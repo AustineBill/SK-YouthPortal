@@ -1,26 +1,24 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import Mandate from "./pages/mandate"
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-import './App.css';
+import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import './style.css';
+import '../style.css';
 
 
 
-const App = () => {
+const Mandate = () => {
   const [loading, setLoading] = useState(true);
 
   const introRef = useRef(null);
-  const programRef = useRef(null);
+  
   const aboutRef = useRef(null);
   const newseventsRef = useRef(null);
   const highlightsRef = useRef(null);
@@ -40,32 +38,25 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <div>
-        {loading ? (
-          <div id="spinner" className="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div className="spinner-grow text-primary" style={{ width: '3rem', height: '3rem' }} role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
+    <div>
+      {loading ? (
+        <div id="spinner" className="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+          <div className="spinner-grow text-primary" style={{ width: '3rem', height: '3rem' }} role="status">
+            <span className="sr-only">Loading...</span>
           </div>
-        ) : (
-          <>
-            <Navbar handleScroll={handleScroll} sections={{ introRef, programRef, aboutRef, newseventsRef, highlightsRef }} />
-            <div ref={introRef}><Intro /></div>
-            <div ref={programRef}><Programs /></div>
-            <div ref={newseventsRef}><NewsEvents /></div>
-            <div ref={highlightsRef}><Highlights /></div>
-            <div ref={aboutRef}><About /></div>
-           
-
-            <Routes>
-              <Route path="/mandate" element={<Mandate />} />
-            </Routes>
-            <Footer />
-          </>
-        )}
-      </div>
-    </Router>
+        </div>
+      ) : (
+        <>
+          <Navbar handleScroll={handleScroll} sections={{ introRef,  aboutRef, newseventsRef, highlightsRef }} />
+          <div ref={introRef}><Intro /></div>
+        
+          <div ref={newseventsRef}><NewsEvents /></div>
+          <div ref={highlightsRef}><Highlights /></div>
+          <div ref={aboutRef}><About /></div>
+          <Footer />
+        </>
+      )}
+    </div>
   );
 };
 
@@ -73,7 +64,7 @@ const Navbar = ({ handleScroll, sections }) => (
   <div className="container-fluid sticky-top">
     
       <nav className="navbar navbar-expand-lg bg-white">
-        <a href="App.js" className="navbar-brand">
+        <a href="../App.js" className="navbar-brand">
           <h2 className="text-dark ms-5">SK Youth Portal</h2>
         </a>
         <button type="button" className="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -84,7 +75,7 @@ const Navbar = ({ handleScroll, sections }) => (
           <div className="navbar-nav ms-auto">
             <a href="#" className="nav-item nav-link active" onClick={() => handleScroll(sections.introRef)}>Home</a>
             <a href="#" className="nav-item nav-link" onClick={() => handleScroll(sections.aboutRef)}>About</a>
-            <a href="#" className="nav-item nav-link" onClick={() => handleScroll(sections.programRef)}>Program</a>
+           
             <a href="#" className="nav-item nav-link" onClick={() => handleScroll(sections.newseventsRef)}>News & Events</a>
             <a href="#" className="nav-item nav-link" onClick={() => handleScroll(sections.highlightsRef)}>Highlights</a>
           </div>
@@ -124,78 +115,7 @@ const Intro = () => (
 
 
 
-const Programs = () => (
-  <div className="container-fluid py-5">
-    <div className="container">
-      <div className="row g-4 justify-content-center">
 
-        <div className="col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-          <div className="custom-feature-item ">
-           
-              <i className="fa fa-search fa-3x text-dark mb-3"></i>
-              <span className="text-dark mb-3 d-block">Search</span> <h5 className="text-dark mb-0">Unleash the champion with SK Youth's Program</h5>
-            
-          </div>
-        </div>
-        
-        <div className="col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-          <div className="custom-feature-item ">
-           
-              <i className="fa fa-book fa-3x text-dark mb-3"></i>
-              <span className="text-dark mb-3 d-block">Book</span> <h5 className="text-dark mb-0">Secure your spot</h5>
-          
-          </div>
-        </div>
-        <div className="col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-          <div className="custom-feature-item ">
-          
-              <i className="fa fa-check fa-3x text-dark mb-3"></i>
-              <span className="text-dark mb-3 d-block">Manage</span> <h5 className="text-dark mb-0">Own your Schedule, your way!</h5>
-           
-          </div>
-        </div>
-      </div>
-
-      <div className="row g-10 justify-content-center mt-3">
-        <Card className="ProgramCard">
-          <Card.Img variant="top" src="holder.js/100px180" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
-
-        <Card className="ProgramCard">
-          <Card.Img variant="top" src="holder.js/100px180" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
-
-        <Card className="ProgramCard">
-          <Card.Img variant="top" src="holder.js/100px180" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
-      </div>
-    </div>
-  </div>
-);
 
 
 
@@ -318,7 +238,7 @@ const Footer = () => (
 
         <div className="col-md-6 col-lg-3 d-flex flex-column justify-content-center align-items-end text-end">
           <h5 className="mb-3">Popular Links</h5>
-          <a className="btn btn-link" to="/mandate">About Us</a>
+          <a className="btn btn-link" href="">About Us</a>
           <a className="btn btn-link" href="">Contact Us</a>
           <a className="btn btn-link" href="">Privacy Policy</a>
           <a className="btn btn-link" href="">Terms & Condition</a>
@@ -329,4 +249,4 @@ const Footer = () => (
 );
 
 
-export default App;
+export default Mandate;
