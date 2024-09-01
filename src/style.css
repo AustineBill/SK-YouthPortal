@@ -76,15 +76,12 @@ img.animated.pulse {
 .navbar {
    /* padding: 25px 0 !important;/*/
     height: 100px;
-  
-  
-   
-
 }
 
+
+
 .navbar .navbar-nav .nav-link {
-    margin-right: 50px;
-    padding: 30;
+    padding: 20px;
     color: var(--bs-dark);
     font-weight: 600;
     transition: .5s;
@@ -135,6 +132,48 @@ img.animated.pulse {
         opacity: 1;
     }
 }
+
+
+
+.login-button {
+    background-color: #f5efef; /* Dark color similar to Bootstrap's .btn-dark */
+    color: rgb(3, 3, 3); /* Text color for contrast */
+    padding: 0.5rem 2rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
+    display: none; /* Initially hidden: d-none */
+    margin-left: 20rem; /* Margin start: ms-3 */
+    border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
+}
+
+@media (min-width: 992px) { /* Large screen (lg) breakpoint */
+    .login-button {
+        display: inline-block; /* Display button inline on lg screens and up */
+    }
+}
+
+.login-button:hover {
+    background-color: #23272b; /* Darker shade on hover */
+}
+
+
+.signup-button {
+    background-color: #2011f5; /* Dark color similar to Bootstrap's .btn-dark */
+    color: rgb(247, 243, 243); /* Text color for contrast */
+    padding: 0.5rem 2rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
+
+    margin-left: 1rem; /* Margin start: ms-3 */
+    border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
+}
+
+@media (min-width: 992px) { /* Large screen (lg) breakpoint */
+    .signup-button {
+        display: inline-block; /* Display button inline on lg screens and up */
+    }
+}
+
+.signup-button:hover {
+    background-color: #e7eaee; /* Darker shade on hover */
+}
+
 
 
 /*** Hero Header ***/

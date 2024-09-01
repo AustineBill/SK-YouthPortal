@@ -10,7 +10,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'owl.carousel/dist/assets/owl.carousel.css';
+//import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './style.css';
 
@@ -22,7 +22,7 @@ const App = () => {
   const introRef = useRef(null);
   const programRef = useRef(null);
   const aboutRef = useRef(null);
-  const newseventsRef = useRef(null);
+  const contactRef = useRef(null);
   const highlightsRef = useRef(null);
 
   useEffect(() => {
@@ -50,11 +50,10 @@ const App = () => {
           </div>
         ) : (
           <>
-            <Navbar handleScroll={handleScroll} sections={{ introRef, programRef, aboutRef, newseventsRef, highlightsRef }} />
+            <Navbar handleScroll={handleScroll} sections={{ introRef, programRef, aboutRef, contactRef, highlightsRef }} />
             <div ref={introRef}><Intro /></div>
             <div ref={programRef}><Programs /></div>
-            <div ref={newseventsRef}><NewsEvents /></div>
-            <div ref={highlightsRef}><Highlights /></div>
+            <div ref={contactRef}><Contact Us /></div>
             <div ref={aboutRef}><About /></div>
            
 
@@ -74,23 +73,23 @@ const Navbar = ({ handleScroll, sections }) => (
     
       <nav className="navbar navbar-expand-lg bg-white">
         <a href="App.js" className="navbar-brand">
-          <h2 className="text-dark ms-5">SK Youth Portal</h2>
+          <h2 className="text-dark ms-4">SK Youth Portal</h2>
         </a>
+        
         <button type="button" className="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarCollapse">
-          <div className="navbar-nav ms-auto">
-            <a href="#" className="nav-item nav-link active" onClick={() => handleScroll(sections.introRef)}>Home</a>
-            <a href="#" className="nav-item nav-link" onClick={() => handleScroll(sections.aboutRef)}>About</a>
-            <a href="#" className="nav-item nav-link" onClick={() => handleScroll(sections.programRef)}>Program</a>
-            <a href="#" className="nav-item nav-link" onClick={() => handleScroll(sections.newseventsRef)}>News & Events</a>
-            <a href="#" className="nav-item nav-link" onClick={() => handleScroll(sections.highlightsRef)}>Highlights</a>
+        <div className="collapse navbar-collapse " id="navbarCollapse">
+          <div className="navbar-nav ms-5 me-10">
+            <a className="nav-item nav-link " onClick={() => handleScroll(sections.introRef)}>Home</a>
+            <a className="nav-item nav-link" onClick={() => handleScroll(sections.aboutRef)}>About us </a>
+            <a className="nav-item nav-link" onClick={() => handleScroll(sections.programRef)}>Programs</a>
+            <a className="nav-item nav-link" onClick={() => handleScroll(sections.contactRefRef)}>Contact us</a>
           </div>
 
-          <a href="" className="btn btn-dark py-2 px-4 d-none d-lg-inline-block ms-1" >Log In</a>
-          <a href="" className="btn btn-light py-2 px-4 d-none d-lg-inline-block ms-3 me-3">Sign Up</a>
+          <a className=" login-button btn btn-light " >Log In</a>
+          <a className="signup-button btn btn-blue">Sign Up</a>
 
 
         </div>
@@ -199,7 +198,7 @@ const Programs = () => (
 
 
 
-const NewsEvents = () => (
+const Contact  = () => (
   <div className="container-fluid py-5">
     
         <div className="about-container" data-wow-delay="0.5s">
