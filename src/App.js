@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+
 
 
 
@@ -7,21 +8,40 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 
+
 /*Main Pages*/
-import Programs from "./mainpages/program";
+import Overview_Program from "./mainpages/program";
 import Contact from "./mainpages/contactus";
 import About from "./mainpages/aboutus";
 
 
 /*Sub Pages*/
-import Mandate from "./pages/mandate";
+import Mandate from "./subpages/mandate";
+import Youth from "./subpages/mandate";
+import Council from "./subpages/mandate";
+
+import News from "./pages/news"
+import Spotlight from "./pages/spotlight"
+
+
+import Home from "./user-side/Dashboard"
+import Programs from "./user-side/user_program"
+import Log from "./user-side/log"
+import Help_Support from "./user-side/help_support"
+import Program_details from './user-side/program_details';
 
 import './App.css';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'animate.css/animate.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
+
+
+
+
 
 import rightArrow from "./assets/right-arrow.png"
 import Cover from "./assets/bg.png"
@@ -49,11 +69,23 @@ const App = () => {
             <Navbar />
             <Routes>
               <Route path="/" element={<Intro />} />
-              <Route path="/mandate" element={<Mandate />} />
-              <Route path="/programs" element={<Programs />} />
+              <Route path="/overview" element={<Overview_Program />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/about" element={<About />} />
-              {/* Add more routes as needed */}
+              <Route path="/team" element={<Spotlight />} />
+              <Route path="/mission" element={<News />} />
+              <Route path="/mandate" element={<Mandate />} />
+              <Route path="/youth" element={<Youth />} />
+              <Route path="/council" element={<Council />} />
+
+              <Route path="/programs" element={<Programs />} />
+              <Route path="/program_details" element={<Program_details />} />
+              <Route path="/contact" element={<Help_Support />} />
+              <Route path="/about" element={<Log />} />
+
+
+              <Route path="/home" element={<Home />} />
+           
             </Routes>
             <Footer />
           </>
@@ -63,32 +95,68 @@ const App = () => {
   );
 };
 
-const Navbar = () => (
-  <div className="container-fluid sticky-top">
-    <nav className="navbar navbar-expand-lg bg-white">
+const Navbar = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-      <Link to="/" className="navbar-brand">
-        <h2 className="Website-Name" style={{ fontFamily: "'Sansita Swashed', cursive" }}>SK Youth </h2>
-      </Link>
-      
-      <button type="button" className="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span className="navbar-toggler-icon"></span>
-      </button>
+  const toggleDropdown = () => {
+    setIsDropdownOpen(prev => !prev);
+  };
 
-      <div className="collapse navbar-collapse" id="navbarCollapse">
-        <div className="navbar-nav ms-5 me-10">
-          <Link className="nav-item nav-link" to="/">Home</Link>
-          <Link className="nav-item nav-link" to="/about">About Us</Link>
-          <Link className="nav-item nav-link" to="/programs">Programs</Link>
-          <Link className="nav-item nav-link" to="/contact">Contact Us</Link>
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div className="container-fluid sticky-top">
+      <nav className="navbar navbar-expand-lg bg-white">
+        <Link to="/" className="navbar-brand">
+          <h2 className="Website-Name" style={{ fontFamily: "'Sansita Swashed', cursive" }}>SK Youth</h2>
+        </Link>
+
+        <div className="navbar-nav ms-4 align-items-center">
+          
+          
+          <div className="nav-item" ref={dropdownRef}>
+            <span 
+              className="nav-link dropdown-toggle" 
+              onClick={toggleDropdown} 
+              style={{ cursor: 'pointer' }}
+            >
+              About Us
+            </span>
+            {isDropdownOpen && (
+              <div className="dropdown-menu" s>
+                <Link className="dropdown-item" to="/about" style={{ display: 'block', padding: '8px 16px' }}>About Us Overview</Link>
+                <Link className="dropdown-item" to="/mandate" style={{ display: 'block', padding: '8px 16px' }}>Mandate</Link>
+                <Link className="dropdown-item" to="/youth" style={{ display: 'block', padding: '8px 16px' }}>Youth</Link>
+                <Link className="dropdown-item" to="/council" style={{ display: 'block', padding: '8px 16px' }}>Council</Link>
+              </div>
+            )}
+          </div>
+          
+          <Link className="nav-item nav-link" to="/program_details">Programs</Link>
+          <Link className="nav-item nav-link" to="/home">Contact Us</Link>
         </div>
 
-        <Link className="login-button btn btn-outline-dark" to="/login">Log In</Link>
-        <Button className="signup-button " to="/signup">Sign Up</Button>
-      </div>
-    </nav>
-  </div>
-);
+        <Link className="login-button btn btn-outline-dark ms-auto" to="/login">Log In</Link>
+        <Link className="signup-button btn btn-primary ms-2" to="/signup">Sign Up</Link>
+      </nav>
+    </div>
+  );
+};
+
+
+
 
 const Intro = () => (
   <div className="container-fluid">
@@ -212,30 +280,30 @@ const Intro = () => (
 
           <Link className="btn btn-primary py-2 px-4 mb-5">Find Out More</Link>
 
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-indicators">
+        <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
+          <div className="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
           </div>
           <div className="carousel-inner">
-            <div class="carousel-item active bg-dark">
-              <img src={Cover} class="d-block w-100" alt="..."></img>
+            <div className="carousel-item active bg-dark">
+              <img src={Cover} className="d-block w-100" alt="..."></img>
             </div>
-            <div class="carousel-item bg-primary">
-              <img src={Cover} class="d-block w-100" alt="..."></img>
+            <div className="carousel-item bg-primary">
+              <img src={Cover} className="d-block w-100" alt="..."></img>
             </div>
-            <div class="carousel-item bg-secondary">
-            <img src={Cover} class="d-block w-100" alt="..."></img>
+            <div className="carousel-item bg-secondary">
+            <img src={Cover} className="d-block w-100" alt="..."></img>
             </div>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
+          <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Previous</span>
           </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
+          <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Next</span>
           </button>
         </div>
 
@@ -290,10 +358,10 @@ const Footer = () => (
           </div>
           All Rights Reserved 2024.
           <div className="d-flex pt-2">
-            <a className="btn btn-square btn-outline-light me-1" href=""><i className="fab fa-twitter"></i></a>
-            <a className="btn btn-square btn-outline-light me-1" href=""><i className="fab fa-facebook-f"></i></a>
-            <a className="btn btn-square btn-outline-light me-1" href=""><i className="fab fa-instagram"></i></a>
-            <a className="btn btn-square btn-outline-light me-1" href=""><i className="fab fa-linkedin-in"></i></a>
+            <Link className="btn btn-square btn-outline-light me-1" to=""><i className="fab fa-twitter"></i></Link>
+            <Link className="btn btn-square btn-outline-light me-1" to=""><i className="fab fa-facebook-f"></i></Link>
+            <Link className="btn btn-square btn-outline-light me-1" to=""><i className="fab fa-instagram"></i></Link>
+            <Link className="btn btn-square btn-outline-light me-1" to=""><i className="fab fa-linkedin-in"></i></Link>
           </div>
         </div>
 
@@ -301,10 +369,10 @@ const Footer = () => (
 
         <div className="col-md-5 col-lg-3 d-flex flex-column justify-content-center align-items-end text-end">
           <h5 className="mb-0">Popular Links</h5>
-          <a className="btn btn-link" to="/mandate">About Us</a>
-          <a className="btn btn-link" href="">Contact Us</a>
-          <a className="btn btn-link" href="">Privacy Policy</a>
-          <a className="btn btn-link" href="">Terms & Condition</a>
+          <Link className="btn btn-link" to="/mandate">About Us</Link>
+          <Link className="btn btn-link" to="">Contact Us</Link>
+          <Link className="btn btn-link" to="">Privacy Policy</Link>
+          <Link className="btn btn-link" to="">Terms & Condition</Link>
         </div>
       </div>
    
