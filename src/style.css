@@ -1,0 +1,221 @@
+
+
+/*++++++Dashboard++++++*/
+
+/* Phase 1 Head */
+
+.dash-maintext{
+  font-weight: bolder; 
+  color: #2011f5;
+  font-size: 100px;
+  font-family: 'Sansita Swashed', cursive;
+}
+
+.dash-subtext {
+  font-weight: bold; 
+  color: #141313; 
+  animation-duration: 1s; 
+  animation-fill-mode: both; 
+  animation-name: slideInLeft; 
+  font-size: 30px;
+  margin-left: 200px;
+}
+
+.dash-button {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;   
+  padding: 0.5rem 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  color: #fff;
+  background-color: #3410fa;
+  border-color: #3312f0;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
+  width: 15%;
+  align-items: center;
+  position: absolute;
+  margin-top: auto;
+}
+
+.dash-button:hover {
+  color: #fff;
+  background-color: #23272b;
+  border-color: #1d2124;
+}
+
+.dash-divider{
+  display: inline-block;
+  padding: 2.5rem;
+  animation: fadeIn 1s ease-in-out;
+  border-right: 2px solid rgb(10, 10, 10);
+  
+  width: 30%;
+  
+}
+.dash-divider-text{
+  color: #141313;
+  font-weight: bold ;
+  font-size: large;
+  margin-left: 2rem;
+  
+}
+
+.dash-card-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;  
+  justify-content: center;
+  margin-top: 6rem;
+  margin-bottom: 6rem;
+}
+
+.dash-Card{
+  width: 20rem;
+  height: auto; 
+  margin: 2rem;
+}
+
+
+
+
+/*++++++Program++++++*/
+
+.prog-maintext {
+  font-weight: bolder; 
+  color: #141313; 
+  animation-duration: 1s; 
+  animation-fill-mode: both; 
+  animation-name: slideInLeft; 
+  font-size: 70px;
+  margin-left: 30px;
+}
+
+.prog-p {
+  font-weight: 200; 
+  color: #141313; 
+  animation-duration: 1s; 
+  animation-fill-mode: both; 
+  animation-name: slideInLeft; 
+  font-size: 30px;
+  margin-left: 30px;
+}
+
+.prog-book-button{
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;   
+  padding: 1rem;
+  font-size: 2;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  color: #fff;
+  background-color: #080808;
+  border-color: #f9f8fa;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
+  width: 15%;
+  align-items: center;
+  position: absolute;
+  margin-top: auto;
+  margin-left: 2rem;
+}
+
+.prog-book-button:hover {
+  color: #fff;
+  background-color: #23272b;
+  border-color: #1d2124;
+}
+
+.prog-view-button{
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;   
+  padding: 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  color: #fff;
+  background-color: #3410fa;
+  border-color: #3312f0;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
+  width: 15%;
+  align-items: center;
+  position: absolute;
+  margin-top: auto;
+  margin-left: 15rem;
+}
+
+.prog-view-button:hover {
+  color: #fff;
+  background-color: #23272b;
+  border-color: #1d2124;
+}
+
+.prog-descripton{
+  width: 80%;
+  justify-content: center;
+  margin: 6rem 3rem 6rem 5rem;
+}
+
+
+
+
+/*++++++Log++++++*/
+
+
+/*++++++ Help and Support ++++++*/
+
+
+
+/*++++++Dropdown++++++*/
+/*++++++Dropdown++++++*/
+
+
+
+/*++++++Dropdown++++++*/
+
+.custom-dropdown {
+    position: relative;
+  }
+  
+  .dropdown-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    color: #333;
+  }
+  
+  .dropdown-menu {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+  }
+  .dropdown-item {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .dropdown-item:hover {
+    background: #f8f9fa;
+  }
+  

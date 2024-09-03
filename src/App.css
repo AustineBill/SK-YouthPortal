@@ -1,38 +1,592 @@
-.App {
-  text-align: center;
+/* <uniquifier>: Use a unique and descriptive class name8/
+/* <weight>: Use a value from 300 to 900 */
+
+
+
+
+/********** Template CSS **********/
+/*** Spinner ***/
+#spinner {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .5s ease-out, visibility 0s linear .5s;
+  z-index: 99999;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#spinner.show {
+  transition: opacity .5s ease-out, visibility 0s linear 0s;
+  visibility: visible;
+  opacity: 1;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.back-to-top {
+  position: fixed;
+  display: none;
+  right: 45px;
+  bottom: 45px;
+  z-index: 99;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+img.animated.pulse {
+  animation-duration: 5s;
+}
+
+/*** Button ***/
+.btn {
+  font-weight: 500;
+  transition: .5s;
+}
+
+.btn.btn-primary {
+  color: var(--bs-white);
+}
+
+.btn-square {
+  width: 38px;
+  height: 38px;
+}
+
+.btn-sm-square {
+  width: 32px;
+  height: 32px;
+}
+
+.btn-lg-square {
+  width: 48px;
+  height: 48px;
+}
+
+.btn-square,
+.btn-sm-square,
+.btn-lg-square {
+  padding: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-weight: normal;
+  border-radius: 50px;
 }
 
-.App-link {
-  color: #61dafb;
+
+/*Overall*/
+
+.container-fluid {
+  width: 100%;
+  max-width: 100%;
+  font-family: 'Poppins', sans-serif;
+  overflow-y: hidden;
+  overflow-x: hidden;   
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.intro-container {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+}
+
+.Website-Name{
+  color: #1809f5; /* Bootstrap's dark color */
+  margin-left: 5rem; /* Equivalent to Bootstrap's `ms-4` */
+  font-weight: bold; /* Makes the text bold */
+  font-family: "Sansita Swashed";
+  font-size: 30px; 
+}
+
+.card-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;  
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+
+
+
+
+
+/*** Navbar ***/
+.sticky-top { 
+  margin-top: 10px;;
+  transition: .5s;
+}
+
+.navbar {
+ /* padding: 25px 0 !important;/*/
+  height: 100px;
+}
+
+.nav-item{
+  padding: 2rem; 
+  margin: 1rem;
+
+}
+
+.navbar .navbar-nav .nav-link {
+  padding: 20px;
+  color: var(--bs-dark);
+  font-weight: 600;
+  transition: .5s;
+  outline: none;
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link.active {
+  color: var(--bs-white);
+}
+
+.navbar .dropdown-toggle::after {
+  border: none;
+  content: "\f107";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+@media (max-width: 991.98px) {
+  .navbar .navbar-nav {
+      padding: 0 15px;
+      background: var(--bs-primary);
   }
-  to {
-    transform: rotate(360deg);
+
+  .navbar .navbar-nav .nav-link  {
+      margin-right: 0;
+      padding: 10px 0;
   }
 }
+
+@media (min-width: 992px) {
+  .navbar .nav-item .dropdown-menu {
+      display: block;
+      border: none;
+      margin-top: 0;
+      top: 150%;
+      opacity: 0;
+      visibility: hidden;
+      transition: .5s;
+  }
+
+  .navbar .nav-item:hover .dropdown-menu {
+      top: 100%;
+      visibility: visible;
+      transition: .5s;
+      opacity: 1;
+  }
+}
+
+
+
+.login-button {
+  background-color: #f5efef; /* Dark color similar to Bootstrap's .btn-dark */
+  color: rgb(15, 15, 15); /* Text color for contrast */
+  padding: 1rem 2rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
+  /* Margin start: ms-3  margin-left: 5rem; */
+ 
+  border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
+}
+
+@media (min-width: 992px) { /* Large screen (lg) breakpoint */
+  .login-button {
+      display: inline-block; /* Display button inline on lg screens and up */
+  }
+}
+
+.login-button:hover {
+  background-color: #23272b; /* Darker shade on hover */
+}
+
+
+.signup-button {
+  background-color: #2011f5; /* Dark color similar to Bootstrap's .btn-dark */
+  color: rgb(247, 243, 243); /* Text color for contrast */
+  padding: 0.5rem 2rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
+  margin-right: 5rem;
+  /* Margin start: ms-3  margin-left: 3rem; */
+  border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
+}
+
+
+@media (min-width: 992px) { /* Large screen (lg) breakpoint */
+  .signup-button {
+      display: inline-block; /* Display button inline on lg screens and up */
+  }
+}
+
+.signup-button:hover {
+  background-color: #e7eaee; /* Darker shade on hover */
+}
+
+
+
+/*** Hero Header ***/
+.hero-header {
+  position: relative;
+  padding-top: 12rem;
+  padding-bottom: 11rem; /*ito yung adjust sa background*/
+  background: url(./assets/bg.png) center center no-repeat;
+  background-size: cover;
+}
+
+.hero-header::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, .1);
+  clip-path: polygon(66% 0, 100% 0, 100% 100%, 33% 100%);
+}
+
+.hero-header .container {
+  position: relative;
+  z-index: 1;
+
+}
+
+.intro-text {
+  font-weight: 300; 
+  color: #1d1b1b; 
+  animation-duration: 1s; 
+  animation-fill-mode: both; 
+  animation-name: slideInLeft; 
+  margin-left: 3rem;
+}
+
+
+.custom-intro-text {
+  font-weight: 300; 
+  color: #161616; 
+  animation-duration: 1s; 
+  animation-fill-mode: both; 
+  animation-name: slideInLeft; 
+  
+}
+
+
+.custom-name {
+  font-weight: bold; 
+  color: #2011f5;
+  font-size: 64px;
+  margin-top: 20px;
+  font-family: 'Sansita Swashed', cursive;
+  
+}
+
+.custom-intro-details {
+  font-weight: bold; 
+  color: #141313; 
+  animation-duration: 1s; 
+  animation-fill-mode: both; 
+  animation-name: slideInRight; 
+  font-size: 30px;
+  margin-left: 50%; /* Remove default margin */
+   /* Remove default padding */
+}
+
+
+.hero-header .breadcrumb-item+.breadcrumb-item::before {
+  color: var(--bs-light);
+}
+
+.intro-button {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;   
+  padding: 0.5rem 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  color: #fff;
+  background-color: #3410fa;
+  border-color: #3312f0;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInRight;
+  width: 15%;
+  align-items: center;
+  position: absolute;
+  right: 10%; /* Adjust as needed */
+  bottom: 200px; /* Adjust as needed */
+}
+
+.intro-button:hover {
+  color: #fff;
+  background-color: #23272b;
+  border-color: #1d2124;
+}
+.arrow{
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 30px; /* Set the width you need */
+  height: auto; /* Maintain aspect ratio */
+}
+
+
+/***Program***/
+
+.feature-item::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, .1);
+  clip-path: polygon(66% 0, 100% 0, 100% 100%, 33% 100%);
+}
+
+.feature-item .border {
+  position: relative;
+  border-color: rgba(255, 255, 255, .2) !important;
+  z-index: 1;
+}
+
+.custom-feature-item {
+
+  animation: fadeIn 1s ease-in-out; 
+  position: relative;
+  text-align: center;
+  padding: 1rem; 
+  margin-top: 30px;
+}
+
+
+.ProgramCard{
+  width: 20rem;
+  margin: 15px;
+  height: auto; 
+}
+
+
+
+/* About */
+
+.about-container {
+  width: 100%; /* Equivalent to col-lg-10 */
+  animation-duration: 1s; /* Equivalent to wow */
+  animation-fill-mode: both; /* Equivalent to wow */
+  animation-name: fadeIn; /* Equivalent to fadeIn */
+  margin-bottom: 5rem;
+}
+
+
+.about-head {
+  color: #060707; /* Equivalent to text-primary */
+  margin-bottom: 1.5rem; /* Equivalent to mb-4 */
+  margin-top: 8rem; /* Equivalent to mb-4 */
+  font-weight: 700; /* Adjust the font-weight as needed */
+  text-align: center; /* Center the text */
+  font-size: 2.5rem;   
+}
+
+
+.BlockQoute{
+  width: 2rem;
+  height: 25rem;
+  margin: 20px;
+}
+
+
+/*/* News and Events */
+
+.NewEve-container {
+  width: 100%; /* Equivalent to col-lg-10 */
+  animation-duration: 1s; /* Equivalent to wow */
+  animation-fill-mode: both; /* Equivalent to wow */
+  animation-name: fadeIn; /* Equivalent to fadeIn */
+}
+
+
+.NewEve-head {
+  color: #060707; /* Equivalent to text-primary */
+  margin-top: 8rem; /* Equivalent to mb-4 */
+  margin-bottom: 1.5rem; /* Equivalent to mb-4 */
+  font-weight: 700; /* Adjust the font-weight as needed */
+  text-align: center; /* Center the text */
+  font-size: 6rem;   
+  
+}
+
+.NewsCard{
+  width: 10rem;
+  margin: 5rem;
+}
+
+
+
+
+
+
+
+
+.NewEve-box-container {
+  width: 80%; /* Equivalent to col-lg-10 */
+  max-height: 50%;
+  background-color: #797f7f;
+  color: #fff;
+  text-align: justify;
+  margin-left: 150px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+
+/*Announcement*/
+
+.latest-youth {
+  position: relative;
+  padding-top: 10rem;
+  margin-top: 5rem;
+  padding-bottom: 11rem; /*ito yung adjust sa background*/
+  background: url(./assets/bg.png) center center no-repeat;
+  background-size: cover;
+}
+
+.carousel-inner{
+  margin-top: 4rem;
+}
+
+.carousel-item{
+  width: 70%;
+  height: 30rem;
+
+}
+
+/* Spotlight */
+.spotlight-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* 3 columns: text, button, image */
+  align-items: center; /* Center items vertically */
+  gap: 1rem; /* Space between columns */
+  padding: 1rem; /* Optional padding */
+  margin-top:  7rem;
+}
+
+.image-content {
+  justify-self: end; /* Align image to the end (right) */
+}
+
+.spotlight-head {
+  color: #060707; /* Equivalent to text-primary */
+  margin-bottom: 4rem; /* Equivalent to mb-4 */
+  font-weight: 700; /* Adjust the font-weight as needed */
+  text-align: left; /* Center the text */
+  font-size: 5rem;    
+}
+
+.spotlight-button {
+  font-weight: 400;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+  text-decoration: none;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInRight;
+  margin-top: 350px;
+}
+
+.spotlight-button:hover {
+  color: #fff;
+  background-color: #23272b;
+  border-color: #1d2124;
+}
+
+/*text*/
+
+
+.text-content {
+  justify-self: start; /* Align text to the start (left) */
+  margin-left: 20px;;
+  margin-bottom: 5rem; 
+  margin-top: 5rem;
+}
+
+
+.Text-1{
+  font-family: 'Poppins', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bolder;
+  font-style: normal;
+  color: #4679e6;
+  font-size: 3rem;
+}
+
+.Text-2{
+ 
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: oblique;
+  color: #2011f5;
+  font-size: 3rem;
+}
+
+.Text-3{
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+  color: #111111;
+  font-size: 1.5rem; 
+}
+
+
+
+
+
+
+/*** Footer ***/
+
+
+.footer-name{
+  color: #2011f5;
+  font-size: 2rem; 
+  font-weight: bolder;
+}
+
+
+.footer .btn.btn-link {
+  display: block;
+  margin-bottom: 5px;
+  padding: 0;
+  text-align: left;
+  color: var(--bs-body);
+  font-weight: normal;
+  transition: .3s;
+}
+
+.footer .btn.btn-link:hover {
+  color: var(--bs-primary);
+}
+
+.footer .btn.btn-link::before {
+  position: relative;
+  content: "\f105";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 10px;
+}
+
+.footer .btn.btn-link:hover {
+  letter-spacing: 1px;
+  box-shadow: none;
+}
+
+
+
+.footer .copyright a {
+  color: var(--bs-body);
+}
+
+.footer .copyright a:hover {
+  color: var(--bs-primary);
+}
+
