@@ -7,10 +7,14 @@ import Card from 'react-bootstrap/Card';
 
 import '../App.css';
 import '../style.css';
+
+import "../style.css"
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 import Location from "../assets/location.png"
 
@@ -32,7 +36,7 @@ const Contact = () => (
           </Card>
 
           <Card className="contact-card mx-2">
-            <i className="bi bi-map fa-4x" aria-hidden="true"></i>
+            <i className="fa fa-map-marker-alt fa-4x" aria-hidden="true"></i>
             <Card.Body>
               <Card.Text>Location</Card.Text>
             </Card.Body>
