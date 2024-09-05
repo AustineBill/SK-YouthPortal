@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
-
-
-
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 
 import Navbar from "./Other pages/Navbar"
 import Footer from "./Other pages/Footer"
+
 
 
 
@@ -36,6 +34,8 @@ import Program_details from './user/program_details';
 
 import './App.css';
 import './style.css';
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'animate.css/animate.min.css';
@@ -47,6 +47,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import rightArrow from "./assets/right-arrow.png"
 import Cover from "./assets/bg.png"
+
 
 
 const App = () => {
@@ -69,25 +70,24 @@ const App = () => {
         ) : (
           <>
             <Navbar />
-            <Routes>
-              <Route path="/" element={<Intro />} />
-              <Route path="/overview" element={<Overview_Program />} />
-              <Route path="/contactus" element={<Contact />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/team" element={<Spotlight />} />
-              <Route path="/mission" element={<News />} />
-              <Route path="/mandate" element={<Mandate />} />
-              <Route path="/youth" element={<Youth />} />
-              <Route path="/council" element={<Council />} />
-
-              <Route path="/programs" element={<Programs />} />
-              <Route path="/program_details" element={<Program_details />} />
-              <Route path="/contact" element={<Help_Support />} />
-              <Route path="/about" element={<Log />} />
-
-              <Route path="/home" element={<Home />} />
-           
-            </Routes>
+            <div className="content"> {/* Adjust padding-top if navbar height changes */}
+              <Routes>
+                <Route path="/" element={<Intro />} />
+                <Route path="/overview" element={<Overview_Program />} />
+                <Route path="/contactus" element={<Contact />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/team" element={<Spotlight />} />
+                <Route path="/mission" element={<News />} />
+                <Route path="/mandate" element={<Mandate />} />
+                <Route path="/youth" element={<Youth />} />
+                <Route path="/council" element={<Council />} />
+                <Route path="/programs" element={<Programs />} />
+                <Route path="/program_details" element={<Program_details />} />
+                <Route path="/contact" element={<Help_Support />} />
+                <Route path="/about" element={<Log />} />
+                <Route path="/home" element={<Home />} />
+              </Routes>
+            </div>
             <Footer />
           </>
         )}
@@ -98,7 +98,9 @@ const App = () => {
 
 
 const Intro = () => (
+  
   <div className="container-fluid">
+    
     <div className="intro-container hero-header bg-primary ">
       <div className="row g- align-items-center mb-15">
         <div className="col-lg-12 text-center text-lg-start ms-5 ">

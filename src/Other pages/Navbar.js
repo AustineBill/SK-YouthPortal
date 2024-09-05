@@ -1,68 +1,69 @@
-import React, { useEffect, useState, useRef } from 'react';
-import {Link } from 'react-router-dom';
-
-
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { Dropdown } from 'react-bootstrap'; // Import only Dropdown from react-bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css'; // Ensure your custom CSS file is imported
 
 const Navbar = () => {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const dropdownRef = useRef(null);
-  
-    const toggleDropdown = () => {
-      setIsDropdownOpen(prev => !prev);
-    };
-  
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-  
-    useEffect(() => {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }, []);
-  
-    return (
-      <div className="container-fluid sticky-top">
-        <nav className="navbar navbar-expand-lg bg-white">
-          <Link to="/" className="navbar-brand">
-            <h2 className="Website-Name" style={{ fontFamily: "'Sansita Swashed', cursive" }}>SK Youth</h2>
-          </Link>
-  
-          <div className="navbar-nav ms-4 align-items-center">
-            
-            
-            <div className="nav-item" ref={dropdownRef}>
-              <span 
-                className="nav-link dropdown-toggle" 
-                onClick={toggleDropdown} 
-                style={{ cursor: 'pointer' }}
-              >
-                About Us
-              </span>
-              {isDropdownOpen && (
-                <div className="dropdown-menu" s>
-                  <Link className="dropdown-item" to="/about" style={{ display: 'block', padding: '8px 16px' }}>About Us Overview</Link>
-                  <Link className="dropdown-item" to="/mandate" style={{ display: 'block', padding: '8px 16px' }}>Mandate</Link>
-                  <Link className="dropdown-item" to="/youth" style={{ display: 'block', padding: '8px 16px' }}>Youth</Link>
-                  <Link className="dropdown-item" to="/council" style={{ display: 'block', padding: '8px 16px' }}>Council</Link>
-                </div>
-              )}
-            </div>
-            
-            <Link className="nav-item nav-link" to="/program_details">Programs</Link>
-            <Link className="nav-item nav-link" to="/contactus">Contact Us</Link>
-          </div>
-  
-          <Link className="login-button btn btn-outline-dark ms-auto" to="/login">Log In</Link>
-          <Link className="signup-button btn btn-primary ms-2" to="/signup">Sign Up</Link>
-        </nav>
-      </div>
-    );
+  // State to manage dropdown visibility
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null); // Ref to handle clicks outside
+
+  // Function to toggle dropdown visibility
+  const handleDropdownToggle = (e) => {
+    e.preventDefault(); // Prevent default anchor behavior
+    setShowDropdown((prevState) => !prevState);
   };
 
+  // Function to close dropdown when clicking outside
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <nav className="navbar">
+      <Link to="/" className="navbar-brand">
+        <h2 className="Website-Name" style={{ fontFamily: "'Sansita Swashed', cursive" }}>SK Youth</h2>
+      </Link>
+      <Link className="nav-item nav-link" to="/">Home</Link>
+
+      {/* Customized Dropdown */}
+      <div className="dropdown" ref={dropdownRef}>
+        <Link
+          to="/"
+          className="nav-item nav-link"
+          onClick={handleDropdownToggle}
+          style={{ border: 'none', backgroundColor: 'transparent', padding: '0', cursor: 'pointer' }} // Removes background and border
+        >
+          About
+        </Link>
+        {showDropdown && (
+          <div className="dropdown-content">
+            <Dropdown.Item as={Link} to="/about/mission">SK Youth</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/about/team">Mandate</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/about/history">SK Council</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/about/careers">Former SK Council</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/about/partners">History</Dropdown.Item>
+          </div>
+        )}
+      </div>
+
+      <Link className="nav-item nav-link" to="/program_details">Programs</Link>
+      <Link className="nav-item nav-link" to="/contactus">Contact Us</Link>
+
+      <Link className="login-button btn btn-outline-dark ms-auto" to="/login">Log In</Link>
+      <Link className="signup-button btn btn-primary ms-2" to="/signup">Sign Up</Link>
+    </nav>
+  );
+};
 
 export default Navbar;
-  
