@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 
@@ -6,6 +6,10 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+
+
+import Navbar from "./Other pages/Navbar"
+import Footer from "./Other pages/Footer"
 
 
 
@@ -16,19 +20,19 @@ import About from "./mainpages/aboutus";
 
 
 /*Sub Pages*/
-import Mandate from "./subpages/mandate";
-import Youth from "./subpages/mandate";
-import Council from "./subpages/mandate";
+import Mandate from "./mainpages/mandate";
+import Youth from "./mainpages/mandate";
+import Council from "./mainpages/mandate";
 
-import News from "./pages/news"
-import Spotlight from "./pages/spotlight"
+import News from "./mainpages/news"
+import Spotlight from "./mainpages/spotlight"
 
 
-import Home from "./user-side/Dashboard"
-import Programs from "./user-side/user_program"
-import Log from "./user-side/log"
-import Help_Support from "./user-side/help_support"
-import Program_details from './user-side/program_details';
+import Home from "./user/Dashboard"
+import Programs from "./user/user_program"
+import Log from "./user/log"
+import Help_Support from "./user/help_support"
+import Program_details from './user/program_details';
 
 import './App.css';
 import './style.css';
@@ -37,8 +41,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'animate.css/animate.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
-
 
 
 
@@ -70,7 +72,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Intro />} />
               <Route path="/overview" element={<Overview_Program />} />
-              <Route path="/contact" element={<Contact />} />
+              <Route path="/contactus" element={<Contact />} />
               <Route path="/about" element={<About />} />
               <Route path="/team" element={<Spotlight />} />
               <Route path="/mission" element={<News />} />
@@ -83,7 +85,6 @@ const App = () => {
               <Route path="/contact" element={<Help_Support />} />
               <Route path="/about" element={<Log />} />
 
-
               <Route path="/home" element={<Home />} />
            
             </Routes>
@@ -94,68 +95,6 @@ const App = () => {
     </Router>
   );
 };
-
-const Navbar = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(prev => !prev);
-  };
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsDropdownOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  return (
-    <div className="container-fluid sticky-top">
-      <nav className="navbar navbar-expand-lg bg-white">
-        <Link to="/" className="navbar-brand">
-          <h2 className="Website-Name" style={{ fontFamily: "'Sansita Swashed', cursive" }}>SK Youth</h2>
-        </Link>
-
-        <div className="navbar-nav ms-4 align-items-center">
-          
-          
-          <div className="nav-item" ref={dropdownRef}>
-            <span 
-              className="nav-link dropdown-toggle" 
-              onClick={toggleDropdown} 
-              style={{ cursor: 'pointer' }}
-            >
-              About Us
-            </span>
-            {isDropdownOpen && (
-              <div className="dropdown-menu" s>
-                <Link className="dropdown-item" to="/about" style={{ display: 'block', padding: '8px 16px' }}>About Us Overview</Link>
-                <Link className="dropdown-item" to="/mandate" style={{ display: 'block', padding: '8px 16px' }}>Mandate</Link>
-                <Link className="dropdown-item" to="/youth" style={{ display: 'block', padding: '8px 16px' }}>Youth</Link>
-                <Link className="dropdown-item" to="/council" style={{ display: 'block', padding: '8px 16px' }}>Council</Link>
-              </div>
-            )}
-          </div>
-          
-          <Link className="nav-item nav-link" to="/program_details">Programs</Link>
-          <Link className="nav-item nav-link" to="/home">Contact Us</Link>
-        </div>
-
-        <Link className="login-button btn btn-outline-dark ms-auto" to="/login">Log In</Link>
-        <Link className="signup-button btn btn-primary ms-2" to="/signup">Sign Up</Link>
-      </nav>
-    </div>
-  );
-};
-
-
 
 
 const Intro = () => (
@@ -337,45 +276,6 @@ const Intro = () => (
           </div> 
         </div>
 
-  </div>
-);
-
-
-const Footer = () => (
-  <div className="container-fluid bg-secondary border-top footer">
-    
-      <div className="row">
-        <div className="col-md-2 col-lg-3 mt-2 wow fadeIn" data-wow-delay="0.3s">
-          <h5 className="mb-1">Get In Touch</h5>
-          <p><i className="fa fa-map-marker-alt me-3 mb-1"></i>123 Street, New York, USA</p>
-          <p><i className="fa fa-phone-alt me-3mb-1"></i>+012 345 67890</p>
-          <p><i className="fa fa-envelope me-3mb-1"></i>info@example.com</p>
-        </div>
-
-        <div className="col-md-4 col-lg-6 d-flex flex-column justify-content-center align-items-center text-center">
-          <div className="mb-5 mb-md-0">
-            &copy; <a className="footer-name">SK YOUTH</a>
-          </div>
-          All Rights Reserved 2024.
-          <div className="d-flex pt-2">
-            <Link className="btn btn-square btn-outline-light me-1" to=""><i className="fab fa-twitter"></i></Link>
-            <Link className="btn btn-square btn-outline-light me-1" to=""><i className="fab fa-facebook-f"></i></Link>
-            <Link className="btn btn-square btn-outline-light me-1" to=""><i className="fab fa-instagram"></i></Link>
-            <Link className="btn btn-square btn-outline-light me-1" to=""><i className="fab fa-linkedin-in"></i></Link>
-          </div>
-        </div>
-
-       
-
-        <div className="col-md-5 col-lg-3 d-flex flex-column justify-content-center align-items-end text-end">
-          <h5 className="mb-0">Popular Links</h5>
-          <Link className="btn btn-link" to="/mandate">About Us</Link>
-          <Link className="btn btn-link" to="">Contact Us</Link>
-          <Link className="btn btn-link" to="">Privacy Policy</Link>
-          <Link className="btn btn-link" to="">Terms & Condition</Link>
-        </div>
-      </div>
-   
   </div>
 );
 

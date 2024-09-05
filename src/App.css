@@ -345,7 +345,6 @@ img.animated.pulse {
 }
 
 .custom-feature-item {
-
   animation: fadeIn 1s ease-in-out; 
   position: relative;
   text-align: center;
@@ -589,4 +588,102 @@ img.animated.pulse {
 .footer .copyright a:hover {
   color: var(--bs-primary);
 }
+
+
+
+
+
+
+
+/*Contact Us*/
+
+.contact-maintext {
+  font-weight: bolder; 
+  color: #141313; 
+  animation-duration: 1s; 
+  animation-fill-mode: both; 
+  animation-name: slideInLeft; 
+  font-size: 70px;
+  margin-left: 30px;
+}
+
+.contact-p {
+  font-weight: 200; 
+  color: #131314; 
+  animation-duration: 1s; 
+  animation-fill-mode: both; 
+  animation-name: slideInLeft; 
+  font-size: 30px;
+  margin-top: 50px;
+  margin-left: 30px;
+}
+
+.contact-subtext {
+  font-weight: 200; 
+  color: #141313; 
+  animation-duration: 1s; 
+  animation-fill-mode: both; 
+  animation-name: slideInLeft; 
+  font-size: 30px;
+  margin-left: 30px;
+}
+
+.contact-divider{
+  margin-top: auto;
+  display: inline-block;
+  padding: 3rem;
+  animation: fadeIn 1s ease-in-out;
+  width: 90%; 
+  text-align: center; /* Centers the text */
+  margin-left: auto;  /* Centers the entire div horizontally */
+  margin-right: auto; /* Centers the entire div horizontally */
+}
+
+
+.contact-divider-text{
+  color: #3008a0;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-weight: 900; /* Makes the text bold */
+  font-size: 3rem; /* Adjust the size to make it bigger */
+  letter-spacing: 0.1rem; /* Adds spacing between the letters */
+  margin-left: 8rem;
+}
+
+.contact-card{
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;   
+  padding: 4rem;
+  /*line-height: 1.5rem;*/
+  /*border-radius: 10rem;*/
+  color: #fff;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
+  width: 20%;
+  margin-top: 1rem; /* Adds some space between buttons */
+  margin: 2rem;
+}
+
+.contact-img{
+  border:  #060707;
+  width: 100%;
+  margin: 2rem;
+}
+
+.contact-button{
+  font-weight: 400;
+  font-size: 2rem;
+ 
+  padding: 2rem;
+  width: 20%;
+  margin-bottom: 3rem;
+  border: none; /* Removes the border */
+  border-bottom: 2px solid #070707;
+  background-color: #fdfdfd; /* Sets the button background color */
+}
+
+
+
+
 
