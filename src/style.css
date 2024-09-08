@@ -53,10 +53,10 @@
   padding: 2.5rem;
   animation: fadeIn 1s ease-in-out;
   border-right: 2px solid rgb(10, 10, 10);
-  
-  width: 30%;
-  
+  width: 30%; 
 }
+
+
 .dash-divider-text{
   color: #141313;
   font-weight: bold ;
