@@ -4,6 +4,8 @@ import { Dropdown } from 'react-bootstrap'; // Import only Dropdown from react-b
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css'; // Ensure your custom CSS file is imported
 
+
+
 const Navbar = () => {
   // State to manage dropdown visibility
   const [showDropdown, setShowDropdown] = useState(false);
@@ -48,11 +50,11 @@ const Navbar = () => {
         </Link>
         {showDropdown && (
           <div className="dropdown-content">
-            <Dropdown.Item as={Link} to="/about/mission">SK Youth</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/about/team">Mandate</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/about/history">SK Council</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/about/careers">Former SK Council</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/about/partners">History</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/about">SK Youth</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/mandate">Mandate</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/council">SK Council</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/former_sk">Former SK Council</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/history">History</Dropdown.Item>
           </div>
         )}
       </div>

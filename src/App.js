@@ -9,35 +9,33 @@ import Navbar from "./Other pages/Navbar"
 import Footer from "./Other pages/Footer"
 
 
-
-
 /*Main Pages*/
-import Overview_Program from "./mainpages/program";
+import OverviewProgram from "./mainpages/program";
 import Contact from "./mainpages/contactus";
 import About from "./mainpages/aboutus";
 
 
 /*Sub Pages*/
 import Mandate from "./mainpages/mandate";
-import Youth from "./mainpages/mandate";
-import Council from "./mainpages/mandate";
+import Youth from "./mainpages/aboutus";
+import Council from "./mainpages/skcouncil";
+import Former from "./mainpages/former_sk";
+import History from "./mainpages/history";
 
-import News from "./mainpages/news"
-import Spotlight from "./mainpages/spotlight"
 
 
+/*User Side*/ 
 import Home from "./user/Dashboard"
 import Programs from "./user/user_program"
 import Log from "./user/log"
-import Help_Support from "./user/help_support"
-import Program_details from './user/program_details';
+import HelpSupport from "./user/help_support"
+import ProgramDescript from './user/program_details';
 
 import './App.css';
 import './style.css';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'animate.css/animate.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -70,22 +68,28 @@ const App = () => {
         ) : (
           <>
             <Navbar />
-            <div className="content"> {/* Adjust padding-top if navbar height changes */}
+            <div className="content"> 
               <Routes>
                 <Route path="/" element={<Intro />} />
-                <Route path="/overview" element={<Overview_Program />} />
-                <Route path="/contactus" element={<Contact />} />
+                <Route path="/overview" element={<OverviewProgram />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/team" element={<Spotlight />} />
-                <Route path="/mission" element={<News />} />
-                <Route path="/mandate" element={<Mandate />} />
-                <Route path="/youth" element={<Youth />} />
-                <Route path="/council" element={<Council />} />
-                <Route path="/programs" element={<Programs />} />
-                <Route path="/program_details" element={<Program_details />} />
-                <Route path="/contact" element={<Help_Support />} />
-                <Route path="/about" element={<Log />} />
+                  <Route path="/mandate" element={<Mandate />} />
+                  <Route path="/youth" element={<Youth />} />
+                  <Route path="/council" element={<Council />} />
+                  <Route path="/former_sk" element={<Former />} />
+                  <Route path="/history" element={<History />} />
+                <Route path="/contactus" element={<Contact />} />
+                  
+               
+               
+
                 <Route path="/home" element={<Home />} />
+                <Route path="/programs" element={<Programs />} />
+                  <Route path="/program_details" element={<ProgramDescript />} />
+                <Route path="/log" element={<Log />} />
+                <Route path="/contact" element={<HelpSupport />} />
+                
+               
               </Routes>
             </div>
             <Footer />
