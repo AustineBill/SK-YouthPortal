@@ -62,8 +62,8 @@ const Navbar = () => {
       <Link className="nav-item nav-link" to="/program_details">Programs</Link>
       <Link className="nav-item nav-link" to="/contactus">Contact Us</Link>
 
-      <Link className="login-button btn btn-outline-dark ms-auto" to="/login">Log In</Link>
-      <Link className="signup-button btn btn-primary ms-2" to="/signup">Sign Up</Link>
+      <Link className="login-button btn btn-outline-dark ms-auto" to="/userauth?view=signIn">Log In</Link>
+      <Link className="signup-button btn btn-primary ms-2" to="/userauth?view=signUp">Sign Up</Link>
     </nav>
   );
 };

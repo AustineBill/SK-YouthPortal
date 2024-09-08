@@ -76,7 +76,11 @@ const UserAuthentication = () => {
                 <div className="success-message">
                     <h2>Your account is ready!</h2>
                     <p>Your profile information and login credentials have been successfully created.  Click "Start Now" to explore the SK Youth program.</p>
+                    <form>
+                        <button type="submit">START NOW</button>
+                    </form>
                 </div>
+                
             )}
         
         </div> 

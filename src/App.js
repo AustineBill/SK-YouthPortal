@@ -15,12 +15,14 @@ import Contact from "./mainpages/contactus";
 import About from "./mainpages/aboutus";
 
 
+
 /*Sub Pages*/
 import Mandate from "./mainpages/mandate";
 import Youth from "./mainpages/aboutus";
 import Council from "./mainpages/skcouncil";
 import Former from "./mainpages/former_sk";
 import History from "./mainpages/history";
+import UserAuthentication from './Other pages/UserAuthentication';
 
 
 
@@ -79,6 +81,7 @@ const App = () => {
                   <Route path="/former_sk" element={<Former />} />
                   <Route path="/history" element={<History />} />
                 <Route path="/contactus" element={<Contact />} />
+                <Route path="/userauth" element={<UserAuthentication />} />
                   
                
                
