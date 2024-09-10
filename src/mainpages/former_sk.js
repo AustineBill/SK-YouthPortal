@@ -80,12 +80,12 @@ const Youth = () => {
       </div>
 
       <div className="Former-img-container">
-        <img src={SKPhoto} className="Former-main-img" alt="Cover Photo" />
+        <img src={SKPhoto} className="Former-main-img" alt="Cover" />
       </div>
 
       <div className="bg-secondary">
-        <div className="dash-divider row">
-          <h1 className="dash-divider-text">SK COUNCIL</h1>
+        <div className="Divider">
+          <h1 className="Divider-Text">SK COUNCIL</h1>
         </div>
       </div>
 

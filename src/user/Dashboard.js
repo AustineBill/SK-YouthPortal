@@ -19,7 +19,6 @@ import Card from 'react-bootstrap/Card';
 import '../App.css';
 import '../style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'animate.css/animate.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -43,7 +42,7 @@ const Home = () => (
         </Link>
 
         <div className="navbar-nav ms-4 align-items-center">
-          <Link className="nav-item nav-link" to="/">Home</Link>
+          <Link className="nav-item nav-link" to="/Dashboard">Home</Link>
           <Link className="nav-item nav-link" to="/programs">Programs</Link>
           <Link className="nav-item nav-link" to="/programs">Reservation</Link>
           <Link className="nav-item nav-link" to="/contact">Help and Support</Link>
@@ -54,8 +53,8 @@ const Home = () => (
     <div className="intro-container hero-header bg-primary ">
       <div className="row">
         <div className="col-lg-5 text-center text-lg-start ms-5 ">
-          <h1 className="dash-maintext animated slideInRight">SK Youth </h1>
-            <h3 className="dash-subtext">Western Bicutan</h3>
+          <h1 className="Maintext animated slideInRight">SK Youth </h1>
+            <h3 className="Subtext">Western Bicutan</h3>
                 <p className=''>Lorem Ipsum heheeeeeeeeeeeeeehheehheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p>
           <button className="dash-button">Find out more</button>
         </div>
@@ -63,8 +62,8 @@ const Home = () => (
     </div>
 
     <div className="bg-secondary">
-        <div className="dash-divider row">
-            <Link className="dash-divider-text">Discover for more events</Link>
+        <div className="Divider">
+            <Link className="Divider-Text">Discover for more events</Link>
         </div>
     </div>
 

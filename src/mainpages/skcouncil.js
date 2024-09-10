@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Council = () => (
   <div className="container-fluid">
@@ -15,10 +16,10 @@ const Council = () => (
             <h1>John Doe</h1>
             <p class="title">CEO & Founder, Example</p>
             <p>Harvard University</p>
-            <a href="#"><i class="fa fa-dribbble"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-facebook"></i></a>
+              <Link to="/"><i class="fa fa-dribbble"></i></Link>
+              <Link to="/"><i class="fa fa-twitter"></i></Link>
+              <Link to="/"><i class="fa fa-linkedin"></i></Link>
+              <Link to="/"><i class="fa fa-facebook"></i></Link>
           </div>
           <div class="flip-card-back">
             <h1>John Doe</h1>
@@ -35,10 +36,10 @@ const Council = () => (
             <h1>John Doe</h1>
             <p class="title">CEO & Founder, Example</p>
             <p>Harvard University</p>
-            <a href="#"><i class="fa fa-dribbble"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-facebook"></i></a>
+              <Link to="/"><i class="fa fa-dribbble"></i></Link>
+              <Link to="/"><i class="fa fa-twitter"></i></Link>
+              <Link to="/"><i class="fa fa-linkedin"></i></Link>
+              <Link to="/"><i class="fa fa-facebook"></i></Link>
           </div>
           <div class="flip-card-back">
             <h1>John Doe</h1>
@@ -55,10 +56,10 @@ const Council = () => (
             <h1>John Doe</h1>
             <p class="title">CEO & Founder, Example</p>
             <p>Harvard University</p>
-            <a href="#"><i class="fa fa-dribbble"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-facebook"></i></a>
+              <Link to="/"><i class="fa fa-dribbble"></i></Link>
+              <Link to="/"><i class="fa fa-twitter"></i></Link>
+              <Link to="/"><i class="fa fa-linkedin"></i></Link>
+              <Link to="/"><i class="fa fa-facebook"></i></Link>
           </div>
           <div class="flip-card-back">
             <h1>John Doe</h1>
@@ -75,10 +76,10 @@ const Council = () => (
             <h1>John Doe</h1>
             <p class="title">CEO & Founder, Example</p>
             <p>Harvard University</p>
-            <a href="#"><i class="fa fa-dribbble"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-facebook"></i></a>
+              <Link to="/"><i class="fa fa-dribbble"></i></Link>
+              <Link to="/"><i class="fa fa-twitter"></i></Link>
+              <Link to="/"><i class="fa fa-linkedin"></i></Link>
+              <Link to="/"><i class="fa fa-facebook"></i></Link>
           </div>
           <div class="flip-card-back">
             <h1>John Doe</h1>
