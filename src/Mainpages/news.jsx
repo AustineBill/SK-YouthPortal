@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Image } from 'react-bootstrap';
-import Hans from "../assets/HANS MARTINEZ.png";
+import Hans from "../Assets/HANS MARTINEZ.png";
 
 const NewsEvents = () => {
   const contentData = [

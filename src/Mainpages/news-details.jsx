@@ -4,7 +4,7 @@ import { Container, Row, Col, Image } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Import the image
-import Hans from '../assets/HANS MARTINEZ.png';
+import Hans from '../Assets/HANS MARTINEZ.png';
 
 
 const contentData = [

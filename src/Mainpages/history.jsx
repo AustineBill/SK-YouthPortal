@@ -1,6 +1,6 @@
 import React from 'react';
 
-import History from "../assets/location.png"
+import History from "../Assets/location.png"
 
 const Home = () => (
     <div className="container-fluid">
