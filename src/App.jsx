@@ -5,33 +5,38 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 
-import Navbar from "./Other pages/Navbar"
-import Footer from "./Other pages/Footer"
+import Navbar from "./Classes/Navbar"
+import Footer from "./Classes/Footer"
 
 
 /*Main Pages*/
-import OverviewProgram from "./mainpages/program";
-import Contact from "./mainpages/contactus";
-import About from "./mainpages/aboutus";
+import OverviewProgram from "./Mainpages/program";
+import Contact from "./Mainpages/contactus";
+import About from "./Mainpages/aboutus";
+import Spotlight from './Mainpages/spotlight';
+import NewsEvents from './Mainpages/news';
+  import ViewDetailed from './Mainpages/news-details';
 
 
 
 /*Sub Pages*/
-import Mandate from "./mainpages/mandate";
-import Youth from "./mainpages/aboutus";
-import Council from "./mainpages/skcouncil";
-import Former from "./mainpages/former_sk";
-import History from "./mainpages/history";
-import UserAuthentication from './Other pages/UserAuthentication';
+import Mandate from "./Mainpages/mandate";
+import Youth from "./Mainpages/aboutus";
+import Council from "./Mainpages/skcouncil";
+import Former from "./Mainpages/former_sk";
+import History from "./Mainpages/history";
+import UserAuthentication from './Classes/UserAuthentication';
 
 
 
 /*User Side*/ 
-import Home from "./user/Dashboard"
-import Programs from "./user/user_program"
-import Log from "./user/log"
-import HelpSupport from "./user/help_support"
-import ProgramDescript from './user/program_details';
+import Dashboard from "./User/Dashboard"
+import Programs from "./User/user_program"
+import Log from "./User/log"
+import HelpSupport from "./User/help_support"
+import ProgramDescript from './User/program_details';
+
+import Reservation from './User/Reservation';
 
 import './App.css';
 import './style.css';
@@ -45,8 +50,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
 
-import rightArrow from "./assets/right-arrow.png"
-import Cover from "./assets/bg.png"
+import rightArrow from "./Assets/right-arrow.png"
+import Cover from "./Assets/bg.png"
 
 
 
@@ -82,15 +87,17 @@ const App = () => {
                   <Route path="/history" element={<History />} />
                 <Route path="/contactus" element={<Contact />} />
                 <Route path="/userauth" element={<UserAuthentication />} />
-                  
-               
-               
 
-                <Route path="/home" element={<Home />} />
+                <Route path="/spotlight" element={<Spotlight />} />
+                <Route path="/news" element={<NewsEvents />} />
+                  <Route path="/news-details/:id" element={<ViewDetailed />} />
+                  
+                <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/programs" element={<Programs />} />
                   <Route path="/program_details" element={<ProgramDescript />} />
                 <Route path="/log" element={<Log />} />
-                <Route path="/contact" element={<HelpSupport />} />
+                <Route path="/Reservation" element={<Reservation />} />
+                //<Route path="/contact" element={<HelpSupport />} />
                 
                
               </Routes>
@@ -187,7 +194,7 @@ const Intro = () => (
         </Card>
         </div>
 
-        <h1 className="NewEve-head">NEWS & EVENTS</h1>
+        <h1 className="NewEve-headline">NEWS & EVENTS</h1>
             <div className="card-container">
               <Card className="ProgramCard">
                 <Card.Img variant="top" src="holder.js/100px180" />
@@ -226,7 +233,7 @@ const Intro = () => (
               </Card>
           </div>
 
-          <Link className="btn btn-primary py-2 px-4 mb-5">Find Out More</Link>
+          <Link className="btn btn-primary py-2 px-4 mb-5" to="/news">Find Out More</Link>
 
         <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
           <div className="carousel-indicators">
@@ -258,7 +265,7 @@ const Intro = () => (
 
         <div className="spotlight-container">
             <h1 className="spotlight-head">SK YOUTH SPOTLIGHTS</h1>
-              <Link className="spotlight-button">View Gallery</Link>
+              <Link className="spotlight-button" to="/Spotlight">View Gallery</Link>
         </div>
 
 

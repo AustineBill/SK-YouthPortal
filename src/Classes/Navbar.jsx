@@ -59,7 +59,7 @@ const Navbar = () => {
         )}
       </div>
 
-      <Link className="nav-item nav-link" to="/program_details">Programs</Link>
+      <Link className="nav-item nav-link" to="/Dashboard">Programs</Link>
       <Link className="nav-item nav-link" to="/contactus">Contact Us</Link>
 
       <Link className="login-button btn btn-outline-dark ms-auto" to="/userauth?view=signIn">Log In</Link>

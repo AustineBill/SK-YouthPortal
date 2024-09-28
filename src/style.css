@@ -4,22 +4,7 @@
 
 /* Phase 1 Head */
 
-.dash-maintext{
-  font-weight: bolder; 
-  color: #2011f5;
-  font-size: 100px;
-  font-family: 'Sansita Swashed', cursive;
-}
 
-.dash-subtext {
-  font-weight: bold; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
-  font-size: 30px;
-  margin-left: 200px;
-}
 
 .dash-button {
   display: inline-block;
@@ -48,22 +33,6 @@
   border-color: #1d2124;
 }
 
-.dash-divider{
-  display: inline-block;
-  padding: 2.5rem;
-  animation: fadeIn 1s ease-in-out;
-  border-right: 2px solid rgb(10, 10, 10);
-  width: 30%; 
-}
-
-
-.dash-divider-text{
-  color: #141313;
-  font-weight: bold ;
-  font-size: large;
-  margin-left: 2rem;
-  
-}
 
 .dash-card-container {
   width: 100%;
@@ -85,25 +54,7 @@
 
 /*++++++Program++++++*/
 
-.prog-maintext {
-  font-weight: bolder; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
-  font-size: 70px;
-  margin-left: 30px;
-}
 
-.prog-p {
-  font-weight: 200; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
-  font-size: 30px;
-  margin-left: 30px;
-}
 
 .prog-book-button{
   display: inline-block;

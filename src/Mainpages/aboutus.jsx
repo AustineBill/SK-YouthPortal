@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Cover from "../assets/bg.png"
+import Cover from "../Assets/bg.png"
 
 const About = () => (
   <div className="container-fluid">
