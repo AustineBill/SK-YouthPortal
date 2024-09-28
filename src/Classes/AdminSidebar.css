@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+.admin-sidebar {
+    background-color: #D9D9D9;
+    width: 350px;
+    height: 100vh;
+}
+
+.sidebar-links {
+    list-style: none;
+    position: fixed;
+    left: 25px;
+}
+
+.sidebar-links li {
+    cursor: pointer;
+    position: relative;
+}
+
+.sidebar-links a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.dropdown li {
+    list-style: none;
+}
+
