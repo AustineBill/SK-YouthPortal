@@ -1,47 +1,128 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Import default styling
 import '../user-style.css'; // Import your custom styling
 
 const Reservation = () => {
-  // Example arrays for fully booked and pencil booked dates
-  const fullyBookedDates = ['2024-09-26', '2024-10-04', '2024-10-11'];
-  const pencilBookedDates = ['2024-09-27', '2024-10-05', '2024-10-12'];
-
   // Initialize the selected date state as an array (for range selection)
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
-
-  // Check if a date is fully booked (unavailable)
-  const isUnavailable = (date) => {
-    const formattedDate = date.toISOString().split('T')[0];
-    return fullyBookedDates.includes(formattedDate);
-  };
+  const [selectedTime, setSelectedTime] = useState(''); // State for selected time
 
   // Handle date or date range changes
   const handleDateChange = (range) => {
-    const [start, end] = range;
-    // Ensure both start and end dates are available before setting
-    if (!isUnavailable(start) && !isUnavailable(end)) {
+    // If a single date is selected, set it as both start and end
+    if (Array.isArray(range)) {
       setSelectedDates(range);
     } else {
-      alert('One or more dates in the range are unavailable.');
+      setSelectedDates([range, range]);
     }
   };
 
-  // Action when applying the selected dates
+  // Action when applying the selected dates and time
   const applyDates = () => {
     console.log('Selected Dates: ', selectedDates);
-    // You can add an API call here or any other action with the selected dates
+    console.log('Selected Time: ', selectedTime);
+    // You can add an API call here or any other action with the selected dates and time
   };
+
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = () => {
+    setIsDropdownVisible((prev) => !prev);
+  };
+
+  const selectTime = (time) => {
+    setSelectedTime(time);
+    setIsDropdownVisible(false);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="calendar-container">
       <h1>Gym Reservations</h1>
+      <p className="text-center">
+        Select or Drag the span of Date/s available you want to book
+      </p>
 
-      {/* Legend for color codes */}
-      <div className="legend">
-        <span className="pencil-booked">Pencil Booked</span>
-        <span className="reserved">Reserved</span>
+      <div className="grid-container">
+        <div className="legend">
+          <h2>Legend</h2>
+          <div className="legend-item">
+            <span className="circle available"></span>
+            <h3>Available</h3>
+          </div>
+          <div className="legend-item">
+            <span className="circle unavailable"></span>
+            <h3>Unavailable</h3>
+          </div>
+          <div className="legend-item">
+            <span className="circle maximize"></span>
+            <h3>Maximize Capacity</h3>
+          </div>
+          <div className="legend-item">
+            <span className="circle unknown"></span>
+            <h3>hindi ko na alam</h3>
+          </div>
+        </div>
+
+        <div className="selected-date">
+          {selectedDates[0].toDateString() === selectedDates[1].toDateString()
+            ? `Selected Date: ${selectedDates[0].toDateString()}`
+            : `Selected Dates: ${selectedDates[0].toDateString()} to ${selectedDates[1].toDateString()}`}
+          {selectedTime && <div>Selected Time: {selectedTime}</div>}
+        </div>
+
+        <button className="apply-dates" onClick={applyDates}>
+          Apply Dates
+        </button>
+      </div>
+
+      <div className="dropdown-container" ref={dropdownRef}>
+        <div className="time-dropdown">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            onClick={toggleDropdown}
+          >
+            Select Time
+          </button>
+          {isDropdownVisible && (
+            <div className="time-dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <h6 className="dropdown-item" onClick={() => selectTime('9:00 am - 10:00 am')}>
+                9:00 am - 10:00 am
+              </h6>
+              <h6 className="dropdown-item" onClick={() => selectTime('10:00 am - 11:00 am')}>
+                10:00 am - 11:00 am
+              </h6>
+              <h6 className="dropdown-item" onClick={() => selectTime('11:00 am - 12:00 nn')}>
+                11:00 am - 12:00 nn
+              </h6>
+              <h6 className="dropdown-item" onClick={() => selectTime('12:00 nn - 1:00 pm')}>
+                12:00 nn - 1:00 pm
+              </h6>
+              <h6 className="dropdown-item" onClick={() => selectTime('1:00 pm - 2:00 pm')}>
+                1:00 pm - 2:00 pm
+              </h6>
+              <h6 className="dropdown-item" onClick={() => selectTime('2:00 pm - 3:00 pm')}>
+                2:00 pm - 3:00 pm
+              </h6>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Calendar Component */}
@@ -50,26 +131,7 @@ const Reservation = () => {
         onChange={handleDateChange} // Handle single or range selection
         selectRange={true} // Enable range selection
         value={selectedDates} // Current selected date or range
-        tileClassName={({ date, view }) => {
-          const formattedDate = date.toISOString().split('T')[0];
-          if (fullyBookedDates.includes(formattedDate)) {
-            return 'reserved'; // Mark as reserved (fully booked)
-          } else if (pencilBookedDates.includes(formattedDate)) {
-            return 'pencil-booked'; // Mark as pencil booked (partially booked)
-          }
-          return null; // Default for available dates
-        }}
       />
-
-      {/* Display Selected Date(s) */}
-      <div className="selected-date">
-        Selected Dates: {selectedDates[0].toDateString()} to {selectedDates[1].toDateString()}
-      </div>
-
-      {/* Button to apply selected dates */}
-      <button className="apply-dates" onClick={applyDates}>
-        Apply Dates
-      </button>
     </div>
   );
 };

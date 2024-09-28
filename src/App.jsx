@@ -47,9 +47,6 @@ import 'animate.css/animate.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-
-
-
 import rightArrow from "./Assets/right-arrow.png"
 import Cover from "./Assets/bg.png"
 

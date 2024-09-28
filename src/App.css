@@ -67,6 +67,12 @@ img.animated.pulse {
   border-radius: 50px;
 }
 
+@media (forced-colors: active) {
+  container-fluid {
+    background-color: Window; /* Background color for forced colors */
+    color: WindowText; /* Text color for forced colors */
+  }
+}
 
 /*Overall*/
 

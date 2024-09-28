@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
-
-
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
@@ -25,14 +22,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
 
-
-
-
-
-
-
-
-const Home = () => (
+const Dashboard = () => (
   <div className="container-fluid">
 
     <div className="container-fluid sticky-top">
@@ -93,16 +83,10 @@ const Home = () => (
         </Card>
 
     </div>
-
-  
-
-
-
-
 </div>
 );
 
 
 
 
-export default Home;
+export default Dashboard;
