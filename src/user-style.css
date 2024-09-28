@@ -24,6 +24,24 @@
   margin-bottom: 2px;
 }
 
+.Maintext-Calendar {
+  font-weight: bolder; 
+  color: #141313; 
+  animation-duration: 1s; 
+  animation-fill-mode: both; 
+  animation-name: slideInLeft; 
+  font-size: 60px;
+}
+
+.Subtext-Calendar {
+  font-weight: 200; 
+  color: #141313; 
+  animation-duration: 1s; 
+  animation-fill-mode: both; 
+  animation-name: slideInLeft; 
+  font-size: 30px;
+}
+
 /* Custom calendar styling */
 .react-calendar {
   width: 100%; /* Ensure the calendar takes up the full width */
@@ -31,7 +49,8 @@
   border: none;
   font-family: 'Poppins', sans-serif;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 10%;
+  margin: 10% 0% 10% 0%;
+  
 }
 
 /* Calendar navigation buttons (Prev/Next) */
@@ -145,6 +164,57 @@
 
 
 
+.step-indicator-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.step {
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.step-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  background-color: white;
+  margin-bottom: 10px;
+  transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+.completed .step-circle {
+  background-color: yellow;
+  border-color: yellow;
+}
+
+.line {
+  height: 2px;
+  background-color: #ccc;
+  transition: background-color 0.5s ease, width 1s ease;
+  flex: 1;
+}
+
+.line.completed {
+  background-color: yellow;
+}
+
+span {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+
+
+
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
@@ -218,4 +288,9 @@
   text-decoration: none;
   align-items: center;
   cursor: pointer;
+}
+
+
+.ScheduleInfo{
+  margin: 50px 0px 50px 0px;
 }
