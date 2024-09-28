@@ -36,6 +36,8 @@ import Log from "./User/log"
 import HelpSupport from "./User/help_support"
 import ProgramDescript from './User/program_details';
 
+import Reservation from './User/Reservation';
+
 import './App.css';
 import './style.css';
 
@@ -94,7 +96,8 @@ const App = () => {
                 <Route path="/programs" element={<Programs />} />
                   <Route path="/program_details" element={<ProgramDescript />} />
                 <Route path="/log" element={<Log />} />
-                <Route path="/contact" element={<HelpSupport />} />
+                <Route path="/Reservation" element={<Reservation />} />
+                //<Route path="/contact" element={<HelpSupport />} />
                 
                
               </Routes>

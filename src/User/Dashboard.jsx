@@ -44,8 +44,8 @@ const Home = () => (
         <div className="navbar-nav ms-4 align-items-center">
           <Link className="nav-item nav-link" to="/Dashboard">Home</Link>
           <Link className="nav-item nav-link" to="/programs">Programs</Link>
-          <Link className="nav-item nav-link" to="/programs">Reservation</Link>
-          <Link className="nav-item nav-link" to="/contact">Help and Support</Link>
+          <Link className="nav-item nav-link" to="/Reservation">Reservation</Link>
+          <Link className="nav-item nav-link" to="/help_support">Help and Support</Link>
         </div>
       </nav>
     </div>
