@@ -87,7 +87,7 @@
   display: inline-block;
   font-weight: 400;
   text-align: center;   
-  padding: 1rem;
+  padding: 1rem 0.5rem 1rem 0.5rem ;
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
@@ -102,7 +102,7 @@
   align-items: center;
   position: absolute;
   margin-top: auto;
-  margin-left: 15rem;
+  margin-left: 20rem;
 }
 
 .prog-view-button:hover {
