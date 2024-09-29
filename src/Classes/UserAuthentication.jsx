@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const UserAuthentication = () => {
+const UserAuthentication = ({ setIsAdminLoggedIn }) => {
     const [view, setView] = useState('');
     const [isSignUpSuccessful, setIsSignUpSuccessful] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -17,9 +18,22 @@ const UserAuthentication = () => {
     const handleSignUpSubmit = (e) => {
         e.preventDefault();
         setIsSignUpSuccessful(true);
-        setView(''); 
+        setView('');
     };
-    
+
+    const handleAdminLogin = (e) => {
+        e.preventDefault();
+        const username = e.target.username.value;
+        const password = e.target.password.value;
+
+        if (username === 'admin123' && password === '123') {
+            setIsAdminLoggedIn(true); // Update the admin login state in App component
+            navigate('/Admin/Admin-Main'); // Redirect to admin reservation page
+        } else {
+            alert('Invalid admin credentials');
+        }
+    };
+
     return ( 
         <div className="auth-page">
             {!isSignUpSuccessful && (
@@ -37,14 +51,14 @@ const UserAuthentication = () => {
             {view === 'signIn' && (
                 <div className="sign-in-form">
                     <h2>Sign In</h2>
-                    <form>
+                    <form onSubmit={handleAdminLogin}>
                         <div>
-                            <label>Email:</label>
-                            <input type="email" required />
+                            <label>Username:</label>
+                            <input type="text" name="username" required />
                         </div>
                         <div>
                             <label>Password:</label>
-                            <input type="password" required />
+                            <input type="password" name="password" required />
                         </div>
                         <button type="submit">Sign In</button>
                     </form>
@@ -75,16 +89,14 @@ const UserAuthentication = () => {
             {isSignUpSuccessful && (
                 <div className="success-message">
                     <h2>Your account is ready!</h2>
-                    <p>Your profile information and login credentials have been successfully created.  Click "Start Now" to explore the SK Youth program.</p>
+                    <p>Your profile information and login credentials have been successfully created. Click "Start Now" to explore the SK Youth program.</p>
                     <form>
                         <button type="submit">START NOW</button>
                     </form>
                 </div>
-                
             )}
-        
         </div> 
     );
-}
- 
+};
+
 export default UserAuthentication;
