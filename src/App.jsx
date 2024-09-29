@@ -34,9 +34,14 @@ import Dashboard from "./User/Dashboard"
 import Programs from "./User/user_program"
 import Log from "./User/log"
 import HelpSupport from "./User/help_support"
-import ProgramDescript from './User/program_details';
+import ProgramDescript from './User/ProgramDetails';
 
 import Reservation from './User/Reservation';
+import ViewSchedule from './User/ViewSchedule';
+import ScheduleDetails from './User/ScheduleDetails';
+import ScheduleDone from './User/ScheduleDone';
+
+import StepIndicator from './Classes/StepIndicator';
 
 import './App.css';
 import './style.css';
@@ -46,9 +51,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
-
-
 
 import rightArrow from "./Assets/right-arrow.png"
 import Cover from "./Assets/bg.png"
@@ -94,10 +96,16 @@ const App = () => {
                   
                 <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/programs" element={<Programs />} />
-                  <Route path="/program_details" element={<ProgramDescript />} />
+                  <Route path="/ProgramDetails" element={<ProgramDescript />} />
+                  <Route path="/Reservation" element={<Reservation />} />
+                  <Route path="/ViewSchedule" element={<ViewSchedule />} />
+                    <Route path="/StepIndicator" element={<StepIndicator />} />
+                    <Route path="/ScheduleDetails" element={<ScheduleDetails />} />
+                    <Route path="/ScheduleDone" element={<ScheduleDone />} />
                 <Route path="/log" element={<Log />} />
-                <Route path="/Reservation" element={<Reservation />} />
-                //<Route path="/contact" element={<HelpSupport />} />
+                <Route path="/contact" element={<HelpSupport />} />
+
+                
                 
                
               </Routes>

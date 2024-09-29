@@ -87,7 +87,7 @@
   display: inline-block;
   font-weight: 400;
   text-align: center;   
-  padding: 1rem;
+  padding: 1rem 0.5rem 1rem 0.5rem ;
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
@@ -102,7 +102,7 @@
   align-items: center;
   position: absolute;
   margin-top: auto;
-  margin-left: 15rem;
+  margin-left: 20rem;
 }
 
 .prog-view-button:hover {
@@ -118,6 +118,28 @@
 }
 
 
+
+
+.book-button{
+  display: inline-block;
+  font-weight: 200;
+  text-align: center;   
+  padding: 1rem;
+  font-size: 2;
+  line-height: 1;
+  border-radius: 0.25rem;
+  color: #fff;
+  background-color: #080808;
+  border-color: #f9f8fa;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
+  width: 10%;
+  align-items: center;
+  position: absolute;
+  margin-top: auto;
+ 
+}
 
 
 /*++++++Log++++++*/

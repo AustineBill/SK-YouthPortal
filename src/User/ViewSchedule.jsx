@@ -4,13 +4,10 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Import default styling
 import '../user-style.css'; // Import your custom styling
 
-import StepIndicator from '../Classes/StepIndicator';
 
-
-const Reservation = () => {
- 
-  const navigate = useNavigate();
-
+const ViewSchedule = () => {
+    const navigate = useNavigate();
+    
   // Initialize the selected date state as an array (for range selection)
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
   const [selectedTime, setSelectedTime] = useState(''); // State for selected time
@@ -44,8 +41,6 @@ const Reservation = () => {
     }
   };
 
- 
-
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => {
@@ -54,16 +49,19 @@ const Reservation = () => {
   }, []);
 
   return (
-
-    
     <div className="calendar-container">
-       <div className="text-center text-lg-start mt-4 ">
-          <h1 className="Maintext-Calendar animated slideInRight">Schedule</h1>
+       
+        <div className="text-center text-lg-start mt-4 ">
+          <h1 className="Maintext-Calendar animated slideInRight">View Schedule</h1>
             <p className='Subtext-Calendar'>Lorem ipsum</p> 
+            
+                <button className="book-button" onClick={() => navigate('/Reservation')}>
+                    <i className="fa fa-bookmark"></i> Book Now
+                </button>
         </div>
 
-      <StepIndicator currentStep={1} />
-       
+      
+    
       <div className="grid-container">
         <div className="legend">
           <h2>Legend</h2>
@@ -91,10 +89,6 @@ const Reservation = () => {
             : `Selected Dates: ${selectedDates[0].toDateString()} to ${selectedDates[1].toDateString()}`}
           {selectedTime && <div>Selected Time: {selectedTime}</div>}
         </div>
-
-        <button className="apply-dates" onClick={() => navigate('/ScheduleDetails')}>
-          Apply Dates
-        </button>
       </div>
 
       <div className="dropdown-container" ref={dropdownRef}>
@@ -143,4 +137,4 @@ const Reservation = () => {
   );
 };
 
-export default Reservation;
+export default ViewSchedule;
