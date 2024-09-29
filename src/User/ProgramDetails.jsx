@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import '../App.css';
 import '../style.css';
@@ -9,7 +11,11 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const Program_details = () => {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <div className="container-fluid">
@@ -17,14 +23,35 @@ const Program_details = () => {
         <div className="text-center text-lg-start m-4">
           <h1 className="Maintext animated slideInRight">Appointment</h1>
           <p className='Subtext'>Reserve yours now!</p>
-          <button className="prog-book-button" onClick={() => navigate('/Reservation')}>
-            <i className="fa fa-bookmark"></i> Book Now
-          </button>
+          
           <button className="prog-view-button" onClick={() => navigate('/ViewSchedule')}>
             <i className="fa fa-calendar" aria-hidden="true"></i> View Schedule
           </button>
         </div>
       </div>
+
+      <button className="prog-book-button" onClick={handleShow}>
+        Book Now
+      </button>
+
+      <Modal  show={show} onHide={handleClose} centered size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Number of Participants</Modal.Title>
+        </Modal.Header>
+        
+          <Modal.Body>
+            <div className="d-flex justify-content-around">
+              <Button className="ButtonCard d-flex flex-column align-items-center" onClick={() => navigate('/Reservation')}>
+                <i className="bi bi-person mb-1" style={{ fontSize: '6rem' }}></i>
+                Solo
+              </Button>
+              <Button className="ButtonCard d-flex flex-column align-items-center" onClick={() => navigate('/Reservation')}>
+                <i className="bi bi-people mb-1 " style={{ fontSize: '6rem' }}></i>
+                Group
+              </Button>
+            </div>
+          </Modal.Body>
+        </Modal>
 
       <div className="prog-descripton">
         <div className="row g-0">

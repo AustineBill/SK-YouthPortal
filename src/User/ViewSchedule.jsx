@@ -54,6 +54,7 @@ const ViewSchedule = () => {
         <div className="text-center text-lg-start mt-4 ">
           <h1 className="Maintext-Calendar animated slideInRight">View Schedule</h1>
             <p className='Subtext-Calendar'>Lorem ipsum</p> 
+            
                 <button className="book-button" onClick={() => navigate('/Reservation')}>
                     <i className="fa fa-bookmark"></i> Book Now
                 </button>

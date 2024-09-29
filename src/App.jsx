@@ -34,7 +34,7 @@ import Dashboard from "./User/Dashboard"
 import Programs from "./User/user_program"
 import Log from "./User/log"
 import HelpSupport from "./User/help_support"
-import ProgramDescript from './User/program_details';
+import ProgramDescript from './User/ProgramDetails';
 
 import Reservation from './User/Reservation';
 import ViewSchedule from './User/ViewSchedule';
@@ -96,7 +96,7 @@ const App = () => {
                   
                 <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/programs" element={<Programs />} />
-                  <Route path="/program_details" element={<ProgramDescript />} />
+                  <Route path="/ProgramDetails" element={<ProgramDescript />} />
                   <Route path="/Reservation" element={<Reservation />} />
                   <Route path="/ViewSchedule" element={<ViewSchedule />} />
                     <Route path="/StepIndicator" element={<StepIndicator />} />

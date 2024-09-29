@@ -16,21 +16,24 @@ const StepIndicator = ({ currentStep }) => {
 
   return (
     <div className="step-indicator-container">
-      <div className={`step ${completedSteps.includes(1) ? 'completed' : ''}`}>
+      {/* Step 1 */}
+      <div className={`step ${completedSteps.includes(1) ? 'completed' : ''} ${currentStep === 1 ? 'current' : ''}`}>
         <div className="step-circle"></div>
         <span>Date and Time</span>
       </div>
 
-      <div className={`line ${completedSteps.includes(1) ? 'completed' : ''}`}></div>
+      <div className='line'></div>
 
-      <div className={`step ${completedSteps.includes(2) ? 'completed' : ''}`}>
+      {/* Step 2 */}
+      <div className={`step ${ completedSteps.includes(2) ? 'completed' : ''} ${currentStep === 2? 'current' : ''}`}>
         <div className="step-circle"></div>
         <span>Details</span>
       </div>
 
-      <div className={`line ${completedSteps.includes(2) ? 'completed' : ''}`}></div>
+      <div className='line'></div>
 
-      <div className={`step ${completedSteps.includes(3) ? 'completed' : ''}`}>
+      {/* Step 3 */}
+      <div className={`step ${completedSteps.includes(3) ? 'completed' : ''} ${currentStep === 3 ? 'current' : ''}`}>
         <div className="step-circle"></div>
         <span>Review and Confirm</span>
       </div>
