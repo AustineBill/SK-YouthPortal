@@ -36,31 +36,10 @@ const Navbar = () => {
       <Link to="/" className="navbar-brand">
         <h2 className="Website-Name" style={{ fontFamily: "'Sansita Swashed', cursive" }}>SK Youth</h2>
       </Link>
-      <Link className="nav-item nav-link" to="/">Home</Link>
-
-      {/* Customized Dropdown */}
-      <div className="dropdown" ref={dropdownRef}>
-        <Link
-          to="/"
-          className="nav-item nav-link"
-          onClick={handleDropdownToggle}
-          style={{ border: 'none', backgroundColor: 'transparent', padding: '0', cursor: 'pointer' }} // Removes background and border
-        >
-          About
-        </Link>
-        {showDropdown && (
-          <div className="dropdown-content">
-            <Dropdown.Item as={Link} to="/about">SK Youth</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/mandate">Mandate</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/council">SK Council</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/former_sk">Former SK Council</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/history">History</Dropdown.Item>
-          </div>
-        )}
-      </div>
-
-      <Link className="nav-item nav-link" to="/overview">Programs</Link>
-      <Link className="nav-item nav-link" to="/ContactUs">Contact Us</Link>
+      <Link className="nav-item nav-link" to="/Dashboard">Home</Link>
+      <Link className="nav-item nav-link" to="/Overview">Programs</Link>
+      <Link className="nav-item nav-link" to="/UserProgram">Reservation</Link>
+      <Link className="nav-item nav-link" to="/ContactUs">Help and Support</Link>
       
 
       <Link className="login-button btn btn-outline-dark ms-auto" to="/userauth?view=signIn">Log In</Link>

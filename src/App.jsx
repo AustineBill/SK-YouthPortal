@@ -4,32 +4,34 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from "./Classes/Navbar";
 import Footer from "./Classes/Footer";
 
-/* Main Pages */
-import OverviewProgram from "./Mainpages/program";
-import Contact from "./Mainpages/contactus";
-import About from "./Mainpages/aboutus";
-import Spotlight from './Mainpages/spotlight';
-import NewsEvents from './Mainpages/news';
-import ViewDetailed from './Mainpages/news-details';
 
-/* Sub Pages */
-import Mandate from "./Mainpages/mandate";
-import Youth from "./Mainpages/aboutus";
-import Council from "./Mainpages/skcouncil";
-import Former from "./Mainpages/former_sk";
-import History from "./Mainpages/history";
+
+/*Main Pages*/
+import OverviewProgram from "./Mainpages/OverProgram";
+import Contact from "./Mainpages/ContactUs";
+import About from "./Mainpages/AboutUs";
+import Spotlight from './Mainpages/Spotlight';
+import NewsEvents from './Mainpages/News';
+  import ViewDetailed from './Mainpages/NewsDetails';
+
+
+
+/*Sub Pages*/
+import Mandate from "./Mainpages/Mandate";
+import Youth from "./Mainpages/AboutUs";
+import Council from "./Mainpages/SKCouncil";
+import Former from "./Mainpages/FormerSK";
+import History from "./Mainpages/History";
 import UserAuthentication from './Classes/UserAuthentication';
 
-/* User Side */ 
-import Dashboard from "./User/Dashboard";
-import Programs from "./User/user_program";
-import Log from "./User/log";
-import HelpSupport from "./User/help_support";
-import ProgramDescript from './User/ProgramDetails';
-import Reservation from './User/Reservation';
-import ViewSchedule from './User/ViewSchedule';
-import ScheduleDetails from './User/ScheduleDetails';
-import ScheduleDone from './User/ScheduleDone';
+
+
+/*User Side*/ 
+import Dashboard from "./User/Dashboard"
+import Programs from "./User/UserProgram"
+import Log from "./User/ReserveLog"
+import HelpSupport from "./User/HelpSupport"
+
 
 import StepIndicator from './Classes/StepIndicator';
 
@@ -86,6 +88,13 @@ const App = () => {
 
                 {/* User Side Routes */}
                 <Route path="/Dashboard" element={<Dashboard />} />
+                <Route path="/UserProgram" element={<Programs />} />
+                  <Route path="/ProgramDetails" element={<ProgramDescript />} />
+                  <Route path="/Reservation" element={<Reservation />} />
+                  <Route path="/ViewSchedule" element={<ViewSchedule />} />
+                    <Route path="/StepIndicator" element={<StepIndicator />} />
+                    <Route path="/ScheduleDetails" element={<ScheduleDetails />} />
+                    <Route path="/ScheduleDone" element={<ScheduleDone />} />
                 <Route path="/programs" element={<Programs />} />
                 <Route path="/ProgramDetails" element={<ProgramDescript />} />
                 <Route path="/Reservation" element={<Reservation />} />

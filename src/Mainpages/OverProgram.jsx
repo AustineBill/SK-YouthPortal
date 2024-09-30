@@ -21,23 +21,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
-const Overview_Program = () => (
+const OverviewProgram = () => (
   <div className="container-fluid">
-    <div className="container-fluid sticky-top">
-      <nav className="navbar navbar-expand-lg bg-white">
-        <Link to="/" className="navbar-brand">
-          <h2 className="Website-Name" style={{ fontFamily: "'Sansita Swashed', cursive" }}>SK Youth</h2>
-        </Link>
-
-        <div className="navbar-nav ms-4 align-items-center">
-          <Link className="nav-item nav-link" to="/">Home</Link>
-          <Link className="nav-item nav-link" to="/programs">Programs</Link>
-          <Link className="nav-item nav-link" to="/programs">Reservation</Link>
-          <Link className="nav-item nav-link" to="/contact">Help and Support</Link>
-        </div>
-      </nav>
-    </div>
-
   <div className="intro-container hero-header bg-primary ">
     <div className="row">
       <div className="col-lg-5 text-center text-lg-start ms-5 ">
@@ -75,4 +60,4 @@ const Overview_Program = () => (
 </div>
 );
 
-export default Overview_Program;
+export default OverviewProgram;
