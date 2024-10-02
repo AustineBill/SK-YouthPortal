@@ -1,80 +1,68 @@
-* {
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
+.sidebar-container {
+    background-color: #ecf0f1; /* Light gray background for the container */
+    padding: 20px; /* Padding around the sidebar */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
 }
 
 .admin-sidebar {
-    background-color: #2E3B4E; /* Darker blue-gray for a modern look */
-    width: 350px;
-    height: 100vh;
-    position: fixed;
-    overflow-y: auto;
-    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2); /* Deeper shadow for depth */
-    transition: all 0.3s ease; /* Smooth transition */
-    border-radius: 8px; /* Rounded corners */
-    color: #ffffff; /* White text for contrast */
+    background-color: #2c3e50; /* Dark background for sidebar */
+    color: #ecf0f1; /* Light text color */
+    width: 250px; /* Fixed width for sidebar */
+    height: 100vh; /* Full height */
+    padding: 20px; /* Padding around sidebar */
+    position: fixed; /* Fixes sidebar on the left */
+    overflow-y: auto; /* Scroll if content overflows */
 }
 
 .sidebar-title {
-    text-align: center;
-    padding: 15px;
-    font-size: 1.5em; /* Larger font size for title */
-    background-color: #1B2430; /* Darker header for separation */
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    font-size: 24px; /* Larger title font size */
+    margin-bottom: 20px; /* Space below title */
+    font-weight: bold; /* Bold title */
 }
 
 .sidebar-links {
-    list-style: none;
-    padding: 20px 15px; /* Padding for spacing */
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove padding */
 }
 
 .sidebar-links li {
-    cursor: pointer;
-    position: relative;
-    margin-bottom: 15px; /* Spacing between items */
-    transition: background-color 0.3s ease; /* Smooth background color change */
-    border-radius: 4px; /* Rounded item corners */
+    padding: 10px; /* Padding for list items */
+    margin: 5px 0; /* Vertical margin between items */
+    display: flex; /* Flex for alignment */
+    align-items: center; /* Center items vertically */
+    transition: background 0.3s; /* Smooth background transition */
 }
 
 .sidebar-links li:hover {
-    background-color: #3E4C6D; /* Highlight on hover */
+    background-color: #34495e; /* Change background on hover */
 }
 
-.sidebar-links a {
-    color: #ffffff; /* White text color */
-    display: flex; /* Flexbox for alignment */
-    align-items: center; /* Center the icon and text */
-    padding: 10px; /* Padding for touch targets */
-}
-
-.sidebar-links img {
-    margin-right: 10px; /* Space between icon and text */
-    width: 20px; /* Fixed icon size */
-    height: 20px; /* Fixed icon size */
+.clickable-link {
+    cursor: pointer; /* Pointer cursor for clickable items */
+    position: relative; /* Position for dropdown arrow */
 }
 
 .dropdown {
-    display: none; /* Hide dropdowns by default */
-    list-style: none;
-    padding-left: 20px; /* Indent dropdown items */
-}
-
-.clickable-link:hover .dropdown {
-    display: block; /* Show dropdown on hover */
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove padding */
+    margin-top: 5px; /* Space above dropdown */
+    background-color: #34495e; /* Background for dropdown */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
 }
 
 .dropdown li {
-    margin-bottom: 5px; /* Spacing between dropdown items */
+    padding: 8px 15px; /* Padding for dropdown items */
 }
 
-.dropdown a {
-    color: #D1D1D1; /* Lighter text color for dropdown items */
-    padding: 5px; /* Padding for dropdown items */
+.dropdown li:hover {
+    background-color: #2c3e50; /* Change background on hover */
 }
 
-.dropdown a:hover {
-    background-color: #3E4C6D; /* Change background for dropdown hover */
-    color: #ffffff; /* White text on hover */
+/* Styling for icons */
+.admin-sidebar img {
+    margin-right: 10px; /* Space between icon and text */
+    width: 20px; /* Set a consistent width */
+    height: 20px; /* Set a consistent height */
 }
