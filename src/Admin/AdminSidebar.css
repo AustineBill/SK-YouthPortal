@@ -5,28 +5,76 @@
 }
 
 .admin-sidebar {
-    background-color: #D9D9D9;
+    background-color: #2E3B4E; /* Darker blue-gray for a modern look */
     width: 350px;
     height: 100vh;
+    position: fixed;
+    overflow-y: auto;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2); /* Deeper shadow for depth */
+    transition: all 0.3s ease; /* Smooth transition */
+    border-radius: 8px; /* Rounded corners */
+    color: #ffffff; /* White text for contrast */
+}
+
+.sidebar-title {
+    text-align: center;
+    padding: 15px;
+    font-size: 1.5em; /* Larger font size for title */
+    background-color: #1B2430; /* Darker header for separation */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 .sidebar-links {
     list-style: none;
-    position: fixed;
-    left: 25px;
+    padding: 20px 15px; /* Padding for spacing */
 }
 
 .sidebar-links li {
     cursor: pointer;
     position: relative;
+    margin-bottom: 15px; /* Spacing between items */
+    transition: background-color 0.3s ease; /* Smooth background color change */
+    border-radius: 4px; /* Rounded item corners */
+}
+
+.sidebar-links li:hover {
+    background-color: #3E4C6D; /* Highlight on hover */
 }
 
 .sidebar-links a {
-    color: #000000;
-    text-decoration: none;
+    color: #ffffff; /* White text color */
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center the icon and text */
+    padding: 10px; /* Padding for touch targets */
+}
+
+.sidebar-links img {
+    margin-right: 10px; /* Space between icon and text */
+    width: 20px; /* Fixed icon size */
+    height: 20px; /* Fixed icon size */
+}
+
+.dropdown {
+    display: none; /* Hide dropdowns by default */
+    list-style: none;
+    padding-left: 20px; /* Indent dropdown items */
+}
+
+.clickable-link:hover .dropdown {
+    display: block; /* Show dropdown on hover */
 }
 
 .dropdown li {
-    list-style: none;
+    margin-bottom: 5px; /* Spacing between dropdown items */
 }
 
+.dropdown a {
+    color: #D1D1D1; /* Lighter text color for dropdown items */
+    padding: 5px; /* Padding for dropdown items */
+}
+
+.dropdown a:hover {
+    background-color: #3E4C6D; /* Change background for dropdown hover */
+    color: #ffffff; /* White text on hover */
+}
