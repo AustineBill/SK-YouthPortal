@@ -43,9 +43,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 /* Admin Side */
-import AdminReservation from './Admin/AdminReservation'; // Already imported
+import AdminReservation from './Admin/AdminReservation'; 
 import AdminMain from './Admin/Admin-Main'; // Adjust the path if necessary
-
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -98,7 +97,8 @@ const App = () => {
 
                 {/* Admin Side Routes */}
                 <Route path="/admin/reservation" element={<AdminReservation />} />
-                <Route path="/admin" element={<AdminMain />} />
+                <Route path="/admin" element={<AdminMain isAdmin={isAdminLoggedIn} />} /> 
+                {/*jer to sa taas*/}
 
                 {/* Add more admin routes here as needed */}
               </Routes>

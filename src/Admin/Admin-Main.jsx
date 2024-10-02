@@ -1,12 +1,11 @@
 import React from 'react';
-import AdminSidebar from './AdminSidebar'; // Adjust the import path
+import AdminSidebar from './AdminSidebar'; // Adjust the import path if necessary
 
 const AdminMain = ({ isAdmin }) => {
+    console.log("isAdmin:", isAdmin); // Check if isAdmin is true
     return (
         <div className="admin-main-container">
-            {isAdmin ? <AdminSidebar /> : null} {/* Render the sidebar only if isAdmin is true */}
-            <h2>Admin Dashboard</h2>
-            <p>Welcome to the Admin Dashboard.</p>
+            {isAdmin ? <AdminSidebar /> : <p>No access to sidebar.</p>} {/* Sidebar rendered based on isAdmin */}
         </div>
     );
 };

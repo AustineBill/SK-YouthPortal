@@ -27,9 +27,10 @@ const UserAuthentication = ({ setIsAdminLoggedIn }) => {
         const password = e.target.password.value;
 
         if (username === 'admin123' && password === '123') {
-            setIsAdminLoggedIn(true); // Update the admin login state in App component
-            navigate('/Admin/Admin-Main'); // Redirect to admin reservation page
-        } else {
+            setIsAdminLoggedIn(true); // Admin login state set
+            navigate('/admin'); // Redirect to admin dashboard
+        }
+         else {
             alert('Invalid admin credentials');
         }
     };

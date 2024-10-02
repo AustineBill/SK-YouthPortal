@@ -1,5 +1,6 @@
 import React from 'react'; // Make sure to import React
 import { Link } from 'react-router-dom'; // Assuming you're using react-router for navigation
+import './AdminSidebar.css';
 
 const AdminSidebar = () => {
     const [openDropdown, setOpenDropdown] = React.useState(0); // State for dropdown toggle
@@ -13,7 +14,7 @@ const AdminSidebar = () => {
             <ul className="sidebar-links">
                 <li>
                     <img src='#' alt="Home icon" />
-                    <Link to="/admin-dashboard">Home</Link>
+                    <Link to="/Admin-Main">Home</Link>
                 </li>
                 <li className="clickable-link" onClick={() => toggleDropdown(1)}>
                     <img src='#' alt="Manage Website icon" />
@@ -34,4 +35,4 @@ const AdminSidebar = () => {
     );
 };
 
-export default AdminSidebar; // Export the component
+export default AdminSidebar;
