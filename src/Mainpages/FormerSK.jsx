@@ -4,7 +4,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import SKPhoto from "../Assets/Western Photo.png";
 
-const Youth = () => {
+const FormerSK = () => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const carouselItems = [
@@ -46,7 +46,7 @@ const Youth = () => {
 
   return (
     <div className="container-fluid">
-      <div className="text-center text-lg-start">
+      <div className="text-center text-lg-start m-4">
         <h1 className="Maintext animated slideInRight">Former SK Officials</h1>
         <p className="Subtext">Visionary leaders who shaped our barangay</p>
       </div>
@@ -108,4 +108,4 @@ const Youth = () => {
   );
 };
 
-export default Youth;
+export default FormerSK;

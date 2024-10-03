@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../user-style.css'; // Import your custom styling
+import '../WebStyles/UserStyle.css'
 
 const StepIndicator = ({ currentStep }) => {
   const [completedSteps, setCompletedSteps] = useState([]);

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Import default styling
-import '../user-style.css'; // Import your custom styling
+import '../WebStyles/UserStyle.css'
 
 import StepIndicator from '../Classes/StepIndicator';
 

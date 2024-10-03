@@ -20,9 +20,11 @@ import NewsEvents from './Mainpages/News';
 import Mandate from "./Mainpages/Mandate";
 import Youth from "./Mainpages/AboutUs";
 import Council from "./Mainpages/SKCouncil";
-import Former from "./Mainpages/FormerSK";
+import FormerSK from './Mainpages/FormerSK';
 import History from "./Mainpages/History";
 import UserAuthentication from './Classes/UserAuthentication';
+
+
 
 
 
@@ -34,6 +36,12 @@ import HelpSupport from "./User/HelpSupport"
 
 
 import StepIndicator from './Classes/StepIndicator';
+import ScheduleDone from './User/ScheduleDone';
+import ViewSchedule from './User/ViewSchedule';
+import ScheduleDetails from './User/ScheduleDetails';
+import ProgramDescript from './User/ProgramDetails';
+import Reservation from './User/Reservation';
+
 
 import './App.css';
 import './style.css';
@@ -73,18 +81,18 @@ const App = () => {
             <div className="content"> 
               <Routes>
                 <Route path="/" element={<Intro />} />
-                <Route path="/overview" element={<OverviewProgram />} />
+                <Route path="/Overview" element={<OverviewProgram />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/mandate" element={<Mandate />} />
-                <Route path="/youth" element={<Youth />} />
-                <Route path="/council" element={<Council />} />
-                <Route path="/former_sk" element={<Former />} />
-                <Route path="/history" element={<History />} />
-                <Route path="/contactus" element={<Contact />} />
+                <Route path="/Mandate" element={<Mandate />} />
+                <Route path="/Youth" element={<Youth />} />
+                <Route path="/Council" element={<Council />} />
+                <Route path="/former_sk" element={<FormerSK />} />
+                <Route path="/History" element={<History />} />
+                <Route path="/ContactUs" element={<Contact />} />
                 <Route path="/userauth" element={<UserAuthentication setIsAdminLoggedIn={setIsAdminLoggedIn} />} />
-                <Route path="/spotlight" element={<Spotlight />} />
-                <Route path="/news" element={<NewsEvents />} />
-                <Route path="/news-details/:id" element={<ViewDetailed />} />
+                <Route path="/Spotlight" element={<Spotlight />} />
+                <Route path="/News" element={<NewsEvents />} />
+                <Route path="/NewsDetails/:id" element={<ViewDetailed />} />
 
                 {/* User Side Routes */}
                 <Route path="/Dashboard" element={<Dashboard />} />
@@ -95,15 +103,15 @@ const App = () => {
                     <Route path="/StepIndicator" element={<StepIndicator />} />
                     <Route path="/ScheduleDetails" element={<ScheduleDetails />} />
                     <Route path="/ScheduleDone" element={<ScheduleDone />} />
-                <Route path="/programs" element={<Programs />} />
+                <Route path="/UserProgram" element={<Programs />} />
                 <Route path="/ProgramDetails" element={<ProgramDescript />} />
                 <Route path="/Reservation" element={<Reservation />} />
                 <Route path="/ViewSchedule" element={<ViewSchedule />} />
                 <Route path="/StepIndicator" element={<StepIndicator />} />
                 <Route path="/ScheduleDetails" element={<ScheduleDetails />} />
                 <Route path="/ScheduleDone" element={<ScheduleDone />} />
-                <Route path="/log" element={<Log />} />
-                <Route path="/contact" element={<HelpSupport />} />
+                <Route path="/Log" element={<Log />} />
+                <Route path="/Contact" element={<HelpSupport />} />
 
                 {/* Admin Side Routes */}
                 <Route path="/admin/reservation" element={<AdminReservation />} />

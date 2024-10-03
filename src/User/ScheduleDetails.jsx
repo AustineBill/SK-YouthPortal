@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Row, Col, Button, Form} from 'react-bootstrap';
-import '../user-style.css'; // Import your custom styling
+import '../WebStyles/UserStyle.css'
 
 import StepIndicator from '../Classes/StepIndicator';
 
