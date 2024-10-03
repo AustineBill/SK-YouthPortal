@@ -34,7 +34,9 @@
 }
 
 
-.dash-card-container {
+
+
+.CardContainer {
   width: 100%;
   display: flex;
   flex-wrap: wrap;  
@@ -43,8 +45,14 @@
   margin-bottom: 6rem;
 }
 
-.dash-Card{
+.MediumCard{
   width: 20rem;
+  height: auto; 
+  margin: 2rem;
+}
+
+.LargeCard{
+  width: 50rem;
   height: auto; 
   margin: 2rem;
 }

@@ -25,30 +25,30 @@ const Spotlight = () => (
             </div>
         </div>
 
-        <div className="dash-card-container">
+        <div className="CardContainer">
 
-            <Card className="dash-Card">
+            <Card className="MediumCard">
             <Card.Img variant="top" src="holder.js/100px180" />
             <Card.Body className="d-flex flex-column align-items-center ">
                 <Card.Title className="fs-5 fw-bold text-dark">Card Title</Card.Title> 
             </Card.Body>
             </Card>
 
-            <Card className="dash-Card">
+            <Card className="MediumCard">
             <Card.Img variant="top" src="holder.js/100px180" />
             <Card.Body className="d-flex flex-column align-items-center ">
                 <Card.Title className="fs-5 fw-bold text-dark">Card Title</Card.Title> 
             </Card.Body>
             </Card>
 
-            <Card className="dash-Card">
+            <Card className="MediumCard">
             <Card.Img variant="top" src="holder.js/100px180" />
             <Card.Body className="d-flex flex-column align-items-center ">
                 <Card.Title className="fs-5 fw-bold text-dark">Card Title</Card.Title> 
             </Card.Body>
             </Card>
 
-            <Card className="dash-Card">
+            <Card className="MediumCard">
             <Card.Img variant="top" src="holder.js/100px180" />
             <Card.Body className="d-flex flex-column align-items-center ">
                 <Card.Title className="fs-5 fw-bold text-dark">Card Title</Card.Title> 

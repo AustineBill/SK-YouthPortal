@@ -57,8 +57,8 @@ const Dashboard = () => (
         </div>
     </div>
 
-    <div className="dash-card-container">
-        <Card className="dash-Card">
+    <div className="CardContainer">
+        <Card className="MediumCard">
           <Card.Img variant="top" src="holder.js/100px180" />
           <Card.Body>
             <Card.Title className="fs-5 fw-bold text-dark">Card Title</Card.Title>
@@ -70,7 +70,7 @@ const Dashboard = () => (
           </Card.Body>
         </Card>
 
-        <Card className="dash-Card">
+        <Card className="MediumCard">
           <Card.Img variant="top" src="holder.js/100px180" />
           <Card.Body>
             <Card.Title className="fs-5 fw-bold text-dark">Card Title</Card.Title>
