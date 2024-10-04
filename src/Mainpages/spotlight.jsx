@@ -16,7 +16,7 @@ const Spotlight = () => (
 
         <div className="spotlight-text-content">
             <h1 className="Lower-Maintext">SK WESTERN BICUTAN COUNSIL</h1>
-                <p className="Lower-Subtext">Celebrating SK Youth Excellent </p>
+                <p className="Lower-Subtext">Celebrating SK Youth Excellents </p>
         </div>
 
         <div className="bg-secondary">
@@ -34,26 +34,6 @@ const Spotlight = () => (
             </Card.Body>
             </Card>
 
-            <Card className="MediumCard">
-            <Card.Img variant="top" src="holder.js/100px180" />
-            <Card.Body className="d-flex flex-column align-items-center ">
-                <Card.Title className="fs-5 fw-bold text-dark">Card Title</Card.Title> 
-            </Card.Body>
-            </Card>
-
-            <Card className="MediumCard">
-            <Card.Img variant="top" src="holder.js/100px180" />
-            <Card.Body className="d-flex flex-column align-items-center ">
-                <Card.Title className="fs-5 fw-bold text-dark">Card Title</Card.Title> 
-            </Card.Body>
-            </Card>
-
-            <Card className="MediumCard">
-            <Card.Img variant="top" src="holder.js/100px180" />
-            <Card.Body className="d-flex flex-column align-items-center ">
-                <Card.Title className="fs-5 fw-bold text-dark">Card Title</Card.Title> 
-            </Card.Body>
-            </Card>
         </div>
     </div>
 );

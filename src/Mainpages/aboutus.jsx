@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React from 'react';  
 import Cover from "../Assets/bg.png"
 
 const About = () => (
@@ -28,22 +27,24 @@ const About = () => (
             <img src={Cover} className="d-block w-100" alt="Youth Slide 3"></img>
           </div>
         </div>
-        <button className="carousel-control-prev " type="button" data-bs-target="#youthCarousel" data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button className="carousel-control-next " type="button" data-bs-target="#youthCarousel" data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Next</span>
-        </button>
+
+          <button className="carousel-control-prev " type="button" data-bs-target="#youthCarousel" data-bs-slide="prev">
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Previous</span>
+          </button>
+
+          <button className="carousel-control-next " type="button" data-bs-target="#youthCarousel" data-bs-slide="next">
+            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Next</span>
+          </button>
       </div>
     </div>
 
     <div className="youth-container">
       <h1 className="youth-head">SANGGUNIANG KABATAAN - WESTERN BICUTAN</h1>
-      <p className="yout-text-content">SANGGUNIANG KABATAAN - WESTERN BICUTAN</p>
+        <p className="yout-text-content">SANGGUNIANG KABATAAN - WESTERN BICUTAN</p>
         
-  </div>
+    </div>
   </div>
 );
 

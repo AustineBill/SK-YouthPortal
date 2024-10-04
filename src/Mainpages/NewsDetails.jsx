@@ -13,7 +13,7 @@ const contentData = [
       title: 'Transparency and Accountability',
       year: '2024',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum.',
-      imageUrl: Hans,
+      //imageUrl: Hans,
       details: 'Detailed description for Transparency and Accountability...',
     },
     {
@@ -21,7 +21,7 @@ const contentData = [
       title: 'Financial Information',
       year: '2024',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum.',
-      imageUrl: 'https://via.placeholder.com/150',
+      //imageUrl: 'https://via.placeholder.com/150',
       details: 'Detailed description for Financial Information...',
     },
     {
@@ -29,7 +29,7 @@ const contentData = [
       title: 'Public Records',
       year: '2024',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum.',
-      imageUrl: 'https://via.placeholder.com/150',
+     // imageUrl: 'https://via.placeholder.com/150',
       details: 'Detailed description for Public Records...',
     },
 ];

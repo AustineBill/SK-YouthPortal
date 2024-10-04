@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Image } from 'react-bootstrap';
-import Hans from "../Assets/HANS MARTINEZ.png";
+
 
 const NewsEvents = () => {
   const contentData = [
@@ -11,21 +11,21 @@ const NewsEvents = () => {
       title: 'Transparency and Accountability',
       year: '2024',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum.',
-      imageUrl: Hans,
+      //imageUrl: Hans,
     },
     {
       id: 2,
       title: 'Financial Information',
       year: '2024',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum.',
-      imageUrl: 'https://via.placeholder.com/150',
+      //imageUrl: 'https://via.placeholder.com/150',
     },
     {
       id: 3,
       title: 'Public Records',
       year: '2024',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum.',
-      imageUrl: 'https://via.placeholder.com/150',
+      //imageUrl: 'https://via.placeholder.com/150',
     },
   ];
 

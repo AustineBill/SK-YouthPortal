@@ -1,8 +1,8 @@
 import React from 'react';
-
 import History from "../Assets/location.png"
 
 const Home = () => (
+  
     <div className="container-fluid">
       <div className="text-center text-lg-start">
         <h1 className="Maintext animated slideInRight">History</h1>
@@ -23,4 +23,5 @@ const Home = () => (
       </div>
     </div>
   );
+
 export default Home;
