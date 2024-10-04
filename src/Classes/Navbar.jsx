@@ -50,16 +50,16 @@ const Navbar = () => {
         </Link>
         {showDropdown && (
           <div className="dropdown-content">
-            <Dropdown.Item as={Link} to="/about">SK Youth</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/mandate">Mandate</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/council">SK Council</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/former_sk">Former SK Council</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/history">History</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/About">SK Youth</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/Mandate">Mandate</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/Council">SK Council</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/FormerSK">Former SK Council</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/History">History</Dropdown.Item>
           </div>
         )}
       </div>
 
-      <Link className="nav-item nav-link" to="/overview">Programs</Link>
+      <Link className="nav-item nav-link" to="/Overview">Programs</Link>
       <Link className="nav-item nav-link" to="/ContactUs">Contact Us</Link>
       
 
