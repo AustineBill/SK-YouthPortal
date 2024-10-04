@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './AdminSidebar.css'
+import './AdminSidebar.css';
 
 const AdminSidebar = () => {
     const [openDropdown, setOpenDropdown] = React.useState(0);
@@ -16,7 +16,7 @@ const AdminSidebar = () => {
                 <ul className="sidebar-links">
                     <li>
                         <img src='#' alt="Home icon" />
-                        <Link to="/admin-dashboard">Home</Link>
+                        <Link to="/admin">Home</Link>
                     </li>
                     <li className="clickable-link" onClick={() => toggleDropdown(1)}>
                         <img src='#' alt="Manage Website icon" />
@@ -61,6 +61,10 @@ const AdminSidebar = () => {
                     <li>
                         <img src='#' alt="Users icon" />
                         <Link to="/users">Users</Link>
+                    </li>
+                    <li>
+                        <img src='#' alt="User Modification icon" />
+                        <Link to="/admin/user-modification">User Modification</Link> {/* New link for User Modification */}
                     </li>
                 </ul>
             </div>

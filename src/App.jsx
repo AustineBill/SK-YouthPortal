@@ -5,26 +5,26 @@ import Navbar from "./Classes/Navbar";
 import Footer from "./Classes/Footer";
 
 /* Main Pages */
-import OverviewProgram from "./Mainpages/OverProgram";
-import Contact from "./Mainpages/ContactUs";
-import About from "./Mainpages/AboutUs";
-import Spotlight from './Mainpages/Spotlight';
-import NewsEvents from './Mainpages/News';
-import ViewDetailed from './Mainpages/NewsDetails';
+import OverviewProgram from "./Mainpages/program";
+import Contact from "./Mainpages/contactus";
+import About from "./Mainpages/aboutus";
+import Spotlight from './Mainpages/spotlight';
+import NewsEvents from './Mainpages/news';
+import ViewDetailed from './Mainpages/news-details';
 
 /* Sub Pages */
-import Mandate from "./Mainpages/Mandate";
-import Youth from "./Mainpages/AboutUs";
-import Council from "./Mainpages/SKCouncil";
-import FormerSK from './Mainpages/FormerSK';
-import History from "./Mainpages/History";
+import Mandate from "./Mainpages/mandate";
+import Youth from "./Mainpages/aboutus";
+import Council from "./Mainpages/skcouncil";
+import Former from "./Mainpages/former_sk";
+import History from "./Mainpages/history";
 import UserAuthentication from './Classes/UserAuthentication';
 
 /* User Side */ 
 import Dashboard from "./User/Dashboard";
-import Programs from "./User/UserProgram";
-import Log from "./User/ReserveLog";
-import HelpSupport from "./User/HelpSupport";
+import Programs from "./User/user_program";
+import Log from "./User/log";
+import HelpSupport from "./User/help_support";
 import ProgramDescript from './User/ProgramDetails';
 import Reservation from './User/Reservation';
 import ViewSchedule from './User/ViewSchedule';
@@ -45,6 +45,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 /* Admin Side */
 import AdminReservation from './Admin/AdminReservation'; 
 import AdminMain from './Admin/Admin-Main'; // Adjust the path if necessary
+import UserModification from './Admin/UserModification'; // New import for the user modification page
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -70,34 +71,35 @@ const App = () => {
             <div className="content"> 
               <Routes>
                 <Route path="/" element={<Intro />} />
-                <Route path="/Overview" element={<OverviewProgram />} />
+                <Route path="/overview" element={<OverviewProgram />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/Mandate" element={<Mandate />} />
-                <Route path="/Youth" element={<Youth />} />
-                <Route path="/Council" element={<Council />} />
-                <Route path="/former_sk" element={<FormerSK />} />
-                <Route path="/History" element={<History />} />
-                <Route path="/ContactUs" element={<Contact />} />
+                <Route path="/mandate" element={<Mandate />} />
+                <Route path="/youth" element={<Youth />} />
+                <Route path="/council" element={<Council />} />
+                <Route path="/former_sk" element={<Former />} />
+                <Route path="/history" element={<History />} />
+                <Route path="/contactus" element={<Contact />} />
                 <Route path="/userauth" element={<UserAuthentication setIsAdminLoggedIn={setIsAdminLoggedIn} />} />
-                <Route path="/Spotlight" element={<Spotlight />} />
-                <Route path="/News" element={<NewsEvents />} />
-                <Route path="/NewsDetails/:id" element={<ViewDetailed />} />
+                <Route path="/spotlight" element={<Spotlight />} />
+                <Route path="/news" element={<NewsEvents />} />
+                <Route path="/news-details/:id" element={<ViewDetailed />} />
 
                 {/* User Side Routes */}
                 <Route path="/Dashboard" element={<Dashboard />} />
-                <Route path="/UserProgram" element={<Programs />} />
+                <Route path="/programs" element={<Programs />} />
                 <Route path="/ProgramDetails" element={<ProgramDescript />} />
                 <Route path="/Reservation" element={<Reservation />} />
                 <Route path="/ViewSchedule" element={<ViewSchedule />} />
                 <Route path="/StepIndicator" element={<StepIndicator />} />
                 <Route path="/ScheduleDetails" element={<ScheduleDetails />} />
                 <Route path="/ScheduleDone" element={<ScheduleDone />} />
-                <Route path="/Log" element={<Log />} />
-                <Route path="/Contact" element={<HelpSupport />} />
+                <Route path="/log" element={<Log />} />
+                <Route path="/contact" element={<HelpSupport />} />
 
                 {/* Admin Side Routes */}
                 <Route path="/admin/reservation" element={<AdminReservation />} />
-                <Route path="/admin" element={<AdminMain isAdmin={isAdminLoggedIn} />} /> 
+                <Route path="/admin" element={<AdminMain isAdmin={isAdminLoggedIn} />} />
+                <Route path="/admin/user-modification" element={<UserModification />} /> {/* New route for user modification */}
 
                 {/* Add more admin routes here as needed */}
               </Routes>
