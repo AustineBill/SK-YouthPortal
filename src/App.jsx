@@ -4,19 +4,15 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from "./Classes/Navbar";
 import Footer from "./Classes/Footer";
 
-
-
-/*Main Pages*/
+/* Main Pages */
 import OverviewProgram from "./Mainpages/OverProgram";
 import Contact from "./Mainpages/ContactUs";
 import About from "./Mainpages/AboutUs";
 import Spotlight from './Mainpages/Spotlight';
 import NewsEvents from './Mainpages/News';
-  import ViewDetailed from './Mainpages/NewsDetails';
+import ViewDetailed from './Mainpages/NewsDetails';
 
-
-
-/*Sub Pages*/
+/* Sub Pages */
 import Mandate from "./Mainpages/Mandate";
 import Youth from "./Mainpages/AboutUs";
 import Council from "./Mainpages/SKCouncil";
@@ -24,24 +20,18 @@ import FormerSK from './Mainpages/FormerSK';
 import History from "./Mainpages/History";
 import UserAuthentication from './Classes/UserAuthentication';
 
-
-
-
-
-/*User Side*/ 
-import Dashboard from "./User/Dashboard"
-import Programs from "./User/UserProgram"
-import Log from "./User/ReserveLog"
-import HelpSupport from "./User/HelpSupport"
-
-
-import StepIndicator from './Classes/StepIndicator';
-import ScheduleDone from './User/ScheduleDone';
-import ViewSchedule from './User/ViewSchedule';
-import ScheduleDetails from './User/ScheduleDetails';
+/* User Side */ 
+import Dashboard from "./User/Dashboard";
+import Programs from "./User/UserProgram";
+import Log from "./User/ReserveLog";
+import HelpSupport from "./User/HelpSupport";
 import ProgramDescript from './User/ProgramDetails';
 import Reservation from './User/Reservation';
+import ViewSchedule from './User/ViewSchedule';
+import ScheduleDetails from './User/ScheduleDetails';
+import ScheduleDone from './User/ScheduleDone';
 
+import StepIndicator from './Classes/StepIndicator';
 
 import './App.css';
 import './style.css';
@@ -53,9 +43,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 /* Admin Side */
-import AdminReservation from './Admin/AdminReservation'; // Already imported
+import AdminReservation from './Admin/AdminReservation'; 
 import AdminMain from './Admin/Admin-Main'; // Adjust the path if necessary
-
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -97,13 +86,6 @@ const App = () => {
                 {/* User Side Routes */}
                 <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/UserProgram" element={<Programs />} />
-                  <Route path="/ProgramDetails" element={<ProgramDescript />} />
-                  <Route path="/Reservation" element={<Reservation />} />
-                  <Route path="/ViewSchedule" element={<ViewSchedule />} />
-                    <Route path="/StepIndicator" element={<StepIndicator />} />
-                    <Route path="/ScheduleDetails" element={<ScheduleDetails />} />
-                    <Route path="/ScheduleDone" element={<ScheduleDone />} />
-                <Route path="/UserProgram" element={<Programs />} />
                 <Route path="/ProgramDetails" element={<ProgramDescript />} />
                 <Route path="/Reservation" element={<Reservation />} />
                 <Route path="/ViewSchedule" element={<ViewSchedule />} />
@@ -115,7 +97,7 @@ const App = () => {
 
                 {/* Admin Side Routes */}
                 <Route path="/admin/reservation" element={<AdminReservation />} />
-                <Route path="/admin" element={<AdminMain />} />
+                <Route path="/admin" element={<AdminMain isAdmin={isAdminLoggedIn} />} /> 
 
                 {/* Add more admin routes here as needed */}
               </Routes>
@@ -135,3 +117,4 @@ const Intro = () => (
 );
 
 export default App;
+
