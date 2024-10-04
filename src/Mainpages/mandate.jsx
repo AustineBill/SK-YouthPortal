@@ -21,6 +21,11 @@ const Mandate = () => (
       <h1 className="man-maintext animated slideInRight">Objective</h1>
         <p className='man-subtext'>Lorem ipsum</p> 
     </div>  
+
+    <div className="text-center text-lg-end m-5">
+      <h1 className="man-maintext animated slideInLeft">Vision</h1>
+        <p className='man-subtext'>Lorem ipsum</p> 
+    </div>
   </div>
 );
 
