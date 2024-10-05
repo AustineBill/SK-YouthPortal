@@ -36,10 +36,10 @@ const NewsEvents = () => {
         <p className="Subtext">Get the inside scoop on all the action</p>
       </div>
       
-      <div className="bg-secondary">
-        <h2 className="NewEve-subheadline">Inside SK Youth Scoop</h2>
+      <div className="bg-secondary p-3">
+        <h2 className="NewEveSubHeadLine">Inside SK Youth Scoop</h2>
 
-        <Container className="mt-4">
+        <Container className="mt-1">
           {contentData.map((item) => (
             <Row key={item.id} className="mb-4 align-items-center">
               <Col md={4}>
