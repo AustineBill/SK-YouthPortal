@@ -84,11 +84,15 @@ img.animated.pulse {
   overflow-x: hidden;   
 }
 
-.intro-container {
-  width: 100%;
-  max-width: 100%;
-  height: 100%;
+.BodyContainer {
+  width: 80%; /* Equivalent to col-lg-10 */
+  margin: 0 auto; /* Center the container horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  text-align: center; 
 }
+
 
 .Website-Name{
   color: #1809f5; /* Bootstrap's dark color */
@@ -100,11 +104,10 @@ img.animated.pulse {
 }
 
 .card-container {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;  
   justify-content: center;
-  margin-bottom: 3rem;
+  margin: 3rem;
 }
 
 
@@ -126,6 +129,7 @@ img.animated.pulse {
   animation-name: slideInLeft; 
   font-size: 30px;
   margin-left: 30px;
+  margin-bottom: 3rem;
 }
 
 .Lower-Maintext {
@@ -150,7 +154,7 @@ img.animated.pulse {
 
 .Divider {
   display: flex; /* Change to flex to use Flexbox for centering */
-  justify-content: center;justify-content: center; /* Center horizontally */
+  justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   padding: 2.5rem;
   animation: fadeIn 1s ease-in-out;
@@ -315,27 +319,9 @@ img.animated.pulse {
 /*** Hero Header ***/
 .hero-header {
   position: relative;
-  padding-top: 12rem;
-  padding-bottom: 11rem; /*ito yung adjust sa background*/
+  padding: 12rem 1rem 18rem 1rem;
   background: url(./Asset/bg.png) center center no-repeat;
   background-size: cover;
-}
-
-.hero-header::before {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: rgba(255, 255, 255, .1);
-  clip-path: polygon(66% 0, 100% 0, 100% 100%, 33% 100%);
-}
-
-.hero-header .container {
-  position: relative;
-  z-index: 1;
-
 }
 
 .intro-text {
@@ -374,24 +360,17 @@ img.animated.pulse {
   animation-fill-mode: both; 
   animation-name: slideInRight; 
   font-size: 30px;
-  margin-left: 50%; /* Remove default margin */
-   /* Remove default padding */
+  margin-left: 35%; /* Remove default margin */
 }
 
-
-.hero-header .breadcrumb-item+.breadcrumb-item::before {
-  color: var(--bs-light);
-}
-
-.intro-button {
+.IntroButton {
   display: inline-block;
   font-weight: 400;
   text-align: center;   
-  padding: 0.5rem 0.5rem;
+  padding: 1rem 1rem;
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   color: #fff;
   background-color: #3410fa;
   border-color: #3312f0;
@@ -401,20 +380,15 @@ img.animated.pulse {
   width: 15%;
   align-items: center;
   position: absolute;
-  right: 10%; /* Adjust as needed */
-  bottom: 200px; /* Adjust as needed */
+  top: 50%;
+  right: 10%; 
 }
 
-.intro-button:hover {
-  color: #fff;
-  background-color: #23272b;
-  border-color: #1d2124;
-}
+
 .arrow{
   margin-right: 10px;
   margin-left: 10px;
   width: 30px; /* Set the width you need */
-  height: auto; /* Maintain aspect ratio */
 }
 
 
@@ -446,8 +420,8 @@ img.animated.pulse {
 }
 
 .ProgramCard{
-  width: 20rem;
-  margin: 15px;
+  width: 23rem;
+  margin: 25px;
   height: auto; 
 }
 
@@ -460,11 +434,10 @@ img.animated.pulse {
   animation-duration: 1s; /* Equivalent to wow */
   animation-fill-mode: both; /* Equivalent to wow */
   animation-name: fadeIn; /* Equivalent to fadeIn */
-  margin-bottom: 5rem;
 }
 
 
-.about-head {
+.BlockQuote {
   color: #060707; /* Equivalent to text-primary */
   margin-bottom: 1.5rem; /* Equivalent to mb-4 */
   margin-top: 8rem; /* Equivalent to mb-4 */
@@ -474,11 +447,6 @@ img.animated.pulse {
 }
 
 
-.BlockQoute{
-  width: 2rem;
-  height: 25rem;
-  margin: 20px;
-}
 
 
 /*/* News and Events */
@@ -500,11 +468,10 @@ img.animated.pulse {
   font-size: 6rem;    
 }
 
-.NewEve-subheadline {
+.NewEveSubHeadLine {
   color: #060707; /* Equivalent to text-primary */
-  margin-top: 8rem; /* Equivalent to mb-4 */
-  margin-bottom: 1.5rem; /* Equivalent to mb-4 */
   font-weight: 700; /* Adjust the font-weight as needed */
+  padding: 2rem;
   text-align: center; /* Center the text */
   font-size: 4rem;    
 }
@@ -634,10 +601,10 @@ img.animated.pulse {
 }
 
 
-/*text*/
+/*Text*/
 
 
-.text-content {
+.TextContent {
   justify-self: start; /* Align text to the start (left) */
   margin-left: 20px;;
   margin-bottom: 5rem; 

@@ -36,14 +36,15 @@
 
 
 
+
 .CardContainer {
   width: 100%;
   display: flex;
   flex-wrap: wrap;  
   justify-content: center;
-  margin-top: 6rem;
-  margin-bottom: 6rem;
+  margin: 4rem;
 }
+
 
 .MediumCard{
   width: 20rem;
@@ -53,8 +54,6 @@
 
 .LargeCard{
   width: 50rem;
-  height: auto; 
-  margin: 2rem;
 }
 
 
