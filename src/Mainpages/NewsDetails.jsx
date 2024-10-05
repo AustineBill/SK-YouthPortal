@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// Import the image
-import Hans from '../Assets/HANS MARTINEZ.png';
+// Import the image import Hans from '../Assets/HANS MARTINEZ.png';
 
 
 const contentData = [
