@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Card from 'react-bootstrap/Card';
-
 import SKPhoto from "../Asset/Western Photo.png";
 
 const Spotlight = () => (
@@ -10,6 +9,8 @@ const Spotlight = () => (
             <h1 className="Maintext animated slideInRight">Spotlight</h1>
                 <p className="Subtext">Celebrating SK Youth Excellent </p>
         </div>
+
+        
         <div className="Former-img-container">
             <img src={SKPhoto} className="Former-main-img" alt="Cover" />
         </div>

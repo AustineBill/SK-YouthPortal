@@ -8,8 +8,8 @@ const Contact = () => (
   <div className="container-fluid">
   <div className="row">
     <div className="text-center text-lg-start m-4 mv-8">
-      <h1 className="contact-maintext animated slideInRight">Get in Touch</h1>
-        <p className='contact-subtext'>Reserve yours now!</p>
+      <h1 className="Maintext animated slideInRight">Get in Touch</h1>
+        <p className='Subtext'>Reserve yours now!</p>
 
         <div className="d-flex justify-content-center mb-3 ">
           <Card className="contact-card mx-2">

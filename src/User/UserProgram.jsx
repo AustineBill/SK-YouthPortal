@@ -20,9 +20,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const Programs = () => (
   <div className="container-fluid">
-    
-
-
     <div className="row bg-primary">
       <div className="text-center text-lg-start m-4">
         <h1 className="Maintext animated slideInRight">Programs</h1>

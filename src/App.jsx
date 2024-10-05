@@ -80,13 +80,13 @@ const App = () => {
         ) : (
           <>
             <Navbar />
-            <div className="content"> 
+            <div className="d-flex flex-column min-vh-100"> 
               <Routes>
+                {/* Landing Page Routes */}
                 <Route path="/" element={<Intro />} />
                 <Route path="/Overview" element={<OverviewProgram />} />
                 <Route path="/About" element={<About />} />
-                <Route path="/Mandate" element={<Mandate />} />
-               
+                <Route path="/Mandate" element={<Mandate />} /> 
                 <Route path="/Council" element={<Council />} />
                 <Route path="/FormerSK" element={<FormerSK />} /> 
                 <Route path="/History" element={<History />} />
@@ -127,15 +127,13 @@ const App = () => {
 const Intro = () => (
   
   <div className="container-fluid">
-    <div className="intro-container hero-header bg-primary ">
-      <div className="row g- align-items-center mb-15">
-        <div className="col-lg-12 text-center text-lg-start ms-5 ">
-          <h1 className="intro-text">Lagi't lagi para sa Kabataan,</h1>
-          <h1 className="custom-intro-text animated slideInRight">Barangay at sa Bayan. <span className="custom-name">SK Youth Portal</span></h1>
-          <p className="custom-intro-details">Western Bicutan</p>
-          <button className="intro-button">Explore Now <img src={rightArrow} className="arrow" alt="Right Arrow" /></button>
+    <div className="hero-header">
+        <div className="col-lg-12 text-center text-lg-start m-5 ">
+          <h1 className="MainText">Lagi't lagi para sa Kabataan,</h1>
+          <h1 className="SubText animated slideInRight">Barangay at sa Bayan. <span className="custom-name">iSKed</span></h1>
+          <p className="custom-intro-details">Western Bicutan</p> 
         </div>
-      </div>
+        <button className="IntroButton">Explore Now <img src={rightArrow} className="arrow" alt="Right Arrow" /></button>
     </div>
    
       <div className="row g-4 justify-content-center">
@@ -281,9 +279,9 @@ const Intro = () => (
         </div>
 
 
-        <div className="about-container" data-wow-delay="0.5s">
-          <h1 className="about-head">SANGGUNIANG KABATAAN - WESTERN BICUTAN</h1>
-          <Card className="BlockQuote">
+        <div className="BodyContainer" data-wow-delay="0.5s">
+          <h1 className="BlockQuote">SANGGUNIANG KABATAAN - WESTERN BICUTAN</h1>
+          <Card>
             <Card.Body>
               <blockquote className="blockquote">
                 <p >
@@ -297,11 +295,14 @@ const Intro = () => (
               </blockquote>
             </Card.Body>
           </Card>
-          <div className="text-content">
-            <h1 style={{ fontFamily: "'Sansita Swashed', cursive" }} className="Text-1">Connect with us.</h1>
-            <h1 style={{ fontFamily: "'Sansita Swashed', cursive" }} className="Text-2">Be part of the SK Youth Community</h1>
-            <h3  style={{ fontFamily: "'Poppins', sans-serif" }} className="Text-3"> Create your Profile today.</h3>
-          </div> 
+          </div>
+
+          <div>
+            <div className="TextContent">
+              <h1 style={{ fontFamily: "'Sansita Swashed', cursive" }} className="Text-1">Connect with us.</h1>
+              <h1 style={{ fontFamily: "'Sansita Swashed', cursive" }} className="Text-2">Be part of the SK Youth Community</h1>
+              <h3  style={{ fontFamily: "'Poppins', sans-serif" }} className="Text-3"> Create your Profile today.</h3>
+            </div> 
         </div>
   </div>
 );
