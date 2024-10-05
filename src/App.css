@@ -317,7 +317,7 @@ img.animated.pulse {
   position: relative;
   padding-top: 12rem;
   padding-bottom: 11rem; /*ito yung adjust sa background*/
-  background: url(./Assets/bg.png) center center no-repeat;
+  background: url(./Asset/bg.png) center center no-repeat;
   background-size: cover;
 }
 

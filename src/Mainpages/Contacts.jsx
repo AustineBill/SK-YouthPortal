@@ -1,9 +1,7 @@
-
-
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 
-import Location from "../Assets/location.png"
+import Location from "../Asset/location.png"
 
 
 const Contact = () => (
@@ -60,18 +58,6 @@ const Contact = () => (
   <div className="d-flex justify-content-center">
     <button className="contact-button"><i class="bi bi-hand-index me-3"></i>Appoint with us</button>
   </div>
-
- 
-
-  
-
-
-  
-
-
-
-
-
 </div>
 );
 export default Contact;

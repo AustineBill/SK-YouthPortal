@@ -5,7 +5,7 @@ const Council = () => (
   <div className="container-fluid">
     <div className="text-center text-lg-start m-4 mv-8">
       <h1 className="Maintext animated slideInRight">SK Council</h1>
-        <p className='Subtext'>Lorem ipsum</p> 
+        <p className='Subtext'>Lorem ipsum WEQWEQWEQWE</p> 
     </div> 
 
     <div className ="council-container">
@@ -49,9 +49,6 @@ const Council = () => (
         </div>
       </div>
 
-
-      
-
       <div class="flip-card">
         <div class="flip-card-inner">
           <div class="flip-card-front">
@@ -66,10 +63,6 @@ const Council = () => (
       </div>
 
     </div>
-
-
-
-
   </div>
 );
 

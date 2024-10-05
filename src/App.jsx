@@ -12,18 +12,17 @@ import Footer from "./Classes/Footer";
 
 /* Main Pages */
 import OverviewProgram from "./Mainpages/OverProgram";
-import Contact from "./Mainpages/ContactUs";
-import About from "./Mainpages/AboutUs";
-import Spotlight from './Mainpages/Spotlight';
-import NewsEvents from './Mainpages/News';
+import Contact from "./Mainpages/Contacts";
+import About from "./Mainpages/About";
+import Spotlight from './Mainpages/Spotlights';
+import NewsEvents from './Mainpages/NewsEvents';
 import ViewDetailed from './Mainpages/NewsDetails';
 
 /* Sub Pages */
-import Mandate from "./Mainpages/Mandate";
-//import Youth from "./Mainpages/AboutUs";
-import Council from "./Mainpages/SKCouncil";
+import Mandate from "./Mainpages/Mandates";
+import Council from "./Mainpages/SkCouncil";
 import FormerSK from './Mainpages/FormerSK';
-import History from "./Mainpages/History";
+import History from "./Mainpages/SkHistory";
 import UserAuthentication from './Classes/UserAuthentication';
 
 /* User Side */ 
@@ -55,8 +54,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
 
-import rightArrow from "./Assets/right-arrow.png"
-import Cover from "./Assets/bg.png"
+import rightArrow from "./Asset/right-arrow.png"
+import Cover from "./Asset/bg.png"
 
 
 

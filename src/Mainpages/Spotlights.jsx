@@ -2,7 +2,7 @@ import React from 'react';
 
 import Card from 'react-bootstrap/Card';
 
-import SKPhoto from "../Assets/Western Photo.png";
+import SKPhoto from "../Asset/Western Photo.png";
 
 const Spotlight = () => (
     <div className="container-fluid">

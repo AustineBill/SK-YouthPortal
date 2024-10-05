@@ -1,5 +1,5 @@
 import React from 'react';  
-import Cover from "../Assets/bg.png"
+import Cover from "../Asset/bg.png"
 
 const About = () => (
   <div className="container-fluid">
@@ -42,7 +42,7 @@ const About = () => (
 
     <div className="youth-container">
       <h1 className="youth-head">SANGGUNIANG KABATAAN - WESTERN BICUTAN</h1>
-        <p className="yout-text-content">SANGGUNIANG KABATAAN - WESTERN BICUTAN</p>
+        <p className="yout-text-content">SANGGUNIANG KABATAAN - WESTERN BICUTAN </p>
         
     </div>
   </div>

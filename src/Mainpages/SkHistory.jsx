@@ -1,7 +1,7 @@
 import React from 'react';
-import History from "../Assets/location.png"
+import HistoryImage from "../Asset/location.png"
 
-const Home = () => (
+const History = () => (
   
     <div className="container-fluid">
       <div className="text-center text-lg-start">
@@ -13,10 +13,10 @@ const Home = () => (
         <div className="history-text-content">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          </p>
+          s</p>
         </div>
         <img 
-          src= {History}
+          src= {HistoryImage}
           alt="SK Youth Spotlights" 
           className="history-image-content" 
         />
@@ -24,4 +24,4 @@ const Home = () => (
     </div>
   );
 
-export default Home;
+export default History;
