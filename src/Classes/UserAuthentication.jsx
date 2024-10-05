@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import './UserAuthentication.css';
 
 const UserAuthentication = ({ setIsAdminLoggedIn }) => {
     const [view, setView] = useState('');
@@ -40,54 +42,57 @@ const UserAuthentication = ({ setIsAdminLoggedIn }) => {
             {!isSignUpSuccessful && (
                 <div className='welcome'>
                     <div className='welcome1'>
-                        <p>Your court, your time.</p>
+                        <h1>iSKed</h1>
                     </div>
                     <div className='welcome2'>
-                        <p>Play together with</p>
-                        <h1 id='iReserba'>iReserba</h1>
+                        <p>Western Bicutan</p>
                     </div>
                 </div>
             )}
 
             {view === 'signIn' && (
                 <div className="sign-in-form">
-                    <h2>Sign In</h2>
                     <form onSubmit={handleAdminLogin}>
-                        <div>
-                            <label>Username:</label>
-                            <input type="text" name="username" required />
+                        <div className='welcome-back-sign-in'>
+                            <h2>Welcome back!</h2>
+                        </div>
+                        <div className='sign-in-username'>
+                            <input type="text" name="username" placeholder='Username' required />
+                        </div>
+                        <div className='sign-in-password'>
+                            <input type="password" name="password" placeholder='Password' required />
                         </div>
                         <div>
-                            <label>Password:</label>
-                            <input type="password" name="password" required />
+                            <Link to="/rawr" className="navbar-brand">
+                                <p id='sign-in-forgot-password'>Forgot your password?</p> 
+                            </Link>
                         </div>
                         <button type="submit">Sign In</button>
+                        <div className='sign-in-form-bottom'>
+                            <p>Don’t have an account?</p>
+                            <Link to="/userauth?view=signUp" className="navbar-brand">
+                                <p id='sign-up-button'>Sign up</p>
+                            </Link>
+                        </div>
                     </form>
                 </div>
             )}
 
             {view === 'signUp' && (
                 <div className="sign-up-form">
-                    <h2>Sign Up</h2>
                     <form onSubmit={handleSignUpSubmit}>
-                        <div>
-                            <label>Email:</label>
-                            <input type="email" required />
+                        <div className='start-with-us-sign-up'>
+                            <h2>Start with us!</h2>
                         </div>
                         <div>
-                            <label>Password:</label>
-                            <input type="password" required />
-                        </div>
-                        <div>
-                            <label>Confirm Password:</label>
-                            <input type="password" required />
+                            <p>Lorem Ipsum</p>
                         </div>
                         <button type="submit">Sign Up</button>
                     </form>
                 </div>
             )}
 
-            {isSignUpSuccessful && (
+            {/* {isSignUpSuccessful && (
                 <div className="success-message">
                     <h2>Your account is ready!</h2>
                     <p>Your profile information and login credentials have been successfully created. Click "Start Now" to explore the SK Youth program.</p>
@@ -95,10 +100,9 @@ const UserAuthentication = ({ setIsAdminLoggedIn }) => {
                         <button type="submit">START NOW</button>
                     </form>
                 </div>
-            )}
+            )} */}
         </div> 
     );
 };
 
 export default UserAuthentication;
-
