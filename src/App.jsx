@@ -20,7 +20,7 @@ import ViewDetailed from './Mainpages/NewsDetails';
 
 /* Sub Pages */
 import Mandate from "./Mainpages/Mandates";
-import Council from "./Mainpages/SkCouncil";
+import Council from "./Mainpages/Council";
 import FormerSK from './Mainpages/FormerSK';
 import History from "./Mainpages/SkHistory";
 import UserAuthentication from './Classes/UserAuthentication';
