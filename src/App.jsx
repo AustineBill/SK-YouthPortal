@@ -57,6 +57,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import rightArrow from "./Asset/right-arrow.png"
 import Cover from "./Asset/bg.png"
+import AdminNavbar from './Classes/AdminNavbar';
 
 
 
@@ -81,6 +82,7 @@ const App = () => {
         ) : (
           <>
             <Navbar />
+            {/* <AdminNavbar /> */}
             <div className="d-flex flex-column min-vh-100"> 
               <Routes>
                 {/* Landing Page Routes */}
