@@ -26,6 +26,7 @@ import History from "./Mainpages/SkHistory";
 import UserAuthentication from './Classes/UserAuthentication';
 
 /* User Side */ 
+import Profile from "./User/Profile";
 import Dashboard from "./User/Dashboard";
 import Programs from "./User/UserProgram";
 import Log from "./User/ReserveLog";
@@ -97,6 +98,7 @@ const App = () => {
                 <Route path="/NewsDetails/:id" element={<ViewDetailed />} />
 
                 {/* User Side Routes */}
+                <Route path="/Profile" element={<Profile />} />
                 <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/UserProgram" element={<Programs />} />
                 <Route path="/ProgramDetails" element={<ProgramDescript />} />
@@ -115,6 +117,7 @@ const App = () => {
               </Routes>
             </div>
             {!isAdminLoggedIn && <Footer />} {/* Hide footer if admin is logged in */}
+            
           </>
         )}
       </div>
