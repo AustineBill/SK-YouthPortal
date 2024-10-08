@@ -12,22 +12,6 @@ import '../style.css';
 
 const Dashboard = () => (
   <div className="container-fluid">
-
-    <div className="container-fluid sticky-top">
-      <nav className="navbar navbar-expand-lg bg-white">
-        <Link to="/" className="navbar-brand">
-          <h2 className="Website-Name" style={{ fontFamily: "'Sansita Swashed', cursive" }}>SK Youth</h2>
-        </Link>
-
-        <div className="navbar-nav ms-4 align-items-center">
-          <Link className="nav-item nav-link" to="/Dashboard">Home</Link>
-          <Link className="nav-item nav-link" to="/programs">Programs</Link>
-          <Link className="nav-item nav-link" to="/Reservation">Reservation</Link>
-          <Link className="nav-item nav-link" to="/help_support">Help and Support</Link>
-        </div>
-      </nav>
-    </div>
-
     <div className="intro-container hero-header bg-primary ">
       <div className="row">
         <div className="col-lg-5 text-center text-lg-start ms-5 ">
