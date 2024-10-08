@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './UserAuthentication.css';
 
-const UserAuthentication = ({ setIsAdminLoggedIn }) => {
+const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
     const [view, setView] = useState('');
     const [isSignUpSuccessful, setIsSignUpSuccessful] = useState(false);
     const location = useLocation();
@@ -27,14 +27,17 @@ const UserAuthentication = ({ setIsAdminLoggedIn }) => {
         e.preventDefault();
         const username = e.target.username.value;
         const password = e.target.password.value;
-
+    
         if (username === 'admin123' && password === '123') {
-            setIsAdminLoggedIn(true); // Admin login state set
-            navigate('/admin'); // Redirect to admin dashboard
+          setIsAdminLoggedIn(true); // Admin login state set
+          navigate('/admin'); // Redirect to admin dashboard
+        } else if (username === 'auztine' && password === '12345') {
+          setIsUserLoggedIn(true); // User login state set
+          navigate('/Dashboard'); // Redirect to user dashboard
         } else {
-            alert('Invalid admin credentials');
+          alert('Invalid credentials');
         }
-    };
+      };
 
     return (
         <div className="auth-page">

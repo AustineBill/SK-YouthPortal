@@ -9,6 +9,7 @@ import Card from 'react-bootstrap/Card';
 
 import Navbar from "./Classes/Navbar";
 import Footer from "./Classes/Footer";
+import UserNavbar from "./Classes/UserNavbar"
 
 /* Main Pages */
 import OverviewProgram from "./Mainpages/OverProgram";
@@ -64,6 +65,8 @@ import AdminNavbar from './Classes/AdminNavbar';
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false); // Admin login state
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+ 
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
@@ -81,7 +84,10 @@ const App = () => {
           </div>
         ) : (
           <>
-            <Navbar />
+            {/* Conditional Navbar rendering */}
+            {!isAdminLoggedIn && !isUserLoggedIn && <Navbar />} {/* Default navbar when no one is logged in */}
+            {isUserLoggedIn && !isAdminLoggedIn && <UserNavbar />} {/* User navbar after user login */}
+            {isAdminLoggedIn && <AdminNavbar />} {/* Admin navbar after admin login */}
             {/* <AdminNavbar /> */}
             <div className="d-flex flex-column min-vh-100"> 
               <Routes>
@@ -94,7 +100,7 @@ const App = () => {
                 <Route path="/FormerSK" element={<FormerSK />} /> 
                 <Route path="/History" element={<History />} />
                 <Route path="/ContactUs" element={<Contact />} />
-                <Route path="/userauth" element={<UserAuthentication setIsAdminLoggedIn={setIsAdminLoggedIn} />} />
+                <Route path="/userauth" element={<UserAuthentication setIsAdminLoggedIn={setIsAdminLoggedIn} setIsUserLoggedIn={setIsUserLoggedIn} />}/>
                 <Route path="/Spotlight" element={<Spotlight />} />
                 <Route path="/News" element={<NewsEvents />} />
                 <Route path="/NewsDetails/:id" element={<ViewDetailed />} />
