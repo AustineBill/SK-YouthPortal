@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Avatar from 'react-avatar';
 
@@ -6,10 +6,45 @@ import '../App.css'; // Ensure your custom CSS file is imported
 
 const Navbar = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState('');
+  const dropdownRef = useRef(null);
 
-  const toggleDropdown = () => {
+
+  const toggleDropdown = (e) => {
+    e.stopPropagation();
     setDropdownVisible(!dropdownVisible);
   };
+
+  const handleLinkClick = () => {
+    setDropdownVisible(false); // Close dropdown when a link is clicked
+  };
+
+  useEffect(() => {
+    // Set the logged-in user's name (for demo purposes, from localStorage)
+    const username = localStorage.getItem('username') || 'Default User';
+    setLoggedInUser(username);
+
+    // Event listener to close the dropdown when clicking outside
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Get the username from localStorage
+    const username = localStorage.getItem('username');
+    if (username) {
+      setLoggedInUser(username);
+    }
+  }, []);
 
   return (
     <nav className="navbar">
@@ -25,13 +60,13 @@ const Navbar = () => {
         {/* Avatar with Dropdown */}
         <div style={{ marginLeft: 'auto', position: 'relative' }}>
           <div onClick={toggleDropdown} style={{ cursor: 'pointer' }}>
-            <Avatar name="Wim Mostmans" round={true} size="70" />
+            <Avatar name={loggedInUser} round={true} size="70" />
           </div>
           {dropdownVisible && (
-            <div className="avatar-dropdown" style={dropdownStyles}>
-              <Link to="/Profile" className="dropdown-item">Profile</Link>
-              <Link to="/settings" className="dropdown-item">Settings</Link>
-              <Link to="/userauth" className="dropdown-item">Logout</Link>
+            <div className={`avatar-dropdown ${dropdownVisible ? 'visible' : ''}`} style={dropdownStyles}>
+              <Link to="/Profile" className="dropdown-item"  onClick={handleLinkClick}>Profile</Link>
+              <Link to="/Profile" className="dropdown-item" onClick={handleLinkClick}>Settings</Link>
+              <Link to="/userauth" className="dropdown-item"  onClick={handleLinkClick}>Logout</Link>
             </div>
           )}
         </div>
