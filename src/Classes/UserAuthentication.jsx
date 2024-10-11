@@ -32,8 +32,13 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
           setIsAdminLoggedIn(true); // Admin login state set
           navigate('/admin'); // Redirect to admin dashboard
         } else if (username === 'auztine' && password === '12345') {
-          setIsUserLoggedIn(true); // User login state set
-          navigate('/Dashboard'); // Redirect to user dashboard
+          setIsUserLoggedIn(true); // User login state 
+          localStorage.setItem('username', username); // Store username
+          navigate('/Dashboard'); // Redirect to user 
+        } else if (username === 'jade' && password ==='54321') {
+            setIsUserLoggedIn(true); // User login state 
+            localStorage.setItem('username', username); // Store username
+            navigate('/Dashboard'); // Redirect to user dashboard
         } else {
           alert('Invalid credentials');
         }

@@ -361,4 +361,21 @@ span {
 
 .personal-info, .other-info {
   margin-bottom: 30px;
-}
+
+} 
+  .avatar-dropdown {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .avatar-dropdown.visible {
+    opacity: 1;
+  }
+  
+
+  fieldset {
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+  }
