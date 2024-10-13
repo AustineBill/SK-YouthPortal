@@ -23,26 +23,42 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
         setView('');
     };
 
-    const handleAdminLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         const username = e.target.username.value;
         const password = e.target.password.value;
     
-        if (username === 'admin123' && password === '123') {
-          setIsAdminLoggedIn(true); // Admin login state set
-          navigate('/admin'); // Redirect to admin dashboard
-        } else if (username === 'auztine' && password === '12345') {
-          setIsUserLoggedIn(true); // User login state 
-          localStorage.setItem('username', username); // Store username
-          navigate('/Dashboard'); // Redirect to user 
-        } else if (username === 'jade' && password ==='54321') {
-            setIsUserLoggedIn(true); // User login state 
-            localStorage.setItem('username', username); // Store username
-            navigate('/Dashboard'); // Redirect to user dashboard
-        } else {
-          alert('Invalid credentials');
+        try {
+            // Check if credentials match admin credentials first
+            if (username === 'admin123' && password === '123') {
+                setIsAdminLoggedIn(true); // Set Admin login state
+                navigate('/admin'); // Redirect to admin dashboard
+            } else {
+                // If not admin, attempt user login with server verification
+                const response = await fetch('http://localhost:5000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+    
+                const data = await response.json();
+    
+                if (response.ok) {
+                    setIsUserLoggedIn(true); // Set user login state
+                    localStorage.setItem('isUserLoggedIn', 'true'); // Set login state
+                    navigate('/Dashboard'); // Redirect to user dashboard
+                } else {
+                    alert(data.message || 'Invalid user credentials');
+                }
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            alert('An error occurred. Please try again.');
         }
-      };
+    };
+    
 
     return (
         <div className="auth-page">
@@ -59,7 +75,7 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
 
             {view === 'signIn' && (
                 <div className="sign-in-form">
-                    <form onSubmit={handleAdminLogin}>
+                    <form onSubmit={handleLogin}>
                         <div className='welcome-back-sign-in'>
                             <h2>Welcome back!</h2>
                         </div>
@@ -98,18 +114,7 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
                     </form>
                 </div>
             )}
-
-    {/* Optional Success Message */ }
-{/* {isSignUpSuccessful && (
-                <div className="success-message">
-                    <h2>Your account is ready!</h2>
-                    <p>Your profile information and login credentials have been successfully created. Click "Start Now" to explore the SK Youth program.</p>
-                    <form>
-                        <button type="submit">START NOW</button>
-                    </form>
-                </div>
-            )} */}
-        </div >
+        </div>
     );
 };
 
