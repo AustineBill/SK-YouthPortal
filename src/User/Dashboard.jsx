@@ -8,8 +8,6 @@ import Card from 'react-bootstrap/Card';
 import '../App.css';
 import '../style.css';
 
-
-
 const Dashboard = () => (
   <div className="container-fluid">
     <div className="intro-container hero-header bg-primary ">
