@@ -36,7 +36,7 @@ const Navbar = () => {
       <Link to="/" className="navbar-brand">
         <h2 className="Website-Name" style={{ fontFamily: "'Sansita Swashed', cursive" }}>SK Youth</h2>
       </Link>
-      <Link className="nav-item nav-link" to="/">Home</Link>
+      <Link className="nav-item nav-link" to="/Splash">Home</Link>
 
       {/* Customized Dropdown */}
       <div className="dropdown" ref={dropdownRef}>

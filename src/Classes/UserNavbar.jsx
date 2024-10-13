@@ -4,11 +4,10 @@ import Avatar from 'react-avatar';
 
 import '../App.css'; // Ensure your custom CSS file is imported
 
-const Navbar = () => {
+const UserNavbar = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState('');
   const dropdownRef = useRef(null);
-
 
   const toggleDropdown = (e) => {
     e.stopPropagation();
@@ -38,14 +37,6 @@ const Navbar = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // Get the username from localStorage
-    const username = localStorage.getItem('username');
-    if (username) {
-      setLoggedInUser(username);
-    }
-  }, []);
-
   return (
     <nav className="navbar">
       <div className="navbar-links" style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
@@ -53,20 +44,20 @@ const Navbar = () => {
           <h2 className="Website-Name" style={{ fontFamily: "'Sansita Swashed', cursive" }}>SK Youth</h2>
         </Link>
         <Link className="nav-item nav-link" to="/Dashboard">Home</Link>
-        <Link className="nav-item nav-link" to="/Overview">Programs</Link>
-        <Link className="nav-item nav-link" to="/UserProgram">Reservation</Link>
+        <Link className="nav-item nav-link" to="/UserProgram">Programs</Link>
+        <Link className="nav-item nav-link" to="/UserReservation">Reservation</Link> {/* Ensure this is the correct route */}
         <Link className="nav-item nav-link" to="/ContactUs">Help and Support</Link>
 
         {/* Avatar with Dropdown */}
-        <div style={{ marginLeft: 'auto', position: 'relative' }}>
+        <div style={{ marginLeft: 'auto', position: 'relative' }} ref={dropdownRef}>
           <div onClick={toggleDropdown} style={{ cursor: 'pointer' }}>
             <Avatar name={loggedInUser} round={true} size="70" />
           </div>
           {dropdownVisible && (
             <div className={`avatar-dropdown ${dropdownVisible ? 'visible' : ''}`} style={dropdownStyles}>
-              <Link to="/Profile" className="dropdown-item"  onClick={handleLinkClick}>Profile</Link>
-              <Link to="/Profile" className="dropdown-item" onClick={handleLinkClick}>Settings</Link>
-              <Link to="/userauth" className="dropdown-item"  onClick={handleLinkClick}>Logout</Link>
+              <Link to="/Profile" className="dropdown-item" onClick={handleLinkClick}>Profile</Link>
+              <Link to="/Settings" className="dropdown-item" onClick={handleLinkClick}>Settings</Link> {/* Ensure this is the correct route */}
+              <Link to="/userauth" className="dropdown-item" onClick={handleLinkClick}>Logout</Link>
             </div>
           )}
         </div>
@@ -89,6 +80,4 @@ const dropdownStyles = {
   flexDirection: 'column',
 };
 
-
-
-export default Navbar;
+export default UserNavbar;
