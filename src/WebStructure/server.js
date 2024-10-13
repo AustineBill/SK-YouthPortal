@@ -28,7 +28,7 @@ app.post('/register', async (req, res) => {
     
     try {
         // Insert new user into the Admin table without hashing
-        await pool.query('INSERT INTO "Admin" (username, password) VALUES ($1, $2)', [username, password]);
+        await pool.query('INSERT INTO "Users" (username, password) VALUES ($1, $2)', [username, password]);
         res.status(201).json({ message: 'User registered successfully' });
     } catch (err) {
         console.error(err);
@@ -42,7 +42,7 @@ app.post('/login', async (req, res) => {
     console.log('Received login attempt:', { username, password });
 
     try {
-        const result = await pool.query('SELECT * FROM "Admin" WHERE username = $1', [username]);
+        const result = await pool.query('SELECT * FROM "Users" WHERE username = $1', [username]);
         console.log('Query result:', result.rows);
 
         if (result.rows.length === 0) {
@@ -67,3 +67,5 @@ app.post('/login', async (req, res) => {
 app.listen(5000, () => {
     console.log('Server running on port 5000');
 });
+
+
