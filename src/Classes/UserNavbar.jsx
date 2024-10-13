@@ -4,7 +4,7 @@ import Avatar from 'react-avatar';
 
 import '../App.css'; // Ensure your custom CSS file is imported
 
-const UserNavbar = () => {
+const UserNavbar = ({ setIsUserLoggedIn }) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState('');
   const dropdownRef = useRef(null);
@@ -19,11 +19,9 @@ const UserNavbar = () => {
   };
 
   useEffect(() => {
-    // Set the logged-in user's name (for demo purposes, from localStorage)
     const username = localStorage.getItem('username') || 'Default User';
     setLoggedInUser(username);
 
-    // Event listener to close the dropdown when clicking outside
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownVisible(false);
@@ -45,10 +43,9 @@ const UserNavbar = () => {
         </Link>
         <Link className="nav-item nav-link" to="/Dashboard">Home</Link>
         <Link className="nav-item nav-link" to="/UserProgram">Programs</Link>
-        <Link className="nav-item nav-link" to="/UserReservation">Reservation</Link> {/* Ensure this is the correct route */}
+        <Link className="nav-item nav-link" to="/UserReservation">Reservation</Link>
         <Link className="nav-item nav-link" to="/ContactUs">Help and Support</Link>
 
-        {/* Avatar with Dropdown */}
         <div style={{ marginLeft: 'auto', position: 'relative' }} ref={dropdownRef}>
           <div onClick={toggleDropdown} style={{ cursor: 'pointer' }}>
             <Avatar name={loggedInUser} round={true} size="70" />
@@ -56,9 +53,12 @@ const UserNavbar = () => {
           {dropdownVisible && (
             <div className={`avatar-dropdown ${dropdownVisible ? 'visible' : ''}`} style={dropdownStyles}>
               <Link to="/Profile" className="dropdown-item" onClick={handleLinkClick}>Profile</Link>
-              <Link to="/Settings" className="dropdown-item" onClick={handleLinkClick}>Settings</Link> {/* Ensure this is the correct route */}
-              <Link to="/userauth" className="dropdown-item" onClick={() => { localStorage.setItem('isUserLoggedIn', 'false');
-                    handleLinkClick(); }}>Logout</Link>
+              <Link to="/Settings" className="dropdown-item" onClick={handleLinkClick}>Settings</Link>
+              <Link to="/userauth" className="dropdown-item" onClick={() => { 
+                localStorage.setItem('isUserLoggedIn', 'false');
+                setIsUserLoggedIn(false);  // Update state to trigger re-render
+                handleLinkClick();
+              }}>Logout</Link>
             </div>
           )}
         </div>
@@ -66,6 +66,7 @@ const UserNavbar = () => {
     </nav>
   );
 };
+
 
 // Inline styles for dropdown (or you can move it to your CSS)
 const dropdownStyles = {
