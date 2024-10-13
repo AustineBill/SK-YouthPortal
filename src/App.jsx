@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+
 import Navbar from "./Classes/Navbar";
 import Footer from "./Classes/Footer";
 import UserNavbar from "./Classes/UserNavbar";
+import UserAuthentication from './Classes/UserAuthentication';
+
 // Main Pages
 import Intro from "./Mainpages/Splash";
 import OverviewProgram from "./Mainpages/OverProgram";
@@ -11,13 +15,28 @@ import About from "./Mainpages/About";
 import Spotlight from './Mainpages/Spotlights';
 import NewsEvents from './Mainpages/NewsEvents';
 import ViewDetailed from './Mainpages/NewsDetails';
-// User Side
-import UserAuthentication from './Classes/UserAuthentication';
-import Dashboard from "./User/Dashboard";
+
+/* Sub Pages */
+import Mandate from "./Mainpages/Mandates";
+import Council from "./Mainpages/Council";
+import FormerSK from './Mainpages/FormerSK';
+import History from "./Mainpages/SkHistory";
+
+
+/* User Side */ 
 import Profile from "./User/Profile";
+import Dashboard from "./User/Dashboard";
 import Programs from "./User/UserProgram";
-import Reservation from './User/Reservation';
+import Log from "./User/ReserveLog";
 import HelpSupport from "./User/HelpSupport";
+import ProgramDescript from './User/ProgramDetails';
+import Reservation from './User/Reservation';
+import ViewSchedule from './User/ViewSchedule';
+import ScheduleDetails from './User/ScheduleDetails';
+import ScheduleDone from './User/ScheduleDone';
+
+import StepIndicator from './Classes/StepIndicator';
+
 // Admin Side
 import AdminNavbar from './Classes/AdminNavbar';
 import AdminMain from './Admin/Admin-Main'; // Adjust the path if necessary
@@ -35,8 +54,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(() => {
-    // Check localStorage for user login state
-    return localStorage.getItem('isUserLoggedIn') === 'true';
+    return localStorage.getItem('isUserLoggedIn') === 'true' ? true : false;
   });
 
   useEffect(() => {
@@ -66,6 +84,10 @@ const App = () => {
                 <Route path="/Splash" element={<Intro />} />
                 <Route path="/Overview" element={<OverviewProgram />} />
                 <Route path="/About" element={<About />} />
+                <Route path="/Mandate" element={<Mandate />} /> 
+                <Route path="/Council" element={<Council />} />
+                <Route path="/FormerSK" element={<FormerSK />} /> 
+                <Route path="/History" element={<History />} />
                 <Route path="/ContactUs" element={<Contact />} />
                 <Route path="/userauth" element={<UserAuthentication setIsAdminLoggedIn={setIsAdminLoggedIn} 
                                                                     setIsUserLoggedIn={setIsUserLoggedIn} />} />
@@ -77,8 +99,15 @@ const App = () => {
                 <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/Profile" element={<Profile />} />
                 <Route path="/UserProgram" element={<Programs />} />
+                <Route path="/ProgramDetails" element={<ProgramDescript />} />
                 <Route path="/Reservation" element={<Reservation />} />
+                <Route path="/ViewSchedule" element={<ViewSchedule />} />
+                <Route path="/StepIndicator" element={<StepIndicator />} />
+                <Route path="/ScheduleDetails" element={<ScheduleDetails />} />
+                <Route path="/ScheduleDone" element={<ScheduleDone />} />
+                <Route path="/Log" element={<Log />} />
                 <Route path="/Contact" element={<HelpSupport />} />
+
                 
                 {/* Admin Side Routes */}
                 <Route path="/admin/reservation" element={<AdminReservation />} />

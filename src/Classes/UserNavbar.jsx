@@ -57,7 +57,8 @@ const UserNavbar = () => {
             <div className={`avatar-dropdown ${dropdownVisible ? 'visible' : ''}`} style={dropdownStyles}>
               <Link to="/Profile" className="dropdown-item" onClick={handleLinkClick}>Profile</Link>
               <Link to="/Settings" className="dropdown-item" onClick={handleLinkClick}>Settings</Link> {/* Ensure this is the correct route */}
-              <Link to="/userauth" className="dropdown-item" onClick={handleLinkClick}>Logout</Link>
+              <Link to="/userauth" className="dropdown-item" onClick={() => { localStorage.setItem('isUserLoggedIn', 'false');
+                    handleLinkClick(); }}>Logout</Link>
             </div>
           )}
         </div>
