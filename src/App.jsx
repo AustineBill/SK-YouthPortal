@@ -40,7 +40,13 @@ import StepIndicator from './Classes/StepIndicator';
 // Admin Side
 import AdminNavbar from './Classes/AdminNavbar';
 import AdminMain from './Admin/Admin-Main'; // Adjust the path if necessary
-import AdminReservation from './Admin/AdminReservation'; 
+import AdminReservation from './Admin/AdminReservation';
+import ManageHomePage from './Admin/AdminManageHome';
+import ManageAboutUs from './Admin/AdminManageAboutUs';
+import ManageProgram from './Admin/AdminManageProgram';
+import ManageContactUs from './Admin/AdminManageContactUs';
+import Reports from './Admin/AdminReports';
+import Users from './Admin/AdminUsers';
 
 import './App.css';
 import './style.css';
@@ -108,10 +114,15 @@ const App = () => {
                 <Route path="/Log" element={<Log />} />
                 <Route path="/Contact" element={<HelpSupport />} />
 
-                
                 {/* Admin Side Routes */}
                 <Route path="/admin/reservation" element={<AdminReservation />} />
                 <Route path="/admin" element={<AdminMain isAdmin={isAdminLoggedIn} />} /> 
+                <Route path="/admin/manage-home" element={<ManageHomePage />} />
+                <Route path="/admin/manage-about-us" element={<ManageAboutUs />} />
+                <Route path="/admin/manage-program" element={<ManageProgram />} />
+                <Route path="/admin/manage-contact-us" element={<ManageContactUs />} />
+                <Route path="/admin/reports" element={<Reports />} />
+                <Route path="/admin/users" element={<Users />} />
               </Routes>
             </div>
             {!isAdminLoggedIn && <Footer />}
