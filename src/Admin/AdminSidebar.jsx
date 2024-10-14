@@ -24,19 +24,19 @@ const AdminSidebar = () => {
                         <ul className="manage-website-nested-links">
                             <li>
                                 <img src='#' alt="Manage Home Page icon" />
-                                <Link to="/manage-home-page">Manage Home Page</Link>
+                                <Link to="/admin/manage-home">Manage Home Page</Link>
                             </li>
                             <li>
                                 <img src='#' alt="Manage About Us Page icon" />
-                                <Link to="/manage-about-us">Manage About Us Page</Link>
+                                <Link to="/admin/manage-about-us">Manage About Us Page</Link>
                             </li>
                             <li>
                                 <img src='#' alt="Manage Program Page icon" />
-                                <Link to="/manage-program">Manage Program Page</Link>
+                                <Link to="/admin/manage-program">Manage Program Page</Link>
                             </li>
                             <li>
                                 <img src='#' alt="Manage Contact Us Page icon" />
-                                <Link to="/manage-contact-us">Manage Contact Us Page</Link>
+                                <Link to="/admin/manage-contact-us">Manage Contact Us Page</Link>
                             </li>
                         </ul>
                     )}
@@ -54,11 +54,11 @@ const AdminSidebar = () => {
                     )}
                     <li>
                         <img src='#' alt="Reports icon" />
-                        <Link to="/reports">Reports</Link>
+                        <Link to="/admin/reports">Reports</Link>
                     </li>
                     <li>
                         <img src='#' alt="Users icon" />
-                        <Link to="/users">Users</Link>
+                        <Link to="/admin/users">Users</Link>
                     </li>
                 </ul>
             </div>
