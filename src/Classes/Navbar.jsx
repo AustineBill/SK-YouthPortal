@@ -34,12 +34,12 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <Link to="/" className="navbar-brand">
-        <h2 className="Website-Name" style={{ fontFamily: "'Sansita Swashed', cursive" }}>SK Youth</h2>
+        <h2 className="Website-Name">iSKed</h2>
       </Link>
       <Link className="nav-item nav-link" to="/Splash">Home</Link>
 
       {/* Customized Dropdown */}
-      <div className="dropdown" ref={dropdownRef}>
+      <div className="dropdown-about" ref={dropdownRef}>
         <Link
           to="/"
           className="nav-item nav-link"

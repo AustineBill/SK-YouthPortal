@@ -31,6 +31,8 @@ import Log from "./User/ReserveLog";
 import HelpSupport from "./User/HelpSupport";
 import ProgramDescript from './User/ProgramDetails';
 import Reservation from './User/Reservation';
+import ReservationDetails from './User/ReservationDetails';
+import CancelReservation from './User/Cancellation';
 import ViewSchedule from './User/ViewSchedule';
 import ScheduleDetails from './User/ScheduleDetails';
 import ScheduleDone from './User/ScheduleDone';
@@ -112,7 +114,10 @@ const App = () => {
                 <Route path="/StepIndicator" element={<StepIndicator />} />
                 <Route path="/ScheduleDetails" element={<ScheduleDetails />} />
                 <Route path="/ScheduleDone" element={<ScheduleDone />} />
-                <Route path="/Log" element={<Log />} />
+                <Route path="/ReservationLog" element={<Log />} />
+                  <Route path="/ReservationDetails" element={<ReservationDetails />} />
+                  <Route path="/Cancellation" element={<CancelReservation />} />
+
                 <Route path="/Contact" element={<HelpSupport />} />
 
                 {/* Admin Side Routes */}

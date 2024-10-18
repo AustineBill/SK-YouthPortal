@@ -94,11 +94,12 @@ img.animated.pulse {
 
 
 .Website-Name{
-  color: #1809f5; /* Bootstrap's dark color */
+  color: #25327A;
   margin-left: 4rem; /* Equivalent to Bootstrap's `ms-4` */
   margin-right: 4rem;
-  font-weight: bold; /* Makes the text bold */
-  font-family: "Sansita Swashed";
+  font-family: 'Sansita';
+  font-style: italic;
+  font-weight: bold;
   font-size: 30px; 
 }
 
@@ -117,7 +118,7 @@ img.animated.pulse {
   animation-fill-mode: both; 
   animation-name: slideInLeft; 
   font-size: 60px;
-  margin-left: 30px;
+  margin-left: 24px;
 }
 
 .Subtext {
@@ -127,7 +128,7 @@ img.animated.pulse {
   animation-fill-mode: both; 
   animation-name: slideInLeft; 
   font-size: 30px;
-  margin-left: 30px;
+  margin-left: 24px;
   margin-bottom: 3rem;
 }
 
@@ -199,7 +200,6 @@ img.animated.pulse {
   font-family: 'Poppins', sans-serif;
   margin: 2rem;
   font-size: 1.2rem;
-  font-weight: bold;
   color: #000000;
 }
 
@@ -683,7 +683,7 @@ img.animated.pulse {
 
 
 /* Dropdown styles */
-.dropdown {
+.dropdown-about{
   position: relative;
   display: inline-block;
 }
