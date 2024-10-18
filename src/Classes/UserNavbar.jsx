@@ -39,11 +39,11 @@ const UserNavbar = ({ setIsUserLoggedIn }) => {
     <nav className="navbar">
       <div className="navbar-links" style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
         <Link to="/" className="navbar-brand">
-          <h2 className="Website-Name" style={{ fontFamily: "'Sansita Swashed', cursive" }}>SK Youth</h2>
+          <h2 className="Website-Name">iSKed</h2>
         </Link>
         <Link className="nav-item nav-link" to="/Dashboard">Home</Link>
         <Link className="nav-item nav-link" to="/UserProgram">Programs</Link>
-        <Link className="nav-item nav-link" to="/UserReservation">Reservation</Link>
+        <Link className="nav-item nav-link" to="/ReservationLog">Reservation</Link>
         <Link className="nav-item nav-link" to="/ContactUs">Help and Support</Link>
 
         <div style={{ marginLeft: 'auto', position: 'relative' }} ref={dropdownRef}>
