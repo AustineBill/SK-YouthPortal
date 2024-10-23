@@ -46,8 +46,10 @@ import AdminReservation from './Admin/AdminReservation';
 import ManageHomePage from './Admin/AdminManageHome';
 import HomeDetails from './Admin/AdminEditHome';
 import ManageAboutUs from './Admin/AdminManageAboutUs';
+import AboutDetails from './Admin/AdminEditAbout';
 import ManageProgram from './Admin/AdminManageProgram';
 import ManageContactUs from './Admin/AdminManageContactUs';
+import ContactDetails from './Admin/AdminEditContact';
 import Reports from './Admin/AdminReports';
 import Users from './Admin/AdminUsers';
 
@@ -58,8 +60,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import AboutDetails from './Admin/AdminEditAbout';
-import ContactDetails from './Admin/AdminEditContact';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
