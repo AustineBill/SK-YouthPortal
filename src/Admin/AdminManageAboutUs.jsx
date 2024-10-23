@@ -4,7 +4,7 @@ const ManageAboutUs = () => {
     return ( 
         <div>
             <h2>Manage About Us Details</h2>
-            <Link to="/admin/edit-about-details">
+            <Link to="/admin/edit-about-us-details">
                 <button>Edit Details</button>
             </Link>
         </div>
