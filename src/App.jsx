@@ -58,6 +58,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import AboutDetails from './Admin/AdminEditAbout';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -126,6 +127,7 @@ const App = () => {
                 <Route path="/admin/manage-home" element={<ManageHomePage />} />
                 <Route path="/admin/edit-home-details" element={<HomeDetails />} />
                 <Route path="/admin/manage-about-us" element={<ManageAboutUs />} />
+                <Route path="/admin/edit-about-details" element={<AboutDetails />} />
                 <Route path="/admin/manage-program" element={<ManageProgram />} />
                 <Route path="/admin/manage-contact-us" element={<ManageContactUs />} />
                 <Route path="/admin/reports" element={<Reports />} />
