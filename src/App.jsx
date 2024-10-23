@@ -46,8 +46,10 @@ import AdminReservation from './Admin/AdminReservation';
 import ManageHomePage from './Admin/AdminManageHome';
 import HomeDetails from './Admin/AdminEditHome';
 import ManageAboutUs from './Admin/AdminManageAboutUs';
+import AboutDetails from './Admin/AdminEditAbout';
 import ManageProgram from './Admin/AdminManageProgram';
 import ManageContactUs from './Admin/AdminManageContactUs';
+import ContactDetails from './Admin/AdminEditContact';
 import Reports from './Admin/AdminReports';
 import Users from './Admin/AdminUsers';
 
@@ -126,8 +128,10 @@ const App = () => {
                 <Route path="/admin/manage-home" element={<ManageHomePage />} />
                 <Route path="/admin/edit-home-details" element={<HomeDetails />} />
                 <Route path="/admin/manage-about-us" element={<ManageAboutUs />} />
+                <Route path="/admin/edit-about-us-details" element={<AboutDetails />} />
                 <Route path="/admin/manage-program" element={<ManageProgram />} />
                 <Route path="/admin/manage-contact-us" element={<ManageContactUs />} />
+                <Route path="/admin/edit-contact-us-details" element={<ContactDetails />} />
                 <Route path="/admin/reports" element={<Reports />} />
                 <Route path="/admin/users" element={<Users />} />
               </Routes>
