@@ -1,0 +1,131 @@
+.admin-user-modification-container {
+    display: flex; /* Use flexbox for layout */
+    margin: 0; /* Reset margin */
+    padding: 0; /* Reset padding */
+    min-height: 100vh; /* Ensure full height */
+    background-color: #ecf0f1; /* Light gray background for the container */
+}
+
+.admin-user-modification-container > * {
+    flex-shrink: 0; /* Prevent shrinking of child components */
+}
+
+.AdminSidebar {
+    width: 250px; /* Fixed width for sidebar */
+    background-color: #34495e; /* Dark background for sidebar */
+    color: white; /* White text for sidebar */
+    padding: 20px; /* Padding inside sidebar */
+    min-height: 100vh; /* Full height of the sidebar */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for sidebar */
+}
+
+.main-content {
+    flex: 1; /* Take up remaining space */
+    padding: 20px; /* Additional padding for main content */
+    background-color: #ffffff; /* White background for main content */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-left: 20px; /* Space between sidebar and main content */
+}
+
+.text-center {
+    text-align: center; /* Center align text */
+    margin-bottom: 20px; /* Margin below title section */
+}
+
+.Maintext {
+    font-size: 28px; /* Larger font size for main title */
+    font-weight: bold; /* Bold title */
+    color: #2c3e50; /* Dark color for title */
+    margin-bottom: 10px; /* Space below main title */
+}
+
+.Subtext {
+    font-size: 18px; /* Font size for subtitle */
+    color: #34495e; /* Slightly lighter dark color for readability */
+    margin-bottom: 20px; /* Space below subtitle */
+}
+
+.user-form {
+    margin-bottom: 30px; /* Space below form */
+    display: flex; /* Flex for form layout */
+    gap: 15px; /* Space between inputs */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.user-form input {
+    padding: 12px; /* Increased padding for input fields */
+    border: 1px solid #bdc3c7; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    width: calc(33% - 15px); /* Responsive width for three inputs */
+    min-width: 220px; /* Minimum width for inputs */
+    font-size: 16px; /* Font size for inputs */
+    margin-bottom: 15px; /* Space below each input field */
+}
+
+.btn {
+    padding: 12px 20px; /* Padding for buttons */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* Remove default border */
+    cursor: pointer; /* Pointer cursor for buttons */
+    margin-top: 5px; /* Space above buttons */
+}
+
+.btn-primary {
+    background-color: #3498db; /* Primary button color */
+    color: white; /* White text */
+}
+
+.btn-success {
+    background-color: #2ecc71; /* Success button color */
+    color: white; /* White text */
+}
+
+.btn-danger {
+    background-color: #e74c3c; /* Danger button color */
+    color: white; /* White text */
+}
+
+.btn-primary:hover, 
+.btn-success:hover, 
+.btn-danger:hover {
+    opacity: 0.8; /* Slightly fade on hover */
+}
+
+.table {
+    width: 100%; /* Full width for the table */
+    margin-top: 20px; /* Space above table */
+    margin-bottom: 30px; /* Space below table */
+    border-collapse: collapse; /* Collapse borders */
+}
+
+.table th,
+.table td {
+    padding: 12px; /* Padding for table cells */
+    text-align: left; /* Left align text */
+    border-bottom: 1px solid #bdc3c7; /* Light border for rows */
+}
+
+.table th {
+    background-color: #34495e; /* Dark background for table header */
+    color: white; /* White text for header */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #ecf0f1; /* Light gray background for odd rows */
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #ffffff; /* White background for even rows */
+}
+
+.table-striped tbody tr:hover {
+    background-color: #dcdcdc; /* Hover effect for table rows */
+}
+
+/* Center the no users message */
+.text-center {
+    text-align: center;
+    color: #34495e; /* Dark color for no users message */
+    margin-top: 20px; /* Space above no users message */
+}
