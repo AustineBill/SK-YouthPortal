@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { Dropdown } from 'react-bootstrap'; // Import only Dropdown from react-bootstrap
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { Nav, Dropdown } from 'react-bootstrap'; // Import Nav and Dropdown from react-bootstrap
+
+import Logo from "../Asset/WebImages/Logo.png";
 import '../App.css'; // Ensure your custom CSS file is imported
 
-
-
 const Navbar = () => {
-  // State to manage dropdown visibility
-  const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false); // State for dropdown visibility
   const dropdownRef = useRef(null); // Ref to handle clicks outside
 
   // Function to toggle dropdown visibility
@@ -32,40 +31,43 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="navbar">
-      <Link to="/" className="navbar-brand">
-        <h2 className="Website-Name">iSKed</h2>
-      </Link>
-      <Link className="nav-item nav-link" to="/Splash">Home</Link>
+    <Nav className="navbar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div className="navbar-links" style={{ display: 'flex', alignItems: 'center'}}>
+        <h2 className="Website-Name clr-db">
+          <img src={Logo} alt="Logo" style={{ width: '70px' }} /> iSKed
+        </h2>
 
-      {/* Customized Dropdown */}
-      <div className="dropdown-about" ref={dropdownRef}>
-        <Link
-          to="/"
-          className="nav-item nav-link"
-          onClick={handleDropdownToggle}
-          style={{ border: 'none', backgroundColor: 'transparent', padding: '0', cursor: 'pointer' }} // Removes background and border
-        >
-          About
-        </Link>
-        {showDropdown && (
-          <div className="dropdown-content">
-            <Dropdown.Item as={Link} to="/About">SK Youth</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/Mandate">Mandate</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/Council">SK Council</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/FormerSK">Former SK Council</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/History">History</Dropdown.Item>
-          </div>
-        )}
+        <Link className="nav-item nav-link" to="/Splash">Home</Link>
+        
+        <div className="dropdown-about" ref={dropdownRef}>
+          <Link
+            to="/"
+            className="nav-item nav-link"
+            onClick={handleDropdownToggle}
+            style={{ border: 'none', backgroundColor: 'transparent', padding: '0', cursor: 'pointer' }}
+          >
+            About
+          </Link>
+          {showDropdown && (
+            <div className="dropdown-content">
+              <Dropdown.Item as={Link} to="/About">SK Youth</Dropdown.Item>
+              <Dropdown.Item as={Link} to="/Mandate">Mandate</Dropdown.Item>
+              <Dropdown.Item as={Link} to="/Council">SK Council</Dropdown.Item>
+              <Dropdown.Item as={Link} to="/FormerSK">Former SK Council</Dropdown.Item>
+              <Dropdown.Item as={Link} to="/History">History</Dropdown.Item>
+            </div>
+          )}
+        </div>
+  
+        <Link className="nav-item nav-link" to="/Overview">Programs</Link>
+        <Link className="nav-item nav-link" to="/ContactUs">Contact Us</Link>
       </div>
 
-      <Link className="nav-item nav-link" to="/Overview">Programs</Link>
-      <Link className="nav-item nav-link" to="/ContactUs">Contact Us</Link>
-      
-
-      <Link className="login-button btn btn-outline-dark ms-auto" to="/userauth?view=signIn">Log In</Link>
-      <Link className="signup-button btn btn-primary ms-2" to="/userauth?view=signUp">Sign Up</Link>
-    </nav>
+      <div className="navbar-buttons" style={{ display: 'flex', alignItems: 'center' }}>
+        <button className="login-button ms-2" onClick={() => navigate('/userauth?view=signIn')}>Log In</button>
+        <button className="signup-button ms-2" onClick={() => navigate('/userauth?view=signUp')}>Sign Up</button>
+      </div>
+    </Nav>
   );
 };
 

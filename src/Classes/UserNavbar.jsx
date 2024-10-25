@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Avatar from 'react-avatar';
-
+import Logo from "../Asset/WebImages/Logo.png";
 import '../App.css'; // Ensure your custom CSS file is imported
 
 const UserNavbar = ({ setIsUserLoggedIn }) => {
@@ -37,9 +37,11 @@ const UserNavbar = ({ setIsUserLoggedIn }) => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-links" style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+      <div className="navbar-links" style={{ display: 'flex', alignItems: 'center', width: '98%' }}>
         <Link to="/" className="navbar-brand">
-          <h2 className="Website-Name">iSKed</h2>
+          <h2 className="Website-Name">
+            <img src={Logo} alt="Logo" style={{ width: '70px' }} /> iSKed
+          </h2>
         </Link>
         <Link className="nav-item nav-link" to="/Dashboard">Home</Link>
         <Link className="nav-item nav-link" to="/UserProgram">Programs</Link>
@@ -48,7 +50,7 @@ const UserNavbar = ({ setIsUserLoggedIn }) => {
 
         <div style={{ marginLeft: 'auto', position: 'relative' }} ref={dropdownRef}>
           <div onClick={toggleDropdown} style={{ cursor: 'pointer' }}>
-            <Avatar name={loggedInUser} round={true} size="70" />
+            <Avatar name={loggedInUser} round={true} size="50" />
           </div>
           {dropdownVisible && (
             <div className={`avatar-dropdown ${dropdownVisible ? 'visible' : ''}`} style={dropdownStyles}>
