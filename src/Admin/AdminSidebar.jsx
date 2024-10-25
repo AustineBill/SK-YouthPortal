@@ -56,7 +56,7 @@ const AdminSidebar = () => {
                     </li>
                     <li>
                         <img src='#' alt="Reports icon" />
-                        <Link to="/reports">Reports</Link>
+                        <Link to="/admin/reports">Reports</Link>
                     </li>
                     <li>
                         <img src='#' alt="User Modification icon" />
