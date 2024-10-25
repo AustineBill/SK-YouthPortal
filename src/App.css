@@ -31,41 +31,32 @@ img.animated.pulse {
   animation-duration: 5s;
 }
 
-/*** Button ***/
-.btn {
-  font-weight: 500;
-  transition: .5s;
+/****** Colors ******/
+
+.clr-db{
+  color: #25327A;
+  
 }
 
-.btn.btn-primary {
-  color: var(--bs-white);
+/****** Buttons ******/
+
+.btn-db{
+  color: #ffffff;
+  border-color: #25327A;
+  background-color:  #25327A;
+
 }
 
-.btn-square {
-  width: 38px;
-  height: 38px;
+
+.txt-db{
+  font-family: 'Sansita';
 }
 
-.btn-sm-square {
-  width: 32px;
-  height: 32px;
+.txt-i-db{
+  font-family: 'Sansita';
+  font-style: italic;
 }
 
-.btn-lg-square {
-  width: 48px;
-  height: 48px;
-}
-
-.btn-square,
-.btn-sm-square,
-.btn-lg-square {
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: normal;
-  border-radius: 50px;
-}
 
 @media (forced-colors: active) {
   container-fluid {
@@ -94,13 +85,13 @@ img.animated.pulse {
 
 
 .Website-Name{
-  color: #25327A;
-  margin-left: 4rem; /* Equivalent to Bootstrap's `ms-4` */
-  margin-right: 4rem;
+  margin-left: 1rem; /* Equivalent to Bootstrap's `ms-4` */
+  margin-right: 3rem;
+  margin-top: 10px;
   font-family: 'Sansita';
   font-style: italic;
   font-weight: bold;
-  font-size: 30px; 
+  font-size: 40px; 
 }
 
 .card-container {
@@ -171,17 +162,11 @@ img.animated.pulse {
 
 
 
-
-
-
-
-
 /*** Navbar ***/
 .sticky-top { 
   margin-top: 10px;;
   transition: .5s;
 }
-
 .navbar {
   height: 100px;
   position: sticky; /* Fix the navbar to the top */
@@ -192,121 +177,43 @@ img.animated.pulse {
   background-color: white; /* Background color to make sure it is visible */
   display: flex; /* Use flexbox for proper alignment */
   align-items: center; /* Center vertically */
-
   border: none; /* No border */
 }
 
-.nav-item{
+.nav-item {
   font-family: 'Poppins', sans-serif;
-  margin: 2rem;
-  font-size: 1.2rem;
-  color: #000000;
-}
-
-.nav-drop-item{
-  font-family: 'Poppins', sans-serif;
-}
-
-.navbar .dropdown {
-  color: inherit; /* Inherit text color */
+  font-size: 4rem;
+  margin: 2rem 1rem;
+  color: black !important;
   text-decoration: none; /* No underline */
   cursor: pointer; /* Cursor as pointer */
 }
 
-/* Remove Bootstrap's default dropdown caret */
-.navbar .dropdown::after {
-  display: none;
-}
-
-.navbar .navbar-nav .nav-link {
- 
-  color: var(--bs-dark);
-  font-weight: 600;
-  transition: .5s;
-  outline: none;
-}
-
-.navbar .navbar-nav .nav-link:hover,
-.navbar .navbar-nav .nav-link.active {
-  color: var(--bs-white);
-}
-
-.navbar .dropdown-toggle::after {
-  border: none;
-  content: "\f107";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  vertical-align: middle;
-  margin-left: 8px;
-}
-
-@media (max-width: 991.98px) {
-  .navbar .navbar-nav {
-      padding: 0 15px;
-      background: var(--bs-primary);
-  }
-
-  .navbar .navbar-nav .nav-link  {
-      margin-right: 0;
-      padding: 10px 0;
-  }
-}
-
-@media (min-width: 992px) {
-  .navbar .nav-item .dropdown-menu {
-      display: block;
-      border: none;
-      margin-top: 0;
-      top: 150%;
-      opacity: 0;
-      visibility: hidden;
-      transition: .5s;
-  }
-
-  .navbar .nav-item:hover .dropdown-menu {
-      top: 100%;
-      visibility: visible;
-      transition: .5s;
-      opacity: 1;
-  }
-}
-
-
-
 .login-button {
   background-color: #f5efef; /* Dark color similar to Bootstrap's .btn-dark */
   color: rgb(15, 15, 15); /* Text color for contrast */
-  padding: 0.5rem 2rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
-  /* Margin start: ms-3  margin-left: 5rem; */
- 
+  padding: 0.5rem 1rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
   border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
 }
 
 @media (min-width: 992px) { /* Large screen (lg) breakpoint */
-  .login-button {
+  .login-button .signup-button  {
       display: inline-block; /* Display button inline on lg screens and up */
   }
 }
 
 .login-button:hover {
   background-color: #23272b; /* Darker shade on hover */
+  color: #ffffff;
 }
 
 
 .signup-button {
-  background-color: #2011f5; /* Dark color similar to Bootstrap's .btn-dark */
-  color: rgb(247, 243, 243); /* Text color for contrast */
-  padding: 0.5rem 2rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
-  margin-right: 5rem;
-  /* Margin start: ms-3  margin-left: 3rem; */
+  background-color: #25327A; /* Dark color similar to Bootstrap's .btn-dark */
+  color: #ffffff;
+  padding: 0.5rem 1rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
+  margin-right: 3rem;
   border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
-}
-
-
-@media (min-width: 992px) { /* Large screen (lg) breakpoint */
-  .signup-button {
-      display: inline-block; /* Display button inline on lg screens and up */
-  }
 }
 
 .signup-button:hover {
@@ -334,60 +241,51 @@ img.animated.pulse {
 
 
 .custom-intro-text {
-  font-weight: 300; 
+  font-weight: 200; 
   color: #161616; 
   animation-duration: 1s; 
   animation-fill-mode: both; 
   animation-name: slideInLeft; 
-  
 }
-
 
 .custom-name {
   font-weight: bold; 
-  color: #2011f5;
-  font-size: 64px;
-  margin-top: 20px;
-  font-family: 'Sansita Swashed', cursive;
-  
+  font-size: 72px;
+  margin-top: 30px; 
 }
 
-.custom-intro-details {
+
+.IntroDetails {
   font-weight: bold; 
   color: #141313; 
   animation-duration: 1s; 
   animation-fill-mode: both; 
   animation-name: slideInRight; 
   font-size: 30px;
-  margin-left: 35%; /* Remove default margin */
+  margin: 0rem 1rem 0rem 55%; /* Remove default margin */
+}
+
+.IntroContainer {
+  display: flex; /* Use Flexbox for alignment */
+  align-items: center; /* Align items vertically center */
+  justify-content: center; /* Center the items horizontally (optional) */
 }
 
 .IntroButton {
-  display: inline-block;
-  font-weight: 400;
   text-align: center;   
-  padding: 1rem 1rem;
+  padding: 0rem 1rem 0.5rem ;
   font-size: 1rem;
-  line-height: 1.5;
   border-radius: 0.25rem;
-  color: #fff;
-  background-color: #3410fa;
-  border-color: #3312f0;
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: slideInRight;
-  width: 15%;
-  align-items: center;
-  position: absolute;
-  top: 50%;
-  right: 10%; 
+  width: auto;
+  height: auto;
 }
 
-
-.arrow{
-  margin-right: 10px;
-  margin-left: 10px;
-  width: 30px; /* Set the width you need */
+.IntroButton .bi {
+  font-size: 1.5rem; /* Increase icon size */
+  margin-left: 0.5rem; /* Space between text and icon */
 }
 
 
@@ -458,13 +356,12 @@ img.animated.pulse {
 }
 
 
-.NewEve-headline {
+.NewEveHead {
   color: #060707; /* Equivalent to text-primary */
-  margin-top: 8rem; /* Equivalent to mb-4 */
-  margin-bottom: 1.5rem; /* Equivalent to mb-4 */
+  margin-top: 6rem; /* Equivalent to mb-4 */
   font-weight: 700; /* Adjust the font-weight as needed */
   text-align: center; /* Center the text */
-  font-size: 6rem;    
+  font-size: 4rem;    
 }
 
 .NewEveSubHeadLine {
@@ -608,24 +505,22 @@ img.animated.pulse {
   margin-left: 20px;;
   margin-bottom: 5rem; 
   margin-top: 5rem;
+  font-family: 'Sansita';
 }
 
 
 .Text-1{
-  font-family: 'Poppins', sans-serif;
   font-optical-sizing: auto;
   font-weight: bolder;
-  font-style: normal;
+  font-style: oblique;
   color: #4679e6;
   font-size: 3rem;
 }
 
 .Text-2{
- 
   font-optical-sizing: auto;
   font-weight: bold;
   font-style: oblique;
-  color: #2011f5;
   font-size: 3rem;
 }
 
@@ -635,13 +530,13 @@ img.animated.pulse {
   font-style: normal;
   color: #111111;
   font-size: 1.5rem; 
+  font-family: "Poppins";
 }
 
 
 /*** Footer ***/
 .footer-name{
-  color: #2011f5;
-  font-size: 2rem; 
+  font-size: 4rem; 
   font-weight: bolder;
 }
 
