@@ -1,0 +1,61 @@
+.admin-main-container {
+    display: flex; /* Use flexbox for layout */
+    height: 100vh; /* Full height for the container */
+    overflow: hidden; /* Prevent overflow */
+}
+
+.analytics-container {
+    display: flex; /* Align sidebar and content horizontally */
+    flex-direction: row; /* Ensure they are in a row */
+    flex: 1; /* Take up available space */
+    max-width: 100%; /* Prevent overflow */
+}
+
+.content-container {
+    flex: 1; /* Allow main content to take up remaining space */
+    padding: 20px; /* Add some padding */
+    overflow-y: auto; /* Allow vertical scrolling if needed */
+}
+
+.admin-header {
+    margin-bottom: 20px; /* Spacing below the header */
+}
+
+.Maintext-Calendar {
+    font-size: 2rem; /* Main title size */
+    font-weight: bold; /* Main title weight */
+    color: #333; /* Main title color */
+}
+
+.Subtext-Calendar {
+    font-size: 1.2rem; /* Subtitle size */
+    color: #666; /* Subtitle color */
+}
+
+.charts-section {
+    display: flex; /* Align charts in a row */
+    flex-wrap: wrap; /* Allow wrapping of charts */
+    justify-content: space-between; /* Space out charts */
+    margin-bottom: 20px; /* Spacing below the charts */
+}
+
+.chart-container {
+    flex: 1 1 45%; /* Flexible size, allowing wrapping */
+    margin: 10px; /* Margin for spacing between charts */
+}
+
+.summary-table {
+    margin-top: 20px; /* Spacing above the summary table */
+}
+
+.table {
+    width: 100%; /* Full width for the table */
+    border-collapse: collapse; /* Collapse borders */
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd; /* Border for table cells */
+    padding: 8px; /* Padding for table cells */
+    text-align: left; /* Left align text */
+}
