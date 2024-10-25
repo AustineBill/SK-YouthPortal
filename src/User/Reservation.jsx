@@ -56,11 +56,13 @@ const Reservation = () => {
   return (
 
     
-    <div className="calendar-container">
-       <div className="text-center text-lg-start mt-4 ">
-          <h1 className="Maintext-Calendar animated slideInRight">Schedule</h1>
-            <p className='Subtext-Calendar'>Lorem ipsum</p> 
+    <div className="container-fluid">
+       <div className="text-center text-lg-start m-4 mv-8 mb-3">
+          <h1 className="Maintext animated slideInRight">Schedule</h1>
+            <p className='Subtext'>Lorem ipsum</p> 
         </div>
+
+      <div className="calendar-container">
 
       <StepIndicator currentStep={1} />
        
@@ -139,6 +141,7 @@ const Reservation = () => {
         selectRange={true} // Enable range selection
         value={selectedDates} // Current selected date or range
       />
+      </div>
     </div>
   );
 };
