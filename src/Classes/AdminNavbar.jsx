@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import "../Admin/styles/AdminNavbar.css";
+
 
 const AdminNavbar = () => {
     const navigate = useNavigate();
