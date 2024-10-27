@@ -19,9 +19,13 @@ const UserNavbar = ({ setIsUserLoggedIn }) => {
   };
 
   useEffect(() => {
-    const username = localStorage.getItem('username') || 'Default User';
-    setLoggedInUser(username);
-
+    const username = localStorage.getItem('username');
+    if (username) {
+        setLoggedInUser(username);
+    } else {
+        // Handle case for not logged in
+        setLoggedInUser(''); // or a default username
+    }
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownVisible(false);
@@ -54,10 +58,11 @@ const UserNavbar = ({ setIsUserLoggedIn }) => {
           </div>
           {dropdownVisible && (
             <div className={`avatar-dropdown ${dropdownVisible ? 'visible' : ''}`} style={dropdownStyles}>
-              <Link to="/Profile" className="dropdown-item" onClick={handleLinkClick}>Profile</Link>
+              <Link to={`/Profile/${loggedInUser}`} className="dropdown-item" onClick={handleLinkClick}>Profile</Link>
+              {/*<Link to="/Profile" className="dropdown-item" onClick={handleLinkClick}>Profile</Link>*/}
               <Link to="/Settings" className="dropdown-item" onClick={handleLinkClick}>Settings</Link>
               <Link to="/userauth" className="dropdown-item" onClick={() => { 
-                localStorage.setItem('isUserLoggedIn', 'false');
+                localStorage.removeItem('isUserLoggedIn', 'false');
                 setIsUserLoggedIn(false);  // Update state to trigger re-render
                 handleLinkClick();
               }}>Logout</Link>
@@ -68,7 +73,6 @@ const UserNavbar = ({ setIsUserLoggedIn }) => {
     </nav>
   );
 };
-
 
 // Inline styles for dropdown (or you can move it to your CSS)
 const dropdownStyles = {

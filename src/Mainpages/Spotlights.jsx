@@ -22,7 +22,7 @@ const Spotlight = () => (
 
         <div className="bg-secondary">
             <div className="Divider">
-                <h1 className="Divider-Text">Milestones</h1>
+                <h1 className="text-dark fw-bold fs-4">Milestones</h1>
             </div>
         </div>
 

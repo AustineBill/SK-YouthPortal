@@ -33,6 +33,19 @@ img.animated.pulse {
 
 /****** Colors ******/
 
+
+@media (forced-colors: active) {
+  container-fluid {
+    background-color: Window; /* Background color for forced colors */
+    color: WindowText; /* Text color for forced colors */
+  }
+}
+
+@media (forced-colors: active) {
+  /* Apply high-contrast mode styles here */
+}
+
+
 .clr-db{
   color: #25327A;
   
@@ -48,6 +61,8 @@ img.animated.pulse {
 }
 
 
+/****** Text ******/
+
 .txt-db{
   font-family: 'Sansita';
 }
@@ -58,13 +73,6 @@ img.animated.pulse {
 }
 
 
-@media (forced-colors: active) {
-  container-fluid {
-    background-color: Window; /* Background color for forced colors */
-    color: WindowText; /* Text color for forced colors */
-  }
-}
-
 /*Overall*/
 
 .container-fluid {
@@ -73,6 +81,7 @@ img.animated.pulse {
   overflow-y: hidden;
   overflow-x: hidden;   
 }
+
 
 .BodyContainer {
   width: 80%; /* Equivalent to col-lg-10 */
@@ -98,7 +107,7 @@ img.animated.pulse {
   display: flex;
   flex-wrap: wrap;  
   justify-content: center;
-  margin: 3rem;
+  margin: 1rem;
 }
 
 
@@ -154,12 +163,6 @@ img.animated.pulse {
   width: 30%;
 }
 
-.Divider-Text {
-  color: #141313;
-  font-weight: bold;
-  font-size: 25px;
-}
-
 
 
 /*** Navbar ***/
@@ -167,6 +170,7 @@ img.animated.pulse {
   margin-top: 10px;;
   transition: .5s;
 }
+
 .navbar {
   height: 100px;
   position: sticky; /* Fix the navbar to the top */
@@ -225,7 +229,7 @@ img.animated.pulse {
 /*** Hero Header ***/
 .hero-header {
   position: relative;
-  padding: 12rem 1rem 18rem 1rem;
+  padding: 8rem 0rem;
   background: url(./Asset/bg.png) center center no-repeat;
   background-size: cover;
 }
@@ -238,7 +242,6 @@ img.animated.pulse {
   animation-name: slideInLeft; 
   margin-left: 3rem;
 }
-
 
 .custom-intro-text {
   font-weight: 200; 
@@ -272,8 +275,11 @@ img.animated.pulse {
 }
 
 .IntroButton {
+  display: inline-flex; /* Use flex to align items */
+  align-items: center; /* Vertically align icon and text */
+  justify-content: center; /* Center content horizontally */
   text-align: center;   
-  padding: 0rem 1rem 0.5rem ;
+  padding: 0.5rem 1rem; /* Adjust padding as needed */
   font-size: 1rem;
   border-radius: 0.25rem;
   animation-duration: 1s;
@@ -284,9 +290,10 @@ img.animated.pulse {
 }
 
 .IntroButton .bi {
-  font-size: 1.5rem; /* Increase icon size */
+  font-size: 1.5rem;
   margin-left: 0.5rem; /* Space between text and icon */
 }
+
 
 
 /***Program***/
@@ -535,6 +542,7 @@ img.animated.pulse {
 
 
 /*** Footer ***/
+
 .footer-name{
   font-size: 4rem; 
   font-weight: bolder;
@@ -568,13 +576,6 @@ img.animated.pulse {
   box-shadow: none;
 }
 
-.footer .copyright a {
-  color: var(--bs-body);
-}
-
-.footer .copyright a:hover {
-  color: var(--bs-primary);
-}
 
 
 /* Dropdown styles */

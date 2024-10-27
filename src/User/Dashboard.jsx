@@ -23,7 +23,7 @@ const Dashboard = () => (
 
     <div className="bg-secondary">
         <div className="Divider">
-            <Link className="Divider-Text">Discover for more events</Link>
+            <Link className="text-dark fw-bold fs-4">Discover for more events</Link>
         </div>
     </div>
 

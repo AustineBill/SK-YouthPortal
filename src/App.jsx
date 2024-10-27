@@ -92,7 +92,7 @@ const App = () => {
             <div className="d-flex flex-column min-vh-100"> 
               <Routes>
                 {/* Landing Page Routes */}
-                <Route path="/Splash" element={<Intro />} />
+                <Route path="/" element={<Intro />} />
                 <Route path="/Overview" element={<OverviewProgram />} />
                 <Route path="/About" element={<About />} />
                 <Route path="/Mandate" element={<Mandate />} /> 
@@ -108,7 +108,7 @@ const App = () => {
                 
                 {/* User Side Routes */}
                 <Route path="/Dashboard" element={<Dashboard />} />
-                <Route path="/Profile" element={<Profile />} />
+                <Route path="/Profile/:username" element={<Profile />} />
                 <Route path="/UserProgram" element={<Programs />} />
                 <Route path="/ProgramDetails" element={<ProgramDescript />} />
                 <Route path="/Reservation" element={<Reservation />} />

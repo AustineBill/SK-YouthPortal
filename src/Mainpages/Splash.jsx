@@ -19,7 +19,9 @@ const Intro = () => (
           </h1>
           <div className="IntroContainer">
             <p className="IntroDetails">Western Bicutan</p>
-            <button className="IntroButton btn-db">Explore Now <i class="bi bi-arrow-right"></i></button>
+              <button className="IntroButton btn-db">
+                Explore Now <i class="bi bi-arrow-right"></i>
+              </button>
           </div>
         </div>
       </div>
@@ -83,19 +85,33 @@ const Intro = () => (
       </div>
   
       <h1 className="NewEveHead">NEWS & EVENTS</h1>
-      <div className="card-container">
-        <Card className="ProgramCard">
-          <Card.Img variant="top" src="holder.js/100px180" />
-            <Card.Body> 
-              <Card.Title>Card Title</Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up the
-                  bulk of the card's content.
-                </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
-            </Card.Body>
-        </Card>
-      </div>
+      <div className="row g-4justify-content-center"></div>
+        <div className="card-container">
+          <Card className="ProgramCard">
+            <Card.Img variant="top" src="holder.js/100px180" />
+              <Card.Body> 
+                <Card.Title>Card Title</Card.Title>
+                  <Card.Text>
+                    Some quick example text to build on the card title and make up the
+                    bulk of the card's content.
+                  </Card.Text>
+                <Button variant="primary">Go somewhere</Button>
+              </Card.Body>
+          </Card>
+          <Card className="ProgramCard">
+            <Card.Img variant="top" src="holder.js/100px180" />
+              <Card.Body> 
+                <Card.Title>Card Title</Card.Title>
+                  <Card.Text>
+                    Some quick example text to build on the card title and make up the
+                    bulk of the card's content.
+                  </Card.Text>
+                <Button variant="primary">Go somewhere</Button>
+              </Card.Body>
+          </Card>
+          
+        </div>
+      
       <Link className="btn btn-primary py-2 px-4 mb-5" to="/news">Find Out More</Link>
       
       <Carousel id="carouselExampleIndicators" interval={3000} controls={true} indicators={true}>

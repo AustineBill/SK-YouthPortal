@@ -47,11 +47,17 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
     
                 if (response.ok) {
                     setIsUserLoggedIn(true); // Set user login state
+                    localStorage.setItem('username', username); // Save the username
                     localStorage.setItem('isUserLoggedIn', 'true'); // Set login state
+                    
                     navigate('/Dashboard'); // Redirect to user dashboard
+                    
                 } else {
                     alert(data.message || 'Invalid user credentials');
                 }
+
+              
+                
             }
         } catch (error) {
             console.error('Error during login:', error);

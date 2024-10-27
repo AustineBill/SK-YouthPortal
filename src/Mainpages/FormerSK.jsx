@@ -86,7 +86,7 @@ const FormerSK = () => {
 
       <div className="bg-secondary">
         <div className="Divider">
-          <h1 className="Divider-Text">SK COUNCIL</h1>
+          <h1 className="text-dark fw-bold fs-4">SK COUNCIL</h1>
         </div>
       </div>
 
