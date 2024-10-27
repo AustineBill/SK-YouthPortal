@@ -41,6 +41,11 @@ img.animated.pulse {
   }
 }
 
+@media (forced-colors: active) {
+  /* Apply high-contrast mode styles here */
+}
+
+
 .clr-db{
   color: #25327A;
   
@@ -270,8 +275,11 @@ img.animated.pulse {
 }
 
 .IntroButton {
+  display: inline-flex; /* Use flex to align items */
+  align-items: center; /* Vertically align icon and text */
+  justify-content: center; /* Center content horizontally */
   text-align: center;   
-  padding: 0rem 1rem 0.5rem ;
+  padding: 0.5rem 1rem; /* Adjust padding as needed */
   font-size: 1rem;
   border-radius: 0.25rem;
   animation-duration: 1s;
@@ -282,9 +290,10 @@ img.animated.pulse {
 }
 
 .IntroButton .bi {
-  font-size: 1.5rem; /* Increase icon size */
+  font-size: 1.5rem;
   margin-left: 0.5rem; /* Space between text and icon */
 }
+
 
 
 /***Program***/

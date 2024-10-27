@@ -108,7 +108,7 @@ const App = () => {
                 
                 {/* User Side Routes */}
                 <Route path="/Dashboard" element={<Dashboard />} />
-                <Route path="/Profile" element={<Profile />} />
+                <Route path="/Profile/:username" element={<Profile />} />
                 <Route path="/UserProgram" element={<Programs />} />
                 <Route path="/ProgramDetails" element={<ProgramDescript />} />
                 <Route path="/Reservation" element={<Reservation />} />

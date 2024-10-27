@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
   Row,
@@ -14,29 +14,34 @@ import Avatar from 'react-avatar';
 
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [profileInfo, setProfileInfo] = useState({
-    fullName: 'Johnatan Smith',
-    email: 'example@example.com',
-    phone: '(097) 234-5678',
-    mobile: '(098) 765-4321',
-    address: 'Bay Area, San Francisco, CA',
-    facebook: 'https://mdbootstrap.com',
-    twitter: 'mdbootstrap',
-    instagram: '@mdbootstrap',
-    linkedin: 'mdbootstrap',
-  });
+  const [profileInfo, setProfileInfo] = useState(null);
+  const { username } = useParams(); // Corrected useParams invocation
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/Profile/${username}?_=${new Date().getTime()}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const userData = await response.json();
+        console.log('Fetched User Data:', userData); // Debugging line
+        setProfileInfo(userData);
+      } catch (error) {
+        console.error('Error fetching profile:', error); // Handle any errors here
+      }
+    };
+    if (username) fetchProfile();
+  }, [username]);
+
+  // If profileInfo is still loading, display a loading message or spinner
+  if (!profileInfo && profileInfo !== null) {
+    return <div>Loading...</div>; // While waiting for profileInfo to load
+  }
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProfileInfo({
-      ...profileInfo,
-      [name]: value,
-    });
   };
 
   return (
@@ -45,7 +50,7 @@ const ProfilePage = () => {
         <Row>
           <Col>
             <Breadcrumb className="bg-light rounded-3 p-3 mb-4">
-              <Breadcrumb.Item onClick={() => navigate('/Dashboard')} >Home</Breadcrumb.Item>
+              <Breadcrumb.Item onClick={() => navigate('/Dashboard')}>Home</Breadcrumb.Item>
               <Breadcrumb.Item active>User Profile</Breadcrumb.Item>
             </Breadcrumb>
           </Col>
@@ -55,10 +60,10 @@ const ProfilePage = () => {
           <Col lg="4">
             <Card className="mb-4 text-center">
               <Card.Body>
-                <Avatar className="m-2" name="Wim Mostmans" round={true} size="150" />
-                <Card.Text className="m-2 fs-2">Full Stack Developer</Card.Text>
+                <Avatar className="m-2" name={profileInfo?.username} round={true} size="150" />
+                <Card.Text className="m-2 fs-2">{profileInfo?.username}</Card.Text>
                 <Card.Text className="text-muted mb-1">Full Stack Developer</Card.Text>
-                <Card.Text className="text-muted mb-4">Bay Area, San Francisco, CA</Card.Text>
+                <Card.Text className="text-muted mb-4">{profileInfo?.address}</Card.Text>
                 <div className="d-flex justify-content-center mb-2">
                   <Button variant="outline-primary btn-block" className="ms-1">Change password</Button>
                   <Button variant="outline-secondary btn-block" className="ms-1" onClick={handleEditClick}>
@@ -77,11 +82,10 @@ const ProfilePage = () => {
                       <Form.Control
                         type="text"
                         name="facebook"
-                        value={profileInfo.facebook}
-                        onChange={handleInputChange}
+                        defaultValue={profileInfo?.facebook}
                       />
                     ) : (
-                      <Card.Text>{profileInfo.facebook}</Card.Text>
+                      <Card.Text>{profileInfo?.facebook}</Card.Text>
                     )}
                   </ListGroup.Item>
                   <ListGroup.Item className="d-flex justify-content-between align-items-center p-3">
@@ -90,11 +94,10 @@ const ProfilePage = () => {
                       <Form.Control
                         type="text"
                         name="twitter"
-                        value={profileInfo.twitter}
-                        onChange={handleInputChange}
+                        defaultValue={profileInfo?.twitter}
                       />
                     ) : (
-                      <Card.Text>{profileInfo.twitter}</Card.Text>
+                      <Card.Text>{profileInfo?.twitter}</Card.Text>
                     )}
                   </ListGroup.Item>
                   <ListGroup.Item className="d-flex justify-content-between align-items-center p-3">
@@ -103,11 +106,10 @@ const ProfilePage = () => {
                       <Form.Control
                         type="text"
                         name="instagram"
-                        value={profileInfo.instagram}
-                        onChange={handleInputChange}
+                        defaultValue={profileInfo?.instagram}
                       />
                     ) : (
-                      <Card.Text>{profileInfo.instagram}</Card.Text>
+                      <Card.Text>{profileInfo?.instagram}</Card.Text>
                     )}
                   </ListGroup.Item>
                   <ListGroup.Item className="d-flex justify-content-between align-items-center p-3">
@@ -116,11 +118,10 @@ const ProfilePage = () => {
                       <Form.Control
                         type="text"
                         name="linkedin"
-                        value={profileInfo.linkedin}
-                        onChange={handleInputChange}
+                        defaultValue={profileInfo?.linkedin}
                       />
                     ) : (
-                      <Card.Text>{profileInfo.linkedin}</Card.Text>
+                      <Card.Text>{profileInfo?.linkedin}</Card.Text>
                     )}
                   </ListGroup.Item>
                 </ListGroup>
@@ -138,7 +139,25 @@ const ProfilePage = () => {
                       <Card.Text>Full Name</Card.Text>
                     </Col>
                     <Col sm="9">
-                      <Card.Text className="text-muted">{profileInfo.fullName}</Card.Text>
+                      <Card.Text className="text-muted">{profileInfo?.username}</Card.Text>
+                    </Col>
+                  </Row>
+                  <hr />
+                  <Row>
+                    <Col sm="3">
+                      <Card.Text>Age</Card.Text>
+                    </Col>
+                    <Col sm="9">
+                      <Card.Text className="text-muted">{profileInfo?.age}</Card.Text>
+                    </Col>
+                  </Row>
+                  <hr />
+                  <Row>
+                    <Col sm="3">
+                      <Card.Text>Sex</Card.Text>
+                    </Col>
+                    <Col sm="9">
+                      <Card.Text className="text-muted">{profileInfo?.sex}</Card.Text>
                     </Col>
                   </Row>
                   <hr />
@@ -147,7 +166,7 @@ const ProfilePage = () => {
                       <Card.Text>Email</Card.Text>
                     </Col>
                     <Col sm="9">
-                      <Card.Text className="text-muted">{profileInfo.email}</Card.Text>
+                      <Card.Text className="text-muted">{profileInfo?.email}</Card.Text>
                     </Col>
                   </Row>
                   <hr />
@@ -156,16 +175,16 @@ const ProfilePage = () => {
                       <Card.Text>Phone</Card.Text>
                     </Col>
                     <Col sm="9">
-                      <Card.Text className="text-muted">{profileInfo.phone}</Card.Text>
+                      <Card.Text className="text-muted">{profileInfo?.contact_number}</Card.Text>
                     </Col>
                   </Row>
                   <hr />
                   <Row>
                     <Col sm="3">
-                      <Card.Text>Mobile</Card.Text>
+                      <Card.Text>Country</Card.Text>
                     </Col>
                     <Col sm="9">
-                      <Card.Text className="text-muted">{profileInfo.mobile}</Card.Text>
+                      <Card.Text className="text-muted">{profileInfo?.country}</Card.Text>
                     </Col>
                   </Row>
                   <hr />
@@ -174,15 +193,18 @@ const ProfilePage = () => {
                       <Card.Text>Address</Card.Text>
                     </Col>
                     <Col sm="9">
-                      <Card.Text className="text-muted">{profileInfo.address}</Card.Text>
+                      <Card.Text className="text-muted">{profileInfo?.address}</Card.Text>
                     </Col>
                   </Row>
                 </Card.Body>
               </Card>
             </fieldset>
 
+
+
+
             <fieldset className="border rounded mb-4 p-3">
-              <legend className=" p-2 rounded">More Information</legend>
+              <legend className="p-2 rounded">More Information</legend>
               <Card className="mb-4">
                 <Card.Body>
                   <Row>
@@ -193,12 +215,11 @@ const ProfilePage = () => {
                       {isEditing ? (
                         <Form.Control
                           type="text"
-                          name="fullName"
-                          value={profileInfo.fullName}
-                          onChange={handleInputChange}
+                          name="username"
+                          defaultValue={profileInfo?.username}
                         />
                       ) : (
-                        <Card.Text className="text-muted">{profileInfo.fullName}</Card.Text>
+                        <Card.Text className="text-muted">{profileInfo?.username}</Card.Text>
                       )}
                     </Col>
                   </Row>
@@ -212,11 +233,10 @@ const ProfilePage = () => {
                         <Form.Control
                           type="email"
                           name="email"
-                          value={profileInfo.email}
-                          onChange={handleInputChange}
+                          defaultValue={profileInfo?.email}
                         />
                       ) : (
-                        <Card.Text className="text-muted">{profileInfo.email}</Card.Text>
+                        <Card.Text className="text-muted">{profileInfo?.email}</Card.Text>
                       )}
                     </Col>
                   </Row>
@@ -230,11 +250,10 @@ const ProfilePage = () => {
                         <Form.Control
                           type="text"
                           name="phone"
-                          value={profileInfo.phone}
-                          onChange={handleInputChange}
+                          defaultValue={profileInfo?.phone}
                         />
                       ) : (
-                        <Card.Text className="text-muted">{profileInfo.phone}</Card.Text>
+                        <Card.Text className="text-muted">{profileInfo?.phone}</Card.Text>
                       )}
                     </Col>
                   </Row>
@@ -248,11 +267,10 @@ const ProfilePage = () => {
                         <Form.Control
                           type="text"
                           name="mobile"
-                          value={profileInfo.mobile}
-                          onChange={handleInputChange}
+                          defaultValue={profileInfo?.mobile}
                         />
                       ) : (
-                        <Card.Text className="text-muted">{profileInfo.mobile}</Card.Text>
+                        <Card.Text className="text-muted">{profileInfo?.mobile}</Card.Text>
                       )}
                     </Col>
                   </Row>
@@ -266,35 +284,21 @@ const ProfilePage = () => {
                         <Form.Control
                           type="text"
                           name="address"
-                          value={profileInfo.address}
-                          onChange={handleInputChange}
+                          defaultValue={profileInfo?.address}
                         />
                       ) : (
-                        <Card.Text className="text-muted">{profileInfo.address}</Card.Text>
+                        <Card.Text className="text-muted">{profileInfo?.address}</Card.Text>
                       )}
                     </Col>
                   </Row>
                 </Card.Body>
               </Card>
             </fieldset>
-
-            {isEditing && (
-              <div className="d-flex justify-content-end mt-3 pe-3">
-                <Button
-                  className="me-3"
-                  variant="primary"
-                  size="lg"
-                  onClick={() => setIsEditing(false)}
-                >
-                  Save
-                </Button>
-              </div>
-            )}
           </Col>
         </Row>
       </Container>
     </section>
   );
-}
+};
 
 export default ProfilePage;
