@@ -43,8 +43,7 @@ import StepIndicator from './Classes/StepIndicator';
 import AdminNavbar from './Classes/AdminNavbar';
 import AdminMain from './Admin/Admin-Main'; // Adjust the path if necessary
 import AdminReservation from './Admin/AdminReservation';
-import ManageHomePage from './Admin/AdminManageHome';
-import HomeDetails from './Admin/AdminEditHome';
+import ManageHome from './Admin/AdminManageHome';
 import ManageAboutUs from './Admin/AdminManageAboutUs';
 import AboutDetails from './Admin/AdminEditAbout';
 import ManageProgram from './Admin/AdminManageProgram';
@@ -125,13 +124,10 @@ const App = () => {
                 {/* Admin Side Routes */}
                 <Route path="/admin/reservation" element={<AdminReservation />} />
                 <Route path="/admin" element={<AdminMain isAdmin={isAdminLoggedIn} />} /> 
-                <Route path="/admin/manage-home" element={<ManageHomePage />} />
-                <Route path="/admin/edit-home-details" element={<HomeDetails />} />
+                <Route path="/admin/manage-home" element={<ManageHome />} />
                 <Route path="/admin/manage-about-us" element={<ManageAboutUs />} />
-                <Route path="/admin/edit-about-us-details" element={<AboutDetails />} />
                 <Route path="/admin/manage-program" element={<ManageProgram />} />
                 <Route path="/admin/manage-contact-us" element={<ManageContactUs />} />
-                <Route path="/admin/edit-contact-us-details" element={<ContactDetails />} />
                 <Route path="/admin/reports" element={<Reports />} />
                 <Route path="/admin/users" element={<Users />} />
               </Routes>

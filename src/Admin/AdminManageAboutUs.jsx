@@ -1,12 +1,10 @@
-import { Link } from 'react-router-dom';
+
 
 const ManageAboutUs = () => {
     return ( 
         <div>
             <h2>Manage About Us Details</h2>
-            <Link to="/admin/edit-about-us-details">
-                <button>Edit Details</button>
-            </Link>
+            <button>Edit Details</button>
         </div>
 
     );

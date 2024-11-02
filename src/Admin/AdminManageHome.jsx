@@ -1,43 +1,49 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
-const ManageHomePage = () => {
+const NavigationLinks = ({ setActiveContent }) => {
+    return (
+        <ul className="sidebar-links">
+            <li onClick={() => setActiveContent('manageDetails')}>Manage Details</li>
+            <li onClick={() => setActiveContent('allAnnouncementsAndEvents')}>All Announcements/Events</li>
+            <li onClick={() => setActiveContent('addNew')}>Add New</li>
+        </ul>
+    );
+};
+
+const ManageHome = () => {
     const [activeContent, setActiveContent] = useState('manageDetails');
+    const [editDetails, setEditDetails] = useState(false);
 
     return (
         <div>
-            <ul>
-                <li onClick={() => setActiveContent('manageDetails')}>
-                    Manage Details
-                </li>
-                <li onClick={() => setActiveContent('allAnnouncementsAndEvents')}>
-                    All Announcements/Events
-                </li>
-                <li onClick={() => setActiveContent('addNew')}>
-                    Add New
-                </li>
-            </ul>
-
             {/* Conditional Rendering of Components */}
             <div className="component-contents">
-                {activeContent === 'manageDetails' && (
+                {activeContent === 'manageDetails' && !editDetails && (
                     <div>
                         <h2>Manage Details</h2>
-                        <Link to="/admin/edit-home-details">
-                            <button>Edit Details</button>
-                        </Link>
+                        <NavigationLinks setActiveContent={setActiveContent} />
+                        <button onClick={() => setEditDetails(true)}>Edit Details</button>
+                    </div>
+                )}
+
+                {activeContent === 'manageDetails' && editDetails && (
+                    <div className='New'>
+                        <h1>Try</h1>
+                        <button onClick={() => setEditDetails(false)}>Back</button>
                     </div>
                 )}
 
                 {activeContent === 'allAnnouncementsAndEvents' && (
                     <div>
                         <h2>All Announcements/Events</h2>
+                        <NavigationLinks setActiveContent={setActiveContent} />
                     </div>
                 )}
 
                 {activeContent === 'addNew' && (
                     <div>
                         <h2>Add New</h2>
+                        <NavigationLinks setActiveContent={setActiveContent} />
                         <form>
                             <input type="text" placeholder="Name of Announcement/Event" />
                             <input type="text" placeholder="Blah" />
@@ -50,4 +56,4 @@ const ManageHomePage = () => {
     );
 }
 
-export default ManageHomePage;
+export default ManageHome;
