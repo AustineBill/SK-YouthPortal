@@ -45,10 +45,8 @@ import AdminMain from './Admin/Admin-Main'; // Adjust the path if necessary
 import AdminReservation from './Admin/AdminReservation';
 import ManageHome from './Admin/AdminManageHome';
 import ManageAboutUs from './Admin/AdminManageAboutUs';
-import AboutDetails from './Admin/AdminEditAbout';
 import ManageProgram from './Admin/AdminManageProgram';
 import ManageContactUs from './Admin/AdminManageContactUs';
-import ContactDetails from './Admin/AdminEditContact';
 import Reports from './Admin/AdminReports';
 import Users from './Admin/AdminUsers';
 
