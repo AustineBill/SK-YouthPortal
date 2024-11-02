@@ -1,14 +1,26 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const ManageContactUs = () => {
+    const [activeContent, setActiveContent] = useState('manageContactDetails');
+
     return ( 
         <div>
-            <h2>Manage Contact Details</h2>
-            <Link to="/admin/edit-contact-us-details">
-                <button>Edit Details</button>
-            </Link>
-        </div>
+            <div className="component-contents">
+                {activeContent === 'manageContactDetails' && (
+                    <div>
+                        <h2>Manage Contact Details</h2>
+                        <button onClick={() => setActiveContent('editContactDetails')}>Edit Details</button>
+                    </div>
+                )}
 
+                {activeContent === 'editContactDetails' && (
+                    <div>
+                        <h2>Edit Contact Details</h2>
+                        <button onClick={() => setActiveContent('manageContactDetails')}>Back</button>
+                    </div>
+                )}
+            </div>
+        </div>
     );
 }
 
