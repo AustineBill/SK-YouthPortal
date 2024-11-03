@@ -16,7 +16,7 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
-    "chart.js": "^4.4.5",
+    "chart.js": "^4.4.6",
     "cors": "^2.8.5",
     "easing-js": "^1.1.2",
     "express": "^4.21.0",

@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { AuthContext } from '../WebStructure/AuthContext';
 import '../App.css';
 import '../style.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'animate.css/animate.min.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 const Program_details = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const { isAuthenticated } = useContext(AuthContext);
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const handleAuthorize = (type) => {
+    if (isAuthenticated) {
+      navigate('/Reservation', { state: { reservationType: type } });
+    } else {
+      navigate('/userauth');
+    }
+  };
+  
   return (
     <div className="container-fluid">
       <div className="row">
@@ -41,11 +49,11 @@ const Program_details = () => {
         
           <Modal.Body>
             <div className="d-flex justify-content-around">
-              <Button className="ButtonCard d-flex flex-column align-items-center" onClick={() => navigate('/Reservation')}>
+              <Button className="ButtonCard d-flex flex-column align-items-center" onClick={() => handleAuthorize('Solo')}>
                 <i className="bi bi-person mb-1" style={{ fontSize: '6rem' }}></i>
                 Solo
               </Button>
-              <Button className="ButtonCard d-flex flex-column align-items-center" onClick={() => navigate('/Reservation')}>
+              <Button className="ButtonCard d-flex flex-column align-items-center" onClick={() => handleAuthorize('Group')}>
                 <i className="bi bi-people mb-1 " style={{ fontSize: '6rem' }}></i>
                 Group
               </Button>

@@ -1,33 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Import default styling
-import '../WebStyles/UserStyle.css'
-
+import 'react-calendar/dist/Calendar.css';
+import '../WebStyles/UserStyle.css';
 import StepIndicator from '../Classes/StepIndicator';
 
-
 const Reservation = () => {
- 
   const navigate = useNavigate();
+  const location = useLocation();
+  const { reservationType } = location.state || { reservationType: 'Solo' }; 
 
-  // Initialize the selected date state as an array (for range selection)
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
-  const [selectedTime, setSelectedTime] = useState(''); // State for selected time
+  const [selectedTime, setSelectedTime] = useState('');
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const dropdownRef = useRef(null);
 
-  // Handle date or date range changes
   const handleDateChange = (range) => {
-    // If a single date is selected, set it as both start and end
     if (Array.isArray(range)) {
       setSelectedDates(range);
     } else {
       setSelectedDates([range, range]);
     }
   };
-
-
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
     setIsDropdownVisible((prev) => !prev);
@@ -44,8 +38,6 @@ const Reservation = () => {
     }
   };
 
- 
-
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => {
@@ -54,93 +46,81 @@ const Reservation = () => {
   }, []);
 
   return (
-
-    
     <div className="container-fluid">
-       <div className="text-center text-lg-start m-4 mv-8 mb-3">
-          <h1 className="Maintext animated slideInRight">Schedule</h1>
-            <p className='Subtext'>Lorem ipsum</p> 
-        </div>
+      <div className="text-center text-lg-start m-4 mb-3">
+        <h1 className="Maintext animated slideInRight">Schedule</h1>
+        <p className='Subtext'>Selected Type: {reservationType}</p>
+      </div>
 
       <div className="calendar-container">
-
-      <StepIndicator currentStep={1} />
+        <StepIndicator currentStep={1} />
        
-      <div className="grid-container">
-        <div className="legend">
-          <h2>Legend</h2>
-          <div className="legend-item">
-            <span className="circle available"></span>
-            <h3>Available</h3>
-          </div>
-          <div className="legend-item">
-            <span className="circle unavailable"></span>
-            <h3>Unavailable</h3>
-          </div>
-          <div className="legend-item">
-            <span className="circle maximize"></span>
-            <h3>Maximize Capacity</h3>
-          </div>
-          <div className="legend-item">
-            <span className="circle unknown"></span>
-            <h3>hindi ko na alam</h3>
-          </div>
-        </div>
-
-        <div className="selected-date">
-          {selectedDates[0].toDateString() === selectedDates[1].toDateString()
-            ? `Selected Date: ${selectedDates[0].toDateString()}`
-            : `Selected Dates: ${selectedDates[0].toDateString()} to ${selectedDates[1].toDateString()}`}
-          {selectedTime && <div>Selected Time: {selectedTime}</div>}
-        </div>
-
-        <button className="apply-dates" onClick={() => navigate('/ScheduleDetails')}>
-          Apply Dates
-        </button>
-      </div>
-
-      <div className="dropdown-container" ref={dropdownRef}>
-        <div className="time-dropdown">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            onClick={toggleDropdown}
-          >
-            Select Time
-          </button>
-          {isDropdownVisible && (
-            <div className="time-dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <h6 className="dropdown-item" onClick={() => selectTime('9:00 am - 10:00 am')}>
-                9:00 am - 10:00 am
-              </h6>
-              <h6 className="dropdown-item" onClick={() => selectTime('10:00 am - 11:00 am')}>
-                10:00 am - 11:00 am
-              </h6>
-              <h6 className="dropdown-item" onClick={() => selectTime('11:00 am - 12:00 nn')}>
-                11:00 am - 12:00 nn
-              </h6>
-              <h6 className="dropdown-item" onClick={() => selectTime('12:00 nn - 1:00 pm')}>
-                12:00 nn - 1:00 pm
-              </h6>
-              <h6 className="dropdown-item" onClick={() => selectTime('1:00 pm - 2:00 pm')}>
-                1:00 pm - 2:00 pm
-              </h6>
-              <h6 className="dropdown-item" onClick={() => selectTime('2:00 pm - 3:00 pm')}>
-                2:00 pm - 3:00 pm
-              </h6>
+        <div className="grid-container">
+          <div className="legend">
+            <h2>Legend</h2>
+            <div className="legend-item">
+              <span className="circle available"></span>
+              <h3>Available</h3>
             </div>
-          )}
-        </div>
-      </div>
+            <div className="legend-item">
+              <span className="circle unavailable"></span>
+              <h3>Unavailable</h3>
+            </div>
+            <div className="legend-item">
+              <span className="circle maximize"></span>
+              <h3>Maximize Capacity</h3>
+            </div>
+            <div className="legend-item">
+              <span className="circle unknown"></span>
+              <h3>Unknown</h3>
+            </div>
+          </div>
 
-      {/* Calendar Component */}
-      <Calendar
-        minDate={new Date()} // Prevent past dates from being selected
-        onChange={handleDateChange} // Handle single or range selection
-        selectRange={true} // Enable range selection
-        value={selectedDates} // Current selected date or range
-      />
+          <div className="selected-date">
+            {selectedDates[0].toDateString() === selectedDates[1].toDateString()
+              ? `Selected Date: ${selectedDates[0].toDateString()}`
+              : `Selected Dates: ${selectedDates[0].toDateString()} to ${selectedDates[1].toDateString()}`}
+            {selectedTime && <div>Selected Time: {selectedTime}</div>}
+          </div>
+
+          <button
+            className="apply-dates"
+            onClick={() => navigate('/ScheduleDetails', {
+              state: { reservationType } // Pass reservationType as state
+            })}
+          >
+            Apply Dates
+          </button>
+        </div>
+
+        <div className="dropdown-container" ref={dropdownRef}>
+          <div className="time-dropdown">
+            <button
+              className="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              onClick={toggleDropdown}
+            >
+              Select Time
+            </button>
+            {isDropdownVisible && (
+              <div className="time-dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {['9:00 am - 10:00 am', '10:00 am - 11:00 am', '11:00 am - 12:00 nn', '12:00 nn - 1:00 pm', '1:00 pm - 2:00 pm', '2:00 pm - 3:00 pm'].map((time) => (
+                  <h6 key={time} className="dropdown-item" onClick={() => selectTime(time)}>
+                    {time}
+                  </h6>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <Calendar
+          minDate={new Date()}
+          onChange={handleDateChange}
+          selectRange={true}
+          value={selectedDates}
+        />
       </div>
     </div>
   );
