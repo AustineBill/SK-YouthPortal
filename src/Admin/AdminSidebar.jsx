@@ -1,5 +1,15 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import HomeLogo from '../Asset/Admin/Home.png';
+import ManageWebsiteLogo from '../Asset/Admin/Manage Website.png';
+import ManageHomeLogo from '../Asset/Admin/Manage Home.png';
+import ManageAboutUsLogo from '../Asset/Admin/Manage About Us.png';
+import ManageProgramLogo from '../Asset/Admin/Manage Program.png';
+import ManageContactUsLogo from '../Asset/Admin/Manage Contact Us.png';
+import ManageRequestsLogo from '../Asset/Admin/Manage Requests.png';
+import ReservationsLogo from '../Asset/Admin/Reservations.png';
+import ReportsLogo from '../Asset/Admin/Reports.png';
+import UsersLogo from '../Asset/Admin/Users.png';
 import './AdminSidebar.css'
 
 const AdminSidebar = () => {
@@ -12,52 +22,52 @@ const AdminSidebar = () => {
                 <h2 className="sidebar-title">Admin Panel</h2>
                 <ul className="sidebar-links">
                     <li>
-                        <img src='#' alt="Home icon" />
+                        <img src={HomeLogo} alt="Home Logo" id='sidebar-logos' />
                         <Link to="/admin-dashboard">Home</Link>
                     </li>
 
                     <li className="manage-website-link-open" onClick={() => setmanageWebsiteChildLinksOpen(!manageWebsiteChildLinksOpen)}>
-                        <img src='#' alt="Manage Website icon" />
+                        <img src={ManageWebsiteLogo} alt="Manage Website Logo" id='sidebar-logos' />
                         Manage Website
                     </li>
                     {manageWebsiteChildLinksOpen && (
                         <ul className="manage-website-nested-links">
                             <li>
-                                <img src='#' alt="Manage Home Page icon" />
+                                <img src={ManageHomeLogo} alt="Manage Home Logo" id='sidebar-logos' />
                                 <Link to="/admin/manage-home">Manage Home Page</Link>
                             </li>
                             <li>
-                                <img src='#' alt="Manage About Us Page icon" />
+                                <img src={ManageAboutUsLogo} alt="Manage About Us Logo" id='sidebar-logos' />
                                 <Link to="/admin/manage-about-us">Manage About Us Page</Link>
                             </li>
                             <li>
-                                <img src='#' alt="Manage Program Page icon" />
+                                <img src={ManageProgramLogo} alt="Manage Program Logo" id='sidebar-logos' />
                                 <Link to="/admin/manage-program">Manage Program Page</Link>
                             </li>
                             <li>
-                                <img src='#' alt="Manage Contact Us Page icon" />
+                                <img src={ManageContactUsLogo} alt="Manage Contact Us Logo" id='sidebar-logos' />
                                 <Link to="/admin/manage-contact-us">Manage Contact Us Page</Link>
                             </li>
                         </ul>
                     )}
                     <li className="manage-requests-link-open" onClick={() => setmanageRequestsChildLinksOpen(!manageRequestsChildLinksOpen)}>
-                        <img src='#' alt="Manage Requests icon" />
+                        <img src={ManageRequestsLogo} alt="Manage Requests Logo" id='sidebar-logos' />
                         Manage Requests
                     </li>
                     {manageRequestsChildLinksOpen && (
                         <ul className="manage-requests-nested-links">
                             <li>
-                                <img src='#' alt="Reservation icon" />
+                                <img src={ReservationsLogo} alt="Reservation Logo" id='sidebar-logos' />
                                 <Link to="/admin/reservation">Reservation</Link>
                             </li>
                         </ul>
                     )}
                     <li>
-                        <img src='#' alt="Reports icon" />
+                        <img src={ReportsLogo} alt="Reports Logo" id='sidebar-logos' />
                         <Link to="/admin/reports">Reports</Link>
                     </li>
                     <li>
-                        <img src='#' alt="Users icon" />
+                        <img src={UsersLogo} alt="Users Logo" id='sidebar-logos' />
                         <Link to="/admin/users">Users</Link>
                     </li>
                 </ul>
