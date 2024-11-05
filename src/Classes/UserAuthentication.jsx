@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import SignUpModal from './SignUpModal.jsx';
+import SignUpModal from './SignUpModal';
 import './UserAuthentication.css';
 
 const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
