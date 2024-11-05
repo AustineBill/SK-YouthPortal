@@ -16,8 +16,8 @@ const Reports = () => {
             <div className="main-content">
                 <div className="container">
                     <div className="text-center text-lg-start mt-4">
-                        <h1 className="Maintext animated slideInRight">Admin Reports</h1>
-                        <p className="Subtext">View and manage all reports</p>
+                        <h1 className="AdminMaintext animated slideInRight">Admin Reports</h1>
+                        <p className="AdminSubtext">View and manage all reports</p>
                     </div>
 
                     <ul className="nav">
