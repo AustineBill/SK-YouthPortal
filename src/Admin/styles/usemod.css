@@ -33,14 +33,14 @@
     margin-bottom: 20px; /* Margin below title section */
 }
 
-.Maintext {
+.AdminMaintext {
     font-size: 28px; /* Larger font size for main title */
     font-weight: bold; /* Bold title */
     color: #2c3e50; /* Dark color for title */
     margin-bottom: 10px; /* Space below main title */
 }
 
-.Subtext {
+.AdminSubtext {
     font-size: 18px; /* Font size for subtitle */
     color: #34495e; /* Slightly lighter dark color for readability */
     margin-bottom: 20px; /* Space below subtitle */
