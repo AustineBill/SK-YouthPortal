@@ -48,7 +48,6 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
                     setIsUserLoggedIn(true); // Set user login state
                     localStorage.setItem('username', username); // Save the username
                     localStorage.setItem('isUserLoggedIn', 'true'); // Set login state
-                    
                     navigate('/Dashboard'); // Redirect to user dashboard
                     
                 } else {
@@ -63,7 +62,7 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
 
     return (
         <div className="container-fluid">
-            <div className="row align-items-center">
+            <div className="row align-items-center mt-3">
                 <div className="col-md-7 text-center text-lg-center">
                     <h1 className=" fw-normal fs-3 me-5 animated slideInTop">Lagi't lagi para sa Kabataan,</h1>
                     <h1 className="fw-normal fs-4 me-4 animated slideInLeft"> Barangay at sa Bayan 
