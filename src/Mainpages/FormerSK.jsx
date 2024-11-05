@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import {Breadcrumb} from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -7,6 +8,7 @@ import SKPhoto from "../Asset/Western Photo.png";
 
 const FormerSK = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
 
   const carouselItems = [
     { src: "http://placehold.it/250/f44336/000000", alt: "Item 1", name: "John Doe", age: 25 },
@@ -47,6 +49,10 @@ const FormerSK = () => {
 
   return (
     <div className="container-fluid">
+      <Breadcrumb className="ms-5">
+        <Breadcrumb.Item onClick={() => navigate('/About')}>About</Breadcrumb.Item>
+          <Breadcrumb.Item active>Former SK Council</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="text-center text-lg-start m-4">
         <h1 className="Maintext animated slideInRight">Former SK Officials</h1>
         <p className="Subtext">Visionary leaders who shaped our barangay</p>
