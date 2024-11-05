@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
+import SignUpModal from './Modals/SignUpModal';
 import '../App.css';
 
 const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
     const [view, setView] = useState('');
-    const [setIsSignUpSuccessful] = useState(false);
+    // const [setIsSignUpSuccessful] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const openModal = () => {
+        setModalOpen(true);
+    }
+    const closeModal = () => { 
+        setModalOpen(false);
+        setView('signUp');
+    };
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -18,8 +28,8 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
 
     const handleSignUpSubmit = (e) => {
         e.preventDefault();
-        setIsSignUpSuccessful(true);
-        setView('');
+        // setIsSignUpSuccessful(true);
+        // setView('');
     };
 
     const handleLogin = async (e) => {
@@ -111,10 +121,11 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
                                 <div>
                                     <p>Lorem Ipsum</p>
                                 </div>
-                                <button type="submit">Sign Up</button>
+                                <button onClick={openModal}>Sign Up</button>
                             </form>
                         </div>
                     )}
+                    <SignUpModal isOpen={isModalOpen} onClose={closeModal} />
                 </div>
             </div>
         </div>
