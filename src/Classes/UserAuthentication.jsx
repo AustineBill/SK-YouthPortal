@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import SignUpModal from './SignUpModal.jsx';
 import './UserAuthentication.css';
 
 const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
     const [view, setView] = useState('');
-    const [isSignUpSuccessful, setIsSignUpSuccessful] = useState(false);
+    // const [isSignUpSuccessful, setIsSignUpSuccessful] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const openModal = () => setModalOpen(true)
+    const closeModal = () => { 
+        setModalOpen(false);
+        setView('signUp');
+    };
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -19,8 +27,8 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
 
     const handleSignUpSubmit = (e) => {
         e.preventDefault();
-        setIsSignUpSuccessful(true);
-        setView('');
+        // setIsSignUpSuccessful(true);
+        // setView('');
     };
 
     const handleLogin = async (e) => {
@@ -68,7 +76,7 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
 
     return (
         <div className="auth-page">
-            {!isSignUpSuccessful && (
+            {/* {!isSignUpSuccessful && (
                 <div className='welcome'>
                     <div className='welcome1'>
                         <h1>iSKed</h1>
@@ -77,6 +85,16 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
                         <p>Western Bicutan</p>
                     </div>
                 </div>
+            )} */}
+            {(view === 'signIn' || view === 'signUp') && (
+                <div className='welcome'>
+                <div className='welcome1'>
+                    <h1>iSKed</h1>
+                </div>
+                <div className='welcome2'>
+                    <p>Western Bicutan</p>
+                </div>
+            </div>
             )}
 
             {view === 'signIn' && (
@@ -116,10 +134,12 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
                         <div>
                             <p>Lorem Ipsum</p>
                         </div>
-                        <button type="submit">Sign Up</button>
+                        <button onClick={openModal}>Sign Up</button>
                     </form>
                 </div>
             )}
+
+            <SignUpModal isOpen={isModalOpen} onClose={closeModal} />
         </div>
     );
 };
