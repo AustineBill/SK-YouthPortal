@@ -24,15 +24,24 @@ const Program_details = () => {
       navigate('/userauth');
     }
   };
+
+  const handleViewSchedule = () => {
+    // Only allow navigation to 'View Schedule' if authenticated
+    if (isAuthenticated) {
+      navigate('/ViewSchedule');
+    } else {
+      navigate('/userauth');
+    }
+  };
   
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="text-center text-lg-start m-4">
-          <h1 className="Maintext animated slideInRight">Appointment</h1>
+          <h1 className="Maintext animated slideInRight">Appointment</h1> 
           <p className='Subtext'>Reserve yours now!</p>
           
-          <button className="prog-view-button" onClick={() => navigate('/ViewSchedule')}>
+          <button className="prog-view-button" onClick={handleViewSchedule}>
             <i className="fa fa-calendar" aria-hidden="true"></i> View Schedule
           </button>
         </div>

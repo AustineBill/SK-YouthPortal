@@ -89,6 +89,7 @@ const App = () => {
               <div className="d-flex flex-column min-vh-100"> 
                 <Routes>
                   {/* Landing Page Routes */}
+                  <Route path="/" element={<Intro />} />
                   <Route path="/Splash" element={<Intro />} />
                   <Route path="/Overview" element={<OverviewProgram />} />
                   <Route path="/About" element={<About />} />

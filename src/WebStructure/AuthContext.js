@@ -8,22 +8,20 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check if user is authenticated (e.g., check localStorage or a token)
     const token = localStorage.getItem('token');
-    if (token) {
-      setIsAuthenticated(true);
-    }
+    setIsAuthenticated(!!token);
   }, []);
 
   const login = (token, username) => {
     localStorage.setItem('token', token);
     localStorage.setItem('username', username);
-    setIsAuthenticated(true); // Make sure this is being called
-  }
+    setIsAuthenticated(true); 
+  };
 
   const logout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
   };
 
   return (

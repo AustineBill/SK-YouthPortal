@@ -20,7 +20,7 @@ const Intro = () => (
           <div className="IntroContainer">
             <p className="IntroDetails">Western Bicutan</p>
               <button className="IntroButton btn-db">
-                Explore Now <i class="bi bi-arrow-right"></i>
+                Explore Now <i className="bi bi-arrow-right"></i>
               </button>
           </div>
         </div>
