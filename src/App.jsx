@@ -7,7 +7,7 @@ import UserNavbar from "./Classes/UserNavbar";
 import UserAuthentication from './Classes/UserAuthentication';
 
 // Main Pages
-import Intro from "./Mainpages/Splash";
+import Intro from "./Mainpages/Home";
 import Contact from "./Mainpages/Contacts";
 import About from "./Mainpages/About";
 import Spotlight from './Mainpages/Spotlights';
@@ -89,7 +89,7 @@ const App = () => {
                 <Routes>
                   {/* Landing Page Routes */}
                   <Route path="/" element={<Intro />} />
-                  <Route path="/Splash" element={<Intro />} />
+                  <Route path="/Home" element={<Intro />} />
                   <Route path="/About" element={<About />} />
                   <Route path="/Mandate" element={<Mandate />} /> 
                   <Route path="/Council" element={<Council />} />
@@ -100,7 +100,7 @@ const App = () => {
                                                                       setIsUserLoggedIn={setIsUserLoggedIn} />} />
                   <Route path="/Spotlight" element={<Spotlight />} />
                   <Route path="/News" element={<NewsEvents />} />
-                  <Route path="/NewsDetails/:id" element={<ViewDetailed />} />
+                  <Route path="/news-details/:id" element={<ViewDetailed />} />
                   
                   {/* User Side Routes */}
                   <Route path="/Dashboard" element={<Dashboard />} />
