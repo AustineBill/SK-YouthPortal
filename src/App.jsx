@@ -8,7 +8,6 @@ import UserAuthentication from './Classes/UserAuthentication';
 
 // Main Pages
 import Intro from "./Mainpages/Splash";
-import OverviewProgram from "./Mainpages/OverProgram";
 import Contact from "./Mainpages/Contacts";
 import About from "./Mainpages/About";
 import Spotlight from './Mainpages/Spotlights';
@@ -91,7 +90,6 @@ const App = () => {
                   {/* Landing Page Routes */}
                   <Route path="/" element={<Intro />} />
                   <Route path="/Splash" element={<Intro />} />
-                  <Route path="/Overview" element={<OverviewProgram />} />
                   <Route path="/About" element={<About />} />
                   <Route path="/Mandate" element={<Mandate />} /> 
                   <Route path="/Council" element={<Council />} />

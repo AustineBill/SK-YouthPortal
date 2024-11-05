@@ -13,8 +13,16 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'iSKed',
-    password:  'JadeMalic143',  //'jadeskiii123',
+    password: 'jadeskiii123', //'JadeMalic143',  //'jadeskiii123',
     port: 5432,
+});
+
+pool.connect((err) => {
+    if (err) {
+        console.error('Failed to connect to the database:', err.stack);
+    } else {
+        console.log('Connected to the database successfully.');
+    }
 });
 
 // A simple root route
@@ -45,12 +53,15 @@ app.post('/login', async (req, res) => {
         console.log('Query result:', result.rows);
 
         if (result.rows.length === 0) {
+            console.log('No user found with that username');
             return res.status(400).json({ message: 'Invalid username or password' });
         }
 
         const user = result.rows[0];
+        console.log('Fetched user:', user);
 
         if (user.password !== password) {
+            console.log('Incorrect password');
             return res.status(400).json({ message: 'Invalid username or password' });
         }
 
@@ -65,10 +76,11 @@ app.post('/login', async (req, res) => {
             },
         });
     } catch (err) {
-        console.error('Error during login:', err);
+        console.error('Error during login:', err.stack);
         res.status(500).json({ message: 'Server error' });
     }
 });
+
 
 app.get('/Profile/:username', async (req, res) => {
     const { username } = req.params;
