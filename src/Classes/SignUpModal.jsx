@@ -51,7 +51,7 @@ const SignUpModal = ({ isOpen, onClose }) => {
             {activeContent === 'userAccountForm' && (
                 <div className='sign-up-modal-container'>
                     <form onSubmit={ userAccountSubmit }>
-                        <label>Enter the code to activate your account:</label>
+                        <label>Username:</label>
                         <input type="text" 
                         name="signup-username" 
                         placeholder="Username" 
@@ -59,7 +59,8 @@ const SignUpModal = ({ isOpen, onClose }) => {
                         value={ username }
                         onChange={(e) => setUsername(e.target.value)}
                         />
-                        <input type="text" 
+                        <label>Password:</label>
+                        <input type="password" 
                         name="signup-password" 
                         placeholder="Password" 
                         required 
@@ -73,10 +74,8 @@ const SignUpModal = ({ isOpen, onClose }) => {
 
             {activeContent === 'success' && (
                 <div className='sign-up-modal-container'>
-                    <form onClick={ onClose }>
-                        <p>Account is Successfully Created!</p>
-                        <button type="submit">Continue</button>
-                    </form>
+                    <p>Account is Successfully Created!</p>
+                    <button onClick={onClose}>Continue</button>
                 </div>
             )}
         </div>
