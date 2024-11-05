@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './SignUpModal.css';
 
 const SignUpModal = ({ isOpen, onClose }) => {
     const [activeContent, setActiveContent] = useState('codeForm');
