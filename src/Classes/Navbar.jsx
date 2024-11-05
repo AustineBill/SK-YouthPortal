@@ -37,7 +37,7 @@ const Navbar = () => {
           <img src={Logo} alt="Logo" style={{ width: '70px' }} /> iSKed
         </h2>
 
-        <Link className="nav-item nav-link" to="/Splash">Home</Link>
+        <Link className="nav-item nav-link" to="/Home">Home</Link>
         
         <div className="dropdown-about" ref={dropdownRef}>
           <Link

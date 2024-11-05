@@ -1,10 +1,11 @@
 // NewsEvents.js
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { Container, Row, Col, Image, Breadcrumb } from 'react-bootstrap';
 
 
 const NewsEvents = () => {
+  const navigate = useNavigate();
   const contentData = [
     {
       id: 1,
@@ -31,6 +32,10 @@ const NewsEvents = () => {
 
   return (
     <div className="container-fluid">
+      <Breadcrumb className="ms-5">
+        <Breadcrumb.Item onClick={() => navigate('/Home')}>Home</Breadcrumb.Item>
+          <Breadcrumb.Item active>News and Events</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="text-center text-lg-start">
         <h1 className="Maintext animated slideInRight">News and Events</h1>
         <p className="Subtext">Get the inside scoop on all the action</p>

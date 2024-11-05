@@ -1,7 +1,8 @@
 /* <uniquifier>: Use a unique and descriptive class name8/
 /* <weight>: Use a value from 300 to 900 */
 
-
+@import url('https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
 
 
 /********** Template CSS **********/
@@ -130,7 +131,7 @@ body {
 
 .Subtext {
   font-weight: 200; 
-  color: #141313; 
+  color: #090909; 
   animation-duration: 1s; 
   animation-fill-mode: both; 
   animation-name: slideInLeft; 
@@ -192,8 +193,8 @@ body {
 }
 
 .nav-item {
-  font-family: 'Poppins', sans-serif;
-  font-size: 4rem;
+  font-family: 'Poppins';
+  font-size: 2rem;
   margin: 2rem 1rem;
   color: black !important;
   text-decoration: none; /* No underline */
@@ -908,3 +909,74 @@ body {
 
 
 
+
+
+/****** FORM*************/
+
+
+
+/* Right part of container */
+.sign-in-form, .sign-up-form {
+  background-color: #E4E4E4;
+  height: 550px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 20px;
+  padding: 20px; /* Add padding for better spacing */
+  margin-left: auto;
+}
+
+.sign-in-form button, .sign-up-form button {
+  color: #25327A;
+  height: 50px;
+  width: 35%;
+  font-weight: bold;
+  font-size: 20px;
+  border-style: none;
+  border-radius: 20px;
+  box-shadow: 0px 2px 4px;
+}
+
+.welcome-back-sign-in h2, .start-with-us-sign-up h2 {
+  color: #25327A;
+  font-family: 'Sansita';
+  font-style: italic;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Poppins';
+  gap: 15px;
+}
+
+.sign-in-username input, .sign-in-password input {
+  width: 300px;
+  height: 50px;
+  border-style: none;
+  border-radius: 20px;
+}
+
+.sign-in-form-bottom {
+  margin-top: 10%;
+  display: flex;
+  gap: 5px;
+}
+
+#sign-in-forgot-password {
+  color: #868686;
+}
+
+#sign-up-button {
+  color: #25327A;
+  font-weight: bold;
+}
+
+#sign-in-forgot-password:hover, #sign-up-button:hover {
+  text-decoration: underline;
+}

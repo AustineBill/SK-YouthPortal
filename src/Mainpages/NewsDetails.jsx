@@ -1,7 +1,7 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Image } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Container, Row, Col, Image, Breadcrumb } from 'react-bootstrap';
+
 
 // Import the image import Hans from '../Assets/HANS MARTINEZ.png';
 
@@ -34,7 +34,7 @@ const contentData = [
 ];
 
 const ViewDetailed = () => {
-
+    const navigate = useNavigate();
     const { id } = useParams(); // Get the ID from the URL
     const item = contentData.find((item) => item.id === parseInt(id)); // Find the item by ID
 
@@ -43,6 +43,11 @@ const ViewDetailed = () => {
 
     return (
         <div className="container-fluid">
+            <Breadcrumb className="ms-5">
+                <Breadcrumb.Item onClick={() => navigate('/Home')}>Home</Breadcrumb.Item>
+                <Breadcrumb.Item onClick={() => navigate('/News')}>News and Events</Breadcrumb.Item>
+                <Breadcrumb.Item active>News Details</Breadcrumb.Item>
+            </Breadcrumb>
             <div className="text-center text-lg-start">
                 <h1 className="Maintext animated slideInRight">{item.title}</h1>
                     <p className="Subtext">Published Data</p>
