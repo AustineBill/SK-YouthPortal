@@ -142,7 +142,7 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
             )}
 
             <SignUpModal isOpen={isModalOpen} onClose={closeModal} />
-        </div> 
+        </div>
     );
 };
 
