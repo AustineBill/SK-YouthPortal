@@ -33,16 +33,3 @@ const Footer = () => (
 export default Footer;
 
 
-
-
- {/* Center Name Section 
- <div className="col-md-4 d-flex flex-column align-items-center">
- <h1 className="footer-name clr-db">iSKed</h1>
- <p>All Rights Reserved 2024.</p>
- <div className="d-flex">
-   <Link className="btn btn-square btn-outline-light me-1" to=""><i className="fab fa-twitter"></i></Link>
-   <Link className="btn btn-square btn-outline-light me-1" to=""><i className="fab fa-facebook-f"></i></Link>
-   <Link className="btn btn-square btn-outline-light me-1" to=""><i className="fab fa-instagram"></i></Link>
-   <Link className="btn btn-square btn-outline-light me-1" to=""><i className="fab fa-linkedin-in"></i></Link>
- </div>
-</div> */}
