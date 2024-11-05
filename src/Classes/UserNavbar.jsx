@@ -63,7 +63,7 @@ const UserNavbar = ({ setIsUserLoggedIn }) => {
               <Link to="/Settings" className="dropdown-item" onClick={handleLinkClick}>Settings</Link>
               <Link to="/userauth" className="dropdown-item" onClick={() => { 
                 localStorage.removeItem('isUserLoggedIn', 'false');
-                setIsUserLoggedIn(false);  // Update state to trigger re-render
+                setIsUserLoggedIn(false);  
                 handleLinkClick();
               }}>Logout</Link>
             </div>

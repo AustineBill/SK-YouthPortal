@@ -16,7 +16,7 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
-    "chart.js": "^4.4.5",
+    "chart.js": "^4.4.6",
     "cors": "^2.8.5",
     "easing-js": "^1.1.2",
     "express": "^4.21.0",
@@ -43,10 +43,12 @@
     "wowjs": "^1.1.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"npm run client\" \"npm run server\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "client": "react-scripts start",
+    "server": "node src/Webstructure/server.js"
   },
   "eslintConfig": {
     "extends": [
@@ -70,5 +72,8 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
 }

@@ -32,7 +32,14 @@ img.animated.pulse {
 }
 
 /****** Colors ******/
+:root {
+  forced-color-adjust: auto; /* or none */
+}
 
+body {
+  background-color: Canvas; /* This will use the system's color scheme */
+  color: Text; /* Default text color */
+}
 
 @media (forced-colors: active) {
   container-fluid {

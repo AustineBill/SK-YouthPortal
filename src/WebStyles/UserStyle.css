@@ -146,6 +146,7 @@
   border-radius: 20px;
   text-align: center;
   border: 2px solid #000000;
+  width: 120%;
 }
 
 /* Apply Dates button */
@@ -295,6 +296,7 @@ span {
 
 .ScheduleInfo{
   margin: 50px 0px 50px 0px;
+  width: 100%;
 }
 
 
