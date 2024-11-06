@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import AdminSidebar from './AdminSidebar'; // Adjust the path as necessary
 import './styles/usemod.css'; // Adjust the path as needed
 
 const Users = () => {
@@ -41,7 +40,6 @@ const Users = () => {
 
     return (
         <div className="admin-user-modification-container">
-            <AdminSidebar /> {/* Include AdminSidebar here */}
 
             <div className="main-content">
                 <div className="container">

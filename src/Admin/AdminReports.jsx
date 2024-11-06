@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import AdminSidebar from './AdminSidebar'; // Adjust the path as necessary
 import './styles/adminreports.css'; // New CSS file for AdminReports styling
 
 const Reports = () => {
@@ -12,12 +11,11 @@ const Reports = () => {
 
     return (
         <div className="admin-reports-container">
-            <AdminSidebar /> {/* Sidebar */}
             <div className="main-content">
                 <div className="container">
                     <div className="text-center text-lg-start mt-4">
-                        <h1 className="AdminMaintext animated slideInRight">Admin Reports</h1>
-                        <p className="AdminSubtext">View and manage all reports</p>
+                        <h1 className="admin-maintext animated slideInRight">Admin Reports</h1>
+                        <p className="admin-subtext">View and manage all reports</p>
                     </div>
 
                     <ul className="nav">

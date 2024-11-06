@@ -23,7 +23,7 @@ const AdminSidebar = () => {
                 <ul className="sidebar-links">
                     <li>
                         <img src={HomeLogo} alt="Home Logo" id='sidebar-logos' />
-                        <Link to="/admin-dashboard">Home</Link>
+                        <Link to="/admin">Home</Link>
                     </li>
 
                     <li className="manage-website-link-open" onClick={() => setmanageWebsiteChildLinksOpen(!manageWebsiteChildLinksOpen)}>
