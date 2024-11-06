@@ -38,6 +38,7 @@ import StepIndicator from './Classes/StepIndicator';
 
 // Admin Side
 import AdminNavbar from './Classes/AdminNavbar';
+import AdminSidebar from './Admin/AdminSidebar'; // Import AdminSidebar
 import AdminMain from './Admin/Admin-Main'; // Adjust the path if necessary
 import AdminReservation from './Admin/AdminReservation';
 import ManageHome from './Admin/AdminManageHome';
@@ -84,6 +85,11 @@ const App = () => {
               {!isAdminLoggedIn && !isUserLoggedIn && <Navbar />}
               {isUserLoggedIn && <UserNavbar setIsUserLoggedIn={setIsUserLoggedIn} />}
               {isAdminLoggedIn && <AdminNavbar />}
+
+              <div className="d-flex">
+                {/* Conditional Sidebar rendering for Admin */}
+                {isAdminLoggedIn && <AdminSidebar />}
+              </div>
             
               <div className="d-flex flex-column min-vh-100"> 
                 <Routes>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './styles/Admin-Style.css'; // Path to your updated CSS
-import AdminSidebar from './AdminSidebar'; // Ensure this is the only import
+
 
 import StepIndicator from '../Classes/StepIndicator';
 
@@ -62,8 +62,6 @@ const AdminReservation = () => {
 
   return (
     <div className="admin-reservation-page">
-      {/* Sidebar */}
-      <AdminSidebar />
 
       {/* Main content */}
       <div className="content-container">
