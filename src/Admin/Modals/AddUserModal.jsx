@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './AddUserModal.css';
 
 const AddUserModal = ({ isOpen, onClose }) => {
     const [name, setName] = useState('');
