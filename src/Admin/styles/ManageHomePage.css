@@ -1,0 +1,164 @@
+.adminhomepage-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px;
+    max-width: 900px;
+    margin: auto;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.adminhomepage-nav-tabs {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+}
+
+.adminhomepage-nav-tabs h3 {
+    cursor: pointer;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #444;
+    background-color: #e2e2e2;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.adminhomepage-nav-tabs h3:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.adminhomepage-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.adminhomepage-home-details, .adminhomepage-events-section, .adminhomepage-add-event {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.adminhomepage-home-details:hover, .adminhomepage-events-section:hover, .adminhomepage-add-event:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.adminhomepage-home-details h4, .adminhomepage-events-section h4, .adminhomepage-add-event h4 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.adminhomepage-home-details input,
+.adminhomepage-home-details textarea,
+.adminhomepage-add-event input,
+.adminhomepage-add-event textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+.adminhomepage-home-details input[type="file"],
+.adminhomepage-add-event input[type="file"] {
+    margin-top: 20px;
+}
+
+.adminhomepage-image-preview, .adminhomepage-event-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    margin-top: 10px;
+    object-fit: cover;
+}
+
+.adminhomepage-btn {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.adminhomepage-btn:hover {
+    background-color: #0056b3;
+}
+
+.adminhomepage-event-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.adminhomepage-event-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.adminhomepage-event-item h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.adminhomepage-event-item p {
+    font-size: 16px;
+    margin: 0;
+    color: #555;
+}
+
+
+
+.adminhomepage-btn-edit:hover {
+    background-color: #e0a800;
+}
+.adminhomepage-nav-tabs h3 {
+    cursor: pointer;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #444;
+    background-color: #e2e2e2;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.adminhomepage-btn {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;  /* Ensure pointer cursor */
+    transition: background-color 0.3s ease;
+}
+
+.adminhomepage-btn-edit {
+    background-color: #ffc107;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 15px;
+    cursor: pointer;  /* Ensure pointer cursor */
+    transition: background-color 0.3s ease;
+}

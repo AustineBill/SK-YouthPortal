@@ -47,6 +47,7 @@ import ManageProgram from './Admin/AdminManageProgram';
 import ManageContactUs from './Admin/AdminManageContactUs';
 import Reports from './Admin/AdminReports';
 import Users from './Admin/AdminUsers';
+import UserDetails from './Admin/UserDetails';
 import { AuthProvider } from './WebStructure/AuthContext'; // Only import AuthProvider
 
 import './App.css';
@@ -133,6 +134,7 @@ const App = () => {
                   <Route path="/admin/manage-contact-us" element={<ManageContactUs />} />
                   <Route path="/admin/reports" element={<Reports />} />
                   <Route path="/admin/users" element={<Users />} />
+                  <Route path="/user/:id" element={<UserDetails />} />
                 </Routes>
               </div>
               {!isAdminLoggedIn && <Footer />}
