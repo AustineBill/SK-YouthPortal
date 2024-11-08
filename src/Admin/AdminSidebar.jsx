@@ -10,7 +10,8 @@ import ManageRequestsLogo from '../Asset/Admin/Manage Requests.png';
 import ReservationsLogo from '../Asset/Admin/Reservations.png';
 import ReportsLogo from '../Asset/Admin/Reports.png';
 import UsersLogo from '../Asset/Admin/Users.png';
-import './AdminSidebar.css'
+// import './AdminSidebar.css'
+import './styles/AdminSidebar.css';
 
 const AdminSidebar = () => {
     const [manageWebsiteChildLinksOpen, setmanageWebsiteChildLinksOpen] = useState(false);
@@ -19,7 +20,7 @@ const AdminSidebar = () => {
     return (
         <div className="sidebar-container">
             <div className="admin-sidebar">
-                <h2 className="sidebar-title">Admin Panel</h2>
+                {/* <h2 className="sidebar-title">Admin Panel</h2> */}
                 <ul className="sidebar-links">
                     <li>
                         <img src={HomeLogo} alt="Home Logo" id='sidebar-logos' />
