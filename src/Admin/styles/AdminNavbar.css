@@ -1,13 +1,17 @@
 /* AdminNavbar.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
 
 .admin-navbar {
+    position: fixed;
+    top: 0;
+    height: 75px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2c3e50;
-    padding: 1rem 2rem;
-    color: #ecf0f1;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #FFFFFF;
+    background-color: #25327A;
+    z-index: 1;
 }
 
 #iSKed-logo {
@@ -15,30 +19,24 @@
 }
 
 .admin-panel {
+    margin-left: 2.5%;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 15px;
 }
 
 .admin-panel h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-family: 'Roboto', sans-serif;
-    color: #ecf0f1;
+    font-family: 'Sansita', sans-serif;
+    font-weight: 750;
+    font-style: italic;
+    font-size: 30px;
 }
 
+/* Not finalized */
 .admin-navbar button {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    font-family: 'Roboto', sans-serif;
-    color: #ecf0f1;
-    background-color: #e74c3c;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin-right: 2.5%;
 }
 
 .admin-navbar button:hover {
-    background-color: #c0392b;
+    color: red;
 }
