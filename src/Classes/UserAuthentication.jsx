@@ -1,22 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import SignUpModal from './Modals/SignUpModal';
 import '../App.css';
+import './UserAuthentication.css'; // Ensure this is correct based on the folder structure
+
 
 const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
     const [view, setView] = useState('');
-    // const [setIsSignUpSuccessful] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
-    const [isModalOpen, setModalOpen] = useState(false);
-
-    const openModal = () => {
-        setModalOpen(true);
-    }
-    const closeModal = () => { 
-        setModalOpen(false);
-        setView('signUp');
-    };
+    const [isSignUpOpen, setSignUpOpen] = useState(false); // Track if sign up is open
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -28,8 +22,9 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
 
     const handleSignUpSubmit = (e) => {
         e.preventDefault();
-        // setIsSignUpSuccessful(true);
-        // setView('');
+        // Handle the sign-up logic, still not connected to the database.
+        alert('Account Created Successfully!');
+        setView('signIn'); // Redirect to sign in after sign up
     };
 
     const handleLogin = async (e) => {
@@ -59,7 +54,6 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
                     localStorage.setItem('username', username); // Save the username
                     localStorage.setItem('isUserLoggedIn', 'true'); // Set login state
                     navigate('/Dashboard'); // Redirect to user dashboard
-                    
                 } else {
                     alert(data.message || 'Invalid user credentials');
                 }
@@ -78,9 +72,8 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
                     <h1 className="fw-normal fs-4 me-4 animated slideInLeft"> Barangay at sa Bayan 
                         <span className="fs-1 fw-bold clr-db txt-i-db animated slideInRight"> Sangguniang Kabataan</span>
                     </h1>
-                        <p className="IntroDetails animated slideInBottom">Western Bicutan</p>
+                    <p className="IntroDetails animated slideInBottom">Western Bicutan</p>
                 </div>
-                
 
                 {/* Right Part: Sign In / Sign Up Form */}
                 <div className="col-md-4">
@@ -121,11 +114,24 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
                                 <div>
                                     <p>Lorem Ipsum</p>
                                 </div>
-                                <button onClick={openModal}>Sign Up</button>
+                                <div className="sign-up-form-input">
+                                    <label>Username:</label>
+                                    <input type="text" placeholder="Username" required value={username} onChange={(e) => setUsername(e.target.value)} />
+                                </div>
+                                <div className="sign-up-form-input">
+                                    <label>Password:</label>
+                                    <input type="password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+                                </div>
+                                <button type="submit">Create Account</button>
+                                <div className="sign-up-form-bottom">
+                                    <p>Already have an account?</p>
+                                    <Link to="/userauth?view=signIn" className="navbar-brand">
+                                        <p id='sign-in-button'>Sign in</p>
+                                    </Link>
+                                </div>
                             </form>
                         </div>
                     )}
-                    <SignUpModal isOpen={isModalOpen} onClose={closeModal} />
                 </div>
             </div>
         </div>
