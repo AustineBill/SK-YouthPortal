@@ -1,4 +1,4 @@
-.adminhomepage-container {
+/* .adminhomepage-container {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -149,7 +149,7 @@
     color: #fff;
     border: none;
     border-radius: 6px;
-    cursor: pointer;  /* Ensure pointer cursor */
+    cursor: pointer; 
     transition: background-color 0.3s ease;
 }
 
@@ -159,6 +159,45 @@
     border: none;
     border-radius: 6px;
     padding: 8px 15px;
-    cursor: pointer;  /* Ensure pointer cursor */
+    cursor: pointer;  
     transition: background-color 0.3s ease;
+} */
+
+/* ManageHomePage.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+
+.adminhomepage-container {
+    position: relative;
+    top: 75px;
+    left: 25%;
+    /* height: 100%; */
+    width: 75%;
+    font-family: 'Inter', sans-serif;
+    background-color: #FFFFFF;
 }
+
+.adminhomepage-container h2 {
+    margin: 20px 0 20px 40px;
+}
+
+.adminhomepage-nav-tabs {
+    display: flex;
+    color: #766F6F;
+    list-style: none;
+    gap: 1in;
+}
+
+.adminhomepage-content {
+    display: flex;
+    justify-content: center;
+}
+
+.adminhomepage-add-event {
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    width: 90%;
+    background-color: #D9D9D9;
+}
+
+/* Still not finished. */
