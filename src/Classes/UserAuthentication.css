@@ -1,0 +1,73 @@
+/* General Styles */
+.container-fluid {
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.sign-in-form, .sign-up-form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sign-in-form input,
+.sign-up-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.sign-up-form-input {
+    margin-bottom: 15px;
+}
+
+.sign-in-form-bottom,
+.sign-up-form-bottom {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.sign-up-form-bottom p,
+.sign-in-form-bottom p {
+    margin: 0;
+    font-size: 14px;
+}
+
+#sign-in-button,
+#sign-up-button {
+    color: #007bff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#sign-in-button:hover,
+#sign-up-button:hover {
+    text-decoration: underline;
+}
+
