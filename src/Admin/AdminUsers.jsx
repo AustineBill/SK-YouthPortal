@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AddUserModal from './Modals/AddUserModal';
 import './styles/usemod.css'; // Adjust the path as needed
 
 const Users = () => {
@@ -6,6 +7,16 @@ const Users = () => {
     const [newUser, setNewUser] = useState({ name: '', role: '', status: '' });
     const [isEditing, setIsEditing] = useState(false);
     const [editUserId, setEditUserId] = useState(null);
+    // New Code
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const openModal = () => {
+        setModalOpen(true);
+    };
+
+    const closeModal = () => { 
+        setModalOpen(false);
+    };
 
     const handleAddUser = () => {
         if (newUser.name && newUser.role && newUser.status) {
@@ -67,14 +78,16 @@ const Users = () => {
                             value={newUser.status}
                             onChange={(e) => setNewUser({ ...newUser, status: e.target.value })}
                         />
-                        <button 
+                        {/* Rej's code */}
+                        {/* <button 
                             className={`btn ${isEditing ? 'btn-success' : 'btn-primary'}`} 
                             onClick={isEditing ? handleUpdateUser : handleAddUser}
                         >
                             {isEditing ? 'Update User' : 'Add User'}
-                        </button>
+                        </button> */}
+                        {/* MJ's code */}
+                        <button onClick={openModal}>Add User</button>
                     </div>
-
                     <table className="table table-striped table-bordered mt-4">
                         <thead>
                             <tr>
@@ -111,6 +124,7 @@ const Users = () => {
                         </tbody>
                     </table>
                 </div>
+                <AddUserModal isOpen={isModalOpen} onClose={closeModal} />
             </div>
         </div>
     );
