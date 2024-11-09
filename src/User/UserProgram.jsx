@@ -6,8 +6,6 @@ import Card from 'react-bootstrap/Card';
 
 import ADAM from "../Asset/ADAM FORTALEZA.png"
 
-import '../App.css';
-import '../style.css';
 
 const Programs = () => {
   const navigate = useNavigate();
@@ -29,7 +27,7 @@ const Programs = () => {
                 Some quick example text to build on the card title and make up the
                 bulk of the card's content.
               </Card.Text>
-              <Button variant="primary" onClick={() => navigate('/ProgramDetails')}>Explore Now</Button>
+              <Button variant="dark" onClick={() => navigate('/ProgramDetails')}>Explore Now</Button>
             </Card.Body>
           </Card>
         </div>
@@ -43,7 +41,7 @@ const Programs = () => {
                 Some quick example text to build on the card title and make up the
                 bulk of the card's content.
               </Card.Text>
-              <Button variant="primary">Explore Now</Button>
+              <Button variant="dark" onClick={() => navigate('/Equipment')}>Explore Now</Button>
             </Card.Body>
           </Card>
         </div>

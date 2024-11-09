@@ -27,6 +27,7 @@ import Programs from "./User/UserProgram";
 import Log from "./User/ReserveLog";
 import HelpSupport from "./User/HelpSupport";
 import ProgramDescript from './User/ProgramDetails';
+import Equipment from './User/Equipment';
 import Reservation from './User/Reservation';
 import ReservationDetails from './User/ReservationDetails';
 import CancelReservation from './User/Cancellation';
@@ -34,7 +35,6 @@ import ViewSchedule from './User/ViewSchedule';
 import ScheduleDetails from './User/ScheduleDetails';
 import ScheduleDone from './User/ScheduleDone';
 
-import StepIndicator from './Classes/StepIndicator';
 
 // Admin Side
 import AdminNavbar from './Classes/AdminNavbar';
@@ -50,8 +50,14 @@ import Users from './Admin/AdminUsers';
 import UserDetails from './Admin/UserDetails';
 import { AuthProvider } from './WebStructure/AuthContext'; // Only import AuthProvider
 
+//Structure
+import StepIndicator from './Classes/StepIndicator';
+
+
+
 import './App.css';
-import './style.css';
+import './WebStyles/WebStyle.css'
+
 import './Admin/styles/Admin-Style.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css';
@@ -114,6 +120,7 @@ const App = () => {
                   <Route path="/Profile/:username" element={<Profile />} />
                   <Route path="/UserProgram" element={<Programs />} />
                   <Route path="/ProgramDetails" element={<ProgramDescript />} />
+                  <Route path="/Equipment" element={<Equipment />} />
                   <Route path="/Reservation" element={<Reservation />} />
                   <Route path="/ViewSchedule" element={<ViewSchedule />} />
                   <Route path="/StepIndicator" element={<StepIndicator />} />

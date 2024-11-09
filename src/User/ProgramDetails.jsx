@@ -4,8 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { AuthContext } from '../WebStructure/AuthContext';
-import '../App.css';
-import '../style.css';
+
 
 
 const Program_details = () => {
@@ -26,7 +25,6 @@ const Program_details = () => {
   };
 
   const handleViewSchedule = () => {
-    // Only allow navigation to 'View Schedule' if authenticated
     if (isAuthenticated) {
       navigate('/ViewSchedule');
     } else {
@@ -40,16 +38,15 @@ const Program_details = () => {
         <div className="text-center text-lg-start m-4">
           <h1 className="Maintext animated slideInRight">Appointment</h1> 
           <p className='Subtext'>Reserve yours now!</p>
-          
-          <button className="prog-view-button" onClick={handleViewSchedule}>
-            <i className="fa fa-calendar" aria-hidden="true"></i> View Schedule
+
+          <button className="LargeButton btn-dark" onClick={handleShow}>
+            <i className="bi bi-bookmark" aria-hidden="true"> </i> Book Now
+          </button>
+          <button className="LargeButton btn-db" onClick={handleViewSchedule}>
+            <i className="bi bi-calendar" aria-hidden="true"></i> View Schedule
           </button>
         </div>
       </div>
-
-      <button className="prog-book-button" onClick={handleShow}>
-        Book Now
-      </button>
 
       <Modal  show={show} onHide={handleClose} centered size="lg">
         <Modal.Header closeButton>
@@ -58,19 +55,21 @@ const Program_details = () => {
         
           <Modal.Body>
             <div className="d-flex justify-content-around">
-              <Button className="ButtonCard d-flex flex-column align-items-center" onClick={() => handleAuthorize('Solo')}>
-                <i className="bi bi-person mb-1" style={{ fontSize: '6rem' }}></i>
-                Solo
+              <Button className="ButtonCard d-flex flex-column align-items-center" onClick={() => handleAuthorize('Solo')}
+                style={{ backgroundColor: '#25327A', borderColor: '25327A' }}>
+                <i className="bi bi-person mb-1" style={{ fontSize: '10rem' }}></i>
+                <span style={{ fontSize: '2rem', color: '#fff' }}>Solo</span>
               </Button>
-              <Button className="ButtonCard d-flex flex-column align-items-center" onClick={() => handleAuthorize('Group')}>
-                <i className="bi bi-people mb-1 " style={{ fontSize: '6rem' }}></i>
-                Group
+              <Button className="ButtonCard d-flex flex-column align-items-center " onClick={() => handleAuthorize('Group')}
+                style={{ backgroundColor: '#25327A', borderColor: '25327A' }}>
+                <i className="bi bi-people mb-1 " style={{ fontSize: '10rem' }}></i>
+                <span style={{ fontSize: '2rem', color: '#fff' }}>Group</span>
               </Button>
             </div>
           </Modal.Body>
         </Modal>
 
-      <div className="prog-descripton">
+      <div className="ItemContainer">
         <div className="row g-0">
           <div className="col-md-4">
             <img src="..." className="img-fluid rounded-start" alt="..." />
