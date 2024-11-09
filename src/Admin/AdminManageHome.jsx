@@ -54,8 +54,8 @@ const ManageHomePage = () => {
 
             {/* Navigation tabs */}
             <ul className="adminhomepage-nav-tabs">
-                <li onClick={() => setActiveContent('homeDetails')}>Homepage Details</li>
-                <li onClick={() => setActiveContent('events')}>All Events</li>
+                <li onClick={() => setActiveContent('homeDetails')}>Manage Details</li>
+                <li onClick={() => setActiveContent('events')}>All Announcements/Events</li>
                 <li onClick={() => setActiveContent('addEvent')}>Add Event</li>
             </ul>
 
@@ -63,8 +63,9 @@ const ManageHomePage = () => {
                 {/* Homepage Details Section */}
                 {activeContent === 'homeDetails' && (
                     <div className="adminhomepage-home-details">
-                        <h3>Homepage Details</h3>
+                        {/* <h3>Homepage Details</h3> */}
                         <div className="adminhomepage-input-group">
+                            <label>Still unknown....</label>
                             <input
                                 type="text"
                                 name="title"
@@ -75,6 +76,7 @@ const ManageHomePage = () => {
                             />
                         </div>
                         <div className="adminhomepage-input-group">
+                            <label>Still unknown....</label>
                             <textarea
                                 name="description"
                                 placeholder="Description"
@@ -84,6 +86,7 @@ const ManageHomePage = () => {
                             />
                         </div>
                         <div className="adminhomepage-input-group">
+                            <label>Still unknown....</label>
                             <input
                                 type="file"
                                 accept="image/*"
@@ -100,7 +103,9 @@ const ManageHomePage = () => {
                             onClick={handleSaveHomeDetails}
                             className="adminhomepage-btn adminhomepage-btn-primary"
                         >
-                            Save Homepage Details
+                            {/* Dapat Edit Details dito tapos ang nakapresent eh yung current information sa home page. */}
+                            {/* Save Homepage Details */}
+                            Edit Details
                         </button>
                     </div>
                 )}
@@ -128,6 +133,7 @@ const ManageHomePage = () => {
                     <div className="adminhomepage-add-event">
                         {/* <h3>Add New Event</h3> */}
                         <div className="adminhomepage-input-group">
+                            <label>Still unknown....</label>
                             <input
                                 type="text"
                                 placeholder="Event Title"
@@ -138,6 +144,7 @@ const ManageHomePage = () => {
                             />
                         </div>
                         <div className="adminhomepage-input-group">
+                            <label>Still unknown....</label>
                             <textarea
                                 placeholder="Event Description"
                                 name="description"
@@ -147,6 +154,7 @@ const ManageHomePage = () => {
                             />
                         </div>
                         <div className="adminhomepage-input-group">
+                            <label>Still unknown....</label>
                             <input
                                 type="file"
                                 accept="image/*"
@@ -163,7 +171,7 @@ const ManageHomePage = () => {
                             onClick={handleAddEvent}
                             className="adminhomepage-btn adminhomepage-btn-primary"
                         >
-                            Add Event
+                            Add
                         </button>
                     </div>
                 )}

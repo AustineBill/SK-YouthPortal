@@ -1,4 +1,4 @@
-.admin-manage-program-container {
+/* .admin-manage-program-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -231,4 +231,68 @@
     font-size: 1em;
     border: 1px solid #ced4da;
     border-radius: 6px;
+} */
+
+/* ManageProgram.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+
+.admin-manage-program-container {
+    position: absolute;
+    top: 75px;
+    left: 25%;
+    width: 75%;
+    font-family: 'Inter', sans-serif;
+    background-color: #FFFFFF;
+}
+
+.admin-manage-program-container h2 {
+    margin: 20px 0 0 40px;
+}
+
+.admin-nav-tabs {
+    margin: 20px 0 20px 30px;
+    display: flex;
+    color: #766F6F;
+    list-style: none;
+    gap: 1in;
+}
+
+.admin-component-contents {
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+.admin-programs-list, .admin-add-program {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+    width: 90%;
+    background-color: #D9D9D9;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-items: center;
+}
+
+form input {
+    width: 90%;
+    height: 50px;
+    border-style: none;
+    border-radius: 20px;
+    background-color: #F0EFEF;
+}
+
+.btn {
+    height: 10%;
+    width: 15%;
+    margin-top: 15px;
+    border-style: none;
+    border-radius: 20px;
+    background-color: #888585;
 }

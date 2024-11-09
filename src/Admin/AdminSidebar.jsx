@@ -22,33 +22,42 @@ const AdminSidebar = () => {
             <div className="admin-sidebar">
                 {/* <h2 className="sidebar-title">Admin Panel</h2> */}
                 <ul className="sidebar-links">
-                    <li>
-                        <img src={HomeLogo} alt="Home Logo" id='sidebar-logos' />
-                        <Link to="/admin">Home</Link>
-                    </li>
-
+                    <Link to="/admin">
+                        <li>
+                            <img src={HomeLogo} alt="Home Logo" id='sidebar-logos' />
+                            Home
+                        </li>
+                    </Link>
                     <li className="manage-website-link-open" onClick={() => setmanageWebsiteChildLinksOpen(!manageWebsiteChildLinksOpen)}>
                         <img src={ManageWebsiteLogo} alt="Manage Website Logo" id='sidebar-logos' />
                         Manage Website
                     </li>
                     {manageWebsiteChildLinksOpen && (
                         <ul className="manage-website-nested-links">
-                            <li>
-                                <img src={ManageHomeLogo} alt="Manage Home Logo" id='sidebar-logos' />
-                                <Link to="/admin/manage-home">Manage Home Page</Link>
-                            </li>
-                            <li>
-                                <img src={ManageAboutUsLogo} alt="Manage About Us Logo" id='sidebar-logos' />
-                                <Link to="/admin/manage-about-us">Manage About Us Page</Link>
-                            </li>
-                            <li>
-                                <img src={ManageProgramLogo} alt="Manage Program Logo" id='sidebar-logos' />
-                                <Link to="/admin/manage-program">Manage Program Page</Link>
-                            </li>
+                            <Link to="/admin/manage-home">
+                                <li>
+                                    <img src={ManageHomeLogo} alt="Manage Home Logo" id='sidebar-logos' />
+                                    Manage Home Page
+                                </li>
+                            </Link>
+                            <Link to="/admin/manage-about-us">
+                                <li>
+                                    <img src={ManageAboutUsLogo} alt="Manage About Us Logo" id='sidebar-logos' />
+                                    Manage About Us Page
+                                </li>
+                            </Link>
+                            <Link to="/admin/manage-program">
+                                <li>
+                                    <img src={ManageProgramLogo} alt="Manage Program Logo" id='sidebar-logos' />
+                                    Manage Program Page
+                                </li>
+                            </Link>
+                            <Link to="/admin/manage-contact-us">
                             <li>
                                 <img src={ManageContactUsLogo} alt="Manage Contact Us Logo" id='sidebar-logos' />
-                                <Link to="/admin/manage-contact-us">Manage Contact Us Page</Link>
+                                Manage Contact Us Page
                             </li>
+                            </Link>
                         </ul>
                     )}
                     <li className="manage-requests-link-open" onClick={() => setmanageRequestsChildLinksOpen(!manageRequestsChildLinksOpen)}>
@@ -57,20 +66,26 @@ const AdminSidebar = () => {
                     </li>
                     {manageRequestsChildLinksOpen && (
                         <ul className="manage-requests-nested-links">
-                            <li>
-                                <img src={ReservationsLogo} alt="Reservation Logo" id='sidebar-logos' />
-                                <Link to="/admin/reservation">Reservation</Link>
-                            </li>
+                            <Link to="/admin/reservation">
+                                <li>
+                                    <img src={ReservationsLogo} alt="Reservation Logo" id='sidebar-logos' />
+                                    Reservation
+                                </li>
+                            </Link>
                         </ul>
                     )}
-                    <li>
-                        <img src={ReportsLogo} alt="Reports Logo" id='sidebar-logos' />
-                        <Link to="/admin/reports">Reports</Link>
-                    </li>
-                    <li>
-                        <img src={UsersLogo} alt="Users Logo" id='sidebar-logos' />
-                        <Link to="/admin/users">Users</Link>
-                    </li>
+                    <Link to="/admin/reports">
+                        <li>
+                            <img src={ReportsLogo} alt="Reports Logo" id='sidebar-logos' />
+                            Reports
+                        </li>
+                    </Link>
+                    <Link to="/admin/users">
+                        <li>
+                            <img src={UsersLogo} alt="Users Logo" id='sidebar-logos' />
+                            Users
+                        </li>
+                    </Link>
                 </ul>
             </div>
         </div>

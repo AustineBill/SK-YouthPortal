@@ -170,17 +170,17 @@
     position: relative;
     top: 75px;
     left: 25%;
-    /* height: 100%; */
     width: 75%;
     font-family: 'Inter', sans-serif;
     background-color: #FFFFFF;
 }
 
 .adminhomepage-container h2 {
-    margin: 20px 0 20px 40px;
+    margin: 20px 0 0 40px;
 }
 
 .adminhomepage-nav-tabs {
+    margin: 20px 0 20px 30px;
     display: flex;
     color: #766F6F;
     list-style: none;
@@ -192,12 +192,55 @@
     justify-content: center;
 }
 
-.adminhomepage-add-event {
+/* Mababago pa yung sa height dito since yung events section eh wala pang contents na nakukuha sa database. */
+.adminhomepage-home-details, .adminhomepage-events-section, .adminhomepage-add-event {
     display: flex;
     flex-direction: column;
-    height: 250px;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
     width: 90%;
     background-color: #D9D9D9;
 }
 
+.adminhomepage-input-group {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-items: center;
+}
+
+.adminhomepage-input-group input, textarea {
+    width: 90%;
+    height: 50px;
+    border-style: none;
+    border-radius: 20px;
+    background-color: #F0EFEF;
+}
+
+.adminhomepage-btn {
+    height: 10%;
+    width: 15%;
+    margin-top: 15px;
+    border-style: none;
+    border-radius: 20px;
+    background-color: #888585;
+}
+
 /* Still not finished. */
+/* Missing: 
+
+1. Active link design
+2. Hover for link
+
+---- In Manage Details:
+1. Alignment of label
+2. Hover for input and button
+
+---- In All Announcements/Events:
+1. All of it since it is still not connected to the database.
+
+---- In Add Event section:
+1. Alignment of label
+2. Hover for input and button
+*/
