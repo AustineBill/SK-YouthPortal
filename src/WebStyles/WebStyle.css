@@ -1,0 +1,31 @@
+
+/*++++++Dashboard++++++*/
+
+.ItemContainer{
+  width: 80%;
+  justify-content: center;
+  margin: 5em;
+}
+
+
+.CardContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;  
+  justify-content: center;
+  margin: 1rem;
+}
+
+
+.MediumCard{
+  width: 20rem;
+  height: auto; 
+  margin: 2rem;
+}
+
+.LargeCard{
+  width: 50rem;
+}
+
+
+

@@ -293,35 +293,17 @@ span {
   cursor: pointer;
 }
 
-
 .ScheduleInfo{
   margin: 50px 0px 50px 0px;
   width: 100%;
 }
 
-
 .ButtonCard {
-  display: flex;
-  flex-direction: column; /* Make the icon above the text */
-  align-items: center; /* Center icon and text */
-  justify-content: center;
-  width: 70%;
-  font-size: 2rem;
-  font-weight: 500;
+  width: 45%;
+  padding: 1em;
+  margin: 1rem; /* Adjusts the spacing for a better layout */
   text-align: center;
-  padding: 3rem; /* Adjust padding for a smaller button */
-  margin: 1rem; /* Smaller margin to fit both buttons in a row */
-  background-color: #f04814;
-  border: 4px solid #000000;
 }
-
-.ButtonCard:hover {
-  background-color: #000000;
-  color: #ffffff;
-  border-color: #000000;
-}
-
-
 
 /***Profile*****/
 

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import '../App.css';
-import './UserAuthentication.css'; // Ensure this is correct based on the folder structure
-
+import './UserAuthentication.css';
 
 const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
-    const [view, setView] = useState('');
+    const [view, setView] = useState('signIn'); // Default to 'signIn' view
     const location = useLocation();
     const navigate = useNavigate();
-    const [isSignUpOpen, setSignUpOpen] = useState(false); // Track if sign up is open
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -22,7 +20,6 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
 
     const handleSignUpSubmit = (e) => {
         e.preventDefault();
-        // Handle the sign-up logic, still not connected to the database.
         alert('Account Created Successfully!');
         setView('signIn'); // Redirect to sign in after sign up
     };
@@ -33,27 +30,23 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
         const password = e.target.password.value;
 
         try {
-            // Check if credentials match admin credentials first
             if (username === 'admin123' && password === '123') {
-                setIsAdminLoggedIn(true); // Set Admin login state
-                navigate('/admin'); // Redirect to admin dashboard
+                setIsAdminLoggedIn(true);
+                navigate('/admin');
             } else {
-                // If not admin, attempt user login with server verification
                 const response = await fetch('http://localhost:5000/login', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password }),
                 });
 
                 const data = await response.json();
 
                 if (response.ok) {
-                    setIsUserLoggedIn(true); // Set user login state
-                    localStorage.setItem('username', username); // Save the username
-                    localStorage.setItem('isUserLoggedIn', 'true'); // Set login state
-                    navigate('/Dashboard'); // Redirect to user dashboard
+                    setIsUserLoggedIn(true);
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('isUserLoggedIn', 'true');
+                    navigate('/Dashboard');
                 } else {
                     alert(data.message || 'Invalid user credentials');
                 }
@@ -75,7 +68,6 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
                     <p className="IntroDetails animated slideInBottom">Western Bicutan</p>
                 </div>
 
-                {/* Right Part: Sign In / Sign Up Form */}
                 <div className="col-md-4">
                     {view === 'signIn' && (
                         <div className="sign-in-form">
@@ -90,7 +82,7 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
                                     <input type="password" name="password" placeholder='Password' required />
                                 </div>
                                 <div>
-                                    <Link to="/rawr" className="navbar-brand">
+                                    <Link to="/forgot-password" className="navbar-brand">
                                         <p id='sign-in-forgot-password'>Forgot your password?</p>
                                     </Link>
                                 </div>
