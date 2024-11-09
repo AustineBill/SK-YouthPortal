@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// import './styles/ManageHomePage.css';
 import './styles/ManageHomePage.css';
 
 const ManageHomePage = () => {
@@ -107,7 +108,7 @@ const ManageHomePage = () => {
                 {/* All Events Section */}
                 {activeContent === 'events' && (
                     <div className="adminhomepage-events-section">
-                        <h3>All Announcements and Events</h3>
+                        {/* <h3>All Announcements and Events</h3> */}
                         {events.length === 0 ? (
                             <p>No events available</p>
                         ) : (
@@ -125,7 +126,7 @@ const ManageHomePage = () => {
                 {/* Add Event Section */}
                 {activeContent === 'addEvent' && (
                     <div className="adminhomepage-add-event">
-                        <h3>Add New Event</h3>
+                        {/* <h3>Add New Event</h3> */}
                         <div className="adminhomepage-input-group">
                             <input
                                 type="text"
