@@ -121,8 +121,9 @@ const ManageProgram = () => {
 
                 {activeContent === 'addProgram' && (
                     <div className="admin-add-program">
-                        <h3>Add New Program</h3>
+                        {/* <h3>Add New Program</h3> */}
                         <form>
+                            <label>Still unknown....</label>
                             <input
                                 type="text"
                                 placeholder="Program Name"
@@ -130,6 +131,7 @@ const ManageProgram = () => {
                                 value={newProgram.name}
                                 onChange={handleNewProgramChange}
                             />
+                            <label>Still unknown....</label>
                             <input
                                 type="text"
                                 placeholder="Program Description"
@@ -137,6 +139,7 @@ const ManageProgram = () => {
                                 value={newProgram.description}
                                 onChange={handleNewProgramChange}
                             />
+                            <label>Still unknown....</label>
                             <input type="file" accept="image/*" onChange={handleImageUpload} />
                             {imagePreview && <img src={imagePreview} alt="Preview" className="admin-image-preview" />}
                             <button type="button" className="btn btn-primary" onClick={handleAddProgram}>
