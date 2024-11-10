@@ -218,14 +218,15 @@
     background-color: #F0EFEF;
 }
 
-.adminhomepage-btn {
+/* Wala muna kasi apektado yung user side. */
+/* .adminhomepage-btn {
     height: 10%;
     width: 15%;
     margin-top: 15px;
     border-style: none;
     border-radius: 20px;
     background-color: #888585;
-}
+} */
 
 /* Still not finished. */
 /* Missing: 

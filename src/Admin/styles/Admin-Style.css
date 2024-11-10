@@ -1,9 +1,14 @@
 .admin-reservation-page {
+    position: absolute;
+    top: 75px;
+    left: 25%;
+    width: 75%;
+    background-color: #FFFFFF;
     display: flex; /* Use flexbox for layout */
     justify-content: space-between; /* Space between sidebar and content */
     align-items: flex-start; /* Align items at the top */
     padding: 20px; /* Add padding around the page */
-    background-color: #f0f2f5; /* Light background for the whole page */
+    /* background-color: #f0f2f5;  */
     height: 100vh; /* Full height for the container */
 }
 
