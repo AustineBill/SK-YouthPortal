@@ -1,9 +1,14 @@
 .admin-user-modification-container {
+    position: absolute;
+    top: 75px;
+    left: 25%;
+    width: 75%;
+    background-color: #FFFFFF;
     display: flex; /* Use flexbox for layout */
     margin: 0; /* Reset margin */
     padding: 0; /* Reset padding */
     min-height: 100vh; /* Ensure full height */
-    background-color: #ecf0f1; /* Light gray background for the container */
+    /* background-color: #ecf0f1; */
 }
 
 .admin-user-modification-container > * {

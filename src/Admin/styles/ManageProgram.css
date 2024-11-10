@@ -288,11 +288,12 @@ form input {
     background-color: #F0EFEF;
 }
 
-.btn {
+/* Wala muna kasi apektado yung user side. */
+/* .btn {
     height: 10%;
     width: 15%;
     margin-top: 15px;
     border-style: none;
     border-radius: 20px;
     background-color: #888585;
-}
+} */
