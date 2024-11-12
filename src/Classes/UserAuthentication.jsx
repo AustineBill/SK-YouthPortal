@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { AuthContext } from '../WebStructure/AuthContext';
+
 import '../App.css';
 import './UserAuthentication.css';
 
 const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
-    const [view, setView] = useState('signIn'); // Default to 'signIn' view
+    const [view, setView] = useState('signIn');
     const location = useLocation();
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const { login } = useContext(AuthContext);
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -28,7 +31,7 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
         e.preventDefault();
         const username = e.target.username.value;
         const password = e.target.password.value;
-
+    
         try {
             if (username === 'admin123' && password === '123') {
                 setIsAdminLoggedIn(true);
@@ -39,13 +42,12 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password }),
                 });
-
+    
                 const data = await response.json();
-
+    
                 if (response.ok) {
-                    setIsUserLoggedIn(true);
-                    localStorage.setItem('username', username);
-                    localStorage.setItem('isUserLoggedIn', 'true');
+                    setIsUserLoggedIn(true); // This should now work as expected
+                    login(data.token, username); // Save auth state in context
                     navigate('/Dashboard');
                 } else {
                     alert(data.message || 'Invalid user credentials');
@@ -56,6 +58,7 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
             alert('An error occurred. Please try again.');
         }
     };
+    
 
     return (
         <div className="container-fluid">

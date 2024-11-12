@@ -46,7 +46,7 @@ const Contact = () => (
       <img src={Location} alt="Location" />
     </div>
     <div className="d-flex justify-content-center">
-      <Button variant ="dark"><i class="bi bi-hand-index me-3"></i>Appoint with us</Button>
+      <Button variant ="dark"><i className="bi bi-hand-index me-3"></i>Appoint with us</Button>
     </div>`
 </div>
 );

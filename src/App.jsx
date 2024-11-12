@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider, AuthContext } from './WebStructure/AuthContext';
 
 import Navbar from "./Classes/Navbar";
 import Footer from "./Classes/Footer";
@@ -17,7 +18,6 @@ import ViewDetailed from './Mainpages/NewsDetails';
 /* Sub Pages */
 import Mandate from "./Mainpages/Mandates";
 import Council from "./Mainpages/Council";
-import FormerSK from './Mainpages/FormerSK';
 import History from "./Mainpages/SkHistory";
 
 /* User Side */ 
@@ -48,12 +48,9 @@ import ManageContactUs from './Admin/AdminManageContactUs';
 import Reports from './Admin/AdminReports';
 import Users from './Admin/AdminUsers';
 import UserDetails from './Admin/UserDetails';
-import { AuthProvider } from './WebStructure/AuthContext'; // Only import AuthProvider
 
 //Structure
 import StepIndicator from './Classes/StepIndicator';
-
-
 
 import './App.css';
 import './WebStyles/WebStyle.css'
@@ -61,21 +58,34 @@ import './WebStyles/WebStyle.css'
 import './Admin/styles/Admin-Style.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(() => {
-    return localStorage.getItem('isUserLoggedIn') === 'true' ? true : false;
-  });
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);  // Set an initial state value (e.g., false)
 
+  const { ProtectedRoute } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
+  
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    console.log("isAuthenticated changed: ", isAuthenticated);
+    
+    if (isAuthenticated) {
+      setIsUserLoggedIn(true);
+    } else {
+      setIsUserLoggedIn(false);
+    }
+    console.log("isUserLoggedIn after update: ", isUserLoggedIn);
+  }, [isAuthenticated]);  
+
+
+  console.log("isUserLoggedIn after update: ", isUserLoggedIn);
   return (
     <AuthProvider>
       <Router>
@@ -89,8 +99,8 @@ const App = () => {
           ) : (
             <>
               {/* Conditional Navbar rendering */}
-              {!isAdminLoggedIn && !isUserLoggedIn && <Navbar />}
-              {isUserLoggedIn && <UserNavbar setIsUserLoggedIn={setIsUserLoggedIn} />}
+              {!isAdminLoggedIn && !isAuthenticated  && <Navbar />}
+              {isAuthenticated && <UserNavbar /> }
               {isAdminLoggedIn && <AdminNavbar />}
 
               <div className="d-flex">
@@ -105,8 +115,7 @@ const App = () => {
                   <Route path="/Home" element={<Intro />} />
                   <Route path="/About" element={<About />} />
                   <Route path="/Mandate" element={<Mandate />} /> 
-                  <Route path="/Council" element={<Council />} />
-                  <Route path="/FormerSK" element={<FormerSK />} /> 
+                  <Route path="/Council" element={<Council />} /> 
                   <Route path="/History" element={<History />} />
                   <Route path="/ContactUs" element={<Contact />} />
                   <Route path="/userauth" element={<UserAuthentication setIsAdminLoggedIn={setIsAdminLoggedIn} 
@@ -116,21 +125,20 @@ const App = () => {
                   <Route path="/news-details/:id" element={<ViewDetailed />} />
                   
                   {/* User Side Routes */}
-                  <Route path="/Dashboard" element={<Dashboard />} />
-                  <Route path="/Profile/:username" element={<Profile />} />
+                  <Route path="/Dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                  <Route path="/Profile/:username" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                   <Route path="/UserProgram" element={<Programs />} />
-                  <Route path="/ProgramDetails" element={<ProgramDescript />} />
-                  <Route path="/Equipment" element={<Equipment />} />
-                  <Route path="/Reservation" element={<Reservation />} />
-                  <Route path="/ViewSchedule" element={<ViewSchedule />} />
-                  <Route path="/StepIndicator" element={<StepIndicator />} />
-                  <Route path="/ScheduleDetails" element={<ScheduleDetails />} />
-                  <Route path="/ScheduleDone" element={<ScheduleDone />} />
-                  <Route path="/ReservationLog" element={<Log />} />
-                  <Route path="/ReservationDetails" element={<ReservationDetails />} />
-                  <Route path="/Cancellation" element={<CancelReservation />} />
-
-                  <Route path="/Contact" element={<HelpSupport />} />
+                  <Route path="/ProgramDetails" element={<ProtectedRoute><ProgramDescript /></ProtectedRoute>} />
+                  <Route path="/Equipment" element={<ProtectedRoute><Equipment /></ProtectedRoute>} />
+                  <Route path="/Reservation" element={<ProtectedRoute><Reservation /></ProtectedRoute>} />
+                  <Route path="/ViewSchedule" element={<ProtectedRoute><ViewSchedule /></ProtectedRoute>} />
+                  <Route path="/StepIndicator" element={<ProtectedRoute><StepIndicator /></ProtectedRoute>} />
+                  <Route path="/ScheduleDetails" element={<ProtectedRoute><ScheduleDetails /></ProtectedRoute>} />
+                  <Route path="/ScheduleDone" element={<ProtectedRoute><ScheduleDone /></ProtectedRoute>} />
+                  <Route path="/ReservationLog" element={<ProtectedRoute><Log /></ProtectedRoute>} />
+                  <Route path="/ReservationDetails" element={<ProtectedRoute><ReservationDetails /></ProtectedRoute>} />
+                  <Route path="/Cancellation" element={<ProtectedRoute><CancelReservation /></ProtectedRoute>} />
+                  <Route path="/Contact" element={<ProtectedRoute><HelpSupport /></ProtectedRoute>} />
 
                   {/* Admin Side Routes */}
                   <Route path="/admin/reservation" element={<AdminReservation />} />
