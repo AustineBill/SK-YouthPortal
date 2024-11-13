@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom'
 
 // Create the context
 export const AuthContext = createContext();
@@ -7,41 +7,57 @@ export const AuthContext = createContext();
 // Create a provider component
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      setIsAuthenticated(true);  // Set authentication state based on localStorage token
+    const username = localStorage.getItem('username');
+    
+    if (token && username) {
+      setIsAuthenticated(true);
+      setIsAdmin(false);
     } else {
-      setIsAuthenticated(false);
+      setIsAdmin(true);
     }
-  }, [isAuthenticated]);
+  }, []);
+
+  const adminlogin = (isAdmin) => {
+    localStorage.setItem('isAdmin', isAdmin);
+    localStorage.setItem('isAdmin', 'true');
+    setIsAdmin(true);
+  };
+
+  const adminlogout = () => {
+    localStorage.removeItem('isAdmin');
+    setIsAdmin(false);
+  };
 
   const login = (token, username) => {
-    // Set token and username in localStorage
     localStorage.setItem('token', token);
     localStorage.setItem('username', username);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    // Clear user data from localStorage and update state
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     setIsAuthenticated(false);
-  };
-
-  // Protected Route Component
-  const ProtectedRoute = ({ children }) => {
-    if (!isAuthenticated) {
-      return <Navigate to="/userauth?view=signIn" />;
-    }
-    return children;
+    setIsAdmin(false); // Reset both isAuthenticated and isAdmin
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, ProtectedRoute }}>
+    <AuthContext.Provider value={{ isAuthenticated, isAdmin, adminlogin, adminlogout, login, logout, ProtectedRoute }}>
       {children}
     </AuthContext.Provider>
   );
+};
+
+
+export const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = React.useContext(AuthContext);
+  if (!isAuthenticated) {
+    return <Navigate to="/userauth" />;
+  }
+  return children;
 };

@@ -8,15 +8,16 @@ import '../App.css';
 const UserNavbar = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState('');
   const dropdownRef = useRef(null);
-
 
   useEffect(() => {
     const username = localStorage.getItem('username');
     if (username) {
-        setLoggedInUser(username);
+      setLoggedInUser(username);
     }
+
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownVisible(false);
@@ -29,11 +30,15 @@ const UserNavbar = () => {
     };
   }, []);
 
-  const handleLogout = () => {
-    logout();
+  const openLogoutModal = () => {
+    setLogoutModalVisible(true);
     setDropdownVisible(false);
   };
 
+  const handleLogout = () => {
+    logout();
+    setLogoutModalVisible(false);
+  };
 
   return (
     <nav className="navbar">
@@ -57,12 +62,24 @@ const UserNavbar = () => {
               <div style={dropdownStyles}>
                 <Link to={`/Profile/${loggedInUser}`} className="dropdown-item" onClick={() => setDropdownVisible(false)}>Profile</Link>
                 <Link to="/Settings" className="dropdown-item" onClick={() => setDropdownVisible(false)}>Settings</Link>
-                <Link to="/userauth" className="dropdown-item" onClick={handleLogout}>Logout</Link>
+                <div className="dropdown-item" onClick={openLogoutModal}>Logout</div>
               </div>
             )}
           </div>
         )}
       </div>
+
+      {/* Logout Confirmation Modal */}
+      {logoutModalVisible && (
+        <div style={modalOverlayStyles}>
+          <div style={modalStyles}>
+            <h3>Confirm Logout</h3>
+            <p>Are you sure you want to log out?</p>
+            <button className="SmallButton btn-dark" onClick={handleLogout} style={modalButtonStyles}>Yes</button>
+            <button className="btn-db SmallButton" onClick={() => setLogoutModalVisible(false)} style={modalButtonStyles}>No</button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
@@ -78,6 +95,34 @@ const dropdownStyles = {
   zIndex: 1000,
   display: 'flex',
   flexDirection: 'column',
+};
+
+const modalOverlayStyles = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: 1000,
+};
+
+const modalStyles = {
+  backgroundColor: '#fff',
+  padding: '20px',
+  borderRadius: '8px',
+  textAlign: 'center',
+  width: '300px',
+};
+
+const modalButtonStyles = {
+  margin: '10px',
+  padding: '8px 16px',
+  borderRadius: '5px',
+  cursor: 'pointer',
 };
 
 export default UserNavbar;

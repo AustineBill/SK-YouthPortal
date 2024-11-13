@@ -5,13 +5,13 @@ import { AuthContext } from '../WebStructure/AuthContext';
 import '../App.css';
 import './UserAuthentication.css';
 
-const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
+const UserAuthentication = () => {
     const [view, setView] = useState('signIn');
     const location = useLocation();
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const { login } = useContext(AuthContext);
+    const { login , adminlogin} = useContext(AuthContext);
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -34,7 +34,7 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
     
         try {
             if (username === 'admin123' && password === '123') {
-                setIsAdminLoggedIn(true);
+                adminlogin('isAdmin');
                 navigate('/admin');
             } else {
                 const response = await fetch('http://localhost:5000/login', {
@@ -46,8 +46,7 @@ const UserAuthentication = ({ setIsAdminLoggedIn, setIsUserLoggedIn }) => {
                 const data = await response.json();
     
                 if (response.ok) {
-                    setIsUserLoggedIn(true); // This should now work as expected
-                    login(data.token, username); // Save auth state in context
+                    login(data.token, username); 
                     navigate('/Dashboard');
                 } else {
                     alert(data.message || 'Invalid user credentials');

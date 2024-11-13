@@ -60,32 +60,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
+
+const NavBarSwitcher = () => {
+  const { isAuthenticated, isAdmin } = useContext(AuthContext);
+
+  if (isAuthenticated) {
+    return <UserNavbar />;
+  } 
+  if (isAdmin) {
+    return (
+      <>
+        <AdminNavbar />
+        <AdminSidebar />
+      </>
+    );
+  } if (!isAdmin){
+    return <Navbar /> ;
+}
+  return <Navbar /> ;
+  
+};
+
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);  // Set an initial state value (e.g., false)
-
-  const { ProtectedRoute } = useContext(AuthContext);
-  const { isAuthenticated } = useContext(AuthContext);
+  const { ProtectedRoute, isAdmin } = useContext(AuthContext);
   
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    console.log("isAuthenticated changed: ", isAuthenticated);
-    
-    if (isAuthenticated) {
-      setIsUserLoggedIn(true);
-    } else {
-      setIsUserLoggedIn(false);
-    }
-    console.log("isUserLoggedIn after update: ", isUserLoggedIn);
-  }, [isAuthenticated]);  
 
-
-  console.log("isUserLoggedIn after update: ", isUserLoggedIn);
   return (
     <AuthProvider>
       <Router>
@@ -98,15 +103,7 @@ const App = () => {
             </div>
           ) : (
             <>
-              {/* Conditional Navbar rendering */}
-              {!isAdminLoggedIn && !isAuthenticated  && <Navbar />}
-              {isAuthenticated && <UserNavbar /> }
-              {isAdminLoggedIn && <AdminNavbar />}
-
-              <div className="d-flex">
-                {/* Conditional Sidebar rendering for Admin */}
-                {isAdminLoggedIn && <AdminSidebar />}
-              </div>
+              <NavBarSwitcher />
             
               <div className="d-flex flex-column min-vh-100"> 
                 <Routes>
@@ -118,16 +115,16 @@ const App = () => {
                   <Route path="/Council" element={<Council />} /> 
                   <Route path="/History" element={<History />} />
                   <Route path="/ContactUs" element={<Contact />} />
-                  <Route path="/userauth" element={<UserAuthentication setIsAdminLoggedIn={setIsAdminLoggedIn} 
-                                                                      setIsUserLoggedIn={setIsUserLoggedIn} />} />
+                  <Route path="/userauth" element={<UserAuthentication/>} />
                   <Route path="/Spotlight" element={<Spotlight />} />
                   <Route path="/News" element={<NewsEvents />} />
                   <Route path="/news-details/:id" element={<ViewDetailed />} />
+
+                  <Route path="/UserProgram" element={<Programs />} />
                   
                   {/* User Side Routes */}
                   <Route path="/Dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                   <Route path="/Profile/:username" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                  <Route path="/UserProgram" element={<Programs />} />
                   <Route path="/ProgramDetails" element={<ProtectedRoute><ProgramDescript /></ProtectedRoute>} />
                   <Route path="/Equipment" element={<ProtectedRoute><Equipment /></ProtectedRoute>} />
                   <Route path="/Reservation" element={<ProtectedRoute><Reservation /></ProtectedRoute>} />
@@ -142,7 +139,7 @@ const App = () => {
 
                   {/* Admin Side Routes */}
                   <Route path="/admin/reservation" element={<AdminReservation />} />
-                  <Route path="/admin" element={<AdminMain isAdmin={isAdminLoggedIn} />} /> 
+                  <Route path="/admin" element={<AdminMain />} /> 
                   <Route path="/admin/manage-home" element={<ManageHome />} />
                   <Route path="/admin/manage-about-us" element={<ManageAboutUs />} />
                   <Route path="/admin/manage-program" element={<ManageProgram />} />
@@ -152,7 +149,7 @@ const App = () => {
                   <Route path="/user/:id" element={<UserDetails />} />
                 </Routes>
               </div>
-              {!isAdminLoggedIn && <Footer />}
+              {!isAdmin && <Footer />}
             </>
          )}
         </div>

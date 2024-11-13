@@ -1,15 +1,17 @@
+import React, { useContext } from 'react';
+import { AuthContext } from '../WebStructure/AuthContext';
 import { useNavigate } from "react-router-dom";
 import iSKedLogo from '../Asset/WebImages/Logo.png';
 import "../Admin/styles/AdminNavbar.css";
 
 
 const AdminNavbar = () => {
+    const { adminlogout } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleSignout = () => {
-        console.log("Signed out");
-
-        navigate("/admin");
+        adminlogout();
+        navigate("/userauth");
     }
 
     return (

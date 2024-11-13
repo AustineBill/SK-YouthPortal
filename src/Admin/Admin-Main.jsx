@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../WebStructure/AuthContext';
 import './styles/adminmain.css'; // Import updated CSS for flexible layout
 // import './styles/Admin-Main.css';
 import { Bar, Pie } from 'react-chartjs-2'; // Import chart libraries
@@ -23,7 +24,8 @@ ChartJS.register(
     ArcElement
 );
 
-const AdminMain = ({ isAdmin }) => {
+const AdminMain = () => {
+    const { isAdmin } = useContext(AuthContext);
     const emptyData = {
         labels: ['No Data'],
         datasets: [
@@ -47,6 +49,10 @@ const AdminMain = ({ isAdmin }) => {
             },
         ],
     };
+
+    if (!isAdmin) {
+        return <div>Access Denied. You must be an admin to view this page.</div>;
+      }
 
     return (
         <div className="admin-main-wrapper">
