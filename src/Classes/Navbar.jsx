@@ -53,7 +53,6 @@ const Navbar = () => {
               <Dropdown.Item as={Link} to="/About">SK Youth</Dropdown.Item>
               <Dropdown.Item as={Link} to="/Mandate">Mandate</Dropdown.Item>
               <Dropdown.Item as={Link} to="/Council">SK Council</Dropdown.Item>
-              <Dropdown.Item as={Link} to="/FormerSK">Former SK Council</Dropdown.Item>
               <Dropdown.Item as={Link} to="/History">History</Dropdown.Item>
             </div>
           )}

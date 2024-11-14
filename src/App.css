@@ -85,6 +85,17 @@ body {
 }
 
 
+.SmallButton{
+  font-weight: 400;
+  text-align: center;   
+  padding: 1rem;
+  font-size: 2;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  width: 30%;
+  align-items: center;
+}
+
 /****** Text ******/
 
 .txt-db{
@@ -933,13 +944,13 @@ body {
 /* Right part of container */
 .sign-in-form, .sign-up-form {
   background-color: #E4E4E4;
-  height: 550px;
-  width: 500px;
+  height: 500px;
+  width: 450px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 20px;
-  padding: 20px; /* Add padding for better spacing */
+  padding: 20px;
   margin-left: auto;
 }
 
@@ -968,6 +979,7 @@ form {
   align-items: center;
   font-family: 'Poppins';
   gap: 15px;
+  margin-left: 20px;
 }
 
 .sign-in-username input, .sign-in-password input {

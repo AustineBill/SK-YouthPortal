@@ -1,15 +1,14 @@
-// index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
-import { AuthProvider } from './WebStructure/AuthContext';
+import { AuthProvider } from './WebStructure/AuthContext'; // Adjust this path if needed
 
+// Create the root and render the App component
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <React.StrictMode>
     <AuthProvider>
-        <App />
+      <App />
     </AuthProvider>
+  </React.StrictMode>
 );
-
-
