@@ -44,8 +44,13 @@ const UserAuthentication = () => {
                 });
     
                 const data = await response.json();
+                console.log("Login response data:", data); 
     
                 if (response.ok) {
+                    const { id, username} = data.user;
+                    console.log("Fetched user id:", id);  // Debugging log
+                    localStorage.setItem('userId', id);
+                    console.log("Stored userId in localStorage:", localStorage.getItem('userId'));
                     login(data.token, username); 
                     navigate('/Dashboard');
                 } else {

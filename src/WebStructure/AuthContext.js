@@ -38,7 +38,6 @@ export const AuthProvider = ({ children }) => {
     setIsAdmin(false);
   };
 
-
   const login = (token, username) => {
     localStorage.setItem('token', token);
     localStorage.setItem('username', username);

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../WebStyles/UserStyle.css';
@@ -45,6 +47,42 @@ const Reservation = () => {
     };
   }, []);
 
+  const saveReservation = async () => {
+    try {
+      // Retrieve userId from localStorage
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+          console.error('No userId found in localStorage');
+          return;
+      }
+  
+      // Ensure userId exists before proceeding
+      if (!userId) {
+        console.error('User ID is not available in localStorage.');
+        alert('Please log in before making a reservation.');
+        return; // Stop the function if userId is missing
+      }
+  
+      // Reservation data object
+      const reservationData = {
+        user_id: userId,
+        reservation_type: reservationType,
+        start_date: selectedDates[0],
+        end_date: selectedDates[1],
+        time_slot: selectedTime,
+      };
+  
+      // Send POST request to server
+      await axios.post('http://localhost:5000/reservations', reservationData);
+      
+      // Navigate on success
+      navigate('/ScheduleDetails', { state: { reservationType } });
+    } catch (error) {
+      console.error('Error saving reservation:', error);
+    }
+  };
+  
+  
   return (
     <div className="container-fluid">
       <div className="text-center text-lg-start m-4 mb-3">
@@ -83,12 +121,7 @@ const Reservation = () => {
             {selectedTime && <div>Selected Time: {selectedTime}</div>}
           </div>
 
-          <button
-            className="apply-dates"
-            onClick={() => navigate('/ScheduleDetails', {
-              state: { reservationType } // Pass reservationType as state
-            })}
-          >
+          <button className="apply-dates" onClick={saveReservation}>
             Apply Dates
           </button>
         </div>
