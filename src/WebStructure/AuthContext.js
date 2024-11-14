@@ -9,41 +9,49 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const username = localStorage.getItem('username');
-    
-    if (token && username) {
-      setIsAuthenticated(true);
-      setIsAdmin(false);
-    } else {
+    const adminStatus = localStorage.getItem('isAdmin') === 'true';
+
+    if (token && adminStatus) {
       setIsAdmin(true);
+      setIsAuthenticated(false); // Only admin should be true, not both
+    } else if (token && !adminStatus) {
+      setIsAuthenticated(true);
+      setIsAdmin(false); // Only user should be true, not both
+    } else {
+      setIsAuthenticated(false);
+      setIsAdmin(false);
     }
   }, []);
 
-  const adminlogin = (isAdmin) => {
-    localStorage.setItem('isAdmin', isAdmin);
+  const adminlogin = (token) => {
+    localStorage.setItem('token', token);
     localStorage.setItem('isAdmin', 'true');
     setIsAdmin(true);
+    setIsAuthenticated(false);
   };
 
   const adminlogout = () => {
+    localStorage.removeItem('token');
     localStorage.removeItem('isAdmin');
     setIsAdmin(false);
   };
+
 
   const login = (token, username) => {
     localStorage.setItem('token', token);
     localStorage.setItem('username', username);
     setIsAuthenticated(true);
+    setIsAdmin(false);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('isAdmin');
     setIsAuthenticated(false);
-    setIsAdmin(false); // Reset both isAuthenticated and isAdmin
+    setIsAdmin(false);
   };
 
   return (

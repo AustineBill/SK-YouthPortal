@@ -64,9 +64,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 const NavBarSwitcher = () => {
   const { isAuthenticated, isAdmin } = useContext(AuthContext);
 
-  if (isAuthenticated) {
-    return <UserNavbar />;
-  } 
   if (isAdmin) {
     return (
       <>
@@ -74,13 +71,12 @@ const NavBarSwitcher = () => {
         <AdminSidebar />
       </>
     );
-  } if (!isAdmin){
-    return <Navbar /> ;
-}
-  return <Navbar /> ;
-  
+  } else if (isAuthenticated) {
+    return <UserNavbar />;
+  } else {
+    return <Navbar />;
+  }
 };
-
 const App = () => {
   const [loading, setLoading] = useState(true);
   const { ProtectedRoute, isAdmin } = useContext(AuthContext);
