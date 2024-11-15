@@ -38,9 +38,9 @@ export const AuthProvider = ({ children }) => {
     setIsAdmin(false);
   };
 
-
   const login = (token, username) => {
     localStorage.setItem('token', token);
+    localStorage.setItem('isAuthenticated', 'true');
     localStorage.setItem('username', username);
     setIsAuthenticated(true);
     setIsAdmin(false);
@@ -49,7 +49,12 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('isAuthenticated',);
     localStorage.removeItem('isAdmin');
+    localStorage.removeItem('scheduleDetails');
+    localStorage.removeItem('reservationData');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userRole');
     setIsAuthenticated(false);
     setIsAdmin(false);
   };

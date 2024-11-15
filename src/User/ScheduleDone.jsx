@@ -1,92 +1,146 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import StepIndicator from '../Classes/StepIndicator';
-import { Button, Form, Modal} from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Modal, Row, Col, Card, Table } from 'react-bootstrap';
 
 function ScheduleDone() {
   const navigate = useNavigate();
-  const [currentStep] = useState(2);
+  const [currentStep] = useState(2); // Assuming step 2 is the confirmation step
   const [show, setShow] = useState(false);
+  const [allData, setAllData] = useState({}); // State to hold all reservation data
 
   const handleClose = () => setShow(false);
   const handleConfirm = () => setShow(true);
-
   const handlePrevious = () => {
     navigate('/ScheduleDetails');
   };
 
-  
+  useEffect(() => {
+    const reservationData = JSON.parse(localStorage.getItem('reservationData')) || {};
+    const scheduleDetails = JSON.parse(localStorage.getItem('scheduleDetails')) || {};
+    setAllData({ ...reservationData, ...scheduleDetails });
+  }, []);
+
   return (
-    <div className="calendar-container">
-        <div className="text-center text-lg-start mt-4 ">
-            <h1 className="Maintext-Calendar animated slideInRight">Schedule</h1>
-                <p className='Subtext-Calendar'>Lorem ipsum</p> 
-        </div>
-      <StepIndicator currentStep={3} />
-      <Form>
-        <Form.Group controlId="formProgram">
-          <Form.Label>Program</Form.Label>
-            <Form.Control type="text" placeholder="Program" disabled />
-        </Form.Group>
-        <Form.Group controlId="formDateTime">
-          <Form.Label>Date & Time</Form.Label>
-            <Form.Control type="text" placeholder="Date & Time" />
-        </Form.Group>
+    <div className="container mt-5">
+      {/* Header Section */}
+      <div className="text-center mb-4">
+        <h1 className="Maintext animated slideInRight">Reservation Confirmation</h1>
+        <p className="Subtext text-muted">
+          Please review your booking details below. Confirm to finalize your reservation.
+        </p>
+      </div>
+
+      {/* Step Indicator */}
+      <StepIndicator currentStep={currentStep} />
+
+      {/* Confirmation Details */}
+      <Card className="shadow-sm mt-4 border-0">
+        <Card.Body>
+          <div className="text-center mb-3">
+            <h2 className="fw-bold">Reservation</h2>
+            <p className="text-muted">Booking Reference: <strong>{allData.reservationId || 'N/A'}</strong></p>
+          </div>
+          <hr />
+
+          {/* Details Section */}
+          <Row>
+            {/* Reservation Details */}
+            <Col md={6}>
+              <h5 className="text-primary">Reservation Details</h5>
+              <Table bordered hover size="sm" className="mt-3">
+                <tbody>
+                  <tr>
+                    <td><strong>Type:</strong></td>
+                    <td>{allData.reservation_type || 'N/A'}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Start Date:</strong></td>
+                    <td>{new Date(allData.start_date).toLocaleDateString() || 'N/A'}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>End Date:</strong></td>
+                    <td>{new Date(allData.end_date).toLocaleDateString() || 'N/A'}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Time Slot:</strong></td>
+                    <td>{allData.time_slot || 'N/A'}</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Col>
+
+            {/* Participant Details */}
+            <Col md={6}>
+              <h5 className="text-primary">Participant Details</h5>
+              {allData.reservation_type === 'Group' ? (
+                <>
+                  <p className="mt-3"><strong>Shared Age:</strong> {allData.sharedDetails?.age || 'N/A'}</p>
+                  <p><strong>Shared Email:</strong> {allData.sharedDetails?.email || 'N/A'}</p>
+                  <h6 className="mt-3">Participants:</h6>
+                  <ul>
+                    {allData.participants?.map((participant, index) => (
+                      <li key={index}>
+                        {participant.fullName} ({participant.age} years old)
+                      </li>
+                    )) || <li>N/A</li>}
+                  </ul>
+                </>
+              ) : (
+                <Table bordered hover size="sm" className="mt-3">
+                  <tbody>
+                    <tr>
+                      <td><strong>Full Name:</strong></td>
+                      <td>{allData.participants?.[0]?.fullName || 'N/A'}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Age:</strong></td>
+                      <td>{allData.participants?.[0]?.age || 'N/A'}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Email:</strong></td>
+                      <td>{allData.participants?.[0]?.email || 'N/A'}</td>
+                    </tr>
+                  </tbody>
+                </Table>
+              )}
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
+
       
-        <Form.Group controlId="formName">
-          <Form.Label>Name</Form.Label>
-            <Form.Control type="text" placeholder="Name" />
-        </Form.Group>
-        <Form.Group controlId="formAge">
-          <Form.Label>Age</Form.Label>
-            <Form.Control type="number" placeholder="Age" />
-        </Form.Group>
-        <Form.Group controlId="formEmail">
-          <Form.Label>Email Address</Form.Label>
-            <Form.Control type="email" placeholder="Email Address" />
-          </Form.Group>
-      </Form>
 
-
-      <Modal  show={show} onHide={handleClose} centered size="lg" >
+      {/* Modal */}
+      <Modal show={show} onHide={handleClose} centered size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Number of Participants</Modal.Title>
+          <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
-        
-        <Modal.Body>
-        <div className="text-center"> {/* Use 'text-center' for centering */}
-          <i className="bi bi-bookmark-check-fill" style={{ fontSize: '6rem' }}></i>
-          <h2 className="mt-3">Appointment Scheduled!</h2> {/* Add margin top for spacing */}
-          <h4 className="mt-2">
-            Your schedule has been successfully set. Please click the button below to acknowledge the contract and waiver, 
-            which you will need to present when you arrive for your appointment.
-          </h4>
-        </div>
-      </Modal.Body>
-
-      <Modal.Footer>
-        <div className="w-100 d-flex justify-content-between"> {/* Use flex utilities to space buttons */}
+        <Modal.Body className="text-center">
+          <i className="bi bi-bookmark-check-fill text-success" style={{ fontSize: '5rem' }}></i>
+          <h3 className="mt-3">Your reservation is confirmed!</h3>
+          <p>
+            Thank you for booking with us. Please download or print the acknowledgment
+            and bring it along for your appointment.
+          </p>
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
           <Button variant="primary" onClick={() => navigate('/Reservation')}>
-            <i className="bi bi-file-text m-2" style={{ fontSize: '2rem' }}></i>
-            Proceed to Waiver
+            View Contract & Waiver
           </Button>
-
-          <Button variant="primary" onClick={() => navigate('/Reservation')}>
-            <i className="bi bi-house-door m-2" style={{ fontSize: '2rem' }}></i>
+          <Button variant="secondary" onClick={() => navigate('/')}>
             Back to Home
           </Button>
-        </div>
-      </Modal.Footer>
+        </Modal.Footer>
       </Modal>
 
-      
+      {/* Navigation Buttons */}
       <div className="d-flex justify-content-between mt-4">
-        <Button variant="secondary" onClick={handlePrevious} disabled={currentStep === 0}>
+        <Button variant="outline-secondary" onClick={handlePrevious} disabled={currentStep === 0}>
           Previous
         </Button>
         <Button variant="primary" onClick={handleConfirm}>
-          {currentStep === 2 ? 'Confirm' : 'Next'}
+          Confirm
         </Button>
       </div>
     </div>

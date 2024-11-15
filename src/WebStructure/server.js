@@ -43,24 +43,30 @@ app.post('/login', async (req, res) => {
     console.log('Login attempt:', { username, password });
 
     try {
+        // Find the user by username
         const result = await pool.query('SELECT * FROM "Users" WHERE username = $1', [username]);
         if (result.rows.length === 0) {
             return res.status(400).json({ message: 'Invalid username or password' });
         }
 
         const user = result.rows[0];
-        if (user.password !== password) {
+        console.log('User ID from database:', user.id);
+
+        // Validate password
+        if (user.password !== password) { // Temporary for plain text; replace with bcrypt for hashing
             return res.status(400).json({ message: 'Invalid username or password' });
         }
 
+        // Return user details including ID
         res.status(200).json({
             message: 'Login successful',
             user: {
+                id: user.id,
                 username: user.username,
+                address: user.address,
                 fullName: user.full_name,
                 email: user.email,
                 phone: user.phone,
-                address: user.address,
             },
         });
     } catch (err) {
@@ -69,9 +75,11 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.get('/Profile/:username', async (req, res) => {
-    const { username } = req.params;
+// Modify the '/Profile/:id' route to fetch user data by id
+app.get('/Profile/:id', async (req, res) => {
+    const { id } = req.params;
     try {
+        //const result = await pool.query('SELECT * FROM "Users" WHERE id = $1', [id]);
         const result = await pool.query('SELECT * FROM "Users" WHERE username = $1', [username]);
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'User not found' });
@@ -83,13 +91,15 @@ app.get('/Profile/:username', async (req, res) => {
     }
 });
 
-app.put('/Profile/:username', async (req, res) => {
-    const { username } = req.params;
+// Modify the '/Profile/:id' PUT route to update user data by id
+app.put('/Profile/:id', async (req, res) => {
+    const { id } = req.params;
     const { fullName, email, phone, address } = req.body;
     try {
+        // Update user data based on user id
         await pool.query(
-            'UPDATE "Users" SET full_name = $1, email = $2, phone = $3, address = $4 WHERE username = $5',
-            [fullName, email, phone, address, username]
+            'UPDATE "Users" SET full_name = $1, email = $2, phone = $3, address = $4 WHERE id = $5',
+            [fullName, email, phone, address, id]
         );
         res.status(200).json({ message: 'Profile updated successfully' });
     } catch (err) {
@@ -97,6 +107,23 @@ app.put('/Profile/:username', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+
+app.post('/reservations', async (req, res) => {
+    const { user_id, reservation_type, start_date, end_date, time_slot } = req.body;
+  
+    try {
+      const result = await pool.query(
+        `INSERT INTO Schedules (user_id, reservation_type, start_date, end_date, time_slot)
+         VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+        [user_id, reservation_type, start_date, end_date, time_slot]
+      );
+      res.status(201).json(result.rows[0]);
+    } catch (error) {
+      console.error('Error saving reservation:', error);
+      res.status(500).send('Server error');
+    }
+  });
 
 app.listen(5000, () => {
     console.log('Server running on port 5000');

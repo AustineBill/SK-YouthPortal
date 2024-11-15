@@ -14,9 +14,12 @@ const UserNavbar = () => {
 
   useEffect(() => {
     const username = localStorage.getItem('username');
+    
     if (username) {
       setLoggedInUser(username);
     }
+
+    
 
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

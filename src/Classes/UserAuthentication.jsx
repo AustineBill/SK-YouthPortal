@@ -44,9 +44,13 @@ const UserAuthentication = () => {
                 });
     
                 const data = await response.json();
+                console.log("Login response data:", data); 
     
                 if (response.ok) {
-                    login(data.token, username); 
+                    const { id, username} = data.user;
+                    localStorage.setItem('userId', id);
+                    console.log("Stored userId in localStorage:", localStorage.getItem('userId'));
+                    login('isAuthenticated', username); 
                     navigate('/Dashboard');
                 } else {
                     alert(data.message || 'Invalid user credentials');
