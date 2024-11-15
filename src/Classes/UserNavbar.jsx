@@ -14,11 +14,9 @@ const UserNavbar = () => {
 
   useEffect(() => {
     const username = localStorage.getItem('username');
-    const userId = localStorage.getItem('userId');
     
     if (username) {
       setLoggedInUser(username);
-      console.log("UserNavbar userId from localStorage:", userId);
     }
 
     

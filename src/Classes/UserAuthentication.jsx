@@ -48,10 +48,9 @@ const UserAuthentication = () => {
     
                 if (response.ok) {
                     const { id, username} = data.user;
-                    console.log("Fetched user id:", id);  // Debugging log
                     localStorage.setItem('userId', id);
                     console.log("Stored userId in localStorage:", localStorage.getItem('userId'));
-                    login(data.token, username); 
+                    login('isAuthenticated', username); 
                     navigate('/Dashboard');
                 } else {
                     alert(data.message || 'Invalid user credentials');

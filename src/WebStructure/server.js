@@ -44,15 +44,16 @@ app.post('/login', async (req, res) => {
 
     try {
         // Find the user by username
-        const result = await pool.query('SELECT * FROM "Users" WHERE id = $1', [id]);
+        const result = await pool.query('SELECT * FROM "Users" WHERE username = $1', [username]);
         if (result.rows.length === 0) {
             return res.status(400).json({ message: 'Invalid username or password' });
         }
 
         const user = result.rows[0];
         console.log('User ID from database:', user.id);
+
         // Validate password
-        if (user.password !== password) {
+        if (user.password !== password) { // Temporary for plain text; replace with bcrypt for hashing
             return res.status(400).json({ message: 'Invalid username or password' });
         }
 
@@ -60,13 +61,12 @@ app.post('/login', async (req, res) => {
         res.status(200).json({
             message: 'Login successful',
             user: {
-                id: user.id,       // Add the id here
+                id: user.id,
                 username: user.username,
                 address: user.address,
                 fullName: user.full_name,
                 email: user.email,
                 phone: user.phone,
-                address: user.address,
             },
         });
     } catch (err) {
@@ -79,7 +79,8 @@ app.post('/login', async (req, res) => {
 app.get('/Profile/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const result = await pool.query('SELECT * FROM "Users" WHERE id = $1', [id]);
+        //const result = await pool.query('SELECT * FROM "Users" WHERE id = $1', [id]);
+        const result = await pool.query('SELECT * FROM "Users" WHERE username = $1', [username]);
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'User not found' });
         }
