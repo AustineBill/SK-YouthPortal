@@ -9,6 +9,10 @@ import ADAM from "../Asset/ADAM FORTALEZA.png"
 
 const Programs = () => {
   const navigate = useNavigate();
+
+  const handleNavigate = (type) => {
+    navigate('/ProgramDetails', { state: { programType: type } });
+  };
   
     return (
       <div className="container-fluid">
@@ -27,7 +31,7 @@ const Programs = () => {
                 Some quick example text to build on the card title and make up the
                 bulk of the card's content.
               </Card.Text>
-              <Button variant="dark" onClick={() => navigate('/ProgramDetails')}>Explore Now</Button>
+              <Button variant="dark" onClick={() => handleNavigate('Facilities')}>Explore Now</Button>
             </Card.Body>
           </Card>
         </div>
@@ -41,7 +45,7 @@ const Programs = () => {
                 Some quick example text to build on the card title and make up the
                 bulk of the card's content.
               </Card.Text>
-              <Button variant="dark" onClick={() => navigate('/Equipment')}>Explore Now</Button>
+              <Button variant="dark" onClick={() => handleNavigate('Equipment')}>Explore Now</Button>
             </Card.Body>
           </Card>
         </div>

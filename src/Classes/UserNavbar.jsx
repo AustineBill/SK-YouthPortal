@@ -18,9 +18,6 @@ const UserNavbar = () => {
     if (username) {
       setLoggedInUser(username);
     }
-
-    
-
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownVisible(false);

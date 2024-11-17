@@ -75,21 +75,35 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Modify the '/Profile/:id' route to fetch user data by id
-app.get('/Profile/:id', async (req, res) => {
-    const { id } = req.params;
+
+app.get('/Profile/:username', async (req, res) => {
+    const username = req.params.username;
+  
     try {
-        //const result = await pool.query('SELECT * FROM "Users" WHERE id = $1', [id]);
-        const result = await pool.query('SELECT * FROM "Users" WHERE username = $1', [username]);
-        if (result.rows.length === 0) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        res.status(200).json(result.rows[0]);
+      console.log('Fetching profile for username:', username);  // Log the incoming username for debugging
+  
+      // Query the database for the user profile
+      const result = await pool.query(
+        'SELECT id, username, address, age, sex, contact_number, country FROM "Users" WHERE username = $1',
+        [username]
+      );
+  
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      console.log('Profile data:', result.rows[0]);  // Log the fetched data for verification
+      res.json(result.rows[0]);
+  
     } catch (err) {
-        console.error('Profile retrieval error:', err.stack);
-        res.status(500).json({ message: 'Server error' });
+      // Log the full error details
+      console.error('Error fetching profile:', err.message);  // Log the error message
+      console.error('Error stack trace:', err.stack);  // Log the stack trace for deeper insights
+      res.status(500).json({ message: 'Internal server error' });
     }
-});
+  });
+  ;
+  
 
 // Modify the '/Profile/:id' PUT route to update user data by id
 app.put('/Profile/:id', async (req, res) => {
@@ -125,6 +139,25 @@ app.post('/reservations', async (req, res) => {
     }
   });
 
+  app.get('/reservations', async (req, res) => {
+    console.log('GET /reservations called with query:', req.query);
+    const { userId } = req.query; // Get userId from query parameters
+  
+    try {
+      const result = await pool.query(
+        `SELECT id, reservation_type AS program, start_date AS date, end_date, time_slot 
+         FROM Schedules 
+         WHERE user_id = $1
+         ORDER BY start_date ASC`,
+        [userId]
+      );
+      res.json(result.rows);
+    } catch (error) {
+      console.error('Error fetching reservations:', error);
+      res.status(500).send('Server error');
+    }
+  });
+  
 app.listen(5000, () => {
     console.log('Server running on port 5000');
 });
