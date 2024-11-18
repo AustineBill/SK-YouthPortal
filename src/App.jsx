@@ -40,7 +40,7 @@ import ScheduleDone from './User/ScheduleDone';
 import AdminNavbar from './Classes/AdminNavbar';
 import AdminSidebar from './Admin/AdminSidebar'; // Import AdminSidebar
 import AdminMain from './Admin/Admin-Main'; // Adjust the path if necessary
-import AdminReservation from './Admin/AdminReservation';
+import AdminReservations from './Admin/AdminReservations';
 import ManageHome from './Admin/AdminManageHome';
 import ManageAboutUs from './Admin/AdminManageAboutUs';
 import ManageProgram from './Admin/AdminManageProgram';
@@ -134,7 +134,7 @@ const App = () => {
                   <Route path="/Contact" element={<ProtectedRoute><HelpSupport /></ProtectedRoute>} />
 
                   {/* Admin Side Routes */}
-                  <Route path="/admin/reservation" element={<AdminReservation />} />
+                  <Route path="/admin/reservations" element={<AdminReservations />} />
                   <Route path="/admin" element={<AdminMain />} /> 
                   <Route path="/admin/manage-home" element={<ManageHome />} />
                   <Route path="/admin/manage-about-us" element={<ManageAboutUs />} />

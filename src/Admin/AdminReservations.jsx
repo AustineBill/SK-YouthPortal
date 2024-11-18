@@ -7,7 +7,7 @@ import './styles/Admin-Style.css'; // Path to your updated CSS
 
 import StepIndicator from '../Classes/StepIndicator';
 
-const AdminReservation = () => {
+const AdminReservations = () => {
   const navigate = useNavigate();
 
   // State for managing reservations and time slots
@@ -155,4 +155,4 @@ const AdminReservation = () => {
   );
 };
 
-export default AdminReservation;
+export default AdminReservations;

@@ -6,7 +6,6 @@ import ManageHomeLogo from '../Asset/Admin/Manage Home.png';
 import ManageAboutUsLogo from '../Asset/Admin/Manage About Us.png';
 import ManageProgramLogo from '../Asset/Admin/Manage Program.png';
 import ManageContactUsLogo from '../Asset/Admin/Manage Contact Us.png';
-import ManageRequestsLogo from '../Asset/Admin/Manage Requests.png';
 import ReservationsLogo from '../Asset/Admin/Reservations.png';
 import ReportsLogo from '../Asset/Admin/Reports.png';
 import UsersLogo from '../Asset/Admin/Users.png';
@@ -15,7 +14,6 @@ import './styles/AdminSidebar.css';
 
 const AdminSidebar = () => {
     const [manageWebsiteChildLinksOpen, setmanageWebsiteChildLinksOpen] = useState(false);
-    const [manageRequestsChildLinksOpen, setmanageRequestsChildLinksOpen] = useState(false);
 
     return (
         <div className="sidebar-container">
@@ -60,20 +58,14 @@ const AdminSidebar = () => {
                             </Link>
                         </ul>
                     )}
-                    <li className="manage-requests-link-open" onClick={() => setmanageRequestsChildLinksOpen(!manageRequestsChildLinksOpen)}>
-                        <img src={ManageRequestsLogo} alt="Manage Requests Logo" id='sidebar-logos' />
-                        Manage Requests
-                    </li>
-                    {manageRequestsChildLinksOpen && (
-                        <ul className="manage-requests-nested-links">
-                            <Link to="/admin/reservation">
-                                <li>
-                                    <img src={ReservationsLogo} alt="Reservation Logo" id='sidebar-logos' />
-                                    Reservation
-                                </li>
-                            </Link>
-                        </ul>
-                    )}
+                    <Link to="/admin/reservations">
+                        <li>
+                            <img src={ReservationsLogo} alt="Reservation Logo" id='sidebar-logos' />
+                            Reservations
+                        </li>
+                    </Link>
+                        {/* </ul>
+                    )} */}
                     <Link to="/admin/reports">
                         <li>
                             <img src={ReportsLogo} alt="Reports Logo" id='sidebar-logos' />
