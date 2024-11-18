@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import './styles/ManageHomePage.css';
-import './styles/ManageHomePage.css';
+import './styles/AdminManageHomePage.css';
 
 const ManageHomePage = () => {
     const [activeContent, setActiveContent] = useState('homeDetails');
@@ -49,22 +49,24 @@ const ManageHomePage = () => {
     };
 
     return (
-        <div className="adminhomepage-container">
-            <h2>Manage Homepage</h2>
-
+        <div className="admin-home-container">
+            <div className='label'>
+                <h2>Manage Homepage</h2>
+            </div>
+            
             {/* Navigation tabs */}
-            <ul className="adminhomepage-nav-tabs">
+            <ul className="home-nav-tabs">
                 <li onClick={() => setActiveContent('homeDetails')}>Manage Details</li>
                 <li onClick={() => setActiveContent('events')}>All Announcements/Events</li>
                 <li onClick={() => setActiveContent('addEvent')}>Add Event</li>
             </ul>
 
-            <div className="adminhomepage-content">
+            <div className="component-contents-container">
                 {/* Homepage Details Section */}
                 {activeContent === 'homeDetails' && (
-                    <div className="adminhomepage-home-details">
+                    <div className="home-details-container">
                         {/* <h3>Homepage Details</h3> */}
-                        <div className="adminhomepage-input-group">
+                        <div className="home-input-group">
                             <label>Still unknown....</label>
                             <input
                                 type="text"
@@ -75,7 +77,7 @@ const ManageHomePage = () => {
                                 className="adminhomepage-input"
                             />
                         </div>
-                        <div className="adminhomepage-input-group">
+                        <div className="home-input-group">
                             <label>Still unknown....</label>
                             <textarea
                                 name="description"
@@ -85,7 +87,7 @@ const ManageHomePage = () => {
                                 className="adminhomepage-input"
                             />
                         </div>
-                        <div className="adminhomepage-input-group">
+                        <div className="home-input-group">
                             <label>Still unknown....</label>
                             <input
                                 type="file"
@@ -112,7 +114,7 @@ const ManageHomePage = () => {
 
                 {/* All Events Section */}
                 {activeContent === 'events' && (
-                    <div className="adminhomepage-events-section">
+                    <div className="events-details-container">
                         {/* <h3>All Announcements and Events</h3> */}
                         {events.length === 0 ? (
                             <p>No events available</p>
@@ -130,9 +132,9 @@ const ManageHomePage = () => {
 
                 {/* Add Event Section */}
                 {activeContent === 'addEvent' && (
-                    <div className="adminhomepage-add-event">
+                    <div className="add-event-container">
                         {/* <h3>Add New Event</h3> */}
-                        <div className="adminhomepage-input-group">
+                        <div className="home-input-group">
                             <label>Still unknown....</label>
                             <input
                                 type="text"
@@ -143,7 +145,7 @@ const ManageHomePage = () => {
                                 className="adminhomepage-input"
                             />
                         </div>
-                        <div className="adminhomepage-input-group">
+                        <div className="home-input-group">
                             <label>Still unknown....</label>
                             <textarea
                                 placeholder="Event Description"
@@ -153,7 +155,7 @@ const ManageHomePage = () => {
                                 className="adminhomepage-input"
                             />
                         </div>
-                        <div className="adminhomepage-input-group">
+                        <div className="home-input-group">
                             <label>Still unknown....</label>
                             <input
                                 type="file"
