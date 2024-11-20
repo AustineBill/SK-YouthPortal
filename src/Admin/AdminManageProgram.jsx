@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import './styles/ManageProgram.css';
+import './styles/ManageProgram.css'
 
 const ManageProgram = () => {
     const [programs, setPrograms] = useState([]);
@@ -20,7 +20,7 @@ const ManageProgram = () => {
 
     const handleEditProgram = (program) => {
         setSelectedProgram(program);
-        setShowEditModal(true);
+        setShowEditModal(true); // Show the edit modal
     };
 
     const handleFormChange = (e) => {
@@ -29,8 +29,13 @@ const ManageProgram = () => {
     };
 
     const handleSaveChanges = () => {
-        setPrograms((prev) => prev.map((program) => (program.id === selectedProgram.id ? selectedProgram : program)));
-        setShowEditModal(false);
+        // Update the program in the programs list
+        setPrograms((prev) =>
+            prev.map((program) =>
+                program.id === selectedProgram.id ? selectedProgram : program
+            )
+        );
+        setShowEditModal(false); // Close the edit modal
     };
 
     const handleDeleteProgram = (programId) => {
@@ -89,6 +94,9 @@ const ManageProgram = () => {
                                                                 <button onClick={() => setSelectedProgram(program)}>
                                                                     View Details
                                                                 </button>
+                                                                <button onClick={() => handleEditProgram(program)}>
+                                                                    Edit Details
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     )}
@@ -121,9 +129,7 @@ const ManageProgram = () => {
 
                 {activeContent === 'addProgram' && (
                     <div className="admin-add-program">
-                        {/* <h3>Add New Program</h3> */}
                         <form>
-                            <label>Still unknown....</label>
                             <input
                                 type="text"
                                 placeholder="Program Name"
@@ -131,7 +137,6 @@ const ManageProgram = () => {
                                 value={newProgram.name}
                                 onChange={handleNewProgramChange}
                             />
-                            <label>Still unknown....</label>
                             <input
                                 type="text"
                                 placeholder="Program Description"
@@ -139,7 +144,6 @@ const ManageProgram = () => {
                                 value={newProgram.description}
                                 onChange={handleNewProgramChange}
                             />
-                            <label>Still unknown....</label>
                             <input type="file" accept="image/*" onChange={handleImageUpload} />
                             {imagePreview && <img src={imagePreview} alt="Preview" className="admin-image-preview" />}
                             <button type="button" className="btn btn-primary" onClick={handleAddProgram}>
@@ -149,6 +153,35 @@ const ManageProgram = () => {
                     </div>
                 )}
             </div>
+
+            {/* Edit Program Modal */}
+            {showEditModal && selectedProgram && (
+                <div className="edit-modal">
+                    <h3>Edit Program</h3>
+                    <form>
+                        <label>Program Name</label>
+                        <input
+                            type="text"
+                            name="name"
+                            value={selectedProgram.name}
+                            onChange={handleFormChange}
+                        />
+                        <label>Program Description</label>
+                        <input
+                            type="text"
+                            name="description"
+                            value={selectedProgram.description}
+                            onChange={handleFormChange}
+                        />
+                        <button type="button" onClick={handleSaveChanges}>
+                            Save Changes
+                        </button>
+                        <button type="button" onClick={() => setShowEditModal(false)}>
+                            Close
+                        </button>
+                    </form>
+                </div>
+            )}
         </div>
     );
 };
