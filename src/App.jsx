@@ -6,6 +6,7 @@ import Navbar from "./Classes/Navbar";
 import Footer from "./Classes/Footer";
 import UserNavbar from "./Classes/UserNavbar";
 import UserAuthentication from './Classes/UserAuthentication';
+import Waiver from "./User/Waiver"
 
 // Main Pages
 import Intro from "./Mainpages/Home";
@@ -132,6 +133,7 @@ const App = () => {
                   <Route path="/ReservationDetails" element={<ProtectedRoute><ReservationDetails /></ProtectedRoute>} />
                   <Route path="/Cancellation" element={<ProtectedRoute><CancelReservation /></ProtectedRoute>} />
                   <Route path="/Contact" element={<ProtectedRoute><HelpSupport /></ProtectedRoute>} />
+                  <Route path="/Waiver" element={<ProtectedRoute><Waiver /></ProtectedRoute>} />
 
                   {/* Admin Side Routes */}
                   <Route path="/admin/reservations" element={<AdminReservations />} />

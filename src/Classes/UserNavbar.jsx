@@ -51,7 +51,7 @@ const UserNavbar = () => {
         <Link className="nav-item nav-link" to="/Dashboard">Home</Link>
         <Link className="nav-item nav-link" to="/UserProgram">Programs</Link>
         <Link className="nav-item nav-link" to="/ReservationLog">Reservation</Link>
-        <Link className="nav-item nav-link" to="/ContactUs">Help and Support</Link>
+        <Link className="nav-item nav-link" to="/Waiver">Help and Support</Link>
 
         {isAuthenticated && (
           <div style={{ marginLeft: 'auto', position: 'relative' }} ref={dropdownRef}>
