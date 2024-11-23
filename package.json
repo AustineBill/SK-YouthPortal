@@ -74,7 +74,7 @@
     ]
   },
   "description": "This project is for Western Bicutan Community",
-  "main": "src/Webstructure/server.js",
+  "main": "src/WebStructure/server.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
