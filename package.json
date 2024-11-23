@@ -53,7 +53,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "client": "react-scripts start",
-    "server": "node src/Webstructure/server.js"
+    "server": "node src/WebStructure/server.js"
   },
   "eslintConfig": {
     "extends": [
