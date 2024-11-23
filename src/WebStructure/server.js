@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Pool } = require('pg');
@@ -14,6 +15,18 @@ const pool = new Pool({
     password: 'iSKedWB2024',
     port: 5432,
 });
+
+
+// Serve React app in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static(path.join(__dirname, '../../build')));
+
+  // Serve index.html for any other requests (React routing)
+  app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../../build/index.html'));
+  });
+}
 
 pool.connect((err) => {
     if (err) {
