@@ -90,33 +90,23 @@ app.post('/login', async (req, res) => {
 
 
 app.get('/Profile/:username', async (req, res) => {
-    const username = req.params.username;
-  
-    try {
-      console.log('Fetching profile for username:', username);  // Log the incoming username for debugging
-  
-      // Query the database for the user profile
+  const username = req.params.username;
+  console.log('Request params:', req.params);  // Log params to ensure correct URL
+  try {
       const result = await pool.query(
-        'SELECT id, username, address, age, sex, contact_number, country FROM "Users" WHERE username = $1',
-        [username]
+          'SELECT id, username, address, age, sex, contact_number, country FROM "Users" WHERE username = $1',
+          [username]
       );
-  
       if (result.rows.length === 0) {
-        return res.status(404).json({ message: 'User not found' });
+          return res.status(404).json({ message: 'User not found' });
       }
-  
-      console.log('Profile data:', result.rows[0]);  // Log the fetched data for verification
       res.json(result.rows[0]);
-  
-    } catch (err) {
-      // Log the full error details
-      console.error('Error fetching profile:', err.message);  // Log the error message
-      console.error('Error stack trace:', err.stack);  // Log the stack trace for deeper insights
+  } catch (err) {
+      console.error('Error fetching profile:', err.message);
       res.status(500).json({ message: 'Internal server error' });
-    }
-  });
-  ;
-  
+  }
+});
+
 
 // Modify the '/Profile/:id' PUT route to update user data by id
 app.put('/Profile/:id', async (req, res) => {
