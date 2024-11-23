@@ -73,8 +73,8 @@
       "last 1 safari version"
     ]
   },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
+  "description": "This project is for Western Bicutan Community",
+  "main": "src/Webstructure/server.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
