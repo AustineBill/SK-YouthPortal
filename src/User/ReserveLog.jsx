@@ -8,8 +8,7 @@ const ReservationLog = () => {
   const navigate = useNavigate();
   const [reservations, setReservations] = useState([]);
 
-  const userId = localStorage.getItem('userId');
-  console.log('User Actrive:', userId)
+  const userId = sessionStorage.getItem('userId');
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -17,7 +16,6 @@ const ReservationLog = () => {
         const response = await axios.get('http://localhost:5000/reservations', {
           params: { userId }, 
         });
-        console.log('Fetched reservations:', response.data);
         setReservations(response.data);
       } catch (error) {
         console.error('Error fetching reservations:', error);
@@ -69,11 +67,13 @@ const ReservationLog = () => {
                 <td>{reservation.time_slot}</td>
                 <td className="d-flex justify-content-center">
                   <Button
-                    variant="primary"
+                    variant="danger"
                     size="sm"
-                    onClick={() => navigate(`/ReservationDetails/${reservation.id}`)}
-                  >
-                    View
+                    onClick={() => {
+                      sessionStorage.setItem('reservationId', reservation.id, );  // Store the ID in sessionStorage
+                      navigate('/Cancellation');  // Navigate without including the ID in the URL
+                    }}>
+                    Delete
                   </Button>
                 </td>
               </tr>

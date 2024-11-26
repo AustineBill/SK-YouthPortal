@@ -62,8 +62,8 @@ const Navbar = () => {
         <Link className="nav-item nav-link" to="/ContactUs">Contact Us</Link>
       </div>
 
-      <div className="navbar-buttons" style={{ display: 'flex', alignItems: 'center' }}>
-        <button className="login-button ms-2" onClick={() => navigate('/userauth?view=signIn')}>Log In</button>
+      <div className="navbar-buttons">
+        <button className="login-button " onClick={() => navigate('/userauth?view=signIn')}>Log In</button>
         <button className="signup-button ms-2" onClick={() => navigate('/userauth?view=signUp')}>Sign Up</button>
       </div>
     </Nav>

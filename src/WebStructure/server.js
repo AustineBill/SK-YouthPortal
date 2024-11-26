@@ -53,7 +53,7 @@ app.post('/register', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    console.log('Login attempt:', { username, password });
+    //console.log('Login attempt:', { username, password });
 
     try {
         // Find the user by username
@@ -63,7 +63,7 @@ app.post('/login', async (req, res) => {
         }
 
         const user = result.rows[0];
-        console.log('User ID from database:', user.id);
+       //console.log('User ID from database:', user.id);
 
         // Validate password
         if (user.password !== password) { // Temporary for plain text; replace with bcrypt for hashing
@@ -91,7 +91,6 @@ app.post('/login', async (req, res) => {
 
 app.get('/Profile/:username', async (req, res) => {
   const username = req.params.username;
-  console.log('Request params:', req.params);  // Log params to ensure correct URL
   try {
       const result = await pool.query(
           'SELECT id, username, address, age, sex, contact_number, country FROM "Users" WHERE username = $1',
@@ -142,8 +141,7 @@ app.post('/reservations', async (req, res) => {
     }
   });
 
-  app.get('/reservations', async (req, res) => {
-    console.log('GET /reservations called with query:', req.query);
+app.get('/reservations', async (req, res) => {
     const { userId } = req.query; // Get userId from query parameters
   
     try {
@@ -160,6 +158,44 @@ app.post('/reservations', async (req, res) => {
       res.status(500).send('Server error');
     }
   });
+
+
+  app.get('/reservations/:reservationId', async (req, res) => {
+    const { reservationId } = req.params;
+    //console.log(`Fetching reservation details for ID: ${reservationId}`);
+
+    try {
+        const result = await pool.query('SELECT * FROM Schedules WHERE id = $1', [reservationId]); // Use pool.query()
+        if (result.rows.length > 0) {
+            res.json(result.rows[0]); // Send the reservation details back
+        } else {
+            res.status(404).json({ error: 'Reservation not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching reservation:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+app.delete('/reservations/:reservationId', async (req, res) => {
+    const { reservationId } = req.params;
+  
+    try {
+      // Delete the reservation using PostgreSQL query
+      const result = await pool.query('DELETE FROM Schedules WHERE id = $1 RETURNING *', [reservationId]); // Use pool.query()
+      
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: "Reservation not found" });
+      }
+      res.status(200).json({ message: "Reservation cancelled successfully" });
+    } catch (error) {
+      console.error("Error cancelling reservation:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+  
   
 app.listen(5000, () => {
     console.log('Server running on port 5000');

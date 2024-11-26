@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom';
 
 // Create the context
 export const AuthContext = createContext();
@@ -10,8 +10,8 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const adminStatus = localStorage.getItem('isAdmin') === 'true';
+    const token = sessionStorage.getItem('authToken');
+    const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
 
     if (token && adminStatus) {
       setIsAdmin(true);
@@ -26,35 +26,29 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const adminlogin = (token) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('isAdmin', 'true');
+    sessionStorage.setItem('authToken', token);
+    sessionStorage.setItem('isAdmin', 'true');
     setIsAdmin(true);
     setIsAuthenticated(false);
   };
 
   const adminlogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('isAdmin');
+    sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('isAdmin');
     setIsAdmin(false);
   };
 
   const login = (token, username) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('isAuthenticated', 'true');
-    localStorage.setItem('username', username);
+    sessionStorage.setItem('authToken', token);
+    sessionStorage.setItem('isAuthenticated', 'true');
+    sessionStorage.setItem('username', username);
     setIsAuthenticated(true);
     setIsAdmin(false);
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('isAuthenticated',);
-    localStorage.removeItem('isAdmin');
-    localStorage.removeItem('scheduleDetails');
-    localStorage.removeItem('reservationData');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userRole');
+    sessionStorage.clear(); // Clears all session data
+    //localStorage.clear(); // Clears all session data
     setIsAuthenticated(false);
     setIsAdmin(false);
   };
@@ -66,7 +60,7 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-
+// ProtectedRoute component to restrict access
 export const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = React.useContext(AuthContext);
   if (!isAuthenticated) {

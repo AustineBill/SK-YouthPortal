@@ -18,22 +18,17 @@ const ProfilePage = () => {
   const { username } = useParams(); // Corrected useParams invocation
   const navigate = useNavigate();
 
-  console.log("Fetching profile for username:", username);
-
   useEffect(() => {
 
     const fetchProfile = async () => {
       try {
-        console.log('Fetching profile for username:', username); // Add logging here
         const response = await fetch(`http://localhost:5000/Profile/${username}?_=${new Date().getTime()}`);
         console.log('Response Status:', response.status); // Check response status
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-    
         const userData = await response.json();
-        //console.log('Fetched User Data:', userData); // Log the response data
         setProfileInfo(userData);
       } catch (error) {
         console.error('Error fetching profile:', error); // Handle any errors here

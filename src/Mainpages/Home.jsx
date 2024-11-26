@@ -5,8 +5,6 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Cover from "../Asset/bg.png"
 
-
-
 const Intro = () => (
 
     <div className="container-fluid">
