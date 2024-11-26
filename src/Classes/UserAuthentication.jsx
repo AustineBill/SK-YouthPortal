@@ -44,12 +44,11 @@ const UserAuthentication = () => {
                 });
     
                 const data = await response.json();
-                console.log("Login response data:", data); 
+                //console.log("Login response data:", data); for debugging only  
     
                 if (response.ok) {
                     const { id, username} = data.user;
-                    localStorage.setItem('userId', id);
-                    console.log("Stored userId in localStorage:", localStorage.getItem('userId'));
+                    sessionStorage.setItem('userId', id);
                     login('isAuthenticated', username); 
                     navigate('/Dashboard');
                 } else {

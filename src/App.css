@@ -32,6 +32,7 @@ img.animated.pulse {
   animation-duration: 5s;
 }
 
+
 /****** Colors ******/
 :root {
   forced-color-adjust: auto; /* or none */
@@ -44,7 +45,7 @@ body {
 
 @media (forced-colors: active) {
   container-fluid {
-    background-color: Window; /* Background color for forced colors */
+    background-color: Window; /* background-color: Window; Background color for forced colors */
     color: WindowText; /* Text color for forced colors */
   }
 }
@@ -214,9 +215,10 @@ body {
   right: 0;
   z-index: 1000; /* Ensure it is above other content */
   background-color: white; /* Background color to make sure it is visible */
-  display: flex; /* Use flexbox for proper alignment */
-  align-items: center; /* Center vertically */
-  border: none; /* No border */
+  display: flex; 
+  align-items: center; 
+  border: none; 
+  width: 98%;
 }
 
 .nav-item {
@@ -227,6 +229,12 @@ body {
   text-decoration: none; /* No underline */
   cursor: pointer; /* Cursor as pointer */
 }
+
+.navbar-buttons{
+  display: flex; 
+  align-items: center;
+}
+
 
 .login-button {
   background-color: #f5efef; /* Dark color similar to Bootstrap's .btn-dark */

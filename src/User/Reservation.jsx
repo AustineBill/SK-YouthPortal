@@ -54,13 +54,13 @@ const Reservation = () => {
       // Validate if both date and time are selected
       if (!selectedDates || !selectedTime) {
         alert('Please select both a date and a time slot before proceeding.');
-        return; // Prevent further execution if validation fails
+        return; 
       }
 
-      // Retrieve userId from localStorage
-      const userId = localStorage.getItem('userId');
+      // Retrieve userId from sessionStorage
+      const userId = sessionStorage.getItem('userId');
       if (!userId) {
-        console.error('No userId found in localStorage');
+        console.error('No userId found in sessionStorage');
         return;
       }
       // Prepare reservation data
@@ -72,13 +72,12 @@ const Reservation = () => {
         time_slot: selectedTime,
       };
 
-      // Save reservation data to localStorage
-      localStorage.setItem('reservationData', JSON.stringify(reservationData));
+      // Save reservation data to sessionStorage
+      sessionStorage.setItem('reservationData', JSON.stringify(reservationData));
 
       // Send reservation data to the backend
       await axios.post('http://localhost:5000/reservations', reservationData);
 
-      // Navigate to the next page (e.g., waiver or schedule details)
       navigate('/ScheduleDetails', { state: { reservationData, reservationType } });
     } catch (error) {
       console.error('Error saving reservation:', error);

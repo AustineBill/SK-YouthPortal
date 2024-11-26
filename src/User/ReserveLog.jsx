@@ -8,8 +8,7 @@ const ReservationLog = () => {
   const navigate = useNavigate();
   const [reservations, setReservations] = useState([]);
 
-  const userId = localStorage.getItem('userId');
-  console.log('User Actrive:', userId)
+  const userId = sessionStorage.getItem('userId');
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -17,7 +16,6 @@ const ReservationLog = () => {
         const response = await axios.get('http://localhost:5000/reservations', {
           params: { userId }, 
         });
-        console.log('Fetched reservations:', response.data);
         setReservations(response.data);
       } catch (error) {
         console.error('Error fetching reservations:', error);
@@ -26,6 +24,17 @@ const ReservationLog = () => {
 
     fetchReservations();
   }, [userId]);
+
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      weekday: 'long', // Long weekday name (e.g., Monday)
+      year: 'numeric', // Full year (e.g., 2024)
+      month: 'long', // Full month name (e.g., November)
+      day: 'numeric', // Day of the month
+    });
+  };
 
   return (
     <div className="container-fluid">
@@ -42,7 +51,7 @@ const ReservationLog = () => {
       <Container>
         <Row className="mb-4">
           <Col className="d-flex justify-content-end">
-            <Button variant="outline-secondary" onClick={() => navigate('/UserProgram')}>
+            <Button variant="outline-secondary" onClick={() => navigate('/ViewSchedule')}>
               <FaCalendarAlt /> 00/00/0000
             </Button>
           </Col>
@@ -64,16 +73,18 @@ const ReservationLog = () => {
               <tr key={reservation.id}>
                 <td>{reservation.id}</td>
                 <td>{reservation.program}</td>
-                <td>{reservation.date}</td>
-                <td>{reservation.end_date}</td>
+                <td>{formatDate(reservation.date)}</td>
+                <td>{formatDate(reservation.end_date)}</td>
                 <td>{reservation.time_slot}</td>
                 <td className="d-flex justify-content-center">
                   <Button
-                    variant="primary"
+                    variant="danger"
                     size="sm"
-                    onClick={() => navigate(`/ReservationDetails/${reservation.id}`)}
-                  >
-                    View
+                    onClick={() => {
+                      sessionStorage.setItem('reservationId', reservation.id, );  // Store the ID in sessionStorage
+                      navigate('/Cancellation');  // Navigate without including the ID in the URL
+                    }}>
+                    Delete
                   </Button>
                 </td>
               </tr>

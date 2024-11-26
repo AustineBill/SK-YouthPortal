@@ -1,149 +1,145 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Import default styling
-import '../WebStyles/UserStyle.css'
+import 'react-calendar/dist/Calendar.css';
+import '../WebStyles/UserStyle.css';
 
-import StepIndicator from '../Classes/StepIndicator';
+const ViewSchedule = () => {
+    const [reservations, setReservations] = useState([]);
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+    const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+    const dropdownRef = useRef(null);
 
-
-const Reservation = () => {
- 
-  const navigate = useNavigate();
-
-  // Initialize the selected date state as an array (for range selection)
-  const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
-  const [selectedTime, setSelectedTime] = useState(''); // State for selected time
-
-  // Handle date or date range changes
-  const handleDateChange = (range) => {
-    // If a single date is selected, set it as both start and end
-    if (Array.isArray(range)) {
-      setSelectedDates(range);
-    } else {
-      setSelectedDates([range, range]);
-    }
-  };
-
-
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const dropdownRef = useRef(null);
-
-  const toggleDropdown = () => {
-    setIsDropdownVisible((prev) => !prev);
-  };
-
-  const selectTime = (time) => {
-    setSelectedTime(time);
-    setIsDropdownVisible(false);
-  };
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsDropdownVisible(false);
-    }
-  };
-
- 
-
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
+    // Fetch reservations from the backend
+    const fetchReservations = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/ViewSched');
+            if (!response.ok) {
+                throw new Error('Error fetching reservations');
+            }
+            const data = await response.json();
+            setReservations(data);
+        } catch (error) {
+            console.error('Error fetching reservations:', error);
+        }
     };
-  }, []);
 
-  return (
+    useEffect(() => {
+        fetchReservations();
+    }, []);
 
-    
-    <div className="container-fluid">
-       <div className="text-center text-lg-start m-4 mv-8 mb-3">
-          <h1 className="Maintext animated slideInRight">Schedule</h1>
-            <p className='Subtext'>Lorem ipsum</p> 
-        </div>
+    const toggleDropdown = () => {
+        setIsDropdownVisible((prev) => !prev);
+    };
 
-      <div className="calendar-container">
+    const selectTime = (time) => {
+        setSelectedTimeSlot(time); // Set the selected time slot
+        setIsDropdownVisible(false); // Hide the dropdown
+    };
 
-      <StepIndicator currentStep={1} />
-       
-      <div className="grid-container">
-        <div className="legend">
-          <h2>Legend</h2>
-          <div className="legend-item">
-            <span className="circle available"></span>
-            <h3>Available</h3>
-          </div>
-          <div className="legend-item">
-            <span className="circle unavailable"></span>
-            <h3>Unavailable</h3>
-          </div>
-          <div className="legend-item">
-            <span className="circle maximize"></span>
-            <h3>Maximize Capacity</h3>
-          </div>
-          <div className="legend-item">
-            <span className="circle unknown"></span>
-            <h3>hindi ko na alam</h3>
-          </div>
-        </div>
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setIsDropdownVisible(false);
+        }
+    };
 
-        <div className="selected-date">
-          {selectedDates[0].toDateString() === selectedDates[1].toDateString()
-            ? `Selected Date: ${selectedDates[0].toDateString()}`
-            : `Selected Dates: ${selectedDates[0].toDateString()} to ${selectedDates[1].toDateString()}`}
-          {selectedTime && <div>Selected Time: {selectedTime}</div>}
-        </div>
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
-        <button className="apply-dates" onClick={() => navigate('/ScheduleDetails')}>
-          Apply Dates
-        </button>
-      </div>
+    // Filter and display reservations based on date and selected time slot
+    const tileContent = ({ date }) => {
+        const dailyReservations = reservations.filter((res) => {
+            const startDate = new Date(res.start_date);
+            const endDate = new Date(res.end_date);
+            const matchesDate = date >= startDate && date <= endDate;
+            const matchesTimeSlot = selectedTimeSlot ? res.time_slot === selectedTimeSlot : true;
+            return matchesDate && matchesTimeSlot;
+        });
 
-      <div className="dropdown-container" ref={dropdownRef}>
-        <div className="time-dropdown">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            onClick={toggleDropdown}
-          >
-            Select Time
-          </button>
-          {isDropdownVisible && (
-            <div className="time-dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <h6 className="dropdown-item" onClick={() => selectTime('9:00 am - 10:00 am')}>
-                9:00 am - 10:00 am
-              </h6>
-              <h6 className="dropdown-item" onClick={() => selectTime('10:00 am - 11:00 am')}>
-                10:00 am - 11:00 am
-              </h6>
-              <h6 className="dropdown-item" onClick={() => selectTime('11:00 am - 12:00 nn')}>
-                11:00 am - 12:00 nn
-              </h6>
-              <h6 className="dropdown-item" onClick={() => selectTime('12:00 nn - 1:00 pm')}>
-                12:00 nn - 1:00 pm
-              </h6>
-              <h6 className="dropdown-item" onClick={() => selectTime('1:00 pm - 2:00 pm')}>
-                1:00 pm - 2:00 pm
-              </h6>
-              <h6 className="dropdown-item" onClick={() => selectTime('2:00 pm - 3:00 pm')}>
-                2:00 pm - 3:00 pm
-              </h6>
+        return dailyReservations.length > 0 ? (
+            <div>
+                {dailyReservations.map((res, index) => (
+                    <div key={index}>
+                        <span>{res.username}</span>
+                    </div>
+                ))}
             </div>
-          )}
-        </div>
-      </div>
+        ) : null;
+    };
 
-      {/* Calendar Component */}
-      <Calendar
-        minDate={new Date()} // Prevent past dates from being selected
-        onChange={handleDateChange} // Handle single or range selection
-        selectRange={true} // Enable range selection
-        value={selectedDates} // Current selected date or range
-      />
-      </div>
-    </div>
-  );
+    return (
+        <div className="container-fluid">
+            <div className="text-center text-lg-start m-4 mv-8 mb-3">
+                <h1 className="Maintext animated slideInRight">Schedule</h1>
+                <p className="Subtext">Lorem ipsum</p>
+            </div>
+
+            <div className="calendar-container">
+                <div className="grid-container">
+                    <div className="legend">
+                        <h2>Legend</h2>
+                        <div className="legend-item">
+                            <span className="circle available"></span>
+                            <h3>Available</h3>
+                        </div>
+                        <div className="legend-item">
+                            <span className="circle unavailable"></span>
+                            <h3>Unavailable</h3>
+                        </div>
+                        <div className="legend-item">
+                            <span className="circle maximize"></span>
+                            <h3>Maximize Capacity</h3>
+                        </div>
+                        <div className="legend-item">
+                            <span className="circle unknown"></span>
+                            <h3>Unknown</h3>
+                        </div>
+                    </div>
+                </div>
+                <div className="dropdown-container" ref={dropdownRef}>
+                    <div className="time-dropdown">
+                        <button
+                            className="btn btn-secondary dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton"
+                            onClick={toggleDropdown}
+                        >
+                            {selectedTimeSlot || "Select Time"}
+                        </button>
+                        {isDropdownVisible && (
+                            <div className="time-dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                {[
+                                    '9:00 am - 10:00 am',
+                                    '10:00 am - 11:00 am',
+                                    '11:00 am - 12:00 nn',
+                                    '12:00 nn - 1:00 pm',
+                                    '1:00 pm - 2:00 pm',
+                                    '2:00 pm - 3:00 pm',
+                                ].map((time) => (
+                                    <h6
+                                        key={time}
+                                        className="dropdown-item"
+                                        onClick={() => selectTime(time)}
+                                    >
+                                        {time}
+                                    </h6>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                <Calendar
+                    minDate={new Date()}
+                    selectRange={true}
+                    tileContent={tileContent}
+                />
+            </div>
+        </div>
+    );
 };
 
-export default Reservation;
+export default ViewSchedule;

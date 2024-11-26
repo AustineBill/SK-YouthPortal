@@ -1,8 +1,10 @@
 
+/*** NAV ***/ 
 
-/* Container for the calendar */
+
 .calendar-container {
-  max-width: 1000px;
+  width: 100%;
+  max-width: 800px; /* Adjust based on your layout */
   margin: 0 auto;
   text-align: center;
   font-family: 'Poppins', sans-serif; /* Optional: Use the Poppins font */
@@ -26,34 +28,18 @@
   margin-bottom: 2px;
 }
 
-.Maintext-Calendar {
-  font-weight: bolder; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
-  font-size: 60px;
-}
-
-.Subtext-Calendar {
-  font-weight: 200; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
-  font-size: 30px;
-}
 
 /* Custom calendar styling */
 .react-calendar {
   width: 100%; /* Ensure the calendar takes up the full width */
+  height: auto;
   background: white;
   border: none;
   font-family: 'Poppins', sans-serif;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 10% 0% 10% 0%;
-  
 }
+
 
 /* Calendar navigation buttons (Prev/Next) */
 .react-calendar__navigation button {
@@ -93,8 +79,8 @@
   background-color: #f7f7f7;
   position: relative; /* Position relative for absolute children */
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items:  center;
 }
 
 /* Position the date number in the top-left corner */

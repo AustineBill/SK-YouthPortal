@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../WebStructure/AuthContext';
 import Avatar from 'react-avatar';
+import { Nav} from 'react-bootstrap'; 
 import Logo from "../Asset/WebImages/Logo.png";
 import '../App.css';
 
@@ -13,7 +14,7 @@ const UserNavbar = () => {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    const username = localStorage.getItem('username');
+    const username = sessionStorage.getItem('username');
     
     if (username) {
       setLoggedInUser(username);
@@ -41,32 +42,18 @@ const UserNavbar = () => {
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-links" style={{ display: 'flex', alignItems: 'center', width: '98%' }}>
-        <Link to="/" className="navbar-brand">
-          <h2 className="Website-Name">
+    <Nav className="navbar">
+      <div className="navbar-links" style={{ display: 'flex', alignItems: 'center'}}>
+       
+          <h2 className="Website-Name clr-db">
             <img src={Logo} alt="Logo" style={{ width: '70px' }} /> iSKed
           </h2>
-        </Link>
+       
+
         <Link className="nav-item nav-link" to="/Dashboard">Home</Link>
         <Link className="nav-item nav-link" to="/UserProgram">Programs</Link>
         <Link className="nav-item nav-link" to="/ReservationLog">Reservation</Link>
         <Link className="nav-item nav-link" to="/Waiver">Help and Support</Link>
-
-        {isAuthenticated && (
-          <div style={{ marginLeft: 'auto', position: 'relative' }} ref={dropdownRef}>
-            <div onClick={() => setDropdownVisible(!dropdownVisible)} style={{ cursor: 'pointer' }}>
-              <Avatar name={loggedInUser} round={true} size="50" />
-            </div>
-            {dropdownVisible && (
-              <div style={dropdownStyles}>
-                <Link to={`/Profile/${loggedInUser}`} className="dropdown-item" onClick={() => setDropdownVisible(false)}>Profile</Link>
-                <Link to="/Settings" className="dropdown-item" onClick={() => setDropdownVisible(false)}>Settings</Link>
-                <div className="dropdown-item" onClick={openLogoutModal}>Logout</div>
-              </div>
-            )}
-          </div>
-        )}
       </div>
 
       {/* Logout Confirmation Modal */}
@@ -80,7 +67,22 @@ const UserNavbar = () => {
           </div>
         </div>
       )}
-    </nav>
+
+      {isAuthenticated && (
+          <div className='navbar-buttons' ref={dropdownRef}>
+            <div onClick={() => setDropdownVisible(!dropdownVisible)} style={{ cursor: 'pointer' }}>
+              <Avatar name={loggedInUser} round={true} size="50" />
+            </div>
+            {dropdownVisible && (
+              <div style={dropdownStyles}>
+                <Link to={`/Profile/${loggedInUser}`} className="dropdown-item" onClick={() => setDropdownVisible(false)}>Profile</Link>
+                <Link to="/Settings" className="dropdown-item" onClick={() => setDropdownVisible(false)}>Settings</Link>
+                <div className="dropdown-item" onClick={openLogoutModal}>Logout</div>
+              </div>
+            )}
+          </div>
+        )}
+    </Nav>
   );
 };
 
