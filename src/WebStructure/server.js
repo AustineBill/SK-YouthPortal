@@ -195,6 +195,26 @@ app.delete('/reservations/:reservationId', async (req, res) => {
     }
 });
 
+
+
+/******** View Schedules ********/
+
+app.get('/ViewSched', async (req, res) => {
+  try {
+      const result = await pool.query(`
+          SELECT s.start_date, s.end_date, s.time_slot, u.username
+          FROM Schedules s
+          JOIN "Users" u ON s.user_id = u.id
+          WHERE s.start_date >= CURRENT_DATE
+          ORDER BY s.start_date ASC
+      `);
+      res.json(result.rows);
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+});
+
+
   
   
 app.listen(5000, () => {

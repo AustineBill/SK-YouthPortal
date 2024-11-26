@@ -25,6 +25,17 @@ const ReservationLog = () => {
     fetchReservations();
   }, [userId]);
 
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      weekday: 'long', // Long weekday name (e.g., Monday)
+      year: 'numeric', // Full year (e.g., 2024)
+      month: 'long', // Full month name (e.g., November)
+      day: 'numeric', // Day of the month
+    });
+  };
+
   return (
     <div className="container-fluid">
       <Breadcrumb className="ms-5">
@@ -40,7 +51,7 @@ const ReservationLog = () => {
       <Container>
         <Row className="mb-4">
           <Col className="d-flex justify-content-end">
-            <Button variant="outline-secondary" onClick={() => navigate('/UserProgram')}>
+            <Button variant="outline-secondary" onClick={() => navigate('/ViewSchedule')}>
               <FaCalendarAlt /> 00/00/0000
             </Button>
           </Col>
@@ -62,8 +73,8 @@ const ReservationLog = () => {
               <tr key={reservation.id}>
                 <td>{reservation.id}</td>
                 <td>{reservation.program}</td>
-                <td>{reservation.date}</td>
-                <td>{reservation.end_date}</td>
+                <td>{formatDate(reservation.date)}</td>
+                <td>{formatDate(reservation.end_date)}</td>
                 <td>{reservation.time_slot}</td>
                 <td className="d-flex justify-content-center">
                   <Button
