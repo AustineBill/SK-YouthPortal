@@ -55,6 +55,17 @@ body {
   color: #25327A;
 }
 
+.clr-w{
+  color: #ffffff;
+}
+
+/****** Background Color ******/
+
+.bg-db{
+  background-color: #25327A !important;
+  color: #ffffff;
+}
+
 /****** Buttons ******/
 
 .btn-db{
@@ -208,11 +219,14 @@ body {
 
 .Website-Name{
   margin-left: 1rem; /* Equivalent to Bootstrap's `ms-4` */
-  margin-right: 2rem;
+  margin-right: 1rem;
   font-family: 'Sansita';
   font-style: italic;
   font-weight: bold;
-  font-size: 1.8rem; 
+  font-size: 1.8rem;
+  color: #ffffff; 
+  display: flex;
+  align-items: center;
 }
 
 .Website-Name img {
@@ -299,13 +313,14 @@ body {
   align-items: center; 
   border: none; 
   width: 100%;
+  background-color:#25327A;
 }
 
 .nav-item {
   font-family: 'Poppins';
   font-size: 2rem;
   margin: 1rem 1rem;
-  color: black !important;
+  color: rgb(248, 241, 241) !important;
   text-decoration: none; /* No underline */
   cursor: pointer; /* Cursor as pointer */
 }
@@ -326,18 +341,11 @@ body {
 
 
 .login-button {
-  background-color: #f7ecec; /* Dark color similar to Bootstrap's .btn-dark */
-  color: rgb(15, 15, 15); /* Text color for contrast */
+  background-color: #25327A; /* Dark color similar to Bootstrap's .btn-dark */
+  color: #ffffff;
   padding: 0.5rem 1rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
   border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
 }
-
-
-.login-button:hover {
-  background-color: #5b5f63; /* Darker shade on hover */
-  color: #ffffff;
-}
-
 
 .signup-button {
   background-color: #25327A; /* Dark color similar to Bootstrap's .btn-dark */
@@ -347,8 +355,26 @@ body {
   border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
 }
 
-.signup-button:hover {
-  background-color: #e7eaee; /* Darker shade on hover */
+
+.login-button, .signup-button {
+  transition: background-color 0.3s ease;
+
+}
+
+.login-button:hover, .signup-button:hover {
+  cursor: pointer;
+  background: transparent;
+}
+
+/* Active styles when buttons are clicked */
+.login-button.active {
+  background-color: #ffffff;
+  color: #000;
+}
+
+.signup-button.active {
+  background-color: #f7ecec;
+  color: #000;
 }
 
 
@@ -430,7 +456,6 @@ body {
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: slideInRight;
-  width: auto;
   height: auto;
 }
 
@@ -624,14 +649,8 @@ body {
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   color: #fff;
-  background-color: #343a40;
-  border-color: #343a40;
   text-decoration: none;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: slideInRight;
   margin-top: 350px;
 }
 
@@ -639,6 +658,7 @@ body {
   color: #fff;
   background-color: #23272b;
   border-color: #1d2124;
+  text-decoration: none;
 }
 
 .spotlight-text-content {
@@ -663,15 +683,14 @@ body {
 
 .Text-1{
   font-optical-sizing: auto;
-  font-weight: bolder;
+  font-weight: 900;
   font-style: oblique;
-  color: #4679e6;
   font-size: 3rem;
 }
 
 .Text-2{
   font-optical-sizing: auto;
-  font-weight: bold;
+  font-weight: 900;
   font-style: oblique;
   font-size: 3rem;
 }
@@ -694,34 +713,18 @@ body {
 }
 
 .footer .btn.btn-link {
-  padding: 0;
   text-align: left;
-  color: var(--bs-body);
+  color: #f1f1f1;
   font-weight: normal;
-  transition: .3s;
-}
-
-.footer .btn.btn-link::before {
-  position: relative;
-  content: "\f105";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  margin-right: 10px;
-}
-
-.footer {
-  padding-top: 10px;
-  padding-bottom: 10px;
 }
 
 .small-footer .col-md-3,
 .small-footer .col-md-2 {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .footer h6 {
   font-size: 16px;
-  margin-bottom: 5px;
 }
 
 .footer p,

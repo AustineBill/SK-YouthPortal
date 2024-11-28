@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import "../App.css"
 
 const Footer = () => (
-  <div className="container-fluid bg-secondary footer">
+  <div className="container-fluid bg-db footer">
     <div className="row d-flex justify-content-between py-1 small-footer">
 
       {/* Get In Touch Section */}
@@ -16,7 +16,7 @@ const Footer = () => (
 
       {/* Center Name Section */}
       <div className="col-md-2 d-flex flex-column align-items-center">
-        <h4 className="footer-name clr-db">iSKed</h4>
+        <h4 className="footer-name">iSKed</h4>
         <p className="mb-0">All Rights Reserved 2024.</p>
       </div> 
 

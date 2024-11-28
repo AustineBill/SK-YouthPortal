@@ -50,8 +50,8 @@ const UserNavbar = () => {
   return (
     <Nav className="navbar">
       <div className="navbar-links" style={{ display: 'flex', alignItems: 'center' }}>
-        <h2 className="Website-Name clr-db">
-          <img src={Logo} alt="Logo" style={{ width: '70px' }} /> iSKed
+        <h2 className="Website-Name">
+          <img src={Logo} alt="Logo"/> iSKed
         </h2>
 
         {/* Hamburger Icon - Visible only on mobile/tablet */}
