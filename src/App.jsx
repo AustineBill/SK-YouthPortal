@@ -55,6 +55,7 @@ import StepIndicator from './Classes/StepIndicator';
 
 import './App.css';
 import './WebStyles/WebStyle.css'
+import './WebStyles/MediaQuiries.css'
 
 import './Admin/styles/Admin-Style.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css';

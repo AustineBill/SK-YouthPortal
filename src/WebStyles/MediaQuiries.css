@@ -1,0 +1,27 @@
+@media (min-width: 992px) { /* Large screen (lg) breakpoint */
+    .login-button .signup-button  {
+        display: inline-block; /* Display button inline on lg screens and up */
+    }
+  }
+
+
+@media (max-width: 768px) {
+    .hamburger-icon {
+      display: flex; /* Show hamburger icon on small screens */
+    }
+
+    .navbar-buttons {
+      display: inline-flex; /* Hide buttons on small screens */
+    }
+
+    .nav-links {
+      display: none; /* Hide links by default */
+      width: 100%;
+      flex-direction: column;
+      background-color: #fff;
+      position: absolute;
+      top: 60px; /* Adjust based on navbar height */
+      right: 0;
+      z-index: 999;
+    }
+  }

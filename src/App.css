@@ -208,12 +208,16 @@ body {
 
 .Website-Name{
   margin-left: 1rem; /* Equivalent to Bootstrap's `ms-4` */
-  margin-right: 3rem;
-  margin-top: 10px;
+  margin-right: 2rem;
   font-family: 'Sansita';
   font-style: italic;
   font-weight: bold;
-  font-size: 40px; 
+  font-size: 1.8rem; 
+}
+
+.Website-Name img {
+  width: 70px;
+  margin-right: 10px;
 }
 
 .card-container {
@@ -280,7 +284,6 @@ body {
 
 /*** Navbar ***/
 .sticky-top { 
-  margin-top: 10px;;
   transition: .5s;
 }
 
@@ -290,18 +293,18 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000; /* Ensure it is above other content */
+  z-index: 1000; 
   background-color: white; /* Background color to make sure it is visible */
   display: flex; 
   align-items: center; 
   border: none; 
-  width: 98%;
+  width: 100%;
 }
 
 .nav-item {
   font-family: 'Poppins';
   font-size: 2rem;
-  margin: 2rem 1rem;
+  margin: 1rem 1rem;
   color: black !important;
   text-decoration: none; /* No underline */
   cursor: pointer; /* Cursor as pointer */
@@ -317,7 +320,7 @@ body {
 }
 
 .navbar-buttons{
-  display: flex; 
+  display: inline; 
   align-items: center;
 }
 
