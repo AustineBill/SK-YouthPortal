@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Nav, Dropdown } from 'react-bootstrap';
-
 import Logo from "../Asset/WebImages/Logo.png";
 import '../App.css'; // Ensure your custom CSS file is imported
 
-const Navbar = () => {
+const Navbar = () => {   
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
   const [hamburgerVisible, setHamburgerVisible] = useState(false); // State for hamburger menu
+  const [activeButton, setActiveButton] = useState('login'); // State for active button
   const dropdownRef = useRef(null); // Ref to handle clicks outside
 
   const handleDropdownToggle = (e) => {
@@ -33,11 +33,16 @@ const Navbar = () => {
     setHamburgerVisible(!hamburgerVisible);
   };
 
+  const handleButtonClick = (buttonType) => {
+    setActiveButton(buttonType); // Update active button state
+    navigate(`/userauth?view=${buttonType}`);
+  };
+
   return (
     <Nav className="navbar">
       <div className="navbar-links" style={{ display: 'flex', alignItems: 'center' }}>
-        <h2 className="Website-Name clr-db">
-          <img src={Logo} alt="Logo" style={{ width: '70px' }} /> iSKed
+        <h2 className="Website-Name">
+          <img src={Logo} alt="Logo"/> iSKed
         </h2>
 
         {/* Hamburger Icon */}
@@ -74,8 +79,18 @@ const Navbar = () => {
 
       {/* Buttons */}
       <div className={`navbar-buttons ${hamburgerVisible ? 'active' : ''}`}>
-        <button className="login-button" onClick={() => navigate('/userauth?view=signIn')}>Log In</button>
-        <button className="signup-button ms-2" onClick={() => navigate('/userauth?view=signUp')}>Sign Up</button>
+        <button
+          className={`login-button ${activeButton === 'signIn' ? 'active' : ''}`}
+          onClick={() => handleButtonClick('signIn')}
+        >
+          Log In
+        </button>
+        <button
+          className={`signup-button ms-2 ${activeButton === 'signUp' ? 'active' : ''}`}
+          onClick={() => handleButtonClick('signUp')}
+        >
+          Sign Up
+        </button>
       </div>
     </Nav>
   );
