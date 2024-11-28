@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import { Carousel , Card} from 'react-bootstrap';
 import Cover from "../Asset/bg.png"
 
 const Intro = () => (
@@ -17,7 +15,7 @@ const Intro = () => (
           </h1>
           <div className="IntroContainer">
             <p className="IntroDetails">Western Bicutan</p>
-              <button className="IntroButton btn-db">
+              <button className="IntroButton after-small btn-db">
                 Explore Now <i className="bi bi-arrow-right"></i>
               </button>
           </div>
@@ -55,7 +53,7 @@ const Intro = () => (
                   Some quick example text to build on the card title and make up the
                   bulk of the card's content.
                 </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
+              <button className="btn-db">Go somewhere</button>
             </Card.Body>
         </Card>
         <Card className="ProgramCard">
@@ -66,7 +64,7 @@ const Intro = () => (
                   Some quick example text to build on the card title and make up the
                   bulk of the card's content.
                 </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
+              <button className="btn-db">Go somewhere</button>
             </Card.Body>
         </Card>  
         <Card className="ProgramCard">
@@ -77,7 +75,7 @@ const Intro = () => (
                   Some quick example text to build on the card title and make up the
                   bulk of the card's content.
                 </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
+              <button className="btn-db">Go somewhere</button>
             </Card.Body>
         </Card>
       </div>
@@ -93,24 +91,12 @@ const Intro = () => (
                     Some quick example text to build on the card title and make up the
                     bulk of the card's content.
                   </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
+                <button className="btn-db">Go somewhere</button>
               </Card.Body>
           </Card>
-          <Card className="ProgramCard">
-            <Card.Img variant="top" src="holder.js/100px180" />
-              <Card.Body> 
-                <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
-                  </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
-              </Card.Body>
-          </Card>
-          
         </div>
       
-      <Link className="btn btn-primary py-2 px-4 mb-5" to="/news">Find Out More</Link>
+      <Link className="text-decoration-none btn-db py-2 px-4 mb-5 " to="/news">Find Out More</Link>
       
       <Carousel id="carouselExampleIndicators" interval={3000} controls={true} indicators={true}>
         <Carousel.Item className="bg-dark">
@@ -126,7 +112,7 @@ const Intro = () => (
 
       <div className="spotlight-container">
         <h1 className="spotlight-head">SK YOUTH SPOTLIGHTS</h1>
-          <Link className="spotlight-button" to="/Spotlight">View Gallery</Link>
+          <Link className="spotlight-button btn-db" to="/Spotlight">View Gallery</Link>
       </div>
 
       <div className="BodyContainer" data-wow-delay="0.5s">
@@ -149,7 +135,7 @@ const Intro = () => (
 
       <div>
         <div className="TextContent">
-          <h1 className="Text-1">Connect with us.</h1>
+          <h1 className="Text-1 text-primary">Connect with us.</h1>
           <h1 className="Text-2 clr-db">Be part of the SK Youth Community</h1>
             <h3 className="Text-3"> Create your Profile today.</h3>
         </div> 

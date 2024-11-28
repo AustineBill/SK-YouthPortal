@@ -34,6 +34,14 @@ img.animated.pulse {
 
 
 /****** Colors ******/
+
+@media (forced-colors: active) {
+  container-fluid {
+    background-color: Window; /* background-color: Window; Background color for forced colors */
+    color: WindowText; /* Text color for forced colors */
+  }
+}
+
 :root {
   forced-color-adjust: auto; /* or none */
 }
@@ -43,20 +51,19 @@ body {
   color: Text; /* Default text color */
 }
 
-@media (forced-colors: active) {
-  container-fluid {
-    background-color: Window; /* background-color: Window; Background color for forced colors */
-    color: WindowText; /* Text color for forced colors */
-  }
-}
-
-@media (forced-colors: active) {
-  /* Apply high-contrast mode styles here */
-}
-
-
 .clr-db{
   color: #25327A;
+}
+
+.clr-w{
+  color: #ffffff;
+}
+
+/****** Background Color ******/
+
+.bg-db{
+  background-color: #25327A !important;
+  color: #ffffff;
 }
 
 /****** Buttons ******/
@@ -74,15 +81,16 @@ body {
 
 .LargeButton{
   font-weight: 400;
-  text-align: center;   
+  text-align: center;  
+  justify-content: center; 
   padding: 1rem;
   font-size: 2;
   line-height: 1.5;
   border-radius: 0.25rem;
   color: #fff;
-  width: 15%;
   align-items: center;
   margin-left: 1em;
+  width:max-content
 }
 
 
@@ -93,9 +101,28 @@ body {
   font-size: 2;
   line-height: 1.5;
   border-radius: 0.25rem;
-  width: 30%;
   align-items: center;
+  width:max-content;
 }
+
+
+.closeButton {
+  position: absolute; /* Position relative to .ModalStyles */
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #070000;
+  cursor: pointer;
+  outline: none; /* Removes the focus outline */
+  box-shadow: none; 
+}
+
+  .closeButton:hover {
+    color: #ff0000; /* Red color when hovered */
+    background: transparent;
+  }
 
 /****** Text ******/
 
@@ -107,6 +134,67 @@ body {
   font-family: 'Sansita';
   font-style: italic;
 }
+
+
+/******* Size *******/
+
+.large{
+  width: 500px;
+}
+
+.semi-large{
+  width: 300px;
+}
+
+.after-small {
+  width: 200px;
+}
+
+.small {
+  width: 150px;
+  height: 50px;
+}
+
+.super-small {
+  width: 100px;
+}
+
+.ultra-small {
+  width: 50px;
+}
+
+/****** Modals ******/
+
+
+.ModalOverlayStyles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensures the overlay stays on top */
+}
+
+.ModalStyles {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  position: relative; /* Ensure the close button is positioned relative to this container */
+  z-index: 1100; /* Ensures the modal content is above the overlay */
+}
+
+.ModalButtonStyles {
+  margin: 10px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 
 
 /*Overall*/
@@ -131,12 +219,19 @@ body {
 
 .Website-Name{
   margin-left: 1rem; /* Equivalent to Bootstrap's `ms-4` */
-  margin-right: 3rem;
-  margin-top: 10px;
+  margin-right: 1rem;
   font-family: 'Sansita';
   font-style: italic;
   font-weight: bold;
-  font-size: 40px; 
+  font-size: 1.8rem;
+  color: #ffffff; 
+  display: flex;
+  align-items: center;
+}
+
+.Website-Name img {
+  width: 70px;
+  margin-right: 10px;
 }
 
 .card-container {
@@ -203,7 +298,6 @@ body {
 
 /*** Navbar ***/
 .sticky-top { 
-  margin-top: 10px;;
   transition: .5s;
 }
 
@@ -213,47 +307,45 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000; /* Ensure it is above other content */
+  z-index: 1000; 
   background-color: white; /* Background color to make sure it is visible */
   display: flex; 
   align-items: center; 
   border: none; 
-  width: 98%;
+  width: 100%;
+  background-color:#25327A;
 }
 
 .nav-item {
   font-family: 'Poppins';
   font-size: 2rem;
-  margin: 2rem 1rem;
-  color: black !important;
+  margin: 1rem 1rem;
+  color: rgb(248, 241, 241) !important;
   text-decoration: none; /* No underline */
   cursor: pointer; /* Cursor as pointer */
 }
 
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links.active {
+  display: block;
+}
+
 .navbar-buttons{
-  display: flex; 
+  display: inline; 
   align-items: center;
 }
 
 
 .login-button {
-  background-color: #f5efef; /* Dark color similar to Bootstrap's .btn-dark */
-  color: rgb(15, 15, 15); /* Text color for contrast */
+  background-color: #25327A; /* Dark color similar to Bootstrap's .btn-dark */
+  color: #ffffff;
   padding: 0.5rem 1rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
   border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
 }
-
-@media (min-width: 992px) { /* Large screen (lg) breakpoint */
-  .login-button .signup-button  {
-      display: inline-block; /* Display button inline on lg screens and up */
-  }
-}
-
-.login-button:hover {
-  background-color: #23272b; /* Darker shade on hover */
-  color: #ffffff;
-}
-
 
 .signup-button {
   background-color: #25327A; /* Dark color similar to Bootstrap's .btn-dark */
@@ -263,9 +355,45 @@ body {
   border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
 }
 
-.signup-button:hover {
-  background-color: #e7eaee; /* Darker shade on hover */
+
+.login-button, .signup-button {
+  transition: background-color 0.3s ease;
+
 }
+
+.login-button:hover, .signup-button:hover {
+  cursor: pointer;
+  background: transparent;
+}
+
+/* Active styles when buttons are clicked */
+.login-button.active {
+  background-color: #ffffff;
+  color: #000;
+}
+
+.signup-button.active {
+  background-color: #f7ecec;
+  color: #000;
+}
+
+
+/* Hamburger icon */
+.hamburger-icon {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger-icon .bar {
+  width: 30px;
+  height: 4px;
+  margin: 5px 0;
+  background-color: #333;
+  border-radius: 4px;
+}
+
+/* Media query for mobile/tablet (screen width less than or equal to 768px) */
 
 
 
@@ -328,7 +456,6 @@ body {
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: slideInRight;
-  width: auto;
   height: auto;
 }
 
@@ -522,14 +649,8 @@ body {
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   color: #fff;
-  background-color: #343a40;
-  border-color: #343a40;
   text-decoration: none;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: slideInRight;
   margin-top: 350px;
 }
 
@@ -537,6 +658,7 @@ body {
   color: #fff;
   background-color: #23272b;
   border-color: #1d2124;
+  text-decoration: none;
 }
 
 .spotlight-text-content {
@@ -561,15 +683,14 @@ body {
 
 .Text-1{
   font-optical-sizing: auto;
-  font-weight: bolder;
+  font-weight: 900;
   font-style: oblique;
-  color: #4679e6;
   font-size: 3rem;
 }
 
 .Text-2{
   font-optical-sizing: auto;
-  font-weight: bold;
+  font-weight: 900;
   font-style: oblique;
   font-size: 3rem;
 }
@@ -592,34 +713,18 @@ body {
 }
 
 .footer .btn.btn-link {
-  padding: 0;
   text-align: left;
-  color: var(--bs-body);
+  color: #f1f1f1;
   font-weight: normal;
-  transition: .3s;
-}
-
-.footer .btn.btn-link::before {
-  position: relative;
-  content: "\f105";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  margin-right: 10px;
-}
-
-.footer {
-  padding-top: 10px;
-  padding-bottom: 10px;
 }
 
 .small-footer .col-md-3,
 .small-footer .col-md-2 {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .footer h6 {
   font-size: 16px;
-  margin-bottom: 5px;
 }
 
 .footer p,

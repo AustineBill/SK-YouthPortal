@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Modal, Button, Card } from 'react-bootstrap';
+import {Card } from 'react-bootstrap';
 import { AuthContext } from '../WebStructure/AuthContext';
 
 const Program_details = () => {
@@ -63,33 +63,26 @@ const Program_details = () => {
         </div>
       </div>
 
-      {programType === 'Facilities' && (
-        <Modal show={show} onHide={handleClose} centered size="lg">
-          <Modal.Header closeButton>
-            <Modal.Title>Number of Participants</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="d-flex justify-content-around">
-              <Button
-                className="ButtonCard d-flex flex-column align-items-center"
-                onClick={() => handleAuthorize('Solo')}
-                style={{ backgroundColor: '#25327A', borderColor: '#25327A' }}
-              >
-                <i className="bi bi-person mb-1" style={{ fontSize: '10rem' }}></i>
-                <span style={{ fontSize: '2rem', color: '#fff' }}>Solo</span>
-              </Button>
-              <Button
-                className="ButtonCard d-flex flex-column align-items-center"
-                onClick={() => handleAuthorize('Group')}
-                style={{ backgroundColor: '#25327A', borderColor: '#25327A' }}
-              >
-                <i className="bi bi-people mb-1" style={{ fontSize: '10rem' }}></i>
-                <span style={{ fontSize: '2rem', color: '#fff' }}>Group</span>
-              </Button>
-            </div>
-          </Modal.Body>
-        </Modal>
+      {/* Modal for "Solo or Group" option */}
+      {programType === 'Facilities' && show && (
+        <div className='ModalOverlayStyles'>
+          <div className='ModalStyles large'>
+            <button className="closeButton" onClick={handleClose} aria-label="Close">
+              <i className="bi bi-x-circle"></i>
+            </button>
+            <h4>Number of Participants</h4>
+            <button className="ModalButtonStyles SmallButton btn-dark small" 
+                    onClick={() => handleAuthorize('Solo')}>
+              <i className="bi bi-person mb-1"></i> Solo
+            </button>
+            <button className="ModalButtonStyles SmallButton btn-db small" 
+                    onClick={() => handleAuthorize('Group')}>
+              <i className="bi bi-people mb-1"></i> Group
+            </button>
+          </div>
+        </div>
       )}
+
 
       <div className="ItemContainer">
         <div className="row g-0">
