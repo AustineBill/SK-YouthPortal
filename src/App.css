@@ -34,14 +34,6 @@ img.animated.pulse {
 
 
 /****** Colors ******/
-:root {
-  forced-color-adjust: auto; /* or none */
-}
-
-body {
-  background-color: Canvas; /* This will use the system's color scheme */
-  color: Text; /* Default text color */
-}
 
 @media (forced-colors: active) {
   container-fluid {
@@ -50,10 +42,14 @@ body {
   }
 }
 
-@media (forced-colors: active) {
-  /* Apply high-contrast mode styles here */
+:root {
+  forced-color-adjust: auto; /* or none */
 }
 
+body {
+  background-color: Canvas; /* This will use the system's color scheme */
+  color: Text; /* Default text color */
+}
 
 .clr-db{
   color: #25327A;
@@ -74,15 +70,16 @@ body {
 
 .LargeButton{
   font-weight: 400;
-  text-align: center;   
+  text-align: center;  
+  justify-content: center; 
   padding: 1rem;
   font-size: 2;
   line-height: 1.5;
   border-radius: 0.25rem;
   color: #fff;
-  width: 15%;
   align-items: center;
   margin-left: 1em;
+  width:max-content
 }
 
 
@@ -93,9 +90,28 @@ body {
   font-size: 2;
   line-height: 1.5;
   border-radius: 0.25rem;
-  width: 30%;
   align-items: center;
+  width:max-content;
 }
+
+
+.closeButton {
+  position: absolute; /* Position relative to .ModalStyles */
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #070000;
+  cursor: pointer;
+  outline: none; /* Removes the focus outline */
+  box-shadow: none; 
+}
+
+  .closeButton:hover {
+    color: #ff0000; /* Red color when hovered */
+    background: transparent;
+  }
 
 /****** Text ******/
 
@@ -107,6 +123,67 @@ body {
   font-family: 'Sansita';
   font-style: italic;
 }
+
+
+/******* Size *******/
+
+.large{
+  width: 500px;
+}
+
+.semi-large{
+  width: 300px;
+}
+
+.after-small {
+  width: 200px;
+}
+
+.small {
+  width: 150px;
+  height: 50px;
+}
+
+.super-small {
+  width: 100px;
+}
+
+.ultra-small {
+  width: 50px;
+}
+
+/****** Modals ******/
+
+
+.ModalOverlayStyles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensures the overlay stays on top */
+}
+
+.ModalStyles {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  position: relative; /* Ensure the close button is positioned relative to this container */
+  z-index: 1100; /* Ensures the modal content is above the overlay */
+}
+
+.ModalButtonStyles {
+  margin: 10px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 
 
 /*Overall*/
@@ -230,6 +307,15 @@ body {
   cursor: pointer; /* Cursor as pointer */
 }
 
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links.active {
+  display: block;
+}
+
 .navbar-buttons{
   display: flex; 
   align-items: center;
@@ -237,20 +323,15 @@ body {
 
 
 .login-button {
-  background-color: #f5efef; /* Dark color similar to Bootstrap's .btn-dark */
+  background-color: #f7ecec; /* Dark color similar to Bootstrap's .btn-dark */
   color: rgb(15, 15, 15); /* Text color for contrast */
   padding: 0.5rem 1rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
   border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
 }
 
-@media (min-width: 992px) { /* Large screen (lg) breakpoint */
-  .login-button .signup-button  {
-      display: inline-block; /* Display button inline on lg screens and up */
-  }
-}
 
 .login-button:hover {
-  background-color: #23272b; /* Darker shade on hover */
+  background-color: #5b5f63; /* Darker shade on hover */
   color: #ffffff;
 }
 
@@ -266,6 +347,24 @@ body {
 .signup-button:hover {
   background-color: #e7eaee; /* Darker shade on hover */
 }
+
+
+/* Hamburger icon */
+.hamburger-icon {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger-icon .bar {
+  width: 30px;
+  height: 4px;
+  margin: 5px 0;
+  background-color: #333;
+  border-radius: 4px;
+}
+
+/* Media query for mobile/tablet (screen width less than or equal to 768px) */
 
 
 
