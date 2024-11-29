@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import './styles/ManageProgram.css'
+// import './styles/ManageProgram.css'
+import './styles/AdminManageProgram.css';
 
 const ManageProgram = () => {
     const [programs, setPrograms] = useState([]);
@@ -64,15 +65,28 @@ const ManageProgram = () => {
 
     return (
         <div className="admin-manage-program-container">
-            <h2>Manage Programs</h2>
-            <ul className="admin-nav-tabs">
-                <li onClick={() => setActiveContent('allPrograms')}>All Programs</li>
-                <li onClick={() => setActiveContent('addProgram')}>Add Program</li>
+            <div className='program-label'>
+                <h2>Manage Programs</h2>
+            </div>
+            
+            <ul className="program-nav-tabs">
+                <li
+                    className={activeContent === "allPrograms" ? "active-tab" : ""}
+                    onClick={() => setActiveContent("allPrograms")}
+                >
+                    All Programs
+                </li>
+                <li
+                    className={activeContent === "addProgram" ? "active-tab" : ""}
+                    onClick={() => setActiveContent("addProgram")}
+                >
+                    Add Program
+                </li>
             </ul>
 
-            <div className="admin-component-contents">
+            <div className="program-component-contents">
                 {activeContent === 'allPrograms' && (
-                    <div className="admin-programs-list">
+                    <div className="programs-details-container">
                         <DragDropContext onDragEnd={handleDragEnd}>
                             <Droppable droppableId="programs">
                                 {(provided) => (
@@ -128,8 +142,9 @@ const ManageProgram = () => {
                 )}
 
                 {activeContent === 'addProgram' && (
-                    <div className="admin-add-program">
-                        <form>
+                    <div className="add-program-container">
+                        <form className="add-program-group">
+                            <label>Program Name</label>
                             <input
                                 type="text"
                                 placeholder="Program Name"
@@ -137,19 +152,30 @@ const ManageProgram = () => {
                                 value={newProgram.name}
                                 onChange={handleNewProgramChange}
                             />
-                            <input
+
+                            <label>Program Description</label>
+                            <textarea
                                 type="text"
                                 placeholder="Program Description"
                                 name="description"
                                 value={newProgram.description}
                                 onChange={handleNewProgramChange}
                             />
-                            <input type="file" accept="image/*" onChange={handleImageUpload} />
-                            {imagePreview && <img src={imagePreview} alt="Preview" className="admin-image-preview" />}
-                            <button type="button" className="btn btn-primary" onClick={handleAddProgram}>
-                                Submit
-                            </button>
+
+                            <label>Amenities</label>
+                            <input type="file" 
+                            accept="image/*" 
+                            onChange={handleImageUpload} 
+                            />
                         </form>
+
+                        {imagePreview && <img src={imagePreview} alt="Preview" className="admin-image-preview" />}
+                        <button type="button" 
+                            onClick={handleAddProgram} 
+                            id="add-new-program-button"
+                        >
+                            Add Program
+                        </button>
                     </div>
                 )}
             </div>

@@ -1,0 +1,85 @@
+/* ManageHomePage.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+
+.admin-home-container {
+    position: absolute;
+    top: 75px;
+    left: 25%;
+    width: 75%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+}
+
+.label h2 {
+    margin: 20px 40px 20px 40px;
+    font-size: 30px;
+}
+
+.home-nav-tabs {
+    display: flex;
+    margin: 20px 0 20px 30px;
+    font-size: 20px;
+    list-style: none;
+    gap: 1in;
+    color: #766F6F;
+}
+
+.home-nav-tabs li {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.home-nav-tabs li:hover {
+    color: rgb(252, 195, 89);
+}
+
+.home-nav-tabs li.active-tab {
+    color: #E3DFDF;
+    text-decoration: underline;
+    text-decoration-color: #C1C1C1;
+    text-underline-offset: 10px;
+}
+
+.home-contents-container {
+    display: flex;
+    justify-content: center;
+}
+
+.events-details-container, .add-event-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    background-color: #8D8C8C;
+}
+
+.add-event-group {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+}
+
+.add-event-group label {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.add-event-group input[type="text"], 
+.add-event-group textarea {
+    height: 50px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    transition: outline 0.3s;
+}
+
+.add-event-group input[type="text"]:focus, 
+.add-event-group textarea:focus {
+    outline: 1px solid #007bff;
+}
+
+#add-new-details-button {
+    background-color: #42BB4E;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
