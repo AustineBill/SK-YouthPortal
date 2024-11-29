@@ -70,13 +70,23 @@ const ManageProgram = () => {
             </div>
             
             <ul className="program-nav-tabs">
-                <li onClick={() => setActiveContent('allPrograms')}>All Programs</li>
-                <li onClick={() => setActiveContent('addProgram')}>Add Program</li>
+                <li
+                    className={activeContent === "allPrograms" ? "active-tab" : ""}
+                    onClick={() => setActiveContent("allPrograms")}
+                >
+                    All Announcements/Events
+                </li>
+                <li
+                    className={activeContent === "addProgram" ? "active-tab" : ""}
+                    onClick={() => setActiveContent("addProgram")}
+                >
+                    Add Event
+                </li>
             </ul>
 
             <div className="program-component-contents">
                 {activeContent === 'allPrograms' && (
-                    <div className="admin-programs-list">
+                    <div className="programs-details-container">
                         <DragDropContext onDragEnd={handleDragEnd}>
                             <Droppable droppableId="programs">
                                 {(provided) => (
@@ -132,8 +142,9 @@ const ManageProgram = () => {
                 )}
 
                 {activeContent === 'addProgram' && (
-                    <div className="admin-add-program">
-                        <form>
+                    <div className="add-program-container">
+                        {/* <div className="add-program-group"> */}
+                        <form className="add-program-group">
                             <label>Program Name</label>
                             <input
                                 type="text"
@@ -142,21 +153,31 @@ const ManageProgram = () => {
                                 value={newProgram.name}
                                 onChange={handleNewProgramChange}
                             />
+
                             <label>Program Description</label>
-                            <input
+                            <textarea
                                 type="text"
                                 placeholder="Program Description"
                                 name="description"
                                 value={newProgram.description}
                                 onChange={handleNewProgramChange}
                             />
-                            <label>Pictures</label>
-                            <input type="file" accept="image/*" onChange={handleImageUpload} />
-                            {imagePreview && <img src={imagePreview} alt="Preview" className="admin-image-preview" />}
-                            <button type="button" id="add-program-button" onClick={handleAddProgram}>
-                                Add Program
-                            </button>
+
+                            <label>Amenities</label>
+                            <input type="file" 
+                            accept="image/*" 
+                            onChange={handleImageUpload} 
+                            />
                         </form>
+
+                        {imagePreview && <img src={imagePreview} alt="Preview" className="admin-image-preview" />}
+                        <button type="button" 
+                            onClick={handleAddProgram} 
+                            id="add-new-program-button"
+                        >
+                            Add Program
+                        </button>
+                        {/* </form> */}
                     </div>
                 )}
             </div>

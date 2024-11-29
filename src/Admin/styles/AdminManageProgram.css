@@ -24,36 +24,63 @@
     color: #766F6F;
 }
 
+.program-nav-tabs li {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.program-nav-tabs li:hover {
+    color: rgb(252, 195, 89);
+}
+
+.program-nav-tabs li.active-tab {
+    color: #E3DFDF;
+    text-decoration: underline;
+    text-decoration-color: #C1C1C1;
+    text-underline-offset: 10px;
+}
+
 .program-component-contents {
     display: flex;
     justify-content: center;
 }
 
-.admin-programs-list, 
-.admin-add-program {
-    background-color: #8D8C8C;
+.programs-details-container, .add-program-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 90%;
+    background-color: #8D8C8C;
 }
 
-.admin-add-program label {
+.add-program-group {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    background-color: orange;
+}
+
+.add-program-group label {
+    margin-top: 20px;
     font-size: 20px;
 }
 
-.admin-add-program input[type="text"],
-.admin-add-program input[type="file"] {
+.add-program-group input[type="text"],
+.add-program-group textarea {
     height: 50px;
-    width: 95%;
     border-style: none;
     border-radius: 10px;
     outline: none;
     transition: outline 0.3s;
 }
 
-.admin-add-program input[type="text"]:focus,
-.admin-add-program input[type="file"]:focus {
-    outline: 5px solid #007bff;
+.add-program-group input[type="text"]:focus,
+.add-program-group textarea:focus {
+    outline: 1px solid #007bff;
 }
 
-#add-program-button {
+#add-new-program-button {
     background-color: #42BB4E;
+    margin-bottom: 20px;
+    border-radius: 10px;
 }
