@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import './styles/ManageProgram.css'
+// import './styles/ManageProgram.css'
+import './styles/AdminManageProgram.css';
 
 const ManageProgram = () => {
     const [programs, setPrograms] = useState([]);
@@ -64,13 +65,16 @@ const ManageProgram = () => {
 
     return (
         <div className="admin-manage-program-container">
-            <h2>Manage Programs</h2>
-            <ul className="admin-nav-tabs">
+            <div className='program-label'>
+                <h2>Manage Programs</h2>
+            </div>
+            
+            <ul className="program-nav-tabs">
                 <li onClick={() => setActiveContent('allPrograms')}>All Programs</li>
                 <li onClick={() => setActiveContent('addProgram')}>Add Program</li>
             </ul>
 
-            <div className="admin-component-contents">
+            <div className="program-component-contents">
                 {activeContent === 'allPrograms' && (
                     <div className="admin-programs-list">
                         <DragDropContext onDragEnd={handleDragEnd}>
@@ -130,6 +134,7 @@ const ManageProgram = () => {
                 {activeContent === 'addProgram' && (
                     <div className="admin-add-program">
                         <form>
+                            <label>Program Name</label>
                             <input
                                 type="text"
                                 placeholder="Program Name"
@@ -137,6 +142,7 @@ const ManageProgram = () => {
                                 value={newProgram.name}
                                 onChange={handleNewProgramChange}
                             />
+                            <label>Program Description</label>
                             <input
                                 type="text"
                                 placeholder="Program Description"
@@ -144,10 +150,11 @@ const ManageProgram = () => {
                                 value={newProgram.description}
                                 onChange={handleNewProgramChange}
                             />
+                            <label>Pictures</label>
                             <input type="file" accept="image/*" onChange={handleImageUpload} />
                             {imagePreview && <img src={imagePreview} alt="Preview" className="admin-image-preview" />}
-                            <button type="button" className="btn btn-primary" onClick={handleAddProgram}>
-                                Submit
+                            <button type="button" id="add-program-button" onClick={handleAddProgram}>
+                                Add Program
                             </button>
                         </form>
                     </div>

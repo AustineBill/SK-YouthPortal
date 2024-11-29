@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './styles/Admin-Style.css'; // Path to your updated CSS
+// import './styles/Admin-Style.css'; 
+// Path to your updated CSS
+import './styles/AdminReservations.css';
 
 
 import StepIndicator from '../Classes/StepIndicator';
