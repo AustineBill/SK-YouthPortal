@@ -74,13 +74,13 @@ const ManageProgram = () => {
                     className={activeContent === "allPrograms" ? "active-tab" : ""}
                     onClick={() => setActiveContent("allPrograms")}
                 >
-                    All Announcements/Events
+                    All Programs
                 </li>
                 <li
                     className={activeContent === "addProgram" ? "active-tab" : ""}
                     onClick={() => setActiveContent("addProgram")}
                 >
-                    Add Event
+                    Add Program
                 </li>
             </ul>
 
@@ -143,7 +143,6 @@ const ManageProgram = () => {
 
                 {activeContent === 'addProgram' && (
                     <div className="add-program-container">
-                        {/* <div className="add-program-group"> */}
                         <form className="add-program-group">
                             <label>Program Name</label>
                             <input
@@ -177,7 +176,6 @@ const ManageProgram = () => {
                         >
                             Add Program
                         </button>
-                        {/* </form> */}
                     </div>
                 )}
             </div>
