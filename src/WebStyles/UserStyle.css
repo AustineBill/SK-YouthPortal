@@ -1,6 +1,4 @@
 
-/*** NAV ***/ 
-
 
 .calendar-container {
   width: 100%;
@@ -8,14 +6,6 @@
   margin: 0 auto;
   text-align: center;
   font-family: 'Poppins', sans-serif; /* Optional: Use the Poppins font */
-}
-
-/* Title of the page */
-.calendar-container h1 {
-  font-size: 40px;
-  margin-bottom: 20px;
-  color: #000000;
-  font-weight: 700;
 }
 
 .calendar-container h2 {
@@ -28,23 +18,22 @@
   margin-bottom: 2px;
 }
 
-
 /* Custom calendar styling */
 .react-calendar {
-  width: 100%; /* Ensure the calendar takes up the full width */
+  width: 100%;
   height: auto;
-  background: white;
   border: none;
-  font-family: 'Poppins', sans-serif;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 10% 0% 10% 0%;
+  margin: 20px auto; /* Center the calendar */
+  overflow: hidden; /* Prevent overflow issues */
+  font-family: 'Poppins', sans-serif !important;
+  color: #000 !important; /* Ensure text is black */
+  background: #fff;
 }
-
 
 /* Calendar navigation buttons (Prev/Next) */
 .react-calendar__navigation button {
-  color: white;
-  background-color: #d9534f;
+  color: rgb(5, 5, 5);
+  background-color: #d7ee0c;
   border: none;
   font-size: 16px;
   padding: 10px;
@@ -70,36 +59,29 @@
 
 /* Custom tile (date box) styling */
 .react-calendar__tile {
-  border: 3px solid #e0e0e0;
   text-align: left; /* Align text to the left */
   padding: 10px; /* Space for content */
   height: 100px; /* Increase height for larger tiles */
   width: 100px;  /* Increase width for larger tiles */
   cursor: pointer;
-  background-color: #f7f7f7;
-  position: relative; /* Position relative for absolute children */
   display: flex;
   justify-content: center;
   align-items:  center;
+  box-sizing: border-box; 
+  background-color: #fff; /* Default background for tiles */
+  color: #000; /* Default text color */
+  border: 1px solid #ddd; /* Optional: Add subtle border */
 }
 
 /* Position the date number in the top-left corner */
 .react-calendar__tile div {
-  position: absolute;
-  top: 10px;
-  left: 10px;
   font-size: 18px;
   font-weight: bold;
 }
 
-/* Tile hover effect */
-.react-calendar__tile:hover {
-  background-color: #eee;
-}
-
 /* Highlight current date (today) */
 .react-calendar__tile--now {
-  background: #e0f7fa;
+  background: #25327A;
   border-radius: 5px;
   font-weight: bold;
 }
@@ -111,28 +93,55 @@
   border-radius: 5px;
 }
 
-/* Disable past dates */
-.react-calendar__tile--disabled {
-  background-color: #f5f5f5;
-  color: #c4c4c4;
-  cursor: not-allowed;
+.vacant {
+  background-color: gray;
+  color: white;
 }
 
-.legend {
-  text-align: left;
+.available {
+  background-color: green;
+  color: white;
 }
+
+.unavailable {
+  background-color: red;
+  color: white;
+}
+
+.reservation-tile-content {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.reservation-count {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.reservation-usernames {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.7rem;
+  color: white;
+}
+
+.reservation-usernames .username {
+  margin: 2px 0;
+}
+
+
+
 
 
 /* Styling the selected date display */
 .selected-date {
-  bottom: 70px;
   font-size: 18px;
   background-color: #ffffff;
   padding: 10px;
   border-radius: 20px;
-  text-align: center;
   border: 2px solid #000000;
-  width: 120%;
+  justify-self: center; 
 }
 
 /* Apply Dates button */
@@ -152,6 +161,7 @@
 }
 
 
+/****** Step indicator ********/
 
 .step-indicator-container {
   display: flex;
@@ -203,6 +213,7 @@ span {
 
 
 
+/****** Right Side *****/
 
 .grid-container {
   display: grid;
@@ -218,6 +229,7 @@ span {
   align-items: flex-start;
   gap: 10px; /* Space between legend items */
 }
+
 
 /* Styling for each legend item */
 .legend-item {
@@ -252,33 +264,17 @@ span {
 
 /*****Time Dropdown*****/
 
-.dropdown-container {
-  position: relative; /* Ensures the dropdown menu is positioned relative to this container */
-}
-
 .time-dropdown {
-  float: right; /* Ensures the dropdown button is aligned to the right */
+  justify-self: center;
+  width: 200px; /* Adjust the width as desired */
 }
 
-.time-dropdown-menu {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  font-size: 16px;
-  position: absolute; /* Positions the dropdown menu relative to the container */
-
+.time-dropdown .dropdown-toggle {
+  width: 100%; /* Ensures the button matches the parent width */
+  text-align: center; /* Centers the text inside the button */
 }
 
-.dropdown-item {
-  padding: 0.5rem;
-  color: #333;
-  text-decoration: none;
-  align-items: center;
-  cursor: pointer;
-}
-
+/*******************/
 .ScheduleInfo{
   margin: 50px 0px 50px 0px;
   width: 100%;

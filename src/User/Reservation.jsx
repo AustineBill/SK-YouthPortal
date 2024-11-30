@@ -111,18 +111,23 @@ const Reservation = () => {
               <span className="circle maximize"></span>
               <h3>Maximize Capacity</h3>
             </div>
-            <div className="legend-item">
-              <span className="circle unknown"></span>
-              <h3>Unknown</h3>
-            </div>
           </div>
 
-          <div className="selected-date">
-            {/* Format the selected dates and times properly */}
-            {selectedDates[0].toDateString() === selectedDates[1].toDateString()
-              ? `Selected Date: ${selectedDates[0].toLocaleDateString()} ${selectedTime}`
-              : `Selected Dates: ${selectedDates[0].toLocaleDateString()} to ${selectedDates[1].toLocaleDateString()} ${selectedTime}`}
+          <div className="selected-date large">
+            {/* Display the selected dates */}
+            <p>
+              <strong>Selected Date:</strong>{' '}
+              {selectedDates[0].toDateString() === selectedDates[1].toDateString()
+                ? selectedDates[0].toLocaleDateString()
+                : `${selectedDates[0].toLocaleDateString()} to ${selectedDates[1].toLocaleDateString()}`}
+            </p>
+
+            {/* Display the selected time */}
+            <p>
+              <strong>Selected Time:</strong> {selectedTime || 'No time selected'}
+            </p>
           </div>
+
 
           <button className="apply-dates" onClick={saveReservation}>
             Apply Dates
@@ -140,13 +145,12 @@ const Reservation = () => {
             <button
               className="btn btn-secondary dropdown-toggle"
               type="button"
-              id="dropdownMenuButton"
               onClick={toggleDropdown}
             >
               Select Time
             </button>
             {isDropdownVisible && (
-              <div className="time-dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <div className="time-dropdown-menu">
                 {['9:00 am - 10:00 am', '10:00 am - 11:00 am', '11:00 am - 12:00 nn', '12:00 nn - 1:00 pm', '1:00 pm - 2:00 pm', '2:00 pm - 3:00 pm'].map((time) => (
                   <h6 key={time} className="dropdown-item" onClick={() => selectTime(time)}>
                     {time}

@@ -40,6 +40,39 @@ app.get('/', (req, res) => {
     res.send('Welcome to the iSKed API');
 });
 
+/********* Website ******** */
+
+app.get('/Website/description', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT description FROM Website WHERE id = $1', [1]);
+        res.json(result.rows[0]); // Send the description
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error fetching description' });
+    }
+});
+
+app.put('/Website/description', async (req, res) => {
+    const { description } = req.body;
+    try {
+        await pool.query('UPDATE Website SET description = $1 WHERE id = $2', [description, 1]);
+        res.json({ message: 'Description updated successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error updating description' });
+    }
+});
+
+app.get('/Website/mandate', async (req, res) => {
+    try {
+      const result = await pool.query('SELECT mandate, objectives, mission, vision FROM Website LIMIT 1');
+      res.json(result.rows[0]); // Sends the data as JSON response
+    } catch (error) {
+      console.error('Error fetching mandate info:', error);
+      res.status(500).json({ message: 'Error fetching mandate info' });
+    }
+  });
+
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
     try {
