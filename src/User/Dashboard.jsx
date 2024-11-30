@@ -4,15 +4,7 @@ import {Button, Card} from 'react-bootstrap';
 
 const Dashboard = () => (
   <div className="container-fluid">
-    <div className="hero-header">
-        <div className="col-lg-12 text-center text-lg-start m-5">
-          <h1 className="Maintext">Sangguniang Kabataan</h1>
-          <h1 className="Subtext ms-5 animated slideInRight">Western Bicutan</h1>
-              <button className="LargeButton btn-db">
-                Explore Now <i className="bi bi-arrow-right"></i>
-              </button>
-          </div>
-        </div>
+    <div className="western-header"> </div>
       
 
     <div className="bg-secondary">
