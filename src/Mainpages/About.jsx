@@ -1,13 +1,33 @@
-import React from 'react';  
-import Cover from "../Asset/bg.png"
+import React, { useState, useEffect } from 'react';  
+import Cover from "../Asset/bg.png";
+import axios from 'axios';
 
-const About = () => (
-  <div className="container-fluid">
+const About = () => {
 
-    <div className="text-center text-lg-start m-4 mv-8">
-      <h1 className="Maintext animated slideInRight">SK Youth</h1>
-        <p className='Subtext'>The Team at your Service</p> 
-    </div>
+  const [description, setDescription] = useState('');
+
+  // Fetch description on component load
+  useEffect(() => {
+    const fetchDescription = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/Website/description');
+        setDescription(response.data.description);
+      } catch (error) {
+        console.error('Error fetching description:', error);
+        setDescription('Error loading description'); // Fallback in case of error
+      }
+    };
+
+    fetchDescription();
+  }, []);
+
+
+  return (
+    <div className="container-fluid">
+      <div className="text-center text-lg-start m-4 mv-8">
+        <h1 className="Maintext animated slideInRight">SK Youth</h1>
+          <p className='Subtext'>The Team at your Service</p> 
+      </div>
 
     <div className="d-flex justify-content-center ">
       <div id="youthCarousel" className="carousel w-75 mb-2" data-bs-ride="carousel">
@@ -42,10 +62,10 @@ const About = () => (
 
     <div className="youth-container">
       <h1 className="youth-head">SANGGUNIANG KABATAAN - WESTERN BICUTAN</h1>
-        <p className="yout-text-content">SANGGUNIANG KABATAAN - WESTERN BICUTAN </p>
-        
+        <p className="yout-text-content">{description}</p>  
     </div>
   </div>
-);
+  );
+};
 
 export default About;
