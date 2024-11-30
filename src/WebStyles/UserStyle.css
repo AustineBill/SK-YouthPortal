@@ -93,6 +93,44 @@
   border-radius: 5px;
 }
 
+.vacant {
+  background-color: gray;
+  color: white;
+}
+
+.available {
+  background-color: green;
+  color: white;
+}
+
+.unavailable {
+  background-color: red;
+  color: white;
+}
+
+.reservation-tile-content {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.reservation-count {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.reservation-usernames {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.7rem;
+  color: white;
+}
+
+.reservation-usernames .username {
+  margin: 2px 0;
+}
+
+
 
 
 

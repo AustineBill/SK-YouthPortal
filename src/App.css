@@ -337,6 +337,7 @@ body {
 .navbar-buttons{
   display: inline; 
   align-items: center;
+  margin-right: 1rem;
 }
 
 
@@ -395,6 +396,12 @@ body {
 
 /* Media query for mobile/tablet (screen width less than or equal to 768px) */
 
+.western-header {
+  position: relative;
+  padding: 15rem 0rem;
+  background: url(./Asset/Western\ Photo.png) center center no-repeat;
+  background-size: cover;
+}
 
 
 /*** Hero Header ***/

@@ -49,44 +49,49 @@ const ViewSchedule = () => {
         };
     }, []);
 
-    // Filter and display reservations based on date and selected time slot
-    const tileContent = ({ date, view }) => {
-        if (view !== 'month') return null; // Render content only for month view
-    
-        const dailyReservations = reservations.filter((res) => {
+    // Filter reservations by date and time slot
+    const filterReservations = (date) => {
+        return reservations.filter((res) => {
             const startDate = new Date(res.start_date);
             const endDate = new Date(res.end_date);
             const matchesDate = date >= startDate && date <= endDate;
             const matchesTimeSlot = selectedTimeSlot ? res.time_slot === selectedTimeSlot : true;
             return matchesDate && matchesTimeSlot;
         });
-    
+    };
+
+    // Display usernames and reservation details on tiles
+    const tileContent = ({ date, view }) => {
+        if (view !== 'month') return null; // Render content only for month view
+
+        const dailyReservations = filterReservations(date);
+
         return dailyReservations.length > 0 ? (
-            <div>
-                {dailyReservations.map((res, index) => (
-                    <div key={index} className="reservation-info">
-                        <span>{res.username}</span>
-                    </div>
-                ))}
+            <div className="reservation-tile-content">
+                <div className="reservation-count">
+                    <strong>{dailyReservations.length}</strong>
+                </div>
+                <ul className="reservation-usernames">
+                    {dailyReservations.map((res, index) => (
+                        <li key={index} className="username">
+                            {res.username}
+                        </li>
+                    ))}
+                </ul>
             </div>
         ) : null;
     };
 
-
+    // Assign classes to tiles based on reservation data
     const tileClassName = ({ date, view }) => {
-        if (view !== 'month') return ''; // Ensure only month view is styled
-    
-        const dailyReservations = reservations.filter((res) => {
-            const startDate = new Date(res.start_date);
-            const endDate = new Date(res.end_date);
-            return date >= startDate && date <= endDate;
-        });
-    
-        if (dailyReservations.length > 0) {
-            return 'reserved'; // Reserved dates
-        }
+        if (view !== 'month') return ''; // Apply styles only in month view
+
+        const dailyReservations = filterReservations(date);
+
+        if (dailyReservations.length === 0) return 'vacant';
+        if (dailyReservations.length >= 5) return 'unavailable';
+        return 'available';
     };
-    
 
     return (
         <div className="container-fluid">
@@ -108,22 +113,21 @@ const ViewSchedule = () => {
                             <h3>Unavailable</h3>
                         </div>
                         <div className="legend-item">
-                            <span className="circle maximize"></span>
-                            <h3>Maximize Capacity</h3>
+                            <span className="circle vacant"></span>
+                            <h3>Vacant</h3>
                         </div>
                     </div>
                 </div>
 
-
                 <div className="dropdown-container" ref={dropdownRef}>
                     <div className="time-dropdown">
                         <button
-                            className="btn-db dropdown-toggle "
+                            className="btn-db dropdown-toggle"
                             type="button"
                             id="dropdownMenuButton"
                             onClick={toggleDropdown}
                         >
-                            {selectedTimeSlot || "Select Time"}
+                            {selectedTimeSlot || 'Select Time'}
                         </button>
                         {isDropdownVisible && (
                             <div className="time-dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -152,7 +156,7 @@ const ViewSchedule = () => {
                     minDate={new Date()}
                     selectRange={true}
                     tileContent={tileContent}
-                    tileClassName={tileClassName} 
+                    tileClassName={tileClassName}
                 />
             </div>
         </div>
