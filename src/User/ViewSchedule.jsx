@@ -50,7 +50,9 @@ const ViewSchedule = () => {
     }, []);
 
     // Filter and display reservations based on date and selected time slot
-    const tileContent = ({ date }) => {
+    const tileContent = ({ date, view }) => {
+        if (view !== 'month') return null; // Render content only for month view
+    
         const dailyReservations = reservations.filter((res) => {
             const startDate = new Date(res.start_date);
             const endDate = new Date(res.end_date);
@@ -58,11 +60,11 @@ const ViewSchedule = () => {
             const matchesTimeSlot = selectedTimeSlot ? res.time_slot === selectedTimeSlot : true;
             return matchesDate && matchesTimeSlot;
         });
-
+    
         return dailyReservations.length > 0 ? (
             <div>
                 {dailyReservations.map((res, index) => (
-                    <div key={index}>
+                    <div key={index} className="reservation-info">
                         <span>{res.username}</span>
                     </div>
                 ))}
@@ -70,11 +72,27 @@ const ViewSchedule = () => {
         ) : null;
     };
 
+
+    const tileClassName = ({ date, view }) => {
+        if (view !== 'month') return ''; // Ensure only month view is styled
+    
+        const dailyReservations = reservations.filter((res) => {
+            const startDate = new Date(res.start_date);
+            const endDate = new Date(res.end_date);
+            return date >= startDate && date <= endDate;
+        });
+    
+        if (dailyReservations.length > 0) {
+            return 'reserved'; // Reserved dates
+        }
+    };
+    
+
     return (
         <div className="container-fluid">
             <div className="text-center text-lg-start m-4 mv-8 mb-3">
-                <h1 className="Maintext animated slideInRight">Schedule</h1>
-                <p className="Subtext">Lorem ipsum</p>
+                <h1 className="Maintext animated slideInRight">View Schedule</h1>
+                <p className="Subtext">Monitor Available Slots</p>
             </div>
 
             <div className="calendar-container">
@@ -93,16 +111,14 @@ const ViewSchedule = () => {
                             <span className="circle maximize"></span>
                             <h3>Maximize Capacity</h3>
                         </div>
-                        <div className="legend-item">
-                            <span className="circle unknown"></span>
-                            <h3>Unknown</h3>
-                        </div>
                     </div>
                 </div>
+
+
                 <div className="dropdown-container" ref={dropdownRef}>
                     <div className="time-dropdown">
                         <button
-                            className="btn btn-secondary dropdown-toggle"
+                            className="btn-db dropdown-toggle "
                             type="button"
                             id="dropdownMenuButton"
                             onClick={toggleDropdown}
@@ -136,6 +152,7 @@ const ViewSchedule = () => {
                     minDate={new Date()}
                     selectRange={true}
                     tileContent={tileContent}
+                    tileClassName={tileClassName} 
                 />
             </div>
         </div>
