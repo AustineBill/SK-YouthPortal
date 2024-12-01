@@ -70,3 +70,4 @@ const ManageAboutUs = () => {
 };
 
 export default ManageAboutUs;
+
