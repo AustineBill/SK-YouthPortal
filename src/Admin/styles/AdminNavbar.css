@@ -1,42 +1,51 @@
 /* AdminNavbar.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
 
-.admin-navbar {
-    position: fixed;
-    top: 0;
+.navbar {
     height: 75px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #FFFFFF;
     background-color: #25327A;
-    z-index: 2;
+    z-index: 3;
+}
+
+.website-navbar {
+    width: 100%;
 }
 
 #iSKed-logo {
     height: 50px;
 }
 
-.admin-panel {
-    margin-left: 2.5%;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.admin-panel h1 {
+.navbar-name-brand {
     font-family: 'Sansita', sans-serif;
-    font-weight: 750;
-    font-style: italic;
-    font-size: 30px;
 }
 
-/* Not finalized */
-.admin-navbar button {
-    margin-right: 2.5%;
+.sign-out-button {
+    font-size: 15px;
+    width: 100px;
+    cursor: pointer;
 }
 
-.admin-navbar button:hover {
-    color: red;
+.sidebar {
+    position: fixed;
+    top: 75px;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #000b49;
+    transition: left 0.3s ease;
+    z-index: 2;
+}
+
+.sidebar-open {
+    left: 0;
+}
+
+.sidebar-closed {
+    left: -250px;
+}
+
+.sidebar .sidebar-links {
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
 }
