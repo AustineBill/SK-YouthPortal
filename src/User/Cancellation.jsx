@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Row, Col, Button, Breadcrumb, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -9,18 +9,15 @@ const CancelReservation = () => {
   const [otherReason, setOtherReason] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [reservationDetails, setReservationDetails] = useState(null);
+  const [showModal, setShowModal] = useState(false); // Modal visibility state
 
-  
-  
   const navigate = useNavigate();
 
-  const reservationId = sessionStorage.getItem('reservationId');  // Get reservation ID from sessionStorage
-  //console.log('Reservation', reservationId )
+  const reservationId = sessionStorage.getItem('reservationId');
 
   const fetchReservationDetails = useCallback(async () => {
     try {
       const response = await axios.get(`http://localhost:5000/reservations/${reservationId}`);
-      console.log('Fetched reservation:', response.data);  // Log the fetched data
       if (response.status === 200) {
         setReservationDetails(response.data);
       } else {
@@ -34,9 +31,8 @@ const CancelReservation = () => {
 
   useEffect(() => {
     fetchReservationDetails();
-  }, [fetchReservationDetails]);  
-  
-  
+  }, [fetchReservationDetails]);
+
   const handleCancellation = async () => {
     if (!isConfirmed) {
       console.log('Cancellation not confirmed');
@@ -44,10 +40,8 @@ const CancelReservation = () => {
     }
     try {
       const response = await axios.delete(`http://localhost:5000/reservations/${reservationId}`);
-      console.log('Cancellation response:', response); // Log the cancellation response
       if (response.status === 200) {
-        alert("Your reservation has been cancelled successfully.");
-        navigate("/ReservationLog");  // Redirect after successful cancellation
+        setShowModal(true); // Show the modal after successful cancellation
       }
     } catch (error) {
       console.error('Error cancelling reservation:', error);
@@ -58,17 +52,15 @@ const CancelReservation = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
-      weekday: 'long', // Long weekday name (e.g., Monday)
-      year: 'numeric', // Full year (e.g., 2024)
-      month: 'long', // Full month name (e.g., November)
-      day: 'numeric', // Day of the month
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
   };
-  
 
   return (
     <div className="container-fluid">
-      {/* Breadcrumb Navigation */}
       <Breadcrumb className="ms-5">
         <Breadcrumb.Item onClick={() => navigate("/ReservationLog")}>
           Reservation Log
@@ -76,14 +68,12 @@ const CancelReservation = () => {
         <Breadcrumb.Item active>Cancellation</Breadcrumb.Item>
       </Breadcrumb>
 
-      {/* Page Header */}
       <div className="text-center text-lg-start m-4 mv-8 mb-3">
         <h1 className="Maintext animated slideInRight">Reservation Log</h1>
         <p className="Subtext text-danger">Cancellation</p> 
       </div> 
 
       <Container>
-        {/* Cancel Reservation Box */}
         <div className="cancel-reservation-box p-4 rounded bg-light">
           <h3 className="text-center mb-4">Cancel Reservation</h3>
 
@@ -108,7 +98,6 @@ const CancelReservation = () => {
             <p>{error ? error : 'Loading reservation details...'}</p>
           )}
 
-          {/* Reason for Cancellation */}
           <Form.Group className="mb-4">
             <Form.Label>Reason for Cancellation</Form.Label>
             <Form.Check
@@ -141,8 +130,6 @@ const CancelReservation = () => {
               label="Other"
               onChange={() => setSelectedReason("Other")}
             />
-
-            {/* Text Input for 'Other' Reason */}
             {selectedReason === "Other" && (
               <Form.Group className="mt-3">
                 <Form.Label>Please specify:</Form.Label>
@@ -156,7 +143,6 @@ const CancelReservation = () => {
             )}
           </Form.Group>
 
-          {/* Confirmation Checkbox */}
           <Form.Check
             type="checkbox"
             id="confirmCheck"
@@ -164,10 +150,9 @@ const CancelReservation = () => {
             className="mb-4"
             checked={isConfirmed}
             onChange={(e) => setIsConfirmed(e.target.checked)}
-            disabled={!selectedReason} // Disable checkbox until a reason is selected
+            disabled={!selectedReason}
           />
 
-          {/* Buttons */}
           <Row className="justify-content-end">
             <Col xs="auto">
               <Button variant="secondary" className="btn-danger" disabled={!isConfirmed} onClick={handleCancellation}>
@@ -175,15 +160,52 @@ const CancelReservation = () => {
               </Button>
             </Col>
             <Col xs="auto">
-              <Button variant="outline-secondary" className="btn-dark text-white" 
+              <Button
+                variant="outline-secondary"
+                className="btn-dark text-white"
                 onClick={() => {
                   sessionStorage.removeItem('reservationId'); 
-                  navigate("/ReservationLog") }}>
+                  navigate("/ReservationLog");
+                }}
+              >
                 Cancel
               </Button>
             </Col>
           </Row>
         </div>
+
+        {/* Modal */}
+        {showModal && (
+          <div className="ModalOverlayStyles">
+            <div className="ModalStyles large">
+              <button
+                className="closeButton"
+                onClick={() => {
+                  setShowModal(false);
+                  navigate("/ReservationLog");
+                }}
+                aria-label="Close"
+              >
+                <i className="bi bi-x-circle"></i>
+              </button>
+              <div className="text-center">
+                <i className="bi bi-check2-circle text-danger" style={{ fontSize: '4rem' }}></i>
+                <h2 className="mt-3 mb-3">Your reservation cancelled successfully!</h2>
+                <p>We hope to see you again soon.</p>
+              </div>
+              <div className="d-flex justify-content-center mt-3">
+                <Button
+                  variant="dark"
+                  className="btn-dark"
+                  onClick={() => navigate("/ReservationLog")}
+                >
+                  <i className="bi bi-house m-1"></i> 
+                    Return to Log
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </Container>
     </div>
   );

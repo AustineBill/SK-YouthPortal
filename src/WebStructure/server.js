@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Pool } = require('pg');
@@ -16,17 +15,6 @@ const pool = new Pool({
     port: 5432,
 });
 
-
-// Serve React app in production
-if (process.env.NODE_ENV === 'production') {
-  // Set static folder
-  app.use(express.static(path.join(__dirname, '../../build')));
-
-  // Serve index.html for any other requests (React routing)
-  app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../../build/index.html'));
-  });
-}
 
 pool.connect((err) => {
     if (err) {
@@ -235,6 +223,12 @@ app.delete('/reservations/:reservationId', async (req, res) => {
 app.get('/ViewSched', async (req, res) => {
   try {
       const result = await pool.query(`
+          SELECT s.start_date, s.end_date, s.time_slot, u.username
+          FROM Schedules s
+          JOIN "Users" u ON s.user_id = u.id
+          SELECT s.start_date, s.end_date, s.time_slot, u.username
+          FROM Schedules s
+          JOIN "Users" u ON s.user_id = u.id
           SELECT s.start_date, s.end_date, s.time_slot, u.username
           FROM Schedules s
           JOIN "Users" u ON s.user_id = u.id

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
 
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -14,7 +13,6 @@ const Reservation = () => {
 
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
   const [selectedTime, setSelectedTime] = useState('');
-  const [loading, setLoading] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -49,41 +47,31 @@ const Reservation = () => {
   }, []);
 
   const saveReservation = async () => {
-    setLoading(true); // Set loading state to true
-    try {
-      // Validate if both date and time are selected
-      if (!selectedDates || !selectedTime) {
-        alert('Please select both a date and a time slot before proceeding.');
-        return; 
-      }
-
-      // Retrieve userId from sessionStorage
-      const userId = sessionStorage.getItem('userId');
-      if (!userId) {
-        console.error('No userId found in sessionStorage');
-        return;
-      }
-      // Prepare reservation data
-      const reservationData = {
-        user_id: userId,
-        reservation_type: reservationType,
-        start_date: selectedDates[0],
-        end_date: selectedDates[1],
-        time_slot: selectedTime,
-      };
-
-      // Save reservation data to sessionStorage
-      sessionStorage.setItem('reservationData', JSON.stringify(reservationData));
-
-      // Send reservation data to the backend
-      await axios.post('http://localhost:5000/reservations', reservationData);
-
-      navigate('/ScheduleDetails', { state: { reservationData, reservationType } });
-    } catch (error) {
-      console.error('Error saving reservation:', error);
-    } finally {
-      setLoading(false); // Set loading state to false
+    if (!selectedDates || !selectedTime) {
+      alert('Please select both a date and a time slot before proceeding.');
+      return false; // Indicate failure to save
     }
+
+    // Retrieve userId from sessionStorage
+    const userId = sessionStorage.getItem('userId');
+    if (!userId) {
+      console.error('No userId found in sessionStorage');
+      return false; // Indicate failure to save
+    }
+
+    // Prepare reservation data
+    const reservationData = {
+      user_id: userId,
+      reservation_type: reservationType,
+      start_date: selectedDates[0],
+      end_date: selectedDates[1],
+      time_slot: selectedTime,
+    };
+   // Save reservation data to sessionStorage
+    sessionStorage.setItem('reservationData', JSON.stringify(reservationData));
+    navigate('/ScheduleDetails', { state: { reservationData, reservationType } });
+    return reservationData; // Return data for the next step
+    
   };
 
   return (
@@ -133,12 +121,6 @@ const Reservation = () => {
             Apply Dates
           </button>
         </div>
-
-        {loading && (
-          <div className="loading-spinner">
-            <p>Loading...</p> {/* You can replace this with a spinner component */}
-          </div>
-        )}
 
         <div className="dropdown-container" ref={dropdownRef}>
           <div className="time-dropdown">
