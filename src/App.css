@@ -136,7 +136,7 @@ body {
 }
 
 
-/******* Size *******/
+/******* Width Size *******/
 
 .large{
   width: 500px;
@@ -162,6 +162,9 @@ body {
 .ultra-small {
   width: 50px;
 }
+
+
+
 
 /****** Modals ******/
 

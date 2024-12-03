@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { AuthContext } from '../WebStructure/AuthContext';
 
 const Program_details = () => {
@@ -14,9 +14,9 @@ const Program_details = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => {
     if (programType === 'Equipment') {
-      handleEquipment(); 
+      handleEquipment();
     } else {
-      setShow(true); 
+      setShow(true);
     }
   };
 
@@ -38,7 +38,12 @@ const Program_details = () => {
 
   const handleViewSchedule = () => {
     if (isAuthenticated) {
-      navigate('/ViewSchedule');
+      // Navigate based on programType
+      if (programType === 'Equipment') {
+        navigate('/ViewEquipment', { state: { programType } });
+      } else if (programType === 'Facilities') {
+        navigate('/ViewFacilities', { state: { programType } });
+      }
     } else {
       navigate('/userauth');
     }
@@ -48,7 +53,7 @@ const Program_details = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="text-center text-lg-start m-4">
-          <h1 className="Maintext animated slideInRight"> Reservation : {programType}</h1>
+          <h1 className="Maintext animated slideInRight"> Reservation: {programType}</h1>
           <p className="Subtext">Reserve yours now!</p>
 
           {(programType === 'Facilities' || programType === 'Equipment') && (
@@ -83,7 +88,6 @@ const Program_details = () => {
         </div>
       )}
 
-
       <div className="ItemContainer">
         <div className="row g-0">
           <div className="col-md-4">
@@ -105,4 +109,3 @@ const Program_details = () => {
 };
 
 export default Program_details;
-

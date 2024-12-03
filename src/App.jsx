@@ -6,7 +6,6 @@ import Navbar from "./Classes/Navbar";
 import Footer from "./Classes/Footer";
 import UserNavbar from "./Classes/UserNavbar";
 import UserAuthentication from './Classes/UserAuthentication';
-import Waiver from "./User/Waiver"
 
 // Main Pages
 import Intro from "./Mainpages/Home";
@@ -28,13 +27,18 @@ import Programs from "./User/UserProgram";
 import Log from "./User/ReserveLog";
 import HelpSupport from "./User/HelpSupport";
 import ProgramDescript from './User/ProgramDetails';
+
 import Equipment from './User/Equipment';
+import EquipReservation from './User/EquipReservation';
+import ViewEquipment from './User/ViewEquipment';
+
 import Reservation from './User/Reservation';
 import ReservationDetails from './User/ReservationDetails';
-import CancelReservation from './User/Cancellation';
-import ViewSchedule from './User/ViewSchedule';
+import ViewFacilities from './User/ViewFacilities';
 import ScheduleDetails from './User/ScheduleDetails';
 import ScheduleDone from './User/ScheduleDone';
+import Waiver from "./User/Waiver"
+import CancelReservation from './User/Cancellation';
 
 
 // Admin Side
@@ -125,8 +129,10 @@ const App = () => {
                   <Route path="/Profile/:username" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                   <Route path="/ProgramDetails" element={<ProtectedRoute><ProgramDescript /></ProtectedRoute>} />
                   <Route path="/Equipment" element={<ProtectedRoute><Equipment /></ProtectedRoute>} />
+                  <Route path="/EquipReservation" element={<ProtectedRoute><EquipReservation /></ProtectedRoute>} />
+                  <Route path="/ViewEquipment" element={<ProtectedRoute><ViewEquipment /></ProtectedRoute>} />
                   <Route path="/Reservation" element={<ProtectedRoute><Reservation /></ProtectedRoute>} />
-                  <Route path="/ViewSchedule" element={<ProtectedRoute><ViewSchedule /></ProtectedRoute>} />
+                  <Route path="/ViewFacilities" element={<ProtectedRoute><ViewFacilities /></ProtectedRoute>} />
                   <Route path="/StepIndicator" element={<ProtectedRoute><StepIndicator /></ProtectedRoute>} />
                   <Route path="/ScheduleDetails" element={<ProtectedRoute><ScheduleDetails /></ProtectedRoute>} />
                   <Route path="/ScheduleDone" element={<ProtectedRoute><ScheduleDone /></ProtectedRoute>} />

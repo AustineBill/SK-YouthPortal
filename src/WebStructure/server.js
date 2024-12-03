@@ -241,6 +241,17 @@ app.get('/ViewSched', async (req, res) => {
   }
 });
 
+/******** Inventory ********/
+app.get('/inventory', async (req, res) => {
+    try {
+      const result = await pool.query('SELECT * FROM inventory');
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  });
+
 
   
   
