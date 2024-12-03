@@ -96,7 +96,7 @@ const ViewSchedule = () => {
     return (
         <div className="container-fluid">
             <div className="text-center text-lg-start m-4 mv-8 mb-3">
-                <h1 className="Maintext animated slideInRight">View Schedule</h1>
+                <h1 className="Maintext animated slideInRight">View Facility Schedule</h1>
                 <p className="Subtext">Monitor Available Slots</p>
             </div>
 
