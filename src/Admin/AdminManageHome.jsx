@@ -12,9 +12,9 @@ const ManageHomePage = () => {
         const imageUrl = URL.createObjectURL(file);
         if (isEvent) {
             setNewEvent(prev => ({ ...prev, imageUrl }));
-        } 
+        }
         else {
-        setImagePreview(imageUrl);
+            setImagePreview(imageUrl);
         }
     };
 
@@ -34,13 +34,13 @@ const ManageHomePage = () => {
     };
 
     return (
-        <div className="admin-home-container">
-            <div className='label'>
-                <h2>Manage Homepage</h2>
+        <div className="admin-home-container d-flex flex-column">
+            <div className='admin-home-label'>
+                <h2 className='admin-home-label-h2 fst-italic'>Manage Homepage</h2>
             </div>
-            
+
             {/* Navigation tabs */}
-            <ul className="home-nav-tabs">
+            <ul className="admin-home-nav-tabs list-unstyled d-flex">
                 <li
                     className={activeContent === "events" ? "active-tab" : ""}
                     onClick={() => setActiveContent("events")}
@@ -55,11 +55,10 @@ const ManageHomePage = () => {
                 </li>
             </ul>
 
-            <div className="home-contents-container">
+            <div className="admin-home-contents-container d-flex justify-content-center">
                 {/* All Events Section */}
                 {activeContent === 'events' && (
-                    <div className="events-details-container">
-                        {/* <h3>All Announcements and Events</h3> */}
+                    <div className="admin-events-details-container d-flex flex-column">
                         {events.length === 0 ? (
                             <p>No events available</p>
                         ) : (
@@ -76,10 +75,9 @@ const ManageHomePage = () => {
 
                 {/* Add Event Section */}
                 {activeContent === 'addEvent' && (
-                    <div className="add-event-container">
-                        {/* <h3>Add New Event</h3> */}
-                        <div className="add-event-group">
-                            <label>Event Name</label>
+                    <div className="admin-add-event-container d-flex align-items-center">
+                        <div className="admin-add-event-group d-flex flex-column align-items-center">
+                            <label className='admin-add-event-label'>Event Name</label>
                             <input
                                 type="text"
                                 placeholder="Event Title"
@@ -89,7 +87,7 @@ const ManageHomePage = () => {
                                 className="adminhomepage-input"
                             />
 
-                            <label>Event Description</label>
+                            <label className='admin-add-event-label'>Event Description</label>
                             <textarea
                                 placeholder="Event Description"
                                 name="description"
@@ -98,7 +96,7 @@ const ManageHomePage = () => {
                                 className="adminhomepage-input"
                             />
 
-                            <label>Amenities</label>
+                            <label className='admin-add-event-label'>Amenities</label>
                             <input
                                 type="file"
                                 accept="image/*"
@@ -106,7 +104,7 @@ const ManageHomePage = () => {
                                 className="adminhomepage-input"
                             />
                         </div>
-                        
+
                         {imagePreview && (
                             <div className="adminhomepage-image-preview-container">
                                 <img src={imagePreview} alt="Event Preview" className="adminhomepage-image-preview" />
@@ -114,7 +112,7 @@ const ManageHomePage = () => {
                         )}
                         <button
                             onClick={handleAddEvent}
-                            id="add-new-details-button"
+                            className='admin-add-event-button bg-success rounded-pill'
                         >
                             Add Event
                         </button>
