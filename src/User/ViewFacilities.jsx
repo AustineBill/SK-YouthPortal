@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../WebStyles/UserStyle.css';
 
-const ViewSchedule = () => {
+const ViewFacilities = () => {
     const [reservations, setReservations] = useState([]);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -96,7 +96,7 @@ const ViewSchedule = () => {
     return (
         <div className="container-fluid">
             <div className="text-center text-lg-start m-4 mv-8 mb-3">
-                <h1 className="Maintext animated slideInRight">View Facility Schedule</h1>
+                <h1 className="Maintext animated slideInRight">View Facilities Schedules</h1>
                 <p className="Subtext">Monitor Available Slots</p>
             </div>
 
@@ -163,4 +163,4 @@ const ViewSchedule = () => {
     );
 };
 
-export default ViewSchedule;
+export default ViewFacilities;

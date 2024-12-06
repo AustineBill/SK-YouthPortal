@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../WebStyles/UserStyle.css';
@@ -6,7 +6,7 @@ import '../WebStyles/UserStyle.css';
 const ViewEquipment = () => {
     const [reservations, setReservations] = useState([]);
 
-    // Fetch reservations from the backend for equipment
+    // Fetch reservations from the backend
     const fetchReservations = async () => {
         try {
             const response = await fetch('http://localhost:5000/ViewEquipment');
@@ -24,7 +24,6 @@ const ViewEquipment = () => {
         fetchReservations();
     }, []);
 
-
     // Check if the reservation exceeds two days
     const validateReservationDuration = (dates) => {
         if (dates.length > 2) {
@@ -32,6 +31,11 @@ const ViewEquipment = () => {
             return false;
         }
         return true;
+    };
+
+    const handleDateSelection = (dates) => {
+        if (!validateReservationDuration(dates)) return;
+        // Removed the state update for selectedDates
     };
 
     // Filter reservations by date and time slot
@@ -77,16 +81,11 @@ const ViewEquipment = () => {
         return 'available';
     };
 
-    const handleDateSelection = (dates) => {
-        if (!validateReservationDuration(dates)) return;
-        // Removed the state update for selectedDates
-    };
-
     return (
         <div className="container-fluid">
             <div className="text-center text-lg-start m-4 mv-8 mb-3">
                 <h1 className="Maintext animated slideInRight">View Equipment Schedule</h1>
-                <p className="Subtext">Monitor Available Equipment</p>
+                <p className="Subtext">Monitor Available Slots</p>
             </div>
 
             <div className="calendar-container">
@@ -107,7 +106,8 @@ const ViewEquipment = () => {
                         </div>
                     </div>
                 </div>
-                      
+
+
                 <Calendar
                     minDate={new Date()}
                     selectRange={true}

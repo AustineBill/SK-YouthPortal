@@ -61,7 +61,7 @@ const Reservation = () => {
 
     // Prepare reservation data
     const reservationData = {
-      user_id: userId,
+      user_id: userId, 
       reservation_type: reservationType,
       start_date: selectedDates[0],
       end_date: selectedDates[1],

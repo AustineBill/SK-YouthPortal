@@ -64,7 +64,7 @@ app.get('/Website/mandate', async (req, res) => {
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
     try {
-        await pool.query('INSERT INTO "Users" (username, password) VALUES ($1, $2)', [username, password]);
+        await pool.query('INSERT INTO Users (username, password) VALUES ($1, $2)', [username, password]);
         res.status(201).json({ message: 'User registered successfully' });
     } catch (err) {
         console.error('Registration error:', err.stack);
@@ -75,10 +75,9 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     //console.log('Login attempt:', { username, password });
-
     try {
         // Find the user by username
-        const result = await pool.query('SELECT * FROM "Users" WHERE username = $1', [username]);
+        const result = await pool.query('SELECT * FROM Users WHERE username = $1', [username]);
         if (result.rows.length === 0) {
             return res.status(400).json({ message: 'Invalid username or password' });
         }
@@ -114,7 +113,7 @@ app.get('/Profile/:username', async (req, res) => {
   const username = req.params.username;
   try {
       const result = await pool.query(
-          'SELECT id, username, address, age, sex, contact_number, country FROM "Users" WHERE username = $1',
+          'SELECT id, username, address, age, sex, contact_number, country FROM Users WHERE username = $1',
           [username]
       );
       if (result.rows.length === 0) {
@@ -135,7 +134,7 @@ app.put('/Profile/:id', async (req, res) => {
     try {
         // Update user data based on user id
         await pool.query(
-            'UPDATE "Users" SET full_name = $1, email = $2, phone = $3, address = $4 WHERE id = $5',
+            'UPDATE Users SET full_name = $1, email = $2, phone = $3, address = $4 WHERE id = $5',
             [fullName, email, phone, address, id]
         );
         res.status(200).json({ message: 'Profile updated successfully' });
@@ -180,6 +179,28 @@ app.get('/reservations', async (req, res) => {
     }
   });
 
+  app.post('/schedule/equipment', async (req, res) => {
+    const { user_id, reservation_id, reservedEquipment, startDate, endDate } = req.body;
+    try {
+        const result = await pool.query(
+            `INSERT INTO Equipment (user_id, reservation_id, start_date, end_date, reserved_equipment)
+            VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+            [
+                user_id,
+                reservation_id,
+                startDate,
+                endDate,
+                JSON.stringify(reservedEquipment),
+            ]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error saving reservation:', error.message);  // Log the error message
+        res.status(500).json({ error: error.message, stack: error.stack });  // Send the detailed error response
+    }
+});
+
 
   app.get('/reservations/:reservationId', async (req, res) => {
     const { reservationId } = req.params;
@@ -216,30 +237,44 @@ app.delete('/reservations/:reservationId', async (req, res) => {
     }
 });
 
-
+//********************* */
+app.get('/Details/:id', async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const result = await pool.query(
+        'SELECT username, age, email_address AS email FROM Users WHERE id = $1',
+        [id]
+      );
+  
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      res.json(result.rows[0]);
+    } catch (err) {
+      console.error('Error fetching user details:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
 
 /******** View Schedules ********/
 
 app.get('/ViewSched', async (req, res) => {
-  try {
-      const result = await pool.query(`
-          SELECT s.start_date, s.end_date, s.time_slot, u.username
-          FROM Schedules s
-          JOIN "Users" u ON s.user_id = u.id
-          SELECT s.start_date, s.end_date, s.time_slot, u.username
-          FROM Schedules s
-          JOIN "Users" u ON s.user_id = u.id
-          SELECT s.start_date, s.end_date, s.time_slot, u.username
-          FROM Schedules s
-          JOIN "Users" u ON s.user_id = u.id
-          WHERE s.start_date >= CURRENT_DATE
-          ORDER BY s.start_date ASC
-      `);
-      res.json(result.rows);
-  } catch (err) {
-      res.status(500).json({ error: err.message });
-  }
+    try {
+        const result = await pool.query(`
+            SELECT s.start_date, s.end_date, s.time_slot, u.username
+            FROM Schedules s
+            JOIN Users u ON s.user_id = u.id
+            WHERE s.start_date >= CURRENT_DATE
+            ORDER BY s.start_date ASC
+        `);
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
+
 
 /******** Inventory ********/
 app.get('/inventory', async (req, res) => {

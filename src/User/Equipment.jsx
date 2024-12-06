@@ -47,18 +47,18 @@ const increaseQuantity = (index) => {
   const handleReserve = () => {
     const reserved = inventory
       .map((item, index) => ({
-        ...item,
-        quantity: quantities[index],
+        id: item.id,  
+        name: item.name, // Equipment name
+        quantity: quantities[index], // Quantity reserved by the user
       }))
       .filter((item) => item.quantity > 0); // Only include items with quantity > 0
-
+  
     if (reserved.length === 0) {
       alert('Please reserve at least one piece of equipment.');
       return;
     }
-
-    // Navigate to the reservation page with reserved data
-    navigate('/EquipReservation', { state: { reserved } });
+    sessionStorage.setItem('reservedEquipment', JSON.stringify(reserved));
+    navigate('/EquipReservation');
   };
 
   return (
@@ -77,7 +77,7 @@ const increaseQuantity = (index) => {
                 <h5 className="card-title">{item.name}</h5>
                 <p className="text-muted mb-2">{item.specification}</p>
                 <p className="text-muted mb-4">
-                  {item.status}: {item.quantity} available
+                  {item.status}: {item.quantity} 
                 </p>
 
                 {/* Quantity controls */}

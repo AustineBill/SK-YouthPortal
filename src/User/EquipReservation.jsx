@@ -1,26 +1,36 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState} from 'react';
+import { useNavigate} from 'react-router-dom';
 
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../WebStyles/UserStyle.css';
+import StepIndicator from '../Classes/StepIndicator';
 
 const EquipReservation = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { reservationType } = location.state || { reservationType: 'Solo' };
-
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = (date) => {
     setSelectedDate(date); // Set the selected date (only one date allowed)
   };
-
-  const saveReservation = async () => {
+  
+  const saveReservation = () => {
     if (!selectedDate) {
       alert('Please select a date before proceeding.');
-      return false; // Indicate failure to save
+      return;
     }
+  
+    // Retrieve reserved equipment data from session storage
+    const reservedEquipment = JSON.parse(sessionStorage.getItem('reservedEquipment')) || [];
+  
+    // Check if the user has reserved any equipment
+    if (reservedEquipment.length === 0) {
+      alert('No equipment selected. Please select equipment before scheduling.');
+      return;
+    }
+
+    const endDate = new Date(selectedDate);
+    endDate.setDate(selectedDate.getDate() + 1); // Add one day
 
     // Retrieve userId from sessionStorage
     const userId = sessionStorage.getItem('userId');
@@ -28,28 +38,29 @@ const EquipReservation = () => {
       console.error('No userId found in sessionStorage');
       return false; // Indicate failure to save
     }
-
+  
     // Prepare reservation data
     const reservationData = {
       user_id: userId,
-      reservation_type: reservationType,
-      date: selectedDate,
+      startDate: selectedDate,
+      endDate: endDate,
+      equipment: reservedEquipment, 
     };
-
-    // Save reservation data to sessionStorage
     sessionStorage.setItem('reservationData', JSON.stringify(reservationData));
-    navigate('/ScheduleDetails', { state: { reservationData, reservationType } });
+    navigate('/ScheduleDetails', { state: { reservationData } });
     return reservationData; // Return data for the next step
   };
 
   return (
     <div className="container-fluid">
       <div className="text-center text-lg-start m-4 mb-3">
-        <h1 className="Maintext animated slideInRight">Reservation</h1>
-        <p className='Subtext'> Borrowers </p>
+        <h1 className="Maintext animated slideInRight">Equipment Schedule</h1>
+        <p className='Subtext'> Choose the Date</p>
       </div>
 
       <div className="calendar-container">
+        <StepIndicator currentStep={1} />
+        
         <div className="grid-container">
           <div className="legend">
             <h2>Legend</h2>
@@ -72,16 +83,18 @@ const EquipReservation = () => {
               <strong>Selected Date:</strong> {selectedDate.toLocaleDateString()}
             </p>
           </div>
-
           <button className="apply-dates" onClick={saveReservation}>
-            Apply Date
+            Apply Dates
           </button>
         </div>
+
+       
 
         <Calendar
           minDate={new Date()}
           onChange={handleDateChange}
           value={selectedDate}
+
         />
       </div>
     </div>

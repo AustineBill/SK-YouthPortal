@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 import { AuthContext } from '../WebStructure/AuthContext';
@@ -10,6 +10,13 @@ const Program_details = () => {
   const { programType } = state || {}; // Destructure programType from state
   const [show, setShow] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
+
+  // Save programType to sessionStorage when it changes
+  useEffect(() => {
+    if (programType) {
+      sessionStorage.setItem('programType', programType);
+    }
+  }, [programType]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
