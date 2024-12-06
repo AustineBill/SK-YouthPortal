@@ -19,7 +19,7 @@ const StepIndicator = ({ currentStep }) => {
       {/* Step 1 */}
       <div className={`step ${completedSteps.includes(1) ? 'completed' : ''} ${currentStep === 1 ? 'current' : ''}`}>
         <div className="step-circle"></div>
-        <span>Date and Time</span>
+        <span>Scheduling</span>
       </div>
 
       <div className='line'></div>

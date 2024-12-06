@@ -64,7 +64,7 @@ app.get('/Website/mandate', async (req, res) => {
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
     try {
-        await pool.query('INSERT INTO "Users" (username, password) VALUES ($1, $2)', [username, password]);
+        await pool.query('INSERT INTO Users (username, password) VALUES ($1, $2)', [username, password]);
         res.status(201).json({ message: 'User registered successfully' });
     } catch (err) {
         console.error('Registration error:', err.stack);
@@ -75,10 +75,9 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     //console.log('Login attempt:', { username, password });
-
     try {
         // Find the user by username
-        const result = await pool.query('SELECT * FROM "Users" WHERE username = $1', [username]);
+        const result = await pool.query('SELECT * FROM Users WHERE username = $1', [username]);
         if (result.rows.length === 0) {
             return res.status(400).json({ message: 'Invalid username or password' });
         }
@@ -114,7 +113,7 @@ app.get('/Profile/:username', async (req, res) => {
   const username = req.params.username;
   try {
       const result = await pool.query(
-          'SELECT id, username, address, age, sex, contact_number, country FROM "Users" WHERE username = $1',
+          'SELECT id, username, address, age, sex, contact_number, country FROM Users WHERE username = $1',
           [username]
       );
       if (result.rows.length === 0) {
@@ -135,7 +134,7 @@ app.put('/Profile/:id', async (req, res) => {
     try {
         // Update user data based on user id
         await pool.query(
-            'UPDATE "Users" SET full_name = $1, email = $2, phone = $3, address = $4 WHERE id = $5',
+            'UPDATE Users SET full_name = $1, email = $2, phone = $3, address = $4 WHERE id = $5',
             [fullName, email, phone, address, id]
         );
         res.status(200).json({ message: 'Profile updated successfully' });
@@ -180,6 +179,101 @@ app.get('/reservations', async (req, res) => {
     }
   });
 
+  app.post('/schedule/equipment', async (req, res) => {
+    const { user_id, reservation_id, reservedEquipment, startDate, endDate } = req.body;
+    try {
+        const result = await pool.query(
+            `INSERT INTO Equipment (user_id, reservation_id, start_date, end_date, reserved_equipment)
+            VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+            [
+                user_id,
+                reservation_id,
+                startDate,
+                endDate,
+                JSON.stringify(reservedEquipment),
+            ]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error saving reservation:', error.message);  // Log the error message
+        res.status(500).json({ error: error.message, stack: error.stack });  // Send the detailed error response
+    }
+});
+
+app.get('/schedule/equipment', async (req, res) => {
+  const { userId } = req.query;
+  try {
+    // Query to fetch reservation data
+    const result = await pool.query(
+      `SELECT reservation_id, reserved_equipment, start_date, end_date
+       FROM Equipment
+       WHERE user_id = $1`,
+      [userId]
+    );
+
+    console.log('Query Result:', result.rows);  // Log the query result for debugging
+
+    // Check if no reservations were found
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'No equipment reservations found.' });
+    }
+
+    // Process each reservation and check if equipment is reserved
+    const equipmentData = result.rows.map((row) => {
+      let equipmentInfo = "No Equipment Reserved";  // Default value for no equipment
+
+      if (row.reserved_equipment) {
+        try {
+          // Handle cases where reserved_equipment is an array of arrays
+          let reservedEquipment = row.reserved_equipment;
+
+          // If it's an array of arrays, flatten it to a single array of objects
+          if (Array.isArray(reservedEquipment) && reservedEquipment[0] && Array.isArray(reservedEquipment[0])) {
+            reservedEquipment = reservedEquipment.flat();
+          }
+
+          // Ensure it's an array of objects before processing
+          if (Array.isArray(reservedEquipment)) {
+            // Format each equipment item as "name - quantity"
+            equipmentInfo = reservedEquipment
+              .map((item) => {
+                if (item && typeof item === 'object') {
+                  // If the item is an object, extract the name and quantity
+                  const name = item.name || 'Unknown Item';
+                  const quantity = item.quantity || 0;
+                  return `${name} - ${quantity}`;
+                }
+                return 'Invalid equipment data';  // Handle invalid data
+              })
+              .join(", ");  // Join the items with a comma
+          } else {
+            equipmentInfo = "Invalid equipment data";  // Handle non-array data
+          }
+        } catch (error) {
+          // Log any error that happens during JSON parsing
+          console.error('Error processing reserved equipment:', error);
+          equipmentInfo = "Error processing equipment details";  // Set error message for faulty data
+        }
+      }
+
+      // Return the processed data for each reservation
+      return {
+        reservation_id: row.reservation_id,
+        reserved_equipment: equipmentInfo,
+        start_date: new Date(row.start_date).toLocaleString(),  // Ensure date formatting
+        end_date: new Date(row.end_date).toLocaleString(),      // Ensure date formatting
+      };
+    });
+
+    // Send the processed data as the response
+    res.status(200).json(equipmentData);
+  } catch (error) {
+    // Log any error that happens during the database query or data processing
+    console.error('Error fetching equipment reservations:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
   app.get('/reservations/:reservationId', async (req, res) => {
     const { reservationId } = req.params;
@@ -216,30 +310,55 @@ app.delete('/reservations/:reservationId', async (req, res) => {
     }
 });
 
-
+//********************* */
+app.get('/Details/:id', async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const result = await pool.query(
+        'SELECT username, age, email_address AS email FROM Users WHERE id = $1',
+        [id]
+      );
+  
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      res.json(result.rows[0]);
+    } catch (err) {
+      console.error('Error fetching user details:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
 
 /******** View Schedules ********/
 
 app.get('/ViewSched', async (req, res) => {
-  try {
-      const result = await pool.query(`
-          SELECT s.start_date, s.end_date, s.time_slot, u.username
-          FROM Schedules s
-          JOIN "Users" u ON s.user_id = u.id
-          SELECT s.start_date, s.end_date, s.time_slot, u.username
-          FROM Schedules s
-          JOIN "Users" u ON s.user_id = u.id
-          SELECT s.start_date, s.end_date, s.time_slot, u.username
-          FROM Schedules s
-          JOIN "Users" u ON s.user_id = u.id
-          WHERE s.start_date >= CURRENT_DATE
-          ORDER BY s.start_date ASC
-      `);
-      res.json(result.rows);
-  } catch (err) {
-      res.status(500).json({ error: err.message });
-  }
+    try {
+        const result = await pool.query(`
+            SELECT s.start_date, s.end_date, s.time_slot, u.username
+            FROM Schedules s
+            JOIN Users u ON s.user_id = u.id
+            WHERE s.start_date >= CURRENT_DATE
+            ORDER BY s.start_date ASC
+        `);
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
+
+
+/******** Inventory ********/
+app.get('/inventory', async (req, res) => {
+    try {
+      const result = await pool.query('SELECT * FROM inventory');
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  });
 
 
   
