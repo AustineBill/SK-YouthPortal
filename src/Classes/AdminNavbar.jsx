@@ -39,33 +39,35 @@ const AdminNavbar = () => {
         { to: "/admin/manage-about-us", label: "Manage About Us Page" },
         { to: "/admin/manage-program", label: "Manage Program Page" },
         { to: "/admin/manage-contact-us", label: "Manage Contact Us Page" },
-        { to: "/admin/reservations", label: "Reservations" },
+        { to: "#", label: "Gym Reservation" },
+        { to: "#", label: "Equipment Reservation" },
         { to: "/admin/reports", label: "Reports" },
         { to: "/admin/users", label: "Users" }
     ];
 
     return (
         <>
-            <nav className='navbar fixed-top'>
-                <div className='website-navbar d-flex align-items-center justify-content-between mx-4'>
-                    <div className='navbar-left-side d-flex align-items-center'>
+            {/* Navbar */}
+            <nav className='admin-navbar fixed-top d-flex align-items-center'>
+                <div className='admin-navbar-details d-flex justify-content-between mx-4'>
+                    <div className='admin-navbar-left-side d-flex align-items-center'>
                         <img
                             src={iSKedLogo}
                             alt="iSKed Logo"
-                            id='iSKed-logo'
-                            className='d-none d-md-block me-2'
+                            className='admin-iSKed-logo me-2 d-none d-md-block'
                         />
-                        <h1 className='navbar-name-brand fst-italic text-white h1 d-none d-md-block'>
+                        <h1 className='admin-iSKed-name fst-italic text-white h1 m-0 p-0 d-none d-md-block'>
                             iSKed - Admin Panel
                         </h1>
 
                         {/* Hamburger Menu */}
-                        <div className="hamburger-menu d-flex d-md-none">
+                        <div className="admin-hamburger-menu d-flex align-items-center justify-content-center d-md-none">
                             <span
-                                className="navbar-toggler-icon me-2"
+                                className="admin-hamburger-nav bi-list m-0 me-2 p-0"
                                 onClick={toggleSidebar}
+                                aria-label="Toggle sidebar"
                             ></span>
-                            <h4 className='navbar-name-brand fst-italic text-white h4 d-md-none'>
+                            <h4 className='admin-iSKed-name-h4 fst-italic text-white h4 m-0 p-0'>
                                 iSKed - Admin Panel
                             </h4>
                         </div>
@@ -73,7 +75,7 @@ const AdminNavbar = () => {
 
                     {/* Sign-out Button */}
                     <button
-                        className='sign-out-button bg-danger rounded-pill'
+                        className='admin-sign-out-button bg-danger rounded-pill'
                         onClick={handleSignout}
                     >
                         Sign out
@@ -83,12 +85,12 @@ const AdminNavbar = () => {
 
             {/* Sidebar */}
             <div
-                className={`sidebar text-white ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
+                className={`admin-sidebar ${isSidebarOpen ? "admin-sidebar-open" : "admin-sidebar-closed"}`}
             >
-                <ul className="list-unstyled">
-                    {sidebarLinks.map(link => (
+                <ul className="admin-sidebar-ul list-unstyled">
+                    {sidebarLinks.map((link) => (
                         <li key={link.to}>
-                            <Link to={link.to} className="sidebar-links text-white ms-4 d-block">
+                            <Link to={link.to} className="admin-sidebar-links text-white ms-4 mt-2 p-1 d-block">
                                 {link.label}
                             </Link>
                         </li>

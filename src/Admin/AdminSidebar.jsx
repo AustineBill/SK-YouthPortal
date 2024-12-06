@@ -1,83 +1,108 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import HomeLogo from '../Asset/Admin/Home.png';
-import ManageWebsiteLogo from '../Asset/Admin/Manage Website.png';
-import ManageHomeLogo from '../Asset/Admin/Manage Home.png';
-import ManageAboutUsLogo from '../Asset/Admin/Manage About Us.png';
-import ManageProgramLogo from '../Asset/Admin/Manage Program.png';
-import ManageContactUsLogo from '../Asset/Admin/Manage Contact Us.png';
-import ReservationsLogo from '../Asset/Admin/Reservations.png';
-import ReportsLogo from '../Asset/Admin/Reports.png';
-import UsersLogo from '../Asset/Admin/Users.png';
-// import './AdminSidebar.css'
+import { Link, useLocation } from 'react-router-dom';
 import './styles/AdminSidebar.css';
 
 const AdminSidebar = () => {
-    const [manageWebsiteChildLinksOpen, setmanageWebsiteChildLinksOpen] = useState(false);
+    const [openedLinks, setOpenedLinks] = useState({});
+    const location = useLocation(); // Get the current location
+
+    const toggleLink = (link) => {
+        setOpenedLinks((prev) => ({
+            ...prev,
+            [link]: !prev[link],
+        }));
+    };
+
+    const isActive = (path) => location.pathname === path;
 
     return (
-        <div className="sidebar-container">
-            <div className="admin-sidebar">
-                {/* <h2 className="sidebar-title">Admin Panel</h2> */}
-                <ul className="sidebar-links">
-                    <Link to="/admin">
-                        <li>
-                            <img src={HomeLogo} alt="Home Logo" id='sidebar-logos' />
+        <div className="admin-bs-sidebar d-none d-md-block">
+            <div className="admin-bs-sidebar-details">
+                <ul className="admin-bs-sidebar-links list-unstyled mt-2">
+                    <li className={`admin-bs-list ${isActive('/admin') ? 'active' : ''}`}>
+                        <Link to="/admin" className="d-flex align-items-center">
+                            <i className="admin-sidebar-icon bi-house-fill ms-4 me-2"></i>
                             Home
-                        </li>
-                    </Link>
-                    <li className="manage-website-link-open" onClick={() => setmanageWebsiteChildLinksOpen(!manageWebsiteChildLinksOpen)}>
-                        <img src={ManageWebsiteLogo} alt="Manage Website Logo" id='sidebar-logos' />
+                        </Link>
+                    </li>
+                    <li
+                        className="admin-bs-list d-flex align-items-center"
+                        onClick={() => toggleLink('manageWebsite')}
+                    >
+                        <i className="admin-sidebar-icon bi-globe-central-south-asia ms-4 me-2"></i>
                         Manage Website
                     </li>
-                    {manageWebsiteChildLinksOpen && (
-                        <ul className="manage-website-nested-links">
-                            <Link to="/admin/manage-home">
-                                <li>
-                                    <img src={ManageHomeLogo} alt="Manage Home Logo" id='sidebar-logos' />
+                    {openedLinks.manageWebsite && (
+                        <ul className="admin-bs-manage-website-nested-links list-unstyled ms-4">
+                            <li
+                                className={`admin-bs-list ${isActive('/admin/manage-home') ? 'active' : ''}`}
+                            >
+                                <Link to="/admin/manage-home" className="d-flex align-items-center">
+                                    <i className="admin-sidebar-icon bi-house-gear-fill ms-4 me-2"></i>
                                     Manage Home Page
-                                </li>
-                            </Link>
-                            <Link to="/admin/manage-about-us">
-                                <li>
-                                    <img src={ManageAboutUsLogo} alt="Manage About Us Logo" id='sidebar-logos' />
-                                    Manage About Us Page
-                                </li>
-                            </Link>
-                            <Link to="/admin/manage-program">
-                                <li>
-                                    <img src={ManageProgramLogo} alt="Manage Program Logo" id='sidebar-logos' />
-                                    Manage Program Page
-                                </li>
-                            </Link>
-                            <Link to="/admin/manage-contact-us">
-                            <li>
-                                <img src={ManageContactUsLogo} alt="Manage Contact Us Logo" id='sidebar-logos' />
-                                Manage Contact Us Page
+                                </Link>
                             </li>
-                            </Link>
+                            <li
+                                className={`admin-bs-list ${isActive('/admin/manage-about-us') ? 'active' : ''}`}
+                            >
+                                <Link to="/admin/manage-about-us" className="d-flex align-items-center">
+                                    <i className="admin-sidebar-icon bi-person-fill ms-4 me-2"></i>
+                                    Manage About Us Page
+                                </Link>
+                            </li>
+                            <li
+                                className={`admin-bs-list ${isActive('/admin/manage-program') ? 'active' : ''}`}
+                            >
+                                <Link to="/admin/manage-program" className="d-flex align-items-center">
+                                    <i className="admin-sidebar-icon bi-activity ms-4 me-2"></i>
+                                    Manage Program Page
+                                </Link>
+                            </li>
+                            <li
+                                className={`admin-bs-list ${isActive('/admin/manage-contact-us') ? 'active' : ''}`}
+                            >
+                                <Link to="/admin/manage-contact-us" className="d-flex align-items-center">
+                                    <i className="admin-sidebar-icon bi-telephone-fill ms-4 me-2"></i>
+                                    Manage Contact Us Page
+                                </Link>
+                            </li>
                         </ul>
                     )}
-                    <Link to="/admin/reservations">
-                        <li>
-                            <img src={ReservationsLogo} alt="Reservation Logo" id='sidebar-logos' />
-                            Reservations
-                        </li>
-                    </Link>
-                        {/* </ul>
-                    )} */}
-                    <Link to="/admin/reports">
-                        <li>
-                            <img src={ReportsLogo} alt="Reports Logo" id='sidebar-logos' />
+                    <li
+                        className="admin-bs-list d-flex align-items-center"
+                        onClick={() => toggleLink('reservations')}
+                    >
+                        <i className="admin-sidebar-icon bi-calendar-week-fill ms-4 me-2"></i>
+                        Reservations
+                    </li>
+                    {openedLinks.reservations && (
+                        <ul className="admin-bs-reservations-nested-links list-unstyled ms-4">
+                            <li className="admin-bs-list">
+                                <Link to="#" className="d-flex align-items-center">
+                                    <i className="admin-sidebar-icon bi-calendar-date-fill ms-4 me-2"></i>
+                                    Gym Reservation
+                                </Link>
+                            </li>
+                            <li className="admin-bs-list">
+                                <Link to="#" className="d-flex align-items-center">
+                                    <i className="admin-sidebar-icon bi-calendar-day-fill ms-4 me-2"></i>
+                                    Equipment Reservation
+                                </Link>
+                            </li>
+                        </ul>
+                    )}
+                    <li className={`admin-bs-list ${isActive('/admin/reports') ? 'active' : ''}`}>
+                        <Link to="/admin/reports" className="d-flex align-items-center">
+                            <i className="admin-sidebar-icon bi-database-fill ms-4 me-2"></i>
                             Reports
-                        </li>
-                    </Link>
-                    <Link to="/admin/users">
-                        <li>
-                            <img src={UsersLogo} alt="Users Logo" id='sidebar-logos' />
+                        </Link>
+                    </li>
+                    <li className={`admin-bs-list ${isActive('/admin/users') ? 'active' : ''}`}>
+                        <Link to="/admin/users" className="admin-link d-flex align-items-center">
+                            <i className="admin-sidebar-icon bi-person-lines-fill ms-4 me-2"></i>
                             Users
-                        </li>
-                    </Link>
+                        </Link>
+                    </li>
                 </ul>
             </div>
         </div>
