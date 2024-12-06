@@ -201,6 +201,79 @@ app.get('/reservations', async (req, res) => {
     }
 });
 
+app.get('/schedule/equipment', async (req, res) => {
+  const { userId } = req.query;
+  try {
+    // Query to fetch reservation data
+    const result = await pool.query(
+      `SELECT reservation_id, reserved_equipment, start_date, end_date
+       FROM Equipment
+       WHERE user_id = $1`,
+      [userId]
+    );
+
+    console.log('Query Result:', result.rows);  // Log the query result for debugging
+
+    // Check if no reservations were found
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'No equipment reservations found.' });
+    }
+
+    // Process each reservation and check if equipment is reserved
+    const equipmentData = result.rows.map((row) => {
+      let equipmentInfo = "No Equipment Reserved";  // Default value for no equipment
+
+      if (row.reserved_equipment) {
+        try {
+          // Handle cases where reserved_equipment is an array of arrays
+          let reservedEquipment = row.reserved_equipment;
+
+          // If it's an array of arrays, flatten it to a single array of objects
+          if (Array.isArray(reservedEquipment) && reservedEquipment[0] && Array.isArray(reservedEquipment[0])) {
+            reservedEquipment = reservedEquipment.flat();
+          }
+
+          // Ensure it's an array of objects before processing
+          if (Array.isArray(reservedEquipment)) {
+            // Format each equipment item as "name - quantity"
+            equipmentInfo = reservedEquipment
+              .map((item) => {
+                if (item && typeof item === 'object') {
+                  // If the item is an object, extract the name and quantity
+                  const name = item.name || 'Unknown Item';
+                  const quantity = item.quantity || 0;
+                  return `${name} - ${quantity}`;
+                }
+                return 'Invalid equipment data';  // Handle invalid data
+              })
+              .join(", ");  // Join the items with a comma
+          } else {
+            equipmentInfo = "Invalid equipment data";  // Handle non-array data
+          }
+        } catch (error) {
+          // Log any error that happens during JSON parsing
+          console.error('Error processing reserved equipment:', error);
+          equipmentInfo = "Error processing equipment details";  // Set error message for faulty data
+        }
+      }
+
+      // Return the processed data for each reservation
+      return {
+        reservation_id: row.reservation_id,
+        reserved_equipment: equipmentInfo,
+        start_date: new Date(row.start_date).toLocaleString(),  // Ensure date formatting
+        end_date: new Date(row.end_date).toLocaleString(),      // Ensure date formatting
+      };
+    });
+
+    // Send the processed data as the response
+    res.status(200).json(equipmentData);
+  } catch (error) {
+    // Log any error that happens during the database query or data processing
+    console.error('Error fetching equipment reservations:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
   app.get('/reservations/:reservationId', async (req, res) => {
     const { reservationId } = req.params;
