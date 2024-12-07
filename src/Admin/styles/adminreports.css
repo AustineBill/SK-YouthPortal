@@ -1,130 +1,94 @@
+/* AdminReports.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+
 .admin-reports-container {
-    position: absolute;
+    position: relative;
     top: 75px;
     left: 25%;
-    width: 100%;
+    width: 75%;
     background-color: #FFFFFF;
-    display: flex;
-    min-height: 100vh;
-    /* background-color: #ecf0f1; */
-    z-index: 3;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
 }
 
-.admin-reports-container > * {
-    flex-shrink: 0;
+.admin-reports-label-h2 {
+    font-size: 40px;
+    margin: 20px 40px 20px 40px;
 }
 
-.AdminSidebar {
-    width: 250px;
-    background-color: #34495e;
-    color: white;
-    padding: 20px;
-    min-height: 100vh;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+.admin-reports-nav-tabs {
+    cursor: pointer;
+    font-size: 20px;
+    margin: 0 0 20px 60px;
+    gap: 1in;
+    color: #766F6F;
+    transition: all 0.35s;
 }
 
-.main-content {
-    flex: 1;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-left: 20px;
+.admin-reports-nav-tabs li:hover {
+    color: #E3DFDF;
 }
 
-.text-center {
-    text-align: center;
-    margin-bottom: 20px;
+.admin-reports-nav-tabs li.active-tab {
+    color: red;
+    text-decoration: underline;
+    text-decoration-color: #C1C1C1;
+    text-underline-offset: 10px;
 }
 
-.admin-maintext {
-    font-size: 28px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 10px;
+.admin-reservation-reports-details-container,
+.admin-generate-report-container {
+    background-color: #c5c1c1;
+    width: 90%;
 }
 
-.admin-subtext {
-    font-size: 18px;
-    color: #34495e;
-    margin-bottom: 20px;
+.admin-reservation-reports-table {
+    margin: 25px 0 25px 0;
+    background-color: #FFFFFF;
+    width: 90%;
 }
 
-.table {
+.all-reservation-reports-th {
+    font-size: 17.5px;
+}
+
+.admin-generate-report-group {
+    width: 90%;
+    margin: 25px 0 25px 0;
+}
+
+.admin-generate-report-group .admin-generate-report-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+
+.generate-report-form {
     width: 100%;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    border-collapse: collapse;
 }
 
-.table th,
-.table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #bdc3c7;
+.generate-report-date-time {
+    width: 100%;
+    gap: 1in;
 }
 
-.table th {
-    background-color: #34495e;
-    color: white;
+.generate-report-date-time .generate-report-date,
+.generate-report-date-time .generate-report-time {
+    width: 50%;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.35s;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #ecf0f1;
+.generate-report-form input[type="text"], 
+.generate-report-date-time input[type="date"],
+.generate-report-date-time input[type="time"] {
+    height: 50px;
 }
 
-.table-striped tbody tr:nth-of-type(even) {
-    background-color: #ffffff;
-}
-
-.table-striped tbody tr:hover {
-    background-color: #dcdcdc;
-}
-
-.text-center {
-    text-align: center;
-    color: #34495e;
-    margin-top: 20px;
-}
-
-.nav {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    padding-left: 0;
-}
-
-.nav li {
-    cursor: pointer;
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: white;
-    border-radius: 5px;
-}
-
-.nav li.active {
-    background-color: #2ecc71;
-}
-
-.nav li:hover {
-    opacity: 0.8;
-}
-
-.btn {
-    padding: 12px 20px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    margin-top: 5px;
-}
-
-.btn-danger {
-    background-color: #e74c3c;
-    color: white;
-}
-
-.btn-primary {
-    background-color: #3498db;
-    color: white;
+.admin-generate-report-button {
+    margin-top: 10px;
+    width: 175px;
+    height: 55px;
 }

@@ -80,7 +80,7 @@
     height: 55px;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 481px) and (max-width: 767px) {
     .admin-home-container {
         width: 100%;
         left: 0;
@@ -118,9 +118,9 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (min-width: 350px) and (max-width: 480px) {
     .admin-home-label-h2 {
-        font-size: 20px;
+        font-size: 15px;
         margin: 20px 20px 20px 20px;
     }
 

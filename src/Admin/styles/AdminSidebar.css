@@ -18,30 +18,47 @@
 }
 
 .admin-bs-list,
-.admin-bs-list a, 
-.manage-website-link-open,
-.reservations-link-open {
+.admin-bs-list a {
     color: black;
     font-family: 'Inter', 'sans-serif';
     transition: all 0.35s ease;
 }
 
 .admin-bs-list:hover,
-.admin-bs-list a:hover,
-.manage-website-link-open:hover,
-.reservations-link-open:hover {
+.admin-bs-list a:hover {
     color: #FFFFFF;
     background-color: #3f3d3d;
 }
 
-.admin-bs-list.active, 
-.admin-bs-manage-website-nested-links .admin-bs-list.active,
-.admin-bs-reservations-nested-links .admin-bs-list.active {
+.admin-bs-list.active
+{
     background-color: #E1D142;
     transition: all 0.35s ease;
 }
 
 .admin-sidebar-icon {
+    margin-left: 30px;
     font-size: 30px;
     color: black;
+}
+
+@media (min-width: 993px) and (max-width: 1200px) { 
+    .admin-bs-list {
+        font-size: 12.5px;
+    }
+
+    .admin-sidebar-icon {
+        margin-left: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 992px) { 
+    .admin-bs-list {
+        font-size: 9px;
+        font-weight: bolder;
+    }
+
+    .admin-sidebar-icon {
+        margin-left: 8px;
+    }
 }
