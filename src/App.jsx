@@ -45,7 +45,9 @@ import CancelReservation from './User/Cancellation';
 import AdminNavbar from './Classes/AdminNavbar';
 import AdminSidebar from './Admin/AdminSidebar'; // Import AdminSidebar
 import AdminMain from './Admin/Admin-Main'; // Adjust the path if necessary
-import AdminReservations from './Admin/AdminReservations';
+import AdminReservations from './Admin/AdminReservations'; //Wala na to.
+import AdminGymReservation from './Admin/AdminGymReservation';
+import AdminEquipmentReservation from './Admin/AdminEquipmentReservation';
 import ManageHome from './Admin/AdminManageHome';
 import ManageAboutUs from './Admin/AdminManageAboutUs';
 import ManageProgram from './Admin/AdminManageProgram';
@@ -143,12 +145,14 @@ const App = () => {
                   <Route path="/Waiver" element={<ProtectedRoute><Waiver /></ProtectedRoute>} />
 
                   {/* Admin Side Routes */}
-                  <Route path="/admin/reservations" element={<AdminReservations />} />
+                  <Route path="/admin/reservations" element={<AdminReservations />} /> {/* Wala na to. */}
                   <Route path="/admin" element={<AdminMain />} /> 
                   <Route path="/admin/manage-home" element={<ManageHome />} />
                   <Route path="/admin/manage-about-us" element={<ManageAboutUs />} />
                   <Route path="/admin/manage-program" element={<ManageProgram />} />
                   <Route path="/admin/manage-contact-us" element={<ManageContactUs />} />
+                  <Route path="/admin/gym-reservation" element={<AdminGymReservation />} />
+                  <Route path="/admin/equipment-reservation" element={<AdminEquipmentReservation />} />
                   <Route path="/admin/reports" element={<Reports />} />
                   <Route path="/admin/users" element={<Users />} />
                   <Route path="/user/:id" element={<UserDetails />} />

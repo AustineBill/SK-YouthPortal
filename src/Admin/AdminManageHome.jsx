@@ -76,7 +76,7 @@ const ManageHomePage = () => {
                 {/* Add Event Section */}
                 {activeContent === 'addEvent' && (
                     <div className="admin-add-event-container d-flex align-items-center">
-                        <div className="admin-add-event-group d-flex flex-column align-items-center">
+                        <form className="admin-add-event-group d-flex flex-column align-items-center">
                             <label className='admin-add-event-label'>Event Name</label>
                             <input
                                 type="text"
@@ -103,11 +103,13 @@ const ManageHomePage = () => {
                                 onChange={(e) => handleImageUpload(e, true)}
                                 className="adminhomepage-input"
                             />
-                        </div>
+                        </form>
 
                         {imagePreview && (
                             <div className="adminhomepage-image-preview-container">
-                                <img src={imagePreview} alt="Event Preview" className="adminhomepage-image-preview" />
+                                <img src={imagePreview}
+                                    alt="Event Preview"
+                                    className="adminhomepage-image-preview" />
                             </div>
                         )}
                         <button
