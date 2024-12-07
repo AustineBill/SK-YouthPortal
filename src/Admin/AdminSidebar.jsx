@@ -78,13 +78,13 @@ const AdminSidebar = () => {
                     {openedLinks.reservations && (
                         <ul className="admin-bs-reservations-nested-links list-unstyled ms-4">
                             <li className="admin-bs-list">
-                                <Link to="#" className="d-flex align-items-center">
+                                <Link to="/admin/gym-reservation" className="d-flex align-items-center">
                                     <i className="admin-sidebar-icon bi-calendar-date-fill ms-4 me-2"></i>
                                     Gym Reservation
                                 </Link>
                             </li>
                             <li className="admin-bs-list">
-                                <Link to="#" className="d-flex align-items-center">
+                                <Link to="/admin/equipment-reservation" className="d-flex align-items-center">
                                     <i className="admin-sidebar-icon bi-calendar-day-fill ms-4 me-2"></i>
                                     Equipment Reservation
                                 </Link>
