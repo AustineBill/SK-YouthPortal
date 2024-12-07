@@ -10,7 +10,6 @@ function ScheduleDone() {
   const [show, setShow] = useState(false);
   const [allData, setAllData] = useState({}); // State to hold all reservation data
   const [programType, setProgramType] = useState(''); // State for program type
-
   const generateReservationId = () => {
     return `REF-${Math.floor(100000 + Math.random() * 900000)}`; // Generate a 6-digit unique ID
   };
@@ -23,24 +22,36 @@ function ScheduleDone() {
   const handleWaiverClick = async () => {
     try {
       if (programType === 'Facilities') {
-        console.log('Sending data for Facilities reservation:', allData);
         await axios.post('http://localhost:5000/reservations', allData);
         sessionStorage.removeItem('reservationData');
-        sessionStorage.getItem('scheduleDetails');
-        
+        sessionStorage.removeItem('scheduleDetails');
         console.log('Facilities reservation saved successfully.');
       } else if (programType === 'Equipment') {
-        console.log('Sending data for Equipment reservation:', allData);
         await axios.post('http://localhost:5000/schedule/equipment', allData);
         sessionStorage.removeItem('reservationData');
-        sessionStorage.getItem('scheduleDetails');
+        sessionStorage.removeItem('scheduleDetails');
         console.log('Equipment reservation saved successfully.');
-        
+
+        // Update the inventory for the reserved equipment
+        for (let item of allData.reservedEquipment) {
+          await axios.put('http://localhost:5000/inventory/update', {
+            user_id: allData.user_id,
+            reservation_id: allData.reservation_id,
+            equipmentReservations: [
+              {
+                equipment_id: item.id,
+                quantity: item.quantity,
+              },
+            ],
+            start_date: allData.start_date,
+            end_date: allData.end_date,
+          });
+          console.log(`Inventory updated for ${item.name}`);
+        }
       } else {
         console.log('Unknown program type');
       }
-  
-      // Navigate to the waiver page
+
       navigate('/Waiver');
     } catch (error) {
       console.error('Error during reservation process:', error);
