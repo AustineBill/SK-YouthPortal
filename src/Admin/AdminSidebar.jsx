@@ -38,7 +38,7 @@ const AdminSidebar = () => {
                                 className={`admin-bs-list ${isActive('/admin/manage-home') ? 'active' : ''}`}
                             >
                                 <Link to="/admin/manage-home" className="d-flex align-items-center">
-                                    <i className="admin-sidebar-icon bi-house-gear-fill ms-4 me-2"></i>
+                                    <i className="admin-sidebar-icon bi-house-gear-fill me-2"></i>
                                     Manage Home Page
                                 </Link>
                             </li>
@@ -46,7 +46,7 @@ const AdminSidebar = () => {
                                 className={`admin-bs-list ${isActive('/admin/manage-about-us') ? 'active' : ''}`}
                             >
                                 <Link to="/admin/manage-about-us" className="d-flex align-items-center">
-                                    <i className="admin-sidebar-icon bi-person-fill ms-4 me-2"></i>
+                                    <i className="admin-sidebar-icon bi-person-fill me-2"></i>
                                     Manage About Us Page
                                 </Link>
                             </li>
@@ -54,7 +54,7 @@ const AdminSidebar = () => {
                                 className={`admin-bs-list ${isActive('/admin/manage-program') ? 'active' : ''}`}
                             >
                                 <Link to="/admin/manage-program" className="d-flex align-items-center">
-                                    <i className="admin-sidebar-icon bi-activity ms-4 me-2"></i>
+                                    <i className="admin-sidebar-icon bi-activity me-2"></i>
                                     Manage Program Page
                                 </Link>
                             </li>
@@ -62,7 +62,7 @@ const AdminSidebar = () => {
                                 className={`admin-bs-list ${isActive('/admin/manage-contact-us') ? 'active' : ''}`}
                             >
                                 <Link to="/admin/manage-contact-us" className="d-flex align-items-center">
-                                    <i className="admin-sidebar-icon bi-telephone-fill ms-4 me-2"></i>
+                                    <i className="admin-sidebar-icon bi-telephone-fill me-2"></i>
                                     Manage Contact Us Page
                                 </Link>
                             </li>
@@ -77,15 +77,19 @@ const AdminSidebar = () => {
                     </li>
                     {openedLinks.reservations && (
                         <ul className="admin-bs-reservations-nested-links list-unstyled ms-4">
-                            <li className="admin-bs-list">
+                            <li
+                                className={`admin-bs-list ${isActive('/admin/gym-reservation') ? 'active' : ''}`}
+                            >
                                 <Link to="/admin/gym-reservation" className="d-flex align-items-center">
-                                    <i className="admin-sidebar-icon bi-calendar-date-fill ms-4 me-2"></i>
+                                    <i className="admin-sidebar-icon bi-calendar-date-fill me-2"></i>
                                     Gym Reservation
                                 </Link>
                             </li>
-                            <li className="admin-bs-list">
+                            <li
+                                className={`admin-bs-list ${isActive('/admin/equipment-reservation') ? 'active' : ''}`}
+                            >
                                 <Link to="/admin/equipment-reservation" className="d-flex align-items-center">
-                                    <i className="admin-sidebar-icon bi-calendar-day-fill ms-4 me-2"></i>
+                                    <i className="admin-sidebar-icon bi-calendar-day-fill me-2"></i>
                                     Equipment Reservation
                                 </Link>
                             </li>
