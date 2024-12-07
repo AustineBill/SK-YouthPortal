@@ -111,20 +111,32 @@ app.post('/login', async (req, res) => {
 
 app.get('/Profile/:username', async (req, res) => {
   const username = req.params.username;
+  //const userId = req.userId; // Assume userId is extracted from a secure session or token
+  //WHERE id = $1 AND username = $1
+  
   try {
-      const result = await pool.query(
-          'SELECT id, username, address, age, sex, contact_number, country FROM Users WHERE username = $1',
-          [username]
-      );
-      if (result.rows.length === 0) {
-          return res.status(404).json({ message: 'User not found' });
-      }
-      res.json(result.rows[0]);
+    const query = `
+        SELECT 
+            id, username, firstname, lastname, region, province, city, barangay, zone,
+            sex, age, birthday, email_address, contact_number, civil_status,
+            youth_age_group, work_status, educational_background, 
+            registered_sk_voter,
+        FROM Users
+        WHERE username = $1
+    `;
+    const result = await pool.query(query, [username]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(result.rows[0]);
   } catch (err) {
-      console.error('Error fetching profile:', err.message);
-      res.status(500).json({ message: 'Internal server error' });
+    console.error('Error fetching profile:', err.message);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 
 // Modify the '/Profile/:id' PUT route to update user data by id
@@ -360,6 +372,25 @@ app.get('/inventory', async (req, res) => {
     }
   });
 
+
+  /***** Check Reservatoion *******/
+
+
+  app.post('/Checkreservation', async (req, res) => {
+    const { user_id, date } = req.body;
+  
+    try {
+      const query = 'SELECT * FROM Schedules WHERE user_id = $1 AND DATE(start_date) = $2';
+      const values = [user_id, date];
+      const result = await pool.query(query, values);
+  
+      res.json({ exists: result.rowCount > 0 });
+    } catch (error) {
+      console.error('Error checking reservation:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
 
   
   
