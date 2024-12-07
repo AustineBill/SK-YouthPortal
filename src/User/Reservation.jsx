@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../WebStyles/UserStyle.css';
 import StepIndicator from '../Classes/StepIndicator';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const Reservation = () => {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ const Reservation = () => {
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
   const [selectedTime, setSelectedTime] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
   const dropdownRef = useRef(null);
 
   const handleDateChange = (range) => {
@@ -49,41 +52,61 @@ const Reservation = () => {
   const saveReservation = async () => {
     if (!selectedDates || !selectedTime) {
       alert('Please select both a date and a time slot before proceeding.');
-      return false; // Indicate failure to save
+      return;
     }
 
-    // Retrieve userId from sessionStorage
     const userId = sessionStorage.getItem('userId');
     if (!userId) {
       console.error('No userId found in sessionStorage');
-      return false; // Indicate failure to save
+      return;
     }
 
-    // Prepare reservation data
-    const reservationData = {
-      user_id: userId, 
-      reservation_type: reservationType,
-      start_date: selectedDates[0],
-      end_date: selectedDates[1],
-      time_slot: selectedTime,
-    };
-   // Save reservation data to sessionStorage
-    sessionStorage.setItem('reservationData', JSON.stringify(reservationData));
-    navigate('/ScheduleDetails', { state: { reservationData, reservationType } });
-    return reservationData; // Return data for the next step
-    
+    // Backend validation
+    try {
+      const response = await fetch('http://localhost:5000/Checkreservation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          date: selectedDates[0],
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.exists) {
+        setModalMessage('You already have a booking on this date. The policy allows only one reservation per day.');
+        setShowModal(true);
+        return;
+      }
+
+      // Save reservation if no conflict
+      const reservationData = {
+        user_id: userId,
+        reservation_type: reservationType,
+        start_date: selectedDates[0],
+        end_date: selectedDates[1],
+        time_slot: selectedTime,
+      };
+
+      sessionStorage.setItem('reservationData', JSON.stringify(reservationData));
+      navigate('/ScheduleDetails', { state: { reservationData, reservationType } });
+    } catch (error) {
+      console.error('Error checking reservation:', error);
+    }
   };
 
   return (
     <div className="container-fluid">
       <div className="text-center text-lg-start m-4 mb-3">
         <h1 className="Maintext animated slideInRight">Schedule</h1>
-        <p className='Subtext'>Selected Type: {reservationType}</p>
+        <p className="Subtext">Selected Type: {reservationType}</p>
       </div>
 
       <div className="calendar-container">
         <StepIndicator currentStep={1} />
-        
         <div className="grid-container">
           <div className="legend">
             <h2>Legend</h2>
@@ -102,20 +125,16 @@ const Reservation = () => {
           </div>
 
           <div className="selected-date large">
-            {/* Display the selected dates */}
             <p>
               <strong>Selected Date:</strong>{' '}
               {selectedDates[0].toDateString() === selectedDates[1].toDateString()
                 ? selectedDates[0].toLocaleDateString()
                 : `${selectedDates[0].toLocaleDateString()} to ${selectedDates[1].toLocaleDateString()}`}
             </p>
-
-            {/* Display the selected time */}
             <p>
               <strong>Selected Time:</strong> {selectedTime || 'No time selected'}
             </p>
           </div>
-
 
           <button className="apply-dates" onClick={saveReservation}>
             Apply Dates
@@ -150,6 +169,18 @@ const Reservation = () => {
           value={selectedDates}
         />
       </div>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Reservation Conflict</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalMessage}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
