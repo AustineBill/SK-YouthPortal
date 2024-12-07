@@ -48,7 +48,7 @@ const ViewEquipment = () => {
         });
     };
 
-    // Display usernames and reservation details on tiles
+    // Display equipment name and quantity on tiles
     const tileContent = ({ date, view }) => {
         if (view !== 'month') return null; // Render content only for month view
 
@@ -56,13 +56,10 @@ const ViewEquipment = () => {
 
         return dailyReservations.length > 0 ? (
             <div className="reservation-tile-content">
-                <div className="reservation-count">
-                    <strong>{dailyReservations.length}</strong>
-                </div>
                 <ul className="reservation-usernames">
                     {dailyReservations.map((res, index) => (
-                        <li key={index} className="username">
-                            {res.username}
+                        <li key={index} className="reservation-item">
+                            {res.equipment_name} - Quantity: {res.quantity}
                         </li>
                     ))}
                 </ul>
@@ -106,7 +103,6 @@ const ViewEquipment = () => {
                         </div>
                     </div>
                 </div>
-
 
                 <Calendar
                     minDate={new Date()}
