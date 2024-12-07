@@ -64,12 +64,160 @@ const ManageProgram = () => {
     };
 
     return (
-        <div className="admin-manage-program-container">
-            <div className='program-label'>
-                <h2>Manage Programs</h2>
+        // <div className="admin-manage-program-container">
+        //     <div className='program-label'>
+        //         <h2>Manage Programs</h2>
+        //     </div>
+
+        //     <ul className="program-nav-tabs">
+        //         <li
+        //             className={activeContent === "allPrograms" ? "active-tab" : ""}
+        //             onClick={() => setActiveContent("allPrograms")}
+        //         >
+        //             All Programs
+        //         </li>
+        //         <li
+        //             className={activeContent === "addProgram" ? "active-tab" : ""}
+        //             onClick={() => setActiveContent("addProgram")}
+        //         >
+        //             Add Program
+        //         </li>
+        //     </ul>
+
+        //     <div className="program-component-contents">
+        //         {activeContent === 'allPrograms' && (
+        //             <div className="programs-details-container">
+        //                 <DragDropContext onDragEnd={handleDragEnd}>
+        //                     <Droppable droppableId="programs">
+        //                         {(provided) => (
+        //                             <div {...provided.droppableProps} ref={provided.innerRef}>
+        //                                 {programs.length === 0 ? (
+        //                                     <p>No programs available</p>
+        //                                 ) : (
+        //                                     programs.map((program, index) => (
+        //                                         <Draggable key={program.id} draggableId={program.id} index={index}>
+        //                                             {(provided) => (
+        //                                                 <div
+        //                                                     className="admin-program-item"
+        //                                                     ref={provided.innerRef}
+        //                                                     {...provided.draggableProps}
+        //                                                     {...provided.dragHandleProps}
+        //                                                 >
+        //                                                     <div className="admin-program-info">
+        //                                                         <h3>{program.name}</h3>
+        //                                                         <button onClick={() => setSelectedProgram(program)}>
+        //                                                             View Details
+        //                                                         </button>
+        //                                                         <button onClick={() => handleEditProgram(program)}>
+        //                                                             Edit Details
+        //                                                         </button>
+        //                                                     </div>
+        //                                                 </div>
+        //                                             )}
+        //                                         </Draggable>
+        //                                     ))
+        //                                 )}
+        //                                 {provided.placeholder}
+        //                             </div>
+        //                         )}
+        //                     </Droppable>
+        //                 </DragDropContext>
+
+        //                 {selectedProgram && (
+        //                     <div className="admin-program-details">
+        //                         <img src={selectedProgram.imageUrl || 'https://via.placeholder.com/100'} alt={selectedProgram.name || "Program"} />
+        //                         <h3>{selectedProgram.name || 'Program Name'}</h3>
+        //                         <p>{selectedProgram.description || 'Program Description'}</p>
+        //                         <div className="admin-program-details-buttons">
+        //                             <button className="btn btn-warning" onClick={() => handleEditProgram(selectedProgram)}>
+        //                                 Edit Details
+        //                             </button>
+        //                             <button className="btn btn-danger" onClick={() => handleDeleteProgram(selectedProgram.id)}>
+        //                                 Delete Program
+        //                             </button>
+        //                         </div>
+        //                     </div>
+        //                 )}
+        //             </div>
+        //         )}
+
+        //         {activeContent === 'addProgram' && (
+        //             <div className="add-program-container">
+        //                 <form className="add-program-group">
+        //                     <label>Program Name</label>
+        //                     <input
+        //                         type="text"
+        //                         placeholder="Program Name"
+        //                         name="name"
+        //                         value={newProgram.name}
+        //                         onChange={handleNewProgramChange}
+        //                     />
+
+        //                     <label>Program Description</label>
+        //                     <textarea
+        //                         type="text"
+        //                         placeholder="Program Description"
+        //                         name="description"
+        //                         value={newProgram.description}
+        //                         onChange={handleNewProgramChange}
+        //                     />
+
+        //                     <label>Amenities</label>
+        //                     <input type="file" 
+        //                     accept="image/*" 
+        //                     onChange={handleImageUpload} 
+        //                     />
+        //                 </form>
+
+        //                 {imagePreview && <img src={imagePreview} alt="Preview" className="admin-image-preview" />}
+        //                 <button type="button" 
+        //                     onClick={handleAddProgram} 
+        //                     id="add-new-program-button"
+        //                 >
+        //                     Add Program
+        //                 </button>
+        //             </div>
+        //         )}
+        //     </div>
+
+        // {/* Edit Program Modal */}
+        // {showEditModal && selectedProgram && (
+        //         <div className="edit-modal">
+        //             <h3>Edit Program</h3>
+        //             <form>
+        //                 <label>Program Name</label>
+        //                 <input
+        //                     type="text"
+        //                     name="name"
+        //                     value={selectedProgram.name}
+        //                     onChange={handleFormChange}
+        //                 />
+        //                 <label>Program Description</label>
+        //                 <input
+        //                     type="text"
+        //                     name="description"
+        //                     value={selectedProgram.description}
+        //                     onChange={handleFormChange}
+        //                 />
+        //                 <button type="button" onClick={handleSaveChanges}>
+        //                     Save Changes
+        //                 </button>
+        //                 <button type="button" onClick={() => setShowEditModal(false)}>
+        //                     Close
+        //                 </button>
+        //             </form>
+        //         </div>
+        //     )}
+        // </div>
+
+
+        <div className="admin-program-container d-flex flex-column">
+            <div className='admin-program-label'>
+                <h2 className='admin-program-label-h2 fst-italic'>Manage Programs</h2>
             </div>
-            
-            <ul className="program-nav-tabs">
+
+            {/* Navigation tabs */}
+            <ul className="admin-program-nav-tabs list-unstyled d-flex">
                 <li
                     className={activeContent === "allPrograms" ? "active-tab" : ""}
                     onClick={() => setActiveContent("allPrograms")}
@@ -84,9 +232,10 @@ const ManageProgram = () => {
                 </li>
             </ul>
 
-            <div className="program-component-contents">
+            <div className="admin-program-contents-container d-flex justify-content-center">
+                {/* All Programs Section */}
                 {activeContent === 'allPrograms' && (
-                    <div className="programs-details-container">
+                    <div className="admin-programs-details-container d-flex flex-column">
                         <DragDropContext onDragEnd={handleDragEnd}>
                             <Droppable droppableId="programs">
                                 {(provided) => (
@@ -141,10 +290,11 @@ const ManageProgram = () => {
                     </div>
                 )}
 
+                {/* Add Program Section */}
                 {activeContent === 'addProgram' && (
-                    <div className="add-program-container">
-                        <form className="add-program-group">
-                            <label>Program Name</label>
+                    <div className="admin-add-program-container d-flex flex-column align-items-center">
+                        <form className="admin-add-program-group align-items-center">
+                            <label className='admin-add-program-label'>Program Name</label>
                             <input
                                 type="text"
                                 placeholder="Program Name"
@@ -153,7 +303,7 @@ const ManageProgram = () => {
                                 onChange={handleNewProgramChange}
                             />
 
-                            <label>Program Description</label>
+                            <label className='admin-add-program-label'>Program Description</label>
                             <textarea
                                 type="text"
                                 placeholder="Program Description"
@@ -162,17 +312,24 @@ const ManageProgram = () => {
                                 onChange={handleNewProgramChange}
                             />
 
-                            <label>Amenities</label>
-                            <input type="file" 
-                            accept="image/*" 
-                            onChange={handleImageUpload} 
+                            <label className='admin-add-program-label'>Amenities</label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageUpload}
                             />
                         </form>
 
-                        {imagePreview && <img src={imagePreview} alt="Preview" className="admin-image-preview" />}
-                        <button type="button" 
-                            onClick={handleAddProgram} 
-                            id="add-new-program-button"
+                        {imagePreview && (
+                            <div className="adminprogrampage-image-preview-container">
+                                <img src={imagePreview}
+                                    alt="Preview"
+                                    className="admin-image-preview" />
+                            </div>
+                        )}
+                        <button type="button"
+                            onClick={handleAddProgram}
+                            className="admin-add-program-button bg-success rounded-pill"
                         >
                             Add Program
                         </button>
