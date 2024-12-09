@@ -23,7 +23,7 @@ const ManageHomePage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('/api/events');
+        const response = await axios.get('http://localhost:5000/events');
         setEvents(response.data);
       } catch (error) {
         console.error('Error fetching events:', error);
@@ -31,7 +31,7 @@ const ManageHomePage = () => {
     };
 
     fetchEvents();
-  }, []);
+  }, []); // Runs once when the component mounts
 
   // Handle input changes for event details
   const handleEventChange = (e) => {
@@ -62,24 +62,24 @@ const ManageHomePage = () => {
     }
   };
 
-  // Handle the adding of a new event
+  // Handle adding a new event
   const handleAddEvent = async () => {
     if (!newEvent.title || !newEvent.description || !newEvent.amenities || !newEvent.image) {
       alert('Please fill in all event details');
       return;
     }
-
+  
     try {
-      const response = await axios.post('/api/events', {
+      const response = await axios.post('http://localhost:5000/events', {
         event_name: newEvent.title,
         event_description: newEvent.description,
         amenities: newEvent.amenities,
         event_image: newEvent.image,
         event_image_format: newEvent.imageFormat
       });
-
+  
       console.log(response.data); // Log success message
-      setEvents([...events, newEvent]); // Add new event to state
+      setEvents([...events, response.data]); // Add new event to the state
       setNewEvent({
         title: '',
         description: '',
@@ -89,12 +89,15 @@ const ManageHomePage = () => {
       });
       setImagePreview(null); // Clear image preview
       setActiveContent('events'); // Switch back to events list
+  
+      // Reload or navigate back to homepage
+      window.location.href = '/';  // Redirect to homepage directly
     } catch (error) {
       console.error('Error adding event:', error);
       alert('Failed to add event');
     }
   };
-
+  
   return (
     <div className="admin-home-container">
       <div className="label-and-button-container">
@@ -108,17 +111,21 @@ const ManageHomePage = () => {
         {/* All Events Section */}
         {activeContent === 'events' && (
           <div className="events-list">
-            {events.map((event, index) => (
-              <div key={index} className="event-item">
-                <h3>{event.event_name}</h3>
-                <p>{event.event_description}</p>
-                <img
-                  src={`data:image/${event.event_image_format};base64,${event.event_image}`}
-                  alt={event.event_name}
-                  className="event-image"
-                />
-              </div>
-            ))}
+            {events.length === 0 ? (
+              <p>No events available</p>
+            ) : (
+              events.map((event, index) => (
+                <div key={index} className="event-item">
+                  <h3>{event.event_name}</h3>
+                  <p>{event.event_description}</p>
+                  <img
+                    src={`data:image/${event.event_image_format};base64,${event.event_image}`}
+                    alt={event.event_name}
+                    className="event-image"
+                  />
+                </div>
+              ))
+            )}
             <button onClick={() => setActiveContent('addEvent')}>Add New Event</button>
           </div>
         )}
