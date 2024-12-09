@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel, Card } from 'react-bootstrap';
+import { Carousel, Card, Spinner } from 'react-bootstrap';
 import axios from 'axios'; // Import axios
 import Cover from "../Asset/bg.png"; // Cover image for the carousel
 
@@ -10,24 +10,31 @@ const Intro = () => {
     const [error, setError] = useState(null);  // Add an error state
 
     useEffect(() => {
-        // Fetch events from the backend using axios
         const fetchEvents = async () => {
             try {
-                const response = await axios.get('/api/events'); // Ensure this is your correct API endpoint
-                setEvents(response.data);  // Store fetched events
-                setLoading(false);  // Set loading to false after fetching
+                const response = await axios.get('http://localhost:5000/events');  // Make the API call
+                console.log('Fetched events:', response.data);  // Log the response data
+
+                if (response.data.length > 0) {
+                    setEvents(response.data);
+                } else {
+                    setError('No events available');
+                }
+
+                setLoading(false);
             } catch (error) {
-                console.error('Error fetching events:', error);
+                console.error('Error fetching events:', error);  // Log the error
                 setError('Error fetching events');
-                setLoading(false);  // Ensure loading is false on error
+                setLoading(false);
             }
         };
 
         fetchEvents();
     }, []);  // Empty array ensures this effect runs only once when the component mounts
 
-    if (loading) return <div>Loading events...</div>;  // Display loading state
-    if (error) return <div>{error}</div>;  // Display error message if there's an error
+    // Loading and error handling
+    if (loading) return <div className="text-center"><Spinner animation="border" variant="primary" /></div>;
+    if (error) return <div className="text-center">{error}</div>;
 
     return (
         <div className="container-fluid">
@@ -75,36 +82,36 @@ const Intro = () => {
 
             {/* Card Container for Programs */}
             <div className="card-container">
-                {events.map((event) => (
-                    <Card key={event.id} className="ProgramCard">
-                        <Card.Img variant="top" src={`data:image/${event.event_image_format};base64,${event.event_image}`} />
-                        <Card.Body>
-                            <Card.Title>{event.event_name}</Card.Title>
-                            <Card.Text>{event.event_description}</Card.Text>
-                            <button className="btn-db">Go somewhere</button>
-                        </Card.Body>
-                    </Card>
-                ))}
+                {events.length === 0 ? (
+                    <p>No events available</p>
+                ) : (
+                    events.map((event) => (
+                        <Card key={event.id} className="ProgramCard">
+                            <Card.Img variant="top" src={`data:image/${event.event_image_format};base64,${event.event_image}`} />
+                            <Card.Body>
+                                <Card.Title>{event.event_name}</Card.Title>
+                                <Card.Text>{event.event_description}</Card.Text>
+                                <Link to={`/event/${event.id}`} className="btn-db">Learn More</Link>
+                            </Card.Body>
+                        </Card>
+                    ))
+                )}
             </div>
 
             {/* Highlighted Events Section */}
             <h1 className="NewEveHead">NEWS & EVENTS</h1>
             <div className="row g-4 justify-content-center">
                 <div className="card-container highlighted-events">
-                    {events.length === 0 ? (
-                        <p>No events available</p>
-                    ) : (
-                        events.map((event) => (
-                            <Card key={event.id} className="ProgramCard">
-                                <Card.Img variant="top" src={`data:image/${event.event_image_format};base64,${event.event_image}`} />
-                                <Card.Body>
-                                    <Card.Title>{event.event_name}</Card.Title>
-                                    <Card.Text>{event.event_description}</Card.Text>
-                                    <button className="btn-db">Learn More</button>
-                                </Card.Body>
-                            </Card>
-                        ))
-                    )}
+                    {events.map((event) => (
+                        <Card key={event.id} className="ProgramCard">
+                            <Card.Img variant="top" src={`data:image/${event.event_image_format};base64,${event.event_image}`} />
+                            <Card.Body>
+                                <Card.Title>{event.event_name}</Card.Title>
+                                <Card.Text>{event.event_description}</Card.Text>
+                                <Link to={`/event/${event.id}`} className="btn-db">Learn More</Link>
+                            </Card.Body>
+                        </Card>
+                    ))}
                 </div>
             </div>
 
