@@ -16,7 +16,7 @@ const Contact = () => {
     // Fetch the contact details using Axios
     const fetchContactDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/contact');
+        const response = await axios.get('http://localhost:5000/contact');
         setContactDetails(response.data);
         setLoading(false);
       } catch (err) {
