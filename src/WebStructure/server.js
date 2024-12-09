@@ -3,6 +3,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Pool } = require('pg');
 
+
+//jer nag
+const axios = require('axios');
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -15,6 +19,8 @@ const pool = new Pool({
     port: 5432,
 });
 
+app.use(cors());
+app.use(express.json());
 
 pool.connect((err) => {
     if (err) {
@@ -391,8 +397,86 @@ app.get('/inventory', async (req, res) => {
     }
   });
   
+//Admin Side
+  /********* Contact Us na ito ******** */
 
-  
+  // Fetch contact details
+app.get('/api/contact', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT contact_number, location, gmail FROM public.contact WHERE id = $1', [1]);
+    res.json(result.rows[0]); // Send the contact details
+  } catch (error) {
+    console.error('Error fetching contact details:', error);
+    res.status(500).json({ error: 'Error fetching contact details' });
+  }
+});
+
+// Update contact details
+app.put('/api/contact', async (req, res) => {
+  const { contact_number, location, gmail } = req.body;
+
+  // Ensure all fields are provided
+  if (!contact_number || !location || !gmail) {
+    return res.status(400).json({ error: 'All fields (contact_number, location, gmail) are required' });
+  }
+
+  try {
+    await pool.query('UPDATE public.contact SET contact_number = $1, location = $2, gmail = $3 WHERE id = $4',
+      [contact_number, location, gmail, 1]);
+    res.json({ message: 'Contact details updated successfully' });
+  } catch (error) {
+    console.error('Error updating contact details:', error);
+    res.status(500).json({ error: 'Error updating contact details' });
+  }
+});
+
+//HOMEPAGE
+// Fetch events from public.home
+app.get('/api/events', async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT event_name, event_description, amenities, event_image, event_image_format 
+       FROM public.home`
+    );
+
+    if (result.rows.length > 0) {
+      const eventsWithBase64Image = result.rows.map(event => {
+        return {
+          ...event,
+          event_image: event.event_image ? `data:image/${event.event_image_format};base64,${event.event_image.toString('base64')}` : null
+        };
+      });
+      res.json(eventsWithBase64Image); // Send events with images in base64 format
+    } else {
+      res.status(404).json({ message: 'No events found' });
+    }
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.status(500).json({ error: 'Error fetching events' });
+  }
+});
+
+// POST /api/events - Add new event
+app.post('/api/events', async (req, res) => {
+  const { event_name, event_description, amenities, event_image, event_image_format } = req.body;
+
+  if (!event_name || !event_description || !amenities || !event_image || !event_image_format) {
+      return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  try {
+      await pool.query(
+          `INSERT INTO public.home (event_name, event_description, amenities, event_image, event_image_format)
+          VALUES ($1, $2, $3, $4, $5)`,
+          [event_name, event_description, amenities, event_image, event_image_format]
+      );
+      res.status(201).json({ message: 'Event added successfully' });
+  } catch (error) {
+      console.error('Error adding event:', error);
+      res.status(500).json({ error: 'Error adding event' });
+  }
+});
+//END HOME PAGE
   
 app.listen(5000, () => {
     console.log('Server running on port 5000');
