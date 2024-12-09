@@ -35,9 +35,11 @@ import ViewEquipment from './User/ViewEquipment';
 import Reservation from './User/Reservation';
 import ReservationDetails from './User/ReservationDetails';
 import ViewFacilities from './User/ViewFacilities';
+import ReservationWaiver from "./User/ReservationWaiver"
+
 import ScheduleDetails from './User/ScheduleDetails';
 import ScheduleDone from './User/ScheduleDone';
-import Waiver from "./User/Waiver"
+import BorrowWaiver from "./User/BorrowWaiver"
 import CancelReservation from './User/Cancellation';
 
 
@@ -130,19 +132,25 @@ const App = () => {
                   <Route path="/Dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                   <Route path="/Profile/:username" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                   <Route path="/ProgramDetails" element={<ProtectedRoute><ProgramDescript /></ProtectedRoute>} />
-                  <Route path="/Equipment" element={<ProtectedRoute><Equipment /></ProtectedRoute>} />
-                  <Route path="/EquipReservation" element={<ProtectedRoute><EquipReservation /></ProtectedRoute>} />
-                  <Route path="/ViewEquipment" element={<ProtectedRoute><ViewEquipment /></ProtectedRoute>} />
-                  <Route path="/Reservation" element={<ProtectedRoute><Reservation /></ProtectedRoute>} />
-                  <Route path="/ViewFacilities" element={<ProtectedRoute><ViewFacilities /></ProtectedRoute>} />
+                  <Route path="/Contact" element={<ProtectedRoute><HelpSupport /></ProtectedRoute>} />
+                  <Route path="/ReservationLog" element={<ProtectedRoute><Log /></ProtectedRoute>} />
                   <Route path="/StepIndicator" element={<ProtectedRoute><StepIndicator /></ProtectedRoute>} />
+
+                    <Route path="/Equipment" element={<ProtectedRoute><Equipment /></ProtectedRoute>} />
+                    <Route path="/EquipReservation" element={<ProtectedRoute><EquipReservation /></ProtectedRoute>} />
+                    <Route path="/ViewEquipment" element={<ProtectedRoute><ViewEquipment /></ProtectedRoute>} />
+                    <Route path="/ReservationWaiver" element={<ProtectedRoute><ReservationWaiver /></ProtectedRoute>} />
+
+                    <Route path="/Reservation" element={<ProtectedRoute><Reservation /></ProtectedRoute>} />
+                    <Route path="/ViewFacilities" element={<ProtectedRoute><ViewFacilities /></ProtectedRoute>} />
+                    <Route path="/BorrowWaiver" element={<ProtectedRoute><BorrowWaiver /></ProtectedRoute>} />
+                 
                   <Route path="/ScheduleDetails" element={<ProtectedRoute><ScheduleDetails /></ProtectedRoute>} />
                   <Route path="/ScheduleDone" element={<ProtectedRoute><ScheduleDone /></ProtectedRoute>} />
-                  <Route path="/ReservationLog" element={<ProtectedRoute><Log /></ProtectedRoute>} />
                   <Route path="/ReservationDetails" element={<ProtectedRoute><ReservationDetails /></ProtectedRoute>} />
                   <Route path="/Cancellation" element={<ProtectedRoute><CancelReservation /></ProtectedRoute>} />
-                  <Route path="/Contact" element={<ProtectedRoute><HelpSupport /></ProtectedRoute>} />
-                  <Route path="/Waiver" element={<ProtectedRoute><Waiver /></ProtectedRoute>} />
+                  
+                  
 
                   {/* Admin Side Routes */}
                   <Route path="/admin/reservations" element={<AdminReservations />} /> {/* Wala na to. */}

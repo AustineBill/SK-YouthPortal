@@ -9,15 +9,20 @@ const CancelReservation = () => {
   const [otherReason, setOtherReason] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [reservationDetails, setReservationDetails] = useState(null);
-  const [showModal, setShowModal] = useState(false); // Modal visibility state
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
 
   const reservationId = sessionStorage.getItem('reservationId');
+  const reservationType = sessionStorage.getItem('reservationType'); // Facility or Equipment
 
   const fetchReservationDetails = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/reservations/${reservationId}`);
+      const endpoint = reservationType === 'Facility' 
+        ? `http://localhost:5000/reservations/${reservationId}`
+        : `http://localhost:5000/equipment/${reservationId}`;
+
+      const response = await axios.get(endpoint);
       if (response.status === 200) {
         setReservationDetails(response.data);
       } else {
@@ -27,7 +32,7 @@ const CancelReservation = () => {
       console.error('Error fetching reservation details:', error);
       setError('Failed to load reservation details');
     }
-  }, [reservationId]);
+  }, [reservationId, reservationType]);
 
   useEffect(() => {
     fetchReservationDetails();
@@ -38,10 +43,12 @@ const CancelReservation = () => {
       console.log('Cancellation not confirmed');
       return;
     }
+  
     try {
-      const response = await axios.delete(`http://localhost:5000/reservations/${reservationId}`);
+      const endpoint = `http://localhost:5000/equipment/${reservationId}`;
+      const response = await axios.delete(endpoint);
       if (response.status === 200) {
-        setShowModal(true); // Show the modal after successful cancellation
+        setShowModal(true);
       }
     } catch (error) {
       console.error('Error cancelling reservation:', error);
@@ -83,13 +90,13 @@ const CancelReservation = () => {
               <Container className="bg-light p-4 rounded">
                 <Row>
                   <Col xs={12} md={6}>
-                    <p><strong>Program:</strong> {reservationDetails.reservation_type}</p>
+                    <p><strong>Type:</strong> {reservationType}</p>
                   </Col>
                   <Col xs={12} md={6}>
                     <p><strong>Date:</strong> {formatDate(reservationDetails.start_date)} to {formatDate(reservationDetails.end_date)}</p>
                   </Col>
                   <Col xs={12} md={6}>
-                    <p><strong>Time Slot:</strong> {reservationDetails.time_slot}</p>
+                    <p><strong>Time Slot:</strong> {reservationDetails.time_slot || 'N/A'}</p>
                   </Col>
                 </Row>
               </Container>
@@ -104,9 +111,9 @@ const CancelReservation = () => {
               type="radio"
               id="reason1"
               name="cancelReason"
-              label="Conflicting Priorities"
+              label="Change in Plans"
               className="mb-2"
-              onChange={() => setSelectedReason("Conflicting Priorities")}
+              onChange={() => setSelectedReason("Change in Plans")}
             />
             <Form.Check
               type="radio"
@@ -120,13 +127,25 @@ const CancelReservation = () => {
               type="radio"
               id="reason3"
               name="cancelReason"
-              label="Personal Emergency"
-              onChange={() => setSelectedReason("Personal Emergency")}
+              className="mb-2"
+              label="Weather or Environmental Factors"
+              onChange={() => setSelectedReason("Weather or Environmental Factors")}
             />
+            {reservationType === 'Equipment' && (
+              <Form.Check
+                type="radio"
+                id="reason4"
+                name="cancelReason"
+                className="mb-2"
+                label="Equipment No Longer Needed"
+                onChange={() => setSelectedReason("Equipment No Longer Needed")}
+              />
+            )}
             <Form.Check
               type="radio"
               id="reason4"
               name="cancelReason"
+              className="mb-2"
               label="Other"
               onChange={() => setSelectedReason("Other")}
             />
@@ -174,7 +193,6 @@ const CancelReservation = () => {
           </Row>
         </div>
 
-        {/* Modal */}
         {showModal && (
           <div className="ModalOverlayStyles">
             <div className="ModalStyles large">

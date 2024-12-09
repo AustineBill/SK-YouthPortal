@@ -73,7 +73,6 @@ const ScheduleDetails = () => {
         return;
       }
     }
-
     sessionStorage.setItem(
       'scheduleDetails',
       JSON.stringify({ reservationType, participants })

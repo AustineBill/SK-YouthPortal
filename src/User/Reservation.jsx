@@ -4,8 +4,8 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../WebStyles/UserStyle.css';
 import StepIndicator from '../Classes/StepIndicator';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { Modal, Button} from 'react-bootstrap';
+
 
 const Reservation = () => {
   const navigate = useNavigate();
@@ -60,7 +60,6 @@ const Reservation = () => {
       console.error('No userId found in sessionStorage');
       return;
     }
-
     // Backend validation
     try {
       const response = await fetch('http://localhost:5000/Checkreservation', {

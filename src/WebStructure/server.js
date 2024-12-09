@@ -223,28 +223,21 @@ app.get('/schedule/equipment', async (req, res) => {
        WHERE user_id = $1`,
       [userId]
     );
-
-    console.log('Query Result:', result.rows);  // Log the query result for debugging
-
     // Check if no reservations were found
     if (result.rows.length === 0) {
       return res.status(404).json({ message: 'No equipment reservations found.' });
     }
-
     // Process each reservation and check if equipment is reserved
     const equipmentData = result.rows.map((row) => {
       let equipmentInfo = "No Equipment Reserved";  // Default value for no equipment
-
       if (row.reserved_equipment) {
         try {
           // Handle cases where reserved_equipment is an array of arrays
           let reservedEquipment = row.reserved_equipment;
-
           // If it's an array of arrays, flatten it to a single array of objects
           if (Array.isArray(reservedEquipment) && reservedEquipment[0] && Array.isArray(reservedEquipment[0])) {
             reservedEquipment = reservedEquipment.flat();
           }
-
           // Ensure it's an array of objects before processing
           if (Array.isArray(reservedEquipment)) {
             // Format each equipment item as "name - quantity"
@@ -287,7 +280,7 @@ app.get('/schedule/equipment', async (req, res) => {
   }
 });
 
-  app.get('/reservations/:reservationId', async (req, res) => {
+app.get('/reservations/:reservationId', async (req, res) => {
     const { reservationId } = req.params;
     //console.log(`Fetching reservation details for ID: ${reservationId}`);
 
@@ -302,6 +295,23 @@ app.get('/schedule/equipment', async (req, res) => {
         console.error('Error fetching reservation:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
+});
+
+app.get('/equipment/:reservation_id', async (req, res) => {
+  const { reservation_id } = req.params;
+  //console.log(`Fetching reservation details for ID: ${reservationId}`);
+
+  try {
+    const result = await pool.query('SELECT * FROM Equipment WHERE reservation_id = $1', [reservation_id]);
+      if (result.rows.length > 0) {
+          res.json(result.rows[0]); // Send the reservation details back
+      } else {
+          res.status(404).json({ error: 'Reservation not found' });
+      }
+  } catch (error) {
+      console.error('Error fetching reservation:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 
@@ -321,6 +331,24 @@ app.delete('/reservations/:reservationId', async (req, res) => {
       res.status(500).json({ message: "Internal Server Error" });
     }
 });
+
+app.delete('/equipment/:reservation_id', async (req, res) => {
+  const { reservation_id } = req.params;
+
+  try {
+    // Delete the reservation using reservation_id
+    const result = await pool.query('DELETE FROM Equipment WHERE reservation_id = $1 RETURNING *', [reservation_id]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Reservation not found" });
+    }
+    res.status(200).json({ message: "Borrowed Equipment cancelled successfully" });
+  } catch (error) {
+    console.error("Error cancelling reservation:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 
 //********************* */
 app.get('/Details/:id', async (req, res) => {
@@ -360,7 +388,32 @@ app.get('/ViewSched', async (req, res) => {
     }
 });
 
+app.get('/ViewEquipment', async (req, res) => {
+  try {
+      // Query to fetch equipment details, using JSON functions to extract data
+      const result = await pool.query(`
+          SELECT 
+              e.start_date, 
+              e.end_date, 
+              jsonb_array_elements(e.reserved_equipment) AS equipment
+          FROM Equipment e
+          WHERE e.start_date >= CURRENT_DATE
+          ORDER BY e.start_date ASC
+      `);
 
+      // Map the result to extract equipment name and quantity
+      const formattedResult = result.rows.map(row => ({
+          start_date: row.start_date,
+          end_date: row.end_date,
+          equipment_name: row.equipment.name,
+          quantity: row.equipment.quantity
+      }));
+
+      res.json(formattedResult);
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+});
 /******** Inventory ********/
 app.get('/inventory', async (req, res) => {
     try {
@@ -369,6 +422,76 @@ app.get('/inventory', async (req, res) => {
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
+    }
+  });
+
+  app.put('/inventory/update', async (req, res) => {
+    const { user_id, reservation_id, equipmentReservations, start_date, end_date } = req.body;
+  
+    try {
+      // Begin a transaction to ensure consistency
+      await pool.query('BEGIN');
+  
+      const reservedItems = []; // Array to store the reservation details for JSON
+  
+      for (const item of equipmentReservations) {
+        const { equipment_id, quantity } = item;
+  
+        // Check current inventory based on reservation_id (not equipment_id)
+        const inventoryCheck = await pool.query(
+          'SELECT quantity FROM Inventory WHERE reservation_id = $1', // Query using reservation_id
+          [reservation_id]
+        );
+  
+        if (inventoryCheck.rows.length === 0) {
+          await pool.query('ROLLBACK');
+          return res.status(400).json({ message: `No inventory found for reservation ID ${reservation_id}` });
+        }
+  
+        const availableQuantity = inventoryCheck.rows[0].quantity;
+  
+        if (quantity > availableQuantity) {
+          await pool.query('ROLLBACK');
+          return res.status(400).json({
+            message: `Insufficient quantity for reservation ID ${reservation_id}. Available: ${availableQuantity}, Requested: ${quantity}`,
+          });
+        }
+  
+        // Update inventory
+        await pool.query(
+          'UPDATE Inventory SET quantity = quantity - $1 WHERE reservation_id = $2',
+          [quantity, reservation_id]
+        );
+  
+        // Prepare data for JSON insertion in `reserved_equipment`
+        const equipmentName = await pool.query(
+          'SELECT name FROM Inventory WHERE reservation_id = $1',
+          [reservation_id]
+        );
+  
+        reservedItems.push({
+          id: equipment_id,
+          name: equipmentName.rows[0].name,
+          quantity,
+        });
+      }
+  
+      // Insert reservation into Equipment table
+      await pool.query(
+        `INSERT INTO Equipment (user_id, reservation_id, start_date, end_date, reserved_equipment, created_at, updated_at)
+         VALUES ($1, $2, $3, $4, $5::jsonb, NOW(), NOW())`,
+        [user_id, reservation_id, start_date, end_date, JSON.stringify(reservedItems)]
+      );
+  
+      // Commit transaction
+      await pool.query('COMMIT');
+  
+      res.status(201).json({ message: 'Reservation successful' });
+    } catch (error) {
+      // Rollback in case of error
+      await pool.query('ROLLBACK');
+      console.error('Error reserving equipment:', error.message);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
   });
 
@@ -390,10 +513,20 @@ app.get('/inventory', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+  app.post('/CheckEquipment', async (req, res) => {
+    const { user_id, date } = req.body;
+    try {
+      const query = 'SELECT * FROM Equipment WHERE user_id = $1 AND DATE(start_date) = $2';
+      const values = [user_id, date];
+      const result = await pool.query(query, values);
+      res.json({ exists: result.rowCount > 0 });
+    } catch (error) {
+      console.error('Error checking reservation:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
   
 
-  
-  
 app.listen(5000, () => {
     console.log('Server running on port 5000');
 });
