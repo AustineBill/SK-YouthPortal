@@ -280,7 +280,7 @@ app.get('/schedule/equipment', async (req, res) => {
   }
 });
 
-  app.get('/reservations/:reservationId', async (req, res) => {
+app.get('/reservations/:reservationId', async (req, res) => {
     const { reservationId } = req.params;
     //console.log(`Fetching reservation details for ID: ${reservationId}`);
 
@@ -295,6 +295,23 @@ app.get('/schedule/equipment', async (req, res) => {
         console.error('Error fetching reservation:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
+});
+
+app.get('/equipment/:reservation_id', async (req, res) => {
+  const { reservation_id } = req.params;
+  //console.log(`Fetching reservation details for ID: ${reservationId}`);
+
+  try {
+    const result = await pool.query('SELECT * FROM Equipment WHERE reservation_id = $1', [reservation_id]);
+      if (result.rows.length > 0) {
+          res.json(result.rows[0]); // Send the reservation details back
+      } else {
+          res.status(404).json({ error: 'Reservation not found' });
+      }
+  } catch (error) {
+      console.error('Error fetching reservation:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 
@@ -315,22 +332,23 @@ app.delete('/reservations/:reservationId', async (req, res) => {
     }
 });
 
-app.delete('/reservations/:reservationId', async (req, res) => {
-  const { reservationId } = req.params;
+app.delete('/equipment/:reservation_id', async (req, res) => {
+  const { reservation_id } = req.params;
 
   try {
-    // Delete the reservation using PostgreSQL query
-    const result = await pool.query('DELETE FROM Schedules WHERE id = $1 RETURNING *', [reservationId]); // Use pool.query()
+    // Delete the reservation using reservation_id
+    const result = await pool.query('DELETE FROM Equipment WHERE reservation_id = $1 RETURNING *', [reservation_id]);
     
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "Reservation not found" });
     }
-    res.status(200).json({ message: "Reservation cancelled successfully" });
+    res.status(200).json({ message: "Borrowed Equipment cancelled successfully" });
   } catch (error) {
     console.error("Error cancelling reservation:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
 
 //********************* */
 app.get('/Details/:id', async (req, res) => {
