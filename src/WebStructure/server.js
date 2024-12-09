@@ -401,7 +401,7 @@ app.get('/inventory', async (req, res) => {
   /********* Contact Us na ito ******** */
 
   // Fetch contact details
-app.get('/api/contact', async (req, res) => {
+app.get('/contact', async (req, res) => {
   try {
     const result = await pool.query('SELECT contact_number, location, gmail FROM public.contact WHERE id = $1', [1]);
     res.json(result.rows[0]); // Send the contact details
@@ -412,7 +412,7 @@ app.get('/api/contact', async (req, res) => {
 });
 
 // Update contact details
-app.put('/api/contact', async (req, res) => {
+app.put('/contact', async (req, res) => {
   const { contact_number, location, gmail } = req.body;
 
   // Ensure all fields are provided
@@ -432,23 +432,23 @@ app.put('/api/contact', async (req, res) => {
 
 //HOMEPAGE
 // Fetch events from public.home
-app.get('/api/events', async (req, res) => {
+// Fetch events
+app.get('/events', async (req, res) => {
   try {
+    // Query the database to get all events
     const result = await pool.query(
-      `SELECT event_name, event_description, amenities, event_image, event_image_format 
-       FROM public.home`
+      'SELECT event_name, event_description, amenities, event_image, event_image_format FROM public.home'
     );
-
+    
     if (result.rows.length > 0) {
-      const eventsWithBase64Image = result.rows.map(event => {
-        return {
-          ...event,
-          event_image: event.event_image ? `data:image/${event.event_image_format};base64,${event.event_image.toString('base64')}` : null
-        };
-      });
-      res.json(eventsWithBase64Image); // Send events with images in base64 format
+      // Return the events in JSON format
+      const eventsWithBase64Image = result.rows.map(event => ({
+        ...event,
+        event_image: event.event_image ? `data:image/${event.event_image_format};base64,${event.event_image.toString('base64')}` : null
+      }));
+      res.json(eventsWithBase64Image);
     } else {
-      res.status(404).json({ message: 'No events found' });
+      res.status(404).json({ error: 'No events found' });
     }
   } catch (error) {
     console.error('Error fetching events:', error);
@@ -456,26 +456,31 @@ app.get('/api/events', async (req, res) => {
   }
 });
 
-// POST /api/events - Add new event
-app.post('/api/events', async (req, res) => {
-  const { event_name, event_description, amenities, event_image, event_image_format } = req.body;
 
-  if (!event_name || !event_description || !amenities || !event_image || !event_image_format) {
-      return res.status(400).json({ error: 'All fields are required' });
+// POST /api/events - Add new event
+// Update event details
+app.put('/events/:id', async (req, res) => {
+  const { event_name, event_description, amenities, event_image, event_image_format } = req.body;
+  const eventId = req.params.id;
+
+  // Ensure required fields are provided
+  if (!event_name || !event_description || !amenities) {
+    return res.status(400).json({ error: 'All fields (event_name, event_description, amenities) are required' });
   }
 
   try {
-      await pool.query(
-          `INSERT INTO public.home (event_name, event_description, amenities, event_image, event_image_format)
-          VALUES ($1, $2, $3, $4, $5)`,
-          [event_name, event_description, amenities, event_image, event_image_format]
-      );
-      res.status(201).json({ message: 'Event added successfully' });
+    // Update event data in the database
+    await pool.query(
+      'UPDATE public.home SET event_name = $1, event_description = $2, amenities = $3, event_image = $4, event_image_format = $5 WHERE id = $6',
+      [event_name, event_description, amenities, event_image, event_image_format, eventId]
+    );
+    res.json({ message: 'Event updated successfully' });
   } catch (error) {
-      console.error('Error adding event:', error);
-      res.status(500).json({ error: 'Error adding event' });
+    console.error('Error updating event details:', error);
+    res.status(500).json({ error: 'Error updating event details' });
   }
 });
+
 //END HOME PAGE
   
 app.listen(5000, () => {
