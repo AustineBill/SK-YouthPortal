@@ -43,49 +43,62 @@ const ManageHomePage = () => {
   };
 
   // Handle image file upload
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB max size
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
+    
     if (file) {
-      const imageUrl = URL.createObjectURL(file); // Preview image URL
+      // Check if file exceeds max size
+      if (file.size > MAX_FILE_SIZE) {
+        alert('File is too large. Maximum size is 5MB.');
+        return;
+      }
+  
+      // Preview image
+      const imageUrl = URL.createObjectURL(file);
       setImagePreview(imageUrl);
-
+  
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Image = reader.result.split(',')[1]; // Get base64 string part
         setNewEvent((prevState) => ({
           ...prevState,
           image: base64Image, // Save base64 string
-          imageFormat: file.type.split('/')[1] // Save image format (e.g., 'jpg', 'png')
+          imageFormat: file.type.split('/')[1], // Save image format (e.g., 'jpg', 'png')
         }));
       };
+  
       reader.readAsDataURL(file);
     }
   };
 
   // Handle adding a new event
-
-  /// Handle adding a new event
   const handleAddEvent = async () => {
     if (!newEvent.title || !newEvent.description || !newEvent.amenities || !newEvent.image) {
       alert('Please fill in all event details');
       return;
     }
   
-    console.log('Adding new event with details:', newEvent);
+    const eventData = {
+      event_name: newEvent.title,
+      event_description: newEvent.description,
+      amenities: newEvent.amenities,
+      event_image: newEvent.image,
+      event_image_format: newEvent.imageFormat,
+    };
+  
+    console.log('Sending event data to backend:', eventData);
   
     try {
-      const response = await axios.post('http://localhost:5000/events', {
-        event_name: newEvent.title,
-        event_description: newEvent.description,
-        amenities: newEvent.amenities,
-        event_image: newEvent.image,
-        event_image_format: newEvent.imageFormat,
-      });
+      const response = await axios.post('http://localhost:5000/events', eventData);
   
-      console.log('Server response after adding event:', response.data);
+      console.log('Event added successfully:', response.data);
   
-      // Update UI with the new event
-      setEvents([...events, response.data]);
+      // Update the state with the new event without re-fetching
+      setEvents((prevEvents) => [...prevEvents, response.data]);
+  
+      // Reset form after adding the event
       setNewEvent({
         title: '',
         description: '',
@@ -95,15 +108,38 @@ const ManageHomePage = () => {
       });
       setImagePreview(null);
       setActiveContent('events');
-      window.location.href = '/';
     } catch (error) {
       console.error('Error adding event:', error.response?.data || error.message);
-      alert('Failed to add event. Please check the console for details.');
+      if (error.response?.data?.error === 'Event with this name already exists') {
+        alert('An event with this name already exists. Please choose a different name.');
+      } else {
+        alert('Failed to add event. Please check the console for details.');
+      }
     }
   };
   
- 
-  
+
+  // Handle deleting an event
+  const handleDeleteEvent = async (eventId) => {
+    if (!eventId) {
+      alert('Event ID is missing');
+      return;
+    }
+
+    try {
+      // Delete the event by its ID
+      const response = await axios.delete(`http://localhost:5000/events/${eventId}`);
+      
+      // Remove the deleted event from the state without re-fetching
+      setEvents((prevEvents) => prevEvents.filter(event => event.id !== eventId));
+      
+      alert('Event deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting event:', error);
+      alert('Failed to delete event');
+    }
+  };
+
   return (
     <div className="admin-home-container">
       <div className="label-and-button-container">
@@ -120,8 +156,8 @@ const ManageHomePage = () => {
             {events.length === 0 ? (
               <p>No events available</p>
             ) : (
-              events.map((event, index) => (
-                <div key={index} className="event-item">
+              events.map((event) => (
+                <div key={event.id} className="event-item">
                   <h3>{event.event_name}</h3>
                   <p>{event.event_description}</p>
                   <img
@@ -129,6 +165,7 @@ const ManageHomePage = () => {
                     alt={event.event_name}
                     className="event-image"
                   />
+                  <button onClick={() => handleDeleteEvent(event.id)}>Delete Event</button>
                 </div>
               ))
             )}

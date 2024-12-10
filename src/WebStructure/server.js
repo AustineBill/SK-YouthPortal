@@ -586,32 +586,50 @@ app.get('/events', async (req, res) => {
 
 
 
-// POST /api/events - Add new event
+
 // POST /events - Add new event
-app.post('/events', (req, res) => {
-    const { event_name, event_description, amenities, event_image, event_image_format } = req.body;
-  
-    if (!event_name || !event_description || !amenities) {
-      return res.status(400).json({ error: 'Missing required fields' });
+app.post('/events', async (req, res) => {
+  const { event_name, event_description, amenities, event_image, event_image_format } = req.body;
+
+  if (!event_name || !event_description || !amenities || !event_image || !event_image_format) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  try {
+    // Step 1: Check if the event already exists
+    const checkEventQuery = 'SELECT * FROM public.home WHERE event_name = $1';
+    const checkEventResult = await pool.query(checkEventQuery, [event_name]);
+
+    if (checkEventResult.rowCount > 0) {
+      console.log(`Event with name "${event_name}" already exists.`);
+      return res.status(400).json({ error: 'Event with this name already exists' });
     }
-  
-    // Simulate saving the event (replace with actual database logic)
-    const newEvent = {
-      id: Date.now(), // Simulated ID
+
+    // Step 2: Insert the new event into the database if it does not exist
+    const insertQuery = `
+      INSERT INTO public.home (event_name, event_description, amenities, event_image, event_image_format)
+      VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+    const result = await pool.query(insertQuery, [
       event_name,
       event_description,
       amenities,
       event_image,
       event_image_format,
-    };
-  
-    console.log('New event received:', newEvent);
-  
-    // Send the event back as a response
+    ]);
+
+    // Log the inserted event
+    const newEvent = result.rows[0];
+    console.log('New event added:', newEvent);
+
+    // Return the newly inserted event data
     res.status(201).json(newEvent);
-  });
-// Update event details by ID
-// PUT /events/:id - Update event details
+  } catch (error) {
+    console.error('Error adding event:', error);
+    res.status(500).json({ error: 'Error adding event' });
+  }
+});
+
+
 app.put('/events/:id', async (req, res) => {
     const { event_name, event_description, amenities, event_image, event_image_format } = req.body;
     const eventId = req.params.id;
@@ -639,6 +657,45 @@ app.put('/events/:id', async (req, res) => {
       res.status(500).json({ error: 'Error updating event details' });
     }
   });
+
+  // DELETE /events/:id - Delete event by ID
+  app.delete('/events/:event_name', async (req, res) => {
+    const { event_name } = req.params;
+  
+    try {
+      // Step 1: Fetch the event id based on the event name
+      const getEventIdResult = await pool.query(
+        'SELECT id FROM public.home WHERE event_name = $1',
+        [event_name]
+      );
+  
+      // Step 2: If no event is found, return an error
+      if (getEventIdResult.rowCount === 0) {
+        return res.status(404).json({ error: 'Event not found' });
+      }
+  
+      const eventId = getEventIdResult.rows[0].id; // Fetch the event_id from the result
+  
+      // Step 3: Delete the event using the event_id
+      const deleteResult = await pool.query(
+        'DELETE FROM public.home WHERE id = $1 RETURNING *',
+        [eventId]
+      );
+  
+      // If no rows were affected, the event was not found
+      if (deleteResult.rowCount === 0) {
+        return res.status(404).json({ error: 'Event not found' });
+      }
+  
+      // Send back the deleted event data
+      res.json({ message: 'Event deleted successfully', event: deleteResult.rows[0] });
+    } catch (error) {
+      console.error('Error deleting event:', error);
+      res.status(500).json({ error: 'Error deleting event' });
+    }
+  });
+  
+
   
 //END HOME PAGE
   
