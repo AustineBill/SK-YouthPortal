@@ -63,11 +63,15 @@ const ManageHomePage = () => {
   };
 
   // Handle adding a new event
+
+  /// Handle adding a new event
   const handleAddEvent = async () => {
     if (!newEvent.title || !newEvent.description || !newEvent.amenities || !newEvent.image) {
       alert('Please fill in all event details');
       return;
     }
+  
+    console.log('Adding new event with details:', newEvent);
   
     try {
       const response = await axios.post('http://localhost:5000/events', {
@@ -75,28 +79,30 @@ const ManageHomePage = () => {
         event_description: newEvent.description,
         amenities: newEvent.amenities,
         event_image: newEvent.image,
-        event_image_format: newEvent.imageFormat
+        event_image_format: newEvent.imageFormat,
       });
   
-      console.log(response.data); // Log success message
-      setEvents([...events, response.data]); // Add new event to the state
+      console.log('Server response after adding event:', response.data);
+  
+      // Update UI with the new event
+      setEvents([...events, response.data]);
       setNewEvent({
         title: '',
         description: '',
         amenities: '',
         image: '',
-        imageFormat: ''
+        imageFormat: '',
       });
-      setImagePreview(null); // Clear image preview
-      setActiveContent('events'); // Switch back to events list
-  
-      // Reload or navigate back to homepage
-      window.location.href = '/';  // Redirect to homepage directly
+      setImagePreview(null);
+      setActiveContent('events');
+      window.location.href = '/';
     } catch (error) {
-      console.error('Error adding event:', error);
-      alert('Failed to add event');
+      console.error('Error adding event:', error.response?.data || error.message);
+      alert('Failed to add event. Please check the console for details.');
     }
   };
+  
+ 
   
   return (
     <div className="admin-home-container">

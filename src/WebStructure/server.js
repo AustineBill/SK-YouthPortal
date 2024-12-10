@@ -587,32 +587,59 @@ app.get('/events', async (req, res) => {
 
 
 // POST /api/events - Add new event
-// Update event details
+// POST /events - Add new event
+app.post('/events', (req, res) => {
+    const { event_name, event_description, amenities, event_image, event_image_format } = req.body;
+  
+    if (!event_name || !event_description || !amenities) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+  
+    // Simulate saving the event (replace with actual database logic)
+    const newEvent = {
+      id: Date.now(), // Simulated ID
+      event_name,
+      event_description,
+      amenities,
+      event_image,
+      event_image_format,
+    };
+  
+    console.log('New event received:', newEvent);
+  
+    // Send the event back as a response
+    res.status(201).json(newEvent);
+  });
 // Update event details by ID
+// PUT /events/:id - Update event details
 app.put('/events/:id', async (req, res) => {
-  const { event_name, event_description, amenities, event_image, event_image_format } = req.body;
-  const eventId = req.params.id;
-
-  // Ensure required fields are provided
-  if (!event_name || !event_description || !amenities) {
-    return res.status(400).json({ error: 'All fields (event_name, event_description, amenities) are required' });
-  }
-
-  try {
-    // Update event data in the database
-    await pool.query(
-      'UPDATE public.home SET event_name = $1, event_description = $2, amenities = $3, event_image = $4, event_image_format = $5 WHERE id = $6',
-      [event_name, event_description, amenities, event_image, event_image_format, eventId]
-    );
-
-    // Send a success response
-    res.json({ message: 'Event updated successfully' });
-  } catch (error) {
-    console.error('Error updating event:', error);
-    res.status(500).json({ error: 'Error updating event details' });
-  }
-});
-
+    const { event_name, event_description, amenities, event_image, event_image_format } = req.body;
+    const eventId = req.params.id;
+  
+    // Ensure required fields are provided
+    if (!event_name || !event_description || !amenities) {
+      return res.status(400).json({ error: 'All fields (event_name, event_description, amenities) are required' });
+    }
+  
+    try {
+      // Update event data in the database
+      const result = await pool.query(
+        'UPDATE public.home SET event_name = $1, event_description = $2, amenities = $3, event_image = $4, event_image_format = $5 WHERE id = $6',
+        [event_name, event_description, amenities, event_image, event_image_format, eventId]
+      );
+  
+      if (result.rowCount === 0) {
+        return res.status(404).json({ error: 'Event not found' });
+      }
+  
+      // Send a success response
+      res.json({ message: 'Event updated successfully' });
+    } catch (error) {
+      console.error('Error updating event:', error);
+      res.status(500).json({ error: 'Error updating event details' });
+    }
+  });
+  
 //END HOME PAGE
   
 app.listen(5000, () => {
