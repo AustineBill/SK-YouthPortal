@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './styles/AdminManageContactUs.css';
+import { Container } from 'react-bootstrap';
 
 const pageLabels = {
   manageContactDetails: 'Manage Contact Us Details',
@@ -45,51 +46,104 @@ const ManageContactUs = () => {
   };
 
   return (
-    <div className="admin-contact-us-container">
-      <div className="label-and-button-container">
-        <h2>{pageLabels[activeContent]}</h2>
+    <div className='admin-contact-us-container'>
+      <div className='admin-contact-us-label-and-button d-flex justify-content-between align-items-center'>
+          <h2 className='admin-contact-us-label-h2 fst-italic'>
+            {pageLabels[activeContent]}
+          </h2>
+
         {activeContent !== 'manageContactDetails' && (
-          <button onClick={() => setActiveContent('manageContactDetails')}>Back</button>
+          <div className='admin-contact-us-back-button'>
+            <button
+              onClick={() => setActiveContent('manageContactDetails')}
+              className='admin-edit-contact-details-back-button rounded'>
+              Back
+            </button>
+          </div>
         )}
       </div>
 
-      <div className="component-contents-container">
+      <div className='admin-contact-us-contents-container d-flex justify-content-center'>
         {activeContent === 'manageContactDetails' && (
-          <div className="contact-us-container">
-            <p>Contact Number: {contactDetails.contact_number}</p>
-            <p>Location: {contactDetails.location}</p>
-            <p>Email: {contactDetails.gmail}</p>
-            <button onClick={() => setActiveContent('editContactDetails')}>Edit Details</button>
+          <div className='admin-current-contacts-details-container d-flex justify-content-center'>
+            {/* Group of Current Contact Details Form */}
+            <div className='admin-contacts-details-group d-flex flex-column align-items-center'>
+              <div className='admin-current-contact-form d-flex flex-column'>
+                <label className='admin-current-contact-label'>Contact Number</label>
+                <input
+                  type='text'
+                  value={contactDetails.contact_number}
+                />
+              </div>
+
+              <div className='admin-current-contact-form d-flex flex-column'>
+                <label className='admin-current-contact-label'>Location</label>
+                <input
+                  type='text'
+                  value={contactDetails.location}
+                />
+              </div>
+
+              <div className='admin-current-contact-form d-flex flex-column'>
+                <label className='admin-current-contact-label'>Email</label>
+                <input
+                  type='text'
+                  value={contactDetails.gmail}
+                />
+              </div>
+
+              <button
+                onClick={() => setActiveContent('editContactDetails')}
+                className='admin-edit-contact-details-button rounded'>
+                Edit Details
+              </button>
+            </div>
           </div>
         )}
 
         {activeContent === 'editContactDetails' && (
-          <div className="edit-contact-us-container">
-            <label>Contact Number</label>
-            <input
-              type="text"
-              value={newContactDetails.contact_number}
-              onChange={(e) =>
-                setNewContactDetails({ ...newContactDetails, contact_number: e.target.value })
-              }
-            />
-            <label>Location</label>
-            <input
-              type="text"
-              value={newContactDetails.location}
-              onChange={(e) =>
-                setNewContactDetails({ ...newContactDetails, location: e.target.value })
-              }
-            />
-            <label>Email</label>
-            <input
-              type="email"
-              value={newContactDetails.gmail}
-              onChange={(e) =>
-                setNewContactDetails({ ...newContactDetails, gmail: e.target.value })
-              }
-            />
-            <button onClick={saveContactDetails}>Save Details</button>
+          <div className='admin-edit-contacts-details-container d-flex justify-content-center'>
+            {/* Group of Edit Contact Details Form */}
+            <form className='admin-edit-contacts-details-group d-flex flex-column align-items-center'>
+              <div className='admin-edit-contact-form d-flex flex-column'>
+                <label className='admin-edit-contact-label'>Contact Number</label>
+                <input
+                  type='text'
+                  value={newContactDetails.contact_number}
+                  onChange={(e) =>
+                    setNewContactDetails({ ...newContactDetails, contact_number: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className='admin-edit-contact-form d-flex flex-column'>
+                <label className='admin-edit-contact-label'>Location</label>
+                <input
+                  type='text'
+                  value={newContactDetails.location}
+                  onChange={(e) =>
+                    setNewContactDetails({ ...newContactDetails, location: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className='admin-edit-contact-form d-flex flex-column'>
+                <label className='admin-edit-contact-label'>Email</label>
+                <input
+                  type='email'
+                  value={newContactDetails.gmail}
+                  onChange={(e) =>
+                    setNewContactDetails({ ...newContactDetails, gmail: e.target.value })
+                  }
+                />
+              </div>
+
+              <button
+                onClick={saveContactDetails}
+                className='admin-save-contact-details-button rounded text-white'>
+                Save Details
+              </button>
+            </form>
           </div>
         )}
       </div>
