@@ -102,15 +102,6 @@ const Reports = () => {
                                 </div>
                             </div>
 
-                            <div className='generate-report-form'>
-                                <label className='admin-generate-report-label'>User ID</label>
-                                <input
-                                    type="text"
-                                    placeholder="User ID"
-                                    className="form-control"
-                                />
-                            </div>
-
                             <button
                                 type="submit"
                                 className="admin-generate-report-button bg-primary rounded-pill">
