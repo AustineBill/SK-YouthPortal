@@ -1,5 +1,6 @@
 /* ManageHomePage.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
 
 .admin-home-container {
     position: relative;
@@ -36,51 +37,59 @@
     text-underline-offset: 10px;
 }
 
-.admin-events-details-container,
-.admin-add-event-container {
+.admin-home-contents-container {
+    margin-bottom: 40px;
+}
+
+.admin-events-details-container, 
+.admin-add-event-details-container {
     background-color: #c5c1c1;
     width: 90%;
 }
 
-.admin-add-event-container {
-    display: flex;
-    flex-direction: column;
+/* Yung kasama neto, ako na bahala basta ayusin mo yung content nung all events. */
+.admin-add-event-details-group {
+    width: 90%;
+    margin: 25px 0 25px 0;
 }
 
-.admin-add-event-group {
-    margin: 25px 0 20px 0;
+/* Yung kasama neto, ako na bahala basta ayusin mo yung content nung all events. */
+.admin-add-event-form {
     width: 100%;
 }
 
-.admin-add-event-label {
+/* Yung kasama neto, ako na bahala basta ayusin mo yung content nung all events. */
+.admin-add-event-details-group .admin-add-event-label {
     font-family: 'Roboto', sans-serif;
-    text-align: left;
     font-size: 20px;
 }
 
-.admin-add-event-group input[type="text"],
-.admin-add-event-group textarea {
-    margin-bottom: 20px;
-    width: 90%;
+.admin-add-event-details-group input[type='text'],
+.admin-add-event-details-group textarea,
+.admin-add-event-details-group input[type='file'] {
     height: 50px;
     border-style: none;
     border-radius: 10px;
     outline: none;
+    margin-bottom: 0;
     transition: all 0.35s;
 }
 
-.admin-add-event-group input[type="text"]:focus,
-.admin-add-event-group textarea:focus {
-    outline: 2px solid #007bff;
+.admin-add-event-details-group input[type='text']:focus,
+.admin-add-event-details-group textarea:focus,
+.admin-add-event-details-group input[type='file']:focus {
+    outline: 1px solid #007bff;
 }
 
-.admin-add-event-button {
-    margin-bottom: 20px;
-    width: 125px;
+.admin-add-event-details-button {
+    background-color: #42BB4E;
+    margin-top: 10px;
+    width: 150px;
     height: 55px;
+    font-size: 15px;
 }
 
-@media (min-width: 481px) and (max-width: 767px) {
+/* @media (min-width: 481px) and (max-width: 767px) {
     .admin-home-container {
         width: 100%;
         left: 0;
@@ -143,4 +152,4 @@
         width: 90%;
         height: 35px;
     }
-}
+} */
