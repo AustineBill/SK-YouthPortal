@@ -1,54 +1,87 @@
 /* AdminManageAboutUs.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
 
 .admin-about-us-container {
-    position: absolute;
+    position: relative;
     top: 75px;
     left: 25%;
     width: 75%;
     background-color: #FFFFFF;
     font-family: 'Inter', sans-serif;
+    z-index: 1;
 }
 
-.label-and-button-container {
-    margin: 20px 40px 20px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.admin-about-us-label-h2 {
+    font-size: 40px;
+    margin: 20px 0 20px 40px;
 }
 
-.label-and-button-container h2 {
-    font-size: 30px;
+.admin-edit-about-details-back-button {
+    margin: 20px 40px 20px 0;
 }
 
-.label-and-button-container button {
-    background-color: #888585;
-    color: #FFFFFF;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
+.admin-about-us-contents-container {
+    margin-bottom: 40px;
 }
 
-/* .label-and-button-container button:hover {
-
-}
-*/
-
-.component-contents-container {
-    display: flex;
-    justify-content: center;
-}
-
-.about-us-container, .edit-about-us-container {
-    display: flex;
-    justify-content: center;
+.admin-current-about-details-container,
+.admin-edit-about-details-container {
+    background-color: #c5c1c1;
     width: 90%;
-    background-color: #8D8C8C;
 }
 
-/* Still not finished. */
-/* Missing:
-1. Contents, since the contents of the form will be retrieved from the database
-2. Hover for buttons
-3. Design for upcoming contents */
+.admin-about-details-group,
+.admin-edit-about-details-group {
+    width: 90%;
+    margin: 25px 0 25px 0;
+}
+
+.admin-current-about-form,
+.admin-edit-about-form {
+    width: 100%;
+}
+
+.admin-about-details-group .admin-current-about-label, 
+.admin-edit-about-details-group .admin-edit-about-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+
+.admin-current-about-form textarea, 
+.admin-edit-about-form textarea {
+    height: 50px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 10px;
+    transition: all 0.35s;
+}
+
+.admin-current-about-form textarea:focus, 
+.admin-edit-about-form textarea:focus {
+    outline: 1px solid #007bff;
+}
+
+.admin-edit-about-details-back-button {
+    background-color: #25327A;
+    width: 100px;
+    height: 40px;
+    font-size: 15px;
+}
+
+.admin-edit-about-details-button {
+    background-color: #25327A;
+    margin-top: 10px;
+    width: 150px;
+    height: 55px;
+    font-size: 15px;
+}
+
+.admin-save-about-details-button {
+    background-color: #42BB4E;
+    margin-top: 10px;
+    width: 150px;
+    height: 55px;
+    font-size: 15px;
+}

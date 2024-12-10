@@ -1,54 +1,97 @@
 /* AdminManageContactUs.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
 
 .admin-contact-us-container {
-    position: absolute;
+    position: relative;
     top: 75px;
     left: 25%;
     width: 75%;
     background-color: #FFFFFF;
     font-family: 'Inter', sans-serif;
+    z-index: 1;
 }
 
-.label-and-button-container {
-    margin: 20px 40px 20px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.admin-contact-us-label-h2 {
+    font-size: 40px;
+    margin: 20px 0 20px 40px;
 }
 
-.label-and-button-container h2 {
-    font-size: 30px;
+.admin-edit-contact-details-back-button {
+    margin: 20px 40px 20px 0;
 }
 
-.label-and-button-container button {
-    background-color: #888585;
-    color: #FFFFFF;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
+.admin-contact-us-contents-container {
+    margin-bottom: 40px;
 }
 
-/* .label-and-button-container button:hover {
-
-}
-*/
-
-.component-contents-container {
-    display: flex;
-    justify-content: center;
-}
-
-.contact-us-container, .edit-contact-us-container {
-    display: flex;
-    justify-content: center;
+.admin-current-contacts-details-container,
+.admin-edit-contacts-details-container {
+    background-color: #c5c1c1;
     width: 90%;
-    background-color: #8D8C8C;
 }
 
-/* Still not finished. */
-/* Missing:
-1. Contents, since the contents of the form will be retrieved from the database
-2. Hover for buttons
-3. Design for upcoming contents */
+.admin-contacts-details-group,
+.admin-edit-contacts-details-group {
+    width: 90%;
+    margin: 25px 0 25px 0;
+}
+
+.admin-current-contact-form,
+.admin-edit-contact-form {
+    width: 100%;
+}
+
+.admin-contacts-details-group .admin-current-contact-label, 
+.admin-edit-contacts-details-group .admin-edit-contact-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+
+.admin-current-contact-form input[type="text"] {
+    height: 50px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 10px;
+    transition: all 0.35s;
+}
+
+.admin-edit-contact-form input[type="text"],
+.admin-edit-contact-form input[type="email"] {
+    height: 50px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 0;
+    transition: all 0.35s;
+}
+
+.admin-current-contact-form input[type="text"]:focus,
+.admin-edit-contact-form input[type="text"]:focus,
+.admin-edit-contact-form input[type="email"]:focus {
+    outline: 1px solid #007bff;
+}
+
+.admin-edit-contact-details-back-button {
+    background-color: #25327A;
+    width: 100px;
+    height: 40px;
+    font-size: 15px;
+}
+
+.admin-edit-contact-details-button {
+    background-color: #25327A;
+    margin-top: 10px;
+    width: 150px;
+    height: 55px;
+    font-size: 15px;
+}
+
+.admin-save-contact-details-button {
+    background-color: #42BB4E;
+    margin-top: 10px;
+    width: 150px;
+    height: 55px;
+    font-size: 15px;
+}
