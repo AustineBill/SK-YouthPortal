@@ -527,6 +527,94 @@ app.get('/inventory', async (req, res) => {
   });
   
 
+//Admin Side
+  /********* Contact Us na ito ******** */
+
+  // Fetch contact details
+app.get('/contact', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT contact_number, location, gmail FROM public.contact WHERE id = $1', [1]);
+    res.json(result.rows[0]); // Send the contact details
+  } catch (error) {
+    console.error('Error fetching contact details:', error);
+    res.status(500).json({ error: 'Error fetching contact details' });
+  }
+});
+
+// Update contact details
+app.put('/contact', async (req, res) => {
+  const { contact_number, location, gmail } = req.body;
+
+  // Ensure all fields are provided
+  if (!contact_number || !location || !gmail) {
+    return res.status(400).json({ error: 'All fields (contact_number, location, gmail) are required' });
+  }
+
+  try {
+    await pool.query('UPDATE public.contact SET contact_number = $1, location = $2, gmail = $3 WHERE id = $4',
+      [contact_number, location, gmail, 1]);
+    res.json({ message: 'Contact details updated successfully' });
+  } catch (error) {
+    console.error('Error updating contact details:', error);
+    res.status(500).json({ error: 'Error updating contact details' });
+  }
+});
+
+//HOMEPAGE
+// Fetch events from public.home
+// Fetch events from the 'public.home' table
+app.get('/events', async (req, res) => {
+  try {
+    // Query the database to get all events
+    const result = await pool.query('SELECT event_name, event_description, amenities, event_image, event_image_format FROM public.home');
+    
+    // If there are events, send them as a JSON response
+    if (result.rows.length > 0) {
+      const events = result.rows.map(event => ({
+        ...event,
+        event_image: event.event_image ? `data:image/${event.event_image_format};base64,${event.event_image.toString('base64')}` : null,
+      }));
+      res.json(events);
+    } else {
+      res.status(404).json({ error: 'No events found' });
+    }
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.status(500).json({ error: 'Error fetching events' });
+  }
+});
+
+
+
+// POST /api/events - Add new event
+// Update event details
+// Update event details by ID
+app.put('/events/:id', async (req, res) => {
+  const { event_name, event_description, amenities, event_image, event_image_format } = req.body;
+  const eventId = req.params.id;
+
+  // Ensure required fields are provided
+  if (!event_name || !event_description || !amenities) {
+    return res.status(400).json({ error: 'All fields (event_name, event_description, amenities) are required' });
+  }
+
+  try {
+    // Update event data in the database
+    await pool.query(
+      'UPDATE public.home SET event_name = $1, event_description = $2, amenities = $3, event_image = $4, event_image_format = $5 WHERE id = $6',
+      [event_name, event_description, amenities, event_image, event_image_format, eventId]
+    );
+
+    // Send a success response
+    res.json({ message: 'Event updated successfully' });
+  } catch (error) {
+    console.error('Error updating event:', error);
+    res.status(500).json({ error: 'Error updating event details' });
+  }
+});
+
+//END HOME PAGE
+  
 app.listen(5000, () => {
     console.log('Server running on port 5000');
 });
