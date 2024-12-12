@@ -2,18 +2,36 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Pool } = require('pg');
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+
+require('dotenv').config();
+
+
+
+const PORT = process.env.PORT || 5000;
+
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
 const pool = new Pool({
+  user: process.env.PG_USER,      // Get this from Render environment variables
+  host: process.env.PG_HOST,      // Get this from Render environment variables
+  database: process.env.PG_DB,    // Get this from Render environment variables
+  password: process.env.PG_PASS,  // Get this from Render environment variables
+  port: 5432,
+});
+
+/*const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'iSKed',
     password: 'iSKedWB2024',
     port: 5432,
-});
+});*/
 
 
 pool.connect((err) => {
@@ -414,16 +432,51 @@ app.get('/ViewEquipment', async (req, res) => {
       res.status(500).json({ error: err.message });
   }
 });
+
+
+
+
 /******** Inventory ********/
-app.get('/inventory', async (req, res) => {
-    try {
-      const result = await pool.query('SELECT * FROM inventory');
-      res.json(result.rows);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
-  });
+
+// Set up multer storage with the desired destination and file naming
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Save images in the 'uploads/Asset/' directory
+    cb(null, '/Asset/');
+  },
+  filename: (req, file, cb) => {
+    // Use the original file name and extension
+    const fileExtension = path.extname(file.originalname); // Get the file extension (e.g., .png, .jpg)
+    const fileName = file.fieldname + '-' + Date.now() + fileExtension; // Generate a unique file name
+    cb(null, fileName); // Save the file with the new name
+  }
+});
+
+// Initialize multer with the custom storage
+const upload = multer({ storage: storage });
+
+// POST route to add inventory item
+app.post('/inventory', upload.single('image'), (req, res) => {
+  const { name, quantity, specification, status } = req.body;
+  const imageFileName = req.file ? '/Asset/' + req.file.filename : null; // Use the correct file path
+
+  const query = 'INSERT INTO inventory (name, quantity, specification, status, image) VALUES ($1, $2, $3, $4, $5)';
+  const values = [name, quantity, specification, status, imageFileName];
+
+  pool.query(query, values)
+    .then(() => res.status(201).send('Item added successfully'))
+    .catch(error => res.status(500).send(error.message));
+});
+
+
+// GET route to fetch all inventory items
+app.get('/inventory', (req, res) => {
+  pool.query('SELECT * FROM inventory')
+    .then(result => res.json(result.rows))
+    .catch(error => res.status(500).send(error.message));
+});
+
+
 
   app.put('/inventory/update', async (req, res) => {
     const { user_id, reservation_id, equipmentReservations, start_date, end_date } = req.body;
@@ -494,6 +547,12 @@ app.get('/inventory', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+
+
+
+// Assuming you're using Express with a PostgreSQL database
+
 
 
   /***** Check Reservatoion *******/
@@ -696,9 +755,6 @@ app.put('/events/:id', async (req, res) => {
   });
   
 
-  
-//END HOME PAGE
-  
-app.listen(5000, () => {
-    console.log('Server running on port 5000');
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
