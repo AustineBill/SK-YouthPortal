@@ -28,6 +28,10 @@ app.get('/', (req, res) => {
     res.send('Welcome to the iSKed API');
 });
 
+app.get('/users', (req, res) => {
+  res.json(users);  // Respond with the list of users
+});
+
 /********* Website ******** */
 
 app.get('/Website/description', async (req, res) => {
@@ -695,8 +699,96 @@ app.put('/events/:id', async (req, res) => {
     }
   });
   
+// end home page ///
+  // user modification route ...
 
-  
+  // Admin route to view a user's profile by user ID
+app.get('/users/:id', async (req, res) => {
+  const userId = req.params.id; // Get the user ID from the route parameters
+  try {
+    const query = `
+      SELECT 
+        id, username, firstname, lastname, region, province, city, barangay, zone,
+        sex, age, birthday, email_address, contact_number, civil_status,
+        youth_age_group, work_status, educational_background, registered_sk_voter
+      FROM Users
+      WHERE id = $1;
+    `;
+    
+    const result = await pool.query(query, [userId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error fetching profile:', err.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+// Admin route to create a new user
+app.post('/users', async (req, res) => {
+  const { username, firstname, lastname, region, province, city, barangay, zone, sex, age, birthday, email_address, contact_number, civil_status, youth_age_group, work_status, educational_background, registered_sk_voter } = req.body;
+
+  try {
+    const query = `
+      INSERT INTO Users (
+        username, firstname, lastname, region, province, city, barangay, zone, sex, age, birthday, email_address, contact_number, civil_status, youth_age_group, work_status, educational_background, registered_sk_voter
+      )
+      VALUES (
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17
+      )
+      RETURNING id;  -- Returning the newly created user's ID
+    `;
+
+    const result = await pool.query(query, [
+      username, firstname, lastname, region, province, city, barangay, zone, sex, age, birthday, email_address, contact_number, civil_status, youth_age_group, work_status, educational_background, registered_sk_voter
+    ]);
+
+    if (result.rows.length > 0) {
+      res.status(201).json({
+        message: 'User created successfully',
+        userId: result.rows[0].id,  // Return the ID of the newly created user
+      });
+    } else {
+      res.status(400).json({ message: 'Failed to create user' });
+    }
+  } catch (err) {
+    console.error('Error creating user:', err.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+// Admin route to update a user's profile by user ID
+app.put('/users/:id', async (req, res) => {
+  const userId = req.params.id; // Get the user ID from the route parameters
+  const { firstname, lastname, region, province, city, barangay, zone, sex, age, birthday, email_address, contact_number, civil_status, youth_age_group, work_status, educational_background, registered_sk_voter } = req.body;
+
+  try {
+    const query = `
+      UPDATE Users
+      SET firstname = $1, lastname = $2, region = $3, province = $4, city = $5, barangay = $6, zone = $7, sex = $8, age = $9, birthday = $10, email_address = $11, contact_number = $12, civil_status = $13, youth_age_group = $14, work_status = $15, educational_background = $16, registered_sk_voter = $17
+      WHERE id = $18;
+    `;
+    
+    const result = await pool.query(query, [
+      firstname, lastname, region, province, city, barangay, zone, sex, age, birthday, email_address, contact_number, civil_status, youth_age_group, work_status, educational_background, registered_sk_voter, userId
+    ]);
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'User not found or no changes made' });
+    }
+
+    res.status(200).json({ message: 'Profile updated successfully' });
+  } catch (err) {
+    console.error('Profile update error:', err.stack);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 //END HOME PAGE
   
 app.listen(5000, () => {
