@@ -16,6 +16,10 @@ const pool = new Pool({
 });
 
 
+// Import the functions from Codex.js
+const { generateRandomId, EncryptionCode, DecryptionCode } = require('./Codex');
+
+
 pool.connect((err) => {
     if (err) {
         console.error('Database connection failed:', err.stack);
@@ -28,17 +32,6 @@ app.get('/', (req, res) => {
     res.send('Welcome to the iSKed API');
 });
 
-function generateRandomId(length = 6) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?';
-  let randomId = '';
-  
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    randomId += characters[randomIndex];
-  }
-  
-  return randomId;
-}
 
 
 // Fetch all users
