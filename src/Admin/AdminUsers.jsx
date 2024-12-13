@@ -1,35 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './styles/AdminUsers.css';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
     const [newUser, setNewUser] = useState({
-        nameOfYouth: '',
+        username: '',
+        password: '',
         firstname: '',
         lastname: '',
         region: '',
         province: '',
-        cityMunicipality: '',
+        city: '',
         barangay: '',
-        purokZone: '',
-        sexAssignedAtBirth: '',
+        zone: '',
+        sex: '',
         age: '',
         birthday: '',
-        emailAddress: '',
-        contactNumber: '',
-        civilStatus: '',
-        youthClassification: '',
-        youthAgeGroup: '',
-        workStatus: '',
-        educationalBackground: '',
-        registeredSKVoter: '',
-        registeredNationalVoter: ''
+        email_address : '',
+        contact_number: '',
+        civil_status: '',
+        youth_age_group: '',
+        work_status: '',
+        educational_background: '',
+        registered_sk_voter: '',
+        registered_national_voter: ''
     });
     const [isEditing, setIsEditing] = useState(false);
     const [editUserId, setEditUserId] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const navigate = useNavigate();
+    const [DeleteModalVisible, setDeleteModalVisible] = useState(false);
+    const [deleteUserId, setDeleteUserId] = useState(null);
+    const [viewUser, setViewUser] = useState(null); // Store the user data to view
+    const [showViewModal, setShowViewModal] = useState(false); // To control the modal visibility
+    const [selectedClassification, setSelectedClassification] = useState('');
+    const youthClassifications = ['Child Youth', 'Core Youth', 'Adult Youth', ];  // Add your classifications here
+
 
     // Fetch users from backend
     useEffect(() => {
@@ -51,40 +56,42 @@ const Users = () => {
         const { name, value } = e.target;
         setNewUser((prev) => {
             const updatedUser = { ...prev, [name]: value };
-            console.log("Updated Form Data on Change:", updatedUser);  // Log the form data after each change
+            //console.log("Updated Form Data on Change:", updatedUser);  // Log the form data after each change
             return updatedUser;
         });
     };
-    
 
     // Add a new user
     const handleAddUser = async () => {
-        console.log("Form Data for Add User:", newUser);  // Print all the inputs when adding a user
+        //console.log("Form Data for Add User:", newUser);  // Log the user data before sending
+    
         try {
             const response = await fetch('http://localhost:5000/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newUser), 
+                body: JSON.stringify(newUser), // Send the data as JSON
             });
     
             if (response.ok) {
-                const createdUser = await response.json();
-                console.log("Created User:", createdUser);  // Debugging log to check createdUser object
+                const createdUser = await response.json();  // Receive the created user response from backend
+                //console.log("Created User:", createdUser);  // Log the created user to ensure it's correct
+    
+                // Update the users state to reflect the newly added user
                 setUsers(prevUsers => [...prevUsers, createdUser]);
+    
+                // Reset the form fields after adding the user
                 resetForm();
-                setShowModal(false);
+                setShowModal(false);  // Close the modal after adding the user
             } else {
-                console.error('Failed to add user');
+                console.error('Failed to add user. Response not OK.');
             }
         } catch (error) {
-            console.error('Error adding user:', error);
+            console.error('Error adding user:', error);  // Catch any errors from the fetch
         }
     };
     
-    
-
     // Edit an existing user
     const handleEdit = (userId) => {
         const user = users.find((u) => u.id === userId);
@@ -96,7 +103,7 @@ const Users = () => {
 
     // Update an existing user
     const handleUpdateUser = async () => {
-        console.log("Form Data for Update User:", newUser);  // Print all the inputs when updating a user
+        //console.log("Form Data for Update User:", newUser);  // Print all the inputs when updating a user
         try {
             const response = await fetch(`http://localhost:5000/users/${editUserId}`, {
                 method: 'PUT',
@@ -109,7 +116,7 @@ const Users = () => {
             if (response.ok) {
                 const updatedUser = await response.json();
                 setUsers(users.map((u) => (u.id === editUserId ? updatedUser : u)));
-                console.log('User updated successfully:', updatedUser);
+                //console.log('User updated successfully:', updatedUser);
                 resetForm();
                 setShowModal(false);
             } else {
@@ -126,9 +133,10 @@ const Users = () => {
             const response = await fetch(`http://localhost:5000/users/${userId}`, {
                 method: 'DELETE',
             });
-
+    
             if (response.ok) {
                 setUsers(users.filter((user) => user.id !== userId));
+                setDeleteModalVisible(false);  // Close the modal after successful deletion
             } else {
                 console.error('Failed to delete user');
             }
@@ -136,39 +144,50 @@ const Users = () => {
             console.error('Error deleting user:', error);
         }
     };
-
-    // Navigate to user details page
-    const handleViewDetails = (userId) => {
-        navigate(`/users/${userId}`);
+    const openDeleteModal = (userId) => {
+        setDeleteUserId(userId);  // Store the user ID to be deleted
+        setDeleteModalVisible(true);
     };
+
+    const handleViewDetails = (userId) => {
+        const user = users.find((u) => u.id === userId);
+        setViewUser(user);  // Set the user data to view
+        setShowViewModal(true);  // Open the modal
+    };
+    
 
     // Reset form and state
     const resetForm = () => {
         setNewUser({
-            nameOfYouth: '',
+            username: '',
+            password: '',
             firstname: '',
             lastname: '',
             region: '',
             province: '',
-            cityMunicipality: '',
+            city: '',
             barangay: '',
-            purokZone: '',
-            sexAssignedAtBirth: '',
+            zone: '',
+            sex: '',
             age: '',
             birthday: '',
-            emailAddress: '',
-            contactNumber: '',
-            civilStatus: '',
-            youthClassification: '',
-            youthAgeGroup: '',
-            workStatus: '',
-            educationalBackground: '',
-            registeredSKVoter: '',
-            registeredNationalVoter: ''
+            email_address : '',
+            contact_number: '',
+            civil_status: '',
+            youth_age_group: '',
+            work_status: '',
+            educational_background: '',
+            registered_sk_voter: '',
+            registered_national_voter: ''
         });
         setIsEditing(false);
         setEditUserId(null);
     };
+
+    const filteredUsers = selectedClassification
+  ? users.filter((user) => user.youth_age_group === selectedClassification)
+  : users;
+
 
     return (
         <div className="admin-users-container">
@@ -181,54 +200,119 @@ const Users = () => {
                     Add User
                 </button>
 
+                <select
+                    value={selectedClassification}
+                    onChange={(e) => setSelectedClassification(e.target.value)}
+                    className="form-control mb-3"
+                    >
+                    <option value="">Select Youth Classification</option>
+                    {youthClassifications.map((classification, index) => (
+                        <option key={index} value={classification}>
+                        {classification}
+                        </option>
+                    ))}
+                    </select>
+
                 <div className="users-list-container">
                     <table className="table table-striped table-bordered mt-4">
                         <thead>
                             <tr>
-                                <th>USERID</th>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                                <th>Action</th>
+                            <th>USERID</th>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Youth Classification</th>
+                            <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {users.length === 0 ? (
-                                <tr>
-                                    <td colSpan="4" className="text-center">No users available</td>
-                                </tr>
+                            {filteredUsers.length === 0 ? (
+                            <tr>
+                                <td colSpan="5" className="text-center">No users found for this classification</td>
+                            </tr>
                             ) : (
-                                users.map((user) => (
-                                    <tr key={user.id}>
-                                        <td>{user.id}</td>
-                                        <td>{user.firstname}</td>
-                                        <td>{user.lastname}</td>
-                                        <td>
-                                            <button
-                                                className="btn btn-info me-2"
-                                                onClick={() => handleViewDetails(user.id)}
-                                            >
-                                                View All Details
-                                            </button>
-                                            <button
-                                                className="btn btn-warning me-2"
-                                                onClick={() => handleEdit(user.id)}
-                                            >
-                                                Edit User
-                                            </button>
-                                            <button
-                                                className="btn btn-danger"
-                                                onClick={() => handleDelete(user.id)}
-                                            >
-                                                Delete User
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
+                            filteredUsers.map((user) => (
+                                <tr key={user.id}>
+                                <td>{user.id}</td>
+                                <td>{user.firstname}</td>
+                                <td>{user.lastname}</td>
+                                <td>{user.youth_age_group}</td>
+                                <td>
+                                    <button
+                                    className="btn btn-info me-2"
+                                    onClick={() => handleViewDetails(user.id)}
+                                    >
+                                    View
+                                    </button>
+                                    <button
+                                    className="btn btn-warning me-2"
+                                    onClick={() => handleEdit(user.id)}
+                                    >
+                                    Edit
+                                    </button>
+                                    <button
+                                    className="btn btn-danger"
+                                    onClick={() => openDeleteModal(user.id)}
+                                    >
+                                    Delete
+                                    </button>
+                                </td>
+                                </tr>
+                            ))
                             )}
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            {/* Logout Confirmation Modal */}
+            {DeleteModalVisible && (
+                <div className='ModalOverlayStyles'>
+                    <div className='ModalStyles semi-large'>
+                        <h3>Confirm Deletion</h3>
+                        <p>Are you sure you want to delete this user?</p>
+                        <button
+                            className="ModalButtonStyles SmallButton btn-dark super-small"
+                            onClick={() => handleDelete(deleteUserId)} >Yes</button>
+                                <button className="ModalButtonStyles SmallButton btn-db super-small" 
+                                        onClick={() => setDeleteModalVisible(false)}>No</button>
+                        </div>
+                </div>
+            )}
+
+
+            {showViewModal && viewUser && (
+                <div className="modal show" style={{ display: 'block' }} tabIndex="-1" role="dialog">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">View User Details</h5>
+                                <button type="button" className="close" onClick={() => setShowViewModal(false)}>
+                                    <span>&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <div><strong>Username:</strong> {viewUser.username}</div>
+                                <div><strong>Firstname:</strong> {viewUser.firstname}</div>
+                                <div><strong>Lastname:</strong> {viewUser.lastname}</div>
+                                <div><strong>Youth Classification:</strong> {viewUser.youth_age_group}</div>
+                                <div><strong>Email Address:</strong> {viewUser.email_address}</div>
+                                <div><strong>Contact Number:</strong> {viewUser.contact_number}</div>
+                                <div><strong>Age:</strong> {viewUser.age}</div>
+                                <div><strong>Sex:</strong> {viewUser.sex}</div>
+                                <div><strong>Work Status:</strong> {viewUser.work_status}</div>
+                                <div><strong>Educational Background:</strong> {viewUser.educational_background}</div>
+                                <div><strong>Birthday:</strong> {viewUser.birthday}</div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={() => setShowViewModal(false)}>
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+      
 
             {/* Modal for Adding/Editing User */}
             {showModal && (
@@ -243,13 +327,22 @@ const Users = () => {
                             </div>
                             <div className="modal-body">
                                 <form>
-                                    <label>Name of Youth</label>
+                                    <label>Username</label>
                                     <input
                                         type="text"
-                                        name="nameOfYouth"
-                                        value={newUser.nameOfYouth}
+                                        name="username"
+                                        value={newUser.username}
                                         onChange={handleChange}
-                                        placeholder="Name of Youth"
+                                        placeholder="username"
+                                        required
+                                    />
+                                     <label>Password</label>
+                                     <input
+                                        type="text"
+                                        name="password"
+                                        value={newUser.password}
+                                        onChange={handleChange}
+                                        placeholder="password"
                                         required
                                     />
                                     <label>Firstname</label>
@@ -291,10 +384,10 @@ const Users = () => {
                                     <label>City/Municipality</label>
                                     <input
                                         type="text"
-                                        name="cityMunicipality"
-                                        value={newUser.cityMunicipality}
+                                        name="city"
+                                        value={newUser.city}
                                         onChange={handleChange}
-                                        placeholder="City/Municipality"
+                                        placeholder="City"
                                         required
                                     />
                                     <label>Barangay</label>
@@ -309,16 +402,16 @@ const Users = () => {
                                     <label>Purok/Zone</label>
                                     <input
                                         type="text"
-                                        name="purokZone"
-                                        value={newUser.purokZone}
+                                        name="zone"
+                                        value={newUser.zone}
                                         onChange={handleChange}
-                                        placeholder="Purok/Zone"
+                                        placeholder="zone"
                                         required
                                     />
                                     <label>Sex Assigned at Birth</label>
                                     <select
-                                        name="sexAssignedAtBirth"
-                                        value={newUser.sexAssignedAtBirth}
+                                        name="sex"
+                                        value={newUser.sex}
                                         onChange={handleChange}
                                         required
                                     >
@@ -346,8 +439,8 @@ const Users = () => {
                                     <label>E-mail Address</label>
                                     <input
                                         type="email"
-                                        name="emailAddress"
-                                        value={newUser.emailAddress}
+                                        name="email_address"
+                                        value={newUser.email_address}
                                         onChange={handleChange}
                                         placeholder="E-mail Address"
                                         required
@@ -355,16 +448,16 @@ const Users = () => {
                                     <label>Contact Number</label>
                                     <input
                                         type="text"
-                                        name="contactNumber"
-                                        value={newUser.contactNumber}
+                                        name="contact_number"
+                                        value={newUser.contact_number}
                                         onChange={handleChange}
                                         placeholder="Contact Number"
                                         required
                                     />
                                     <label>Civil Status</label>
                                     <select
-                                        name="civilStatus"
-                                        value={newUser.civilStatus}
+                                        name="civil_status"
+                                        value={newUser.civil_status}
                                         onChange={handleChange}
                                         required
                                     >
@@ -373,28 +466,23 @@ const Users = () => {
                                         <option value="Married">Married</option>
                                         <option value="Widowed">Widowed</option>
                                     </select>
-                                    <label>Youth Classification</label>
-                                    <input
-                                        type="text"
-                                        name="youthClassification"
-                                        value={newUser.youthClassification}
-                                        onChange={handleChange}
-                                        placeholder="Youth Classification"
-                                        required
-                                    />
                                     <label>Youth Age Group</label>
-                                    <input
-                                        type="text"
-                                        name="youthAgeGroup"
-                                        value={newUser.youthAgeGroup}
+                                     <select
+                                        name="youth_age_group"
+                                        value={newUser.youth_age_group}
                                         onChange={handleChange}
                                         placeholder="Youth Age Group"
                                         required
-                                    />
+                                    >
+                                        <option value="">Select Option</option>
+                                        <option value="Child Youth">Child Youth</option>
+                                        <option value="Core Youth">Core Youth</option>
+                                        <option value="Adult Youth">Adult Youth</option>
+                                    </select>
                                     <label>Work Status</label>
                                     <select
-                                        name="workStatus"
-                                        value={newUser.workStatus}
+                                        name="work_status"
+                                        value={newUser.work_status}
                                         onChange={handleChange}
                                         required
                                     >
@@ -403,18 +491,22 @@ const Users = () => {
                                         <option value="Unemployed">Unemployed</option>
                                     </select>
                                     <label>Educational Background</label>
-                                    <input
-                                        type="text"
-                                        name="educationalBackground"
-                                        value={newUser.educationalBackground}
+                                    <select
+                                        name="educational_background"
+                                        value={newUser.educational_background}
                                         onChange={handleChange}
                                         placeholder="Educational Background"
                                         required
-                                    />
+                                    >
+                                        <option value="">Select Option</option>
+                                        <option value="High School">High School</option>
+                                        <option value="College">College</option>
+                                        <option value="College Graduate">College Graduate</option>
+                                    </select>
                                     <label>Registered SK Voter?</label>
                                     <select
-                                        name="registeredSKVoter"
-                                        value={newUser.registeredSKVoter}
+                                        name="registered_sk_voter"
+                                        value={newUser.registered_sk_voter}
                                         onChange={handleChange}
                                         required
                                     >
@@ -424,8 +516,8 @@ const Users = () => {
                                     </select>
                                     <label>Registered National Voter?</label>
                                     <select
-                                        name="registeredNationalVoter"
-                                        value={newUser.registeredNationalVoter}
+                                        name="registered_national_voter"
+                                        value={newUser.registered_national_voter}
                                         onChange={handleChange}
                                         required
                                     >
@@ -451,7 +543,7 @@ const Users = () => {
                                     {isEditing ? 'Update User' : 'Add User'}
                                 </button>
                             </div>
-                        </div>
+                        </div>  
                     </div>
                 </div>
             )}
