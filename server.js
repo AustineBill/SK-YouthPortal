@@ -9,7 +9,6 @@ const path = require('path');
 require('dotenv').config();
 
 
-
 const PORT = process.env.PORT || 5000;
 
 
@@ -17,21 +16,21 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const pool = new Pool({
+/*const pool = new Pool({
   user: process.env.PG_USER,      // Get this from Render environment variables
   host: process.env.PG_HOST,      // Get this from Render environment variables
   database: process.env.PG_DB,    // Get this from Render environment variables
   password: process.env.PG_PASS,  // Get this from Render environment variables
   port: 5432,
-});
+});*/
 
-/*const pool = new Pool({
+const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'iSKed',
     password: 'iSKedWB2024',
     port: 5432,
-});*/
+});
 
 
 pool.connect((err) => {
@@ -131,14 +130,13 @@ app.get('/Profile/:username', async (req, res) => {
   const username = req.params.username;
   //const userId = req.userId; // Assume userId is extracted from a secure session or token
   //WHERE id = $1 AND username = $1
-  
   try {
     const query = `
         SELECT 
             id, username, firstname, lastname, region, province, city, barangay, zone,
             sex, age, birthday, email_address, contact_number, civil_status,
             youth_age_group, work_status, educational_background, 
-            registered_sk_voter,
+            registered_sk_voter
         FROM Users
         WHERE username = $1
     `;
@@ -153,25 +151,6 @@ app.get('/Profile/:username', async (req, res) => {
     console.error('Error fetching profile:', err.message);
     res.status(500).json({ message: 'Internal server error' });
   }
-});
-
-
-
-// Modify the '/Profile/:id' PUT route to update user data by id
-app.put('/Profile/:id', async (req, res) => {
-    const { id } = req.params;
-    const { fullName, email, phone, address } = req.body;
-    try {
-        // Update user data based on user id
-        await pool.query(
-            'UPDATE Users SET full_name = $1, email = $2, phone = $3, address = $4 WHERE id = $5',
-            [fullName, email, phone, address, id]
-        );
-        res.status(200).json({ message: 'Profile updated successfully' });
-    } catch (err) {
-        console.error('Profile update error:', err.stack);
-        res.status(500).json({ message: 'Server error' });
-    }
 });
 
 
@@ -208,28 +187,66 @@ app.get('/reservations', async (req, res) => {
       res.status(500).send('Server error');
     }
   });
+  
+app.post('/schedule/equipment', async (req, res) => {
+  const { user_id, reservation_id, reservedEquipment, startDate, endDate } = req.body;
+  
+  if (!user_id) {
+    return res.status(400).json({ error: 'User ID is required' });
+  }
 
-  app.post('/schedule/equipment', async (req, res) => {
-    const { user_id, reservation_id, reservedEquipment, startDate, endDate } = req.body;
-    try {
-        const result = await pool.query(
-            `INSERT INTO Equipment (user_id, reservation_id, start_date, end_date, reserved_equipment)
-            VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-            [
-                user_id,
-                reservation_id,
-                startDate,
-                endDate,
-                JSON.stringify(reservedEquipment),
-            ]
-        );
+  const client = await pool.connect();  // Acquire client from the pool
+  try {
+    await client.query('BEGIN');  // Start the transaction
 
-        res.status(201).json(result.rows[0]);
-    } catch (error) {
-        console.error('Error saving reservation:', error.message);  // Log the error message
-        res.status(500).json({ error: error.message, stack: error.stack });  // Send the detailed error response
+    // Step 1: Insert the reservation into the Equipment table
+    const result = await client.query(
+      `INSERT INTO Equipment (user_id, reservation_id, start_date, end_date, reserved_equipment)
+      VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+      [
+        user_id,
+        reservation_id,
+        startDate,
+        endDate,
+        JSON.stringify(reservedEquipment),
+      ]
+    );
+    
+    const reservationId = result.rows[0].id;
+
+    // Step 2: Update inventory by reducing the quantity
+    for (const equipment of reservedEquipment) {
+      const { id, quantity } = equipment;
+
+      // Check if there is enough stock
+      const inventoryCheckQuery = 'SELECT quantity FROM Inventory WHERE id = $1';
+      const inventoryCheckResult = await client.query(inventoryCheckQuery, [id]);
+      
+      if (inventoryCheckResult.rowCount === 0 || inventoryCheckResult.rows[0].quantity < quantity) {
+        // If not enough stock, rollback transaction and send error
+        await client.query('ROLLBACK');
+        return res.status(400).json({ error: `Not enough stock for ${equipment.name}` });
+      }
+
+      // Update the inventory by reducing the quantity
+      const updateInventoryQuery = 'UPDATE Inventory SET quantity = quantity - $1 WHERE id = $2';
+      await client.query(updateInventoryQuery, [quantity, id]);
     }
+
+    // Commit transaction after successful operations
+    await client.query('COMMIT');
+
+    // Return the reservation details (with the inserted reservation ID)
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    await client.query('ROLLBACK');  // Rollback if an error occurs
+    console.error('Error saving reservation:', error.message);  // Log the error message
+    res.status(500).json({ error: error.message, stack: error.stack });
+  } finally {
+    client.release();  // Release the database client back to the pool
+  }
 });
+
 
 app.get('/schedule/equipment', async (req, res) => {
   const { userId } = req.query;
@@ -280,7 +297,6 @@ app.get('/schedule/equipment', async (req, res) => {
         }
       }
 
-      // Return the processed data for each reservation
       return {
         reservation_id: row.reservation_id,
         reserved_equipment: equipmentInfo,
@@ -354,13 +370,57 @@ app.delete('/equipment/:reservation_id', async (req, res) => {
   const { reservation_id } = req.params;
 
   try {
-    // Delete the reservation using reservation_id
-    const result = await pool.query('DELETE FROM Equipment WHERE reservation_id = $1 RETURNING *', [reservation_id]);
-    
-    if (result.rows.length === 0) {
+    // Step 1: Get the reservation details to identify the reserved equipment
+    const reservationResult = await pool.query(
+      'SELECT * FROM Equipment WHERE reservation_id = $1', 
+      [reservation_id]
+    );
+
+    if (reservationResult.rows.length === 0) {
       return res.status(404).json({ message: "Reservation not found" });
     }
-    res.status(200).json({ message: "Borrowed Equipment cancelled successfully" });
+
+    // Step 2: Get reserved equipment
+    const reservedEquipment = reservationResult.rows[0].reserved_equipment;
+
+    // Step 3: Check if reserved_equipment is a string and parse it if necessary
+    let equipmentList;
+    if (typeof reservedEquipment === 'string') {
+      // Parse the JSON string if it's in string format
+      equipmentList = JSON.parse(reservedEquipment);
+    } else {
+      // If it's already an object/array, use it directly
+      equipmentList = reservedEquipment;
+    }
+
+    // Step 4: Update the inventory for each equipment in the reservation
+    for (const equipment of equipmentList) {
+      const { id, quantity } = equipment;
+
+      // Update the inventory by increasing the quantity of the equipment
+      const updateInventoryResult = await pool.query(
+        'UPDATE Inventory SET quantity = quantity + $1 WHERE id = $2 RETURNING *', 
+        [quantity, id]
+      );
+
+      if (updateInventoryResult.rowCount === 0) {
+        return res.status(404).json({ message: `Equipment with id ${id} not found in inventory` });
+      }
+    }
+
+    // Step 5: Delete the reservation record
+    const deleteReservationResult = await pool.query(
+      'DELETE FROM Equipment WHERE reservation_id = $1 RETURNING *',
+      [reservation_id]
+    );
+
+    if (deleteReservationResult.rowCount === 0) {
+      return res.status(404).json({ message: "Reservation not found" });
+    }
+
+    // Step 6: Return success response
+    res.status(200).json({ message: "Reservation cancelled and equipment quantity updated successfully" });
+
   } catch (error) {
     console.error("Error cancelling reservation:", error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -368,7 +428,7 @@ app.delete('/equipment/:reservation_id', async (req, res) => {
 });
 
 
-//********************* */
+/********* Auto Fill Details  *********/
 app.get('/Details/:id', async (req, res) => {
     const { id } = req.params;
   
@@ -435,37 +495,50 @@ app.get('/ViewEquipment', async (req, res) => {
 
 
 
-
 /******** Inventory ********/
 
-// Set up multer storage with the desired destination and file naming
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
+// Define multer storage configuration to save files in public/Asset
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // Save images in the 'uploads/Asset/' directory
-    cb(null, '/Asset/');
+    const dir = path.join(__dirname, 'public', 'Equipment');
+    // Make sure the directory exists
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    cb(null, dir); // All files will be saved to the public/Asset directory
   },
   filename: (req, file, cb) => {
-    // Use the original file name and extension
-    const fileExtension = path.extname(file.originalname); // Get the file extension (e.g., .png, .jpg)
-    const fileName = file.fieldname + '-' + Date.now() + fileExtension; // Generate a unique file name
-    cb(null, fileName); // Save the file with the new name
-  }
-});
-
+    // Sanitize the filename to prevent issues with special characters
+    const sanitizedFilename = file.originalname.replace(/[^a-zA-Z0-9.-]/g, '_');
+    cb(null, sanitizedFilename); // Keep the original file name
+  },
+}); 
 // Initialize multer with the custom storage
 const upload = multer({ storage: storage });
 
 // POST route to add inventory item
-app.post('/inventory', upload.single('image'), (req, res) => {
-  const { name, quantity, specification, status } = req.body;
-  const imageFileName = req.file ? '/Asset/' + req.file.filename : null; // Use the correct file path
+app.post('/inventory', upload.single('image'), async (req, res) => {
+  try {
+    // Check if an image is uploaded
+    if (!req.file) {
+      return res.status(400).send('No file uploaded');
+    }
 
-  const query = 'INSERT INTO inventory (name, quantity, specification, status, image) VALUES ($1, $2, $3, $4, $5)';
-  const values = [name, quantity, specification, status, imageFileName];
+    const { name, quantity, specification, status } = req.body;
+    const imageFileName = '/Equipment/' + req.file.filename; // Save only the relative path
 
-  pool.query(query, values)
-    .then(() => res.status(201).send('Item added successfully'))
-    .catch(error => res.status(500).send(error.message));
+    // Insert the item data into your database
+    const query = 'INSERT INTO inventory (name, quantity, specification, status, image) VALUES ($1, $2, $3, $4, $5)';
+    const values = [name, quantity, specification, status, imageFileName];
+
+    await pool.query(query, values);
+
+    res.status(201).send('Item added successfully');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 });
 
 
@@ -476,82 +549,51 @@ app.get('/inventory', (req, res) => {
     .catch(error => res.status(500).send(error.message));
 });
 
+// PUT route to update an inventory item
+app.put('/inventory/:id', upload.single('image'), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, quantity, specification, status } = req.body;
+    let query = 'UPDATE inventory SET name = $1, quantity = $2, specification = $3, status = $4';
+    const values = [name, quantity, specification, status];
 
-
-  app.put('/inventory/update', async (req, res) => {
-    const { user_id, reservation_id, equipmentReservations, start_date, end_date } = req.body;
-  
-    try {
-      // Begin a transaction to ensure consistency
-      await pool.query('BEGIN');
-  
-      const reservedItems = []; // Array to store the reservation details for JSON
-  
-      for (const item of equipmentReservations) {
-        const { equipment_id, quantity } = item;
-  
-        // Check current inventory based on reservation_id (not equipment_id)
-        const inventoryCheck = await pool.query(
-          'SELECT quantity FROM Inventory WHERE reservation_id = $1', // Query using reservation_id
-          [reservation_id]
-        );
-  
-        if (inventoryCheck.rows.length === 0) {
-          await pool.query('ROLLBACK');
-          return res.status(400).json({ message: `No inventory found for reservation ID ${reservation_id}` });
-        }
-  
-        const availableQuantity = inventoryCheck.rows[0].quantity;
-  
-        if (quantity > availableQuantity) {
-          await pool.query('ROLLBACK');
-          return res.status(400).json({
-            message: `Insufficient quantity for reservation ID ${reservation_id}. Available: ${availableQuantity}, Requested: ${quantity}`,
-          });
-        }
-  
-        // Update inventory
-        await pool.query(
-          'UPDATE Inventory SET quantity = quantity - $1 WHERE reservation_id = $2',
-          [quantity, reservation_id]
-        );
-  
-        // Prepare data for JSON insertion in `reserved_equipment`
-        const equipmentName = await pool.query(
-          'SELECT name FROM Inventory WHERE reservation_id = $1',
-          [reservation_id]
-        );
-  
-        reservedItems.push({
-          id: equipment_id,
-          name: equipmentName.rows[0].name,
-          quantity,
-        });
-      }
-  
-      // Insert reservation into Equipment table
-      await pool.query(
-        `INSERT INTO Equipment (user_id, reservation_id, start_date, end_date, reserved_equipment, created_at, updated_at)
-         VALUES ($1, $2, $3, $4, $5::jsonb, NOW(), NOW())`,
-        [user_id, reservation_id, start_date, end_date, JSON.stringify(reservedItems)]
-      );
-  
-      // Commit transaction
-      await pool.query('COMMIT');
-  
-      res.status(201).json({ message: 'Reservation successful' });
-    } catch (error) {
-      // Rollback in case of error
-      await pool.query('ROLLBACK');
-      console.error('Error reserving equipment:', error.message);
-      res.status(500).json({ error: 'Internal Server Error' });
+    if (req.file) {
+      const imageFileName = '/Equipment/' + req.file.filename;
+      query += ', image = $5 WHERE id = $6';
+      values.push(imageFileName, id);
+    } else {
+      query += ' WHERE id = $5';
+      values.push(id);
     }
-  });
 
+    await pool.query(query, values);
+    res.status(200).send('Item updated successfully');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
+// DELETE route to delete an inventory item
+app.delete('/inventory/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    // Retrieve the item's image path to delete the file
+    const result = await pool.query('SELECT image FROM inventory WHERE id = $1', [id]);
+    if (result.rows.length > 0) {
+      const imagePath = path.join(__dirname, 'public', result.rows[0].image);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+    }
 
-// Assuming you're using Express with a PostgreSQL database
+    // Delete the item from the database
+    await pool.query('DELETE FROM inventory WHERE id = $1', [id]);
+    res.status(200).send('Item deleted successfully');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
 
 

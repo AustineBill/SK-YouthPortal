@@ -69,11 +69,19 @@
           {inventory.map((item, index) => (
             <Col md={3} className="mb-4" key={item.id}>
               <div className="card text-center">
-              <img
-                src={`${process.env.PUBLIC_URL}`}
-                className="card-img-top"
-                alt="Chairs"
-              />
+              {item.image ? (
+                  <img
+                    src={item.image} // Adjust the URL to point to your server's upload folder
+                    alt={item.name}
+                    style={{ width: '100px', height: 'auto' }}
+                  />
+                ) : (
+                  <img
+                    src="/Asset/Equipment/Chairs.png" // Fallback image if no image available
+                    alt="Default"
+                    style={{ width: '100px', height: 'auto' }}
+                  />
+                )}
                 <div className="card-body">
                   <h5 className="card-title">{item.name}</h5>
                   <p className="text-muted mb-2">{item.specification}</p>
