@@ -190,17 +190,12 @@ app.get('/reservations', async (req, res) => {
   
 app.post('/schedule/equipment', async (req, res) => {
   const { user_id, reservation_id, reservedEquipment, startDate, endDate } = req.body;
-  
-  if (!user_id) {
-    return res.status(400).json({ error: 'User ID is required' });
-  }
-
-  const client = await pool.connect();  // Acquire client from the pool
+  //const pool = await pool.connect();  // Acquire pool from the pool
   try {
-    await client.query('BEGIN');  // Start the transaction
+    await pool.query('BEGIN');  // Start the transaction
 
     // Step 1: Insert the reservation into the Equipment table
-    const result = await client.query(
+    const result = await pool.query(
       `INSERT INTO Equipment (user_id, reservation_id, start_date, end_date, reserved_equipment)
       VALUES ($1, $2, $3, $4, $5) RETURNING id`,
       [
@@ -220,32 +215,33 @@ app.post('/schedule/equipment', async (req, res) => {
 
       // Check if there is enough stock
       const inventoryCheckQuery = 'SELECT quantity FROM Inventory WHERE id = $1';
-      const inventoryCheckResult = await client.query(inventoryCheckQuery, [id]);
+      const inventoryCheckResult = await pool.query(inventoryCheckQuery, [id]);
       
       if (inventoryCheckResult.rowCount === 0 || inventoryCheckResult.rows[0].quantity < quantity) {
         // If not enough stock, rollback transaction and send error
-        await client.query('ROLLBACK');
+        await pool.query('ROLLBACK');
         return res.status(400).json({ error: `Not enough stock for ${equipment.name}` });
       }
 
       // Update the inventory by reducing the quantity
       const updateInventoryQuery = 'UPDATE Inventory SET quantity = quantity - $1 WHERE id = $2';
-      await client.query(updateInventoryQuery, [quantity, id]);
+      await pool.query(updateInventoryQuery, [quantity, id]);
     }
 
     // Commit transaction after successful operations
-    await client.query('COMMIT');
+    await pool.query('COMMIT');
 
     // Return the reservation details (with the inserted reservation ID)
     res.status(201).json(result.rows[0]);
   } catch (error) {
-    await client.query('ROLLBACK');  // Rollback if an error occurs
+    await pool.query('ROLLBACK');  // Rollback if an error occurs
     console.error('Error saving reservation:', error.message);  // Log the error message
     res.status(500).json({ error: error.message, stack: error.stack });
   } finally {
-    client.release();  // Release the database client back to the pool
+    pool.release();  // Release the database pool back to the pool
   }
 });
+
 
 
 app.get('/schedule/equipment', async (req, res) => {
@@ -258,10 +254,7 @@ app.get('/schedule/equipment', async (req, res) => {
        WHERE user_id = $1`,
       [userId]
     );
-    // Check if no reservations were found
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'No equipment reservations found.' });
-    }
+
     // Process each reservation and check if equipment is reserved
     const equipmentData = result.rows.map((row) => {
       let equipmentInfo = "No Equipment Reserved";  // Default value for no equipment
@@ -305,8 +298,71 @@ app.get('/schedule/equipment', async (req, res) => {
       };
     });
 
-    // Send the processed data as the response
-    res.status(200).json(equipmentData);
+    // If no equipment is reserved, return an empty array
+    res.status(200).json(equipmentData.length > 0 ? equipmentData : []);
+  } catch (error) {
+    // Log any error that happens during the database query or data processing
+    console.error('Error fetching equipment reservations:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/schedule/equipment', async (req, res) => {
+  const { userId } = req.query;
+  try {
+    // Query to fetch reservation data
+    const result = await pool.query(
+      `SELECT reservation_id, reserved_equipment, start_date, end_date
+       FROM Equipment
+       WHERE user_id = $1`,
+      [userId]
+    );
+
+    // Process each reservation and check if equipment is reserved
+    const equipmentData = result.rows.map((row) => {
+      let equipmentInfo = "No Equipment Reserved";  // Default value for no equipment
+      if (row.reserved_equipment) {
+        try {
+          // Handle cases where reserved_equipment is an array of arrays
+          let reservedEquipment = row.reserved_equipment;
+          // If it's an array of arrays, flatten it to a single array of objects
+          if (Array.isArray(reservedEquipment) && reservedEquipment[0] && Array.isArray(reservedEquipment[0])) {
+            reservedEquipment = reservedEquipment.flat();
+          }
+          // Ensure it's an array of objects before processing
+          if (Array.isArray(reservedEquipment)) {
+            // Format each equipment item as "name - quantity"
+            equipmentInfo = reservedEquipment
+              .map((item) => {
+                if (item && typeof item === 'object') {
+                  // If the item is an object, extract the name and quantity
+                  const name = item.name || 'Unknown Item';
+                  const quantity = item.quantity || 0;
+                  return `${name} - ${quantity}`;
+                }
+                return 'Invalid equipment data';  // Handle invalid data
+              })
+              .join(", ");  // Join the items with a comma
+          } else {
+            equipmentInfo = "Invalid equipment data";  // Handle non-array data
+          }
+        } catch (error) {
+          // Log any error that happens during JSON parsing
+          console.error('Error processing reserved equipment:', error);
+          equipmentInfo = "Error processing equipment details";  // Set error message for faulty data
+        }
+      }
+
+      return {
+        reservation_id: row.reservation_id,
+        reserved_equipment: equipmentInfo,
+        start_date: new Date(row.start_date).toLocaleString(),  // Ensure date formatting
+        end_date: new Date(row.end_date).toLocaleString(),      // Ensure date formatting
+      };
+    });
+
+    // If no equipment is reserved, return an empty array
+    res.status(200).json(equipmentData.length > 0 ? equipmentData : []);
   } catch (error) {
     // Log any error that happens during the database query or data processing
     console.error('Error fetching equipment reservations:', error.message);
