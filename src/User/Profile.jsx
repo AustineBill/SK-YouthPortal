@@ -7,7 +7,6 @@ import {
   Card,
   Button,
   Breadcrumb,
-  Form,
 } from 'react-bootstrap';
 import Avatar from 'react-avatar';
 
@@ -20,7 +19,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const username = sessionStorage.getItem('username');
-      console.log('Fetching profile for:', username);
+      //console.log('Fetching profile for:', username);
   
       try {
         const response = await fetch(`http://localhost:5000/Profile/${username}`);
@@ -30,7 +29,7 @@ const ProfilePage = () => {
         }
   
         const userData = await response.json();
-        console.log('Profile Data:', userData);
+        //console.log('Profile Data:', userData);
   
         setProfileInfo(userData);
       } catch (error) {
@@ -189,100 +188,8 @@ const ProfilePage = () => {
                       <Card.Text>Province</Card.Text>
                     </Col>
                     <Col sm="9">
-                      <Card.Text className="text-muted">{profileInfo?.province} {profileInfo?.regiopn} 
+                      <Card.Text className="text-muted">{profileInfo?.province} {profileInfo?.region} 
                       </Card.Text>
-                    </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
-            </fieldset>
-
-            <fieldset className="border rounded mb-4 p-3">
-              <legend className="p-2 rounded">More Information</legend>
-              <Card className="mb-4">
-                <Card.Body>
-                  <Row>
-                    <Col sm="3">
-                      <Card.Text>Full Name</Card.Text>
-                    </Col>
-                    <Col sm="9">
-                      {isEditing ? (
-                        <Form.Control
-                          type="text"
-                          name="username"
-                          defaultValue={profileInfo?.username}
-                        />
-                      ) : (
-                        <Card.Text className="text-muted">{profileInfo?.username}</Card.Text>
-                      )}
-                    </Col>
-                  </Row>
-                  <hr />
-                  <Row>
-                    <Col sm="3">
-                      <Card.Text>Email</Card.Text>
-                    </Col>
-                    <Col sm="9">
-                      {isEditing ? (
-                        <Form.Control
-                          type="email"
-                          name="email"
-                          defaultValue={profileInfo?.email}
-                        />
-                      ) : (
-                        <Card.Text className="text-muted">{profileInfo?.email}</Card.Text>
-                      )}
-                    </Col>
-                  </Row>
-                  <hr />
-                  <Row>
-                    <Col sm="3">
-                      <Card.Text>Phone</Card.Text>
-                    </Col>
-                    <Col sm="9">
-                      {isEditing ? (
-                        <Form.Control
-                          type="text"
-                          name="phone"
-                          defaultValue={profileInfo?.phone}
-                        />
-                      ) : (
-                        <Card.Text className="text-muted">{profileInfo?.phone}</Card.Text>
-                      )}
-                    </Col>
-                  </Row>
-                  <hr />
-                  <Row>
-                    <Col sm="3">
-                      <Card.Text>Mobile</Card.Text>
-                    </Col>
-                    <Col sm="9">
-                      {isEditing ? (
-                        <Form.Control
-                          type="text"
-                          name="mobile"
-                          defaultValue={profileInfo?.mobile}
-                        />
-                      ) : (
-                        <Card.Text className="text-muted">{profileInfo?.mobile}</Card.Text>
-                      )}
-                    </Col>
-                  </Row>
-                  <hr />
-                  <Row>
-                    <Col sm="3">
-                      <Card.Text>Address</Card.Text>
-                    </Col>
-                    <Col sm="9">
-                      {isEditing ? (
-                        <Form.Control
-                          type="text"
-                          name="address"
-                          defaultValue={profileInfo?.address}
-                        />
-                      ) : (
-                        <Card.Text className="text-muted">{profileInfo?.address}</Card.Text>
-                      )}
                     </Col>
                   </Row>
                 </Card.Body>
