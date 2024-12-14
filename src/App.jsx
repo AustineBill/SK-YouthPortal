@@ -57,6 +57,7 @@ import ManageContactUs from './Admin/AdminManageContactUs';
 import Reports from './Admin/AdminReports';
 import Users from './Admin/AdminUsers';
 import UserDetails from './Admin/UserDetails';
+import InventoryTable from './Admin/Inventory';
 
 //Structure
 import StepIndicator from './Classes/StepIndicator';
@@ -161,6 +162,7 @@ const App = () => {
                   <Route path="/admin/manage-contact-us" element={<ManageContactUs />} />
                   <Route path="/admin/gym-reservation" element={<AdminGymReservation />} />
                   <Route path="/admin/equipment-reservation" element={<AdminEquipmentReservation />} />
+                  <Route path="/admin/Inventory" element={<InventoryTable />} />
                   <Route path="/admin/reports" element={<Reports />} />
                   <Route path="/admin/users" element={<Users />} />
                   <Route path="/user/:id" element={<UserDetails />} />

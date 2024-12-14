@@ -134,6 +134,14 @@ const AdminSidebar = () => {
                                     Equipment Reservation
                                 </Link>
                             </li>
+                            <li
+                                className={`admin-bs-list ${isActive('/admin/Inventory') ? 'active' : ''}`}
+                            >
+                                <Link to="/admin/Inventory" className="d-flex align-items-center">
+                                    <i className="admin-sidebar-icon bi-calendar-day-fill me-2"></i>
+                                    Inventory
+                                </Link>
+                            </li>
                         </ul>
                     )}
                     <li className={`admin-bs-list ${isActive('/admin/reports') ? 'active' : ''}`}>

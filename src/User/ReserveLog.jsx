@@ -34,6 +34,7 @@ const ReservationLog = () => {
 
     fetchReservations();
   }, [userId, selectedCategory]);
+  
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -98,7 +99,14 @@ const ReservationLog = () => {
             </tr>
           </thead>
           <tbody>
-            {reservations.map((reservation) => (
+            {reservations.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="text-center">
+                  No transactions found. Inventory has been restored.
+                </td>
+              </tr>
+            ) : (
+            reservations.map((reservation) => (
               <tr key={reservation.id || reservation.reservation_id}>
                 {selectedCategory === 'Facility' ? (
                   <>
@@ -131,7 +139,8 @@ const ReservationLog = () => {
                   </button>
                 </td>
               </tr>
-            ))}
+            ))
+            )}
           </tbody>
         </Table>
       </Container>
