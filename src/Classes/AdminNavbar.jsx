@@ -49,7 +49,7 @@ const AdminNavbar = () => {
         <>
             {/* Navbar */}
             <nav className='admin-navbar fixed-top d-flex align-items-center'>
-                <div className='admin-navbar-details d-flex justify-content-between mx-4'>
+                <div className='admin-navbar-details d-flex align-items-center justify-content-between mx-4'>
                     <div className='admin-navbar-left-side d-flex align-items-center'>
                         <img
                             src={iSKedLogo}
@@ -61,15 +61,17 @@ const AdminNavbar = () => {
                         </h1>
 
                         {/* Hamburger Menu */}
-                        <div className="admin-hamburger-menu d-flex align-items-center justify-content-center d-md-none">
-                            <span
-                                className="admin-hamburger-nav bi-list m-0 me-2 p-0"
-                                onClick={toggleSidebar}
-                                aria-label="Toggle sidebar"
-                            ></span>
-                            <h4 className='admin-iSKed-name-h4 fst-italic text-white h4 m-0 p-0'>
-                                iSKed - Admin Panel
-                            </h4>
+                        <div className="admin-hamburger-menu d-md-none">
+                            <div className='admin-hamburger-menu-left d-flex align-items-center'>
+                                <span
+                                    className="admin-hamburger-nav bi-list m-0 p-0 me-2"
+                                    onClick={toggleSidebar}
+                                    aria-label="Toggle sidebar"
+                                ></span>
+                                <h4 className='admin-iSKed-name-h4 fst-italic text-white m-0 p-0'>
+                                    iSKed - Admin Panel
+                                </h4>
+                            </div>
                         </div>
                     </div>
 
