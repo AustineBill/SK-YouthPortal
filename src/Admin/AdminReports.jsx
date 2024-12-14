@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './styles/AdminReports.css';
+import './styles/adminreports.css';
 // New CSS file for AdminReports styling
 
 const Reports = () => {

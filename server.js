@@ -7,6 +7,8 @@ const fs = require('fs');
 const path = require('path');
 
 require('dotenv').config();
+const { generateRandomId, EncryptionCode, DecryptionCode } = require('./Codex');
+
 
 
 const PORT = process.env.PORT || 5000;
@@ -851,6 +853,142 @@ app.put('/events/:id', async (req, res) => {
       res.status(500).json({ error: 'Error deleting event' });
     }
   });
+
+
+
+
+  // Fetch all users
+app.get('/users', async (req, res) => {
+  try {
+      const result = await pool.query('SELECT * FROM users');
+      res.json(result.rows);
+  } catch (err) {
+      console.error('Error fetching users:', err);
+      res.status(500).send('Server error');
+  }
+});
+
+// Insert into the database with random ID generation
+app.post('/users', async (req, res) => {
+  console.log('Request Body:', req.body);  // Log the incoming data
+
+  const {
+    username,
+    password,
+    firstname,
+    lastname,
+    region,
+    province,
+    city,
+    barangay,
+    zone,
+    sex,
+    age,
+    birthday,
+    email_address,
+    contact_number,
+    civil_status,
+    youth_age_group,
+    work_status,
+    educational_background,
+    registered_sk_voter,
+    registered_national_voter
+  } = req.body;
+
+  // Generate a random 6-character ID
+  const userId = generateRandomId();  // Call the random ID function
+
+  try {
+    // Adjust the INSERT query to include the generated `id` and all required values
+    const result = await pool.query(
+      `INSERT INTO Users (
+        id, username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
+        birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
+        educational_background, registered_sk_voter, registered_national_voter
+      ) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) 
+      RETURNING *`,
+      [
+        userId, username, password, firstname, lastname, region, province, city, barangay, zone, sex, 
+        age, birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
+        educational_background, registered_sk_voter, registered_national_voter
+      ]
+    );
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error adding user:', err);
+    res.status(500).send('Server error');
+  }
+});
+
+
+// Update a user
+app.put('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  const {
+      username,
+      password,
+      firstname,
+      lastname,
+      region,
+      province,
+      city,
+      barangay,
+      zone,
+      sex,
+      age,
+      birthday,
+      email_address,
+      contact_number,
+      civil_status,
+      youth_age_group,
+      work_status,
+      educational_background,
+      registered_sk_voter,
+      registered_national_voter
+  } = req.body;
+
+  try {
+      const result = await pool.query(
+          `UPDATE users SET
+              username = $1, password = $2, firstname = $3, lastname = $4, region = $5, province = $6, 
+              city = $7, barangay = $8, zone = $9, sex = $10, age = $11, birthday = $12, 
+              email_address = $13, contact_number = $14, civil_status = $15, youth_age_group = $16, 
+              work_status = $17, educational_background = $18, registered_sk_voter = $19, 
+              registered_national_voter = $20
+          WHERE id = $21 RETURNING *`,
+          [
+              username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
+              birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
+              educational_background, registered_sk_voter, registered_national_voter, id
+          ]
+      );
+
+      res.json(result.rows[0]);
+  } catch (err) {
+      console.error('Error updating user:', err);
+      res.status(500).send('Server error');
+  }
+});
+
+// Delete a user
+app.delete('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  
+  try {
+      const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING *', [id]);
+      
+      if (result.rows.length === 0) {
+          return res.status(404).send('User not found');
+      }
+      
+      res.json(result.rows[0]);
+  } catch (err) {
+      console.error('Error deleting user:', err);
+      res.status(500).send('Server error');
+  }
+});
   
 
 app.listen(PORT, () => {
