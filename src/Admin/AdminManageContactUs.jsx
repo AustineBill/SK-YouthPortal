@@ -73,6 +73,7 @@ const ManageContactUs = () => {
                 <input
                   type='text'
                   value={contactDetails.contact_number}
+                  readOnly
                 />
               </div>
 
@@ -81,6 +82,7 @@ const ManageContactUs = () => {
                 <input
                   type='text'
                   value={contactDetails.location}
+                  readOnly
                 />
               </div>
 
@@ -89,6 +91,7 @@ const ManageContactUs = () => {
                 <input
                   type='text'
                   value={contactDetails.gmail}
+                  readOnly
                 />
               </div>
 

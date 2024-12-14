@@ -5,15 +5,15 @@
 .admin-contact-us-container {
     position: relative;
     top: 75px;
-    left: 25%;
-    width: 75%;
+    left: 22.5%;
+    width: 77.5%;
     background-color: #FFFFFF;
     font-family: 'Inter', sans-serif;
     z-index: 1;
 }
 
 .admin-contact-us-label-h2 {
-    font-size: 40px;
+    font-size: 45px;
     margin: 20px 0 20px 40px;
 }
 
@@ -42,28 +42,32 @@
     width: 100%;
 }
 
-.admin-contacts-details-group .admin-current-contact-label, 
+.admin-contacts-details-group .admin-current-contact-label,
 .admin-edit-contacts-details-group .admin-edit-contact-label {
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
+    font-size: 25px
 }
 
-.admin-current-contact-form input[type="text"] {
-    height: 50px;
+.admin-current-contact-form input[type="text"],
+.admin-current-contact-form input[type="email"] {
+    height: 60px;
     border-style: none;
     border-radius: 10px;
     outline: none;
     margin-bottom: 10px;
+    font-size: 20px;
     transition: all 0.35s;
 }
 
 .admin-edit-contact-form input[type="text"],
 .admin-edit-contact-form input[type="email"] {
-    height: 50px;
+    /* height: 50px; */
+    height: 60px;
     border-style: none;
     border-radius: 10px;
     outline: none;
     margin-bottom: 0;
+    font-size: 20px;
     transition: all 0.35s;
 }
 
@@ -94,4 +98,159 @@
     width: 150px;
     height: 55px;
     font-size: 15px;
+}
+
+
+/* Media */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    .admin-contact-us-label-h2 {
+        font-size: 40px;
+    }
+
+    .admin-contacts-details-group .admin-current-contact-label,
+    .admin-edit-contacts-details-group .admin-edit-contact-label {
+        font-size: 20px;
+    }
+
+    .admin-current-contact-form input[type="text"],
+    .admin-current-contact-form input[type="email"] {
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .admin-edit-contact-form input[type="text"],
+    .admin-edit-contact-form input[type="email"] {
+        height: 50px;
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    
+    .admin-contact-us-label-h2 {
+        font-size: 35px;
+    }
+
+    .admin-contacts-details-group .admin-current-contact-label,
+    .admin-edit-contacts-details-group .admin-edit-contact-label {
+        font-size: 17.5px;
+    }
+
+    .admin-current-contact-form input[type="text"],
+    .admin-current-contact-form input[type="email"] {
+        height: 45px;
+        font-size: 17.5px;
+    }
+
+    .admin-edit-contact-form input[type="text"],
+    .admin-edit-contact-form input[type="email"] {
+        height: 45px;
+        font-size: 17.5px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    .admin-contact-us-container {
+        left: 0;
+        width: 100%;
+    }
+
+    .admin-contact-us-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 20px 25px;
+    }
+    
+    .admin-edit-contact-details-back-button {
+        margin: 20px 25px 20px 0;
+    }
+
+    .admin-contacts-details-group .admin-current-contact-label,
+    .admin-edit-contacts-details-group .admin-edit-contact-label {
+        font-size: 15px;
+    }
+
+    .admin-current-contact-form input[type="text"],
+    .admin-current-contact-form input[type="email"] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-contact-form input[type="text"],
+    .admin-edit-contact-form input[type="email"] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-contact-details-back-button {
+        width: 75px;
+        height: 40px;
+        font-size: 12.5px;
+    }
+    
+    .admin-edit-contact-details-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+    
+    .admin-save-contact-details-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .admin-contact-us-container {
+        left: 0;
+        width: 100%;
+    }
+
+    .admin-contact-us-label-h2 {
+        font-size: 25px;
+        margin: 20px 0 20px 20px;
+    }
+    
+    .admin-edit-contact-details-back-button {
+        margin: 20px 20px 20px 0;
+    }
+
+    .admin-contacts-details-group .admin-current-contact-label,
+    .admin-edit-contacts-details-group .admin-edit-contact-label {
+        font-size: 12.5px;
+    }
+
+    .admin-current-contact-form input[type="text"],
+    .admin-current-contact-form input[type="email"] {
+        height: 30px;
+        font-size: 10px;
+    }
+
+    .admin-edit-contact-form input[type="text"],
+    .admin-edit-contact-form input[type="email"] {
+        height: 30px;
+        font-size: 10px;
+    }
+    
+    .admin-edit-contact-details-back-button {
+        width: 75px;
+        height: 35px;
+        font-size: 10px;
+    }
+    
+    .admin-edit-contact-details-button {
+        width: 100px;
+        height: 50px;
+        font-size: 10px;
+    }
+    
+    .admin-save-contact-details-button {
+        width: 100px;
+        height: 50px;
+        font-size: 10px;
+    }
 }
