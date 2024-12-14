@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../WebStructure/AuthContext';
 
 import '../App.css';
@@ -7,11 +7,20 @@ import './UserAuthentication.css';
 
 const UserAuthentication = () => {
     const [view, setView] = useState('signIn');
+    // New Code:
+    const [showAccountActivationFields, setShowAccountActivationFields] = useState(false);
+    const [showForgotPasswordCodeField, setShowForgotPasswordCodeField] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const { login , adminlogin} = useContext(AuthContext);
+    const [email, setEmail] = useState('');
+    const [forgotPasswordCode, setForgotPasswordCode] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [activationCode, setActivationCode] = useState('');
+    const [signupUsername, setSignupUsername] = useState('');
+    const [signupPassword, setSignupPassword] = useState('');
+    const { login, adminlogin } = useContext(AuthContext);
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -21,8 +30,32 @@ const UserAuthentication = () => {
         }
     }, [location.search]);
 
+    const handleShowAccountActivationFields = () => {
+        if (activationCode.trim() === '') {
+            alert('Activation code cannot be blank!');
+            return;
+        }
+
+        setShowAccountActivationFields(true);
+    };
+
+    const handleShowForgotPasswordCodeField = () => {
+        // if (activationCode.trim() === '') {
+        //     alert('Activation code cannot be blank!');
+        //     return;
+        // }
+
+        setShowForgotPasswordCodeField(true);
+    };
+
+    // Di pa to tapos, dapat matrack yung laman.
     const handleSignUpSubmit = (e) => {
         e.preventDefault();
+        // Use the tracked input values
+        console.log('Activation Code:', activationCode);
+        console.log('Username:', signupUsername);
+        console.log('Password:', signupPassword);
+
         alert('Account Created Successfully!');
         setView('signIn'); // Redirect to sign in after sign up
     };
@@ -31,7 +64,7 @@ const UserAuthentication = () => {
         e.preventDefault();
         const username = e.target.username.value;
         const password = e.target.password.value;
-    
+
         try {
             if (username === 'admin123' && password === '123') {
                 adminlogin('isAdmin');
@@ -42,14 +75,14 @@ const UserAuthentication = () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password }),
                 });
-    
+
                 const data = await response.json();
                 //console.log("Login response data:", data); for debugging only  
-    
+
                 if (response.ok) {
-                    const { id, username} = data.user;
+                    const { id, username } = data.user;
                     sessionStorage.setItem('userId', id);
-                    login('isAuthenticated', username); 
+                    login('isAuthenticated', username);
                     navigate('/Dashboard');
                 } else {
                     alert(data.message || 'Invalid user credentials');
@@ -60,14 +93,13 @@ const UserAuthentication = () => {
             alert('An error occurred. Please try again.');
         }
     };
-    
 
     return (
         <div className="container-fluid">
             <div className="row align-items-center mt-3">
                 <div className="col-md-7 text-center text-lg-center">
                     <h1 className=" fw-normal fs-3 me-5 animated slideInTop">Lagi't lagi para sa Kabataan,</h1>
-                    <h1 className="fw-normal fs-4 me-4 animated slideInLeft"> Barangay at sa Bayan 
+                    <h1 className="fw-normal fs-4 me-4 animated slideInLeft"> Barangay at sa Bayan
                         <span className="fs-1 fw-bold clr-db txt-i-db animated slideInRight"> Sangguniang Kabataan</span>
                     </h1>
                     <p className="IntroDetails animated slideInBottom">Western Bicutan</p>
@@ -87,17 +119,82 @@ const UserAuthentication = () => {
                                     <input type="password" name="password" placeholder='Password' required />
                                 </div>
                                 <div>
-                                    <Link to="/forgot-password" className="navbar-brand">
-                                        <p id='sign-in-forgot-password'>Forgot your password?</p>
-                                    </Link>
+                                    <button
+                                        type='button'
+                                        onClick={() => setView('forgotPassword')}>
+                                        Forgot your password?
+                                    </button>
                                 </div>
                                 <button type="submit">Sign In</button>
                                 <div className='sign-in-form-bottom'>
                                     <p>Don’t have an account?</p>
-                                    <Link to="/userauth?view=signUp" className="navbar-brand">
-                                        <p id='sign-up-button'>Sign up</p>
-                                    </Link>
+                                    <button
+                                        type='button'
+                                        onClick={() => navigate('/userauth?view=signUp')}>
+                                        Sign up
+                                    </button>
                                 </div>
+                            </form>
+                        </div>
+                    )}
+
+                    {view === 'forgotPassword' && (
+                        <div>
+                            <form>
+                                {!showForgotPasswordCodeField && (
+                                    <>
+                                        <div className='forgot-password-form-input'>
+                                            <label>Email</label>
+                                            <input
+                                                type='text'
+                                                name='signup-username'
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            onClick={handleShowForgotPasswordCodeField}
+                                            className='activate-account-button rounded'>
+                                            Proceed
+                                        </button>
+                                    </>
+                                )}
+
+                                {showForgotPasswordCodeField && (
+                                    <>
+                                        <div className='forgot-password-form-input'>
+                                            <label>Verification Code</label>
+                                            <input
+                                                type='text'
+                                                name='forgot-password-code'
+                                                value={forgotPasswordCode}
+                                                onChange={(e) => setForgotPasswordCode(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+
+                                        <div className='forgot-password-form-input'>
+                                            <label>New Password</label>
+                                            <input
+                                                type='password'
+                                                name='new-password'
+                                                value={newPassword}
+                                                onChange={(e) => setNewPassword(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            // onClick={} Wala pa.
+                                            className='activate-account-button rounded'>
+                                            Submit
+                                        </button>
+                                    </>
+                                )}
                             </form>
                         </div>
                     )}
@@ -105,27 +202,60 @@ const UserAuthentication = () => {
                     {view === 'signUp' && (
                         <div className="sign-up-form">
                             <form onSubmit={handleSignUpSubmit}>
-                                <div className='start-with-us-sign-up'>
-                                    <h2>Start with us!</h2>
-                                </div>
-                                <div>
-                                    <p>Lorem Ipsum</p>
-                                </div>
-                                <div className="sign-up-form-input">
-                                    <label>Username:</label>
-                                    <input type="text" placeholder="Username" required value={username} onChange={(e) => setUsername(e.target.value)} />
-                                </div>
-                                <div className="sign-up-form-input">
-                                    <label>Password:</label>
-                                    <input type="password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-                                </div>
-                                <button type="submit">Create Account</button>
-                                <div className="sign-up-form-bottom">
-                                    <p>Already have an account?</p>
-                                    <Link to="/userauth?view=signIn" className="navbar-brand">
-                                        <p id='sign-in-button'>Sign in</p>
-                                    </Link>
-                                </div>
+                                {!showAccountActivationFields && (
+                                    <>
+                                        <div className='sign-up-form-input'>
+                                            <label>Activation Code</label>
+                                            <input
+                                                type='text'
+                                                name='activation-code'
+                                                value={activationCode}
+                                                onChange={(e) => setActivationCode(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            onClick={handleShowAccountActivationFields}
+                                            className='activate-account-button rounded'>
+                                            Proceed
+                                        </button>
+                                    </>
+                                )}
+
+                                {showAccountActivationFields && (
+                                    <>
+                                        <p>Set up your account</p>
+                                        <div className='sign-up-form-input'>
+                                            <label>Username:</label>
+                                            <input
+                                                type='text'
+                                                name='signup-username'
+                                                value={signupUsername}
+                                                onChange={(e) => setSignupUsername(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+
+                                        <div className='sign-up-form-input'>
+                                            <label>Password:</label>
+                                            <input
+                                                type='password'
+                                                name='signup-password'
+                                                value={signupPassword}
+                                                onChange={(e) => setSignupPassword(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+
+                                        <button
+                                            type="submit"
+                                            className='activate-account-button rounded'>
+                                            Activate Account
+                                        </button>
+                                    </>
+                                )}
                             </form>
                         </div>
                     )}
