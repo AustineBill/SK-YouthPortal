@@ -1,51 +1,97 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-// import './styles/usemod.css';
+import React, { useState, useEffect } from 'react';
 import './styles/AdminUsers.css';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
     const [newUser, setNewUser] = useState({
+        username: '',
+        password: '',
         firstname: '',
         lastname: '',
-        birthday: '',
+        region: '',
+        province: '',
+        city: '',
+        barangay: '',
+        zone: '',
         sex: '',
-        address: '',
-        civilStatus: '',
-        imageUrl: ''
+        age: '',
+        birthday: '',
+        email_address : '',
+        contact_number: '',
+        civil_status: '',
+        youth_age_group: '',
+        work_status: '',
+        educational_background: '',
+        registered_sk_voter: '',
+        registered_national_voter: ''
     });
     const [isEditing, setIsEditing] = useState(false);
     const [editUserId, setEditUserId] = useState(null);
-    const [showModal, setShowModal] = useState(false); // Toggle for modal
-    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [DeleteModalVisible, setDeleteModalVisible] = useState(false);
+    const [deleteUserId, setDeleteUserId] = useState(null);
+    const [viewUser, setViewUser] = useState(null); // Store the user data to view
+    const [showViewModal, setShowViewModal] = useState(false); // To control the modal visibility
+    const [selectedClassification, setSelectedClassification] = useState('');
+    const youthClassifications = ['Child Youth', 'Core Youth', 'Adult Youth', ];  // Add your classifications here
+
+
+    // Fetch users from backend
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
+    const fetchUsers = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/users'); // Adjust endpoint as needed
+            const data = await response.json();
+            setUsers(data);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
 
     // Handle input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setNewUser((prev) => ({ ...prev, [name]: value }));
-    };
-
-    // Handle image upload
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setNewUser((prev) => ({ ...prev, imageUrl: reader.result }));
-        };
-        if (file) reader.readAsDataURL(file);
+        setNewUser((prev) => {
+            const updatedUser = { ...prev, [name]: value };
+            //console.log("Updated Form Data on Change:", updatedUser);  // Log the form data after each change
+            return updatedUser;
+        });
     };
 
     // Add a new user
-    const handleAddUser = () => {
-        if (newUser.firstname && newUser.lastname) {
-            const userId = users.length ? users[users.length - 1].id + 1 : 1;
-            const userToAdd = { id: userId, ...newUser };
-            setUsers([...users, userToAdd]);
-            resetForm();
-            setShowModal(false);
+    const handleAddUser = async () => {
+        //console.log("Form Data for Add User:", newUser);  // Log the user data before sending
+    
+        try {
+            const response = await fetch('http://localhost:5000/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newUser), // Send the data as JSON
+            });
+    
+            if (response.ok) {
+                const createdUser = await response.json();  // Receive the created user response from backend
+                //console.log("Created User:", createdUser);  // Log the created user to ensure it's correct
+    
+                // Update the users state to reflect the newly added user
+                setUsers(prevUsers => [...prevUsers, createdUser]);
+    
+                // Reset the form fields after adding the user
+                resetForm();
+                setShowModal(false);  // Close the modal after adding the user
+            } else {
+                console.error('Failed to add user. Response not OK.');
+            }
+        } catch (error) {
+            console.error('Error adding user:', error);  // Catch any errors from the fetch
         }
     };
-
+    
     // Edit an existing user
     const handleEdit = (userId) => {
         const user = users.find((u) => u.id === userId);
@@ -56,36 +102,92 @@ const Users = () => {
     };
 
     // Update an existing user
-    const handleUpdateUser = () => {
-        setUsers(users.map((u) => (u.id === editUserId ? { id: u.id, ...newUser } : u)));
-        resetForm();
-        setShowModal(false);
+    const handleUpdateUser = async () => {
+        //console.log("Form Data for Update User:", newUser);  // Print all the inputs when updating a user
+        try {
+            const response = await fetch(`http://localhost:5000/users/${editUserId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newUser),
+            });
+    
+            if (response.ok) {
+                const updatedUser = await response.json();
+                setUsers(users.map((u) => (u.id === editUserId ? updatedUser : u)));
+                //console.log('User updated successfully:', updatedUser);
+                resetForm();
+                setShowModal(false);
+            } else {
+                console.error('Failed to update user');
+            }
+        } catch (error) {
+            console.error('Error updating user:', error);
+        }
     };
 
     // Delete a user
-    const handleDelete = (userId) => {
-        setUsers(users.filter((user) => user.id !== userId));
+    const handleDelete = async (userId) => {
+        try {
+            const response = await fetch(`http://localhost:5000/users/${userId}`, {
+                method: 'DELETE',
+            });
+    
+            if (response.ok) {
+                setUsers(users.filter((user) => user.id !== userId));
+                setDeleteModalVisible(false);  // Close the modal after successful deletion
+            } else {
+                console.error('Failed to delete user');
+            }
+        } catch (error) {
+            console.error('Error deleting user:', error);
+        }
+    };
+    const openDeleteModal = (userId) => {
+        setDeleteUserId(userId);  // Store the user ID to be deleted
+        setDeleteModalVisible(true);
     };
 
-    // Navigate to user details page
     const handleViewDetails = (userId) => {
-        navigate(`/user/${userId}`);
+        const user = users.find((u) => u.id === userId);
+        setViewUser(user);  // Set the user data to view
+        setShowViewModal(true);  // Open the modal
     };
+    
 
     // Reset form and state
     const resetForm = () => {
         setNewUser({
+            username: '',
+            password: '',
             firstname: '',
             lastname: '',
-            birthday: '',
+            region: '',
+            province: '',
+            city: '',
+            barangay: '',
+            zone: '',
             sex: '',
-            address: '',
-            civilStatus: '',
-            imageUrl: ''
+            age: '',
+            birthday: '',
+            email_address : '',
+            contact_number: '',
+            civil_status: '',
+            youth_age_group: '',
+            work_status: '',
+            educational_background: '',
+            registered_sk_voter: '',
+            registered_national_voter: ''
         });
         setIsEditing(false);
         setEditUserId(null);
     };
+
+    const filteredUsers = selectedClassification
+  ? users.filter((user) => user.youth_age_group === selectedClassification)
+  : users;
+
 
     return (
         <div className="admin-users-container">
@@ -98,118 +200,119 @@ const Users = () => {
                     Add User
                 </button>
 
+                <select
+                    value={selectedClassification}
+                    onChange={(e) => setSelectedClassification(e.target.value)}
+                    className="form-control mb-3"
+                    >
+                    <option value="">Select Youth Classification</option>
+                    {youthClassifications.map((classification, index) => (
+                        <option key={index} value={classification}>
+                        {classification}
+                        </option>
+                    ))}
+                    </select>
+
                 <div className="users-list-container">
-                    {/* <table className="table table-striped table-bordered mt-4"> */}
                     <table className="table table-striped table-bordered mt-4">
                         <thead>
                             <tr>
-                                <th>USERID</th>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                                <th>Action</th>
+                            <th>USERID</th>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Youth Classification</th>
+                            <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {users.length === 0 ? (
-                                <tr>
-                                    <td colSpan="4" className="text-center">No users available</td>
-                                </tr>
+                            {filteredUsers.length === 0 ? (
+                            <tr>
+                                <td colSpan="5" className="text-center">No users found for this classification</td>
+                            </tr>
                             ) : (
-                                users.map((user) => (
-                                    <tr key={user.id}>
-                                        <td>{user.id}</td>
-                                        <td>{user.firstname}</td>
-                                        <td>{user.lastname}</td>
-                                        <td>
-                                            <button
-                                                className="btn btn-info me-2"
-                                                onClick={() => handleViewDetails(user.id)}
-                                            >
-                                                View All Details
-                                            </button>
-                                            <button
-                                                className="btn btn-warning me-2"
-                                                onClick={() => handleEdit(user.id)}
-                                            >
-                                                Edit User
-                                            </button>
-                                            <button
-                                                className="btn btn-danger"
-                                                onClick={() => handleDelete(user.id)}
-                                            >
-                                                Delete User
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
+                            filteredUsers.map((user) => (
+                                <tr key={user.id}>
+                                <td>{user.id}</td>
+                                <td>{user.firstname}</td>
+                                <td>{user.lastname}</td>
+                                <td>{user.youth_age_group}</td>
+                                <td>
+                                    <button
+                                    className="btn btn-info me-2"
+                                    onClick={() => handleViewDetails(user.id)}
+                                    >
+                                    View
+                                    </button>
+                                    <button
+                                    className="btn btn-warning me-2"
+                                    onClick={() => handleEdit(user.id)}
+                                    >
+                                    Edit
+                                    </button>
+                                    <button
+                                    className="btn btn-danger"
+                                    onClick={() => openDeleteModal(user.id)}
+                                    >
+                                    Delete
+                                    </button>
+                                </td>
+                                </tr>
+                            ))
                             )}
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            
-
-            {/* <div className="main-content">
-                <div className="container">
-                    <div className="text-center text-lg-start mt-4">
-                        <h1 className="Maintext animated slideInRight">Admin User Modification</h1>
-                        <p className="Subtext">Manage users</p>
-                    </div> */}
-
-                    {/* Add User Button */}
-                    {/* <button className="btn btn-primary mb-3" onClick={() => setShowModal(true)}>
-                        Add User
-                    </button> */}
-
-                    {/* User Table */}
-                    {/* <table className="table table-striped table-bordered mt-4">
-                        <thead>
-                            <tr>
-                                <th>USERID</th>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {users.length === 0 ? (
-                                <tr>
-                                    <td colSpan="4" className="text-center">No users available</td>
-                                </tr>
-                            ) : (
-                                users.map((user) => (
-                                    <tr key={user.id}>
-                                        <td>{user.id}</td>
-                                        <td>{user.firstname}</td>
-                                        <td>{user.lastname}</td>
-                                        <td>
-                                            <button
-                                                className="btn btn-info me-2"
-                                                onClick={() => handleViewDetails(user.id)}
-                                            >
-                                                View All Details
-                                            </button>
-                                            <button
-                                                className="btn btn-warning me-2"
-                                                onClick={() => handleEdit(user.id)}
-                                            >
-                                                Edit User
-                                            </button>
-                                            <button
-                                                className="btn btn-danger"
-                                                onClick={() => handleDelete(user.id)}
-                                            >
-                                                Delete User
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
+            {/* Logout Confirmation Modal */}
+            {DeleteModalVisible && (
+                <div className='ModalOverlayStyles'>
+                    <div className='ModalStyles semi-large'>
+                        <h3>Confirm Deletion</h3>
+                        <p>Are you sure you want to delete this user?</p>
+                        <button
+                            className="ModalButtonStyles SmallButton btn-dark super-small"
+                            onClick={() => handleDelete(deleteUserId)} >Yes</button>
+                                <button className="ModalButtonStyles SmallButton btn-db super-small" 
+                                        onClick={() => setDeleteModalVisible(false)}>No</button>
+                        </div>
                 </div>
-            </div> */}
+            )}
+
+
+            {showViewModal && viewUser && (
+                <div className="modal show" style={{ display: 'block' }} tabIndex="-1" role="dialog">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">View User Details</h5>
+                                <button type="button" className="close" onClick={() => setShowViewModal(false)}>
+                                    <span>&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <div><strong>Username:</strong> {viewUser.username}</div>
+                                <div><strong>Firstname:</strong> {viewUser.firstname}</div>
+                                <div><strong>Lastname:</strong> {viewUser.lastname}</div>
+                                <div><strong>Youth Classification:</strong> {viewUser.youth_age_group}</div>
+                                <div><strong>Email Address:</strong> {viewUser.email_address}</div>
+                                <div><strong>Contact Number:</strong> {viewUser.contact_number}</div>
+                                <div><strong>Age:</strong> {viewUser.age}</div>
+                                <div><strong>Sex:</strong> {viewUser.sex}</div>
+                                <div><strong>Work Status:</strong> {viewUser.work_status}</div>
+                                <div><strong>Educational Background:</strong> {viewUser.educational_background}</div>
+                                <div><strong>Birthday:</strong> {viewUser.birthday}</div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={() => setShowViewModal(false)}>
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+      
 
             {/* Modal for Adding/Editing User */}
             {showModal && (
@@ -224,163 +327,198 @@ const Users = () => {
                             </div>
                             <div className="modal-body">
                                 <form>
-                                    <label>Name of Youth</label>
+                                    <label>Username</label>
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        value={newUser.username}
+                                        onChange={handleChange}
+                                        placeholder="username"
+                                        required
+                                    />
+                                     <label>Password</label>
+                                     <input
+                                        type="text"
+                                        name="password"
+                                        value={newUser.password}
+                                        onChange={handleChange}
+                                        placeholder="password"
+                                        required
+                                    />
+                                    <label>Firstname</label>
                                     <input
                                         type="text"
                                         name="firstname"
+                                        value={newUser.firstname}
+                                        onChange={handleChange}
                                         placeholder="Firstname"
+                                        required
                                     />
-
-                                    <label>Address</label>
-
+                                    <label>Lastname</label>
+                                    <input
+                                        type="text"
+                                        name="lastname"
+                                        value={newUser.lastname}
+                                        onChange={handleChange}
+                                        placeholder="Lastname"
+                                        required
+                                    />
                                     <label>Region</label>
                                     <input
                                         type="text"
                                         name="region"
+                                        value={newUser.region}
+                                        onChange={handleChange}
                                         placeholder="Region"
                                         required
                                     />
-
                                     <label>Province</label>
                                     <input
                                         type="text"
                                         name="province"
+                                        value={newUser.province}
+                                        onChange={handleChange}
                                         placeholder="Province"
                                         required
                                     />
-                                    
                                     <label>City/Municipality</label>
                                     <input
                                         type="text"
                                         name="city"
-                                        placeholder="City/Municipality"
+                                        value={newUser.city}
+                                        onChange={handleChange}
+                                        placeholder="City"
                                         required
                                     />
-
-                                    <label>Baragay</label>
+                                    <label>Barangay</label>
                                     <input
                                         type="text"
                                         name="barangay"
+                                        value={newUser.barangay}
+                                        onChange={handleChange}
                                         placeholder="Barangay"
                                         required
                                     />
-                                    
                                     <label>Purok/Zone</label>
                                     <input
                                         type="text"
                                         name="zone"
-                                        placeholder="Purok/Zone"
+                                        value={newUser.zone}
+                                        onChange={handleChange}
+                                        placeholder="zone"
                                         required
                                     />
-
                                     <label>Sex Assigned at Birth</label>
                                     <select
                                         name="sex"
+                                        value={newUser.sex}
+                                        onChange={handleChange}
                                         required
                                     >
                                         <option value="">Select Option</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
-
                                     <label>Age</label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         name="age"
+                                        value={newUser.age}
+                                        onChange={handleChange}
                                         placeholder="Age"
                                         required
                                     />
-
                                     <label>Birthday</label>
-                                    {/* Rej, pakilagyan nung calendar dito para sa bday. */}
-
+                                    <input
+                                        type="date"
+                                        name="birthday"
+                                        value={newUser.birthday}
+                                        onChange={handleChange}
+                                        required
+                                    />
                                     <label>E-mail Address</label>
                                     <input
-                                        type="text"
-                                        name="e-mail"
+                                        type="email"
+                                        name="email_address"
+                                        value={newUser.email_address}
+                                        onChange={handleChange}
                                         placeholder="E-mail Address"
                                         required
                                     />
-
                                     <label>Contact Number</label>
                                     <input
                                         type="text"
-                                        name="contact-number"
+                                        name="contact_number"
+                                        value={newUser.contact_number}
+                                        onChange={handleChange}
                                         placeholder="Contact Number"
                                         required
                                     />
-
                                     <label>Civil Status</label>
                                     <select
-                                        name="civil-status"
+                                        name="civil_status"
+                                        value={newUser.civil_status}
+                                        onChange={handleChange}
                                         required
                                     >
                                         <option value="">Select Option</option>
                                         <option value="Single">Single</option>
                                         <option value="Married">Married</option>
                                         <option value="Widowed">Widowed</option>
-                                        <option value="Divorced">Divorced</option>
-                                        <option value="Separated">Separated</option>
-                                        <option value="Annulled">Annulled</option>
-                                        <option value="Unknown">Unknown</option>
-                                        <option value="Live-in">Live-in</option>
                                     </select>
-
-                                    <label>Youth Classification</label>
                                     <label>Youth Age Group</label>
-                                    <select
-                                        name="youth-age-group"
+                                     <select
+                                        name="youth_age_group"
+                                        value={newUser.youth_age_group}
+                                        onChange={handleChange}
+                                        placeholder="Youth Age Group"
                                         required
                                     >
                                         <option value="">Select Option</option>
-                                        <option value="Child Youth">Child Youth(15-17 yrs old)</option>
-                                        <option value="Core Youth">Core Youth(18-24 yrs old)</option>
-                                        <option value="Young Adult">Young Adult(25-30 yrs old)</option>
+                                        <option value="Child Youth">Child Youth</option>
+                                        <option value="Core Youth">Core Youth</option>
+                                        <option value="Adult Youth">Adult Youth</option>
                                     </select>
-
                                     <label>Work Status</label>
                                     <select
-                                        name="work-status"
+                                        name="work_status"
+                                        value={newUser.work_status}
+                                        onChange={handleChange}
                                         required
                                     >
                                         <option value="">Select Option</option>
                                         <option value="Employed">Employed</option>
                                         <option value="Unemployed">Unemployed</option>
-                                        <option value="Self-Employed">Self-Employed</option>
-                                        <option value="Currently looking for a job">Currently looking for a job</option>
-                                        <option value="Not interested looking for a job">Not interested looking for a job</option>
                                     </select>
-
                                     <label>Educational Background</label>
                                     <select
-                                        name="educational-background"
+                                        name="educational_background"
+                                        value={newUser.educational_background}
+                                        onChange={handleChange}
+                                        placeholder="Educational Background"
                                         required
                                     >
                                         <option value="">Select Option</option>
-                                        <option value="Elementary Level">Elementary Level</option>
-                                        <option value="Elementary Grad">Elementary Grad</option>
-                                        <option value="High School Level">High School Level</option>
-                                        <option value="High School Grad">High School Grad</option>
-                                        <option value="Vocational Grad">Vocational Grad</option>
-                                        <option value="College Level">College Level</option>
-                                        <option value="College Grad">College Grad</option>
-                                        <option value="Masters Level">Masters Level</option>
-                                        <option value="Masters Grad">Masters Grad</option>
+                                        <option value="High School">High School</option>
+                                        <option value="College">College</option>
+                                        <option value="College Graduate">College Graduate</option>
                                     </select>
-
                                     <label>Registered SK Voter?</label>
                                     <select
-                                        name="registered-sk-voter"
+                                        name="registered_sk_voter"
+                                        value={newUser.registered_sk_voter}
+                                        onChange={handleChange}
                                         required
                                     >
                                         <option value="">Select Option</option>
-                                        <option value="Male">Yes</option>
-                                        <option value="Female">No</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
                                     </select>
-
                                     <label>Registered National Voter?</label>
                                     <select
-                                        name="registered-national-voter"
+                                        name="registered_national_voter"
+                                        value={newUser.registered_national_voter}
+                                        onChange={handleChange}
                                         required
                                     >
                                         <option value="">Select Option</option>
@@ -389,7 +527,6 @@ const Users = () => {
                                     </select>
                                 </form>
                             </div>
-
                             <div className="modal-footer">
                                 <button
                                     type="button"
@@ -406,7 +543,7 @@ const Users = () => {
                                     {isEditing ? 'Update User' : 'Add User'}
                                 </button>
                             </div>
-                        </div>
+                        </div>  
                     </div>
                 </div>
             )}

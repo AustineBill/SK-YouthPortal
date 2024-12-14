@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './styles/AdminManageContactUs.css';
-import { Container } from 'react-bootstrap';
+// import { Container } from 'react-bootstrap'; Idk kung gagamitin pa to ni Rej.
 
 const pageLabels = {
   manageContactDetails: 'Manage Contact Us Details',
@@ -73,6 +73,7 @@ const ManageContactUs = () => {
                 <input
                   type='text'
                   value={contactDetails.contact_number}
+                  readOnly
                 />
               </div>
 
@@ -81,6 +82,7 @@ const ManageContactUs = () => {
                 <input
                   type='text'
                   value={contactDetails.location}
+                  readOnly
                 />
               </div>
 
@@ -89,6 +91,7 @@ const ManageContactUs = () => {
                 <input
                   type='text'
                   value={contactDetails.gmail}
+                  readOnly
                 />
               </div>
 

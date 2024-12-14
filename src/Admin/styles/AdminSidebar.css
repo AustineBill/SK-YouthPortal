@@ -4,7 +4,7 @@
 .admin-bs-sidebar {
     position: fixed;
     padding-top: 75px;
-    width: 25%;
+    width: 22.5%;
     height: 100%;
     background-color: #e2dbdb;
     z-index: 2;
@@ -14,7 +14,6 @@
 .admin-bs-manage-website-nested-links a,
 .admin-bs-reservations-nested-links a {
     text-decoration: none;
-    color: black;
 }
 
 .admin-bs-list,
@@ -30,35 +29,47 @@
     background-color: #3f3d3d;
 }
 
-.admin-bs-list.active
-{
+.admin-bs-list.active {
     background-color: #E1D142;
     transition: all 0.35s ease;
 }
 
 .admin-sidebar-icon {
-    margin-left: 30px;
-    font-size: 30px;
-    color: black;
+    margin: 0 10px 0 30px;
+    font-size: 40px;
 }
 
-@media (min-width: 993px) and (max-width: 1200px) { 
-    .admin-bs-list {
-        font-size: 12.5px;
-    }
+.admin-bs-manage-website-nested-links,
+.admin-bs-reservations-nested-links {
+    margin-left: 20px;
+}
+
+
+/* Media */
+
+@media (min-width: 1025px ) and (max-width: 1440px) {
 
     .admin-sidebar-icon {
-        margin-left: 20px;
+        margin: 0 5px 0 20px;
+        font-size: 30px;
+    }
+    
+    .admin-bs-manage-website-nested-links,
+    .admin-bs-reservations-nested-links {
+        margin-left: 15px;
     }
 }
 
-@media (min-width: 768px) and (max-width: 992px) { 
-    .admin-bs-list {
-        font-size: 9px;
-        font-weight: bolder;
-    }
+
+@media (min-width: 768px) and (max-width: 1024px) {
 
     .admin-sidebar-icon {
-        margin-left: 8px;
+        margin: 0 5px 0 15px;
+        font-size: 20px;
+    }
+    
+    .admin-bs-manage-website-nested-links,
+    .admin-bs-reservations-nested-links {
+        margin-left: 0px;
     }
 }
