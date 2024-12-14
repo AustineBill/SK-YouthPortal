@@ -5,21 +5,21 @@
 .admin-reports-container {
     position: relative;
     top: 75px;
-    left: 25%;
-    width: 75%;
+    left: 22.5%;
+    width: 77.5%;
     background-color: #FFFFFF;
     font-family: 'Inter', sans-serif;
     z-index: 1;
 }
 
 .admin-reports-label-h2 {
-    font-size: 40px;
+    font-size: 45px;
     margin: 20px 40px 20px 40px;
 }
 
 .admin-reports-nav-tabs {
     cursor: pointer;
-    font-size: 20px;
+    font-size: 25px;
     margin: 0 0 20px 60px;
     gap: 1in;
     color: #766F6F;
@@ -37,6 +37,10 @@
     text-underline-offset: 10px;
 }
 
+.admin-reports-contents-container {
+    margin-bottom: 40px;
+}
+
 .admin-reservation-reports-details-container,
 .admin-generate-report-container {
     background-color: #c5c1c1;
@@ -46,11 +50,12 @@
 .admin-reservation-reports-table {
     margin: 25px 0 25px 0;
     background-color: #FFFFFF;
-    width: 90%;
+    width: 95%;
 }
 
 .all-reservation-reports-th {
-    font-size: 17.5px;
+    /* font-family: 'Roboto', sans-serif; */
+    font-size: 20px;
 }
 
 .admin-generate-report-group {
@@ -60,7 +65,7 @@
 
 .admin-generate-report-group .admin-generate-report-label {
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .generate-report-form {
@@ -81,14 +86,160 @@
     transition: all 0.35s;
 }
 
-.generate-report-form input[type="text"], 
+.generate-report-form input[type="text"],
 .generate-report-date-time input[type="date"],
 .generate-report-date-time input[type="time"] {
-    height: 50px;
+    height: 60px;
+    margin-bottom: 0;
+    font-size: 20px;
+}
+
+.generate-report-form input[type="text"]:focus,
+.generate-report-date-time input[type="date"]:focus,
+.generate-report-date-time input[type="time"]:focus {
+    outline: 1px solid #007bff;
 }
 
 .admin-generate-report-button {
+    background-color: #25327A;
     margin-top: 10px;
     width: 175px;
     height: 55px;
+    font-size: 15px;
+}
+
+
+/* Media */
+/* MISSING: RESERVATION REPORTS */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    .admin-reports-label-h2 {
+        font-size: 40px;
+    }
+
+    .admin-generate-report-group .admin-generate-report-label {
+        font-size: 20px;
+    }
+
+    .admin-reports-nav-tabs {
+        font-size: 22.5px;
+        margin: 0 0 20px 45px;
+        gap: 0.75in;
+    }
+
+    .generate-report-form input[type="text"],
+    .generate-report-date-time input[type="date"],
+    .generate-report-date-time input[type="time"] {
+        height: 50px;
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .admin-reports-label-h2 {
+        font-size: 35px;
+    }
+
+    .admin-generate-report-group .admin-generate-report-label {
+        font-size: 17.5px;
+    }
+
+    .generate-report-date-time {
+        gap: 0.75in;
+    }
+
+    .admin-reports-nav-tabs {
+        font-size: 20px;
+        margin: 0 0 20px 45px;
+        gap: 1in;
+    }
+
+    .generate-report-form input[type="text"],
+    .generate-report-date-time input[type="date"],
+    .generate-report-date-time input[type="time"] {
+        height: 45px;
+        font-size: 17.5px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    .admin-reports-container {
+        left: 0;
+        width: 100%;
+    }
+
+    .admin-reports-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 20px 25px;
+    }
+
+    .admin-reports-nav-tabs {
+        font-size: 17.5px;
+        margin: 0 0 20px 45px;
+        gap: 0.5in;
+    }
+
+    .admin-generate-report-group .admin-generate-report-label {
+        font-size: 15px;
+    }
+
+    .generate-report-date-time {
+        gap: 0.50in;
+    }
+
+    .generate-report-form input[type="text"],
+    .generate-report-date-time input[type="date"],
+    .generate-report-date-time input[type="time"] {
+        height: 45px;
+        font-size: 12.5px;
+    }
+
+    .admin-generate-report-button {
+        width: 150px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .admin-reports-container {
+        left: 0;
+        width: 100%;
+    }
+
+    .admin-reports-label-h2 {
+        font-size: 25px;
+        margin: 20px 0 20px 20px;
+    }
+
+    .admin-reports-nav-tabs {
+        font-size: 15px;
+        margin: 0 0 20px 40px;
+        gap: 0.5in;
+    }
+
+    .admin-generate-report-group .admin-generate-report-label {
+        font-size: 12.5px;
+    }
+
+    .generate-report-date-time {
+        gap: 0.25in;
+    }
+
+    .generate-report-form input[type="text"],
+    .generate-report-date-time input[type="date"],
+    .generate-report-date-time input[type="time"] {
+        height: 45px;
+        font-size: 10px;
+    }
+
+    .admin-generate-report-button {
+        width: 125px;
+        height: 50px;
+        font-size: 10px;
+    }
 }
