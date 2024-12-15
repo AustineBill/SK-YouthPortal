@@ -567,23 +567,10 @@ const storage = multer.diskStorage({
   },
 }); 
 
-const eventsStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = path.join(__dirname, 'public', 'Events');
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    cb(null, dir); // Files will be saved to public/Events
-  },
-  filename: (req, file, cb) => {
-    const sanitizedFilename = file.originalname.replace(/[^a-zA-Z0-9.-]/g, '_');
-    cb(null, sanitizedFilename);
-  },
-});
 
 
 // Initialize multer with the custom storage
-const uploadEvents = multer({ storage: eventsStorage });
+
 const upload = multer({ storage: storage });
 
 // POST route to add inventory item
