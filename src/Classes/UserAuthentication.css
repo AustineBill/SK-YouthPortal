@@ -59,15 +59,15 @@ button:hover {
     font-size: 14px;
 }
 
-#sign-in-button,
-#sign-up-button {
+
+
+
+.forgot-password-link, .sign-up-link {
     color: #007bff;
-    text-decoration: none;
     cursor: pointer;
+    text-decoration: none;
 }
 
-#sign-in-button:hover,
-#sign-up-button:hover {
-    text-decoration: underline;
+.forgot-password-link:hover, .sign-up-link:hover {
+    color: #1d127e;
 }
-

@@ -5,14 +5,13 @@ const { Pool } = require('pg');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require('bcrypt');
+
 
 require('dotenv').config();
-const { generateRandomId, EncryptionCode, DecryptionCode } = require('./Codex');
-
-
+const { generateRandomId, EncryptionCode, DecryptionCode } = require('./src/WebStructure/Codex');
 
 const PORT = process.env.PORT || 5000;
-
 
 const app = express();
 app.use(cors());
@@ -74,14 +73,90 @@ app.get('/Website/mandate', async (req, res) => {
   });
 
 app.post('/register', async (req, res) => {
-    const { username, password } = req.body;
+    const { activationCode, username, password } = req.body;
+
     try {
-        await pool.query('INSERT INTO Users (username, password) VALUES ($1, $2)', [username, password]);
-        res.status(201).json({ message: 'User registered successfully' });
-    } catch (err) {
-        console.error('Registration error:', err.stack);
-        res.status(500).json({ message: 'Error registering user' });
+        // Decrypt the activation code
+        const decryptedCode = DecryptionCode(activationCode);
+
+        // Ensure the decrypted code has the correct format (e.g., 8 digits)
+        if (decryptedCode.length !== 8) {
+            return res.status(400).json({ message: 'Invalid Activation Code' });
+        }
+
+        // Query the database to check if the user with the decrypted activation code exists
+        const user = await pool.query('SELECT * FROM Users WHERE id = $1', [decryptedCode]);
+
+        if (user.rowCount === 0) {
+            return res.status(400).json({ message: 'Invalid Activation Code' });
+        }
+
+        const result = await pool.query('SELECT * FROM Users WHERE id = $1', [decryptedCode]);
+
+        if (result.rowCount === 0) {
+          return res.status(400).json({ message: 'Invalid Activation Code' }); 
+        }
+
+        // Check if the username already exists
+        const existingUser = await pool.query('SELECT * FROM Users WHERE username = $1', [username]);
+        if (existingUser.rowCount > 0) {
+            return res.status(400).json({ message: 'Username already taken' });
+        }
+
+        // Hash the password before storing it in the database
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Insert the new user into the database with the hashed password
+        await pool.query(
+            'INSERT INTO Users (username, password) VALUES ($1, $2)',
+            [username, hashedPassword]
+        );
+
+        res.status(201).json({ message: 'Account Created Successfully' });
+    } catch (error) {
+        console.error('Error during registration:', error);
+        res.status(500).json({ message: 'An error occurred during signup' });
     }
+});
+
+app.put('/updateUser', async (req, res) => {
+  const { userId, username, password, newPassword } = req.body;
+
+  try {
+      // Find the user by ID (using raw SQL)
+      const userResult = await pool.query('SELECT * FROM Users WHERE id = $1', [userId]);
+      const user = userResult.rows[0];
+
+      if (!user) {
+          return res.status(404).json({ message: 'User not found.' });
+      }
+
+      // Check if the username already exists
+      const existingUser = await pool.query('SELECT * FROM Users WHERE username = $1', [username]);
+      if (existingUser.rowCount > 0 && existingUser.rows[0].id !== userId) {
+          return res.status(400).json({ message: 'Username already taken by another user.' });
+      }
+
+      // Check if password matches current password (using bcrypt)
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+          return res.status(400).json({ message: 'Incorrect current password.' });
+      }
+
+      // Hash the new password before saving to the database
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      // Update user info (username and password) in the database
+      await pool.query(
+          'UPDATE Users SET username = $1, password = $2 WHERE id = $3',
+          [username, hashedPassword, userId]
+      );
+
+      return res.status(200).json({ message: 'User info updated successfully!' });
+  } catch (error) {
+      console.error('Error during update:', error);
+      return res.status(500).json({ message: 'An error occurred while updating user info.' });
+  }
 });
 
 app.post('/login', async (req, res) => {
