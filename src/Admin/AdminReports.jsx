@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import './styles/AdminReports.css';
-// New CSS file for AdminReports styling
+import './styles/adminreports.css'; // New CSS file for AdminReports styling
 
 const Reports = () => {
     const [activeContent, setActiveContent] = useState('reports');
@@ -105,7 +104,7 @@ const Reports = () => {
 
                             <button
                                 type="submit"
-                                className="admin-generate-report-button rounded">
+                                className="admin-generate-report-button bg-primary rounded-pill">
                                 Generate Report
                             </button>
                         </form>

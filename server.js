@@ -18,13 +18,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-/*const pool = new Pool({
-  user: process.env.PG_USER,      // Get this from Render environment variables
-  host: process.env.PG_HOST,      // Get this from Render environment variables
-  database: process.env.PG_DB,    // Get this from Render environment variables
-  password: process.env.PG_PASS,  // Get this from Render environment variables
-  port: 5432,
-});*/
 
 const pool = new Pool({
     user: 'postgres',
@@ -573,7 +566,11 @@ const storage = multer.diskStorage({
     cb(null, sanitizedFilename); // Keep the original file name
   },
 }); 
+
+
+
 // Initialize multer with the custom storage
+
 const upload = multer({ storage: storage });
 
 // POST route to add inventory item
@@ -719,6 +716,8 @@ app.put('/contact', async (req, res) => {
   }
 });
 
+
+
 //HOMEPAGE
 // Fetch events from public.home
 // Fetch events from the 'public.home' table
@@ -861,7 +860,7 @@ app.put('/events/:id', async (req, res) => {
 app.get('/users', async (req, res) => {
   try {
       const result = await pool.query('SELECT * FROM users');
-      res.json(result.rows);
+       res.json(result.rows);
   } catch (err) {
       console.error('Error fetching users:', err);
       res.status(500).send('Server error');
@@ -870,8 +869,62 @@ app.get('/users', async (req, res) => {
 
 // Insert into the database with random ID generation
 app.post('/users', async (req, res) => {
-  console.log('Request Body:', req.body);  // Log the incoming data
+    console.log('Request Body:', req.body);  // Log the incoming data
+  
+    const {
+      username,
+      password,
+      firstname,
+      lastname,
+      region,
+      province,
+      city,
+      barangay,
+      zone,
+      sex,
+      age,
+      birthday,
+      email_address,
+      contact_number,
+      civil_status,
+      youth_age_group,
+      work_status,
+      educational_background,
+      registered_sk_voter,
+      registered_national_voter,
+      active  // Add this field to the request body (optional)
+    } = req.body;
+  
+    // Generate a random 6-character ID
+    const userId = generateRandomId();  // Call the random ID function
+  
+    try {
+      // Adjust the INSERT query to include the `active` field
+      const result = await pool.query(
+        `INSERT INTO Users (
+          id, username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
+          birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
+          educational_background, registered_sk_voter, registered_national_voter, active
+        ) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
+        RETURNING *`,
+        [
+          userId, username, password, firstname, lastname, region, province, city, barangay, zone, sex, 
+          age, birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
+          educational_background, registered_sk_voter, registered_national_voter, active || true // Default to true if not provided
+        ]
+      );
+  
+      res.json(result.rows[0]);
+    } catch (err) {
+      console.error('Error adding user:', err);
+      res.status(500).send('Server error');
+    }
+});
 
+// Update a user
+app.put('/users/:id', async (req, res) => {
+  const { id } = req.params;
   const {
     username,
     password,
@@ -892,61 +945,8 @@ app.post('/users', async (req, res) => {
     work_status,
     educational_background,
     registered_sk_voter,
-    registered_national_voter
-  } = req.body;
-
-  // Generate a random 6-character ID
-  const userId = generateRandomId();  // Call the random ID function
-
-  try {
-    // Adjust the INSERT query to include the generated `id` and all required values
-    const result = await pool.query(
-      `INSERT INTO Users (
-        id, username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
-        birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
-        educational_background, registered_sk_voter, registered_national_voter
-      ) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) 
-      RETURNING *`,
-      [
-        userId, username, password, firstname, lastname, region, province, city, barangay, zone, sex, 
-        age, birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
-        educational_background, registered_sk_voter, registered_national_voter
-      ]
-    );
-
-    res.json(result.rows[0]);
-  } catch (err) {
-    console.error('Error adding user:', err);
-    res.status(500).send('Server error');
-  }
-});
-
-
-// Update a user
-app.put('/users/:id', async (req, res) => {
-  const { id } = req.params;
-  const {
-      username,
-      password,
-      firstname,
-      lastname,
-      region,
-      province,
-      city,
-      barangay,
-      zone,
-      sex,
-      age,
-      birthday,
-      email_address,
-      contact_number,
-      civil_status,
-      youth_age_group,
-      work_status,
-      educational_background,
-      registered_sk_voter,
-      registered_national_voter
+    registered_national_voter,
+    active  // This will now be part of the request body
   } = req.body;
 
   try {
@@ -956,12 +956,12 @@ app.put('/users/:id', async (req, res) => {
               city = $7, barangay = $8, zone = $9, sex = $10, age = $11, birthday = $12, 
               email_address = $13, contact_number = $14, civil_status = $15, youth_age_group = $16, 
               work_status = $17, educational_background = $18, registered_sk_voter = $19, 
-              registered_national_voter = $20
-          WHERE id = $21 RETURNING *`,
+              registered_national_voter = $20, active = $21
+          WHERE id = $22 RETURNING *`,
           [
               username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
               birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
-              educational_background, registered_sk_voter, registered_national_voter, id
+              educational_background, registered_sk_voter, registered_national_voter, active, id
           ]
       );
 
@@ -972,24 +972,32 @@ app.put('/users/:id', async (req, res) => {
   }
 });
 
-// Delete a user
-app.delete('/users/:id', async (req, res) => {
-  const { id } = req.params;
   
+//admin dashboard 
+//admin dashboard start
+// Add this new route to fetch the required user stats for the dashboard
+app.get('/admindashboard', async (req, res) => {
   try {
-      const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING *', [id]);
-      
-      if (result.rows.length === 0) {
-          return res.status(404).send('User not found');
-      }
-      
+    // Query to get total users, active users, and inactive users from the `users` table
+    const result = await pool.query(`
+      SELECT 
+        COUNT(*) AS total_users,
+        COUNT(CASE WHEN status = 'active' THEN 1 END) AS active_users,
+        COUNT(CASE WHEN status = 'inactive' THEN 1 END) AS inactive_users
+      FROM users
+    `);
+
+    // Return the result in JSON format
+    if (result.rows.length > 0) {
       res.json(result.rows[0]);
+    } else {
+      res.status(404).json({ message: 'No user data found' });
+    }
   } catch (err) {
-      console.error('Error deleting user:', err);
-      res.status(500).send('Server error');
+    console.error('Error fetching dashboard data:', err);
+    res.status(500).send('Server error');
   }
 });
-  
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
