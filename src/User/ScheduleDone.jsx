@@ -17,6 +17,17 @@ function ScheduleDone() {
     navigate('/ScheduleDetails');
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+
   const handleWaiverRedirect = () => {
     if (programType === 'Facilities') {
       navigate('/ReservationWaiver'); // Navigate to Reservation Waiver
@@ -75,11 +86,12 @@ function ScheduleDone() {
                       </tr>
                       <tr>
                         <td><strong>Start Date:</strong></td>
-                        <td>{new Date(allData.start_date).toLocaleDateString() || 'N/A'}</td>
+                        <td>{formatDate(allData.start_date) || 'N/A'}</td>
+                        
                       </tr>
                       <tr>
                         <td><strong>End Date:</strong></td>
-                        <td>{new Date(allData.end_date).toLocaleDateString() || 'N/A'}</td>
+                        <td>{formatDate(allData.end_date) || 'N/A'}</td>
                       </tr>
                       <tr>
                         <td><strong>Time Slot:</strong></td>

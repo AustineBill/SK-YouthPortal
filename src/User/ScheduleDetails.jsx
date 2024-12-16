@@ -80,6 +80,7 @@ const ScheduleDetails = () => {
 
     navigate('/ScheduleDone');
   };
+  
 
   return (
     <div className="container-fluid">

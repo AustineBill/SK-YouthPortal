@@ -55,32 +55,30 @@ const ViewFacilities = () => {
             const startDate = new Date(res.start_date);
             const endDate = new Date(res.end_date);
             const matchesDate = date >= startDate && date <= endDate;
-            const matchesTimeSlot = selectedTimeSlot ? res.time_slot === selectedTimeSlot : true;
-            return matchesDate && matchesTimeSlot;
+            return matchesDate; // Remove the time slot filtering
         });
     };
+    
 
     // Display usernames and reservation details on tiles
     const tileContent = ({ date, view }) => {
         if (view !== 'month') return null; // Render content only for month view
-
+    
         const dailyReservations = filterReservations(date);
-
+    
         return dailyReservations.length > 0 ? (
             <div className="reservation-tile-content">
-                <div className="reservation-count">
-                    <strong>{dailyReservations.length}</strong>
-                </div>
                 <ul className="reservation-usernames">
                     {dailyReservations.map((res, index) => (
                         <li key={index} className="username">
-                            {res.username}
+                            {res.username} {/* Display username */}
                         </li>
                     ))}
                 </ul>
             </div>
         ) : null;
     };
+    
 
     // Assign classes to tiles based on reservation data
     const tileClassName = ({ date, view }) => {
