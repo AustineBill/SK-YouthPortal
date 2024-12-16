@@ -1290,6 +1290,51 @@ app.get('/admindashboard', async (req, res) => {
   }
 });
 
+// Route to get all equipment reservations
+app.get('/equipmentreservation', async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT id, user_id, reservation_id, start_date, end_date, reserved_equipment, status, time_slot 
+       FROM equipment 
+       ORDER BY start_date ASC`
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching equipment reservations:', error);
+    res.status(500).send('Server error');
+  }
+});
+
+// Route to approve equipment reservations
+app.post('/approveequipmentreservation', async (req, res) => {
+  const { ids } = req.body; // Array of reservation IDs to approve
+  try {
+    await pool.query(
+      'UPDATE equipment SET status = $1 WHERE id = ANY($2::int[])',
+      ['Approved', ids]
+    );
+    res.status(200).send('Equipment reservations approved');
+  } catch (error) {
+    console.error('Error approving equipment reservations:', error);
+    res.status(500).send('Server error');
+  }
+});
+
+// Route to disapprove equipment reservations
+app.post('/disapproveequipmentreservation', async (req, res) => {
+  const { ids } = req.body; // Array of reservation IDs to disapprove
+  try {
+    await pool.query(
+      'UPDATE equipment SET status = $1 WHERE id = ANY($2::int[])',
+      ['Disapproved', ids]
+    );
+    res.status(200).send('Equipment reservations disapproved');
+  } catch (error) {
+    console.error('Error disapproving equipment reservations:', error);
+    res.status(500).send('Server error');
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
