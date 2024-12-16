@@ -1140,7 +1140,7 @@ app.post('/users', async (req, res) => {
         birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
         educational_background, registered_sk_voter, registered_national_voter
       ) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
       RETURNING *`,
       [
         userId, username, password, firstname, lastname, region, province, city, barangay, zone, sex, 
@@ -1206,24 +1206,48 @@ app.put('/users/:id', async (req, res) => {
   }
 });
 
-
+app.delete('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  
+  try {
+      const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING *', [id]);
+      
+      if (result.rows.length === 0) {
+          return res.status(404).send('User not found');
+      }
+      
+      res.json(result.rows[0]);
+  } catch (err) {
+      console.error('Error deleting user:', err);
+      res.status(500).send('Server error');
+  }
+});
   
 //admin dashboard 
 //admin dashboard start
 // Add this new route to fetch the required user stats for the dashboard
 app.get('/admindashboard', async (req, res) => {
   try {
-      const result = await pool.query('SELECT COUNT(*) AS total_users FROM users');
-      if (result.rows.length > 0) {
-          res.json(result.rows[0]);
-      } else {
-          res.status(404).json({ message: 'No data found' });
-      }
+    // Query to get total number of users
+    const usersResult = await pool.query('SELECT COUNT(*) AS total_users FROM users');
+    
+    // Query to get total number of schedules
+    const schedulesResult = await pool.query('SELECT COUNT(*) AS total_schedules FROM schedules');
+    
+    if (usersResult.rows.length > 0 && schedulesResult.rows.length > 0) {
+      res.json({
+        total_users: usersResult.rows[0].total_users,
+        total_schedules: schedulesResult.rows[0].total_schedules
+      });
+    } else {
+      res.status(404).json({ message: 'No data found' });
+    }
   } catch (err) {
-      console.error('Error fetching dashboard data:', err);
-      res.status(500).json({ message: 'Server error' });
+    console.error('Error fetching dashboard data:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 
 
