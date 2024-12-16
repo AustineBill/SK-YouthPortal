@@ -43,52 +43,27 @@ app.get('/', (req, res) => {
 
 /********* Website ******** */
 
-app.post('/register', async (req, res) => {
-    const { activationCode, username, password } = req.body;
+app.post('/ValidateCode', async (req, res) => {
+  const { activationCode } = req.body;
+  console.log('Request Body:', req.body); // Check what the backend is receiving
+  try {
+      const activationCodeTrimmed = activationCode.toString().trim();
+      console.log('Received Activation Code:', activationCodeTrimmed);
 
-    try {
-        // Decrypt the activation code
-        const decryptedCode = DecryptionCode(activationCode);
+      // Query the database to check if the user exists
+      const user = await pool.query('SELECT * FROM Users WHERE id = $1', [activationCodeTrimmed]);
+      console.log('Query Result for Activation Code:', user.rows);
 
-        // Ensure the decrypted code has the correct format (e.g., 8 digits)
-        if (decryptedCode.length !== 8) {
-            return res.status(400).json({ message: 'Invalid Activation Code' });
-        }
-
-        // Query the database to check if the user with the decrypted activation code exists
-        const user = await pool.query('SELECT * FROM Users WHERE id = $1', [decryptedCode]);
-
-        if (user.rowCount === 0) {
-            return res.status(400).json({ message: 'Invalid Activation Code' });
-        }
-
-        const result = await pool.query('SELECT * FROM Users WHERE id = $1', [decryptedCode]);
-
-        if (result.rowCount === 0) {
-          return res.status(400).json({ message: 'Invalid Activation Code' }); 
-        }
-
-        // Check if the username already exists
-        const existingUser = await pool.query('SELECT * FROM Users WHERE username = $1', [username]);
-        if (existingUser.rowCount > 0) {
-            return res.status(400).json({ message: 'Username already taken' });
-        }
-
-        // Hash the password before storing it in the database
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Insert the new user into the database with the hashed password
-        await pool.query(
-            'INSERT INTO Users (username, password) VALUES ($1, $2)',
-            [username, hashedPassword]
-        );
-
-        res.status(201).json({ message: 'Account Created Successfully' });
-    } catch (error) {
-        console.error('Error during registration:', error);
-        res.status(500).json({ message: 'An error occurred during signup' });
-    }
+      if (user.rowCount === 0) {
+          return res.status(400).json({ message: 'Invalid Activation Code' });
+      }
+      res.status(201).json({ message: 'Account Created Successfully' });
+  } catch (error) {
+      console.error('Error during registration:', error);
+      res.status(500).json({ message: 'An error occurred during signup' });
+  }
 });
+
 
 app.put('/updateUser', async (req, res) => {
   const { userId, username, password, newPassword } = req.body;
@@ -193,38 +168,6 @@ app.get('/Profile/:username', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-
-app.get('/Allreservations', async (req, res) => {
-  try {
-    const result = await pool.query(
-      `SELECT id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
-       FROM Schedules 
-       ORDER BY start_date ASC`
-    );
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Error fetching reservations:', error);
-    res.status(500).send('Server error');
-  }
-});
-
-app.post('/approveReservations', async (req, res) => {
-  const { ids } = req.body; // Array of reservation IDs to approve
-
-  try {
-    // Update the status of the selected reservations
-    await pool.query(
-      'UPDATE Schedules SET status = $1 WHERE id = ANY($2::int[])',
-      ['Approved', ids]
-    );
-    res.status(200).send('Reservations approved');
-  } catch (error) {
-    console.error('Error approving reservations:', error);
-    res.status(500).send('Server error');
-  }
-});
-
-
 
 app.post('/reservations', async (req, res) => {
     const { user_id, reservation_type, start_date, end_date, status, time_slot } = req.body;
@@ -1251,13 +1194,13 @@ app.delete('/users/:id', async (req, res) => {
 app.get('/admindashboard', async (req, res) => {
   try {
     // Query to get the total number of users
-    const usersResult = await pool.query('SELECT COUNT(*) AS total_users FROM users');
+    const usersResult = await pool.query('SELECT COUNT(*) AS total_users FROM Users');
     
     // Query to get the total number of schedules (reservations)
-    const reservationsResult = await pool.query('SELECT COUNT(*) AS total_reservations FROM schedules');
+    const reservationsResult = await pool.query('SELECT COUNT(*) AS total_reservations FROM Schedules');
     
     // Query to get the total number of equipment
-    const equipmentResult = await pool.query('SELECT COUNT(*) AS total_equipment FROM equipment');
+    const equipmentResult = await pool.query('SELECT COUNT(*) AS total_equipment FROM Equipment');
     
     // Query to calculate total reserved equipment (aggregating quantities) if needed
     const reservedEquipmentResult = await pool.query(`
@@ -1265,7 +1208,7 @@ app.get('/admindashboard', async (req, res) => {
         SUM(CAST(item->>'quantity' AS INTEGER)) AS total_reserved_quantity
       FROM (
         SELECT jsonb_array_elements(reserved_equipment) AS item
-        FROM reservations
+        FROM Equipment
       ) AS equipment_items
     `);
 
@@ -1290,12 +1233,60 @@ app.get('/admindashboard', async (req, res) => {
   }
 });
 
-// Route to get all equipment reservations
-app.get('/equipmentreservation', async (req, res) => {
+
+app.get('/Allreservations', async (req, res) => {
   try {
     const result = await pool.query(
-      `SELECT id, user_id, reservation_id, start_date, end_date, reserved_equipment, status, time_slot 
-       FROM equipment 
+      `SELECT id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
+       FROM Schedules 
+       ORDER BY start_date ASC`
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching reservations:', error);
+    res.status(500).send('Server error');
+  }
+});
+
+app.post('/approveReservations', async (req, res) => {
+  const { ids } = req.body; // Array of reservation IDs to approve
+
+  try {
+    // Update the status of the selected reservations
+    await pool.query(
+      'UPDATE Schedules SET status = $1 WHERE id = ANY($2::int[])',
+      ['Approved', ids]
+    );
+    res.status(200).send('Reservations approved');
+  } catch (error) {
+    console.error('Error approving reservations:', error);
+    res.status(500).send('Server error');
+  }
+});
+
+app.post('/disapproveReservations', async (req, res) => {
+  const { ids } = req.body; // Array of reservation IDs to disapprove
+
+  try {
+    // Update the status of the selected reservations to 'Disapproved'
+    await pool.query(
+      'UPDATE Schedules SET status = $1 WHERE id = ANY($2::int[])',
+      ['Disapproved', ids]
+    );
+    res.status(200).send('Reservations disapproved');
+  } catch (error) {
+    console.error('Error disapproving reservations:', error);
+    res.status(500).send('Server error');
+  }
+});
+
+
+
+app.get('/Allequipments', async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT id, user_id, reservation_id, start_date, end_date, reserved_equipment, status
+       FROM Equipment 
        ORDER BY start_date ASC`
     );
     res.json(result.rows);
@@ -1306,11 +1297,11 @@ app.get('/equipmentreservation', async (req, res) => {
 });
 
 // Route to approve equipment reservations
-app.post('/approveequipmentreservation', async (req, res) => {
+app.post('/approveEquipment', async (req, res) => {
   const { ids } = req.body; // Array of reservation IDs to approve
   try {
     await pool.query(
-      'UPDATE equipment SET status = $1 WHERE id = ANY($2::int[])',
+      'UPDATE Equipment SET status = $1 WHERE id = ANY($2::int[])',
       ['Approved', ids]
     );
     res.status(200).send('Equipment reservations approved');
@@ -1318,21 +1309,20 @@ app.post('/approveequipmentreservation', async (req, res) => {
     console.error('Error approving equipment reservations:', error);
     res.status(500).send('Server error');
   }
-});
 
-// Route to disapprove equipment reservations
-app.post('/disapproveequipmentreservation', async (req, res) => {
-  const { ids } = req.body; // Array of reservation IDs to disapprove
-  try {
-    await pool.query(
-      'UPDATE equipment SET status = $1 WHERE id = ANY($2::int[])',
-      ['Disapproved', ids]
-    );
-    res.status(200).send('Equipment reservations disapproved');
-  } catch (error) {
-    console.error('Error disapproving equipment reservations:', error);
-    res.status(500).send('Server error');
-  }
+app.post('/disapproveEquipment', async (req, res) => {
+    const { ids } = req.body; // Array of reservation IDs to approve
+    try {
+      await pool.query(
+        'UPDATE Equipment SET status = $1 WHERE id = ANY($2::int[])',
+        ['Disapproved', ids]
+      );
+      res.status(200).send('Equipment reservations approved');
+    } catch (error) {
+      console.error('Error approving equipment reservations:', error);
+      res.status(500).send('Server error');
+    }
+  });
 });
 
 

@@ -31,6 +31,7 @@ const UserAuthentication = () => {
         }
     }, [location.search]);
 
+   
     const handleShowAccountActivationFields = () => {
         if (activationCode.trim() === '') {
             alert('Activation code cannot be blank!');
@@ -38,32 +39,33 @@ const UserAuthentication = () => {
         }
 
         const decryptedCode = DecryptionCode(activationCode);
-        console.log('Decrypted Code:', decryptedCode);
-        
+        console.log('Decrypted Activation Code:', decryptedCode);
+
         if (decryptedCode.length !== 8) {
             alert('Invalid Activation Code');
             return;
         }
-
         // Send decrypted code to backend for validation
-        fetch('http://localhost:5000/register', {
+        fetch('http://localhost:5000/ValidateCode', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ activationCode: decryptedCode }),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message === 'Valid Activation Code') {
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('Server Response:', data);
+            if (data.message === 'Account Created Successfully') {
                 setShowAccountActivationFields(true);
             } else {
-                alert('Invalid Activation Code');
+                alert(data.message || 'Invalid Activation Code');
             }
         })
-        .catch(error => {
+        .catch((error) => {
             console.error('Error:', error);
             alert('An error occurred during validation.');
-        });
+        });        
     };
+
 
     // Di pa to tapos, dapat matrack yung laman.
     const handleSignUpSubmit = (e) => {
