@@ -9,330 +9,306 @@ const pageLabels = {
 
 const ManageAboutUs = () => {
     const [activeContent, setActiveContent] = useState('manageAboutDetails');
-    const [description, setDescription] = useState('');
-    const [newDescription, setNewDescription] = useState('');
-    // NEW CODES: useState for SK Council Inputs
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    // State for About Us details
+    const [aboutDetails, setAboutDetails] = useState({
+        isked: '',
+        sangguniangKabataan: '',
+        mandate: '',
+        mission: '',
+        vision: '',
+        objective: '',
+        skCouncil: '',
+        history: '',
+        formerOfficials: '',
+    });
+
+    const [newAboutDetails, setNewAboutDetails] = useState({ ...aboutDetails });
     const [skCouncilInputs, setSkCouncilInputs] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false); // Track modal visibility
+    const [currentMember, setCurrentMember] = useState(null); // Track the current member being edited or added
 
-    // NEW CODES: Add new SK Council member input
-    const addSkCouncilInput = () => {
-        setSkCouncilInputs([...skCouncilInputs, { name: '', description: '', image: '' }]);
-    };
-
-    // NEW CODES: Handle changes to SK Council inputs
-    const handleSkCouncilInputChange = (index, field, value) => {
-        const updatedInputs = [...skCouncilInputs];
-        updatedInputs[index][field] = value; // Update specific field
-        setSkCouncilInputs(updatedInputs);
-    };
-
-    // NEW CODES: Delete an SK Council input
-    const deleteSkCouncilInput = (index) => {
-        const updatedInputs = skCouncilInputs.filter((_, i) => i !== index);
-        setSkCouncilInputs(updatedInputs);
-    };
-
-    // Fetch description on component mount
+    // Fetch data
     useEffect(() => {
-        const fetchDescription = async () => {
+        const fetchData = async () => {
+            setLoading(true);
             try {
-                const response = await axios.get('http://localhost:5000/Website/description');
-                setDescription(response.data.description);
-                setNewDescription(response.data.description);
+                const aboutResponse = await axios.get('http://localhost:5000/Website');
+                setAboutDetails(aboutResponse.data);
+                setNewAboutDetails(aboutResponse.data);
+
+                const skCouncilResponse = await axios.get('http://localhost:5000/Skcouncil');
+                setSkCouncilInputs(skCouncilResponse.data);
             } catch (error) {
-                console.error('Error fetching description:', error);
+                setError('Error fetching data');
+                console.error(error);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchDescription();
+        fetchData();
     }, []);
 
-    // NEW CODES: Save functionality (BASED ON ChatGPT, Pakitry ipasok to dun sa logic)
-    // const saveDescription = (e) => {
-    //     e.preventDefault();
-    //     console.log('Saving description and SK Council inputs:', { newDescription, skCouncilInputs });
-    // };
+    const handleAboutDetailsChange = (field, value) => {
+        setNewAboutDetails(prev => ({ ...prev, [field]: value }));
+    };
 
-    // Save updated description
-    const saveDescription = async () => {
+    const handleSkCouncilInputChange = (field, value) => {
+        setCurrentMember(prev => ({ ...prev, [field]: value }));
+    };
+
+    const addSkCouncilInput = () => {
+        setCurrentMember({ id: '', name: '', age: '', position: '', description: '', image: '' });
+        setModalVisible(true);
+    };
+
+    const editSkCouncilInput = (member) => {
+        setCurrentMember({ ...member });
+        setModalVisible(true);
+    };
+
+    const deleteSkCouncilInput = async (id) => {
         try {
-            await axios.put('http://localhost:5000/Website/description', { description: newDescription });
-            setDescription(newDescription);
-            setActiveContent('manageAboutDetails');
+            if (id) {
+                await axios.delete(`http://localhost:5000/Skcouncil/${id}`);
+            }
+            setSkCouncilInputs(skCouncilInputs.filter(member => member.id !== id));
         } catch (error) {
-            console.error('Error saving description:', error);
+            setError('Error deleting SK Council member');
+            console.error(error);
         }
     };
 
+    const saveSkCouncilMember = async () => {
+        try {
+          if (currentMember.id) {
+            await axios.put(`http://localhost:5000/Skcouncil/${currentMember.id}`, currentMember);
+          } else {
+            const response = await axios.post('http://localhost:5000/Skcouncil', currentMember);
+            // Assuming the response contains the new member's data
+            setSkCouncilInputs(prev => [...prev, response.data]); // Add the new member to the list
+          }
+          setModalVisible(false); // Close modal after saving
+        } catch (error) {
+          setError('Error saving SK Council member');
+          console.error(error);
+        }
+      };
+      
+
+    const saveAboutDetails = async () => {
+        try {
+            await axios.put('http://localhost:5000/Website', newAboutDetails);
+            setAboutDetails(newAboutDetails);
+            setActiveContent('manageAboutDetails');
+        } catch (error) {
+            setError('Error saving About Us details');
+            console.error(error);
+        }
+    };
+
+    const saveSkCouncilMembers = async () => {
+        try {
+            for (const member of skCouncilInputs) {
+                if (member.id) {
+                    await axios.put(`http://localhost:5000/Skcouncil/${member.id}`, member);
+                } else {
+                    await axios.post('http://localhost:5000/Skcouncil', member);
+                }
+            }
+            setActiveContent('manageAboutDetails');
+        } catch (error) {
+            setError('Error saving SK Council members');
+            console.error(error);
+        }
+    };
+
+    const handleSave = async (e) => {
+        e.preventDefault(); // Prevent form refresh
+        await saveAboutDetails();
+        await saveSkCouncilMembers();
+        setActiveContent('manageAboutDetails'); // Switch back to manage view after saving
+    };
+
     return (
-        <div className='admin-about-us-container'>
-            <div className='admin-about-us-label-and-button d-flex justify-content-between align-items-center'>
-                <h2 className='admin-about-us-label-h2 fst-italic'>
+        <div className="admin-about-us-container">
+            <div className="admin-about-us-label-and-button d-flex justify-content-between align-items-center">
+                <h2 className="admin-about-us-label-h2 fst-italic">
                     {pageLabels[activeContent]}
                 </h2>
 
                 {activeContent !== 'manageAboutDetails' && (
-                    <div className='admin-about-us-back-button'>
+                    <div className="admin-about-us-back-button">
                         <button
                             onClick={() => setActiveContent('manageAboutDetails')}
-                            className='admin-edit-about-details-back-button rounded'>
+                            className="admin-edit-about-details-back-button rounded"
+                        >
                             Back
                         </button>
                     </div>
                 )}
             </div>
 
-            <div className='admin-about-us-contents-container d-flex justify-content-center'>
-                {activeContent === 'manageAboutDetails' && (
-                    <div className='admin-current-about-details-container d-flex justify-content-center'>
-                        {/* Group of Current About Details Form */}
-                        <div className='admin-about-details-group d-flex flex-column align-items-center'>
-                            <div className='admin-current-about-form d-flex flex-column'>
-                                <label className='admin-current-about-label'>iSKed</label>
-                                <textarea
-                                    className='form-control'
-                                    value={description}
-                                />
-                            </div>
+            <div className="admin-about-us-contents-container d-flex justify-content-center">
+                {loading && <p>Loading...</p>}
+                {error && <p className="error-text">{error}</p>}
 
-                            <div className='admin-current-about-form d-flex flex-column'>
-                                <label className='admin-current-about-label'>SANGGUNIANG KABATAAN - WESTERN BICUTAN</label>
-                                <textarea
-                                    className='form-control'
-                                    value={description}
-                                />
-                            </div>
-
-                            <div className='admin-current-about-form d-flex flex-column'>
-                                <label className='admin-current-about-label'>Mandate</label>
-                                <textarea
-                                    className='form-control'
-                                    value={description}
-                                />
-                            </div>
-
-                            <div className='admin-current-about-form d-flex flex-column'>
-                                <label className='admin-current-about-label'>Mission</label>
-                                <textarea
-                                    className='form-control'
-                                    value={description}
-                                />
-                            </div>
-
-                            <div className='admin-current-about-form d-flex flex-column'>
-                                <label className='admin-current-about-label'>Vision</label>
-                                <textarea
-                                    className='form-control'
-                                    value={description}
-                                />
-                            </div>
-
-                            <div className='admin-current-about-form d-flex flex-column'>
-                                <label className='admin-current-about-label'>Objective</label>
-                                <textarea
-                                    className='form-control'
-                                    value={description}
-                                />
-                            </div>
-
-                            <div className='admin-current-about-form d-flex flex-column'>
-                                <label className='admin-current-about-label'>SK COUNCIL DITO! WALA PANG OUTPUT!</label>
-                                <textarea
-                                    className='form-control'
-                                    value={description}
-                                />
-                            </div>
-
-                            <div className='admin-current-about-form d-flex flex-column'>
-                                <label className='admin-current-about-label'>HISTORY DITO! WALA PANG OUTPUT!</label>
-                                <textarea
-                                    className='form-control'
-                                    value={description}
-                                />
-                            </div>
-
-                            <div className='admin-current-about-form d-flex flex-column'>
-                                <label className='admin-current-about-label'>FORMER SK OFFICIALS DITO! WALA PANG OUTPUT!</label>
-                                <textarea
-                                    className='form-control'
-                                    value={description}
-                                />
-                            </div>
-
+                {activeContent === 'manageAboutDetails' && !loading && (
+                    <div className="admin-current-about-details-container">
+                        <div className="admin-about-details-group">
+                            {Object.keys(aboutDetails).map((field, idx) => (
+                                field !== 'id' && ( // Exclude the 'id' field
+                                    <div className="admin-current-about-form" key={idx}>
+                                        <label className="admin-current-about-label">{field.replace(/([A-Z])/g, ' $1').toUpperCase()}</label>
+                                        <textarea className="form-control" value={aboutDetails[field]} readOnly />
+                                    </div>
+                                )
+                            ))}
                             <button
                                 onClick={() => setActiveContent('editAboutDetails')}
-                                className='admin-edit-about-details-button rounded'>
+                                className="admin-edit-about-details-button rounded"
+                            >
                                 Edit Details
                             </button>
+
+                            {/* SK Council Details Table */}
+                            <div className="mt-4">
+                                <h3>SK Council Members</h3>
+                                <table className="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Age</th>
+                                            <th>Position</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {skCouncilInputs.map((member, index) => (
+                                            <tr key={index}>
+                                                <td>{member.name}</td>
+                                                <td>{member.description}</td>
+                                                <td>{member.age}</td>
+                                                <td>{member.position}</td>
+                                                <td>
+                                                    <button
+                                                        className="btn btn-primary btn-sm me-2"
+                                                        onClick={() => editSkCouncilInput(member)}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                    <button
+                                                        className="btn btn-danger btn-sm"
+                                                        onClick={() => deleteSkCouncilInput(member.id)}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                <button
+                                    onClick={addSkCouncilInput}
+                                    className="btn btn-secondary mt-3"
+                                >
+                                    Add SK Council Member
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Modal for Add/Edit SK Council Member */}
+                {modalVisible && (
+                    <div className="modal" style={{ display: 'block' }}>
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title">{currentMember.id ? 'Edit' : 'Add'} SK Council Member</h5>
+                                    <button
+                                        type="button"
+                                        className="btn-close"
+                                        onClick={() => setModalVisible(false)}
+                                    ></button>
+                                </div>
+                                <div className="modal-body">
+                                    <form onSubmit={(e) => { e.preventDefault(); saveSkCouncilMember(); }}>
+                                        <div className="mb-3">
+                                            <label>Name</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                value={currentMember.name}
+                                                onChange={(e) => handleSkCouncilInputChange('name', e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label>Description</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                value={currentMember.description}
+                                                onChange={(e) => handleSkCouncilInputChange('description', e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label>Age</label>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                value={currentMember.age}
+                                                onChange={(e) => handleSkCouncilInputChange('age', e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label>Position</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                value={currentMember.position}
+                                                onChange={(e) => handleSkCouncilInputChange('position', e.target.value)}
+                                            />
+                                        </div>
+                                        <button type="submit" className="btn btn-primary">
+                                            Save Member
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
 
                 {activeContent === 'editAboutDetails' && (
-                    <div className='admin-edit-about-details-container d-flex justify-content-center'>
-                        {/* Group of Edit About Details Form */}
-                        <form className='admin-edit-about-details-group d-flex flex-column align-items-center'>
-                            <div className='admin-edit-about-form d-flex flex-column'>
-                                <label className='admin-edit-about-label'>iSKed</label>
-                                <textarea
-                                    value={newDescription}
-                                    onChange={(e) => setNewDescription(e.target.value)}
-                                />
-                            </div>
-
-                            <div className='admin-edit-about-form d-flex flex-column'>
-                                <label className='admin-edit-about-label'>SANGGUNIANG KABATAAN - WESTERN BICUTAN</label>
-                                <textarea
-                                    value={newDescription}
-                                    onChange={(e) => setNewDescription(e.target.value)}
-                                />
-                            </div>
-
-                            <div className='admin-edit-about-form d-flex flex-column'>
-                                <label className='admin-edit-about-label'>Mandate</label>
-                                <textarea
-                                    value={newDescription}
-                                    onChange={(e) => setNewDescription(e.target.value)}
-                                />
-                            </div>
-
-                            <div className='admin-edit-about-form d-flex flex-column'>
-                                <label className='admin-edit-about-label'>Mission</label>
-                                <textarea
-                                    value={newDescription}
-                                    onChange={(e) => setNewDescription(e.target.value)}
-                                />
-                            </div>
-
-                            <div className='admin-edit-about-form d-flex flex-column'>
-                                <label className='admin-edit-about-label'>Vision</label>
-                                <textarea
-                                    value={newDescription}
-                                    onChange={(e) => setNewDescription(e.target.value)}
-                                />
-                            </div>
-
-                            <div className='admin-edit-about-form d-flex flex-column'>
-                                <label className='admin-edit-about-label'>Objective</label>
-                                <textarea
-                                    value={newDescription}
-                                    onChange={(e) => setNewDescription(e.target.value)}
-                                />
-                            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <div className='admin-edit-about-form d-flex flex-column'>
-                                <label className='admin-edit-about-label'>SK Council</label>
-                                <textarea
-                                    value={newDescription}
-                                    onChange={(e) => setNewDescription(e.target.value)}
-                                />
-                            </div>
-
-                            {/* Render dynamic SK Council inputs */}
-                            {skCouncilInputs.map((input, index) => (
-                                <div className="admin-edit-about-form d-flex flex-column mt-3" key={index}>
-                                    <label className="admin-edit-about-label">SK Council Member {index + 1}</label>
-                                    {/* Name Input */}
-                                    <textarea
-                                        value={input.name}
-                                        onChange={(e) => handleSkCouncilInputChange(index, 'name', e.target.value)}
-                                        className="form-control mb-2"
-                                        placeholder="Enter name"
-                                    />
-                                    {/* Description Input */}
-                                    <textarea
-                                        value={input.description}
-                                        onChange={(e) => handleSkCouncilInputChange(index, 'description', e.target.value)}
-                                        className="form-control mb-2"
-                                        placeholder="Enter description"
-                                    />
-                                    {/* Image URL Input */}
-                                    <input
-                                        type="image"
-                                        value={input.image}
-                                        onChange={(e) => handleSkCouncilInputChange(index, 'image', e.target.value)}
-                                        className="form-control mb-2"
-                                        placeholder="Enter image URL"
-                                    />
-
-                                    {/* Delete Button */}
-                                    <button
-                                        type="button"
-                                        onClick={() => deleteSkCouncilInput(index)}
-                                        className="btn btn-danger btn-sm mt-2"
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
+                    <div className="admin-edit-about-details-container">
+                        <form onSubmit={handleSave} className="admin-edit-about-details-group">
+                            {Object.keys(newAboutDetails).map((field, idx) => (
+                                field !== 'id' && ( // Exclude the 'id' field
+                                    <div className="admin-edit-about-form" key={idx}>
+                                        <label className="admin-edit-about-label">{field.replace(/([A-Z])/g, ' $1').toUpperCase()}</label>
+                                        <textarea
+                                            value={newAboutDetails[field]}
+                                            onChange={(e) => handleAboutDetailsChange(field, e.target.value)}
+                                        />
+                                    </div>
+                                )
                             ))}
-
-                            {/* Button to add a new SK Council member */}
                             <button
-                                type="button"
-                                onClick={addSkCouncilInput}
-                                className="btn btn-secondary mt-3"
+                                type="submit"
+                                className="admin-save-about-details-button rounded text-white"
                             >
-                                Add SK Council Member
-                            </button>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <div className='admin-edit-about-form d-flex flex-column'>
-                                <label className='admin-edit-about-label'>HISTORY DITO! WALA PANG OUTPUT!</label>
-                                <textarea
-                                    value={newDescription}
-                                    onChange={(e) => setNewDescription(e.target.value)}
-                                />
-                            </div>
-
-                            <div className='admin-edit-about-form d-flex flex-column'>
-                                <label className='admin-edit-about-label'>FORMER SK OFFICIALS DITO! WALA PANG OUTPUT!</label>
-                                <textarea
-                                    value={newDescription}
-                                    onChange={(e) => setNewDescription(e.target.value)}
-                                />
-                            </div>
-
-                            <button onClick={saveDescription}
-                                className='admin-save-about-details-button rounded text-white'>
                                 Save Details
                             </button>
                         </form>
                     </div>
-                )
-                }
-            </div >
-        </div >
+                )}
+            </div>
+        </div>
     );
 };
 

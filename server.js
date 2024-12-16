@@ -41,37 +41,6 @@ app.get('/', (req, res) => {
 
 /********* Website ******** */
 
-app.get('/Website/description', async (req, res) => {
-    try {
-        const result = await pool.query('SELECT description FROM Website WHERE id = $1', [1]);
-        res.json(result.rows[0]); // Send the description
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error fetching description' });
-    }
-});
-
-app.put('/Website/description', async (req, res) => {
-    const { description } = req.body;
-    try {
-        await pool.query('UPDATE Website SET description = $1 WHERE id = $2', [description, 1]);
-        res.json({ message: 'Description updated successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error updating description' });
-    }
-});
-
-app.get('/Website/mandate', async (req, res) => {
-    try {
-      const result = await pool.query('SELECT mandate, objectives, mission, vision FROM Website LIMIT 1');
-      res.json(result.rows[0]); // Sends the data as JSON response
-    } catch (error) {
-      console.error('Error fetching mandate info:', error);
-      res.status(500).json({ message: 'Error fetching mandate info' });
-    }
-  });
-
 app.post('/register', async (req, res) => {
     const { activationCode, username, password } = req.body;
 
@@ -761,7 +730,6 @@ app.delete('/inventory/:id', async (req, res) => {
 //Admin Side
   /********* Contact Us na ito ******** */
 
-  // Fetch contact details
 app.get('/contact', async (req, res) => {
   try {
     const result = await pool.query('SELECT contact_number, location, gmail FROM public.contact WHERE id = $1', [1]);
@@ -771,6 +739,131 @@ app.get('/contact', async (req, res) => {
     res.status(500).json({ error: 'Error fetching contact details' });
   }
 });
+
+
+app.post('/Website', async (req, res) => {
+  const { description, mandate, objectives, mission, vision } = req.body;
+
+  // Validate the input data
+  if (!description || !mandate || !objectives || !mission || !vision) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  try {
+    // Insert a new entry into the Website table
+    await pool.query(
+      'INSERT INTO Website (description, mandate, objectives, mission, vision) VALUES ($1, $2, $3, $4, $5)',
+      [description, mandate, objectives, mission, vision]
+    );
+    res.status(201).json({ message: 'Website details added successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error adding website details' });
+  }
+});
+
+app.get('/Website', async (req, res) => {
+  try {
+      const result = await pool.query('SELECT * FROM Website WHERE id = $1', [1]);
+      res.json(result.rows[0]); // Send the website details
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error fetching website details' });
+  }
+});
+
+app.put('/Website', async (req, res) => {
+  const { description, mandate, objectives, mission, vision } = req.body;
+
+  // Validate the input data
+  if (!description || !mandate || !objectives || !mission || !vision) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  try {
+    // Update website data in the Website table
+    await pool.query(
+      'UPDATE Website SET description = $1, mandate = $2, objectives = $3, mission = $4, vision = $5 WHERE id = $6',
+      [description, mandate, objectives, mission, vision, 1]
+    );
+    res.json({ message: 'Website details updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error updating website details' });
+  }
+});
+
+app.get('/Skcouncil', async (req, res) => {
+  try {
+      const result = await pool.query('SELECT * FROM Skcouncil');
+      res.json(result.rows); // Send all SK Council members
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error fetching SK Council members' });
+  }
+});
+
+
+// Get SK Council Members
+// Get SK Council Members
+app.get('/Skcouncil', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM Skcouncil');
+    res.json(result.rows); // Send all SK Council members
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error fetching SK Council members' });
+  }
+});
+
+// Update SK Council Member
+app.put('/Skcouncil/:id', async (req, res) => {
+  const { name, age, position, description } = req.body;
+  const { id } = req.params;
+
+  // Validate input data
+  if (!name || !age || !position || !description) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  try {
+    // Update the SK Council member's data in the Skcouncil table
+    await pool.query(
+      'UPDATE Skcouncil SET name = $1, age = $2, position = $3, description = $4 WHERE id = $5',
+      [name, age, position, description, id]
+    );
+    res.json({ message: 'SK Council member updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error updating SK Council member' });
+  }
+});
+
+// Add SK Council Member
+app.post('/Skcouncil', async (req, res) => {
+  const { name, age, position, description } = req.body;
+  console.log(req.body); // Log the incoming data
+
+  if (!name || !age || !position || !description) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  try {
+    const result = await pool.query(
+      'INSERT INTO Skcouncil (name, age, position, description) VALUES ($1, $2, $3, $4) RETURNING *',
+      [name, age, position, description]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error adding SK Council member' });
+  }
+});
+
+
+
+
+
 
 // Update contact details
 app.put('/contact', async (req, res) => {
@@ -790,7 +883,6 @@ app.put('/contact', async (req, res) => {
     res.status(500).json({ error: 'Error updating contact details' });
   }
 });
-
 
 
 //HOMEPAGE

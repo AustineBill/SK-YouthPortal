@@ -30,13 +30,13 @@ function DecryptionCode(encryptedString) {
 
 // Example usage
 const originalId = generateRandomId();
-console.log('Original ID:', originalId);
+//console.log('Original ID:', originalId);
 
 const encryptedId = EncryptionCode(originalId);
-console.log('Encrypted ID:', encryptedId); //HGAHGCHG
+//console.log('Encrypted ID:', encryptedId); //HGAHGCHG
 
 const decryptedId = DecryptionCode(encryptedId);
-console.log('Decrypted ID:', decryptedId);
+//console.log('Decrypted ID:', decryptedId);
 
 // Export the functions to use in other files
 module.exports = { generateRandomId, EncryptionCode, DecryptionCode };
