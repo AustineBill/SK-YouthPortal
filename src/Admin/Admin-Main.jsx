@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../WebStructure/AuthContext';
 import './styles/adminmain.css'; // Import updated CSS for flexible layout
-import { Bar } from 'react-chartjs-2'; // Import chart libraries
+import { Bar, Pie } from 'react-chartjs-2'; // Import chart libraries
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -10,6 +10,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    ArcElement, // Import ArcElement for Pie chart
 } from 'chart.js';
 
 ChartJS.register(
@@ -18,20 +19,22 @@ ChartJS.register(
     BarElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    ArcElement // Register ArcElement for Pie chart
 );
 
 const AdminMain = () => {
     const { isAdmin } = useContext(AuthContext);
     
-    // Local state to store fetched user data
-    const [userData, setUserData] = useState({
+    // Local state to store fetched data
+    const [dashboardData, setDashboardData] = useState({
         totalUsers: 0,
+        totalSchedules: 0,
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null); // To handle errors during data fetching
 
-    // Fetch user data from backend
+    // Fetch dashboard data from backend
     useEffect(() => {
         if (isAdmin) {
             fetch('http://localhost:5000/admindashboard') // Ensure this matches your backend endpoint
@@ -42,8 +45,9 @@ const AdminMain = () => {
                     return response.json();
                 })
                 .then((data) => {
-                    setUserData({
+                    setDashboardData({
                         totalUsers: data.total_users,
+                        totalSchedules: data.total_schedules,
                     });
                     setLoading(false); // Stop loading after data is fetched
                 })
@@ -93,10 +97,25 @@ const AdminMain = () => {
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
-                data: [userData.totalUsers], // Use actual data
+                data: [dashboardData.totalUsers], // Use actual data
             },
         ],
     };
+
+    // Pie Chart Data for Total Reservations
+    const pieChartData = {
+        labels: ['Total Reservations'],
+        datasets: [
+            {
+                label: 'Total Reservations',
+                data: [dashboardData.totalSchedules], // Just show the total schedule
+                backgroundColor: ['rgba(75, 192, 192, 0.6)'], // Only one segment
+                borderColor: ['rgba(75, 192, 192, 1)'],
+                borderWidth: 1,
+            },
+        ],
+    };
+    
 
     return (
         <div className="admin-main-wrapper">
@@ -113,6 +132,11 @@ const AdminMain = () => {
                                 <h2>User Registrations</h2>
                                 <Bar data={barChartData} options={{ responsive: true }} />
                             </div>
+
+                            <div className="chart-container">
+                                <h2>Total Reservations</h2>
+                                <Pie data={pieChartData} options={{ responsive: true }} />
+                            </div>
                         </section>
 
                         <section className="summary-table">
@@ -127,7 +151,11 @@ const AdminMain = () => {
                                 <tbody>
                                     <tr>
                                         <td>Total Users</td>
-                                        <td>{userData.totalUsers}</td>
+                                        <td>{dashboardData.totalUsers}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Reservations</td>
+                                        <td>{dashboardData.totalSchedules}</td>
                                     </tr>
                                 </tbody>
                             </table>
