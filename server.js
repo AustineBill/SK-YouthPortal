@@ -1191,47 +1191,51 @@ app.delete('/users/:id', async (req, res) => {
   }
 });*/
 
+// Assuming you have the 'pool' object for your database connection (pg module).
 app.get('/admindashboard', async (req, res) => {
-  try {
-    // Query to get the total number of users
-    const usersResult = await pool.query('SELECT COUNT(*) AS total_users FROM Users');
-    
-    // Query to get the total number of schedules (reservations)
-    const reservationsResult = await pool.query('SELECT COUNT(*) AS total_reservations FROM Schedules');
-    
-    // Query to get the total number of equipment
-    const equipmentResult = await pool.query('SELECT COUNT(*) AS total_equipment FROM Equipment');
-    
-    // Query to calculate total reserved equipment (aggregating quantities) if needed
-    const reservedEquipmentResult = await pool.query(`
-      SELECT
-        SUM(CAST(item->>'quantity' AS INTEGER)) AS total_reserved_quantity
-      FROM (
-        SELECT jsonb_array_elements(reserved_equipment) AS item
-        FROM Equipment
-      ) AS equipment_items
-    `);
+  const { month } = req.query; // Get the month from the query parameter
 
-    if (
-      usersResult.rows.length > 0 &&
-      reservationsResult.rows.length > 0 &&
-      equipmentResult.rows.length > 0 &&
-      reservedEquipmentResult.rows.length > 0
-    ) {
-      res.json({
-        total_users: usersResult.rows[0].total_users,
-        total_reservations: reservationsResult.rows[0].total_reservations,
-        total_equipment: equipmentResult.rows[0].total_equipment,
-        total_reserved_quantity: reservedEquipmentResult.rows[0].total_reserved_quantity || 0,
-      });
-    } else {
-      res.status(404).json({ message: 'No data found' });
+  try {
+    // If month is provided, filter by the month in 'created_at' column
+    let query = `
+      SELECT COUNT(*) AS total_users FROM Users
+      WHERE EXTRACT(MONTH FROM created_at) = $1
+    `;
+    let values = [month];
+
+    // If no month is provided, return total for all months
+    if (!month) {
+      query = `
+        SELECT COUNT(*) AS total_users FROM Users
+      `;
+      values = [];
     }
+
+    const usersResult = await pool.query(query, values);
+
+    query = `
+      SELECT COUNT(*) AS total_reservations FROM Schedules
+      WHERE EXTRACT(MONTH FROM created_at) = $1
+    `;
+    const reservationsResult = await pool.query(query, values);
+
+    query = `
+      SELECT COUNT(*) AS total_equipment FROM Equipment
+      WHERE EXTRACT(MONTH FROM created_at) = $1
+    `;
+    const equipmentResult = await pool.query(query, values);
+
+    res.json({
+      total_users: usersResult.rows[0].total_users,
+      total_reservations: reservationsResult.rows[0].total_reservations,
+      total_equipment: equipmentResult.rows[0].total_equipment,
+    });
   } catch (err) {
     console.error('Error fetching dashboard data:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 
 app.get('/Allreservations', async (req, res) => {
