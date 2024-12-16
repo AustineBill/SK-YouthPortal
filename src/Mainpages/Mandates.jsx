@@ -17,7 +17,7 @@ const Mandate = () => {
   useEffect(() => {
     const fetchMandateInfo = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/Website/Mandate');
+        const response = await axios.get('http://localhost:5000/Website');
         setMandateInfo(response.data);
       } catch (error) {
         console.error('Error fetching mandate info:', error);

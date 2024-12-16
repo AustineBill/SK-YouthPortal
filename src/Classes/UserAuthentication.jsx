@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link} from 'react-router-dom';
 import { AuthContext } from '../WebStructure/AuthContext';
 
 import '../App.css';
 import './UserAuthentication.css';
+const { DecryptionCode } = require('../WebStructure/Codex');
 
 const UserAuthentication = () => {
     const [view, setView] = useState('signIn');
@@ -12,8 +13,8 @@ const UserAuthentication = () => {
     const [showForgotPasswordCodeField, setShowForgotPasswordCodeField] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    //const [username, setUsername] = useState('');
+    //const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [forgotPasswordCode, setForgotPasswordCode] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -36,26 +37,37 @@ const UserAuthentication = () => {
             return;
         }
 
-        setShowAccountActivationFields(true);
-    };
+        const decryptedCode = DecryptionCode(activationCode);
+        console.log('Decrypted Code:', decryptedCode);
+        
+        if (decryptedCode.length !== 8) {
+            alert('Invalid Activation Code');
+            return;
+        }
 
-    const handleShowForgotPasswordCodeField = () => {
-        // if (activationCode.trim() === '') {
-        //     alert('Activation code cannot be blank!');
-        //     return;
-        // }
-
-        setShowForgotPasswordCodeField(true);
+        // Send decrypted code to backend for validation
+        fetch('http://localhost:5000/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ activationCode: decryptedCode }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Valid Activation Code') {
+                setShowAccountActivationFields(true);
+            } else {
+                alert('Invalid Activation Code');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred during validation.');
+        });
     };
 
     // Di pa to tapos, dapat matrack yung laman.
     const handleSignUpSubmit = (e) => {
         e.preventDefault();
-        // Use the tracked input values
-        console.log('Activation Code:', activationCode);
-        console.log('Username:', signupUsername);
-        console.log('Password:', signupPassword);
-
         alert('Account Created Successfully!');
         setView('signIn'); // Redirect to sign in after sign up
     };
@@ -94,6 +106,14 @@ const UserAuthentication = () => {
         }
     };
 
+    const handleShowForgotPasswordCodeField = () => {
+        if (activationCode.trim() === '') {
+        alert('Activation code cannot be blank!');
+         return;
+         }
+        setShowForgotPasswordCodeField(true);
+    };
+
     return (
         <div className="container-fluid">
             <div className="row align-items-center mt-3">
@@ -119,20 +139,30 @@ const UserAuthentication = () => {
                                     <input type="password" name="password" placeholder='Password' required />
                                 </div>
                                 <div>
-                                    <button
-                                        type='button'
-                                        onClick={() => setView('forgotPassword')}>
-                                        Forgot your password?
-                                    </button>
+                                <Link
+                                   to="/"
+                                    onClick={(e) => {
+                                        e.preventDefault(); // Prevent default link behavior
+                                        setView('forgotPassword');
+                                    }}
+                                    className="forgot-password-link"
+                                >
+                                    Forgot your password?
+                                </Link>
                                 </div>
                                 <button type="submit">Sign In</button>
                                 <div className='sign-in-form-bottom'>
                                     <p>Don’t have an account?</p>
-                                    <button
-                                        type='button'
-                                        onClick={() => navigate('/userauth?view=signUp')}>
+                                    <Link
+                                        onClick={(e) => {
+                                            e.preventDefault(); // Prevent default link behavior
+                                            navigate('/userauth?view=signUp');
+                                        }}
+                                        className="sign-up-link"
+                                    >
                                         Sign up
-                                    </button>
+                                    </Link>
+
                                 </div>
                             </form>
                         </div>

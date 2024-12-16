@@ -11,76 +11,80 @@ const EquipReservation = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date());
+  
 
 
   const handleDateChange = (date) => {
     setSelectedDate(date); // Set the selected date (only one date allowed)
   };
 
-  const saveReservation = async () => {
-    if (!selectedDate) {
-      alert('Please select a date before proceeding.');
+ const saveReservation = async () => {
+  if (!selectedDate) {
+    alert('Please select a date before proceeding.');
+    return;
+  }
+
+  const reservedEquipment = JSON.parse(sessionStorage.getItem('reservedEquipment')) || [];
+  if (reservedEquipment.length === 0) {
+    alert('No equipment selected. Please select equipment before scheduling.');
+    return;
+  }
+
+  const userId = sessionStorage.getItem('userId');
+  if (!userId) {
+    console.error('No userId found in sessionStorage');
+    return false; // Indicate failure to save
+  }
+
+  // Set startDate to the clicked date at 12:00 AM (local time)
+  const startDate = new Date(selectedDate);
+  startDate.setHours(0, 0, 0, 0); // Ensure time is set to 12:00 AM
+  
+
+  // Set endDate to the next day at 12:00 AM (local time)
+  const endDate = new Date(selectedDate);
+  endDate.setDate(startDate.getDate() + 1); // Add 1 day
+  endDate.setHours(0, 0, 0, 0); // Ensure time is set to 12:00 AM
+
+  try {
+    const response = await fetch('http://localhost:5000/CheckEquipment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_id: userId, date: startDate.toLocaleDateString() }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to check reservation');
+    }
+
+    const result = await response.json();
+    if (result.exists) {
+      setModalMessage('You already have a booking on this date. The policy allows only one reservation per day.');
+      setShowModal(true);
       return;
     }
 
-    // Retrieve reserved equipment data from session storage
-    const reservedEquipment = JSON.parse(sessionStorage.getItem('reservedEquipment')) || [];
+    // Prepare reservation data
+    const reservationData = {
+      user_id: userId,
+      startDate: startDate.toString(), // Save the local date and time as a string
+      endDate: endDate.toString(),
+      equipment: reservedEquipment,
+    };
 
-    if (reservedEquipment.length === 0) {
-      alert('No equipment selected. Please select equipment before scheduling.');
-      return;
-    }
+    sessionStorage.setItem('reservationData', JSON.stringify(reservationData));
+    navigate('/ScheduleDetails', { state: { reservationData } });
+    return reservationData; // Return data for the next step
+  } catch (error) {
+    console.error('Error checking or saving reservation:', error);
+    alert('Error checking or saving reservation, please try again later.');
+    return false; // Handle failure
+  }
+};
 
-    const userId = sessionStorage.getItem('userId');
-    if (!userId) {
-      console.error('No userId found in sessionStorage');
-      return false; // Indicate failure to save
-    }
-
-    const selectedDateFormatted = selectedDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
-
-    // Check if a reservation already exists for the user on the selected date
-    try {
-      const response = await fetch('http://localhost:5000/CheckEquipment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user_id: userId, date: selectedDateFormatted }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to check reservation');
-      }
-      const result = await response.json();
-      if (result.exists) {
-        setModalMessage('You already have a booking on this date. The policy allows only one reservation per day.');
-        setShowModal(true);
-        return;
-      }
-
-      // Proceed with saving the reservation if no conflict
-      const endDate = new Date(selectedDate);
-      endDate.setDate(selectedDate.getDate() + 1); // Add one day
-
-      // Prepare reservation data
-      const reservationData = {
-        user_id: userId,
-        startDate: selectedDate,
-        endDate: endDate,
-        equipment: reservedEquipment,
-      };
-
-      sessionStorage.setItem('reservationData', JSON.stringify(reservationData));
-      navigate('/ScheduleDetails', { state: { reservationData } });
-      return reservationData; // Return data for the next step
-    } catch (error) {
-      console.error('Error checking or saving reservation:', error);
-      alert('Error checking or saving reservation, please try again later.');
-      return false; // Handle failure
-    }
-  };
-
+  
   return (
     <div className="container-fluid">
       <div className="text-center text-lg-start m-4 mb-3">

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../WebStructure/AuthContext';
 import './styles/adminmain.css'; // Import updated CSS for flexible layout
-import { Bar, Pie } from 'react-chartjs-2'; // Import chart libraries
+import { Bar } from 'react-chartjs-2'; // Import chart libraries
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -10,7 +10,6 @@ import {
     Title,
     Tooltip,
     Legend,
-    ArcElement,
 } from 'chart.js';
 
 ChartJS.register(
@@ -19,8 +18,7 @@ ChartJS.register(
     BarElement,
     Title,
     Tooltip,
-    Legend,
-    ArcElement
+    Legend
 );
 
 const AdminMain = () => {
@@ -29,8 +27,6 @@ const AdminMain = () => {
     // Local state to store fetched user data
     const [userData, setUserData] = useState({
         totalUsers: 0,
-        activeUsers: 0,
-        inactiveUsers: 0,
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null); // To handle errors during data fetching
@@ -39,12 +35,15 @@ const AdminMain = () => {
     useEffect(() => {
         if (isAdmin) {
             fetch('http://localhost:5000/admindashboard') // Ensure this matches your backend endpoint
-                .then((response) => response.json())
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then((data) => {
                     setUserData({
                         totalUsers: data.total_users,
-                        activeUsers: data.active_users,
-                        inactiveUsers: data.inactive_users,
                     });
                     setLoading(false); // Stop loading after data is fetched
                 })
@@ -66,17 +65,6 @@ const AdminMain = () => {
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
                 data: [0],
-            },
-        ],
-    };
-
-    const emptyPieData = {
-        labels: ['Active Users', 'Inactive Users'],
-        datasets: [
-            {
-                data: [0, 0],
-                backgroundColor: ['#36A2EB', '#FF6384'],
-                hoverBackgroundColor: ['#36A2EB', '#FF6384'],
             },
         ],
     };
@@ -110,18 +98,6 @@ const AdminMain = () => {
         ],
     };
 
-    // Pie Chart Data for User Activity (Active vs Inactive)
-    const pieChartData = {
-        labels: ['Active Users', 'Inactive Users'],
-        datasets: [
-            {
-                data: [userData.activeUsers, userData.inactiveUsers],
-                backgroundColor: ['#36A2EB', '#FF6384'],
-                hoverBackgroundColor: ['#36A2EB', '#FF6384'],
-            },
-        ],
-    };
-
     return (
         <div className="admin-main-wrapper">
             <div className="admin-main-container">
@@ -136,10 +112,6 @@ const AdminMain = () => {
                             <div className="chart-container">
                                 <h2>User Registrations</h2>
                                 <Bar data={barChartData} options={{ responsive: true }} />
-                            </div>
-                            <div className="chart-container">
-                                <h2>User Activity</h2>
-                                <Pie data={pieChartData} options={{ responsive: true }} />
                             </div>
                         </section>
 
@@ -156,14 +128,6 @@ const AdminMain = () => {
                                     <tr>
                                         <td>Total Users</td>
                                         <td>{userData.totalUsers}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Active Users</td>
-                                        <td>{userData.activeUsers}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Inactive Users</td>
-                                        <td>{userData.inactiveUsers}</td>
                                     </tr>
                                 </tbody>
                             </table>
