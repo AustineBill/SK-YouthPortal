@@ -1131,7 +1131,7 @@ app.post('/users', async (req, res) => {
         birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
         educational_background, registered_sk_voter, registered_national_voter
       ) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
       RETURNING *`,
       [
         userId, username, password, firstname, lastname, region, province, city, barangay, zone, sex, 
@@ -1215,26 +1215,80 @@ app.delete('/users/:id', async (req, res) => {
   }
 });
 
-
-  
 //admin dashboard 
 //admin dashboard start
 // Add this new route to fetch the required user stats for the dashboard
+/*app.get('/admindashboard', async (req, res) => {
+  try {
+    // Query to get the total number of users
+    const usersResult = await pool.query('SELECT COUNT(*) AS total_users FROM users');
+    
+    // Query to get the total number of schedules
+    const schedulesResult = await pool.query('SELECT COUNT(*) AS total_schedules FROM schedules');
+    
+    // Query to get the total number of equipment
+    const equipmentResult = await pool.query('SELECT COUNT(*) AS total_equipment FROM equipment');
+    
+    if (
+      usersResult.rows.length > 0 &&
+      schedulesResult.rows.length > 0 &&
+      equipmentResult.rows.length > 0
+    ) {
+      res.json({
+        total_users: usersResult.rows[0].total_users,
+        total_schedules: schedulesResult.rows[0].total_schedules,
+        total_equipment: equipmentResult.rows[0].total_equipment
+      });
+    } else {
+      res.status(404).json({ message: 'No data found' });
+    }
+  } catch (err) {
+    console.error('Error fetching dashboard data:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});*/
+
 app.get('/admindashboard', async (req, res) => {
   try {
-      const result = await pool.query('SELECT COUNT(*) AS total_users FROM users');
-      if (result.rows.length > 0) {
-          res.json(result.rows[0]);
-      } else {
-          res.status(404).json({ message: 'No data found' });
-      }
+    // Query to get the total number of users
+    const usersResult = await pool.query('SELECT COUNT(*) AS total_users FROM users');
+    
+    // Query to get the total number of schedules (reservations)
+    const reservationsResult = await pool.query('SELECT COUNT(*) AS total_reservations FROM schedules');
+    
+    // Query to get the total number of equipment
+    const equipmentResult = await pool.query('SELECT COUNT(*) AS total_equipment FROM equipment');
+    
+    // Query to calculate total reserved equipment (aggregating quantities) if needed
+    const reservedEquipmentResult = await pool.query(`
+      SELECT
+        SUM(CAST(item->>'quantity' AS INTEGER)) AS total_reserved_quantity
+      FROM (
+        SELECT jsonb_array_elements(reserved_equipment) AS item
+        FROM reservations
+      ) AS equipment_items
+    `);
+
+    if (
+      usersResult.rows.length > 0 &&
+      reservationsResult.rows.length > 0 &&
+      equipmentResult.rows.length > 0 &&
+      reservedEquipmentResult.rows.length > 0
+    ) {
+      res.json({
+        total_users: usersResult.rows[0].total_users,
+        total_reservations: reservationsResult.rows[0].total_reservations,
+        total_equipment: equipmentResult.rows[0].total_equipment,
+        total_reserved_quantity: reservedEquipmentResult.rows[0].total_reserved_quantity || 0,
+      });
+    } else {
+      res.status(404).json({ message: 'No data found' });
+    }
   } catch (err) {
-      console.error('Error fetching dashboard data:', err);
-      res.status(500).json({ message: 'Server error' });
+    console.error('Error fetching dashboard data:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 });
-
-
 
 
 app.listen(PORT, () => {
