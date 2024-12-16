@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './styles/AdminReservations.css';
-import StepIndicator from '../Classes/StepIndicator';
 import axios from 'axios'; // Import axios
 
 const AdminReservations = () => {
@@ -114,9 +112,6 @@ const AdminReservations = () => {
             <h1 className="Maintext-Calendar animated slideInRight">Admin Schedule Management</h1>
             <p className="Subtext-Calendar">Manage venue reservations and availability</p>
           </div>
-
-          {/* Step indicator */}
-          <StepIndicator currentStep={2} />
 
           <div className="grid-container">
             {/* Reservation Legend */}

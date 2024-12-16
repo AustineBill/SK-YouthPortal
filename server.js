@@ -6,6 +6,7 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcrypt');
+const moment = require('moment-timezone');
 
 
 require('dotenv').config();
@@ -26,6 +27,7 @@ const pool = new Pool({
     port: 5432,
 });
 
+pool.query("SET timezone = 'UTC';");
 
 pool.connect((err) => {
     if (err) {
@@ -226,61 +228,70 @@ app.get('/reservations', async (req, res) => {
       res.status(500).send('Server error');
     }
   });
-  
+
 app.post('/schedule/equipment', async (req, res) => {
   const { user_id, reservation_id, reservedEquipment, startDate, endDate } = req.body;
-  //const pool = await pool.connect();  // Acquire pool from the pool
-  try {
-    await pool.query('BEGIN');  // Start the transaction
+  
+// Convert the JavaScript Date object to an ISO string if it's not already
+const startDateISO = new Date(startDate).toISOString();
+const endDateISO = new Date(endDate).toISOString();
 
-    // Step 1: Insert the reservation into the Equipment table
-    const result = await pool.query(
-      `INSERT INTO Equipment (user_id, reservation_id, start_date, end_date, reserved_equipment)
-      VALUES ($1, $2, $3, $4, $5) RETURNING id`,
-      [
-        user_id,
-        reservation_id,
-        startDate,
-        endDate,
-        JSON.stringify(reservedEquipment),
-      ]
-    );
+// Convert startDate and endDate to 'Asia/Manila' timezone using moment-timezone
+const startDateManila = moment(startDateISO).tz('Asia/Manila').format('YYYY-MM-DD HH:mm:ss');
+const endDateManila = moment(endDateISO).tz('Asia/Manila').format('YYYY-MM-DD HH:mm:ss');
+
+let client;
+try {
+  client = await pool.connect();  // Acquire a client from the pool
+  await client.query('BEGIN');  // Start the transaction
+
+  // Step 1: Insert the reservation into the Equipment table
+  const result = await client.query(
+    `INSERT INTO Equipment (user_id, reservation_id, start_date, end_date, reserved_equipment)
+    VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+    [
+      user_id,
+      reservation_id,
+      startDateManila,  // Use the converted start date
+      endDateManila,    // Use the converted end date
+      JSON.stringify(reservedEquipment),
+    ]
+  );
+  
+  const reservationId = result.rows[0].id;
+
+  // Step 2: Update inventory by reducing the quantity
+  for (const equipment of reservedEquipment) {
+    const { id, quantity } = equipment;
+
+    // Check if there is enough stock
+    const inventoryCheckQuery = 'SELECT quantity FROM Inventory WHERE id = $1';
+    const inventoryCheckResult = await client.query(inventoryCheckQuery, [id]);
     
-    const reservationId = result.rows[0].id;
-
-    // Step 2: Update inventory by reducing the quantity
-    for (const equipment of reservedEquipment) {
-      const { id, quantity } = equipment;
-
-      // Check if there is enough stock
-      const inventoryCheckQuery = 'SELECT quantity FROM Inventory WHERE id = $1';
-      const inventoryCheckResult = await pool.query(inventoryCheckQuery, [id]);
-      
-      if (inventoryCheckResult.rowCount === 0 || inventoryCheckResult.rows[0].quantity < quantity) {
-        // If not enough stock, rollback transaction and send error
-        await pool.query('ROLLBACK');
-        return res.status(400).json({ error: `Not enough stock for ${equipment.name}` });
-      }
-
-      // Update the inventory by reducing the quantity
-      const updateInventoryQuery = 'UPDATE Inventory SET quantity = quantity - $1 WHERE id = $2';
-      await pool.query(updateInventoryQuery, [quantity, id]);
+    if (inventoryCheckResult.rowCount === 0 || inventoryCheckResult.rows[0].quantity < quantity) {
+      // If not enough stock, rollback transaction and send error
+      await client.query('ROLLBACK');
+      return res.status(400).json({ error: `Not enough stock for ${equipment.name}` });
     }
 
-    // Commit transaction after successful operations
-    await pool.query('COMMIT');
-
-    // Return the reservation details (with the inserted reservation ID)
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    await pool.query('ROLLBACK');  // Rollback if an error occurs
-    console.error('Error saving reservation:', error.message);  // Log the error message
-    res.status(500).json({ error: error.message, stack: error.stack });
-  } finally {
-    pool.release();  // Release the database pool back to the pool
+    // Update the inventory by reducing the quantity
+    const updateInventoryQuery = 'UPDATE Inventory SET quantity = quantity - $1 WHERE id = $2';
+    await client.query(updateInventoryQuery, [quantity, id]);
   }
-});
 
+  // Commit transaction after successful operations
+  await client.query('COMMIT');
+
+  // Return the reservation details (with the inserted reservation ID)
+  res.status(201).json(result.rows[0]);
+} catch (error) {
+  if (client) await client.query('ROLLBACK');  // Rollback if an error occurs
+  console.error('Error saving reservation:', error.message);  // Log the error message
+  res.status(500).json({ error: error.message, stack: error.stack });
+} finally {
+  if (client) client.release();  // Release the client back to the pool
+}
+});
 
 
 app.get('/schedule/equipment', async (req, res) => {
@@ -547,19 +558,32 @@ app.get('/Details/:id', async (req, res) => {
 /******** View Schedules ********/
 
 app.get('/ViewSched', async (req, res) => {
-    try {
-        const result = await pool.query(`
-            SELECT s.start_date, s.end_date, s.time_slot, u.username
-            FROM Schedules s
-            JOIN Users u ON s.user_id = u.id
-            WHERE s.start_date >= CURRENT_DATE
-            ORDER BY s.start_date ASC
-        `);
-        res.json(result.rows);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+  try {
+      // Log the connection or any variables involved
+      console.log('Connecting to database...');
+
+      const result = await pool.query(`
+          SELECT s.start_date, s.end_date, s.time_slot, u.username
+          FROM Schedules s
+          JOIN Users u ON s.user_id = u.id
+          WHERE s.start_date >= CURRENT_DATE
+          ORDER BY s.start_date ASC
+      `);
+
+      if (result.rows.length === 0) {
+          console.log('No results found'); // Log if no results are found
+      } else {
+          console.log('Results:', result.rows); // Log the results if any
+      }
+
+      res.json(result.rows);
+  } catch (err) {
+      console.error('Error during query execution:', err);
+      res.status(500).json({ error: err.message });
+  }
 });
+
+
 
 app.get('/ViewEquipment', async (req, res) => {
   try {
@@ -587,6 +611,45 @@ app.get('/ViewEquipment', async (req, res) => {
       res.status(500).json({ error: err.message });
   }
 });
+
+app.get('/ViewScheduleAndEquipment', async (req, res) => {
+  try {
+      const result = await pool.query(`
+          SELECT 
+              s.start_date AS schedule_start_date, 
+              s.end_date AS schedule_end_date, 
+              s.time_slot, 
+              u.username, 
+              e.start_date AS equipment_start_date, 
+              e.end_date AS equipment_end_date, 
+              jsonb_array_elements(e.reserved_equipment) AS equipment
+          FROM Schedules s
+          JOIN Users u ON s.user_id = u.id
+          LEFT JOIN Equipment e ON e.start_date = s.start_date AND e.end_date = s.end_date
+          WHERE s.start_date >= CURRENT_DATE
+          ORDER BY s.start_date ASC
+      `);
+
+      // Map the result to combine schedule and equipment details
+      const formattedResult = result.rows.map(row => ({
+          schedule: {
+              start_date: row.schedule_start_date,
+              end_date: row.schedule_end_date,
+              time_slot: row.time_slot,
+              username: row.username
+          },
+          equipment: row.equipment ? {
+              equipment_name: row.equipment.name,
+              quantity: row.equipment.quantity
+          } : null // Handle case where no equipment is reserved for the schedule
+      }));
+
+      res.json(formattedResult);
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+});
+
 
 
 
@@ -713,11 +776,16 @@ app.delete('/inventory/:id', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+ 
   app.post('/CheckEquipment', async (req, res) => {
     const { user_id, date } = req.body;
     try {
-      const query = 'SELECT * FROM Equipment WHERE user_id = $1 AND DATE(start_date) = $2';
-      const values = [user_id, date];
+      const query = `
+        SELECT * FROM Equipment 
+        WHERE user_id = $1 
+        AND DATE(start_date AT TIME ZONE 'UTC') = $2
+      `;
+      const values = [user_id, date]; // Ensure date is ISO format
       const result = await pool.query(query, values);
       res.json({ exists: result.rowCount > 0 });
     } catch (error) {
@@ -1036,58 +1104,58 @@ app.get('/users', async (req, res) => {
 
 // Insert into the database with random ID generation
 app.post('/users', async (req, res) => {
-    console.log('Request Body:', req.body);  // Log the incoming data
-  
-    const {
-      username,
-      password,
-      firstname,
-      lastname,
-      region,
-      province,
-      city,
-      barangay,
-      zone,
-      sex,
-      age,
-      birthday,
-      email_address,
-      contact_number,
-      civil_status,
-      youth_age_group,
-      work_status,
-      educational_background,
-      registered_sk_voter,
-      registered_national_voter,
-      active  // Add this field to the request body (optional)
-    } = req.body;
-  
-    // Generate a random 6-character ID
-    const userId = generateRandomId();  // Call the random ID function
-  
-    try {
-      // Adjust the INSERT query to include the `active` field
-      const result = await pool.query(
-        `INSERT INTO Users (
-          id, username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
-          birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
-          educational_background, registered_sk_voter, registered_national_voter, active
-        ) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
-        RETURNING *`,
-        [
-          userId, username, password, firstname, lastname, region, province, city, barangay, zone, sex, 
-          age, birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
-          educational_background, registered_sk_voter, registered_national_voter, active || true // Default to true if not provided
-        ]
-      );
-  
-      res.json(result.rows[0]);
-    } catch (err) {
-      console.error('Error adding user:', err);
-      res.status(500).send('Server error');
-    }
+  console.log('Request Body:', req.body);  // Log the incoming data
+
+  const {
+    username,
+    password,
+    firstname,
+    lastname,
+    region,
+    province,
+    city,
+    barangay,
+    zone,
+    sex,
+    age,
+    birthday,
+    email_address,
+    contact_number,
+    civil_status,
+    youth_age_group,
+    work_status,
+    educational_background,
+    registered_sk_voter,
+    registered_national_voter
+  } = req.body;
+
+  // Generate a random 6-character ID
+  const userId = generateRandomId();  // Call the random ID function
+
+  try {
+    // Adjust the INSERT query to exclude the `active` field
+    const result = await pool.query(
+      `INSERT INTO Users (
+        id, username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
+        birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
+        educational_background, registered_sk_voter, registered_national_voter
+      ) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
+      RETURNING *`,
+      [
+        userId, username, password, firstname, lastname, region, province, city, barangay, zone, sex, 
+        age, birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
+        educational_background, registered_sk_voter, registered_national_voter
+      ]
+    );
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error adding user:', err);
+    res.status(500).send('Server error');
+  }
 });
+
 
 // Update a user
 app.put('/users/:id', async (req, res) => {
@@ -1112,8 +1180,7 @@ app.put('/users/:id', async (req, res) => {
     work_status,
     educational_background,
     registered_sk_voter,
-    registered_national_voter,
-    active  // This will now be part of the request body
+    registered_national_voter
   } = req.body;
 
   try {
@@ -1123,12 +1190,12 @@ app.put('/users/:id', async (req, res) => {
               city = $7, barangay = $8, zone = $9, sex = $10, age = $11, birthday = $12, 
               email_address = $13, contact_number = $14, civil_status = $15, youth_age_group = $16, 
               work_status = $17, educational_background = $18, registered_sk_voter = $19, 
-              registered_national_voter = $20, active = $21
-          WHERE id = $22 RETURNING *`,
+              registered_national_voter = $20
+          WHERE id = $21 RETURNING *`,
           [
               username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
               birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
-              educational_background, registered_sk_voter, registered_national_voter, active, id
+              educational_background, registered_sk_voter, registered_national_voter, id
           ]
       );
 
@@ -1139,32 +1206,27 @@ app.put('/users/:id', async (req, res) => {
   }
 });
 
+
   
 //admin dashboard 
 //admin dashboard start
 // Add this new route to fetch the required user stats for the dashboard
 app.get('/admindashboard', async (req, res) => {
   try {
-    // Query to get total users, active users, and inactive users from the `users` table
-    const result = await pool.query(`
-      SELECT 
-        COUNT(*) AS total_users,
-        COUNT(CASE WHEN status = 'active' THEN 1 END) AS active_users,
-        COUNT(CASE WHEN status = 'inactive' THEN 1 END) AS inactive_users
-      FROM users
-    `);
-
-    // Return the result in JSON format
-    if (result.rows.length > 0) {
-      res.json(result.rows[0]);
-    } else {
-      res.status(404).json({ message: 'No user data found' });
-    }
+      const result = await pool.query('SELECT COUNT(*) AS total_users FROM users');
+      if (result.rows.length > 0) {
+          res.json(result.rows[0]);
+      } else {
+          res.status(404).json({ message: 'No data found' });
+      }
   } catch (err) {
-    console.error('Error fetching dashboard data:', err);
-    res.status(500).send('Server error');
+      console.error('Error fetching dashboard data:', err);
+      res.status(500).json({ message: 'Server error' });
   }
 });
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
