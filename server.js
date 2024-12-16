@@ -194,15 +194,46 @@ app.get('/Profile/:username', async (req, res) => {
   }
 });
 
+app.get('/Allreservations', async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
+       FROM Schedules 
+       ORDER BY start_date ASC`
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching reservations:', error);
+    res.status(500).send('Server error');
+  }
+});
+
+app.post('/approveReservations', async (req, res) => {
+  const { ids } = req.body; // Array of reservation IDs to approve
+
+  try {
+    // Update the status of the selected reservations
+    await pool.query(
+      'UPDATE Schedules SET status = $1 WHERE id = ANY($2::int[])',
+      ['Approved', ids]
+    );
+    res.status(200).send('Reservations approved');
+  } catch (error) {
+    console.error('Error approving reservations:', error);
+    res.status(500).send('Server error');
+  }
+});
+
+
 
 app.post('/reservations', async (req, res) => {
-    const { user_id, reservation_type, start_date, end_date, time_slot } = req.body;
+    const { user_id, reservation_type, start_date, end_date, status, time_slot } = req.body;
   
     try {
       const result = await pool.query(
-        `INSERT INTO Schedules (user_id, reservation_type, start_date, end_date, time_slot)
-         VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-        [user_id, reservation_type, start_date, end_date, time_slot]
+        `INSERT INTO Schedules (user_id, reservation_type, start_date, end_date, status, time_slot)
+         VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+        [user_id, reservation_type, start_date, end_date, status, time_slot]
       );
       res.status(201).json(result.rows[0]);
     } catch (error) {
@@ -216,7 +247,7 @@ app.get('/reservations', async (req, res) => {
   
     try {
       const result = await pool.query(
-        `SELECT id, reservation_type AS program, start_date AS date, end_date, time_slot 
+        `SELECT id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
          FROM Schedules 
          WHERE user_id = $1
          ORDER BY start_date ASC`,
@@ -611,46 +642,6 @@ app.get('/ViewEquipment', async (req, res) => {
       res.status(500).json({ error: err.message });
   }
 });
-
-app.get('/ViewScheduleAndEquipment', async (req, res) => {
-  try {
-      const result = await pool.query(`
-          SELECT 
-              s.start_date AS schedule_start_date, 
-              s.end_date AS schedule_end_date, 
-              s.time_slot, 
-              u.username, 
-              e.start_date AS equipment_start_date, 
-              e.end_date AS equipment_end_date, 
-              jsonb_array_elements(e.reserved_equipment) AS equipment
-          FROM Schedules s
-          JOIN Users u ON s.user_id = u.id
-          LEFT JOIN Equipment e ON e.start_date = s.start_date AND e.end_date = s.end_date
-          WHERE s.start_date >= CURRENT_DATE
-          ORDER BY s.start_date ASC
-      `);
-
-      // Map the result to combine schedule and equipment details
-      const formattedResult = result.rows.map(row => ({
-          schedule: {
-              start_date: row.schedule_start_date,
-              end_date: row.schedule_end_date,
-              time_slot: row.time_slot,
-              username: row.username
-          },
-          equipment: row.equipment ? {
-              equipment_name: row.equipment.name,
-              quantity: row.equipment.quantity
-          } : null // Handle case where no equipment is reserved for the schedule
-      }));
-
-      res.json(formattedResult);
-  } catch (err) {
-      res.status(500).json({ error: err.message });
-  }
-});
-
-
 
 
 /******** Inventory ********/
@@ -1133,7 +1124,7 @@ app.post('/users', async (req, res) => {
   const userId = generateRandomId();  // Call the random ID function
 
   try {
-    // Adjust the INSERT query to exclude the `active` field
+    // Adjust the INSERT query to include the generated `id` and all required values
     const result = await pool.query(
       `INSERT INTO Users (
         id, username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
@@ -1155,6 +1146,7 @@ app.post('/users', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+
 
 
 // Update a user
@@ -1222,7 +1214,7 @@ app.delete('/users/:id', async (req, res) => {
       res.status(500).send('Server error');
   }
 });
-  
+
 //admin dashboard 
 //admin dashboard start
 // Add this new route to fetch the required user stats for the dashboard
