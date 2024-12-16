@@ -15,7 +15,7 @@ const AdminGymReservation = () => {
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const endpoint = 'http://localhost:5000/equipmentreservation'; // Updated endpoint to fetch equipment reservations
+        const endpoint = 'http://localhost:5000/Allequipments'; // Updated endpoint to fetch equipment reservations
         const response = await axios.get(endpoint);
         setReservations(response.data);
         setFilteredReservations(response.data);
@@ -70,10 +70,10 @@ const AdminGymReservation = () => {
   const handleApprove = async () => {
     try {
       // Update the status of the selected reservations to 'Approved'
-      await axios.post('http://localhost:5000/approveequipmentreservation', { ids: selectedReservations });
+      await axios.post('http://localhost:5000/approveEquipment', { ids: selectedReservations });
 
       // Refresh the reservations list
-      const response = await axios.get('http://localhost:5000/equipmentreservation');
+      const response = await axios.get('http://localhost:5000/Allequipments');
       setReservations(response.data);
       setFilteredReservations(response.data);
       setSelectedReservations([]); // Clear selected reservations
@@ -85,10 +85,10 @@ const AdminGymReservation = () => {
   const handleDisapprove = async () => {
     try {
       // Update the status of the selected reservations to 'Disapproved'
-      await axios.post('http://localhost:5000/disapproveequipmentreservation', { ids: selectedReservations });
+      await axios.post('http://localhost:5000/disapproveEquipment', { ids: selectedReservations });
 
       // Refresh the reservations list
-      const response = await axios.get('http://localhost:5000/equipmentreservation');
+      const response = await axios.get('http://localhost:5000/Allequipments');
       setReservations(response.data);
       setFilteredReservations(response.data);
       setSelectedReservations([]); // Clear selected reservations
@@ -172,11 +172,11 @@ const AdminGymReservation = () => {
                   checked={selectedReservations.length === filteredReservations.length}
                 />
               </th>
-              <th>ID</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Time Slot</th>
-              <th>Status</th>
+                <th>Reservation ID</th>
+                <th>Reserved Equipment</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
               <th style={{ width: '120px' }}>Action</th>
             </tr>
           </thead>
