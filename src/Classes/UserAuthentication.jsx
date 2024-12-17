@@ -2,13 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../WebStructure/AuthContext';
 
-import '../App.css';
+// import '../App.css';
 import './UserAuthentication.css';
 const { DecryptionCode } = require('../WebStructure/Codex');
 
 const UserAuthentication = () => {
     const [view, setView] = useState('signIn');
-    // New Code:
     const [showAccountActivationFields, setShowAccountActivationFields] = useState(false);
     const [showForgotPasswordCodeField, setShowForgotPasswordCodeField] = useState(false);
     const location = useLocation();
@@ -117,13 +116,15 @@ const UserAuthentication = () => {
 
     return (
         <div className='user-authentication-container'>
-            <div className='user-authentication-contents d-flex justify-content-center align-items-center'>
-                <div className="left-side-contents-container text-center text-lg-center">
-                    <h1 className="fw-normal fs-3 me-5">Lagi't lagi para sa Kabataan,</h1>
-                    <h1 className="fw-normal fs-4 me-4"> Barangay at sa Bayan
-                        <span className="fs-1 fw-bold clr-db txt-i-db animated slideInRight"> Sangguniang Kabataan</span>
-                    </h1>
-                    <p className="IntroDetails animated slideInBottom">Western Bicutan</p>
+            <div className='user-authentication-contents d-flex justify-content-center'>
+                <div className='left-side-responsive d-none d-md-block'>
+                    <div className="left-side-contents-container d-flex flex-column justify-content-center text-center text-lg-center">
+                        <h1 className="top-part">Lagi't lagi para sa Kabataan,</h1>
+                        <h1 className="middle-part"> Barangay at sa Bayan
+                            <span className="bottom-part fst-italic"> Sangguniang Kabataan</span>
+                        </h1>
+                        <p className="SK-location">Western Bicutan</p>
+                    </div>
                 </div>
 
                 <div className='right-side-contents-container d-flex justify-content-center'>
@@ -169,7 +170,7 @@ const UserAuthentication = () => {
                                 </button>
 
                                 <div className='sign-in-form-bottom'>
-                                    <p>Don’t have an account?</p>
+                                    <p className='no-account-p text-black'>Don’t have an account?</p>
                                     <Link
                                         onClick={(e) => {
                                             e.preventDefault();

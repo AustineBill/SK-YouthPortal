@@ -6,9 +6,38 @@
     margin: 30px 0 30px 0;
 }
 
-.left-side-contents-container {
+.left-side-responsive {
     width: 60%;
 }
+
+.left-side-contents-container {
+    width: 100%;
+    height: 500px;
+}
+
+.top-part {
+    font-weight: normal;
+    font-size: 35px;
+}
+
+.middle-part {
+    font-weight: normal;
+    font-size: 30px;
+}
+
+.bottom-part {
+    font-family: 'Sansita', sans-serif;
+    color: #25327A;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.SK-location {
+    font-weight: bolder;
+    font-size: 30px;
+    margin-left: 60%;
+}
+
 
 .right-side-contents-container {
     width: 40%;
@@ -18,6 +47,7 @@
 .forgot-password-fp,
 .sign-up-su {
     font-family: 'Sansita', sans-serif;
+    font-size: 55px;
     color: #25327A;
     margin: 25px 0 25px 0;
 }
@@ -40,7 +70,7 @@
 .sign-in-details-group .sign-in-label,
 .forgot-password-details-group .forgot-password-label,
 .sign-up-details-group .sign-up-label {
-    font-size: 17.5px
+    font-size: 25px
 }
 
 .user-auth-sign-in-form,
@@ -55,12 +85,12 @@
 .user-auth-forgot-password-form input[type='password'],
 .user-auth-sign-up-form input[type='text'],
 .user-auth-sign-up-form input[type='password'] {
-    height: 40px;
+    height: 50px;
     border-style: none;
     border-radius: 10px;
     outline: none;
     margin-bottom: 0;
-    font-size: 20px;
+    font-size: 25px;
     transition: all 0.35s;
 }
 
@@ -74,6 +104,7 @@
 
 .forgot-password-link {
     color: #868686;
+    font-size: 20px;
 }
 
 .sign-up-link {
@@ -84,6 +115,12 @@
 .forgot-password-email-description,
 .sign-up-description {
     color: #838383;
+    font-size: 20px;
+}
+
+.no-account-p,
+.sign-up-link {
+    font-size: 17.5px;
 }
 
 .sign-in-button,
@@ -93,10 +130,10 @@
 .su-submit-button {
     background-color: #FFFFFF;
     color: #25327A;
-    width: 150px;
-    height: 50px;
+    width: 175px;
+    height: 60px;
     border: none;
-    font-size: 15px;
+    font-size: 20px;
     transition: all 0.35s;
 }
 
@@ -114,4 +151,266 @@
 .su-submit-button:hover {
     background-color: #948a8a;
     color: #FFFFFF;
+}
+
+
+/* Media */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    .left-side-responsive {
+        width: 57.5%;
+    }
+    
+    .left-side-contents-container {
+        width: 100%;
+        height: 500px;
+    }
+
+    .top-part {
+        font-size: 30px;
+    }
+    
+    .middle-part {
+        font-size: 25px;
+    }
+    
+    .bottom-part {
+        font-size: 35px;
+    }
+
+    .SK-location {
+        font-size: 27.5px;
+        margin-left: 55%;
+    }
+
+    .right-side-contents-container {
+        width: 42.5%;
+    }
+
+    .sign-in-welcome,
+    .forgot-password-fp,
+    .sign-up-su {
+        font-size: 50px;
+    }
+
+    .sign-in-details-group .sign-in-label,
+    .forgot-password-details-group .forgot-password-label,
+    .sign-up-details-group .sign-up-label {
+        font-size: 22.5px;
+    }
+
+    .user-auth-sign-in-form input[type='text'],
+    .user-auth-sign-in-form input[type='password'],
+    .user-auth-forgot-password-form input[type='text'],
+    .user-auth-forgot-password-form input[type='password'],
+    .user-auth-sign-up-form input[type='text'],
+    .user-auth-sign-up-form input[type='password'] {
+        height: 47.5px;
+        font-size: 22.5px;
+    }
+
+    .forgot-password-link {
+        font-size: 17.5px;
+    }
+
+    .no-account-p,
+    .sign-up-link {
+        font-size: 15px;
+    }
+
+    .forgot-password-email-description,
+    .sign-up-description {
+        font-size: 17.5px;
+    }
+
+    .sign-in-button,
+    .fp-proceed-button,
+    .fp-submit-button,
+    .su-proceed-button,
+    .su-submit-button {
+        width: 150px;
+        height: 55px;
+        font-size: 17.5px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .left-side-responsive {
+        width: 55%;
+    }
+
+    .top-part {
+        font-size: 25px;
+    }
+    
+    .middle-part {
+        font-size: 20px;
+    }
+    
+    .bottom-part {
+        font-size: 30px;
+    }
+
+    .SK-location {
+        font-size: 22.5px;
+        margin-left: 50%;
+    }
+
+    .right-side-contents-container {
+        width: 45%;
+    }
+
+    .sign-in-welcome,
+    .forgot-password-fp,
+    .sign-up-su {
+        font-size: 42.5px;
+    }
+
+    .sign-in-details-group .sign-in-label,
+    .forgot-password-details-group .forgot-password-label,
+    .sign-up-details-group .sign-up-label {
+        font-size: 20px;
+    }
+
+    .user-auth-sign-in-form input[type='text'],
+    .user-auth-sign-in-form input[type='password'],
+    .user-auth-forgot-password-form input[type='text'],
+    .user-auth-forgot-password-form input[type='password'],
+    .user-auth-sign-up-form input[type='text'],
+    .user-auth-sign-up-form input[type='password'] {
+        height: 45px;
+        font-size: 20px;
+    }
+
+    .forgot-password-link {
+        font-size: 15px;
+    }
+
+    .no-account-p,
+    .sign-up-link {
+        font-size: 12.5px;
+    }
+
+    .forgot-password-email-description,
+    .sign-up-description {
+        font-size: 15px;
+    }
+
+    .sign-in-button,
+    .fp-proceed-button,
+    .fp-submit-button,
+    .su-proceed-button,
+    .su-submit-button {
+        width: 125px;
+        height: 50px;
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    .right-side-contents-container {
+        width: 100%;
+    }
+
+    .sign-in-welcome,
+    .forgot-password-fp,
+    .sign-up-su {
+        font-size: 40px;
+    }
+
+    .sign-in-details-group .sign-in-label,
+    .forgot-password-details-group .forgot-password-label,
+    .sign-up-details-group .sign-up-label {
+        font-size: 17.5px;
+    }
+
+    .user-auth-sign-in-form input[type='text'],
+    .user-auth-sign-in-form input[type='password'],
+    .user-auth-forgot-password-form input[type='text'],
+    .user-auth-forgot-password-form input[type='password'],
+    .user-auth-sign-up-form input[type='text'],
+    .user-auth-sign-up-form input[type='password'] {
+        height: 42.5px;
+        font-size: 17.5px;
+    }
+
+    .forgot-password-link {
+        font-size: 12.5px;
+    }
+
+    .no-account-p,
+    .sign-up-link {
+        font-size: 10px;
+    }
+
+    .forgot-password-email-description,
+    .sign-up-description {
+        font-size: 12.5px;
+    }
+
+    .sign-in-button,
+    .fp-proceed-button,
+    .fp-submit-button,
+    .su-proceed-button,
+    .su-submit-button {
+        width: 115px;
+        height: 45px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .right-side-contents-container {
+        width: 100%;
+    }
+
+    .sign-in-welcome,
+    .forgot-password-fp,
+    .sign-up-su {
+        font-size: 30px;
+    }
+
+    .sign-in-details-group .sign-in-label,
+    .forgot-password-details-group .forgot-password-label,
+    .sign-up-details-group .sign-up-label {
+        font-size: 15px;
+    }
+
+    .user-auth-sign-in-form input[type='text'],
+    .user-auth-sign-in-form input[type='password'],
+    .user-auth-forgot-password-form input[type='text'],
+    .user-auth-forgot-password-form input[type='password'],
+    .user-auth-sign-up-form input[type='text'],
+    .user-auth-sign-up-form input[type='password'] {
+        height: 35px;
+        font-size: 15px;
+    }
+
+    .forgot-password-link {
+        font-size: 10px;
+    }
+
+    .no-account-p,
+    .sign-up-link {
+        font-size: 8px;
+    }
+
+    .forgot-password-email-description,
+    .sign-up-description {
+        font-size: 10px;
+    }
+
+    .sign-in-button,
+    .fp-proceed-button,
+    .fp-submit-button,
+    .su-proceed-button,
+    .su-submit-button {
+        width: 100px;
+        height: 40px;
+        font-size: 10px;
+    }
 }
