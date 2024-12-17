@@ -530,7 +530,6 @@ app.get('/Details/:id', async (req, res) => {
   });
 
 /******** View Schedules ********/
-
 app.get('/ViewSched', async (req, res) => {
   try {
       // Log the connection or any variables involved
@@ -540,23 +539,19 @@ app.get('/ViewSched', async (req, res) => {
           SELECT s.start_date, s.end_date, s.time_slot, u.username
           FROM Schedules s
           JOIN Users u ON s.user_id = u.id
-          WHERE s.start_date >= CURRENT_DATE
+          WHERE s.start_date >= CURRENT_DATE::date
           ORDER BY s.start_date ASC
       `);
-
+      
       if (result.rows.length === 0) {
-          console.log('No results found'); // Log if no results are found
-      } else {
-          console.log('Results:', result.rows); // Log the results if any
-      }
+      } 
 
-      res.json(result.rows);
+      //res.json(result.rows); // Send the result as a JSON response
   } catch (err) {
       console.error('Error during query execution:', err);
-      res.status(500).json({ error: err.message });
+      res.status(500).json({ error: err.message }); // Send error message if there's an issue
   }
 });
-
 
 
 app.get('/ViewEquipment', async (req, res) => {
