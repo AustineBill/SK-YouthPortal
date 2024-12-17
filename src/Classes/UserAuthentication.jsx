@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useLocation, useNavigate, Link} from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../WebStructure/AuthContext';
 
 import '../App.css';
@@ -31,7 +31,6 @@ const UserAuthentication = () => {
         }
     }, [location.search]);
 
-   
     const handleShowAccountActivationFields = () => {
         if (activationCode.trim() === '') {
             alert('Activation code cannot be blank!');
@@ -51,19 +50,19 @@ const UserAuthentication = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ activationCode: decryptedCode }),
         })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('Server Response:', data);
-            if (data.message === 'Account Created Successfully') {
-                setShowAccountActivationFields(true);
-            } else {
-                alert(data.message || 'Invalid Activation Code');
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            alert('An error occurred during validation.');
-        });        
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Server Response:', data);
+                if (data.message === 'Account Created Successfully') {
+                    setShowAccountActivationFields(true);
+                } else {
+                    alert(data.message || 'Invalid Activation Code');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('An error occurred during validation.');
+            });
     };
 
 
@@ -110,57 +109,73 @@ const UserAuthentication = () => {
 
     const handleShowForgotPasswordCodeField = () => {
         if (activationCode.trim() === '') {
-        alert('Activation code cannot be blank!');
-         return;
-         }
+            alert('Activation code cannot be blank!');
+            return;
+        }
         setShowForgotPasswordCodeField(true);
     };
 
     return (
-        <div className="container-fluid">
-            <div className="row align-items-center mt-3">
-                <div className="col-md-7 text-center text-lg-center">
-                    <h1 className=" fw-normal fs-3 me-5 animated slideInTop">Lagi't lagi para sa Kabataan,</h1>
-                    <h1 className="fw-normal fs-4 me-4 animated slideInLeft"> Barangay at sa Bayan
+        <div className='user-authentication-container'>
+            <div className='user-authentication-contents d-flex justify-content-center align-items-center'>
+                <div className="left-side-contents-container text-center text-lg-center">
+                    <h1 className="fw-normal fs-3 me-5">Lagi't lagi para sa Kabataan,</h1>
+                    <h1 className="fw-normal fs-4 me-4"> Barangay at sa Bayan
                         <span className="fs-1 fw-bold clr-db txt-i-db animated slideInRight"> Sangguniang Kabataan</span>
                     </h1>
                     <p className="IntroDetails animated slideInBottom">Western Bicutan</p>
                 </div>
 
-                <div className="col-md-4">
+                <div className='right-side-contents-container d-flex justify-content-center'>
                     {view === 'signIn' && (
-                        <div className="sign-in-form">
-                            <form onSubmit={handleLogin}>
-                                <div className='welcome-back-sign-in'>
-                                    <h2>Welcome back!</h2>
+                        <div className='sign-in-details-container d-flex justify-content-center rounded'>
+                            <form className='sign-in-details-group' onSubmit={handleLogin}>
+                                <h1 className='sign-in-welcome fw-bold fst-italic'>Welcome back!</h1>
+
+                                <div className='user-auth-sign-in-form d-flex flex-column'>
+                                    <label className='sign-in-label'>Username</label>
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        required />
                                 </div>
-                                <div className='sign-in-username'>
-                                    <input type="text" name="username" placeholder='Username' required />
+
+                                <div className='user-auth-sign-in-form d-flex flex-column'>
+                                    <label className='sign-in-label'>Password</label>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        required />
                                 </div>
-                                <div className='sign-in-password'>
-                                    <input type="password" name="password" placeholder='Password' required />
-                                </div>
+
                                 <div>
-                                <Link
-                                   to="/"
-                                    onClick={(e) => {
-                                        e.preventDefault(); // Prevent default link behavior
-                                        setView('forgotPassword');
-                                    }}
-                                    className="forgot-password-link"
-                                >
-                                    Forgot your password?
-                                </Link>
+                                    <Link
+                                        to="/"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setView('forgotPassword');
+                                        }}
+                                        className="forgot-password-link text-decoration-none"
+                                    >
+                                        Forgot your password?
+                                    </Link>
                                 </div>
-                                <button type="submit">Sign In</button>
+
+                                <button
+                                    type='submit'
+                                    className='sign-in-button fw-bold rounded-pill'
+                                >
+                                    Sign In
+                                </button>
+
                                 <div className='sign-in-form-bottom'>
                                     <p>Don’t have an account?</p>
                                     <Link
                                         onClick={(e) => {
-                                            e.preventDefault(); // Prevent default link behavior
+                                            e.preventDefault();
                                             navigate('/userauth?view=signUp');
                                         }}
-                                        className="sign-up-link"
+                                        className="sign-up-link text-decoration-none"
                                     >
                                         Sign up
                                     </Link>
@@ -171,15 +186,20 @@ const UserAuthentication = () => {
                     )}
 
                     {view === 'forgotPassword' && (
-                        <div>
-                            <form>
+                        <div className='forgot-password-details-container d-flex justify-content-center rounded'>
+                            <form className='forgot-password-details-group d-flex text-center'>
                                 {!showForgotPasswordCodeField && (
                                     <>
-                                        <div className='forgot-password-form-input'>
-                                            <label>Email</label>
+                                        <div className='fp-group-container'>
+                                            <h1 className='forgot-password-fp fw-bold fst-italic mb-3'>Forgot Password</h1>
+                                            <p className='forgot-password-email-description'>Enter your email address for a link to change your pasword</p>
+                                        </div>
+
+                                        <div className='user-auth-forgot-password-form d-flex flex-column text-left'>
+                                            <label className='forgot-password-label'>Email</label>
                                             <input
                                                 type='text'
-                                                name='signup-username'
+                                                name='forgot-password-email'
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 required
@@ -189,7 +209,7 @@ const UserAuthentication = () => {
                                         <button
                                             type="button"
                                             onClick={handleShowForgotPasswordCodeField}
-                                            className='activate-account-button rounded'>
+                                            className='fp-proceed-button fw-bold rounded-pill'>
                                             Proceed
                                         </button>
                                     </>
@@ -197,8 +217,10 @@ const UserAuthentication = () => {
 
                                 {showForgotPasswordCodeField && (
                                     <>
-                                        <div className='forgot-password-form-input'>
-                                            <label>Verification Code</label>
+                                        <h1 className='forgot-password-fp fw-bold fst-italic'>Forgot Password</h1>
+
+                                        <div className='user-auth-forgot-password-form d-flex flex-column text-left'>
+                                            <label className='forgot-password-label'>Verification Code</label>
                                             <input
                                                 type='text'
                                                 name='forgot-password-code'
@@ -208,8 +230,8 @@ const UserAuthentication = () => {
                                             />
                                         </div>
 
-                                        <div className='forgot-password-form-input'>
-                                            <label>New Password</label>
+                                        <div className='user-auth-forgot-password-form d-flex flex-column text-left'>
+                                            <label className='forgot-password-label'>New Password</label>
                                             <input
                                                 type='password'
                                                 name='new-password'
@@ -221,8 +243,7 @@ const UserAuthentication = () => {
 
                                         <button
                                             type="button"
-                                            // onClick={} Wala pa.
-                                            className='activate-account-button rounded'>
+                                            className='fp-submit-button fw-bold rounded-pill'>
                                             Submit
                                         </button>
                                     </>
@@ -232,12 +253,14 @@ const UserAuthentication = () => {
                     )}
 
                     {view === 'signUp' && (
-                        <div className="sign-up-form">
-                            <form onSubmit={handleSignUpSubmit}>
+                        <div className='sign-up-details-container d-flex justify-content-center rounded'>
+                            <form className='sign-up-details-group d-flex text-center' onSubmit={handleSignUpSubmit}>
                                 {!showAccountActivationFields && (
                                     <>
-                                        <div className='sign-up-form-input'>
-                                            <label>Activation Code</label>
+                                        <h1 className='sign-up-su fw-bold fst-italic'>Account Activation</h1>
+
+                                        <div className='user-auth-sign-up-form d-flex flex-column text-left'>
+                                            <label className='sign-up-label'>Activation Code</label>
                                             <input
                                                 type='text'
                                                 name='activation-code'
@@ -250,7 +273,7 @@ const UserAuthentication = () => {
                                         <button
                                             type="button"
                                             onClick={handleShowAccountActivationFields}
-                                            className='activate-account-button rounded'>
+                                            className='su-proceed-button fw-bold rounded-pill'>
                                             Proceed
                                         </button>
                                     </>
@@ -258,9 +281,13 @@ const UserAuthentication = () => {
 
                                 {showAccountActivationFields && (
                                     <>
-                                        <p>Set up your account</p>
-                                        <div className='sign-up-form-input'>
-                                            <label>Username:</label>
+                                        <div className='aa-group-container'>
+                                            <h1 className='sign-up-su fw-bold fst-italic mb-3'>Account Activation</h1>
+                                            <p className='sign-up-description'>Set up your account</p>
+                                        </div>
+
+                                        <div className='user-auth-sign-up-form d-flex flex-column text-left'>
+                                            <label className='sign-up-label'>Username:</label>
                                             <input
                                                 type='text'
                                                 name='signup-username'
@@ -270,8 +297,8 @@ const UserAuthentication = () => {
                                             />
                                         </div>
 
-                                        <div className='sign-up-form-input'>
-                                            <label>Password:</label>
+                                        <div className='user-auth-sign-up-form d-flex flex-column text-left'>
+                                            <label className='sign-up-label'>Password:</label>
                                             <input
                                                 type='password'
                                                 name='signup-password'
@@ -283,7 +310,7 @@ const UserAuthentication = () => {
 
                                         <button
                                             type="submit"
-                                            className='activate-account-button rounded'>
+                                            className='su-submit-button fw-bold rounded-pill'>
                                             Activate Account
                                         </button>
                                     </>
