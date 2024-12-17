@@ -79,27 +79,41 @@
 
 .admin-edit-contact-details-back-button {
     background-color: #25327A;
+    color: #FFFFFF;
     width: 100px;
     height: 40px;
     font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
 }
 
 .admin-edit-contact-details-button {
     background-color: #25327A;
+    color: #FFFFFF;
     margin-top: 10px;
     width: 150px;
     height: 55px;
     font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
 }
 
 .admin-save-contact-details-button {
     background-color: #42BB4E;
+    color: #FFFFFF;
     margin-top: 10px;
     width: 150px;
     height: 55px;
     font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
 }
 
+.admin-edit-contact-details-back-button:hover,
+.admin-edit-contact-details-button:hover,
+.admin-save-contact-details-button:hover {
+    color: rgb(2, 107, 107);
+}
 
 /* Media */
 
@@ -149,6 +163,24 @@
         height: 45px;
         font-size: 17.5px;
     }
+
+    .admin-edit-contact-details-back-button {
+        width: 90px;
+        height: 37.5px;
+        font-size: 12.5px;
+    }
+    
+    .admin-edit-contact-details-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+    
+    .admin-save-contact-details-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
@@ -186,20 +218,20 @@
 
     .admin-edit-contact-details-back-button {
         width: 75px;
-        height: 40px;
-        font-size: 12.5px;
+        height: 35px;
+        font-size: 10px;
     }
     
     .admin-edit-contact-details-button {
-        width: 125px;
-        height: 50px;
-        font-size: 12.5px;
+        width: 100px;
+        height: 45px;
+        font-size: 10px;
     }
     
     .admin-save-contact-details-button {
-        width: 125px;
-        height: 50px;
-        font-size: 12.5px;
+        width: 100px;
+        height: 45px;
+        font-size: 10px;
     }
 }
 
@@ -235,7 +267,7 @@
         height: 30px;
         font-size: 10px;
     }
-    
+
     .admin-edit-contact-details-back-button {
         width: 75px;
         height: 35px;
@@ -244,13 +276,13 @@
     
     .admin-edit-contact-details-button {
         width: 100px;
-        height: 50px;
+        height: 45px;
         font-size: 10px;
     }
     
     .admin-save-contact-details-button {
         width: 100px;
-        height: 50px;
+        height: 45px;
         font-size: 10px;
     }
 }
