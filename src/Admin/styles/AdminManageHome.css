@@ -285,6 +285,7 @@
 
     .home-event-details {
         width: 90%;
+        align-items: center;
     }
 
     /* .home-event-delete-button {

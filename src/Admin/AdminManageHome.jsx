@@ -173,7 +173,7 @@ const ManageHomePage = () => {
               ) : (
                 events.map((event) => (
                   <div key={event.id} className="admin-event-item d-flex">
-                    <div className='home-event-image'>
+                    <div className='home-event-image d-flex justify-content-center'>
                       <img
                         src={`data:image/${event.event_image_format};base64,${event.event_image}`}
                         alt={event.event_name}
@@ -181,7 +181,7 @@ const ManageHomePage = () => {
                       />
                     </div>
 
-                    <div className='home-event-details'>
+                    <div className='home-event-details d-flex flex-column'>
                       <h3 className='event-name'>{event.event_name}</h3>
                       <p className='event-description'>{event.event_description}</p>
 
