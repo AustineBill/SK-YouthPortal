@@ -102,10 +102,17 @@
 
 .admin-generate-report-button {
     background-color: #25327A;
+    color: #FFFFFF;
     margin-top: 10px;
     width: 175px;
     height: 55px;
     font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-generate-report-button:hover {
+    color: rgb(2, 107, 107);
 }
 
 

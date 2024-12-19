@@ -104,7 +104,7 @@ const Reports = () => {
 
                             <button
                                 type="submit"
-                                className="admin-generate-report-button bg-primary rounded-pill">
+                                className="admin-generate-report-button rounded">
                                 Generate Report
                             </button>
                         </form>
