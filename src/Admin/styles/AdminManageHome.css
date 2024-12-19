@@ -1,24 +1,25 @@
 /* ManageHomePage.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
 
 .admin-home-container {
     position: relative;
-    top: 75px;
-    left: 25%;
-    width: 75%;
+    padding-top: 75px;
+    left: 22.5%;
+    width: 77.5%;
     background-color: #FFFFFF;
     font-family: 'Inter', sans-serif;
     z-index: 1;
 }
 
 .admin-home-label-h2 {
-    font-size: 40px;
+    font-size: 45px;
     margin: 20px 40px 20px 40px;
 }
 
 .admin-home-nav-tabs {
     cursor: pointer;
-    font-size: 20px;
+    font-size: 25px;
     margin: 0 0 20px 60px;
     gap: 1in;
     color: #766F6F;
@@ -36,111 +37,287 @@
     text-underline-offset: 10px;
 }
 
-.admin-events-details-container,
-.admin-add-event-container {
+.admin-home-contents-container {
+    margin-bottom: 40px;
+}
+
+.admin-all-event-details-container {
+    width: 100%;
+}
+
+.admin-add-event-details-container {
     background-color: #c5c1c1;
     width: 90%;
 }
 
-.admin-add-event-container {
-    display: flex;
-    flex-direction: column;
+.admin-add-event-details-group {
+    width: 90%;
+    margin: 25px 0 25px 0;
 }
 
-.admin-add-event-group {
-    margin: 25px 0 20px 0;
+.admin-event-item {
+    background-color: #c5c1c1;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.home-event-image {
+    width: 40%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.home-event-details {
+    margin-top: 20px;
+    width: 60%;
+}
+
+.event-name {
+    font-size: 35px;
+}
+
+.event-description {
+    font-size: 25px;
+}
+
+.admin-add-event-form {
     width: 100%;
 }
 
-.admin-add-event-label {
-    font-family: 'Roboto', sans-serif;
-    text-align: left;
-    font-size: 20px;
+.admin-all-event-details-group {
+    width: 90%;
 }
 
-.admin-add-event-group input[type="text"],
-.admin-add-event-group textarea {
-    margin-bottom: 20px;
-    width: 90%;
-    height: 50px;
+.admin-add-event-details-group .admin-add-event-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+}
+
+.admin-add-event-form input[type="text"],
+.admin-add-event-form textarea {
+    height: 60px;
     border-style: none;
     border-radius: 10px;
     outline: none;
+    margin-bottom: 10px;
+    font-size: 20px;
     transition: all 0.35s;
 }
 
-.admin-add-event-group input[type="text"]:focus,
-.admin-add-event-group textarea:focus {
-    outline: 2px solid #007bff;
+.admin-add-event-form input[type="text"]:focus,
+.admin-add-event-form textarea:focus {
+    outline: 1px solid #007bff;
 }
 
 .admin-add-event-button {
+    background-color: #42BB4E;
+    color: #FFFFFF;
+    margin-top: 10px;
+    width: 125px;
+    height: 55px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-delete-event-button {
+    background-color: #E1D142;
+    color: #000000;
     margin-bottom: 20px;
     width: 125px;
     height: 55px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-delete-event-button:hover,
+.admin-add-event-button:hover {
+    color: rgb(2, 107, 107);
+}
+
+
+/* Media */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    .admin-home-label-h2 {
+        font-size: 40px;
+    }
+
+    .admin-add-event-details-group .admin-add-event-label {
+        font-size: 20px;
+    }
+
+    .admin-home-nav-tabs {
+        font-size: 22.5px;
+        margin: 0 0 20px 45px;
+        gap: 0.75in;
+    }
+
+    .event-name {
+        font-size: 30px;
+    }
+
+    .event-description {
+        font-size: 20px;
+    }
+
+    .admin-add-event-form input[type="text"],
+    .admin-add-event-form textarea {
+        height: 50px;
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .admin-home-label-h2 {
+        font-size: 35px;
+    }
+
+    .admin-add-event-details-group .admin-add-event-label {
+        font-size: 17.5px;
+    }
+
+    .admin-home-nav-tabs {
+        font-size: 20px;
+        margin: 0 0 20px 45px;
+        gap: 1in;
+    }
+
+    .event-name {
+        font-size: 25px;
+    }
+
+    .event-description {
+        font-size: 15px;
+    }
+
+    .admin-delete-event-button {
+        width: 125px;
+        height: 47.5px;
+        font-size: 13px;
+    }
+
+    .admin-add-event-form input[type="text"],
+    .admin-add-event-form textarea {
+        height: 45px;
+        font-size: 17.5px;
+    }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+
     .admin-home-container {
-        width: 100%;
         left: 0;
+        width: 100%;
     }
 
     .admin-home-label-h2 {
         font-size: 30px;
+        margin: 20px 0 20px 25px;
     }
 
     .admin-home-nav-tabs {
+        font-size: 17.5px;
+        margin: 0 0 20px 45px;
+        gap: 0.5in;
+    }
+
+    .event-name {
+        font-size: 25px;
+    }
+
+    .event-description {
         font-size: 15px;
-        gap: 0.50in;
     }
 
-    .admin-events-details-container,
-    .admin-add-event-container {
-        width: 85%;
+    .admin-delete-event-button {
+        width: 125px;
+        height: 45px;
+        font-size: 12.5px;
     }
 
-    .admin-add-event-label {
+    .admin-add-event-details-group .admin-add-event-label {
         font-size: 15px;
     }
 
-    .admin-add-event-group input[type="text"],
-    .admin-add-event-group textarea {
-        margin-bottom: 10px;
-        width: 90%;
-        height: 35px;
+    .admin-add-event-form input[type="text"],
+    .admin-add-event-form textarea {
+        height: 45px;
+        font-size: 12.5px;
     }
 
     .admin-add-event-button {
-        font-size: 10px;
-        width: 100px;
-        height: 40px;
+        width: 150px;
+        height: 50px;
+        font-size: 12.5px;
     }
 }
 
-@media (min-width: 350px) and (max-width: 480px) {
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .admin-home-container {
+        left: 0;
+        width: 100%;
+    }
+
     .admin-home-label-h2 {
-        font-size: 15px;
-        margin: 20px 20px 20px 20px;
+        font-size: 25px;
+        margin: 20px 0 20px 20px;
     }
 
     .admin-home-nav-tabs {
-        margin: 0 0 20px 40px;
-    }
-
-    .admin-events-details-container,
-    .admin-add-event-container {
-        width: 85%;
-    }
-
-    .admin-add-event-label {
         font-size: 15px;
+        margin: 0 0 20px 40px;
+        gap: 0.5in;
     }
 
-    .admin-add-event-group input[type="text"],
-    .admin-add-event-group textarea {
-        margin-bottom: 10px;
+    .admin-event-item {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .home-event-image {
         width: 90%;
-        height: 35px;
+    }
+
+    .home-event-details {
+        width: 90%;
+    }
+
+    /* .home-event-delete-button {
+
+    } */
+
+    .event-name {
+        font-size: 20px;
+    }
+
+    .event-description {
+        font-size: 12.5px;
+    }
+
+    .admin-delete-event-button {
+        width: 100px;
+        height: 40px;
+        font-size: 10px;
+    }
+
+    .admin-add-event-details-group .admin-add-event-label {
+        font-size: 12.5px;
+    }
+
+    .admin-add-event-form input[type="text"],
+    .admin-add-event-form textarea {
+        height: 45px;
+        font-size: 10px;
+    }
+
+    .admin-add-event-button {
+        width: 125px;
+        height: 50px;
+        font-size: 10px;
     }
 }

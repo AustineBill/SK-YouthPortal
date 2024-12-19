@@ -45,7 +45,7 @@
 .admin-contacts-details-group .admin-current-contact-label,
 .admin-edit-contacts-details-group .admin-edit-contact-label {
     font-family: 'Roboto', sans-serif;
-    font-size: 25px
+    font-size: 25px;
 }
 
 .admin-current-contact-form input[type="text"],
