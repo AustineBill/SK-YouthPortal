@@ -1325,6 +1325,89 @@ app.post('/disapproveEquipment', async (req, res) => {
 });
 
 
+//mamageprograms.
+
+app.get('/programs', async (req, res) => {
+  try {
+      const result = await pool.query('SELECT * FROM programs');
+      res.json(result.rows);
+  } catch (err) {
+      console.error('Error getting programs:', err);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
+// API Endpoint to get a single program by ID
+app.get('/programs/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+      const result = await pool.query('SELECT * FROM programs WHERE id = $1', [id]);
+      if (result.rows.length === 0) {
+          return res.status(404).send('Program not found');
+      }
+      res.json(result.rows[0]);
+  } catch (err) {
+      console.error('Error getting program:', err);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
+// API Endpoint to create a new program
+app.post('/programs', async (req, res) => {
+  const { program_name, description, image_base64 } = req.body;
+  try {
+      const result = await pool.query(
+          'INSERT INTO programs (program_name, description, image_base64) VALUES ($1, $2, $3) RETURNING *',
+          [program_name, description, image_base64]
+      );
+      res.status(201).json(result.rows[0]);
+  } catch (err) {
+      console.error('Error creating program:', err);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
+
+// API Endpoint to update an existing program
+app.put('/programs/:id', async (req, res) => {
+  const { id } = req.params;
+  const { program_name, description, image_base64 } = req.body;
+
+  try {
+      const result = await pool.query(
+          'UPDATE programs SET program_name = $1, description = $2, image_base64 = $3 WHERE id = $4 RETURNING *',
+          [program_name, description, image_base64, id]
+      );
+
+      if (result.rows.length === 0) {
+          return res.status(404).send('Program not found');
+      }
+
+      res.json(result.rows[0]);
+  } catch (err) {
+      console.error('Error updating program:', err);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
+// API Endpoint to delete a program
+app.delete('/programs/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+      const result = await pool.query('DELETE FROM programs WHERE id = $1 RETURNING *', [id]);
+
+      if (result.rows.length === 0) {
+          return res.status(404).send('Program not found');
+      }
+
+      res.json(result.rows[0]);
+  } catch (err) {
+      console.error('Error deleting program:', err);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
