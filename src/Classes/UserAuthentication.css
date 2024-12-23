@@ -38,7 +38,6 @@
     margin-left: 60%;
 }
 
-
 .right-side-contents-container {
     width: 40%;
 }
@@ -47,7 +46,7 @@
 .forgot-password-fp,
 .sign-up-su {
     font-family: 'Sansita', sans-serif;
-    font-size: 55px;
+    font-size: 50px;
     color: #25327A;
     margin: 25px 0 25px 0;
 }
@@ -55,7 +54,7 @@
 .sign-in-details-container,
 .forgot-password-details-container,
 .sign-up-details-container {
-    width: 90%;
+    width: 75%;
     background-color: #E4E4E4;
 }
 
@@ -70,7 +69,7 @@
 .sign-in-details-group .sign-in-label,
 .forgot-password-details-group .forgot-password-label,
 .sign-up-details-group .sign-up-label {
-    font-size: 25px
+    font-size: 20px;
 }
 
 .user-auth-sign-in-form,
@@ -85,12 +84,12 @@
 .user-auth-forgot-password-form input[type='password'],
 .user-auth-sign-up-form input[type='text'],
 .user-auth-sign-up-form input[type='password'] {
-    height: 50px;
+    height: 45px;
     border-style: none;
     border-radius: 10px;
     outline: none;
     margin-bottom: 0;
-    font-size: 25px;
+    font-size: 20px;
     transition: all 0.35s;
 }
 
@@ -104,7 +103,7 @@
 
 .forgot-password-link {
     color: #868686;
-    font-size: 20px;
+    font-size: 17.5px;
 }
 
 .sign-up-link {
@@ -120,7 +119,7 @@
 
 .no-account-p,
 .sign-up-link {
-    font-size: 17.5px;
+    font-size: 15px;
 }
 
 .sign-in-button,
@@ -191,13 +190,13 @@
     .sign-in-welcome,
     .forgot-password-fp,
     .sign-up-su {
-        font-size: 50px;
+        font-size: 42.5px;
     }
 
     .sign-in-details-group .sign-in-label,
     .forgot-password-details-group .forgot-password-label,
     .sign-up-details-group .sign-up-label {
-        font-size: 22.5px;
+        font-size: 17.5px;
     }
 
     .user-auth-sign-in-form input[type='text'],
@@ -206,17 +205,17 @@
     .user-auth-forgot-password-form input[type='password'],
     .user-auth-sign-up-form input[type='text'],
     .user-auth-sign-up-form input[type='password'] {
-        height: 47.5px;
-        font-size: 22.5px;
+        height: 40px;
+        font-size: 17.5px;
     }
 
     .forgot-password-link {
-        font-size: 17.5px;
+        font-size: 15px;
     }
 
     .no-account-p,
     .sign-up-link {
-        font-size: 15px;
+        font-size: 12.5px;
     }
 
     .forgot-password-email-description,
@@ -265,13 +264,13 @@
     .sign-in-welcome,
     .forgot-password-fp,
     .sign-up-su {
-        font-size: 42.5px;
+        font-size: 35px;
     }
 
     .sign-in-details-group .sign-in-label,
     .forgot-password-details-group .forgot-password-label,
     .sign-up-details-group .sign-up-label {
-        font-size: 20px;
+        font-size: 15px;
     }
 
     .user-auth-sign-in-form input[type='text'],
@@ -280,22 +279,22 @@
     .user-auth-forgot-password-form input[type='password'],
     .user-auth-sign-up-form input[type='text'],
     .user-auth-sign-up-form input[type='password'] {
-        height: 45px;
-        font-size: 20px;
+        height: 35px;
+        font-size: 15px;
     }
 
     .forgot-password-link {
-        font-size: 15px;
+        font-size: 12.5px;
     }
 
     .no-account-p,
     .sign-up-link {
-        font-size: 12.5px;
+        font-size: 10px;
     }
 
     .forgot-password-email-description,
     .sign-up-description {
-        font-size: 15px;
+        font-size: 12.5px;
     }
 
     .sign-in-button,
@@ -318,13 +317,13 @@
     .sign-in-welcome,
     .forgot-password-fp,
     .sign-up-su {
-        font-size: 40px;
+        font-size: 35px;
     }
 
     .sign-in-details-group .sign-in-label,
     .forgot-password-details-group .forgot-password-label,
     .sign-up-details-group .sign-up-label {
-        font-size: 17.5px;
+        font-size: 15px;
     }
 
     .user-auth-sign-in-form input[type='text'],
@@ -333,8 +332,8 @@
     .user-auth-forgot-password-form input[type='password'],
     .user-auth-sign-up-form input[type='text'],
     .user-auth-sign-up-form input[type='password'] {
-        height: 42.5px;
-        font-size: 17.5px;
+        height: 35px;
+        font-size: 15px;
     }
 
     .forgot-password-link {
@@ -358,7 +357,7 @@
     .su-submit-button {
         width: 115px;
         height: 45px;
-        font-size: 12.5px;
+        font-size: 15px;
     }
 }
 
@@ -377,7 +376,7 @@
     .sign-in-details-group .sign-in-label,
     .forgot-password-details-group .forgot-password-label,
     .sign-up-details-group .sign-up-label {
-        font-size: 15px;
+        font-size: 12.5px;
     }
 
     .user-auth-sign-in-form input[type='text'],
@@ -386,8 +385,8 @@
     .user-auth-forgot-password-form input[type='password'],
     .user-auth-sign-up-form input[type='text'],
     .user-auth-sign-up-form input[type='password'] {
-        height: 35px;
-        font-size: 15px;
+        height: 32.5px;
+        font-size: 12.5px;
     }
 
     .forgot-password-link {
@@ -396,7 +395,7 @@
 
     .no-account-p,
     .sign-up-link {
-        font-size: 8px;
+        font-size: 7.5px;
     }
 
     .forgot-password-email-description,
@@ -411,6 +410,6 @@
     .su-submit-button {
         width: 100px;
         height: 40px;
-        font-size: 10px;
+        font-size: 12.5px;
     }
 }

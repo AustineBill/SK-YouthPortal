@@ -97,7 +97,7 @@ const ManageProgram = () => {
             description: newProgram.description,
             image_base64: newProgram.imageBase64,
         };
-    
+
         try {
             const response = await axios.post('http://localhost:5000/programs', programData);
             console.log('Program added:', response.data);
@@ -193,53 +193,63 @@ const ManageProgram = () => {
 
                 {/* Add Program Section */}
                 {activeContent === 'addProgram' && (
-                    <div className="admin-add-program-container d-flex flex-column align-items-center">
-                        <form className="admin-add-program-group align-items-center">
-                            <label className="admin-add-program-label">Program Name</label>
-                            <input
-                                type="text"
-                                placeholder="Program Name"
-                                name="name"
-                                value={newProgram.name}
-                                onChange={(e) =>
-                                    setNewProgram((prev) => ({ ...prev, name: e.target.value }))
-                                }
-                            />
-
-                            <label className="admin-add-program-label">Program Description</label>
-                            <textarea
-                                placeholder="Program Description"
-                                name="description"
-                                value={newProgram.description}
-                                onChange={(e) =>
-                                    setNewProgram((prev) => ({ ...prev, description: e.target.value }))
-                                }
-                            />
-
-                            <label className="admin-add-program-label">Upload Image</label>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImageUpload}
-                            />
-                        </form>
-
-                        {imagePreview && (
-                            <div className="adminprogrampage-image-preview-container">
-                                <img
-                                    src={imagePreview}
-                                    alt="Preview"
-                                    className="admin-image-preview"
+                    <div className="admin-add-program-details-container d-flex justify-content-center">
+                        <form className="admin-add-program-details-group d-flex flex-column align-items-center">
+                            <div className='admin-add-program-form d-flex flex-column'>
+                                <label className="admin-add-program-label">Program Name</label>
+                                <input
+                                    type="text"
+                                    placeholder="Program Name"
+                                    name="name"
+                                    value={newProgram.name}
+                                    onChange={(e) =>
+                                        setNewProgram((prev) => ({ ...prev, name: e.target.value }))
+                                    }
+                                    className="add-program-form-control"
                                 />
                             </div>
-                        )}
-                        <button
-                            type="button"
-                            onClick={handleAddProgram}
-                            className="admin-add-program-button bg-success rounded-pill"
-                        >
-                            Add Program
-                        </button>
+
+                            <div className='admin-add-program-form d-flex flex-column'>
+                                <label className="admin-add-program-label">Program Description</label>
+                                <textarea
+                                    placeholder="Program Description"
+                                    name="description"
+                                    value={newProgram.description}
+                                    onChange={(e) =>
+                                        setNewProgram((prev) => ({ ...prev, description: e.target.value }))
+                                    }
+                                    className="add-program-form-control"
+                                />
+                            </div>
+
+                            <div className='admin-add-program-form d-flex flex-column'>
+                                <label className="admin-add-program-label">Upload Image</label>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageUpload}
+                                    className="add-program-form-control"
+                                />
+                            </div>
+
+                            {imagePreview && (
+                                <div className="adminprogrampage-image-preview-container">
+                                    <img
+                                        src={imagePreview}
+                                        alt="Preview"
+                                        className="admin-image-preview"
+                                    />
+                                </div>
+                            )}
+
+                            <button
+                                type="button"
+                                onClick={handleAddProgram}
+                                className="admin-add-program-button rounded"
+                            >
+                                Add Program
+                            </button>
+                        </form>
                     </div>
                 )}
             </div>
