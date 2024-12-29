@@ -10,10 +10,12 @@
     z-index: 2;
 }
 
-.admin-bs-sidebar-links a,
-.admin-bs-manage-website-nested-links a,
-.admin-bs-reservations-nested-links a {
+.admin-bs-sidebar-links a {
     text-decoration: none;
+}
+
+.admin-sidebar-link {
+    height: 50px;
 }
 
 .admin-bs-list,
@@ -36,40 +38,50 @@
 
 .admin-sidebar-icon {
     margin: 0 10px 0 30px;
-    font-size: 40px;
+    font-size: 30px;
 }
 
-.admin-bs-manage-website-nested-links,
+.admin-sidebar-title {
+    font-size: 15px;
+}
+
+.admin-sidebar-MW-close,
+.admin-sidebar-R-close,
+.admin-sidebar-MW-open,
+.admin-sidebar-R-open {
+    color: gray;
+    margin: 0 0 0 10px;
+}
+
+/* .admin-bs-manage-website-nested-links,
 .admin-bs-reservations-nested-links {
     margin-left: 20px;
-}
+}  */
 
 
 /* Media */
 
-@media (min-width: 1025px ) and (max-width: 1440px) {
 
+@media (min-width: 1025px) and (max-width: 1440px) {
+    
     .admin-sidebar-icon {
-        margin: 0 5px 0 20px;
-        font-size: 30px;
+        margin: 0 10px 0 25px;
+        font-size: 27.5px;
     }
     
-    .admin-bs-manage-website-nested-links,
-    .admin-bs-reservations-nested-links {
-        margin-left: 15px;
+    .admin-sidebar-title {
+        font-size: 12.5px;
     }
 }
 
-
 @media (min-width: 768px) and (max-width: 1024px) {
-
+    
     .admin-sidebar-icon {
-        margin: 0 5px 0 15px;
-        font-size: 20px;
+        margin: 0 10px 0 20px;
+        font-size: 25px;
     }
     
-    .admin-bs-manage-website-nested-links,
-    .admin-bs-reservations-nested-links {
-        margin-left: 0px;
+    .admin-sidebar-title {
+        font-size: 10px;
     }
 }
