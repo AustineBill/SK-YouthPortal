@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button, Form, Modal, Tab } from 'react-bootstrap';
-import './styles/Inventory.css';
+// import './styles/Inventory.css';
+import './styles/Admin-CSS.css';
 
 const InventoryTable = () => {
   const [inventory, setInventory] = useState([]);

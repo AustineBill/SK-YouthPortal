@@ -4,7 +4,7 @@
 
 .admin-contact-us-container {
     position: relative;
-    top: 75px;
+    padding-top: 75px;
     left: 22.5%;
     width: 77.5%;
     background-color: #FFFFFF;
@@ -13,7 +13,7 @@
 }
 
 .admin-contact-us-label-h2 {
-    font-size: 45px;
+    font-size: 40px;
     margin: 20px 0 20px 40px;
 }
 
@@ -45,29 +45,28 @@
 .admin-contacts-details-group .admin-current-contact-label,
 .admin-edit-contacts-details-group .admin-edit-contact-label {
     font-family: 'Roboto', sans-serif;
-    font-size: 25px;
+    font-size: 17.5px;
 }
 
 .admin-current-contact-form input[type="text"],
 .admin-current-contact-form input[type="email"] {
-    height: 60px;
+    height: 50px;
     border-style: none;
     border-radius: 10px;
     outline: none;
     margin-bottom: 10px;
-    font-size: 20px;
+    font-size: 17.5px;
     transition: all 0.35s;
 }
 
 .admin-edit-contact-form input[type="text"],
 .admin-edit-contact-form input[type="email"] {
-    /* height: 50px; */
-    height: 60px;
+    height: 50px;
     border-style: none;
     border-radius: 10px;
     outline: none;
     margin-bottom: 0;
-    font-size: 20px;
+    font-size: 17.5px;
     transition: all 0.35s;
 }
 
@@ -120,24 +119,24 @@
 @media (min-width: 1025px) and (max-width: 1440px) {
 
     .admin-contact-us-label-h2 {
-        font-size: 40px;
+        font-size: 37.5px;
     }
 
     .admin-contacts-details-group .admin-current-contact-label,
     .admin-edit-contacts-details-group .admin-edit-contact-label {
-        font-size: 20px;
+        font-size: 15px;
     }
 
     .admin-current-contact-form input[type="text"],
     .admin-current-contact-form input[type="email"] {
-        height: 50px;
-        font-size: 20px;
+        height: 45px;
+        font-size: 15px;
     }
 
     .admin-edit-contact-form input[type="text"],
     .admin-edit-contact-form input[type="email"] {
-        height: 50px;
-        font-size: 20px;
+        height: 45px;
+        font-size: 15px;
     }
 }
 
@@ -149,19 +148,19 @@
 
     .admin-contacts-details-group .admin-current-contact-label,
     .admin-edit-contacts-details-group .admin-edit-contact-label {
-        font-size: 17.5px;
+        font-size: 12.5px;
     }
 
     .admin-current-contact-form input[type="text"],
     .admin-current-contact-form input[type="email"] {
-        height: 45px;
-        font-size: 17.5px;
+        height: 40px;
+        font-size: 12.5px;
     }
 
     .admin-edit-contact-form input[type="text"],
     .admin-edit-contact-form input[type="email"] {
-        height: 45px;
-        font-size: 17.5px;
+        height: 40px;
+        font-size: 12.5px;
     }
 
     .admin-edit-contact-details-back-button {
@@ -191,7 +190,7 @@
     }
 
     .admin-contact-us-label-h2 {
-        font-size: 30px;
+        font-size: 35px;
         margin: 20px 0 20px 25px;
     }
     
@@ -201,7 +200,7 @@
 
     .admin-contacts-details-group .admin-current-contact-label,
     .admin-edit-contacts-details-group .admin-edit-contact-label {
-        font-size: 15px;
+        font-size: 12.5px;
     }
 
     .admin-current-contact-form input[type="text"],
@@ -243,7 +242,7 @@
     }
 
     .admin-contact-us-label-h2 {
-        font-size: 25px;
+        font-size: 30px;
         margin: 20px 0 20px 20px;
     }
     
@@ -253,18 +252,18 @@
 
     .admin-contacts-details-group .admin-current-contact-label,
     .admin-edit-contacts-details-group .admin-edit-contact-label {
-        font-size: 12.5px;
+        font-size: 10px;
     }
 
     .admin-current-contact-form input[type="text"],
     .admin-current-contact-form input[type="email"] {
-        height: 30px;
+        height: 35px;
         font-size: 10px;
     }
 
     .admin-edit-contact-form input[type="text"],
     .admin-edit-contact-form input[type="email"] {
-        height: 30px;
+        height: 35px;
         font-size: 10px;
     }
 

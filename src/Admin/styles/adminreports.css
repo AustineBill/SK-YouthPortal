@@ -4,7 +4,7 @@
 
 .admin-reports-container {
     position: relative;
-    top: 75px;
+    padding-top: 75px;
     left: 22.5%;
     width: 77.5%;
     background-color: #FFFFFF;
@@ -13,7 +13,7 @@
 }
 
 .admin-reports-label-h2 {
-    font-size: 45px;
+    font-size: 40px;
     margin: 20px 40px 20px 40px;
 }
 
@@ -65,7 +65,7 @@
 
 .admin-generate-report-group .admin-generate-report-label {
     font-family: 'Roboto', sans-serif;
-    font-size: 25px;
+    font-size: 17.5px;
 }
 
 .generate-report-form {
@@ -89,9 +89,9 @@
 .generate-report-form input[type="text"],
 .generate-report-date-time input[type="date"],
 .generate-report-date-time input[type="time"] {
-    height: 60px;
+    height: 50px;
     margin-bottom: 0;
-    font-size: 20px;
+    font-size: 17.5px;
 }
 
 .generate-report-form input[type="text"]:focus,
@@ -122,7 +122,7 @@
 @media (min-width: 1025px) and (max-width: 1440px) {
 
     .admin-reports-label-h2 {
-        font-size: 40px;
+        font-size: 37.5px;
     }
 
     .admin-generate-report-group .admin-generate-report-label {
@@ -138,8 +138,8 @@
     .generate-report-form input[type="text"],
     .generate-report-date-time input[type="date"],
     .generate-report-date-time input[type="time"] {
-        height: 50px;
-        font-size: 20px;
+        height: 45px;
+        font-size: 15px;
     }
 }
 
@@ -150,7 +150,7 @@
     }
 
     .admin-generate-report-group .admin-generate-report-label {
-        font-size: 17.5px;
+        font-size: 12.5px;
     }
 
     .generate-report-date-time {
@@ -166,8 +166,8 @@
     .generate-report-form input[type="text"],
     .generate-report-date-time input[type="date"],
     .generate-report-date-time input[type="time"] {
-        height: 45px;
-        font-size: 17.5px;
+        height: 40px;
+        font-size: 12.5px;
     }
 }
 
@@ -179,7 +179,7 @@
     }
 
     .admin-reports-label-h2 {
-        font-size: 30px;
+        font-size: 35px;
         margin: 20px 0 20px 25px;
     }
 
@@ -190,7 +190,7 @@
     }
 
     .admin-generate-report-group .admin-generate-report-label {
-        font-size: 15px;
+        font-size: 12.5px;
     }
 
     .generate-report-date-time {
@@ -200,7 +200,7 @@
     .generate-report-form input[type="text"],
     .generate-report-date-time input[type="date"],
     .generate-report-date-time input[type="time"] {
-        height: 45px;
+        height: 40px;
         font-size: 12.5px;
     }
 
@@ -219,7 +219,7 @@
     }
 
     .admin-reports-label-h2 {
-        font-size: 25px;
+        font-size: 30px;
         margin: 20px 0 20px 20px;
     }
 
@@ -230,7 +230,7 @@
     }
 
     .admin-generate-report-group .admin-generate-report-label {
-        font-size: 12.5px;
+        font-size: 10px;
     }
 
     .generate-report-date-time {
@@ -240,7 +240,7 @@
     .generate-report-form input[type="text"],
     .generate-report-date-time input[type="date"],
     .generate-report-date-time input[type="time"] {
-        height: 45px;
+        height: 35px;
         font-size: 10px;
     }
 

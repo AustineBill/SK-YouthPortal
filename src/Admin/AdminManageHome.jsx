@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './styles/AdminManageHome.css';
+// import './styles/AdminManageHome.css';
+import './styles/Admin-CSS.css';
 
 const pageLabels = {
   events: 'Manage Events',

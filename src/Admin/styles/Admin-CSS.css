@@ -1,0 +1,1138 @@
+/* Admin CSS file */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+
+
+/* ____________________________________________________________________________________________________ */
+/* Admin Manage Home */
+/* ____________________________________________________________________________________________________ */
+
+.admin-home-container {
+    position: relative;
+    padding-top: 75px;
+    left: 22.5%;
+    width: 77.5%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
+}
+
+.admin-home-label-h2 {
+    font-size: 40px;
+    margin: 20px 40px 20px 40px;
+}
+
+.admin-home-nav-tabs {
+    cursor: pointer;
+    font-size: 25px;
+    margin: 0 0 20px 60px;
+    gap: 1in;
+    color: #766F6F;
+    transition: all 0.35s;
+}
+
+.admin-home-nav-tabs li:hover {
+    color: #E3DFDF;
+}
+
+.admin-home-nav-tabs li.active-tab {
+    color: red;
+    text-decoration: underline;
+    text-decoration-color: #C1C1C1;
+    text-underline-offset: 10px;
+}
+
+.admin-home-contents-container {
+    margin-bottom: 40px;
+}
+
+.admin-all-event-details-container {
+    width: 100%;
+}
+
+.admin-add-event-details-container {
+    background-color: #c5c1c1;
+    width: 90%;
+}
+
+.admin-add-event-details-group {
+    width: 90%;
+    margin: 25px 0 25px 0;
+}
+
+.admin-event-item {
+    background-color: #c5c1c1;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.home-event-image {
+    width: 40%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.home-event-details {
+    margin-top: 20px;
+    width: 60%;
+}
+
+.event-name {
+    font-size: 35px;
+}
+
+.event-description {
+    font-size: 25px;
+}
+
+.admin-add-event-form {
+    width: 100%;
+}
+
+.admin-all-event-details-group {
+    width: 90%;
+}
+
+.admin-add-event-details-group .admin-add-event-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 17.5px;
+}
+
+.admin-add-event-form input[type="text"],
+.admin-add-event-form textarea {
+    height: 50px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 10px;
+    font-size: 17.5px;
+    transition: all 0.35s;
+}
+
+.admin-add-event-form input[type="text"]:focus,
+.admin-add-event-form textarea:focus {
+    outline: 1px solid #007bff;
+}
+
+.admin-add-event-button {
+    background-color: #42BB4E;
+    color: #FFFFFF;
+    margin-top: 10px;
+    width: 150px;
+    height: 55px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-delete-event-button {
+    background-color: #E1D142;
+    color: #000000;
+    margin-bottom: 20px;
+    width: 125px;
+    height: 55px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-delete-event-button:hover,
+.admin-add-event-button:hover {
+    color: rgb(2, 107, 107);
+}
+
+
+/* Media */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    .admin-home-label-h2 {
+        font-size: 37.5px;
+    }
+
+    .admin-add-event-details-group .admin-add-event-label {
+        font-size: 15px;
+    }
+
+    .admin-home-nav-tabs {
+        font-size: 22.5px;
+        margin: 0 0 20px 45px;
+        gap: 0.75in;
+    }
+
+    .event-name {
+        font-size: 30px;
+    }
+
+    .event-description {
+        font-size: 20px;
+    }
+
+    .admin-add-event-form input[type="text"],
+    .admin-add-event-form textarea {
+        height: 50px;
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .admin-home-label-h2 {
+        font-size: 35px;
+    }
+
+    .admin-add-event-details-group .admin-add-event-label {
+        font-size: 17.5px;
+    }
+
+    .admin-home-nav-tabs {
+        font-size: 20px;
+        margin: 0 0 20px 45px;
+        gap: 1in;
+    }
+
+    .event-name {
+        font-size: 25px;
+    }
+
+    .event-description {
+        font-size: 15px;
+    }
+
+    .admin-delete-event-button {
+        width: 125px;
+        height: 47.5px;
+        font-size: 13px;
+    }
+
+    .admin-add-event-form input[type="text"],
+    .admin-add-event-form textarea {
+        height: 45px;
+        font-size: 17.5px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    .admin-home-container {
+        left: 0;
+        width: 100%;
+    }
+
+    .admin-home-label-h2 {
+        font-size: 35px;
+        margin: 20px 0 20px 25px;
+    }
+
+    .admin-home-nav-tabs {
+        font-size: 17.5px;
+        margin: 0 0 20px 45px;
+        gap: 0.5in;
+    }
+
+    .event-name {
+        font-size: 25px;
+    }
+
+    .event-description {
+        font-size: 15px;
+    }
+
+    .admin-delete-event-button {
+        width: 125px;
+        height: 45px;
+        font-size: 12.5px;
+    }
+
+    .admin-add-event-details-group .admin-add-event-label {
+        font-size: 15px;
+    }
+
+    .admin-add-event-form input[type="text"],
+    .admin-add-event-form textarea {
+        height: 45px;
+        font-size: 12.5px;
+    }
+
+    .admin-add-event-button {
+        width: 150px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .admin-home-container {
+        left: 0;
+        width: 100%;
+    }
+
+    .admin-home-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 20px 20px;
+    }
+
+    .admin-home-nav-tabs {
+        font-size: 15px;
+        margin: 0 0 20px 40px;
+        gap: 0.5in;
+    }
+
+    .admin-event-item {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .home-event-image {
+        width: 90%;
+    }
+
+    .home-event-details {
+        width: 90%;
+        align-items: center;
+    }
+
+    .event-name {
+        font-size: 20px;
+    }
+
+    .event-description {
+        font-size: 12.5px;
+    }
+
+    .admin-delete-event-button {
+        width: 100px;
+        height: 40px;
+        font-size: 10px;
+    }
+
+    .admin-add-event-details-group .admin-add-event-label {
+        font-size: 12.5px;
+    }
+
+    .admin-add-event-form input[type="text"],
+    .admin-add-event-form textarea {
+        height: 45px;
+        font-size: 10px;
+    }
+
+    .admin-add-event-button {
+        width: 125px;
+        height: 50px;
+        font-size: 10px;
+    }
+}
+
+
+/* ____________________________________________________________________________________________________ */
+/* Admin Manage Contact Us */
+/* ____________________________________________________________________________________________________ */
+
+.admin-contact-us-container {
+    position: relative;
+    padding-top: 75px;
+    left: 22.5%;
+    width: 77.5%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
+}
+
+.admin-contact-us-label-h2 {
+    font-size: 40px;
+    margin: 20px 0 20px 40px;
+}
+
+.admin-edit-contact-details-back-button {
+    margin: 20px 40px 20px 0;
+}
+
+.admin-contact-us-contents-container {
+    margin-bottom: 40px;
+}
+
+.admin-current-contacts-details-container,
+.admin-edit-contacts-details-container {
+    background-color: #c5c1c1;
+    width: 90%;
+}
+
+.admin-contacts-details-group,
+.admin-edit-contacts-details-group {
+    width: 90%;
+    margin: 25px 0 25px 0;
+}
+
+.admin-current-contact-form,
+.admin-edit-contact-form {
+    width: 100%;
+}
+
+.admin-contacts-details-group .admin-current-contact-label,
+.admin-edit-contacts-details-group .admin-edit-contact-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 17.5px;
+}
+
+.admin-current-contact-form input[type="text"],
+.admin-current-contact-form input[type="email"] {
+    height: 50px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 10px;
+    font-size: 17.5px;
+    transition: all 0.35s;
+}
+
+.admin-edit-contact-form input[type="text"],
+.admin-edit-contact-form input[type="email"] {
+    height: 50px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 0;
+    font-size: 17.5px;
+    transition: all 0.35s;
+}
+
+.admin-current-contact-form input[type="text"]:focus,
+.admin-edit-contact-form input[type="text"]:focus,
+.admin-edit-contact-form input[type="email"]:focus {
+    outline: 1px solid #007bff;
+}
+
+.admin-edit-contact-details-back-button {
+    background-color: #25327A;
+    color: #FFFFFF;
+    width: 100px;
+    height: 40px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-edit-contact-details-button {
+    background-color: #25327A;
+    color: #FFFFFF;
+    margin-top: 10px;
+    width: 150px;
+    height: 55px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-save-contact-details-button {
+    background-color: #42BB4E;
+    color: #FFFFFF;
+    margin-top: 10px;
+    width: 150px;
+    height: 55px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-edit-contact-details-back-button:hover,
+.admin-edit-contact-details-button:hover,
+.admin-save-contact-details-button:hover {
+    color: rgb(2, 107, 107);
+}
+
+/* Media */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    .admin-contact-us-label-h2 {
+        font-size: 37.5px;
+    }
+
+    .admin-contacts-details-group .admin-current-contact-label,
+    .admin-edit-contacts-details-group .admin-edit-contact-label {
+        font-size: 15px;
+    }
+
+    .admin-current-contact-form input[type="text"],
+    .admin-current-contact-form input[type="email"] {
+        height: 45px;
+        font-size: 15px;
+    }
+
+    .admin-edit-contact-form input[type="text"],
+    .admin-edit-contact-form input[type="email"] {
+        height: 45px;
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    
+    .admin-contact-us-label-h2 {
+        font-size: 35px;
+    }
+
+    .admin-contacts-details-group .admin-current-contact-label,
+    .admin-edit-contacts-details-group .admin-edit-contact-label {
+        font-size: 12.5px;
+    }
+
+    .admin-current-contact-form input[type="text"],
+    .admin-current-contact-form input[type="email"] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-contact-form input[type="text"],
+    .admin-edit-contact-form input[type="email"] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-contact-details-back-button {
+        width: 90px;
+        height: 37.5px;
+        font-size: 12.5px;
+    }
+    
+    .admin-edit-contact-details-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+    
+    .admin-save-contact-details-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    .admin-contact-us-container {
+        left: 0;
+        width: 100%;
+    }
+
+    .admin-contact-us-label-h2 {
+        font-size: 35px;
+        margin: 20px 0 20px 25px;
+    }
+    
+    .admin-edit-contact-details-back-button {
+        margin: 20px 25px 20px 0;
+    }
+
+    .admin-contacts-details-group .admin-current-contact-label,
+    .admin-edit-contacts-details-group .admin-edit-contact-label {
+        font-size: 12.5px;
+    }
+
+    .admin-current-contact-form input[type="text"],
+    .admin-current-contact-form input[type="email"] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-contact-form input[type="text"],
+    .admin-edit-contact-form input[type="email"] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-contact-details-back-button {
+        width: 75px;
+        height: 35px;
+        font-size: 10px;
+    }
+    
+    .admin-edit-contact-details-button {
+        width: 100px;
+        height: 45px;
+        font-size: 10px;
+    }
+    
+    .admin-save-contact-details-button {
+        width: 100px;
+        height: 45px;
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .admin-contact-us-container {
+        left: 0;
+        width: 100%;
+    }
+
+    .admin-contact-us-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 20px 20px;
+    }
+    
+    .admin-edit-contact-details-back-button {
+        margin: 20px 20px 20px 0;
+    }
+
+    .admin-contacts-details-group .admin-current-contact-label,
+    .admin-edit-contacts-details-group .admin-edit-contact-label {
+        font-size: 10px;
+    }
+
+    .admin-current-contact-form input[type="text"],
+    .admin-current-contact-form input[type="email"] {
+        height: 35px;
+        font-size: 10px;
+    }
+
+    .admin-edit-contact-form input[type="text"],
+    .admin-edit-contact-form input[type="email"] {
+        height: 35px;
+        font-size: 10px;
+    }
+
+    .admin-edit-contact-details-back-button {
+        width: 75px;
+        height: 35px;
+        font-size: 10px;
+    }
+    
+    .admin-edit-contact-details-button {
+        width: 100px;
+        height: 45px;
+        font-size: 10px;
+    }
+    
+    .admin-save-contact-details-button {
+        width: 100px;
+        height: 45px;
+        font-size: 10px;
+    }
+}
+
+
+/* ____________________________________________________________________________________________________ */
+/* Admin Inventory */
+/* ____________________________________________________________________________________________________ */
+
+.admin-inventory-container {
+    position: relative;
+    padding-top: 75px;
+    left: 22.5%;
+    width: 77.5%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
+}
+
+.admin-inventory-label-h2 {
+    font-size: 40px;
+    margin: 20px 0 20px 40px;
+}
+
+.admin-inventory-contents-container {
+    margin: 0 auto;
+    width: 90%;
+    margin-bottom: 40px;
+}
+
+.admin-inventory-head th {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.admin-inventory-body td {
+    font-size: 17.5px;
+}
+
+.admin-inventory-add-equipment-container {
+    bottom: 20px;
+    right: 20px;
+}
+
+.admin-inventory-add-equipment-button {
+    background-color: #42BB4E;
+    color: #FFFFFF;
+    width: 150px;
+    height: 55px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-inventory-save-add-button-container .admin-inventory-save-add-button {
+    margin: 10px 0 10px 0;
+    color: #FFFFFF;
+    width: 150px;
+    height: 50px;
+    font-size: 15px;
+    border-style: none;
+}
+
+.admin-inventory-add-equipment-button:hover {
+    color: rgb(2, 107, 107);
+}
+
+.admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+.admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+    font-size: 15px;
+    width: 80px;
+    height: 40px;
+    transition: all 0.35s;
+}
+
+.admin-inventory-modal-container .modal-dialog {
+    width: 500px;
+}
+
+.admin-inventory-modal-body {
+    background-color: #c5c1c1;
+}
+
+.admin-inventory-form-group {
+    width: 90%;
+}
+
+.admin-inventory-form-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 17.5px;
+}
+
+.admin-inventory-form-group .admin-inventory-form {
+    height: 50px;
+    font-size: 17.5px;
+}
+
+
+/* Media */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    .admin-inventory-label-h2 {
+        font-size: 37.5px;
+    }
+
+    .admin-inventory-head th {
+        font-size: 17.5px;
+    }
+
+    .admin-inventory-body td {
+        font-size: 15px;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+    .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+        font-size: 15px;
+        width: 80px;
+        height: 35px;
+    }
+
+    .admin-inventory-form-label {
+        font-size: 15px;
+    }
+
+    .admin-inventory-form-group .admin-inventory-form {
+        height: 45px;
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .admin-inventory-label-h2 {
+        font-size: 35px;
+    }
+
+    .admin-inventory-head th {
+        font-size: 15px;
+    }
+
+    .admin-inventory-body td {
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-add-equipment-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
+        width: 150px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+    .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+        font-size: 12.5px;
+        width: 70px;
+        height: 30px;
+    }
+
+    .admin-inventory-form-label {
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-form-group .admin-inventory-form {
+        height: 40px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    .admin-inventory-container {
+        left: 0%;
+        width: 100%;
+    }
+
+    .admin-inventory-label-h2 {
+        font-size: 35px;
+        margin: 20px 0 20px 25px;
+    }
+
+    .admin-inventory-head th {
+        font-size: 15px;
+    }
+
+    .admin-inventory-body td {
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-add-equipment-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
+        width: 125px;
+        height: 45px;
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+    .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+        font-size: 12.5px;
+        width: 70px;
+        height: 30px;
+    }
+
+    .admin-inventory-form-label {
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-form-group .admin-inventory-form {
+        height: 40px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .admin-inventory-container {
+        left: 0%;
+        width: 100%;
+    }
+
+    .admin-inventory-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 20px 20px;
+    }
+
+    .admin-inventory-head th {
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-body td {
+        font-size: 10px;
+    }
+
+    .admin-inventory-add-equipment-button {
+        width: 100px;
+        height: 45px;
+        font-size: 10px;
+    }
+
+    .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
+        width: 125px;
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+    .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+        font-size: 10px;
+        width: 60px;
+        height: 30px;
+    }
+
+    .admin-inventory-form-label {
+        font-size: 10px;
+    }
+
+    .admin-inventory-form-group .admin-inventory-form {
+        height: 35px;
+        font-size: 10px;
+    }
+}
+
+
+/* ____________________________________________________________________________________________________ */
+/* Admin Reports */
+/* ____________________________________________________________________________________________________ */
+
+.admin-reports-container {
+    position: relative;
+    padding-top: 75px;
+    left: 22.5%;
+    width: 77.5%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
+}
+
+.admin-reports-label-h2 {
+    font-size: 40px;
+    margin: 20px 40px 20px 40px;
+}
+
+.admin-reports-nav-tabs {
+    cursor: pointer;
+    font-size: 25px;
+    margin: 0 0 20px 60px;
+    gap: 1in;
+    color: #766F6F;
+    transition: all 0.35s;
+}
+
+.admin-reports-nav-tabs li:hover {
+    color: #E3DFDF;
+}
+
+.admin-reports-nav-tabs li.active-tab {
+    color: red;
+    text-decoration: underline;
+    text-decoration-color: #C1C1C1;
+    text-underline-offset: 10px;
+}
+
+.admin-reports-contents-container {
+    margin-bottom: 40px;
+}
+
+.admin-reservation-reports-details-container,
+.admin-generate-report-container {
+    background-color: #c5c1c1;
+    width: 90%;
+}
+
+.admin-reservation-reports-table {
+    margin: 25px 0 25px 0;
+    background-color: #FFFFFF;
+    width: 95%;
+}
+
+.all-reservation-reports-th {
+    /* font-family: 'Roboto', sans-serif; */
+    font-size: 20px;
+}
+
+.admin-generate-report-group {
+    width: 90%;
+    margin: 25px 0 25px 0;
+}
+
+.admin-generate-report-group .admin-generate-report-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 17.5px;
+}
+
+.generate-report-form {
+    width: 100%;
+}
+
+.generate-report-date-time {
+    width: 100%;
+    gap: 1in;
+}
+
+.generate-report-date-time .generate-report-date,
+.generate-report-date-time .generate-report-time {
+    width: 50%;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.35s;
+}
+
+.generate-report-form input[type="text"],
+.generate-report-date-time input[type="date"],
+.generate-report-date-time input[type="time"] {
+    height: 50px;
+    margin-bottom: 0;
+    font-size: 17.5px;
+}
+
+.generate-report-form input[type="text"]:focus,
+.generate-report-date-time input[type="date"]:focus,
+.generate-report-date-time input[type="time"]:focus {
+    outline: 1px solid #007bff;
+}
+
+.admin-generate-report-button {
+    background-color: #25327A;
+    color: #FFFFFF;
+    margin-top: 10px;
+    width: 175px;
+    height: 55px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-generate-report-button:hover {
+    color: rgb(2, 107, 107);
+}
+
+
+/* Media */
+/* MISSING: RESERVATION REPORTS */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    .admin-reports-label-h2 {
+        font-size: 37.5px;
+    }
+
+    .admin-generate-report-group .admin-generate-report-label {
+        font-size: 20px;
+    }
+
+    .admin-reports-nav-tabs {
+        font-size: 22.5px;
+        margin: 0 0 20px 45px;
+        gap: 0.75in;
+    }
+
+    .generate-report-form input[type="text"],
+    .generate-report-date-time input[type="date"],
+    .generate-report-date-time input[type="time"] {
+        height: 45px;
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .admin-reports-label-h2 {
+        font-size: 35px;
+    }
+
+    .admin-generate-report-group .admin-generate-report-label {
+        font-size: 12.5px;
+    }
+
+    .generate-report-date-time {
+        gap: 0.75in;
+    }
+
+    .admin-reports-nav-tabs {
+        font-size: 20px;
+        margin: 0 0 20px 45px;
+        gap: 1in;
+    }
+
+    .generate-report-form input[type="text"],
+    .generate-report-date-time input[type="date"],
+    .generate-report-date-time input[type="time"] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    .admin-reports-container {
+        left: 0;
+        width: 100%;
+    }
+
+    .admin-reports-label-h2 {
+        font-size: 35px;
+        margin: 20px 0 20px 25px;
+    }
+
+    .admin-reports-nav-tabs {
+        font-size: 17.5px;
+        margin: 0 0 20px 45px;
+        gap: 0.5in;
+    }
+
+    .admin-generate-report-group .admin-generate-report-label {
+        font-size: 12.5px;
+    }
+
+    .generate-report-date-time {
+        gap: 0.50in;
+    }
+
+    .generate-report-form input[type="text"],
+    .generate-report-date-time input[type="date"],
+    .generate-report-date-time input[type="time"] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-generate-report-button {
+        width: 150px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .admin-reports-container {
+        left: 0;
+        width: 100%;
+    }
+
+    .admin-reports-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 20px 20px;
+    }
+
+    .admin-reports-nav-tabs {
+        font-size: 15px;
+        margin: 0 0 20px 40px;
+        gap: 0.5in;
+    }
+
+    .admin-generate-report-group .admin-generate-report-label {
+        font-size: 10px;
+    }
+
+    .generate-report-date-time {
+        gap: 0.25in;
+    }
+
+    .generate-report-form input[type="text"],
+    .generate-report-date-time input[type="date"],
+    .generate-report-date-time input[type="time"] {
+        height: 35px;
+        font-size: 10px;
+    }
+
+    .admin-generate-report-button {
+        width: 125px;
+        height: 50px;
+        font-size: 10px;
+    }
+}
+
+
+
