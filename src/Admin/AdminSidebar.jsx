@@ -4,7 +4,7 @@ import './styles/AdminSidebar.css';
 
 const AdminSidebar = () => {
     const [openedLinks, setOpenedLinks] = useState({});
-    const location = useLocation(); // Get the current location
+    const location = useLocation();
 
     const toggleLink = (link) => {
         setOpenedLinks((prev) => ({
@@ -12,8 +12,6 @@ const AdminSidebar = () => {
             [link]: !prev[link],
         }));
     };
-
-    // const isActive = (path) => location.pathname === path;
 
     const isActive = useCallback(
         (path) => location.pathname === path,
@@ -43,64 +41,63 @@ const AdminSidebar = () => {
         }
 
         setOpenedLinks(initialOpenedLinks);
-    }, /* [location] */[isActive]);
+    }, [isActive]);
 
     return (
         <div className="admin-bs-sidebar d-none d-md-block">
             <div className="admin-bs-sidebar-details">
                 <ul className="admin-bs-sidebar-links list-unstyled mt-2">
                     <li className={`admin-bs-list ${isActive('/admin') ? 'active' : ''}`}>
-                        <Link to="/admin" className="d-flex align-items-center">
-                            {/* <i className="admin-sidebar-icon bi-house-fill ms-4 me-2"></i> */}
+                        <Link to="/admin" className="admin-sidebar-link d-flex align-items-center">
                             <i className="admin-sidebar-icon bi-house-fill"></i>
-                            Home
+                            <p className='admin-sidebar-title m-0'>Home</p>
                         </Link>
                     </li>
                     <li
                         className="admin-bs-list d-flex align-items-center"
                         onClick={() => toggleLink('manageWebsite')}
                     >
-                        {/* <i className="admin-sidebar-icon bi-globe-central-south-asia ms-4 me-2"></i> */}
                         <i className="admin-sidebar-icon bi-globe-central-south-asia"></i>
-                        Manage Website
+                        <p className='admin-sidebar-title m-0'>Manage Website</p>
+                        {!openedLinks.manageWebsite && (
+                            <i className='admin-sidebar-MW-close bi bi-caret-right-fill'></i>
+                        )}
+                        {openedLinks.manageWebsite && (
+                            <i className='admin-sidebar-MW-open bi bi-caret-down-fill'></i>
+                        )}
                     </li>
                     {openedLinks.manageWebsite && (
-                        // <ul className="admin-bs-manage-website-nested-links list-unstyled ms-4">
                         <ul className="admin-bs-manage-website-nested-links list-unstyled">
                             <li
                                 className={`admin-bs-list ${isActive('/admin/manage-home') ? 'active' : ''}`}
                             >
-                                <Link to="/admin/manage-home" className="d-flex align-items-center">
-                                    {/* <i className="admin-sidebar-icon bi-house-gear-fill me-2"></i> */}
+                                <Link to="/admin/manage-home" className="admin-sidebar-link d-flex align-items-center">
                                     <i className="admin-sidebar-icon bi-house-gear-fill"></i>
-                                    Manage Home Page
+                                    <p className='admin-sidebar-title m-0'>Manage Home Page</p>
                                 </Link>
                             </li>
                             <li
                                 className={`admin-bs-list ${isActive('/admin/manage-about-us') ? 'active' : ''}`}
                             >
-                                <Link to="/admin/manage-about-us" className="d-flex align-items-center">
-                                    {/* <i className="admin-sidebar-icon bi-person-fill me-2"></i> */}
+                                <Link to="/admin/manage-about-us" className="admin-sidebar-link d-flex align-items-center">
                                     <i className="admin-sidebar-icon bi-person-fill"></i>
-                                    Manage About Us Page
+                                    <p className='admin-sidebar-title m-0'>Manage About Us Page</p>
                                 </Link>
                             </li>
                             <li
                                 className={`admin-bs-list ${isActive('/admin/manage-program') ? 'active' : ''}`}
                             >
-                                <Link to="/admin/manage-program" className="d-flex align-items-center">
-                                    {/* <i className="admin-sidebar-icon bi-activity me-2"></i> */}
+                                <Link to="/admin/manage-program" className="admin-sidebar-link d-flex align-items-center">
                                     <i className="admin-sidebar-icon bi-activity"></i>
-                                    Manage Program Page
+                                    <p className='admin-sidebar-title m-0'>Manage Program Page</p>
                                 </Link>
                             </li>
                             <li
                                 className={`admin-bs-list ${isActive('/admin/manage-contact-us') ? 'active' : ''}`}
                             >
-                                <Link to="/admin/manage-contact-us" className="d-flex align-items-center">
-                                    {/* <i className="admin-sidebar-icon bi-telephone-fill me-2"></i> */}
+                                <Link to="/admin/manage-contact-us" className="admin-sidebar-link d-flex align-items-center">
                                     <i className="admin-sidebar-icon bi-telephone-fill"></i>
-                                    Manage Contact Us Page
+                                    <p className='admin-sidebar-title m-0'>Manage Contact Us Page</p>
                                 </Link>
                             </li>
                         </ul>
@@ -109,53 +106,53 @@ const AdminSidebar = () => {
                         className="admin-bs-list d-flex align-items-center"
                         onClick={() => toggleLink('reservations')}
                     >
-                        {/* <i className="admin-sidebar-icon bi-calendar-week-fill ms-4 me-2"></i> */}
                         <i className="admin-sidebar-icon bi-calendar-week-fill"></i>
-                        Reservations
+                        <p className='admin-sidebar-title m-0'>Reservations</p>
+                        {!openedLinks.reservations && (
+                            <i className='admin-sidebar-R-close bi bi-caret-right-fill'></i>
+                        )}
+                        {openedLinks.reservations && (
+                            <i className='admin-sidebar-R-open bi bi-caret-down-fill'></i>
+                        )}
                     </li>
                     {openedLinks.reservations && (
-                        // <ul className="admin-bs-reservations-nested-links list-unstyled ms-4">
                         <ul className="admin-bs-reservations-nested-links list-unstyled">
                             <li
                                 className={`admin-bs-list ${isActive('/admin/gym-reservation') ? 'active' : ''}`}
                             >
-                                <Link to="/admin/gym-reservation" className="d-flex align-items-center">
-                                    {/* <i className="admin-sidebar-icon bi-calendar-date-fill me-2"></i> */}
+                                <Link to="/admin/gym-reservation" className="admin-sidebar-link d-flex align-items-center">
                                     <i className="admin-sidebar-icon bi-calendar-date-fill"></i>
-                                    Gym Reservation
+                                    <p className='admin-sidebar-title m-0'>Gym Reservation</p>
                                 </Link>
                             </li>
                             <li
                                 className={`admin-bs-list ${isActive('/admin/equipment-reservation') ? 'active' : ''}`}
                             >
-                                <Link to="/admin/equipment-reservation" className="d-flex align-items-center">
-                                    {/* <i className="admin-sidebar-icon bi-calendar-day-fill me-2"></i> */}
+                                <Link to="/admin/equipment-reservation" className="admin-sidebar-link d-flex align-items-center">
                                     <i className="admin-sidebar-icon bi-calendar-day-fill"></i>
-                                    Equipment Reservation
+                                    <p className='admin-sidebar-title m-0'>Equipment Reservation</p>
                                 </Link>
                             </li>
                             <li
                                 className={`admin-bs-list ${isActive('/admin/Inventory') ? 'active' : ''}`}
                             >
-                                <Link to="/admin/Inventory" className="d-flex align-items-center">
+                                <Link to="/admin/Inventory" className="admin-sidebar-link d-flex align-items-center">
                                     <i className="admin-sidebar-icon bi-calendar-day-fill me-2"></i>
-                                    Inventory
+                                    <p className='admin-sidebar-title m-0'>Inventory</p>
                                 </Link>
                             </li>
                         </ul>
                     )}
                     <li className={`admin-bs-list ${isActive('/admin/reports') ? 'active' : ''}`}>
-                        <Link to="/admin/reports" className="d-flex align-items-center">
-                            {/* <i className="admin-sidebar-icon bi-database-fill ms-4 me-2"></i> */}
+                        <Link to="/admin/reports" className="admin-sidebar-link d-flex align-items-center">
                             <i className="admin-sidebar-icon bi-database-fill"></i>
-                            Reports
+                            <p className='admin-sidebar-title m-0'>Reports</p>
                         </Link>
                     </li>
                     <li className={`admin-bs-list ${isActive('/admin/users') ? 'active' : ''}`}>
-                        <Link to="/admin/users" className="admin-link d-flex align-items-center">
-                            {/* <i className="admin-sidebar-icon bi-person-lines-fill ms-4 me-2"></i> */}
+                        <Link to="/admin/users" className="admin-sidebar-link admin-link d-flex align-items-center">
                             <i className="admin-sidebar-icon bi-person-lines-fill"></i>
-                            Users
+                            <p className='admin-sidebar-title m-0'>Users</p>
                         </Link>
                     </li>
                 </ul>

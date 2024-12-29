@@ -25,7 +25,7 @@ const AdminNavbar = () => {
             }
         };
 
-        handleResize(); // check on first render
+        handleResize();
         window.addEventListener("resize", handleResize);
 
         return () => {
@@ -91,7 +91,7 @@ const AdminNavbar = () => {
             >
                 <ul className="admin-sidebar-ul list-unstyled">
                     {sidebarLinks.map((link) => (
-                        <li key={link.to}>
+                        <li key={link.to} className='admin-sidebar-links-container'>
                             <Link to={link.to} className="admin-sidebar-links text-white ms-4 mt-2 p-1 d-block">
                                 {link.label}
                             </Link>
