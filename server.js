@@ -168,6 +168,36 @@ app.get('/Profile/:username', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+app.post('/change-password', async (req, res) => {
+  const { id, oldPassword, newPassword } = req.body;
+
+  try {
+    const user = await pool.query(
+      'SELECT password FROM users WHERE id = $1',
+      [id]
+    );
+
+    if (user.rows.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const currentPassword = user.rows[0].password;
+
+    if (currentPassword !== oldPassword) {
+      return res.status(400).json({ message: 'Old password is incorrect' });
+    }
+
+    await pool.query(
+      'UPDATE users SET password = $1 WHERE id = $2',
+      [newPassword, id]
+    );
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 app.post('/reservations', async (req, res) => {
     const { user_id, reservation_type, start_date, end_date, status, time_slot } = req.body;

@@ -91,7 +91,6 @@ const UserNavbar = () => {
           {dropdownVisible && (
             <div style={dropdownStyles}>
               <Link to={`/Profile/${loggedInUser}`} className="dropdown-item" onClick={() => setDropdownVisible(false)}>Profile</Link>
-              <Link to="/Settings" className="dropdown-item" onClick={() => setDropdownVisible(false)}>Settings</Link>
               <div className="dropdown-item" onClick={openLogoutModal}>Logout</div>
             </div>
           )}
