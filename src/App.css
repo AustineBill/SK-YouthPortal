@@ -341,28 +341,20 @@ body {
   display: inline; 
   align-items: center;
   margin-right: 1rem;
-}
-
-
-.login-button {
-  background-color: #25327A; /* Dark color similar to Bootstrap's .btn-dark */
-  color: #ffffff;
-  padding: 0.5rem 1rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
-  border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
+  text-decoration: none;
 }
 
 .signup-button {
-  background-color: #25327A; /* Dark color similar to Bootstrap's .btn-dark */
-  color: #ffffff;
-  padding: 0.5rem 1rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
   margin-right: 3rem;
-  border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
 }
-
 
 .login-button, .signup-button {
   transition: background-color 0.3s ease;
-
+  background-color: #25327A; /* Dark color similar to Bootstrap's .btn-dark */
+  color: #ffffff;
+  padding: 0.5rem 1rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
+  border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
+  text-decoration: none;
 }
 
 .login-button:hover, .signup-button:hover {
@@ -371,15 +363,11 @@ body {
 }
 
 /* Active styles when buttons are clicked */
-.login-button.active {
+.login-button.active, .signup-button.active {
   background-color: #ffffff;
   color: #000;
 }
 
-.signup-button.active {
-  background-color: #f7ecec;
-  color: #000;
-}
 
 
 /* Hamburger icon */

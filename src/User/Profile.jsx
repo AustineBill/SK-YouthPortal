@@ -7,12 +7,19 @@ import {
   Card,
   Button,
   Breadcrumb,
+  Modal,
+  Form,
+  Alert,
 } from 'react-bootstrap';
 import Avatar from 'react-avatar';
 
-const ProfilePage = () => {
-  const [isEditing, setIsEditing] = useState(false);
+const ProfilePage = () => {;
   const [profileInfo, setProfileInfo] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState('');
   const { username } = useParams(); 
   const navigate = useNavigate();
 
@@ -20,7 +27,6 @@ const ProfilePage = () => {
     const fetchProfile = async () => {
       const username = sessionStorage.getItem('username');
       //console.log('Fetching profile for:', username);
-  
       try {
         const response = await fetch(`http://localhost:5000/Profile/${username}`);
   
@@ -29,8 +35,6 @@ const ProfilePage = () => {
         }
   
         const userData = await response.json();
-        //console.log('Profile Data:', userData);
-  
         setProfileInfo(userData);
       } catch (error) {
         console.error('Error fetching profile:', error);
@@ -39,15 +43,40 @@ const ProfilePage = () => {
   
     if (username) fetchProfile();
   }, [username]);
-  
-  
-  if (!profileInfo && profileInfo !== null) {
-    return <div>Loading...</div>; // While waiting for profileInfo to load
-  }
 
-  const handleEditClick = () => {
-    setIsEditing(!isEditing);
+  const handlePasswordChange = async () => {
+    if (newPassword !== confirmPassword) {
+      setMessage('New password and confirm password do not match.');
+      return;
+    }
+  
+    try {
+      const id = sessionStorage.getItem('userId'); // Ensure user ID is stored in sessionStorage during login
+      const response = await fetch('http://localhost:5000/change-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, oldPassword, newPassword }),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        setMessage(data.message || 'Error updating password');
+      } else {
+        setMessage('Password updated successfully');
+        setOldPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+        setShowModal(false);
+      }
+    } catch (error) {
+      console.error('Error updating password:', error);
+      setMessage('Error updating password');
+    }
   };
+  
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A"; // Handle null or undefined dates
@@ -57,6 +86,15 @@ const ProfilePage = () => {
       day: "numeric",
       year: "numeric",
     }).format(date);
+  };
+
+
+  if (!profileInfo && profileInfo !== null) {
+    return <div>Loading...</div>; // While waiting for profileInfo to load
+  }
+
+  const ChangeModal = () => {
+    setShowModal(true); // This triggers the modal to open
   };
 
   return (
@@ -81,10 +119,7 @@ const ProfilePage = () => {
                 
 
                 <div className="d-flex justify-content-center mb-2">
-                  <Button variant="outline-primary btn-block" className="ms-1">Change password</Button>
-                  <Button variant="outline-secondary btn-block" className="ms-1" onClick={handleEditClick}>
-                    {isEditing ? 'Cancel' : 'Edit information'}
-                  </Button>
+                  <Button variant="outline-primary btn-block" className="ms-1" onClick={ChangeModal} >Change password</Button>
                 </div>
               </Card.Body>
             </Card>
@@ -198,6 +233,61 @@ const ProfilePage = () => {
           </Col>
         </Row>
       </Container>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Change Password</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {message && <Alert variant="danger">{message}</Alert>}
+          <Form>
+            <Form.Group controlId="oldPassword">
+              <Form.Label>Old Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="newPassword">
+              <Form.Label>New Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="confirmPassword">
+              <Form.Label>Confirm New Password</Form.Label>
+              <Form.Control
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </Form.Group>
+          </Form>
+          <div className="mt-3 text-center">
+            <Button variant="link" onClick={() => navigate('/forgot-password')}>
+              Forgot Password?
+            </Button>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handlePasswordChange}>
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
     </section>
   );
 };
