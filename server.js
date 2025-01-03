@@ -791,27 +791,6 @@ app.put('/contact', async (req, res) => {
   }
 });
 
-
-
-    // Step 3: Delete the event using the event_id
-    const deleteResult = await pool.query(
-      'DELETE FROM public.home WHERE id = $1 RETURNING *',
-      [eventId]
-    );
-
-    // If no rows were affected, the event was not found
-    if (deleteResult.rowCount === 0) {
-      return res.status(404).json({ error: 'Event not found' });
-    }
-
-    // Send back the deleted event data
-    res.json({ message: 'Event deleted successfully', event: deleteResult.rows[0] });
-  } catch (error) {
-    console.error('Error deleting event:', error);
-    res.status(500).json({ error: 'Error deleting event' });
-  }
-});
-
 // Fetch all users
 app.get('/users', async (req, res) => {
   try {
@@ -1267,6 +1246,8 @@ app.delete('/events/:id', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
