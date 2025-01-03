@@ -28,8 +28,6 @@ function generateDeterministicKey(seed = 'staticSeed123') {
 
 // Generate a deterministic substitution key based on the static seed
 const key = generateDeterministicKey();
-console.log('Generated Key:', key);
-
 // Function to generate a random 8-digit number with a "WB" prefix
 function generateRandomId() {
   const randomNumber = Math.floor(Math.random() * 90000000) + 10000000; // Ensures it's an 8-digit number
