@@ -73,7 +73,7 @@ const UserAuthentication = () => {
         e.preventDefault();
         console.log('Updating account with:', signupUsername, signupPassword); // Debugging line
         try {
-            await axios.post('/UpdateAccount', {
+            await axios.post('http://localhost:5000/UpdateAccount', {
                 username: signupUsername,
                 password: signupPassword,
             });
