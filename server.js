@@ -1247,7 +1247,48 @@ app.delete('/events/:id', async (req, res) => {
   }
 });
 
+app.get('/user-reports', async (req, res) => {
+  try {
+      const result = await pool.query('SELECT * FROM users');
+      res.json(result.rows);
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error fetching user data');
+  }
+});
 
+// Route for fetching equipment reservations
+app.get('/equipment-reports', async (req, res) => {
+  try {
+      const result = await pool.query('SELECT * FROM equipment');
+      res.json(result.rows);
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error fetching equipment data');
+  }
+});
+
+// Route for fetching gym reservations (schedules)
+app.get('/schedule-reports', async (req, res) => {
+  try {
+      const result = await pool.query('SELECT * FROM schedules');
+      res.json(result.rows);
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error fetching schedules data');
+  }
+});
+
+// Route for fetching inventory data
+app.get('/inventory-reports', async (req, res) => {
+  try {
+      const result = await pool.query('SELECT * FROM inventory');
+      res.json(result.rows);
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error fetching inventory data');
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
