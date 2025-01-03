@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Form, Modal, Tab } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import './styles/AdminUsers.css';
 
 const Users = () => {
+
+    const generatePassword = () => {
+        return Math.floor(10000 + Math.random() * 90000).toString();
+    };
+    
     const [users, setUsers] = useState([]);
     const [newUser, setNewUser] = useState({
-        username: '',
-        password: '',
+        username: 'User',
+        password: generatePassword(),
         firstname: '',
         lastname: '',
         region: '',
@@ -54,11 +59,39 @@ const Users = () => {
     // Handle input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setNewUser((prev) => {
-            const updatedUser = { ...prev, [name]: value };
-            //console.log("Updated Form Data on Change:", updatedUser);  // Log the form data after each change
-            return updatedUser;
-        });
+    
+        // If the input is for 'birthday', calculate the age
+        if (name === 'birthday') {
+            const age = calculateAge(value); // Calculate age based on the birthday
+            setNewUser((prev) => {
+                // Automatically assign the youth age group based on the calculated age
+                let youthClassification = '';
+                if (age >= 15 && age <= 17) {
+                    youthClassification = 'Child Youth';
+                } else if (age >= 18 && age <= 24) {
+                    youthClassification = 'Core Youth';
+                } else if (age >= 25 && age <= 30) {
+                    youthClassification = 'Adult Youth';
+                } else if (age > 30) {
+                    alert("Cannot add user. Age is over the limit.");
+                    return prev; // Prevent setting the user if age exceeds 30
+                }
+    
+                // Set the new user state with calculated age and youth classification
+                return {
+                    ...prev,
+                    birthday: value,
+                    age: age, // Set the calculated age
+                    youth_age_group: youthClassification, // Automatically set youth classification
+                };
+            });
+        } else {
+            // Handle other fields (non-birthday)
+            setNewUser((prev) => ({
+                ...prev,
+                [name]: value,
+            }));
+        }
     };
 
     // Add a new user
@@ -144,6 +177,7 @@ const Users = () => {
             console.error('Error deleting user:', error);
         }
     };
+
     const openDeleteModal = (userId) => {
         setDeleteUserId(userId);  // Store the user ID to be deleted
         setDeleteModalVisible(true);
@@ -155,12 +189,22 @@ const Users = () => {
         setShowViewModal(true);  // Open the modal
     };
 
+    const calculateAge = (birthday) => {
+        const birthDate = new Date(birthday);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    };
 
     // Reset form and state
     const resetForm = () => {
         setNewUser({
-            username: '',
-            password: '',
+            username: 'User',
+            password: generatePassword(),
             firstname: '',
             lastname: '',
             region: '',
@@ -334,7 +378,7 @@ const Users = () => {
 
             {/* Modal for Adding/Editing User */}
             {showModal && (
-                <div className="admin-users-add-edit-modal modal open" style={{ display: 'block' }} tabIndex="-1" role="dialog" centered>
+                <div className="admin-users-add-edit-modal modal open" style={{ display: 'block' }} tabIndex="-1" role="dialog" >
                     {/* <div className="admin-users-add-edit-modal"> */}
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
@@ -539,21 +583,15 @@ const Users = () => {
                                                 <option value="Widowed">Widowed</option>
                                             </select>
                                         </div>
-
-                                        <div className='admin-users-form d-flex flex-column'>
-                                            <label className='admin-users-modal-label'>Youth Age Group</label>
-                                            <select
-                                                name="youth_age_group"
-                                                value={newUser.youth_age_group}
-                                                onChange={handleChange}
-                                                placeholder="Youth Age Group"
-                                                required
-                                            >
-                                                <option value="">Select Option</option>
-                                                <option value="Child Youth">Child Youth</option>
-                                                <option value="Core Youth">Core Youth</option>
-                                                <option value="Adult Youth">Adult Youth</option>
-                                            </select>
+                                            <div className='admin-users-form d-flex flex-column'>
+                                                <label className='admin-users-modal-label'>Youth Age Group</label>
+                                                <input
+                                                    type="text"
+                                                    name="youth_age_group"
+                                                    value={newUser.youth_age_group || ''}
+                                                    readOnly
+                                                    disabled
+                                                />
                                         </div>
                                     </div>
 

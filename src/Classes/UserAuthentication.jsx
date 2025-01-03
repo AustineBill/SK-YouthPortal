@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../WebStructure/AuthContext';
+import axios from 'axios';
 
 // import '../App.css';
 import './UserAuthentication.css';
@@ -12,14 +13,14 @@ const UserAuthentication = () => {
     const [showForgotPasswordCodeField, setShowForgotPasswordCodeField] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
-    //const [username, setUsername] = useState('');
-    //const [password, setPassword] = useState('');
+
     const [email, setEmail] = useState('');
     const [forgotPasswordCode, setForgotPasswordCode] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [activationCode, setActivationCode] = useState('');
     const [signupUsername, setSignupUsername] = useState('');
     const [signupPassword, setSignupPassword] = useState('');
+
     const { login, adminlogin } = useContext(AuthContext);
 
     useEffect(() => {
@@ -35,14 +36,15 @@ const UserAuthentication = () => {
             alert('Activation code cannot be blank!');
             return;
         }
-
+    
         const decryptedCode = DecryptionCode(activationCode);
         console.log('Decrypted Activation Code:', decryptedCode);
-
-        if (decryptedCode.length !== 8) {
+    
+        if (decryptedCode.length !== 11) {
             alert('Invalid Activation Code');
             return;
         }
+    
         // Send decrypted code to backend for validation
         fetch('http://localhost:5000/ValidateCode', {
             method: 'POST',
@@ -51,8 +53,11 @@ const UserAuthentication = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('Server Response:', data);
-                if (data.message === 'Account Created Successfully') {
+                if (data.message === 'Activation code validated. Please change your username and password.') {
+                    // Set the username and password returned from the server
+                    setSignupUsername(data.username);
+                    setSignupPassword(data.password);
+    
                     setShowAccountActivationFields(true);
                 } else {
                     alert(data.message || 'Invalid Activation Code');
@@ -64,12 +69,20 @@ const UserAuthentication = () => {
             });
     };
 
-
-    // Di pa to tapos, dapat matrack yung laman.
-    const handleSignUpSubmit = (e) => {
+    const handleAccountUpdate = async (e) => {
         e.preventDefault();
-        alert('Account Created Successfully!');
-        setView('signIn'); // Redirect to sign in after sign up
+        console.log('Updating account with:', signupUsername, signupPassword); // Debugging line
+        try {
+            await axios.post('/UpdateAccount', {
+                username: signupUsername,
+                password: signupPassword,
+            });
+            alert('Account successfully updated!');
+            setView('signIn'); // Redirect to sign in after sign up
+        } catch (error) {
+            console.error('Update Error:', error.response?.data?.message || 'An error occurred');
+            alert(error.response?.data?.message || 'An error occurred while updating your account');
+        }
     };
 
     const handleLogin = async (e) => {
@@ -89,7 +102,6 @@ const UserAuthentication = () => {
                 });
 
                 const data = await response.json();
-                //console.log("Login response data:", data); for debugging only  
 
                 if (response.ok) {
                     const { id, username } = data.user;
@@ -193,7 +205,7 @@ const UserAuthentication = () => {
                                     <>
                                         <div className='fp-group-container'>
                                             <h1 className='forgot-password-fp fw-bold fst-italic mb-3'>Forgot Password</h1>
-                                            <p className='forgot-password-email-description'>Enter your email address for a link to change your pasword</p>
+                                            <p className='forgot-password-email-description'>Enter your email address for a link to change your password</p>
                                         </div>
 
                                         <div className='user-auth-forgot-password-form d-flex flex-column text-left'>
@@ -255,7 +267,7 @@ const UserAuthentication = () => {
 
                     {view === 'signUp' && (
                         <div className='sign-up-details-container d-flex justify-content-center rounded'>
-                            <form className='sign-up-details-group d-flex text-center' onSubmit={handleSignUpSubmit}>
+                            <form className='sign-up-details-group d-flex text-center'>
                                 {!showAccountActivationFields && (
                                     <>
                                         <h1 className='sign-up-su fw-bold fst-italic'>Account Activation</h1>
@@ -275,7 +287,7 @@ const UserAuthentication = () => {
                                             type="button"
                                             onClick={handleShowAccountActivationFields}
                                             className='su-proceed-button fw-bold rounded-pill'>
-                                            Proceed
+                                            Validate Code
                                         </button>
                                     </>
                                 )}
@@ -299,7 +311,7 @@ const UserAuthentication = () => {
                                         </div>
 
                                         <div className='user-auth-sign-up-form d-flex flex-column text-left'>
-                                            <label className='sign-up-label'>Password:</label>
+                                            <label className='sign-up-label'>Password</label>
                                             <input
                                                 type='password'
                                                 name='signup-password'
@@ -311,8 +323,9 @@ const UserAuthentication = () => {
 
                                         <button
                                             type="submit"
+                                            onClick={handleAccountUpdate}
                                             className='su-submit-button fw-bold rounded-pill'>
-                                            Activate Account
+                                            Create Account
                                         </button>
                                     </>
                                 )}

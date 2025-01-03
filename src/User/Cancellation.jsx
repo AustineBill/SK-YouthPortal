@@ -45,7 +45,11 @@ const CancelReservation = () => {
     }
   
     try {
-      const endpoint = `http://localhost:5000/equipment/${reservationId}`;
+      const endpoint =
+        reservationType === 'Facility'
+          ? `http://localhost:5000/reservations/${reservationId}`
+          : `http://localhost:5000/equipment/${reservationId}`;
+  
       const response = await axios.delete(endpoint);
       if (response.status === 200) {
         setShowModal(true);
@@ -55,7 +59,6 @@ const CancelReservation = () => {
       alert("There was an error cancelling your reservation.");
     }
   };
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {

@@ -36,33 +36,62 @@ pool.connect((err) => {
         console.log('Connected to the database successfully.');
     }
 });
-
 app.get('/', (req, res) => {
     res.send('Welcome to the iSKed API');
 });
-
 /********* Website ******** */
-
 app.post('/ValidateCode', async (req, res) => {
   const { activationCode } = req.body;
-  console.log('Request Body:', req.body); // Check what the backend is receiving
   try {
       const activationCodeTrimmed = activationCode.toString().trim();
-      console.log('Received Activation Code:', activationCodeTrimmed);
-
-      // Query the database to check if the user exists
-      const user = await pool.query('SELECT * FROM Users WHERE id = $1', [activationCodeTrimmed]);
-      console.log('Query Result for Activation Code:', user.rows);
+      const user = await pool.query('SELECT username, password FROM Users WHERE id = $1', [activationCodeTrimmed]);
 
       if (user.rowCount === 0) {
           return res.status(400).json({ message: 'Invalid Activation Code' });
       }
-      res.status(201).json({ message: 'Account Created Successfully' });
+
+      // If the user exists, send the username and password back in the response for updating
+      res.status(200).json({ 
+          message: 'Activation code validated. Please change your username and password.', 
+          username: user.rows[0].username, 
+          password: user.rows[0].password 
+      });
   } catch (error) {
-      console.error('Error during registration:', error);
-      res.status(500).json({ message: 'An error occurred during signup' });
+      console.error('Error during validation:', error);
+      res.status(500).json({ message: 'An error occurred during validation' });
   }
 });
+
+app.post('/UpdateAccount', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+      // Hash the new password before saving it to the database
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Update query to modify both username and password
+      const updateQuery = await pool.query(
+          'UPDATE Users SET username = $1, password = $2 WHERE username = $3 RETURNING *',
+          [username, hashedPassword, username]
+      );
+
+      if (updateQuery.rowCount === 0) {
+          return res.status(400).json({ message: 'Account update failed: User not found' });
+      }
+
+      // Respond with success message
+      res.status(200).json({
+          message: 'Account updated successfully',
+          user: updateQuery.rows[0], // Send the updated user info if necessary
+      });
+
+  } catch (error) {
+      console.error('Error during account update:', error);
+      res.status(500).json({ message: 'An error occurred while updating your account', error: error.message });
+  }
+});
+
+
 
 
 app.put('/updateUser', async (req, res) => {
@@ -104,7 +133,6 @@ app.put('/updateUser', async (req, res) => {
       return res.status(500).json({ message: 'An error occurred while updating user info.' });
   }
 });
-
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     //console.log('Login attempt:', { username, password });
@@ -140,8 +168,6 @@ app.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
-
-
 app.get('/Profile/:username', async (req, res) => {
   const username = req.params.username;
   //const userId = req.userId; // Assume userId is extracted from a secure session or token
@@ -198,7 +224,6 @@ app.post('/change-password', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
 app.post('/reservations', async (req, res) => {
     const { user_id, reservation_type, start_date, end_date, status, time_slot } = req.body;
   
@@ -213,8 +238,7 @@ app.post('/reservations', async (req, res) => {
       console.error('Error saving reservation:', error);
       res.status(500).send('Server error');
     }
-  });
-
+});
 app.get('/reservations', async (req, res) => {
     const { userId } = req.query; // Get userId from query parameters
   
@@ -231,8 +255,7 @@ app.get('/reservations', async (req, res) => {
       console.error('Error fetching reservations:', error);
       res.status(500).send('Server error');
     }
-  });
-
+});
 app.post('/schedule/equipment', async (req, res) => {
   const { user_id, reservation_id, reservedEquipment, startDate, endDate } = req.body;
   
@@ -296,8 +319,6 @@ try {
   if (client) client.release();  // Release the client back to the pool
 }
 });
-
-
 app.get('/schedule/equipment', async (req, res) => {
   const { userId } = req.query;
   try {
@@ -360,73 +381,8 @@ app.get('/schedule/equipment', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-app.get('/schedule/equipment', async (req, res) => {
-  const { userId } = req.query;
-  try {
-    // Query to fetch reservation data
-    const result = await pool.query(
-      `SELECT reservation_id, reserved_equipment, start_date, end_date
-       FROM Equipment
-       WHERE user_id = $1`,
-      [userId]
-    );
-
-    // Process each reservation and check if equipment is reserved
-    const equipmentData = result.rows.map((row) => {
-      let equipmentInfo = "No Equipment Reserved";  // Default value for no equipment
-      if (row.reserved_equipment) {
-        try {
-          // Handle cases where reserved_equipment is an array of arrays
-          let reservedEquipment = row.reserved_equipment;
-          // If it's an array of arrays, flatten it to a single array of objects
-          if (Array.isArray(reservedEquipment) && reservedEquipment[0] && Array.isArray(reservedEquipment[0])) {
-            reservedEquipment = reservedEquipment.flat();
-          }
-          // Ensure it's an array of objects before processing
-          if (Array.isArray(reservedEquipment)) {
-            // Format each equipment item as "name - quantity"
-            equipmentInfo = reservedEquipment
-              .map((item) => {
-                if (item && typeof item === 'object') {
-                  // If the item is an object, extract the name and quantity
-                  const name = item.name || 'Unknown Item';
-                  const quantity = item.quantity || 0;
-                  return `${name} - ${quantity}`;
-                }
-                return 'Invalid equipment data';  // Handle invalid data
-              })
-              .join(", ");  // Join the items with a comma
-          } else {
-            equipmentInfo = "Invalid equipment data";  // Handle non-array data
-          }
-        } catch (error) {
-          // Log any error that happens during JSON parsing
-          console.error('Error processing reserved equipment:', error);
-          equipmentInfo = "Error processing equipment details";  // Set error message for faulty data
-        }
-      }
-
-      return {
-        reservation_id: row.reservation_id,
-        reserved_equipment: equipmentInfo,
-        start_date: new Date(row.start_date).toLocaleString(),  // Ensure date formatting
-        end_date: new Date(row.end_date).toLocaleString(),      // Ensure date formatting
-      };
-    });
-
-    // If no equipment is reserved, return an empty array
-    res.status(200).json(equipmentData.length > 0 ? equipmentData : []);
-  } catch (error) {
-    // Log any error that happens during the database query or data processing
-    console.error('Error fetching equipment reservations:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
 app.get('/reservations/:reservationId', async (req, res) => {
     const { reservationId } = req.params;
-    //console.log(`Fetching reservation details for ID: ${reservationId}`);
 
     try {
         const result = await pool.query('SELECT * FROM Schedules WHERE id = $1', [reservationId]); // Use pool.query()
@@ -440,31 +396,12 @@ app.get('/reservations/:reservationId', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-
-app.get('/equipment/:reservation_id', async (req, res) => {
-  const { reservation_id } = req.params;
-  //console.log(`Fetching reservation details for ID: ${reservationId}`);
-
-  try {
-    const result = await pool.query('SELECT * FROM Equipment WHERE reservation_id = $1', [reservation_id]);
-      if (result.rows.length > 0) {
-          res.json(result.rows[0]); // Send the reservation details back
-      } else {
-          res.status(404).json({ error: 'Reservation not found' });
-      }
-  } catch (error) {
-      console.error('Error fetching reservation:', error);
-      res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-
 app.delete('/reservations/:reservationId', async (req, res) => {
     const { reservationId } = req.params;
   
     try {
       // Delete the reservation using PostgreSQL query
-      const result = await pool.query('DELETE FROM Schedules WHERE id = $1 RETURNING *', [reservationId]); // Use pool.query()
+      const result = await pool.query('DELETE FROM Schedules WHERE id = $1 RETURNING *', [reservationId]); 
       
       if (result.rows.length === 0) {
         return res.status(404).json({ message: "Reservation not found" });
@@ -475,7 +412,6 @@ app.delete('/reservations/:reservationId', async (req, res) => {
       res.status(500).json({ message: "Internal Server Error" });
     }
 });
-
 app.delete('/equipment/:reservation_id', async (req, res) => {
   const { reservation_id } = req.params;
 
@@ -536,8 +472,6 @@ app.delete('/equipment/:reservation_id', async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
-
 /********* Auto Fill Details  *********/
 app.get('/Details/:id', async (req, res) => {
     const { id } = req.params;
@@ -557,13 +491,10 @@ app.get('/Details/:id', async (req, res) => {
       console.error('Error fetching user details:', err);
       res.status(500).json({ error: 'Internal server error' });
     }
-  });
-
+});
 /******** View Schedules ********/
 app.get('/ViewSched', async (req, res) => {
   try {
-      // Log the connection or any variables involved
-      console.log('Connecting to database...');
 
       const result = await pool.query(`
           SELECT s.start_date, s.end_date, s.time_slot, u.username
@@ -576,14 +507,12 @@ app.get('/ViewSched', async (req, res) => {
       if (result.rows.length === 0) {
       } 
 
-      //res.json(result.rows); // Send the result as a JSON response
+      res.json(result.rows); // Send the result as a JSON response
   } catch (err) {
       console.error('Error during query execution:', err);
       res.status(500).json({ error: err.message }); // Send error message if there's an issue
   }
 });
-
-
 app.get('/ViewEquipment', async (req, res) => {
   try {
       // Query to fetch equipment details, using JSON functions to extract data
@@ -610,12 +539,8 @@ app.get('/ViewEquipment', async (req, res) => {
       res.status(500).json({ error: err.message });
   }
 });
-
-
 /******** Inventory ********/
-
 app.use('/public', express.static(path.join(__dirname, 'public')));
-
 // Define multer storage configuration to save files in public/Asset
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -632,14 +557,7 @@ const storage = multer.diskStorage({
     cb(null, sanitizedFilename); // Keep the original file name
   },
 }); 
-
-
-
-// Initialize multer with the custom storage
-
 const upload = multer({ storage: storage });
-
-// POST route to add inventory item
 app.post('/inventory', upload.single('image'), async (req, res) => {
   try {
     // Check if an image is uploaded
@@ -661,16 +579,11 @@ app.post('/inventory', upload.single('image'), async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
-
-// GET route to fetch all inventory items
 app.get('/inventory', (req, res) => {
   pool.query('SELECT * FROM inventory')
     .then(result => res.json(result.rows))
     .catch(error => res.status(500).send(error.message));
 });
-
-// PUT route to update an inventory item
 app.put('/inventory/:id', upload.single('image'), async (req, res) => {
   try {
     const { id } = req.params;
@@ -693,8 +606,6 @@ app.put('/inventory/:id', upload.single('image'), async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
-// DELETE route to delete an inventory item
 app.delete('/inventory/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -715,48 +626,38 @@ app.delete('/inventory/:id', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
-
-
-  /***** Check Reservatoion *******/
-
-
-  app.post('/Checkreservation', async (req, res) => {
-    const { user_id, date } = req.body;
-  
-    try {
-      const query = 'SELECT * FROM Schedules WHERE user_id = $1 AND DATE(start_date) = $2';
-      const values = [user_id, date];
-      const result = await pool.query(query, values);
-  
-      res.json({ exists: result.rowCount > 0 });
-    } catch (error) {
-      console.error('Error checking reservation:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  });
- 
-  app.post('/CheckEquipment', async (req, res) => {
-    const { user_id, date } = req.body;
-    try {
-      const query = `
-        SELECT * FROM Equipment 
-        WHERE user_id = $1 
-        AND DATE(start_date AT TIME ZONE 'UTC') = $2
-      `;
-      const values = [user_id, date]; // Ensure date is ISO format
-      const result = await pool.query(query, values);
-      res.json({ exists: result.rowCount > 0 });
-    } catch (error) {
-      console.error('Error checking reservation:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  });
-  
+/***** Check Reservatoion *******/
+app.post('/Checkreservation', async (req, res) => {
+  const { user_id, date } = req.body;
+  try {
+    const query = 'SELECT * FROM Schedules WHERE user_id = $1 AND DATE(start_date) = $2';
+    const values = [user_id, date];
+    const result = await pool.query(query, values);
+    res.json({ exists: result.rowCount > 0 });
+  } catch (error) {
+    console.error('Error checking reservation:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+app.post('/CheckEquipment', async (req, res) => {
+  const { user_id, date } = req.body;
+  try {
+    const query = `
+      SELECT * FROM Equipment 
+      WHERE user_id = $1 
+      AND DATE(start_date AT TIME ZONE 'UTC') = $2
+    `;
+    const values = [user_id, date]; // Ensure date is ISO format
+    const result = await pool.query(query, values);
+    res.json({ exists: result.rowCount > 0 });
+  } catch (error) {
+    console.error('Error checking reservation:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 //Admin Side
-  /********* Contact Us na ito ******** */
-
+/********* Contact Us na ito ******** */
 app.get('/contact', async (req, res) => {
   try {
     const result = await pool.query('SELECT contact_number, location, gmail FROM public.contact WHERE id = $1', [1]);
@@ -766,8 +667,6 @@ app.get('/contact', async (req, res) => {
     res.status(500).json({ error: 'Error fetching contact details' });
   }
 });
-
-
 app.post('/Website', async (req, res) => {
   const { description, mandate, objectives, mission, vision } = req.body;
 
@@ -788,7 +687,6 @@ app.post('/Website', async (req, res) => {
     res.status(500).json({ error: 'Error adding website details' });
   }
 });
-
 app.get('/Website', async (req, res) => {
   try {
       const result = await pool.query('SELECT * FROM Website WHERE id = $1', [1]);
@@ -798,7 +696,6 @@ app.get('/Website', async (req, res) => {
       res.status(500).json({ error: 'Error fetching website details' });
   }
 });
-
 app.put('/Website', async (req, res) => {
   const { description, mandate, objectives, mission, vision } = req.body;
 
@@ -819,7 +716,6 @@ app.put('/Website', async (req, res) => {
     res.status(500).json({ error: 'Error updating website details' });
   }
 });
-
 app.get('/Skcouncil', async (req, res) => {
   try {
       const result = await pool.query('SELECT * FROM Skcouncil');
@@ -829,10 +725,6 @@ app.get('/Skcouncil', async (req, res) => {
       res.status(500).json({ error: 'Error fetching SK Council members' });
   }
 });
-
-
-// Get SK Council Members
-// Get SK Council Members
 app.get('/Skcouncil', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM Skcouncil');
@@ -842,7 +734,6 @@ app.get('/Skcouncil', async (req, res) => {
     res.status(500).json({ error: 'Error fetching SK Council members' });
   }
 });
-
 // Update SK Council Member
 app.put('/Skcouncil/:id', async (req, res) => {
   const { name, age, position, description } = req.body;
@@ -865,7 +756,6 @@ app.put('/Skcouncil/:id', async (req, res) => {
     res.status(500).json({ error: 'Error updating SK Council member' });
   }
 });
-
 // Add SK Council Member
 app.post('/Skcouncil', async (req, res) => {
   const { name, age, position, description } = req.body;
@@ -886,12 +776,6 @@ app.post('/Skcouncil', async (req, res) => {
     res.status(500).json({ error: 'Error adding SK Council member' });
   }
 });
-
-
-
-
-
-
 // Update contact details
 app.put('/contact', async (req, res) => {
   const { contact_number, location, gmail } = req.body;
@@ -910,11 +794,6 @@ app.put('/contact', async (req, res) => {
     res.status(500).json({ error: 'Error updating contact details' });
   }
 });
-
-
-//HOMEPAGE
-// Fetch events from public.home
-// Fetch events from the 'public.home' table
 app.get('/events', async (req, res) => {
   try {
     // Query the database to get all events
@@ -935,11 +814,6 @@ app.get('/events', async (req, res) => {
     res.status(500).json({ error: 'Error fetching events' });
   }
 });
-
-
-
-
-// POST /events - Add new event
 app.post('/events', async (req, res) => {
   const { event_name, event_description, amenities, event_image, event_image_format } = req.body;
 
@@ -980,8 +854,6 @@ app.post('/events', async (req, res) => {
     res.status(500).json({ error: 'Error adding event' });
   }
 });
-
-
 app.put('/events/:id', async (req, res) => {
     const { event_name, event_description, amenities, event_image, event_image_format } = req.body;
     const eventId = req.params.id;
@@ -1008,49 +880,45 @@ app.put('/events/:id', async (req, res) => {
       console.error('Error updating event:', error);
       res.status(500).json({ error: 'Error updating event details' });
     }
-  });
+});
+// DELETE /events/:id - Delete event by ID
+app.delete('/events/:event_name', async (req, res) => {
+  const { event_name } = req.params;
 
-  // DELETE /events/:id - Delete event by ID
-  app.delete('/events/:event_name', async (req, res) => {
-    const { event_name } = req.params;
-  
-    try {
-      // Step 1: Fetch the event id based on the event name
-      const getEventIdResult = await pool.query(
-        'SELECT id FROM public.home WHERE event_name = $1',
-        [event_name]
-      );
-  
-      // Step 2: If no event is found, return an error
-      if (getEventIdResult.rowCount === 0) {
-        return res.status(404).json({ error: 'Event not found' });
-      }
-  
-      const eventId = getEventIdResult.rows[0].id; // Fetch the event_id from the result
-  
-      // Step 3: Delete the event using the event_id
-      const deleteResult = await pool.query(
-        'DELETE FROM public.home WHERE id = $1 RETURNING *',
-        [eventId]
-      );
-  
-      // If no rows were affected, the event was not found
-      if (deleteResult.rowCount === 0) {
-        return res.status(404).json({ error: 'Event not found' });
-      }
-  
-      // Send back the deleted event data
-      res.json({ message: 'Event deleted successfully', event: deleteResult.rows[0] });
-    } catch (error) {
-      console.error('Error deleting event:', error);
-      res.status(500).json({ error: 'Error deleting event' });
+  try {
+    // Step 1: Fetch the event id based on the event name
+    const getEventIdResult = await pool.query(
+      'SELECT id FROM public.home WHERE event_name = $1',
+      [event_name]
+    );
+
+    // Step 2: If no event is found, return an error
+    if (getEventIdResult.rowCount === 0) {
+      return res.status(404).json({ error: 'Event not found' });
     }
-  });
 
+    const eventId = getEventIdResult.rows[0].id; // Fetch the event_id from the result
 
+    // Step 3: Delete the event using the event_id
+    const deleteResult = await pool.query(
+      'DELETE FROM public.home WHERE id = $1 RETURNING *',
+      [eventId]
+    );
 
+    // If no rows were affected, the event was not found
+    if (deleteResult.rowCount === 0) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
 
-  // Fetch all users
+    // Send back the deleted event data
+    res.json({ message: 'Event deleted successfully', event: deleteResult.rows[0] });
+  } catch (error) {
+    console.error('Error deleting event:', error);
+    res.status(500).json({ error: 'Error deleting event' });
+  }
+});
+
+// Fetch all users
 app.get('/users', async (req, res) => {
   try {
       const result = await pool.query('SELECT * FROM users');
@@ -1060,7 +928,6 @@ app.get('/users', async (req, res) => {
       res.status(500).send('Server error');
   }
 });
-
 // Insert into the database with random ID generation
 app.post('/users', async (req, res) => {
   console.log('Request Body:', req.body);  // Log the incoming data
@@ -1114,9 +981,6 @@ app.post('/users', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-
-
-
 // Update a user
 app.put('/users/:id', async (req, res) => {
   const { id } = req.params;
@@ -1165,7 +1029,6 @@ app.put('/users/:id', async (req, res) => {
       res.status(500).send('Server error');
   }
 });
-
 app.delete('/users/:id', async (req, res) => {
   const { id } = req.params;
   
@@ -1260,9 +1123,6 @@ app.get('/admindashboard', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
-
-
 app.get('/Allreservations', async (req, res) => {
   try {
     const result = await pool.query(
@@ -1276,7 +1136,6 @@ app.get('/Allreservations', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-
 app.post('/approveReservations', async (req, res) => {
   const { ids } = req.body; // Array of reservation IDs to approve
 
@@ -1292,7 +1151,6 @@ app.post('/approveReservations', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-
 app.post('/disapproveReservations', async (req, res) => {
   const { ids } = req.body; // Array of reservation IDs to disapprove
 
@@ -1308,9 +1166,6 @@ app.post('/disapproveReservations', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-
-
-
 app.get('/Allequipments', async (req, res) => {
   try {
     const result = await pool.query(
@@ -1324,7 +1179,6 @@ app.get('/Allequipments', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-
 // Route to approve equipment reservations
 app.post('/approveEquipment', async (req, res) => {
   const { ids } = req.body; // Array of reservation IDs to approve
@@ -1353,10 +1207,7 @@ app.post('/disapproveEquipment', async (req, res) => {
     }
   });
 });
-
-
 //mamageprograms.
-
 app.get('/programs', async (req, res) => {
   try {
       const result = await pool.query('SELECT * FROM programs');
@@ -1366,8 +1217,6 @@ app.get('/programs', async (req, res) => {
       res.status(500).send('Internal Server Error');
   }
 });
-
-// API Endpoint to get a single program by ID
 app.get('/programs/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -1381,8 +1230,6 @@ app.get('/programs/:id', async (req, res) => {
       res.status(500).send('Internal Server Error');
   }
 });
-
-// API Endpoint to create a new program
 app.post('/programs', async (req, res) => {
   const { program_name, description, image_base64 } = req.body;
   try {
@@ -1396,9 +1243,6 @@ app.post('/programs', async (req, res) => {
       res.status(500).send('Internal Server Error');
   }
 });
-
-
-// API Endpoint to update an existing program
 app.put('/programs/:id', async (req, res) => {
   const { id } = req.params;
   const { program_name, description, image_base64 } = req.body;
@@ -1420,7 +1264,6 @@ app.put('/programs/:id', async (req, res) => {
   }
 });
 
-// API Endpoint to delete a program
 app.delete('/programs/:id', async (req, res) => {
   const { id } = req.params;
 
