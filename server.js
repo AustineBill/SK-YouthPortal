@@ -61,7 +61,6 @@ app.post('/ValidateCode', async (req, res) => {
       res.status(500).json({ message: 'An error occurred during validation' });
   }
 });
-
 app.post('/UpdateAccount', async (req, res) => {
   const { username, password } = req.body;
 
@@ -90,9 +89,6 @@ app.post('/UpdateAccount', async (req, res) => {
       res.status(500).json({ message: 'An error occurred while updating your account', error: error.message });
   }
 });
-
-
-
 
 app.put('/updateUser', async (req, res) => {
   const { userId, username, password, newPassword } = req.body;
@@ -134,39 +130,39 @@ app.put('/updateUser', async (req, res) => {
   }
 });
 app.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-    //console.log('Login attempt:', { username, password });
-    try {
-        // Find the user by username
-        const result = await pool.query('SELECT * FROM Users WHERE username = $1', [username]);
-        if (result.rows.length === 0) {
-            return res.status(400).json({ message: 'Invalid username or password' });
-        }
+  const { username, password } = req.body;
 
-        const user = result.rows[0];
-       //console.log('User ID from database:', user.id);
+  try {
+      // Find the user by username
+      const result = await pool.query('SELECT * FROM Users WHERE username = $1', [username]);
+      if (result.rows.length === 0) {
+          return res.status(400).json({ message: 'Invalid username or password' });
+      }
 
-        // Validate password
-        if (user.password !== password) { // Temporary for plain text; replace with bcrypt for hashing
-            return res.status(400).json({ message: 'Invalid username or password' });
-        }
+      const user = result.rows[0];
+      
+      // Validate password using bcrypt
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+          return res.status(400).json({ message: 'Invalid username or password' });
+      }
 
-        // Return user details including ID
-        res.status(200).json({
-            message: 'Login successful',
-            user: {
-                id: user.id,
-                username: user.username,
-                address: user.address,
-                fullName: user.full_name,
-                email: user.email,
-                phone: user.phone,
-            },
-        });
-    } catch (err) {
-        console.error('Login error:', err.stack);
-        res.status(500).json({ message: 'Server error' });
-    }
+      // Return user details including ID
+      res.status(200).json({
+          message: 'Login successful',
+          user: {
+              id: user.id,
+              username: user.username,
+              address: user.address,
+              fullName: user.full_name,
+              email: user.email,
+              phone: user.phone,
+          },
+      });
+  } catch (err) {
+      console.error('Login error:', err.stack);
+      res.status(500).json({ message: 'Server error' });
+  }
 });
 app.get('/Profile/:username', async (req, res) => {
   const username = req.params.username;
@@ -959,7 +955,19 @@ app.post('/users', async (req, res) => {
   const userId = generateRandomId();  // Call the random ID function
 
   try {
-    // Adjust the INSERT query to include the generated `id` and all required values
+    // Check if a user with the same username, email_address, or combination of first name, last name, and birthday exists
+    const checkDuplicateQuery = `
+      SELECT * FROM Users 
+      WHERE email_address = $1 OR (firstname = $2 AND lastname = $3 )
+    `;
+    const checkResult = await pool.query(checkDuplicateQuery, [email_address, firstname, lastname]);
+
+    if (checkResult.rows.length > 0) {
+      // If duplicate found, send a conflict error response
+      return res.status(400).json({ error: 'Duplicate user data found.' });
+    }
+
+    // Proceed with inserting the new user if no duplicates are found
     const result = await pool.query(
       `INSERT INTO Users (
         id, username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
@@ -981,6 +989,7 @@ app.post('/users', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+
 // Update a user
 app.put('/users/:id', async (req, res) => {
   const { id } = req.params;

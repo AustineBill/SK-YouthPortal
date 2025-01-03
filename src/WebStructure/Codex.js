@@ -1,22 +1,33 @@
-// Function to generate a random substitution key (letters and numbers)
-function generateRandomKey() {
+// Function to generate a deterministic substitution key (based on a static value)
+function generateDeterministicKey(seed = 'staticSeed123') {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let randomKey = '';
+  let key = '';
   const usedChars = new Set();
 
-  while (randomKey.length < characters.length) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    const char = characters[randomIndex];
+  for (let i = 0; i < seed.length; i++) {
+    const index = (seed.charCodeAt(i) + i) % characters.length;
+    const char = characters[index];
     if (!usedChars.has(char)) {
-      randomKey += char;
+      key += char;
       usedChars.add(char);
     }
   }
-  return randomKey;
+
+  // If the key length is shorter than required, fill it up
+  while (key.length < characters.length) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    const char = characters[randomIndex];
+    if (!usedChars.has(char)) {
+      key += char;
+      usedChars.add(char);
+    }
+  }
+
+  return key;
 }
 
-// Generate a random substitution key
-const key = generateRandomKey();
+// Generate a deterministic substitution key based on the static seed
+const key = generateDeterministicKey();
 console.log('Generated Key:', key);
 
 // Function to generate a random 8-digit number with a "WB" prefix
@@ -51,16 +62,6 @@ function DecryptionCode(encryptedId) {
   }
   return `WB-${decryptedNumber}`;
 }
-
-// Example usage
-const originalId = generateRandomId();
-console.log('Original ID:', originalId); // Example: WB-78302334
-
-const encryptedId = EncryptionCode(originalId);
-console.log('Encrypted ID:', encryptedId); // Example: WB-QWERTY
-
-const decryptedId = DecryptionCode(encryptedId);
-console.log('Decrypted ID:', decryptedId); // Example: WB-78302334
 
 // Export the functions to use in other files
 module.exports = { generateRandomId, EncryptionCode, DecryptionCode };
