@@ -468,7 +468,22 @@ app.delete('/equipment/:reservation_id', async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-/********* Auto Fill Details  *********/
+app.get('/api/programs', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM Programs');
+    const programs = result.rows.map((program) => ({
+      ...program,
+      image_url: program.image_url.startsWith('http')
+        ? program.image_url
+        : `http://localhost:5000${program.image_url.replace('/Asset', '/public/Asset')}`,
+    }));
+    res.status(200).json(programs);
+  } catch (error) {
+    console.error('Error fetching programs:', error);
+    res.status(500).json({ error: 'Failed to fetch programs' });
+  }
+});
+/********* Auto Fill Details  *********
 app.get('/Details/:id', async (req, res) => {
     const { id } = req.params;
   
@@ -543,6 +558,7 @@ app.get('/ViewEquipment', async (req, res) => {
 });
 /******** Inventory ********/
 app.use('/public', express.static(path.join(__dirname, 'public')));
+
 // Define multer storage configuration to save files in public/Asset
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -560,6 +576,27 @@ const storage = multer.diskStorage({
   },
 }); 
 const upload = multer({ storage: storage });
+
+
+app.get('/api/programs', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM Programs');
+    const programs = result.rows.map((program) => ({
+      ...program,
+      image_url: program.image_url.startsWith('http')
+        ? program.image_url
+        : `http://localhost:5000${program.image_url.replace('/Asset', '/public/Asset')}`,
+    }));
+    res.status(200).json(programs);
+  } catch (error) {
+    console.error('Error fetching programs:', error);
+    res.status(500).json({ error: 'Failed to fetch programs' });
+  }
+});
+
+
+
+
 app.post('/inventory', upload.single('image'), async (req, res) => {
   try {
     // Check if an image is uploaded
