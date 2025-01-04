@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { Popover, OverlayTrigger } from 'react-bootstrap';
 import '../WebStyles/UserStyle.css';
 
 const ViewFacilities = () => {
     const [reservations, setReservations] = useState([]);
-    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const dropdownRef = useRef(null);
 
     // Fetch reservations from the backend
@@ -32,8 +33,8 @@ const ViewFacilities = () => {
     };
 
     const selectTime = (time) => {
-        setSelectedTimeSlot(time); // Set the selected time slot
-        setIsDropdownVisible(false); // Hide the dropdown
+        setSelectedTimeSlot(time);
+        setIsDropdownVisible(false);
     };
 
     const handleClickOutside = (event) => {
@@ -49,47 +50,55 @@ const ViewFacilities = () => {
         };
     }, []);
 
-    // Filter reservations by date and time slot
+    // Filter reservations by date
     const filterReservations = (date) => {
         return reservations.filter((res) => {
             const startDate = new Date(res.start_date);
             const endDate = new Date(res.end_date);
-            const matchesDate = date >= startDate && date <= endDate;
-            return matchesDate; // Remove the time slot filtering
+            const selectedDate = new Date(date);
+
+            return selectedDate >= startDate && selectedDate <= endDate;
         });
     };
-    
 
-    // Display usernames and reservation details on tiles
-    const tileContent = ({ date, view }) => {
-        if (view !== 'month') return null; // Render content only for month view
-    
-        const dailyReservations = filterReservations(date);
-    
-        return dailyReservations.length > 0 ? (
-            <div className="reservation-tile-content">
-                <ul className="reservation-usernames">
-                    {dailyReservations.map((res, index) => (
-                        <li key={index} className="username">
-                            {res.username} {/* Display username */}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        ) : null;
-    };
-    
-
-    // Assign classes to tiles based on reservation data
+    // Count solo and group reservations
     const tileClassName = ({ date, view }) => {
         if (view !== 'month') return ''; // Apply styles only in month view
 
         const dailyReservations = filterReservations(date);
 
-        if (dailyReservations.length === 0) return 'vacant';
-        if (dailyReservations.length >= 5) return 'unavailable';
-        return 'available';
+        if (dailyReservations.length === 0) {
+            return 'vacant'; // No reservations: Vacant
+        }
+
+        const soloReservationsCount = dailyReservations.filter(
+            (res) => res.reservation_type === 'Solo'
+        ).length;
+
+        const hasGroupReservation = dailyReservations.some((res) => res.reservation_type === 'Group');
+        const isFullyBooked = soloReservationsCount >= 5;
+
+        if (hasGroupReservation || isFullyBooked) {
+            return 'unavailable'; // Fully booked: Unavailable
+        }
+
+        return 'available'; // Partially booked
     };
+
+    // Render a popover with reservation details
+    const renderPopover = (dailyReservations) => (
+        <Popover id="popover-basic">
+            <Popover.Body>
+                <ul>
+                    {dailyReservations.map((res, index) => (
+                        <li key={index}>
+                            {res.username} ({res.groupSize || 1} members)
+                        </li>
+                    ))}
+                </ul>
+            </Popover.Body>
+        </Popover>
+    );
 
     return (
         <div className="container-fluid">
@@ -103,16 +112,16 @@ const ViewFacilities = () => {
                     <div className="legend">
                         <h2>Legend</h2>
                         <div className="legend-item">
-                            <span className="circle available"></span>
-                            <h3>Available</h3>
+                            <span className="circle vacant"></span>
+                            <h3>Vacant</h3>
                         </div>
                         <div className="legend-item">
                             <span className="circle unavailable"></span>
                             <h3>Unavailable</h3>
                         </div>
                         <div className="legend-item">
-                            <span className="circle vacant"></span>
-                            <h3>Vacant</h3>
+                            <span className="circle available"></span>
+                            <h3>Available</h3>
                         </div>
                     </div>
                 </div>
@@ -153,8 +162,31 @@ const ViewFacilities = () => {
                 <Calendar
                     minDate={new Date()}
                     selectRange={true}
-                    tileContent={tileContent}
                     tileClassName={tileClassName}
+                    tileContent={({ date, view }) => {
+                        if (view !== 'month') return null;
+
+                        const dailyReservations = filterReservations(date);
+
+                        if (dailyReservations.length > 0) {
+                            return (
+                                <OverlayTrigger
+                                    trigger="click"
+                                    placement="top"
+                                    overlay={renderPopover(dailyReservations)}
+                                >
+                                    <div className="overlay-content">
+                                        {dailyReservations.length > 0 && (
+                                            <div className="reservation-count">
+                                                {dailyReservations.length}
+                                            </div>
+                                        )}
+                                    </div>
+                                </OverlayTrigger>
+                            );
+                        }
+                        return null;
+                    }}
                 />
             </div>
         </div>

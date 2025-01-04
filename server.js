@@ -491,9 +491,13 @@ app.get('/Details/:id', async (req, res) => {
 /******** View Schedules ********/
 app.get('/ViewSched', async (req, res) => {
   try {
-
       const result = await pool.query(`
-          SELECT s.start_date, s.end_date, s.time_slot, u.username
+          SELECT 
+              s.start_date, 
+              s.end_date, 
+              s.time_slot, 
+              u.username, 
+              s.reservation_type -- Include reservation_type in the response
           FROM Schedules s
           JOIN Users u ON s.user_id = u.id
           WHERE s.start_date >= CURRENT_DATE::date
@@ -501,7 +505,8 @@ app.get('/ViewSched', async (req, res) => {
       `);
       
       if (result.rows.length === 0) {
-      } 
+          return res.status(404).json({ message: 'No schedules found' });
+      }
 
       res.json(result.rows); // Send the result as a JSON response
   } catch (err) {
@@ -509,6 +514,7 @@ app.get('/ViewSched', async (req, res) => {
       res.status(500).json({ error: err.message }); // Send error message if there's an issue
   }
 });
+
 app.get('/ViewEquipment', async (req, res) => {
   try {
       // Query to fetch equipment details, using JSON functions to extract data

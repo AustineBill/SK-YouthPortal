@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import './styles/AdminReports.css';
+import './styles/adminreports.css'; // New CSS file for AdminReports styling
 
 const Reports = () => {
     const [activeTable, setActiveTable] = useState('users');

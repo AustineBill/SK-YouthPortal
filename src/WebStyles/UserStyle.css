@@ -131,7 +131,6 @@
 
 
 
-
 /* Styling the selected date display */
 .selected-date {
   font-size: 18px;
@@ -298,4 +297,27 @@ fieldset {
   border-radius: 5px;
   margin-bottom: 20px;
   padding: 10px 20px;
+}
+
+
+
+.reservation-count {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: #030303; /* Bootstrap primary blue */
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-container .react-calendar__tile {
+  position: relative; /* Ensure absolute positioning works within the tile */
 }
