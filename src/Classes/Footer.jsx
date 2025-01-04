@@ -4,7 +4,7 @@ import "../App.css"
 
 const Footer = () => (
   <div className="container-fluid bg-db footer">
-    <div className="row d-flex justify-content-between py-1 small-footer">
+    <div className="row d-flex justify-content-between py-1">
 
       {/* Get In Touch Section */}
       <div className="col-md-2 d-flex flex-column">
