@@ -594,6 +594,21 @@ app.get('/api/programs', async (req, res) => {
   }
 });
 
+app.get('/api/programs/:programType', async (req, res) => {
+  const { programType } = req.params;
+  try {
+    const result = await pool.query('SELECT * FROM Programs WHERE program_type = $1', [programType]);
+    const program = result.rows[0]; // Assuming you're only fetching one program based on type
+    if (!program) {
+      return res.status(404).json({ error: 'Program not found' });
+    }
+    // Process the image URL as needed
+    res.status(200).json(program);
+  } catch (error) {
+    console.error('Error fetching program:', error);
+    res.status(500).json({ error: 'Failed to fetch program' });
+  }
+});
 
 
 

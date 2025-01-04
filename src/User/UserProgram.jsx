@@ -29,7 +29,6 @@ const Programs = () => {
         {programs.map((program) => (
           <div className="w-100 d-flex justify-content-center mb-4" key={program.id}>
             <Card className="w-50">
-              {console.log(program.image_url)} {/* Add this line */}
               <Card.Img 
                 variant="top" 
                 src={program.image_url} 
@@ -37,7 +36,7 @@ const Programs = () => {
               />
               <Card.Body className="d-flex flex-column align-items-center">
                 <Card.Title className="fs-5 fw-bold text-dark">{program.program_name}</Card.Title>
-                <Card.Text>{program.description}</Card.Text>
+                <Card.Text>{program.heading}</Card.Text>
                 <Button
                   variant="dark"
                   onClick={() => handleNavigate(program.program_type)}
