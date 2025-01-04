@@ -204,6 +204,7 @@ body {
 
 .container-fluid {
   width: 100%;
+  height: auto;
   font-family: 'Poppins', sans-serif;
   overflow-y: hidden;
   overflow-x: hidden;   
@@ -355,11 +356,13 @@ body {
   padding: 0.5rem 1rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
   border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
   text-decoration: none;
+  border: none;
 }
 
 .login-button:hover, .signup-button:hover {
   cursor: pointer;
   background: transparent;
+  color: #25327A;
 }
 
 /* Active styles when buttons are clicked */

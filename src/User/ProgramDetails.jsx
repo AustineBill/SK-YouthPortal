@@ -8,8 +8,23 @@ const Program_details = () => {
   const location = useLocation();
   const { state } = location; // Access the passed state
   const { programType } = state || {}; // Destructure programType from state
+  const [program, setProgram] = useState(null);
   const [show, setShow] = useState(false);
   const { isAuthenticated } = useContext(AuthContext);
+
+  // Fetch program details based on programType when component mounts or programType changes
+  useEffect(() => {
+    if (programType) {
+      fetch(`http://localhost:5000/api/programs/${programType}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setProgram(data);
+        })
+        .catch((error) => {
+          setProgram('error'); // Set to 'error' to handle display in case of a fetch failure
+        });
+    }
+  }, [programType]);
 
   // Save programType to sessionStorage when it changes
   useEffect(() => {
@@ -56,11 +71,20 @@ const Program_details = () => {
     }
   };
 
+  // Return loading message if program is null or error occurs
+  if (!program) {
+    return <div>Loading...</div>;
+  }
+
+  if (program === 'error') {
+    return <div>Error fetching program details. Please try again later.</div>;
+  }
+
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="text-center text-lg-start m-4">
-          <h1 className="Maintext animated slideInRight"> Reservation: {programType}</h1>
+          <h1 className="Maintext animated slideInRight"> Reservation: {program.program_name}</h1>
           <p className="Subtext">Reserve yours now!</p>
 
           {(programType === 'Facilities' || programType === 'Equipment') && (
@@ -98,16 +122,28 @@ const Program_details = () => {
       <div className="ItemContainer">
         <div className="row g-0">
           <div className="col-md-4">
-            <img src="..." className="img-fluid rounded-start" alt="..." />
+            <img 
+              src={program.image_url} 
+              className="img-fluid rounded-start" 
+              alt={program.program_name} 
+              style={{ height: '500px', width: '400px' }} // Set custom height and width
+            />
           </div>
-          <div className="col-md-8">
+          <div className="col-md-7">
             <h5 className="card-title">Description</h5>
-            {programType === 'Facilities'
-              ? 'This is a facilities description.'
-              : 'This is an equipment description.'}
+            <p>{program.description}</p>
             <h5 className="card-title">Amenities</h5>
-            <Card.Img src="holder.js/100px180" />
-            <Card.Img src="holder.js/100px180" />
+            <div className="d-flex flex-wrap gap-2">
+              {program.amenities && program.amenities.map((amenity, index) => (
+                <img
+                  key={index}
+                  src={amenity}
+                  className="rounded"
+                  style={{ width: '100px', height: '100px' }}
+                  alt={`Amenity ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

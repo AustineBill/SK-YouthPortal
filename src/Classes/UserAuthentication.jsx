@@ -127,13 +127,12 @@ const UserAuthentication = () => {
     };
 
     return (
-        <div className='user-authentication-container'>
             <div className='user-authentication-contents d-flex justify-content-center'>
                 <div className='left-side-responsive d-none d-md-block'>
                     <div className="left-side-contents-container d-flex flex-column justify-content-center text-center text-lg-center">
-                        <h1 className="top-part">Lagi't lagi para sa Kabataan,</h1>
-                        <h1 className="middle-part"> Barangay at sa Bayan
-                            <span className="bottom-part fst-italic"> Sangguniang Kabataan</span>
+                        <h1 className=" w-normal fs-1">Lagi't lagi para sa Kabataan,</h1>
+                        <h1 className="fw-normal fs-2"> Barangay at sa Bayan
+                            <span className="bottom-part fst-italic fs-1"> Sangguniang Kabataan</span>
                         </h1>
                         <p className="SK-location">Western Bicutan</p>
                     </div>
@@ -334,7 +333,6 @@ const UserAuthentication = () => {
                     )}
                 </div>
             </div>
-        </div>
     );
 };
 
