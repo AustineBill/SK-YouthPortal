@@ -796,7 +796,6 @@ body {
   margin-left: 30px;
 }
 
-
 .youth-subtext {
   font-weight: 200; 
   color: #141313; 
@@ -814,7 +813,6 @@ body {
   align-items: center; /* Center items vertically */
   gap: 1rem; /* Space between columns */
   padding: 1rem; /* Optional padding */
-  margin-top:  7rem;
 }
 
 .youth-text-content {
@@ -823,8 +821,7 @@ body {
 
 .youth-head {
   color: #060707; /* Equivalent to text-primary */
-  margin-bottom: 4rem; /* Equivalent to mb-4 */
-  font-weight: 700; /* Adjust the font-weight as needed */
+  font-weight: 600; /* Adjust the font-weight as needed */
   text-align: left; /* Center the text */
   font-size: 5rem;    
 }

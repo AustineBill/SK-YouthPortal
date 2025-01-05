@@ -468,21 +468,7 @@ app.delete('/equipment/:reservation_id', async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-app.get('/api/programs', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM Programs');
-    const programs = result.rows.map((program) => ({
-      ...program,
-      image_url: program.image_url.startsWith('http')
-        ? program.image_url
-        : `http://localhost:5000${program.image_url.replace('/Asset', '/public/Asset')}`,
-    }));
-    res.status(200).json(programs);
-  } catch (error) {
-    console.error('Error fetching programs:', error);
-    res.status(500).json({ error: 'Failed to fetch programs' });
-  }
-});
+
 /********* Auto Fill Details  *********
 app.get('/Details/:id', async (req, res) => {
     const { id } = req.params;
@@ -770,6 +756,46 @@ app.put('/Website', async (req, res) => {
     res.status(500).json({ error: 'Error updating website details' });
   }
 });
+app.get('/api/programs', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM Programs');
+    const programs = result.rows.map((program) => ({
+      ...program,
+      image_url: program.image_url.startsWith('http')
+        ? program.image_url
+        : `http://localhost:5000${program.image_url.replace('/Asset', '/public/Asset')}`,
+    }));
+    res.status(200).json(programs);
+  } catch (error) {
+    console.error('Error fetching programs:', error);
+    res.status(500).json({ error: 'Failed to fetch programs' });
+  }
+});
+app.get('/api/sk', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM Website');
+    
+    const skcouncil = result.rows.map((item) => {
+      // Split the image URLs stored as an array in the database
+      const imageUrls = item.image_url.replace(/[{}"]/g, '').split(',');
+      
+      // Process each URL
+      return imageUrls.map((url) => ({
+        ...item,
+        image_url: url.startsWith('http') 
+          ? url 
+          : `http://localhost:5000${url.replace('/Asset', '/public/Asset')}`,
+      }));
+    }).flat();  // Flatten the array of image URLs into a single array
+
+    res.status(200).json(skcouncil);
+  } catch (error) {
+    console.error('Error fetching SK Council data:', error);
+    res.status(500).json({ error: 'Failed to fetch SK Photos data' });
+  }
+});
+
+
 app.get('/Skcouncil', async (req, res) => {
   try {
       const result = await pool.query('SELECT * FROM Skcouncil');
