@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Breadcrumb, Card, Badge } from 'react-bootstrap';
+import { Breadcrumb, Card } from 'react-bootstrap';
 import axios from 'axios';
 
 const Mandate = () => {
@@ -29,7 +29,7 @@ const Mandate = () => {
 
   return (
     <div className="container-fluid">
-      <Breadcrumb className="ms-5">
+      <Breadcrumb className="ms-5 mt-3">
         <Breadcrumb.Item onClick={() => navigate('/About')}>About</Breadcrumb.Item>
         <Breadcrumb.Item active>Mandate</Breadcrumb.Item>
       </Breadcrumb>
@@ -45,16 +45,9 @@ const Mandate = () => {
         <div className="timeline-left">
           <Card className="gradient-custom">
             <Card.Body className="p-4">
-              <i className="bi bi-0-circle"></i> 
-              <h4>Mandate</h4>
-              <p className="small text-white-50 mb-4">Updated Info</p>
-              <p>{mandateInfo.mandate || 'Loading Mandate...'}</p>
-              <Badge className="text-black mb-0 me-1" bg="light">
-                New
-              </Badge>
-              <Badge className="text-black mb-0" bg="light">
-                Admin
-              </Badge>
+              <i class="bi bi-card-checklist fs-1"></i>
+              <h2>Mandate</h2>
+              <p className="text-white-50 fs-4">{mandateInfo.mandate || 'Loading Mandate...'}</p>
             </Card.Body>
           </Card>
         </div>
@@ -63,16 +56,9 @@ const Mandate = () => {
         <div className="timeline-right">
           <Card className="gradient-custom-4">
             <Card.Body className="p-4">
-              <i className="bi bi-0-circle"></i> 
-              <h4>Mission</h4>
-              <p className="small text-white-50 mb-4">Updated Info</p>
-              <p>{mandateInfo.mission || 'Loading Mission...'}</p>
-              <Badge className="text-black mb-0 me-1" bg="light">
-                New
-              </Badge>
-              <Badge className="text-black mb-0" bg="light">
-                Admin
-              </Badge>
+            <i class="bi bi-bullseye fs-1"></i>
+              <h2>Mission</h2>
+              <p className="text-white-50 fs-4">{mandateInfo.mission || 'Loading Mission...'}</p>
             </Card.Body>
           </Card>
         </div>
@@ -81,16 +67,9 @@ const Mandate = () => {
         <div className="timeline-left">
           <Card className="gradient-custom">
             <Card.Body className="p-4">
-              <i className="bi bi-0-circle"></i> 
-              <h4>Vision</h4>
-              <p className="small text-white-50 mb-4">Updated Info</p>
-              <p>{mandateInfo.vision || 'Loading Vision...'}</p>
-              <Badge className="text-black mb-0 me-1" bg="light">
-                New
-              </Badge>
-              <Badge className="text-black mb-0" bg="light">
-                Admin
-              </Badge>
+            <i class="bi bi-eye-fill fs-1"></i>
+              <h2>Vision</h2>           
+              <p className="text-white-50 fs-4">{mandateInfo.vision || 'Loading Vision...'}</p>
             </Card.Body>
           </Card>
         </div>
@@ -99,16 +78,9 @@ const Mandate = () => {
         <div className="timeline-right">
           <Card className="gradient-custom-4">
             <Card.Body className="p-4">
-              <i className="bi bi-0-circle"></i> 
-              <h4>Objectives</h4>
-              <p className="small text-white-50 mb-4">Updated Info</p>
-              <p>{mandateInfo.objectives || 'Loading Objectives...'}</p>
-              <Badge className="text-black mb-0 me-1" bg="light">
-                New
-              </Badge>
-              <Badge className="text-black mb-0" bg="light">
-                Admin
-              </Badge>
+              <i class="bi bi-calendar-check-fill fs-1"></i>
+              <h2>Objectives</h2>
+              <p className="text-white-50 fs-4">{mandateInfo.objectives || 'Loading Objectives...'}</p>
             </Card.Body>
           </Card>
         </div>
