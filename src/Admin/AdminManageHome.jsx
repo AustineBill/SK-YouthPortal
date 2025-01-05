@@ -85,10 +85,21 @@ const ManageHomePage = () => {
     }
   };
 
-  // Handle adding a new event
+  // Check if event name already exists in the events list
+  const isDuplicateEvent = (eventName) => {
+    return events.some(event => event.event_name.toLowerCase() === eventName.toLowerCase());
+  };
+
+  // Handle adding a new event with duplicate prevention
   const handleAddEvent = async () => {
     if (!newEvent.title || !newEvent.description || !newEvent.amenities || !newEvent.imageBase64) {
       alert('Please fill in all event details');
+      return;
+    }
+
+    // Check for duplicate event title
+    if (isDuplicateEvent(newEvent.title)) {
+      alert('An event with this name already exists. Please choose a different name.');
       return;
     }
 
