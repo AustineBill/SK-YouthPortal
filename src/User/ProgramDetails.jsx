@@ -126,7 +126,7 @@ const Program_details = () => {
               src={program.image_url} 
               className="img-fluid rounded-start" 
               alt={program.program_name} 
-              style={{ height: '500px', width: '400px' }} // Set custom height and width
+              style={{ height: '400px', width: '350px' }} // Set custom height and width
             />
           </div>
           <div className="col-md-7">
