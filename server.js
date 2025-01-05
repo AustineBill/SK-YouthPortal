@@ -17,6 +17,9 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json({ limit: '20mb' }));  // Allow up to 20MB for JSON payloads
+app.use(express.urlencoded({ limit: '20mb', extended: true }));  // Allow up to 20MB for URL-encoded payloads
+
 
 
 const pool = new Pool({
@@ -1054,45 +1057,28 @@ app.get('/admindashboard', async (req, res) => {
   const { month } = req.query; // Get the month from the query parameter
 
   try {
-    // If month is provided, filter by the month in 'created_at' column
-    let query = `
-      SELECT COUNT(*) AS total_users FROM Users
-      WHERE EXTRACT(MONTH FROM created_at) = $1
+    const query = `
+      SELECT 
+        (SELECT COUNT(*) FROM Users WHERE $1::int IS NULL OR EXTRACT(MONTH FROM created_at) = $1) AS total_users,
+        (SELECT COUNT(*) FROM Schedules WHERE $1::int IS NULL OR EXTRACT(MONTH FROM created_at) = $1) AS total_reservations,
+        (SELECT COUNT(*) FROM Equipment WHERE $1::int IS NULL OR EXTRACT(MONTH FROM created_at) = $1) AS total_equipment
     `;
-    let values = [month];
 
-    // If no month is provided, return total for all months
-    if (!month) {
-      query = `
-        SELECT COUNT(*) AS total_users FROM Users
-      `;
-      values = [];
-    }
+    const values = [month ? parseInt(month, 10) : null];
 
-    const usersResult = await pool.query(query, values);
-
-    query = `
-      SELECT COUNT(*) AS total_reservations FROM Schedules
-      WHERE EXTRACT(MONTH FROM created_at) = $1
-    `;
-    const reservationsResult = await pool.query(query, values);
-
-    query = `
-      SELECT COUNT(*) AS total_equipment FROM Equipment
-      WHERE EXTRACT(MONTH FROM created_at) = $1
-    `;
-    const equipmentResult = await pool.query(query, values);
+    const result = await pool.query(query, values);
 
     res.json({
-      total_users: usersResult.rows[0].total_users,
-      total_reservations: reservationsResult.rows[0].total_reservations,
-      total_equipment: equipmentResult.rows[0].total_equipment,
+      total_users: result.rows[0].total_users,
+      total_reservations: result.rows[0].total_reservations,
+      total_equipment: result.rows[0].total_equipment,
     });
   } catch (err) {
     console.error('Error fetching dashboard data:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 app.get('/Allreservations', async (req, res) => {
   try {
     const result = await pool.query(
