@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Card } from 'react-bootstrap';
 import { AuthContext } from '../WebStructure/AuthContext';
 
 const Program_details = () => {

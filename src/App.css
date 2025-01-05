@@ -1,21 +1,20 @@
 /* <uniquifier>: Use a unique and descriptive class name8/
 /* <weight>: Use a value from 300 to 900 */
 
-@import url('https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap");
 
 /********** Template CSS **********/
 /*** Spinner ***/
 #spinner {
   opacity: 0;
   visibility: hidden;
-  transition: opacity .5s ease-out, visibility 0s linear .5s;
+  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
   z-index: 99999;
 }
 
 #spinner.show {
-  transition: opacity .5s ease-out, visibility 0s linear 0s;
+  transition: opacity 0.5s ease-out, visibility 0s linear 0s;
   visibility: visible;
   opacity: 1;
 }
@@ -31,7 +30,6 @@
 img.animated.pulse {
   animation-duration: 5s;
 }
-
 
 /****** Colors ******/
 
@@ -51,38 +49,38 @@ body {
   color: Text; /* Default text color */
 }
 
-.clr-db{
-  color: #25327A;
+.clr-db {
+  color: #25327a;
 }
 
-.clr-w{
+.clr-w {
   color: #ffffff;
 }
 
 /****** Background Color ******/
 
-.bg-db{
-  background-color: #25327A !important;
+.bg-db {
+  background-color: #25327a !important;
   color: #ffffff;
 }
 
 /****** Buttons ******/
 
-.btn-db{
+.btn-db {
   color: #ffffff;
-  border-color: #25327A;
-  background-color:  #25327A;
+  border-color: #25327a;
+  background-color: #25327a;
 }
-.btn-dark{
+.btn-dark {
   color: #fff;
   background-color: #080808;
   border-color: #f9f8fa;
 }
 
-.LargeButton{
+.LargeButton {
   font-weight: 400;
-  text-align: center;  
-  justify-content: center; 
+  text-align: center;
+  justify-content: center;
   padding: 1rem;
   font-size: 2;
   line-height: 1.5;
@@ -90,21 +88,19 @@ body {
   color: #fff;
   align-items: center;
   margin-left: 1em;
-  width:max-content
+  width: max-content;
 }
 
-
-.SmallButton{
+.SmallButton {
   font-weight: 400;
-  text-align: center;   
+  text-align: center;
   padding: 1rem;
   font-size: 2;
   line-height: 1.5;
   border-radius: 0.25rem;
   align-items: center;
-  width:max-content;
+  width: max-content;
 }
-
 
 .closeButton {
   position: absolute; /* Position relative to .ModalStyles */
@@ -116,33 +112,32 @@ body {
   color: #070000;
   cursor: pointer;
   outline: none; /* Removes the focus outline */
-  box-shadow: none; 
+  box-shadow: none;
 }
 
-  .closeButton:hover {
-    color: #ff0000; /* Red color when hovered */
-    background: transparent;
-  }
+.closeButton:hover {
+  color: #ff0000; /* Red color when hovered */
+  background: transparent;
+}
 
 /****** Text ******/
 
-.txt-db{
-  font-family: 'Sansita';
+.txt-db {
+  font-family: "Sansita";
 }
 
-.txt-i-db{
-  font-family: 'Sansita';
+.txt-i-db {
+  font-family: "Sansita";
   font-style: italic;
 }
 
-
 /******* Width Size *******/
 
-.large{
+.large {
   width: 500px;
 }
 
-.semi-large{
+.semi-large {
   width: 300px;
 }
 
@@ -163,11 +158,7 @@ body {
   width: 50px;
 }
 
-
-
-
 /****** Modals ******/
-
 
 .ModalOverlayStyles {
   position: fixed;
@@ -198,18 +189,47 @@ body {
   cursor: pointer;
 }
 
+.sign-up-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
+.sign-up-modal-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 500px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
 
 /*Overall*/
 
 .container-fluid {
   width: 100%;
   height: auto;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   overflow-y: hidden;
-  overflow-x: hidden;   
+  overflow-x: hidden;
 }
-
 
 .BodyContainer {
   width: 80%; /* Equivalent to col-lg-10 */
@@ -217,18 +237,17 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center; /* Center items horizontally */
-  text-align: center; 
+  text-align: center;
 }
 
-
-.Website-Name{
+.Website-Name {
   margin-left: 1rem; /* Equivalent to Bootstrap's `ms-4` */
   margin-right: 1rem;
-  font-family: 'Sansita';
+  font-family: "Sansita";
   font-style: italic;
   font-weight: bold;
   font-size: 1.8rem;
-  color: #ffffff; 
+  color: #ffffff;
   display: flex;
   align-items: center;
 }
@@ -240,51 +259,30 @@ body {
 
 .card-container {
   display: flex;
-  flex-wrap: wrap;  
+  flex-wrap: wrap;
   justify-content: center;
   margin: 1rem;
 }
 
-
 .Maintext {
-  font-weight: bolder; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
+  font-weight: bolder;
+  color: #141313;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
   font-size: 60px;
   margin-left: 24px;
 }
 
 .Subtext {
-  font-weight: 200; 
-  color: #090909; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
+  font-weight: 200;
+  color: #090909;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
   font-size: 30px;
   margin-left: 24px;
   margin-bottom: 3rem;
-}
-
-.Lower-Maintext {
-  font-weight: bolder; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
-  font-size: 40px;
-  margin-left: 30px;
-}
-
-.Lower-Subtext {
-  font-weight: 200; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
-  font-size: 20px;
-  margin-left: 30px;
 }
 
 .Divider {
@@ -298,11 +296,9 @@ body {
   width: 30%;
 }
 
-
-
 /*** Navbar ***/
-.sticky-top { 
-  transition: .5s;
+.sticky-top {
+  transition: 0.5s;
 }
 
 .navbar {
@@ -311,17 +307,17 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000; 
+  z-index: 1000;
   background-color: white; /* Background color to make sure it is visible */
-  display: flex; 
-  align-items: center; 
-  border: none; 
+  display: flex;
+  align-items: center;
+  border: none;
   width: 100%;
-  background-color:#25327A;
+  background-color: #25327a;
 }
 
 .nav-item {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-size: 2rem;
   margin: 1rem 1rem;
   color: rgb(248, 241, 241) !important;
@@ -338,8 +334,8 @@ body {
   display: block;
 }
 
-.navbar-buttons{
-  display: inline; 
+.navbar-buttons {
+  display: inline;
   align-items: center;
   margin-right: 1rem;
   text-decoration: none;
@@ -349,9 +345,10 @@ body {
   margin-right: 3rem;
 }
 
-.login-button, .signup-button {
+.login-button,
+.signup-button {
   transition: background-color 0.3s ease;
-  background-color: #25327A; /* Dark color similar to Bootstrap's .btn-dark */
+  background-color: #25327a; /* Dark color similar to Bootstrap's .btn-dark */
   color: #ffffff;
   padding: 0.5rem 1rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
   border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
@@ -359,19 +356,19 @@ body {
   border: none;
 }
 
-.login-button:hover, .signup-button:hover {
+.login-button:hover,
+.signup-button:hover {
   cursor: pointer;
   background: transparent;
-  color: #25327A;
+  color: #25327a;
 }
 
 /* Active styles when buttons are clicked */
-.login-button.active, .signup-button.active {
+.login-button.active,
+.signup-button.active {
   background-color: #ffffff;
   color: #000;
 }
-
-
 
 /* Hamburger icon */
 .hamburger-icon {
@@ -397,7 +394,6 @@ body {
   background-size: cover;
 }
 
-
 /*** Hero Header ***/
 .hero-header {
   position: relative;
@@ -407,35 +403,34 @@ body {
 }
 
 .intro-text {
-  font-weight: 300; 
-  color: #1d1b1b; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
+  font-weight: 300;
+  color: #1d1b1b;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
   margin-left: 3rem;
 }
 
 .custom-intro-text {
-  font-weight: 200; 
-  color: #161616; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
+  font-weight: 200;
+  color: #161616;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
 }
 
 .custom-name {
-  font-weight: bold; 
+  font-weight: bold;
   font-size: 72px;
-  margin-top: 30px; 
+  margin-top: 30px;
 }
 
-
 .IntroDetails {
-  font-weight: bold; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInRight; 
+  font-weight: bold;
+  color: #141313;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInRight;
   font-size: 30px;
   margin: 0rem 1rem 0rem 55%; /* Remove default margin */
 }
@@ -450,7 +445,7 @@ body {
   display: inline-flex; /* Use flex to align items */
   align-items: center; /* Vertically align icon and text */
   justify-content: center; /* Center content horizontally */
-  text-align: center;   
+  text-align: center;
   padding: 0.5rem 1rem; /* Adjust padding as needed */
   font-size: 1rem;
   border-radius: 0.25rem;
@@ -465,8 +460,6 @@ body {
   margin-left: 0.5rem; /* Space between text and icon */
 }
 
-
-
 /***Program***/
 
 .feature-item::before {
@@ -476,31 +469,29 @@ body {
   height: 100%;
   top: 0;
   left: 0;
-  background: rgba(255, 255, 255, .1);
+  background: rgba(255, 255, 255, 0.1);
   clip-path: polygon(66% 0, 100% 0, 100% 100%, 33% 100%);
 }
 
 .feature-item .border {
   position: relative;
-  border-color: rgba(255, 255, 255, .2) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
   z-index: 1;
 }
 
 .custom-feature-item {
-  animation: fadeIn 1s ease-in-out; 
+  animation: fadeIn 1s ease-in-out;
   position: relative;
   text-align: center;
-  padding: 1rem; 
+  padding: 1rem;
   margin-top: 30px;
 }
 
-.ProgramCard{
+.ProgramCard {
   width: 23rem;
   margin: 25px;
-  height: auto; 
+  height: auto;
 }
-
-
 
 /* About */
 
@@ -511,18 +502,14 @@ body {
   animation-name: fadeIn; /* Equivalent to fadeIn */
 }
 
-
 .BlockQuote {
   color: #060707; /* Equivalent to text-primary */
   margin-bottom: 1.5rem; /* Equivalent to mb-4 */
   margin-top: 8rem; /* Equivalent to mb-4 */
   font-weight: 700; /* Adjust the font-weight as needed */
   text-align: center; /* Center the text */
-  font-size: 2.5rem;   
+  font-size: 2.5rem;
 }
-
-
-
 
 /*/* News and Events */
 
@@ -533,13 +520,12 @@ body {
   animation-name: fadeIn; /* Equivalent to fadeIn */
 }
 
-
 .NewEveHead {
   color: #060707; /* Equivalent to text-primary */
   margin-top: 6rem; /* Equivalent to mb-4 */
   font-weight: 700; /* Adjust the font-weight as needed */
   text-align: center; /* Center the text */
-  font-size: 4rem;    
+  font-size: 4rem;
 }
 
 .NewEveSubHeadLine {
@@ -547,14 +533,13 @@ body {
   font-weight: 700; /* Adjust the font-weight as needed */
   padding: 2rem;
   text-align: center; /* Center the text */
-  font-size: 4rem;    
+  font-size: 4rem;
 }
 
-.NewsCard{
+.NewsCard {
   width: 10rem;
   margin: 5rem;
 }
-
 
 .NewEve-box-container {
   width: 80%; /* Equivalent to col-lg-10 */
@@ -567,20 +552,17 @@ body {
   padding-right: 15px;
 }
 
-
 /*Announcement*/
 
-
-.carousel-item{
+.carousel-item {
   width: 100%;
   height: 30rem;
 }
 
-
 /* Remove the background color and outline when focused */
 .carousel-control-prev:focus,
 .carousel-control-next:focus {
-  outline: none;   /* Remove outline */
+  outline: none; /* Remove outline */
   box-shadow: none; /* Remove the blue shadow (focus ring) */
   background-color: transparent; /* Ensure background is transparent */
 }
@@ -592,7 +574,6 @@ body {
   border: none; /* Remove border */
 }
 
-
 /*** Spotlight ***/
 
 .spotlight-container {
@@ -601,7 +582,7 @@ body {
   align-items: center; /* Center items vertically */
   gap: 1rem; /* Space between columns */
   padding: 1rem; /* Optional padding */
-  margin-top:  7rem;
+  margin-top: 7rem;
 }
 
 .image-content {
@@ -613,7 +594,7 @@ body {
   margin-bottom: 4rem; /* Equivalent to mb-4 */
   font-weight: 700; /* Adjust the font-weight as needed */
   text-align: left; /* Center the text */
-  font-size: 5rem;    
+  font-size: 5rem;
 }
 
 .spotlight-button {
@@ -637,52 +618,48 @@ body {
 
 .spotlight-text-content {
   justify-self: start; /* Align text to the start (left) */
-  margin-left: 30px;;
-  margin-bottom: 5rem; 
+  margin-left: 30px;
+  margin-bottom: 5rem;
   margin-top: 2rem;
 }
 
-
 /*Text*/
-
 
 .TextContent {
   justify-self: start; /* Align text to the start (left) */
-  margin-left: 20px;;
-  margin-bottom: 5rem; 
+  margin-left: 20px;
+  margin-bottom: 5rem;
   margin-top: 5rem;
-  font-family: 'Sansita';
+  font-family: "Sansita";
 }
 
-
-.Text-1{
+.Text-1 {
   font-optical-sizing: auto;
   font-weight: 900;
   font-style: oblique;
   font-size: 3rem;
 }
 
-.Text-2{
+.Text-2 {
   font-optical-sizing: auto;
   font-weight: 900;
   font-style: oblique;
   font-size: 3rem;
 }
 
-.Text-3{
+.Text-3 {
   font-optical-sizing: auto;
   font-weight: 900;
   font-style: normal;
   color: #111111;
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   font-family: "Poppins";
 }
 
-
 /*** Footer ***/
 
-.footer-name{
-  font-size: 3rem; 
+.footer-name {
+  font-size: 3rem;
   font-weight: bolder;
 }
 
@@ -708,11 +685,9 @@ body {
   margin: 0;
 }
 
-
-
 /* Dropdown styles */
 
-.dropdown-about{
+.dropdown-about {
   position: relative;
   display: inline-block;
 }
@@ -728,7 +703,7 @@ body {
   position: absolute;
   background-color: #070707; /* Dropdown background color */
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Shadow effect */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); /* Shadow effect */
   z-index: 1100; /* Higher than navbar to overlay properly */
   top: 100%; /* Position below the dropdown button */
   left: 0; /* Align to the left of the button */
@@ -783,29 +758,27 @@ body {
   background: #f8f9fa;
 }
 
-
 /*SK Youth*/
 
 .youth-maintext {
-  font-weight: bolder; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
+  font-weight: bolder;
+  color: #141313;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
   font-size: 60px;
   margin-left: 30px;
 }
 
 .youth-subtext {
-  font-weight: 200; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
+  font-weight: 200;
+  color: #141313;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: slideInLeft;
   font-size: 30px;
   margin-left: 30px;
 }
-
 
 .youth-container {
   display: grid;
@@ -823,7 +796,7 @@ body {
   color: #060707; /* Equivalent to text-primary */
   font-weight: 600; /* Adjust the font-weight as needed */
   text-align: left; /* Center the text */
-  font-size: 5rem;    
+  font-size: 5rem;
 }
 
 /* Gradient Backgrounds */
@@ -836,7 +809,7 @@ body {
 }
 
 .gradient-custom-4 {
-  background: linear-gradient(45deg, #ff6a00 0%, #ee0979 100%);
+  background: linear-gradient(45deg, #ff6a00 0%, #ee0979 100%); /*!important*/
   color: white;
   border: none;
   border-radius: 10px;
@@ -850,24 +823,25 @@ body {
   margin: 5px;
 }
 
-.main-timeline:before { 
-  content: ''; 
-  position: absolute; 
-  width: 6px; 
-  background-color: #25327A;
-  top: 0; 
-  bottom: 0; 
-  left: 50%; 
-  margin-left: -3px; 
+.main-timeline:before {
+  content: "";
+  position: absolute;
+  width: 6px;
+  background-color: #25327a;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -3px;
 }
 
 /* Timeline Items */
-.timeline-left, .timeline-right {
-  position: relative; 
-  width: 45%; 
-  padding: 20px; 
-  border-radius: 6px; 
-  margin-bottom: 30px; 
+.timeline-left,
+.timeline-right {
+  position: relative;
+  width: 45%;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 30px;
 }
 
 .timeline-left {
@@ -878,126 +852,48 @@ body {
   left: 0;
 }
 
-.timeline-left .card, .timeline-right .card { 
-  position: relative; 
-  border-radius: 6px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-} 
+.timeline-left .card,
+.timeline-right .card {
+  position: relative;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-.timeline-left .card:before, .timeline-right .card:before { 
-  content: ''; 
-  position: absolute; 
-  top: 20px; 
-  width: 0; 
-  height: 0; 
-  border-style: solid; 
-} 
+.timeline-left .card:before,
+.timeline-right .card:before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
 
-.timeline-left .card:before { 
-  left: -15px; 
-  border-width: 10px 15px 10px 0; 
+.timeline-left .card:before {
+  left: -15px;
+  border-width: 10px 15px 10px 0;
   border-color: transparent #6a11cb transparent transparent; /* Color for arrow */
-} 
+}
 
-.timeline-right .card:before { 
-  right: -15px; 
-  border-width: 10px 0 10px 15px; 
+.timeline-right .card:before {
+  right: -15px;
+  border-width: 10px 0 10px 15px;
   border-color: transparent transparent transparent #ff6a00; /* Color for arrow */
-} 
-
+}
 
 /*SK Council*/
 
-.council-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px; /* Adjusts the space between the cards */
+.img-responsive {
+  width: 100%; /* Ensures the image scales properly */
+  height: auto; /* Maintains the aspect ratio */
 }
-
-.flip-card {
-  background-color: transparent;
-  border: 1px solid #f1f1f1;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  width: 300px; /* Adjust the width as needed */
-  height: 350px; /* Adjust the height as needed */
-  margin: 30px
- 
-}
-
-/* This container is needed to position the front and back side */
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-}
-
-/* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-/* Position the front and back side */
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari */
-  backface-visibility: hidden;
-}
-
-/* Style the front side (fallback if image is missing) */
-.flip-card-front {
-  background-color: #bbb;
-  color: black;
-}
-
-/* Style the back side */
-.flip-card-back {
-  background-color: dodgerblue;
-  color: white;
-  transform: rotateY(180deg);
-}
-
-
 
 /*Former Council*/
-.Former-main-img{
-  width: 80%;
-  height: 50%;
-  justify-content: center;
-}
-
-.Former-img-container{
- 
-  display: flex;
-  justify-content: center; /* Centers horizontally */
-  align-items: center; /* Centers vertically */
-  margin-bottom: 2rem;
-}
 
 .carousel-container {
   margin: 0 auto; /* Center the carousel container */
-  max-width: 1200px; /* Set a maximum width */
+  max-width: 1500px; /* Set a maximum width */
 }
-
-.dropdown-term {
-  position: relative;
-  display: inline-block;
-}
-
-/* Ensure dropdown-menu is positioned correctly below the button */
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  transform: translateY(4px); /* Optional: Adjust space between button and dropdown */
-  z-index: 1000; /* Ensure dropdown is above other elements */
-}
-
 
 /*History*/
 
@@ -1025,32 +921,29 @@ body {
   margin-right: 1rem; /* Space between the text and image */
 }
 
-
 /*Contact Us*/
 
-
-
-.DividerType2{
+.DividerType2 {
   margin-top: auto;
   display: inline-block;
   padding: 3rem;
   animation: fadeIn 1s ease-in-out;
-  width: 90%; 
-  text-align: center; 
-  margin-left: auto;  
-  margin-right: auto; 
+  width: 90%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.DividerText{
-  font-weight: 900; 
-  font-size: 2rem; 
-  letter-spacing: 0.1rem; 
+.DividerText {
+  font-weight: 900;
+  font-size: 2rem;
+  letter-spacing: 0.1rem;
   margin-left: 8rem;
 }
 
-.ContactCard{
+.ContactCard {
   font-weight: 400;
-  text-align: center;   
+  text-align: center;
   padding: 5em;
   animation-duration: 1s;
   animation-fill-mode: both;
@@ -1059,12 +952,12 @@ body {
   margin: 2em;
 }
 
-
 /****** Form *******/
 
 /* Right part of container */
-.sign-in-form, .sign-up-form {
-  background-color: #E4E4E4;
+.sign-in-form,
+.sign-up-form {
+  background-color: #e4e4e4;
   height: 500px;
   width: 450px;
   display: flex;
@@ -1075,8 +968,9 @@ body {
   margin-left: auto;
 }
 
-.sign-in-form button, .sign-up-form button {
-  color: #25327A;
+.sign-in-form button,
+.sign-up-form button {
+  color: #25327a;
   height: 50px;
   width: 35%;
   font-weight: bold;
@@ -1086,9 +980,10 @@ body {
   box-shadow: 0px 2px 4px;
 }
 
-.welcome-back-sign-in h2, .start-with-us-sign-up h2 {
-  color: #25327A;
-  font-family: 'Sansita';
+.welcome-back-sign-in h2,
+.start-with-us-sign-up h2 {
+  color: #25327a;
+  font-family: "Sansita";
   font-style: italic;
   font-weight: bold;
   font-size: 40px;
@@ -1098,12 +993,13 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   gap: 15px;
   margin-left: 20px;
 }
 
-.sign-in-username input, .sign-in-password input {
+.sign-in-username input,
+.sign-in-password input {
   width: 300px;
   height: 50px;
   border-style: none;
@@ -1121,10 +1017,11 @@ form {
 }
 
 #sign-up-button {
-  color: #25327A;
+  color: #25327a;
   font-weight: bold;
 }
 
-#sign-in-forgot-password:hover, #sign-up-button:hover {
+#sign-in-forgot-password:hover,
+#sign-up-button:hover {
   text-decoration: underline;
 }

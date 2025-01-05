@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';  // Make sure Bootstrap JS is included
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const About = () => {
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState("");
   const [carouselPhotos, setCarouselPhotos] = useState([]); // Default to an empty array
 
   // Fetch description from /Website API
   useEffect(() => {
     const fetchDescription = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/Website');
-        setDescription(response.data.description || ''); // Handle case where description might be undefined
+        const response = await axios.get("http://localhost:5000/Website");
+        setDescription(response.data.description || ""); // Handle case where description might be undefined
       } catch (error) {
-        console.error('Error fetching description:', error);
-        setDescription('Error loading description'); // Fallback in case of error
+        console.error("Error fetching description:", error);
+        setDescription("Error loading description"); // Fallback in case of error
       }
     };
 
@@ -26,10 +24,10 @@ const About = () => {
   useEffect(() => {
     const fetchCarouselPhotos = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/sk');
+        const response = await axios.get("http://localhost:5000/api/sk");
         setCarouselPhotos(response.data || []); // Ensure response is an array or fallback to an empty array
       } catch (error) {
-        console.error('Error fetching carousel photos:', error);
+        console.error("Error fetching carousel photos:", error);
         setCarouselPhotos([]); // Fallback to empty array
       }
     };
@@ -39,11 +37,11 @@ const About = () => {
 
   // Initialize the carousel to ensure it auto-slides
   useEffect(() => {
-    const carouselElement = document.querySelector('#youthCarousel');
+    const carouselElement = document.querySelector("#youthCarousel");
     if (carouselElement) {
       // Initialize the Bootstrap carousel
       new window.bootstrap.Carousel(carouselElement, {
-        ride: 'carousel',
+        ride: "carousel",
         interval: 2000, // Auto-slide every 2 seconds
       });
     }
