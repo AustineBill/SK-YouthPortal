@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Breadcrumb } from 'react-bootstrap';
+import { Breadcrumb, Card, Badge } from 'react-bootstrap';
 import axios from 'axios';
 
 const Mandate = () => {
@@ -36,22 +36,82 @@ const Mandate = () => {
 
       <div className="text-center text-lg-start m-4 mv-8">
         <h1 className="Maintext animated slideInRight">Mandate</h1>
-        <p className='Subtext'>{mandateInfo.mandate || 'Loading...'}</p>
+        <p className='Subtext'> Goals </p>
       </div>
 
-      <div className="text-center text-lg-start m-5">
-        <h1 className="man-maintext animated slideInRight">Mission</h1>
-        <p className='man-subtext'>{mandateInfo.mission || 'Loading...'}</p>
-      </div>
+      {/* Timeline Container */}
+      <div className="main-timeline">
+        {/* Mandate */}
+        <div className="timeline-left">
+          <Card className="gradient-custom">
+            <Card.Body className="p-4">
+              <i className="bi bi-0-circle"></i> 
+              <h4>Mandate</h4>
+              <p className="small text-white-50 mb-4">Updated Info</p>
+              <p>{mandateInfo.mandate || 'Loading Mandate...'}</p>
+              <Badge className="text-black mb-0 me-1" bg="light">
+                New
+              </Badge>
+              <Badge className="text-black mb-0" bg="light">
+                Admin
+              </Badge>
+            </Card.Body>
+          </Card>
+        </div>
 
-      <div className="text-center text-lg-end m-5">
-        <h1 className="man-maintext animated slideInLeft">Vision</h1>
-        <p className='man-subtext'>{mandateInfo.vision || 'Loading...'}</p>
-      </div>
+        {/* Mission */}
+        <div className="timeline-right">
+          <Card className="gradient-custom-4">
+            <Card.Body className="p-4">
+              <i className="bi bi-0-circle"></i> 
+              <h4>Mission</h4>
+              <p className="small text-white-50 mb-4">Updated Info</p>
+              <p>{mandateInfo.mission || 'Loading Mission...'}</p>
+              <Badge className="text-black mb-0 me-1" bg="light">
+                New
+              </Badge>
+              <Badge className="text-black mb-0" bg="light">
+                Admin
+              </Badge>
+            </Card.Body>
+          </Card>
+        </div>
 
-      <div className="text-center text-lg-start m-5">
-        <h1 className="man-maintext animated slideInRight">Objective</h1>
-        <p className='man-subtext'>{mandateInfo.objectives || 'Loading...'}</p>
+        {/* Vision */}
+        <div className="timeline-left">
+          <Card className="gradient-custom">
+            <Card.Body className="p-4">
+              <i className="bi bi-0-circle"></i> 
+              <h4>Vision</h4>
+              <p className="small text-white-50 mb-4">Updated Info</p>
+              <p>{mandateInfo.vision || 'Loading Vision...'}</p>
+              <Badge className="text-black mb-0 me-1" bg="light">
+                New
+              </Badge>
+              <Badge className="text-black mb-0" bg="light">
+                Admin
+              </Badge>
+            </Card.Body>
+          </Card>
+        </div>
+
+        {/* Objectives */}
+        <div className="timeline-right">
+          <Card className="gradient-custom-4">
+            <Card.Body className="p-4">
+              <i className="bi bi-0-circle"></i> 
+              <h4>Objectives</h4>
+              <p className="small text-white-50 mb-4">Updated Info</p>
+              <p>{mandateInfo.objectives || 'Loading Objectives...'}</p>
+              <Badge className="text-black mb-0 me-1" bg="light">
+                New
+              </Badge>
+              <Badge className="text-black mb-0" bg="light">
+                Admin
+              </Badge>
+            </Card.Body>
+          </Card>
+        </div>
       </div>
     </div>
   );

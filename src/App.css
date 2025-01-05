@@ -796,7 +796,6 @@ body {
   margin-left: 30px;
 }
 
-
 .youth-subtext {
   font-weight: 200; 
   color: #141313; 
@@ -814,7 +813,6 @@ body {
   align-items: center; /* Center items vertically */
   gap: 1rem; /* Space between columns */
   padding: 1rem; /* Optional padding */
-  margin-top:  7rem;
 }
 
 .youth-text-content {
@@ -823,54 +821,90 @@ body {
 
 .youth-head {
   color: #060707; /* Equivalent to text-primary */
-  margin-bottom: 4rem; /* Equivalent to mb-4 */
-  font-weight: 700; /* Adjust the font-weight as needed */
+  font-weight: 600; /* Adjust the font-weight as needed */
   text-align: left; /* Center the text */
   font-size: 5rem;    
 }
 
-
-/*Mandate*/
-
-.man-maintext {
-  font-weight: bold; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
-  font-size: 70px;
-  margin: 30px;
+/* Gradient Backgrounds */
+.gradient-custom {
+  background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.man-subtext {
-  font-weight: 200; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
-  font-size: 30px;
-  margin: 0px 300px auto 300px;
+.gradient-custom-4 {
+  background: linear-gradient(45deg, #ff6a00 0%, #ee0979 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.Mission-text {
-  font-weight: bolder; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
-  font-size: 70px;
-  margin-left: 30px;
+/* Timeline Container */
+.main-timeline {
+  position: relative;
+  padding: 20px 0;
+  margin: 5px;
 }
 
-.Mission-subtext {
-  font-weight: 200; 
-  color: #141313; 
-  animation-duration: 1s; 
-  animation-fill-mode: both; 
-  animation-name: slideInLeft; 
-  font-size: 30px;
-  margin-left: 30px;
+.main-timeline:before { 
+  content: ''; 
+  position: absolute; 
+  width: 6px; 
+  background-color: #25327A;
+  top: 0; 
+  bottom: 0; 
+  left: 50%; 
+  margin-left: -3px; 
 }
+
+/* Timeline Items */
+.timeline-left, .timeline-right {
+  position: relative; 
+  width: 45%; 
+  padding: 20px; 
+  border-radius: 6px; 
+  margin-bottom: 30px; 
+}
+
+.timeline-left {
+  left: 55%;
+}
+
+.timeline-right {
+  left: 0;
+}
+
+.timeline-left .card, .timeline-right .card { 
+  position: relative; 
+  border-radius: 6px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+} 
+
+.timeline-left .card:before, .timeline-right .card:before { 
+  content: ''; 
+  position: absolute; 
+  top: 20px; 
+  width: 0; 
+  height: 0; 
+  border-style: solid; 
+} 
+
+.timeline-left .card:before { 
+  left: -15px; 
+  border-width: 10px 15px 10px 0; 
+  border-color: transparent #6a11cb transparent transparent; /* Color for arrow */
+} 
+
+.timeline-right .card:before { 
+  right: -15px; 
+  border-width: 10px 0 10px 15px; 
+  border-color: transparent transparent transparent #ff6a00; /* Color for arrow */
+} 
+
 
 /*SK Council*/
 
