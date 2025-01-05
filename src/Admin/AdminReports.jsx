@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import './styles/adminreports.css'; // New CSS file for AdminReports styling
+import './styles/AdminReports.css'; // New CSS file for AdminReports styling
 
 const Reports = () => {
     const [activeTable, setActiveTable] = useState('users');
@@ -42,7 +42,7 @@ const Reports = () => {
         fetchData();
     }, [activeTable]);
 
-    // Group data by date (date, monthly, or annual) using created_at for users
+    // Group data by date (date, monthly, or annual) using created_at for users, equipment, schedules, and inventory
     const groupDataByDate = (data) => {
         const groupedData = data.reduce((acc, entry) => {
             const date = new Date(entry.created_at || entry.date || entry.start_date || entry.start_time);
@@ -69,6 +69,7 @@ const Reports = () => {
     const groupedUsers = groupDataByDate(usersData);
     const groupedEquipmentReservations = groupDataByDate(equipmentReservations);
     const groupedSchedules = groupDataByDate(schedules);
+    const groupedInventory = groupDataByDate(inventory);
 
     // Generate PDF
     const generatePDF = () => {
@@ -276,19 +277,19 @@ const Reports = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {inventory.length === 0 ? (
+                                {Object.entries(groupedInventory).length === 0 ? (
                                     <tr>
                                         <td colSpan="6" className="text-center">No inventory records found</td>
                                     </tr>
                                 ) : (
-                                    inventory.map(item => (
-                                        <tr key={item.id}>
-                                            <td>{new Date(item.date).toLocaleDateString()}</td>
-                                            <td>{item.id}</td>
-                                            <td>{item.name}</td>
-                                            <td>{item.quantity}</td>
-                                            <td>{item.specification}</td>
-                                            <td>{item.status}</td>
+                                    Object.entries(groupedInventory).map(([date, items]) => (
+                                        <tr key={date}>
+                                            <td>{date}</td>
+                                            <td>{items.map(item => <div key={item.id}>{item.id}</div>)}</td>
+                                            <td>{items.map(item => <div key={item.id}>{item.name}</div>)}</td>
+                                            <td>{items.map(item => <div key={item.id}>{item.quantity}</div>)}</td>
+                                            <td>{items.map(item => <div key={item.id}>{item.specification}</div>)}</td>
+                                            <td>{items.map(item => <div key={item.id}>{item.status}</div>)}</td>
                                         </tr>
                                     ))
                                 )}
