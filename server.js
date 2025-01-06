@@ -8,13 +8,6 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const moment = require("moment-timezone");
 
-require("dotenv").config();
-const {
-  generateRandomId,
-  EncryptionCode,
-  DecryptionCode,
-} = require("./src/WebStructure/Codex");
-
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -30,6 +23,8 @@ const pool = new Pool({
   password: "iSKedWB2024",
   port: 5432,
 });
+
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 pool.query("SET timezone = 'UTC';");
 
@@ -593,10 +588,22 @@ app.get("/ViewEquipment", async (req, res) => {
   }
 });
 /******** Inventory ********/
-app.use("/public", express.static(path.join(__dirname, "public")));
+
+const MilestoneStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/Asset/SK_Officials"); // Store in the desired folder
+  },
+  filename: (req, file, cb) => {
+    // Retain the original filename and just add a suffix to ensure uniqueness
+    const fileName = file.originalname.replace(/\s+/g, "_"); // Optionally replace spaces with underscores
+    cb(null, fileName); // Save the file with its original name
+  },
+});
+
+const Milestonesupload = multer({ storage: MilestoneStorage });
 
 // Define multer storage configuration to save files in public/Asset
-const storage = multer.diskStorage({
+const Inventorystorage = multer.diskStorage({
   destination: (req, file, cb) => {
     const dir = path.join(__dirname, "public", "Equipment");
     // Make sure the directory exists
@@ -611,7 +618,22 @@ const storage = multer.diskStorage({
     cb(null, sanitizedFilename); // Keep the original file name
   },
 });
-const upload = multer({ storage: storage });
+
+const upload = multer({ storage: Inventorystorage });
+
+// Set up the storage engine for multer
+const skOfficialsStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/Asset/SK_Officials"); // Store in the desired folder
+  },
+  filename: (req, file, cb) => {
+    // Retain the original filename and just add a suffix to ensure uniqueness
+    const fileName = file.originalname.replace(/\s+/g, "_"); // Optionally replace spaces with underscores
+    cb(null, fileName); // Save the file with its original name
+  },
+});
+
+const skOfficialsupload = multer({ storage: skOfficialsStorage });
 
 app.get("/api/programs", async (req, res) => {
   try {
@@ -819,24 +841,6 @@ app.put("/Website", async (req, res) => {
     res.status(500).json({ error: "Error updating website details" });
   }
 });
-app.get("/api/programs", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM Programs");
-    const programs = result.rows.map((program) => ({
-      ...program,
-      image_url: program.image_url.startsWith("http")
-        ? program.image_url
-        : `http://localhost:5000${program.image_url.replace(
-            "/Asset",
-            "/public/Asset"
-          )}`,
-    }));
-    res.status(200).json(programs);
-  } catch (error) {
-    console.error("Error fetching programs:", error);
-    res.status(500).json({ error: "Failed to fetch programs" });
-  }
-});
 app.get("/api/sk", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM Website");
@@ -897,48 +901,118 @@ app.get("/Skcouncil", async (req, res) => {
   }
 });
 
-// Update SK Council Member
-app.put("/Skcouncil/:id", async (req, res) => {
-  const { name, age, position, description } = req.body;
-  const { id } = req.params;
-
-  // Validate input data
-  if (!name || !age || !position || !description) {
-    return res.status(400).json({ error: "All fields are required" });
+// Add new SkCouncil record
+app.post("/Skcouncil", skOfficialsupload.single("image"), async (req, res) => {
+  // Ensure the file is uploaded
+  if (!req.file) {
+    return res.status(400).json({ error: "No file uploaded" });
   }
 
+  const imagePath = "/Asset/SK_Officials/" + req.file.filename; // Use the new unique filename path
+
   try {
-    // Update the SK Council member's data in the Skcouncil table
-    await pool.query(
-      "UPDATE Skcouncil SET name = $1, age = $2, position = $3, description = $4 WHERE id = $5",
-      [name, age, position, description, id]
+    // Check if the image already exists in the database
+    const existingRecord = await pool.query(
+      "SELECT * FROM SkCouncil WHERE image = $1",
+      [imagePath]
     );
-    res.json({ message: "SK Council member updated successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error updating SK Council member" });
-  }
-});
-// Add SK Council Member
-app.post("/Skcouncil", async (req, res) => {
-  const { name, age, position, description } = req.body;
-  console.log(req.body); // Log the incoming data
 
-  if (!name || !age || !position || !description) {
-    return res.status(400).json({ error: "All fields are required" });
-  }
+    if (existingRecord.rows.length > 0) {
+      return res
+        .status(400)
+        .json({ error: "Image with this filename already exists" });
+    }
 
-  try {
+    // If no duplicate is found, insert the new record
     const result = await pool.query(
-      "INSERT INTO Skcouncil (name, age, position, description) VALUES ($1, $2, $3, $4) RETURNING *",
-      [name, age, position, description]
+      "INSERT INTO SkCouncil (image) VALUES ($1) RETURNING *",
+      [imagePath]
     );
-    res.json(result.rows[0]);
+
+    res.status(201).json({
+      message: "Record added successfully",
+      data: result.rows[0], // Return the newly added record
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error adding SK Council member" });
+    console.error("Error adding record:", error);
+    res.status(500).json({ error: "Failed to add SkCouncil record" });
   }
 });
+
+// Edit an existing SkCouncil record
+app.put(
+  "/Skcouncil/:id",
+  skOfficialsupload.single("image"),
+  async (req, res) => {
+    const { id } = req.params; // Get the id of the record from the URL parameter
+    // Check if a file was uploaded
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+    const imagePath = "/Asset/SK_Officials/" + req.file.filename; // Generate the image path
+    try {
+      const result = await pool.query(
+        "UPDATE SkCouncil SET image = $1 WHERE id = $2 RETURNING *",
+        [imagePath, id] // Update the image column with the new file path
+      );
+
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: "Record not found" });
+      }
+
+      res.status(200).json({
+        message: "Record updated successfully",
+        data: result.rows[0], // Return the updated record with the new image
+      });
+    } catch (error) {
+      console.error("Error updating record:", error);
+      res.status(500).json({ error: "Failed to update SkCouncil record" });
+    }
+  }
+);
+
+app.get("/spotlight", async (req, res) => {
+  try {
+    // Fetching data from the 'Spotlight' table
+    const result = await pool.query("SELECT * FROM Spotlight");
+
+    // Map through the rows and process image URLs
+    const spot = result.rows
+      .map((item) => {
+        // Check if 'images' exists and is not empty
+        if (!item.images) {
+          return null; // Skip this item if no images exist
+        }
+
+        // Split the 'images' column value into individual image paths
+        const imageUrls = item.images.split(",").map((url) => url.trim()); // Trim any extra spaces from URLs
+
+        // Map the frontimage and the individual images
+        return {
+          ...item,
+          frontImage: item.frontimage
+            ? `http://localhost:5000${item.frontimage.replace(
+                "/Asset",
+                "/public/Asset"
+              )}`
+            : null,
+          images: imageUrls.map((url) =>
+            url.startsWith("http")
+              ? url
+              : `http://localhost:5000${url.replace("/Asset", "/public/Asset")}`
+          ),
+        };
+      })
+      .filter(Boolean); // Remove null entries (where images were missing)
+
+    // Return the processed spotlight data as JSON
+    res.status(200).json(spot);
+  } catch (error) {
+    console.error("Error fetching spotlight data:", error);
+    res.status(500).json({ error: "Failed to fetch spotlight data" });
+  }
+});
+
 // Update contact details
 app.put("/contact", async (req, res) => {
   const { contact_number, location, gmail } = req.body;
