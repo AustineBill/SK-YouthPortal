@@ -5,9 +5,9 @@ import axios from "axios";
 
 const Spotlight = () => {
   const [carouselPhotos, setCarouselPhotos] = useState([]);
+  const [spotlightData, setSpotlightData] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch photos for the carousel from /api/sk API
   useEffect(() => {
     const fetchCarouselPhotos = async () => {
       try {
@@ -22,17 +22,35 @@ const Spotlight = () => {
     fetchCarouselPhotos();
   }, []);
 
+  useEffect(() => {
+    const fetchSpotlightData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/spotlight");
+        console.log(response.data); // Log the response
+        setSpotlightData(response.data);
+      } catch (error) {
+        console.error("Error fetching spotlight data:", error);
+        setSpotlightData([]); // Fallback to empty array
+      }
+    };
+
+    fetchSpotlightData();
+  }, []);
+
   return (
     <div className="container-fluid">
+      {/* Breadcrumb */}
       <Breadcrumb className="ms-5 mt-3">
         <Breadcrumb.Item onClick={() => navigate("/Home")}>
           Home
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>Hightlights</Breadcrumb.Item>
+        <Breadcrumb.Item active>Highlights</Breadcrumb.Item>
       </Breadcrumb>
-      <div className="text-center text-lg-start m-4 mv-8">
+
+      {/* Title Section */}
+      <div className="text-center text-lg-start m-4">
         <h1 className="Maintext animated slideInRight">Spotlight</h1>
-        <p className="Subtext">Celebrating SK Youth Excellent </p>
+        <p className="Subtext">Celebrating SK Youth Excellence</p>
       </div>
 
       {/* Carousel Section */}
@@ -95,15 +113,29 @@ const Spotlight = () => {
         </div>
       </div>
 
-      <div className="CardContainer">
-        <Card className="MediumCard">
-          <Card.Img variant="top" src="holder.js/100px180" />
-          <Card.Body className="d-flex flex-column align-items-center ">
-            <Card.Title className="fs-5 fw-bold text-dark">
-              Card Title
-            </Card.Title>
-          </Card.Body>
-        </Card>
+      {/* Cards Section */}
+      <div className="d-flex flex-wrap justify-content-center">
+        {spotlightData.length > 0 ? (
+          spotlightData.map((spotlight, index) =>
+            (spotlight.images || []).map((image, imgIndex) => (
+              <Card className="MediumCard m-3" key={`${index}-${imgIndex}`}>
+                <Card.Img
+                  variant="top"
+                  src={image}
+                  alt={`Milestone ${imgIndex + 1}`}
+                  style={{ height: "200px", objectFit: "cover" }}
+                />
+                <Card.Body className="d-flex flex-column align-items-center">
+                  <Card.Title className="fs-5 fw-bold text-dark">
+                    Milestone {imgIndex + 1}
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            ))
+          )
+        ) : (
+          <p className="text-center text-muted py-5">No milestones available</p>
+        )}
       </div>
     </div>
   );

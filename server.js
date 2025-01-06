@@ -589,6 +589,19 @@ app.get("/ViewEquipment", async (req, res) => {
 });
 /******** Inventory ********/
 
+const MilestoneStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/Asset/SK_Officials"); // Store in the desired folder
+  },
+  filename: (req, file, cb) => {
+    // Retain the original filename and just add a suffix to ensure uniqueness
+    const fileName = file.originalname.replace(/\s+/g, "_"); // Optionally replace spaces with underscores
+    cb(null, fileName); // Save the file with its original name
+  },
+});
+
+const Milestonesupload = multer({ storage: MilestoneStorage });
+
 // Define multer storage configuration to save files in public/Asset
 const Inventorystorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -957,6 +970,48 @@ app.put(
     }
   }
 );
+
+app.get("/spotlight", async (req, res) => {
+  try {
+    // Fetching data from the 'Spotlight' table
+    const result = await pool.query("SELECT * FROM Spotlight");
+
+    // Map through the rows and process image URLs
+    const spot = result.rows
+      .map((item) => {
+        // Check if 'images' exists and is not empty
+        if (!item.images) {
+          return null; // Skip this item if no images exist
+        }
+
+        // Split the 'images' column value into individual image paths
+        const imageUrls = item.images.split(",").map((url) => url.trim()); // Trim any extra spaces from URLs
+
+        // Map the frontimage and the individual images
+        return {
+          ...item,
+          frontImage: item.frontimage
+            ? `http://localhost:5000${item.frontimage.replace(
+                "/Asset",
+                "/public/Asset"
+              )}`
+            : null,
+          images: imageUrls.map((url) =>
+            url.startsWith("http")
+              ? url
+              : `http://localhost:5000${url.replace("/Asset", "/public/Asset")}`
+          ),
+        };
+      })
+      .filter(Boolean); // Remove null entries (where images were missing)
+
+    // Return the processed spotlight data as JSON
+    res.status(200).json(spot);
+  } catch (error) {
+    console.error("Error fetching spotlight data:", error);
+    res.status(500).json({ error: "Failed to fetch spotlight data" });
+  }
+});
 
 // Update contact details
 app.put("/contact", async (req, res) => {
