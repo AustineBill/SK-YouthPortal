@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../WebStructure/AuthContext';
-import './styles/adminmain.css';
+// import './styles/adminmain.css';
+import './styles/Admin-Main.css';
+// import './styles/Admin-CSS.css';
 import { Bar, Pie, Line } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -152,94 +154,98 @@ const AdminMain = () => {
     }
 
     return (
-        <div className="admin-main-wrapper">
-            <div className="admin-main-container">
-                <div className="analytics-container">
-                    <div className="content-container">
-                        <div className="admin-header text-center text-lg-start mt-4">
-                            <h1 className="Maintext-Calendar animated slideInRight">Analytics Dashboard</h1>
-                            <p className="Subtext-Calendar">Overview of the admin analytics.</p>
-                        </div>
+        <div className="admin-dashboard-container">
+            <div className="admin-dashboard-header-labels">
+                <h2 className='admin-dashboard-label-h2 fst-italic'>Analytics Dashboard</h2>
+                <p className="admin-dashboard-label-p">Overview of the admin analytics.</p>
+            </div>
 
-                        <div className="filters">
-                            <div className="month-dropdown">
-                                <label htmlFor="month">Select Month:</label>
-                                <select
-                                    id="month"
-                                    value={selectedMonth}
-                                    onChange={(e) => setSelectedMonth(e.target.value)}
-                                >
-                                    {months.map((month, index) => (
-                                        <option key={index} value={index + 1}>
-                                            {month}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
+            <div className="admin-dashboard-filters-container d-flex flex-column">
+                <div className="month-dropdown d-flex align-items-center">
+                    <label className='month-dropdown-label' htmlFor="month">Select Month:</label>
+                    <select
+                        id="month"
+                        value={selectedMonth}
+                        onChange={(e) => setSelectedMonth(e.target.value)}
+                        className='month-classification rounded'
+                    >
+                        {months.map((month, index) => (
+                            <option key={index} value={index + 1}>
+                                {month}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-                            <div className="year-dropdown">
-                                <label htmlFor="year">Select Year:</label>
-                                <select
-                                    id="year"
-                                    value={selectedYear}
-                                    onChange={(e) => setSelectedYear(e.target.value)}
-                                >
-                                    {years.map((year, index) => (
-                                        <option key={index} value={year}>
-                                            {year}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-
-                        {validationError && (
-                            <div className="validation-error">{validationError}</div>
-                        )}
-
-                        <section className="charts-section">
-                            <div className="chart-container">
-                                <h2>Total Reservations</h2>
-                                <Bar data={reservationsChartData} options={{ responsive: true }} />
-                            </div>
-                            <div className="chart-container">
-                                <h2>Total Users</h2>
-                                <Pie data={usersPieChartData} options={{ responsive: true }} />
-                            </div>
-                            <div className="chart-container">
-                                <h2>Total Equipment</h2>
-                                <Line data={equipmentLineChartData} options={{ responsive: true }} />
-                            </div>
-                        </section>
-
-                        <section className="summary-table">
-                            <h2>Summary Table</h2>
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th>Description</th>
-                                        <th>Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Total Users</td>
-                                        <td>{dashboardData.totalUsers}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total Reservations</td>
-                                        <td>{dashboardData.totalReservations}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total Equipment</td>
-                                        <td>{dashboardData.totalEquipment}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </section>
-                    </div>
+                <div className="year-dropdown d-flex align-items-center">
+                    <label className='year-dropdown-label' htmlFor="year">Select Year:</label>
+                    <select
+                        id="year"
+                        value={selectedYear}
+                        onChange={(e) => setSelectedYear(e.target.value)}
+                        className='year-classification rounded'
+                    >
+                        {years.map((year, index) => (
+                            <option key={index} value={year}>
+                                {year}
+                            </option>
+                        ))}
+                    </select>
                 </div>
             </div>
+
+            {validationError && (
+                <div className="validation-error">{validationError}</div>
+            )}
+
+            <section className="admin-dashboard-charts-section">
+                <div className='reservations-users-container d-flex justify-content-around'>
+                    <div className="reservations-chart-container">
+                        <h2 className='reservations-label-h2'>Total Reservations</h2>
+                        <Bar data={reservationsChartData} options={{ responsive: true }} />
+                    </div>
+
+                    <div className="users-chart-container">
+                        <h2 className='users-label-h2'>Total Users</h2>
+                        <Pie data={usersPieChartData} options={{ responsive: true }} />
+                    </div>
+                </div>
+
+                <div className="equipment-chart-container">
+                    <h2 className='equipment-label-h2'>Total Equipment</h2>
+                    <Line data={equipmentLineChartData} options={{ responsive: true }} />
+                </div>
+            </section>
+
+            <section className="dashboard-summary-table-container">
+                <div className='admin-dashboard-sm-label-container'>
+                    <h2 className='sm-label-h2'>Summary Table</h2>
+                </div>
+
+                <table className="dashboard-summary-table table-bordered">
+                    <thead className='admin-summary-table-head text-center'>
+                        <tr>
+                            <th>Description</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+
+                    <tbody className='admin-summary-table-body text-center'>
+                        <tr>
+                            <td>Total Users</td>
+                            <td>{dashboardData.totalUsers}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Reservations</td>
+                            <td>{dashboardData.totalReservations}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Equipment</td>
+                            <td>{dashboardData.totalEquipment}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
         </div>
     );
 };
