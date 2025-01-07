@@ -11,7 +11,7 @@ const ManageAboutUs = () => {
   const [activeContent, setActiveContent] = useState("manageAboutDetails");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [imageCount, setImageCount] = useState(0); // State for image count
+  const [imageCount, setImageCount] = useState(0);
 
   // State for About Us details
   const [aboutDetails, setAboutDetails] = useState({
@@ -19,15 +19,15 @@ const ManageAboutUs = () => {
     mandate: "",
     mission: "",
     vision: "",
-    objective: "",
+    objectives: "", // Changed objective to objectives to match DB
     skCouncil: "",
     image_ur: { imageCount },
   });
 
   const [newAboutDetails, setNewAboutDetails] = useState({ ...aboutDetails });
   const [skCouncilInputs, setSkCouncilInputs] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false); // Track modal visibility
-  const [currentMember, setCurrentMember] = useState(null); // Track the current member being edited or added
+  const [modalVisible, setModalVisible] = useState(false);
+  const [currentMember, setCurrentMember] = useState(null);
   const [imageFile, setImageFile] = useState(null);
 
   // Fetch data
@@ -36,15 +36,21 @@ const ManageAboutUs = () => {
       setLoading(true);
       try {
         const aboutResponse = await axios.get("http://localhost:5000/Website");
+        
+        // Log the response to check the fetched data
+        console.log("Fetched data:", aboutResponse.data);
+        
+        // Ensure the objectives field is in the response
         setAboutDetails(aboutResponse.data);
         setNewAboutDetails(aboutResponse.data);
 
-        // Count the number of images in the image_url field
+        // Check if image URLs exist and count them
         const imageUrls = aboutResponse.data.image_url.match(
           /\/Asset\/SK_Photos\/[^,]+/g
         );
         setImageCount(imageUrls ? imageUrls.length : 0);
 
+        // Fetch SK Council members
         const skCouncilResponse = await axios.get(
           "http://localhost:5000/Skcouncil"
         );
@@ -95,12 +101,10 @@ const ManageAboutUs = () => {
       return;
     }
 
-    // Normalize the image filename
     const normalizedImageFile = imageFile
       ? normalizeFilename(imageFile.name)
       : normalizeFilename(currentMember.image);
 
-    // Check if the member already exists by normalized image path
     const memberExists = skCouncilInputs.some(
       (member) => normalizeFilename(member.image) === normalizedImageFile
     );
@@ -115,7 +119,6 @@ const ManageAboutUs = () => {
 
     try {
       if (!currentMember.id) {
-        // For new members, create the member with image upload
         const response = await axios.post(
           "http://localhost:5000/Skcouncil",
           formData,
@@ -131,7 +134,6 @@ const ManageAboutUs = () => {
           { ...response.data, image: response.data.image },
         ]);
       } else {
-        // For editing existing members, upload image and update the member's info
         const response = await axios.put(
           `http://localhost:5000/Skcouncil/${currentMember.id}`,
           formData,
@@ -150,7 +152,7 @@ const ManageAboutUs = () => {
         );
       }
 
-      setModalVisible(false); // Close the modal after saving
+      setModalVisible(false);
     } catch (error) {
       console.error("Error saving SK Council member", error);
       alert("Error saving SK Council member");
@@ -160,7 +162,7 @@ const ManageAboutUs = () => {
   const handleSave = async (e) => {
     await saveAboutDetails();
     await saveSkCouncilMembers();
-    setActiveContent("manageAboutDetails"); // Switch back to manage view after saving
+    setActiveContent("manageAboutDetails");
   };
 
   const handleImageChange = (e) => {
@@ -195,21 +197,52 @@ const ManageAboutUs = () => {
         {activeContent === "manageAboutDetails" && !loading && (
           <div className="admin-current-about-details-container">
             <div className="admin-about-details-group">
-              {Object.keys(aboutDetails).map(
-                (field, idx) =>
-                  field !== "id" && ( // Exclude the 'id' field
-                    <div className="admin-current-about-form" key={idx}>
-                      <label className="admin-current-about-label">
-                        {field.replace(/([A-Z])/g, " $1").toUpperCase()}
-                      </label>
-                      <textarea
-                        className="form-control"
-                        value={aboutDetails[field]}
-                        readOnly
-                      />
-                    </div>
-                  )
-              )}
+              {/* Custom section for each field */}
+              <div className="admin-description-form">
+                <label className="admin-description-label">Description</label>
+                <textarea
+                  className="admin-description-textarea form-control"
+                  value={aboutDetails.description}
+                  readOnly
+                />
+              </div>
+
+              <div className="admin-mandate-form">
+                <label className="admin-mandate-label">Mandate</label>
+                <textarea
+                  className="admin-mandate-textarea form-control"
+                  value={aboutDetails.mandate}
+                  readOnly
+                />
+              </div>
+
+              <div className="admin-mission-form">
+                <label className="admin-mission-label">Mission</label>
+                <textarea
+                  className="admin-mission-textarea form-control"
+                  value={aboutDetails.mission}
+                  readOnly
+                />
+              </div>
+
+              <div className="admin-vision-form">
+                <label className="admin-vision-label">Vision</label>
+                <textarea
+                  className="admin-vision-textarea form-control"
+                  value={aboutDetails.vision}
+                  readOnly
+                />
+              </div>
+
+              <div className="admin-objectives-form">
+                <label className="admin-objectives-label">Objectives</label>
+                <textarea
+                  className="admin-objectives-textarea form-control"
+                  value={aboutDetails.objectives}
+                  readOnly
+                />
+              </div>
+
               <button
                 onClick={() => setActiveContent("editAboutDetails")}
                 className="admin-edit-about-details-button rounded"
@@ -226,11 +259,12 @@ const ManageAboutUs = () => {
               onSubmit={handleSave}
               className="admin-edit-about-details-group"
             >
+              {/* Editable fields */}
               {Object.keys(newAboutDetails).map(
                 (field, idx) =>
-                  field !== "id" && ( // Exclude the 'id' field
-                    <div className="admin-edit-about-form" key={idx}>
-                      <label className="admin-edit-about-label">
+                  field !== "id" && (
+                    <div className={`admin-${field}-form`} key={idx}>
+                      <label className={`admin-${field}-label`}>
                         {field.replace(/([A-Z])/g, " $1").toUpperCase()}
                       </label>
                       <textarea
@@ -254,47 +288,46 @@ const ManageAboutUs = () => {
 
         {activeContent === "manageAboutDetails" && !loading && (
           <div className="admin-current-about-details-container">
-            <div className="admin-about-details-group">
-              <h3>SK Council Members</h3>
-              <table className="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Image</th>
-                    <th>Actions</th>
+            <h3>SK Council Members</h3>
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {skCouncilInputs.map((member, index) => (
+                  <tr key={index}>
+                    <td>
+                      <img
+                        src={member.image}
+                        alt={`SK Member ${index + 1}`}
+                        style={{ width: "100px", height: "auto" }}
+                      />
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-primary btn-sm me-2"
+                        onClick={() => editSkCouncilInput(member)}
+                      >
+                        Edit
+                      </button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {skCouncilInputs.map((member, index) => (
-                    <tr key={index}>
-                      <td>
-                        <img
-                          src={member.image}
-                          alt={`SK Member ${index + 1}`}
-                          style={{ width: "100px", height: "auto" }}
-                        />
-                      </td>
-                      <td>
-                        <button
-                          className="btn btn-primary btn-sm me-2"
-                          onClick={() => editSkCouncilInput(member)}
-                        >
-                          Edit
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <button
-                onClick={addSkCouncilInput}
-                className="btn btn-secondary mt-3"
-              >
-                Add SK Council Member
-              </button>
-            </div>
+                ))}
+              </tbody>
+            </table>
+            <button
+              onClick={addSkCouncilInput}
+              className="btn btn-secondary mt-3"
+            >
+              Add SK Council Member
+            </button>
           </div>
         )}
 
+        {/* Modal for managing SK Council members */}
         {modalVisible && (
           <div className="modal" style={{ display: "block" }}>
             <div className="modal-dialog">
@@ -312,9 +345,9 @@ const ManageAboutUs = () => {
                 <div className="modal-body">
                   <form
                     onSubmit={(e) => {
-                      e.preventDefault(); // Prevent page reload on submit
+                      e.preventDefault();
                       if (imageFile) {
-                        saveSkCouncilMembers(); // Save the SK Council member when image is available
+                        saveSkCouncilMembers();
                       } else {
                         alert("Please upload an image");
                       }
