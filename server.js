@@ -8,6 +8,8 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const moment = require("moment-timezone");
 
+const { generateRandomId } = require("./src/WebStructure/Codex");
+
 const PORT = process.env.PORT || 5000;
 
 const app = express();
