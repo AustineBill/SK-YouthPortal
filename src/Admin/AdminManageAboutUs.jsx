@@ -36,10 +36,10 @@ const ManageAboutUs = () => {
       setLoading(true);
       try {
         const aboutResponse = await axios.get("http://localhost:5000/Website");
-        
+
         // Log the response to check the fetched data
         console.log("Fetched data:", aboutResponse.data);
-        
+
         // Ensure the objectives field is in the response
         setAboutDetails(aboutResponse.data);
         setNewAboutDetails(aboutResponse.data);
@@ -241,6 +241,18 @@ const ManageAboutUs = () => {
                   value={aboutDetails.objectives}
                   readOnly
                 />
+              </div>
+
+              <div className="admin-objectives-form">
+                <label className="admin-photos-label">Objectives</label>
+                <div className="mb-3">
+                  <label>Upload Image</label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    onChange={(e) => handleImageChange(e)}
+                  />
+                </div>
               </div>
 
               <button
