@@ -1,6 +1,126 @@
 /* Admin CSS file */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
 
+/* ____________________________________________________________________________________________________ */
+/* User Authentication */
+/* ____________________________________________________________________________________________________ */
+
+
+
+
+/* ____________________________________________________________________________________________________ */
+/* Admin Navbar */
+/* ____________________________________________________________________________________________________ */
+
+.admin-navbar {
+    height: 75px;
+    background-color: #25327A;
+    z-index: 3;
+}
+
+.admin-navbar-details {
+    width: 100%;
+}
+
+.admin-iSKed-logo {
+    height: 50px;
+    width: 50px;
+}
+
+.admin-iSKed-name,
+.admin-iSKed-name-h4 {
+    font-family: 'Sansita', sans-serif;
+}
+
+.admin-hamburger-nav {
+    color: white;
+}
+
+.admin-sign-out-button {
+    font-size: 15px;
+    color: #FFFFFF;
+    height: 45px;
+    width: 100px;
+    cursor: pointer;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-sign-out-button:hover {
+    color: rgb(2, 107, 107);
+}
+
+/* Sidebar */
+
+.admin-sidebar {
+    background-color: #000b49;
+    position: fixed;
+    padding-top: 75px;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    transition: left 0.35s ease-in-out;
+    z-index: 2;
+}
+
+.admin-sidebar-open {
+    left: 0;
+}
+
+.admin-sidebar-closed {
+    left: -250px;
+}
+
+.admin-sidebar .admin-sidebar-links {
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+}
+
+
+/* Media */
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    .admin-sign-out-button {
+        font-size: 12.5px;
+        height: 42.5px;
+        width: 90px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .admin-iSKed-name-h4 {
+        font-size: 17.5px;
+    }
+
+    .admin-sign-out-button {
+        font-size: 10px;
+        height: 40px;
+        width: 80px;
+    }
+
+    /* Sidebar */
+
+    .admin-sidebar {
+        left: -225px;
+        width: 225px;
+    }
+
+    .admin-sidebar-open {
+        left: 0;
+    }
+
+    .admin-sidebar-closed {
+        left: -225px;
+    }
+
+    .admin-sidebar .admin-sidebar-links {
+        font-size: 12.5px;
+    }
+}
+
 
 /* ____________________________________________________________________________________________________ */
 /* Admin Manage Home */
