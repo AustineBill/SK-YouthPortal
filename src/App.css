@@ -397,8 +397,8 @@ body {
 /*** Hero Header ***/
 .hero-header {
   position: relative;
-  padding: 8rem 0rem;
-  background: url(./Asset/bg.png) center center no-repeat;
+  padding: 10em 0rem;
+  background: url(/public/Asset/WebImages/Bg_noLOGO.png) center center no-repeat;
   background-size: cover;
 }
 
@@ -578,15 +578,18 @@ body {
 
 .spotlight-container {
   display: grid;
-  grid-template-columns: 1fr auto 1fr; /* 3 columns: text, button, image */
-  align-items: center; /* Center items vertically */
-  gap: 1rem; /* Space between columns */
+  grid-template-columns: 1fr auto; /* 2 columns: text, image */
+  grid-template-rows: auto 1fr auto; /* 3 rows: headline, image, button */
+  align-items: center; /* Center items vertically in each row */
+  gap: 1rem; /* Space between rows and columns */
   padding: 1rem; /* Optional padding */
   margin-top: 7rem;
+  justify-items: center; /* Center items horizontally */
 }
 
 .image-content {
   justify-self: end; /* Align image to the end (right) */
+  align-self: center;
 }
 
 .spotlight-head {
@@ -594,19 +597,23 @@ body {
   margin-bottom: 4rem; /* Equivalent to mb-4 */
   font-weight: 700; /* Adjust the font-weight as needed */
   text-align: left; /* Center the text */
-  font-size: 5rem;
+  font-size: 6rem;
 }
 
 .spotlight-button {
   font-weight: 400;
+  display: inline-block;
   text-align: center;
-  padding: 1rem;
-  font-size: 1rem;
+  padding: 0.5rem 1rem; /* Adjusted padding for a smaller button */
+  font-size: 0.875rem; /* Smaller font size */
   line-height: 1.5;
   border-radius: 0.25rem;
   color: #fff;
   text-decoration: none;
-  margin-top: 350px;
+  margin-top: 2rem; /* Add space between the image and button */
+  margin-left: auto;
+  margin-right: 2rem;
+  justify-self: center; /* Center the button horizontally */
 }
 
 .spotlight-button:hover {
@@ -658,9 +665,28 @@ body {
 
 /*** Footer ***/
 
+/*** Footer ***/
+
 .footer-name {
-  font-size: 3rem;
-  font-weight: bolder;
+  font-size: 4rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 30px;
+  position: relative;
+  left: 20px;
+  top: 10px;
+}
+
+.footer-line {
+  border: 1px solid #ffffff;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.footer-text {
+  color: #ffffff;
+  font-size: 14px;
+  margin-bottom: 30px;
 }
 
 .footer .btn.btn-link {

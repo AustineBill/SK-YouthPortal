@@ -637,44 +637,6 @@ const skOfficialsStorage = multer.diskStorage({
 
 const skOfficialsupload = multer({ storage: skOfficialsStorage });
 
-app.get("/api/programs", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM Programs");
-    const programs = result.rows.map((program) => ({
-      ...program,
-      image_url: program.image_url.startsWith("http")
-        ? program.image_url
-        : `http://localhost:5000${program.image_url.replace(
-            "/Asset",
-            "/public/Asset"
-          )}`,
-    }));
-    res.status(200).json(programs);
-  } catch (error) {
-    console.error("Error fetching programs:", error);
-    res.status(500).json({ error: "Failed to fetch programs" });
-  }
-});
-
-app.get("/api/programs/:programType", async (req, res) => {
-  const { programType } = req.params;
-  try {
-    const result = await pool.query(
-      "SELECT * FROM Programs WHERE program_type = $1",
-      [programType]
-    );
-    const program = result.rows[0]; // Assuming you're only fetching one program based on type
-    if (!program) {
-      return res.status(404).json({ error: "Program not found" });
-    }
-    // Process the image URL as needed
-    res.status(200).json(program);
-  } catch (error) {
-    console.error("Error fetching program:", error);
-    res.status(500).json({ error: "Failed to fetch program" });
-  }
-});
-
 app.post("/inventory", upload.single("image"), async (req, res) => {
   try {
     // Check if an image is uploaded
@@ -1366,16 +1328,91 @@ app.post("/approveEquipment", async (req, res) => {
     }
   });
 });
+
 //mamageprograms.
-app.get("/programs", async (req, res) => {
+
+app.get("/api/programs", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM programs");
-    res.json(result.rows);
-  } catch (err) {
-    console.error("Error getting programs:", err);
-    res.status(500).send("Internal Server Error");
+    const result = await pool.query("SELECT * FROM Programs");
+    const programs = result.rows.map((program) => {
+      // Check if image_url is null or undefined before attempting to use startsWith
+      const imageUrl = program.image_url
+        ? program.image_url.startsWith("http")
+          ? program.image_url
+          : `http://localhost:5000${program.image_url.replace(
+              "/Asset",
+              "/public/Asset"
+            )}`
+        : null; // Return null if image_url is not available
+
+      return {
+        ...program,
+        image_url: imageUrl,
+      };
+    });
+    res.status(200).json(programs);
+  } catch (error) {
+    console.error("Error fetching programs:", error);
+    res.status(500).json({ error: "Failed to fetch programs" });
   }
 });
+
+app.get("/api/programs/:programType", async (req, res) => {
+  const { programType } = req.params;
+  try {
+    const result = await pool.query(
+      "SELECT * FROM Programs WHERE program_type = $1",
+      [programType]
+    );
+    const program = result.rows[0]; // Assuming you're only fetching one program based on type
+    if (!program) {
+      return res.status(404).json({ error: "Program not found" });
+    }
+    // Process the image URL as needed
+    res.status(200).json(program);
+  } catch (error) {
+    console.error("Error fetching program:", error);
+    res.status(500).json({ error: "Failed to fetch program" });
+  }
+});
+
+const ProgramStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/Asset/Programs"); // Store in the desired folder
+  },
+  filename: (req, file, cb) => {
+    // Retain the original filename and just add a suffix to ensure uniqueness
+    const fileName = file.originalname.replace(/\s+/g, "_"); // Optionally replace spaces with underscores
+    cb(null, fileName); // Save the file with its original name
+  },
+});
+const Programupload = multer({ storage: ProgramStorage });
+
+app.post(
+  "/programs",
+  Programupload.array("amenities", 10),
+  async (req, res) => {
+    const { program_name, description, heading, program_type } = req.body;
+    const amenities = req.files.map(
+      (file) => `/Asset/Programs/${file.filename}`
+    );
+    const image_url = req.files[0]
+      ? `/Asset/Programs/${req.files[0].filename}`
+      : null; // Assuming first file is the main image
+
+    try {
+      const result = await pool.query(
+        "INSERT INTO Programs (program_name, heading, description, amenities, image_url, program_type) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+        [program_name, heading, description, amenities, image_url, program_type]
+      );
+      res.status(201).json(result.rows[0]); // Return newly added program
+    } catch (error) {
+      console.error("Error adding program:", error);
+      res.status(500).send("Error adding program");
+    }
+  }
+);
+
 app.get("/programs/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -1391,34 +1428,37 @@ app.get("/programs/:id", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-app.post("/programs", async (req, res) => {
-  const { program_name, description, image_base64 } = req.body;
-  try {
-    const result = await pool.query(
-      "INSERT INTO programs (program_name, description, image_base64) VALUES ($1, $2, $3) RETURNING *",
-      [program_name, description, image_base64]
-    );
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.error("Error creating program:", err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+
 app.put("/programs/:id", async (req, res) => {
   const { id } = req.params;
-  const { program_name, description, image_base64 } = req.body;
+  const {
+    program_name,
+    description,
+    heading,
+    amenities,
+    image_url,
+    program_type,
+  } = req.body;
 
   try {
     const result = await pool.query(
-      "UPDATE programs SET program_name = $1, description = $2, image_base64 = $3 WHERE id = $4 RETURNING *",
-      [program_name, description, image_base64, id]
+      "UPDATE programs SET program_name = $1, description = $2, heading = $3, amenities = $4, image_url = $5, program_type = $6 WHERE id = $7 RETURNING *",
+      [
+        program_name,
+        description,
+        heading,
+        amenities,
+        image_url,
+        program_type,
+        id,
+      ]
     );
 
     if (result.rows.length === 0) {
       return res.status(404).send("Program not found");
     }
 
-    res.json(result.rows[0]);
+    res.json(result.rows[0]); // Send back the updated program as a response
   } catch (err) {
     console.error("Error updating program:", err);
     res.status(500).send("Internal Server Error");

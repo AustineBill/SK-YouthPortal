@@ -1,11 +1,9 @@
-
-
 .calendar-container {
   width: 100%;
   max-width: 800px; /* Adjust based on your layout */
   margin: 0 auto;
   text-align: center;
-  font-family: 'Poppins', sans-serif; /* Optional: Use the Poppins font */
+  font-family: "Poppins", sans-serif; /* Optional: Use the Poppins font */
 }
 
 .calendar-container h2 {
@@ -25,7 +23,7 @@
   border: none;
   margin: 20px auto; /* Center the calendar */
   overflow: hidden; /* Prevent overflow issues */
-  font-family: 'Poppins', sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
   color: #000 !important; /* Ensure text is black */
   background: #fff;
 }
@@ -62,12 +60,12 @@
   text-align: left; /* Align text to the left */
   padding: 10px; /* Space for content */
   height: 100px; /* Increase height for larger tiles */
-  width: 100px;  /* Increase width for larger tiles */
+  width: 100px; /* Increase width for larger tiles */
   cursor: pointer;
   display: flex;
   justify-content: center;
-  align-items:  center;
-  box-sizing: border-box; 
+  align-items: center;
+  box-sizing: border-box;
   background-color: #fff; /* Default background for tiles */
   color: #000; /* Default text color */
   border: 1px solid #ddd; /* Optional: Add subtle border */
@@ -81,7 +79,7 @@
 
 /* Highlight current date (today) */
 .react-calendar__tile--now {
-  background: #25327A;
+  background: #25327a;
   border-radius: 5px;
   font-weight: bold;
 }
@@ -128,9 +126,6 @@
   margin: 2px 0;
 }
 
-
-
-
 /* Styling the selected date display */
 .selected-date {
   font-size: 18px;
@@ -138,7 +133,7 @@
   padding: 10px;
   border-radius: 20px;
   border: 2px solid #000000;
-  justify-self: center; 
+  justify-self: center;
 }
 
 /* Apply Dates button */
@@ -150,13 +145,12 @@
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
-  justify-self: right; 
+  justify-self: right;
 }
 
 .apply-dates:hover {
   background-color: #c9302c;
 }
-
 
 /****** Step indicator ********/
 
@@ -208,8 +202,6 @@ span {
   font-size: 14px;
 }
 
-
-
 /****** Right Side *****/
 
 .grid-container {
@@ -226,7 +218,6 @@ span {
   align-items: flex-start;
   gap: 10px; /* Space between legend items */
 }
-
 
 /* Styling for each legend item */
 .legend-item {
@@ -272,7 +263,7 @@ span {
 }
 
 /*******************/
-.ScheduleInfo{
+.ScheduleInfo {
   margin: 50px 0px 50px 0px;
   width: 100%;
 }
@@ -293,13 +284,11 @@ span {
 }
 
 fieldset {
-  border: 2px solid #007BFF;
+  border: 2px solid #007bff;
   border-radius: 5px;
   margin-bottom: 20px;
   padding: 10px 20px;
 }
-
-
 
 .reservation-count {
   position: absolute;
@@ -320,4 +309,11 @@ fieldset {
 
 .calendar-container .react-calendar__tile {
   position: relative; /* Ensure absolute positioning works within the tile */
+}
+
+.amenity-preview {
+  width: 50px; /* Adjust the size as needed */
+  height: 50px;
+  object-fit: cover; /* This will ensure that the aspect ratio is maintained while scaling the image */
+  margin-right: 10px; /* Adds space between images */
 }

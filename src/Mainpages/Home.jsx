@@ -1,13 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Carousel, Card, Spinner } from "react-bootstrap";
-import axios from "axios"; // Import axios
-import Cover from "../Asset/bg.png"; // Cover image for the carousel
+import { Link, useNavigate } from "react-router-dom";
+import { Button, Card, Spinner } from "react-bootstrap";
+import axios from "axios";
 
 const Intro = () => {
+  const [programs, setPrograms] = useState([]);
   const [events, setEvents] = useState([]);
+  const [spotlightData, setSpotlightData] = useState([]);
   const [loading, setLoading] = useState(true); // Add a loading state
   const [error, setError] = useState(null); // Add an error state
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProgramData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/programs");
+        console.log(response.data); // Log the response
+        setPrograms(response.data);
+      } catch (error) {
+        console.error("Error fetching Programs data:", error);
+        setPrograms([]); // Fallback to empty array
+      }
+    };
+
+    fetchProgramData();
+  }, []);
 
   useEffect(() => {
     // Fetch events from the backend API
@@ -33,6 +50,25 @@ const Intro = () => {
     fetchEvents(); // Call the function to fetch events
   }, []); // Empty array ensures this effect runs only once when the component mounts
 
+  useEffect(() => {
+    const fetchSpotlightData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/spotlight");
+        console.log(response.data); // Log the response
+        setSpotlightData(response.data);
+      } catch (error) {
+        console.error("Error fetching spotlight data:", error);
+        setSpotlightData([]); // Fallback to empty array
+      }
+    };
+
+    fetchSpotlightData();
+  }, []);
+
+  const handleNavigate = (type) => {
+    navigate("/ProgramDetails", { state: { programType: type } });
+  };
+
   // Loading and error handling
   if (loading)
     return (
@@ -46,8 +82,10 @@ const Intro = () => {
     <div className="container-fluid">
       <div className="hero-header">
         <div className="text-center text-lg-start m-4 mv-8">
-          <h1 className="MainText ms-5">Lagi't lagi para sa Kabataan,</h1>
-          <h1 className="SubText animated slideInRight">
+          <h1 className="MainText ms-5 offset-content">
+            Lagi't lagi para sa Kabataan,{" "}
+          </h1>
+          <h1 className="SubText animated slideInRight offset-content">
             Barangay at sa Bayan
             <span className="custom-name clr-db txt-i-db">
               {" "}
@@ -64,55 +102,59 @@ const Intro = () => {
       </div>
 
       {/* Feature Cards Section */}
-      <div className="row g-4 justify-content-center">
+      <div className="row g-5 justify-content-center">
         <div className="col-lg-3 wow fadeIn" data-wow-delay="0.1s">
           <div className="custom-feature-item ">
-            <i className="fa fa-search fa-3x text-dark mb-3"></i>
-            <span className="text-dark mb-3 fs-3 d-block">Search</span>
-            <span className="text-dark mb-0 fs-5">
+            <i className="fa fa-search fa-2x text-primary mb-2"></i>
+            <span className="fw-bold mb-2 fs-4 d-block">Search</span>
+            <span className="text-dark mb-0 fs-6">
               Unleash the champion with SK Youth's Program
             </span>
           </div>
         </div>
         <div className="col-lg-3 wow fadeIn" data-wow-delay="0.3s">
           <div className="custom-feature-item ">
-            <i className="fa fa-book fa-3x text-dark mb-3"></i>
-            <span className="text-dark mb-3 fs-3 d-block">Book</span>
-            <span className="text-dark mb-0 fs-5">Secure your spot</span>
+            <i className="fa fa-book fa-2x text-success mb-2"></i>
+            <span className="fw-bold mb-2 fs-4 d-block">Book</span>
+            <span className="text-dark mb-0 fs-6">Secure your spot</span>
           </div>
         </div>
         <div className="col-lg-3 wow fadeIn" data-wow-delay="0.5s">
           <div className="custom-feature-item ">
-            <i className="fa fa-check fa-3x text-dark mb-3"></i>
-            <span className="text-dark mb-3 fs-3 d-block">Manage</span>
-            <span className="text-dark mb-0 fs-5">
+            <i
+              className="fa fa-check fa-2x"
+              style={{ color: "#ff6347" }}
+              mb-2
+            ></i>
+            <span className="fw-bold text-dark mb-2 fs-4 d-block">Manage</span>
+            <span className="text-dark mb-0 fs-6">
               Own your Schedule, your way!
             </span>
           </div>
         </div>
       </div>
 
-      {/* Card Container for Programs (Displaying events fetched from the backend) */}
+      {/* Card Container for Programs*/}
       <div className="card-container">
-        {events.length === 0 ? (
+        {programs.length === 0 ? (
           <p>No events available</p>
         ) : (
-          events.map((event) => (
-            <Card key={event.id} className="ProgramCard">
-              {/* Display event image */}
+          programs.map((programs) => (
+            <Card key={programs.id} className="ProgramCard">
               <Card.Img
                 variant="top"
-                src={`data:image/${event.event_image_format};base64,${event.event_image}`}
+                src={programs.image_url}
+                alt={programs.program_name}
               />
               <Card.Body>
-                {/* Display event name */}
-                <Card.Title>{event.event_name}</Card.Title>
-                {/* Display event description */}
-                <Card.Text>{event.event_description}</Card.Text>
-                {/* Link to individual event page */}
-                <Link to={`/event/${event.id}`} className="btn-db">
+                <Card.Title>{programs.program_name}</Card.Title>
+                <Card.Text>{programs.heading}</Card.Text>
+                <Button
+                  onClick={() => handleNavigate(programs.program_type)}
+                  className="btn-db"
+                >
                   Learn More
-                </Link>
+                </Button>
               </Card.Body>
             </Card>
           ))
@@ -132,40 +174,46 @@ const Intro = () => {
               <Card.Body>
                 <Card.Title>{event.event_name}</Card.Title>
                 <Card.Text>{event.event_description}</Card.Text>
-                <Link to={`/event/${event.id}`} className="btn-db">
+                <Button to={`/event/${event.id}`} className="btn-db">
                   Learn More
-                </Link>
+                </Button>
               </Card.Body>
             </Card>
           ))}
         </div>
       </div>
 
-      <Link className="text-decoration-none btn-db py-2 px-4 mb-5" to="/news">
+      <Link className="spotlight-button btn-db m-2" to="/news">
         Find Out More
       </Link>
-
-      {/* Carousel Section */}
-      <Carousel
-        id="carouselExampleIndicators"
-        interval={3000}
-        controls={true}
-        indicators={true}
-      >
-        <Carousel.Item className="bg-dark">
-          <img src={Cover} className="d-block w-100" alt="Slide 1" />
-        </Carousel.Item>
-        <Carousel.Item className="bg-primary">
-          <img src={Cover} className="d-block w-100" alt="Slide 2" />
-        </Carousel.Item>
-        <Carousel.Item className="bg-secondary">
-          <img src={Cover} className="d-block w-100" alt="Slide 3" />
-        </Carousel.Item>
-      </Carousel>
 
       {/* Spotlight Section */}
       <div className="spotlight-container">
         <h1 className="spotlight-head">SK YOUTH SPOTLIGHTS</h1>
+        <div className="image-content">
+          {spotlightData.length > 0 ? (
+            spotlightData.map((spotlight, index) =>
+              // Check if frontimage exists and display it as a single image
+              spotlight.frontimage ? (
+                <img
+                  key={index}
+                  src={spotlight.frontimage}
+                  alt={`Milestone ${index + 1}`}
+                  style={{ height: "300px", objectFit: "cover" }}
+                />
+              ) : (
+                <p className="text-center text-muted py-5" key={index}>
+                  No front image available
+                </p>
+              )
+            )
+          ) : (
+            <p className="text-center text-muted py-5">
+              No milestones available
+            </p>
+          )}
+        </div>
+
         <Link className="spotlight-button btn-db" to="/Spotlight">
           View Gallery
         </Link>
