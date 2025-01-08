@@ -1013,6 +1013,9 @@
 /* Admin Users */
 /* ____________________________________________________________________________________________________ */
 
+/* Users.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+
 .admin-users-container {
     position: relative;
     padding-top: 75px;
@@ -1028,9 +1031,19 @@
     margin: 20px 0 20px 40px;
 }
 
+.admin-users-contents-container {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.admin-users-add-classification-container {
+    width: 90%;
+    gap: 0.25in;
+    margin-bottom: 20px;
+}
+
 .admin-users-classification-container {
     width: 90%;
-    margin-bottom: 20px;
 }
 
 .admin-users-classification {
@@ -1056,9 +1069,23 @@
     pointer-events: none;
 }
 
-.admin-users-contents-container {
+.admin-users-add-user-container {
+    width: 10%;
+}
+
+.admin-users-add-user-button {
+    background-color: #42BB4E;
+    color: #FFFFFF;
     width: 100%;
-    margin-bottom: 40px;
+    height: 50px;
+    font-size: 15px;
+    border-style: solid;
+    border-width: 1px;
+    transition: all 0.35s;
+}
+
+.admin-users-add-user-button:hover {
+    color: rgb(2, 107, 107);
 }
 
 .users-list-container {
@@ -1074,26 +1101,6 @@
     font-size: 17.5px;
 }
 
-.admin-users-add-user-container {
-    bottom: 20px;
-    right: 20px;
-}
-
-.admin-users-add-user-button {
-    background-color: #42BB4E;
-    color: #FFFFFF;
-    width: 150px;
-    height: 55px;
-    font-size: 17.5px;
-    border-style: solid;
-    border-width: 1px;
-    transition: all 0.35s;
-}
-
-.admin-users-add-user-button:hover {
-    color: rgb(2, 107, 107);
-}
-
 .admin-users-actions-buttons-container .admin-users-view-button,
 .admin-users-actions-buttons-container .admin-users-edit-button {
     margin-right: 10px;
@@ -1107,6 +1114,9 @@
     height: 35px;
     transition: all 0.35s;
 }
+
+
+
 
 .admin-users-add-edit-modal {
     padding-top: 75px;
@@ -1156,9 +1166,17 @@
     .admin-users-label-h2 {
         font-size: 37.5px;
     }
+    
+    .admin-users-classification-container {
+        width: 87.5%;
+    }
 
-    .admin-users-classification {
-        height: 45px;
+    .admin-users-add-user-container {
+        width: 12.5%;
+    }
+    
+    .admin-users-add-user-button {
+        height: 50px;
         font-size: 15px;
     }
 
@@ -1168,12 +1186,6 @@
 
     .admin-users-body td {
         font-size: 15px;
-    }
-
-    .admin-users-add-user-button {
-        width: 150px;
-        height: 55px;
-        font-size: 17.5px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
@@ -1189,8 +1201,21 @@
         font-size: 35px;
     }
 
+    .admin-users-classification-container {
+        width: 85%;
+    }
+    
     .admin-users-classification {
-        height: 40px;
+        height: 45px;
+        font-size: 12.5px;
+    }
+
+    .admin-users-add-user-container {
+        width: 15%;
+    }
+    
+    .admin-users-add-user-button {
+        height: 45px;
         font-size: 12.5px;
     }
 
@@ -1200,12 +1225,6 @@
 
     .admin-users-body td {
         font-size: 12.5px;
-    }
-
-    .admin-users-add-user-button {
-        width: 140px;
-        height: 50px;
-        font-size: 15px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
@@ -1234,9 +1253,22 @@
         margin: 20px 0 20px 25px;
     }
 
+    .admin-users-classification-container {
+        width: 82.5%;
+    }
+    
     .admin-users-classification {
-        height: 40px;
-        font-size: 10px;
+        height: 45px;
+        font-size: 12.5px;
+    }
+
+    .admin-users-add-user-container {
+        width: 17.5%;
+    }
+    
+    .admin-users-add-user-button {
+        height: 45px;
+        font-size: 12.5px;
     }
 
     .admin-users-head th {
@@ -1250,12 +1282,6 @@
     .admin-users-actions-buttons-container {
         flex-direction: column;
         align-items: center;
-    }
-
-    .admin-users-add-user-button {
-        width: 130px;
-        height: 45px;
-        font-size: 12.5px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
@@ -1285,9 +1311,22 @@
         margin: 20px 0 20px 20px;
     }
 
+    .admin-users-classification-container {
+        width: 80%;
+    }
+    
     .admin-users-classification {
         height: 35px;
-        font-size: 7.5px;
+        font-size: 10px;
+    }
+
+    .admin-users-add-user-container {
+        width: 20%;
+    }
+    
+    .admin-users-add-user-button {
+        height: 35px;
+        font-size: 10px;
     }
 
     .admin-users-head th {
@@ -1301,12 +1340,6 @@
     .admin-users-actions-buttons-container {
         flex-direction: column;
         align-items: center;
-    }
-
-    .admin-users-add-user-button {
-        width: 120px;
-        height: 40px;
-        font-size: 10px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,

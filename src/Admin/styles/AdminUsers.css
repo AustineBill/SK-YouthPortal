@@ -16,9 +16,19 @@
     margin: 20px 0 20px 40px;
 }
 
+.admin-users-contents-container {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.admin-users-add-classification-container {
+    width: 90%;
+    gap: 0.25in;
+    margin-bottom: 20px;
+}
+
 .admin-users-classification-container {
     width: 90%;
-    margin-bottom: 20px;
 }
 
 .admin-users-classification {
@@ -44,9 +54,23 @@
     pointer-events: none;
 }
 
-.admin-users-contents-container {
+.admin-users-add-user-container {
+    width: 10%;
+}
+
+.admin-users-add-user-button {
+    background-color: #42BB4E;
+    color: #FFFFFF;
     width: 100%;
-    margin-bottom: 40px;
+    height: 50px;
+    font-size: 15px;
+    border-style: solid;
+    border-width: 1px;
+    transition: all 0.35s;
+}
+
+.admin-users-add-user-button:hover {
+    color: rgb(2, 107, 107);
 }
 
 .users-list-container {
@@ -60,26 +84,6 @@
 
 .admin-users-body td {
     font-size: 17.5px;
-}
-
-.admin-users-add-user-container {
-    bottom: 20px;
-    right: 20px;
-}
-
-.admin-users-add-user-button {
-    background-color: #42BB4E;
-    color: #FFFFFF;
-    width: 150px;
-    height: 55px;
-    font-size: 17.5px;
-    border-style: solid;
-    border-width: 1px;
-    transition: all 0.35s;
-}
-
-.admin-users-add-user-button:hover {
-    color: rgb(2, 107, 107);
 }
 
 .admin-users-actions-buttons-container .admin-users-view-button,
@@ -147,9 +151,17 @@
     .admin-users-label-h2 {
         font-size: 37.5px;
     }
+    
+    .admin-users-classification-container {
+        width: 87.5%;
+    }
 
-    .admin-users-classification {
-        height: 45px;
+    .admin-users-add-user-container {
+        width: 12.5%;
+    }
+    
+    .admin-users-add-user-button {
+        height: 50px;
         font-size: 15px;
     }
 
@@ -159,12 +171,6 @@
 
     .admin-users-body td {
         font-size: 15px;
-    }
-
-    .admin-users-add-user-button {
-        width: 150px;
-        height: 55px;
-        font-size: 17.5px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
@@ -180,8 +186,21 @@
         font-size: 35px;
     }
 
+    .admin-users-classification-container {
+        width: 85%;
+    }
+    
     .admin-users-classification {
-        height: 40px;
+        height: 45px;
+        font-size: 12.5px;
+    }
+
+    .admin-users-add-user-container {
+        width: 15%;
+    }
+    
+    .admin-users-add-user-button {
+        height: 45px;
         font-size: 12.5px;
     }
 
@@ -191,12 +210,6 @@
 
     .admin-users-body td {
         font-size: 12.5px;
-    }
-
-    .admin-users-add-user-button {
-        width: 140px;
-        height: 50px;
-        font-size: 15px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
@@ -225,9 +238,22 @@
         margin: 20px 0 20px 25px;
     }
 
+    .admin-users-classification-container {
+        width: 82.5%;
+    }
+    
     .admin-users-classification {
-        height: 40px;
-        font-size: 10px;
+        height: 45px;
+        font-size: 12.5px;
+    }
+
+    .admin-users-add-user-container {
+        width: 17.5%;
+    }
+    
+    .admin-users-add-user-button {
+        height: 45px;
+        font-size: 12.5px;
     }
 
     .admin-users-head th {
@@ -241,12 +267,6 @@
     .admin-users-actions-buttons-container {
         flex-direction: column;
         align-items: center;
-    }
-
-    .admin-users-add-user-button {
-        width: 130px;
-        height: 45px;
-        font-size: 12.5px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
@@ -276,9 +296,22 @@
         margin: 20px 0 20px 20px;
     }
 
+    .admin-users-classification-container {
+        width: 80%;
+    }
+    
     .admin-users-classification {
         height: 35px;
-        font-size: 7.5px;
+        font-size: 10px;
+    }
+
+    .admin-users-add-user-container {
+        width: 20%;
+    }
+    
+    .admin-users-add-user-button {
+        height: 35px;
+        font-size: 10px;
     }
 
     .admin-users-head th {
@@ -292,12 +325,6 @@
     .admin-users-actions-buttons-container {
         flex-direction: column;
         align-items: center;
-    }
-
-    .admin-users-add-user-button {
-        width: 120px;
-        height: 40px;
-        font-size: 10px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
