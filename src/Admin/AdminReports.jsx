@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import "./styles/AdminReports.css"; // New CSS file for AdminReports styling
+import "./styles/AdminReports.css";
 
 const Reports = () => {
   const [activeTable, setActiveTable] = useState("users");
@@ -77,7 +77,7 @@ const Reports = () => {
 
   // Generate PDF
   const generatePDF = () => {
-    const input = document.getElementById("admin-reports-table");
+    const input = document.getElementById("admin-reports-tables-container");
     html2canvas(input).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
@@ -90,13 +90,17 @@ const Reports = () => {
 
   return (
     <div className="admin-reports-container">
-      <div className="row">
-        {/* Dropdown for selecting table */}
-        <div className="col-md-6 mb-3">
+      <div className='admin-reports-label'>
+        <h2 className='admin-reports-label-h2 fst-italic'>Reservation Reports</h2>
+      </div>
+
+      <div className="admin-reports-generate-classification-date-container d-flex">
+        <div className="admin-reports-classification-container">
+          {/* Dropdown for selecting table */}
           <select
-            className="form-select"
             value={activeTable}
             onChange={(e) => setActiveTable(e.target.value)}
+            className="admin-reports-classification rounded"
           >
             <option value="users">Users</option>
             <option value="equipment">Equipment Reservations</option>
@@ -106,33 +110,39 @@ const Reports = () => {
         </div>
 
         {/* Dropdown for selecting date sort option */}
-        <div className="col-md-6 mb-3">
+        <div className="admin-reports-date-container">
           <select
-            className="form-select"
             value={dateSortOption}
             onChange={(e) => setDateSortOption(e.target.value)}
+            className="admin-reports-date rounded"
           >
             <option value="date">Date</option>
             <option value="monthly">Monthly</option>
             <option value="annual">Annual</option>
           </select>
         </div>
-      </div>
 
-      {/* Generate PDF Button */}
-      <div className="text-end mb-3">
-        <button className="btn btn-primary" onClick={generatePDF}>
-          Generate PDF
-        </button>
+        {/* Generate PDF Button */}
+        <div className="admin-reports-generate-pdf-container d-flex justify-content-end">
+          <button
+            className="admin-reports-generate-pdf-button rounded"
+            onClick={generatePDF}
+          >
+            Generate PDF
+          </button>
+        </div>
       </div>
 
       {/* Show selected table */}
-      <div id="admin-reports-table">
+      <div 
+      id="admin-reports-tables-container" 
+      className="reports-list-container">
+        {/* Show selected table */}
         {activeTable === "users" && (
           <div className="admin-reports-users-table">
-            <h3 className="text-center mb-3">Users</h3>
-            <table className="table table-striped table-bordered">
-              <thead>
+            <h2 className="reports-users-label-h2">Users</h2>
+            <table className="admin-reports-users-table-container table-bordered">
+              <thead className='admin-reports-users-head text-center'>
                 <tr>
                   <th>Date</th>
                   <th>User ID</th>
@@ -141,7 +151,7 @@ const Reports = () => {
                   <th>Email Address</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className='admin-reports-users-body text-center'>
                 {Object.entries(groupedUsers).length === 0 ? (
                   <tr>
                     <td colSpan="5" className="text-center">
@@ -184,9 +194,9 @@ const Reports = () => {
 
         {activeTable === "equipment" && (
           <div className="admin-reports-equipment-table">
-            <h3 className="text-center mb-3">Equipment Reservations</h3>
-            <table className="table table-striped table-bordered">
-              <thead>
+            <h2 className="reports-equipment-label-h2">Equipment Reservations</h2>
+            <table className="admin-reports-equipment-table-container table-bordered">
+              <thead className='admin-reports-equipment-head text-center'>
                 <tr>
                   <th>Date</th>
                   <th>User ID</th>
@@ -196,7 +206,7 @@ const Reports = () => {
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className='admin-reports-equipment-body text-center'>
                 {Object.entries(groupedEquipmentReservations).length === 0 ? (
                   <tr>
                     <td colSpan="6" className="text-center">
@@ -251,10 +261,10 @@ const Reports = () => {
         )}
 
         {activeTable === "schedules" && (
-          <div className="admin-reports-schedules-table">
-            <h3 className="text-center mb-3">Gym Reservations</h3>
-            <table className="table table-striped table-bordered">
-              <thead>
+          <div className="admin-reports-gym-table">
+            <h2 className="reports-gym-label-h2">Gym Reservations</h2>
+            <table className="admin-reports-gym-table-container table-bordered">
+              <thead className='admin-reports-gym-head text-center'>
                 <tr>
                   <th>Date</th>
                   <th>Reservation ID</th>
@@ -264,7 +274,7 @@ const Reports = () => {
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className='admin-reports-gym-body text-center'>
                 {Object.entries(groupedSchedules).length === 0 ? (
                   <tr>
                     <td colSpan="6" className="text-center">
@@ -320,9 +330,9 @@ const Reports = () => {
 
         {activeTable === "inventory" && (
           <div className="admin-reports-inventory-table">
-            <h3 className="text-center mb-3">Inventory</h3>
-            <table className="table table-striped table-bordered">
-              <thead>
+            <h2 className="reports-inventory-label-h2">Inventory</h2>
+            <table className="admin-reports-inventory-table-container table-bordered">
+              <thead className='admin-reports-inventory-head text-center'>
                 <tr>
                   <th>Date</th>
                   <th>ID</th>
@@ -332,7 +342,7 @@ const Reports = () => {
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className='admin-reports-inventory-body text-center'>
                 {Object.entries(groupedInventory).length === 0 ? (
                   <tr>
                     <td colSpan="6" className="text-center">
@@ -376,7 +386,7 @@ const Reports = () => {
           </div>
         )}
       </div>
-    </div>
+    </div >
   );
 };
 
