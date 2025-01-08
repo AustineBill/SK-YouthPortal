@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Table, Button, Form, Modal, Tab } from 'react-bootstrap';
-import './styles/Inventory.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Table, Button, Form, Modal } from "react-bootstrap";
+import "./styles/Inventory.css";
 // import './styles/Admin-CSS.css';
 
 const InventoryTable = () => {
@@ -9,10 +9,10 @@ const InventoryTable = () => {
   const [showModal, setShowModal] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   const [newItem, setNewItem] = useState({
-    name: '',
-    quantity: '',
-    specification: '',
-    status: 'Available',
+    name: "",
+    quantity: "",
+    specification: "",
+    status: "Available",
     image: null,
   });
 
@@ -22,7 +22,7 @@ const InventoryTable = () => {
 
   const fetchInventory = () => {
     axios
-      .get('http://localhost:5000/inventory')
+      .get("http://localhost:5000/inventory")
       .then((response) => {
         setInventory(response.data);
       })
@@ -55,10 +55,10 @@ const InventoryTable = () => {
       });
     } else {
       setNewItem({
-        name: '',
-        quantity: '',
-        specification: '',
-        status: 'Available',
+        name: "",
+        quantity: "",
+        specification: "",
+        status: "Available",
         image: null,
       });
     }
@@ -70,24 +70,28 @@ const InventoryTable = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('name', newItem.name);
-    formData.append('quantity', newItem.quantity);
-    formData.append('specification', newItem.specification);
-    formData.append('status', newItem.status);
+    formData.append("name", newItem.name);
+    formData.append("quantity", newItem.quantity);
+    formData.append("specification", newItem.specification);
+    formData.append("status", newItem.status);
     if (newItem.image) {
-      formData.append('image', newItem.image);
+      formData.append("image", newItem.image);
     }
 
     try {
       if (currentItem) {
         // Edit
-        await axios.put(`http://localhost:5000/inventory/${currentItem.id}`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
+        await axios.put(
+          `http://localhost:5000/inventory/${currentItem.id}`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
       } else {
         // Add
-        await axios.post('http://localhost:5000/inventory', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+        await axios.post("http://localhost:5000/inventory", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
         });
       }
       fetchInventory();
@@ -98,33 +102,34 @@ const InventoryTable = () => {
   };
 
   const handleDelete = async (id) => {
-    console.log('Deleting item with ID:', id);
+    console.log("Deleting item with ID:", id);
     try {
       await axios.delete(`http://localhost:5000/inventory/${id}`);
       fetchInventory();
     } catch (error) {
-      console.error('Error in handleDelete:', error);
+      console.error("Error in handleDelete:", error);
     }
   };
 
-
   return (
-    <div className='admin-inventory-container'>
+    <div className="admin-inventory-container">
       <div className="admin-inventory-label">
-        <h2 className='admin-inventory-label-h2 fst-italic'>Inventory</h2>
+        <h2 className="admin-inventory-label-h2 fst-italic">Inventory</h2>
       </div>
 
       <div className="admin-inventory-add-equipment-container">
-        <button className="admin-inventory-add-equipment-button rounded"
-          onClick={() => handleShowModal()}>
+        <button
+          className="admin-inventory-add-equipment-button rounded"
+          onClick={() => handleShowModal()}
+        >
           Add Equipment
         </button>
       </div>
 
       {/* <Table striped bordered hover> */}
-      <div className='admin-inventory-contents-container'>
-        <Table className='admin-inventory-table-container table-bordered'>
-          <thead className='admin-inventory-head text-center'>
+      <div className="admin-inventory-contents-container">
+        <Table className="admin-inventory-table-container table-bordered">
+          <thead className="admin-inventory-head text-center">
             <tr>
               <th>Name</th>
               <th>Quantity</th>
@@ -134,7 +139,7 @@ const InventoryTable = () => {
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody className='admin-inventory-body text-center'>
+          <tbody className="admin-inventory-body text-center">
             {inventory.map((item) => (
               <tr key={item.id}>
                 <td>{item.name}</td>
@@ -146,14 +151,14 @@ const InventoryTable = () => {
                     <img
                       src={item.image}
                       alt={item.name}
-                      style={{ width: '100px', height: '125px' }}
+                      style={{ width: "100px", height: "125px" }}
                     />
                   ) : (
-                    'No Image'
+                    "No Image"
                   )}
                 </td>
                 <td>
-                  <div className='admin-inventory-actions-buttons-container d-flex justify-content-center'>
+                  <div className="admin-inventory-actions-buttons-container d-flex justify-content-center">
                     <Button
                       variant="warning"
                       onClick={() => handleShowModal(item)}
@@ -164,7 +169,7 @@ const InventoryTable = () => {
                     <Button
                       variant="danger"
                       onClick={() => handleDelete(item.id)}
-                      className='admin-inventory-delete-button rounded-pill'
+                      className="admin-inventory-delete-button rounded-pill"
                     >
                       Delete
                     </Button>
@@ -177,18 +182,24 @@ const InventoryTable = () => {
       </div>
 
       {/* Add/Edit Modal */}
-      <Modal show={showModal} onHide={handleHideModal} centered className='admin-inventory-modal-container d-flex justify-content-center'>
+      <Modal
+        show={showModal}
+        onHide={handleHideModal}
+        centered
+        className="admin-inventory-modal-container d-flex justify-content-center"
+      >
         <Modal.Header closeButton>
-          <Modal.Title className='admin-inventory-modal-title fst-italic'>
-            {currentItem ? 'Edit Item' : 'Add Item'}
+          <Modal.Title className="admin-inventory-modal-title fst-italic">
+            {currentItem ? "Edit Item" : "Add Item"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="admin-inventory-modal-body">
-          <Form onSubmit={handleSubmit} className='m-0 p-0'>
+          <Form onSubmit={handleSubmit} className="m-0 p-0">
             <Form.Group
               controlId="name"
-              className='admin-inventory-form-group d-flex flex-column'>
-              <Form.Label className='admin-inventory-form-label'>
+              className="admin-inventory-form-group d-flex flex-column"
+            >
+              <Form.Label className="admin-inventory-form-label">
                 Name
               </Form.Label>
               <Form.Control
@@ -197,14 +208,15 @@ const InventoryTable = () => {
                 value={newItem.name}
                 onChange={handleChange}
                 required
-                className='admin-inventory-form'
+                className="admin-inventory-form"
               />
             </Form.Group>
 
             <Form.Group
               controlId="quantity"
-              className='admin-inventory-form-group d-flex flex-column'>
-              <Form.Label className='admin-inventory-form-label'>
+              className="admin-inventory-form-group d-flex flex-column"
+            >
+              <Form.Label className="admin-inventory-form-label">
                 Quantity
               </Form.Label>
               <Form.Control
@@ -213,14 +225,15 @@ const InventoryTable = () => {
                 value={newItem.quantity}
                 onChange={handleChange}
                 required
-                className='admin-inventory-form'
+                className="admin-inventory-form"
               />
             </Form.Group>
 
             <Form.Group
               controlId="specification"
-              className='admin-inventory-form-group d-flex flex-column'>
-              <Form.Label className='admin-inventory-form-label'>
+              className="admin-inventory-form-group d-flex flex-column"
+            >
+              <Form.Label className="admin-inventory-form-label">
                 Specification
               </Form.Label>
               <Form.Control
@@ -229,14 +242,15 @@ const InventoryTable = () => {
                 value={newItem.specification}
                 onChange={handleChange}
                 required
-                className='admin-inventory-form'
+                className="admin-inventory-form"
               />
             </Form.Group>
 
             <Form.Group
               controlId="status"
-              className='admin-inventory-form-group d-flex flex-column'>
-              <Form.Label className='admin-inventory-form-label'>
+              className="admin-inventory-form-group d-flex flex-column"
+            >
+              <Form.Label className="admin-inventory-form-label">
                 Status
               </Form.Label>
               <Form.Control
@@ -245,7 +259,7 @@ const InventoryTable = () => {
                 value={newItem.status}
                 onChange={handleChange}
                 required
-                className='admin-inventory-form'
+                className="admin-inventory-form"
               >
                 <option>Available</option>
                 <option>Out of Stock</option>
@@ -254,8 +268,9 @@ const InventoryTable = () => {
 
             <Form.Group
               controlId="image"
-              className='admin-inventory-form-group d-flex flex-column'>
-              <Form.Label className='admin-inventory-form-label'>
+              className="admin-inventory-form-group d-flex flex-column"
+            >
+              <Form.Label className="admin-inventory-form-label">
                 Upload Image
               </Form.Label>
               <Form.Control
@@ -263,13 +278,17 @@ const InventoryTable = () => {
                 name="image"
                 onChange={handleFileChange}
                 required
-                className='admin-inventory-form'
+                className="admin-inventory-form"
               />
             </Form.Group>
 
-            <div className='admin-inventory-save-add-button-container'>
-              <Button variant="primary" type="submit" className='admin-inventory-save-add-button rounded'>
-                {currentItem ? 'Save Changes' : 'Add Item'}
+            <div className="admin-inventory-save-add-button-container">
+              <Button
+                variant="primary"
+                type="submit"
+                className="admin-inventory-save-add-button rounded"
+              >
+                {currentItem ? "Save Changes" : "Add Item"}
               </Button>
             </div>
           </Form>

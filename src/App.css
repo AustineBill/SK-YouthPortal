@@ -488,9 +488,17 @@ body {
 }
 
 .ProgramCard {
-  width: 23rem;
+  height: auto; /* Set a fixed height */
+  max-height: 150%;
+  width: 20em; /* Make the width responsive to the card */
   margin: 25px;
-  height: auto;
+}
+
+.program-card-img {
+  height: 300px; /* Set a fixed height */
+  width: 25em; /* Make the width responsive to the card */
+  object-fit: cover; /* Ensure the image fills the dimensions without distortion */
+  border-radius: 5px; /* Optional: Add rounded corners */
 }
 
 /* About */
