@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button, Form, Modal, Tab } from 'react-bootstrap';
-// import './styles/Inventory.css';
-import './styles/Admin-CSS.css';
+import './styles/Inventory.css';
+// import './styles/Admin-CSS.css';
 
 const InventoryTable = () => {
   const [inventory, setInventory] = useState([]);
@@ -114,7 +114,7 @@ const InventoryTable = () => {
         <h2 className='admin-inventory-label-h2 fst-italic'>Inventory</h2>
       </div>
 
-      <div className="admin-inventory-add-equipment-container position-fixed">
+      <div className="admin-inventory-add-equipment-container">
         <button className="admin-inventory-add-equipment-button rounded"
           onClick={() => handleShowModal()}>
           Add Equipment
@@ -157,7 +157,7 @@ const InventoryTable = () => {
                     <Button
                       variant="warning"
                       onClick={() => handleShowModal(item)}
-                      className="admin-inventory-edit-button rounded-pill me-2"
+                      className="admin-inventory-edit-button rounded-pill"
                     >
                       Edit
                     </Button>
@@ -268,9 +268,9 @@ const InventoryTable = () => {
             </Form.Group>
 
             <div className='admin-inventory-save-add-button-container'>
-            <Button variant="primary" type="submit" className='admin-inventory-save-add-button rounded'>
-              {currentItem ? 'Save Changes' : 'Add Item'}
-            </Button>
+              <Button variant="primary" type="submit" className='admin-inventory-save-add-button rounded'>
+                {currentItem ? 'Save Changes' : 'Add Item'}
+              </Button>
             </div>
           </Form>
         </Modal.Body>

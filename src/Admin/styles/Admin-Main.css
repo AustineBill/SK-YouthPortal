@@ -98,6 +98,10 @@
     margin: 20px auto;
 }
 
+.dashboard-summary-table tr {
+    height: 35px;
+}
+
 .admin-summary-table-head th {
     font-size: 17.5px;
     font-weight: bold;
@@ -137,6 +141,10 @@
         height: 50px;
         gap: 0.10in;
         font-size: 17.5px;
+    }
+
+    .dashboard-summary-table tr {
+        height: 32.5px;
     }
 
     .admin-summary-table-head th {
@@ -181,6 +189,10 @@
     .month-classification,
     .year-classification {
         font-size: 15px;
+    }
+
+    .dashboard-summary-table tr {
+        height: 30px;
     }
 
     .admin-summary-table-head th {
@@ -234,6 +246,10 @@
         font-size: 12.5px;
     }
 
+    .dashboard-summary-table tr {
+        height: 30px;
+    }
+
     .admin-summary-table-head th {
         font-size: 10px;
     }
@@ -283,6 +299,10 @@
     .month-classification,
     .year-classification {
         font-size: 10px;
+    }
+
+    .dashboard-summary-table tr {
+        height: 22.5px;
     }
 
     .admin-summary-table-head th {

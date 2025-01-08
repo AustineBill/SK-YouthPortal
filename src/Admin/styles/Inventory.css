@@ -36,18 +36,23 @@
 }
 
 .admin-inventory-add-equipment-container {
-    bottom: 20px;
-    right: 20px;
+    width: 90%;
+    margin: 0 auto 20px;
 }
 
 .admin-inventory-add-equipment-button {
     background-color: #42BB4E;
     color: #FFFFFF;
-    width: 150px;
-    height: 55px;
+    width: 15%;
+    height: 50px;
     font-size: 15px;
-    border-style: none;
+    border-style: solid;
+    border-width: 1px;
     transition: all 0.35s;
+}
+
+.admin-inventory-add-equipment-button:hover {
+    color: rgb(2, 107, 107);
 }
 
 .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
@@ -59,8 +64,8 @@
     border-style: none;
 }
 
-.admin-inventory-add-equipment-button:hover {
-    color: rgb(2, 107, 107);
+.admin-inventory-actions-buttons-container .admin-inventory-edit-button {
+    margin-right: 10px;
 }
 
 .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
@@ -110,11 +115,13 @@
         font-size: 15px;
     }
 
+    .admin-inventory-add-equipment-button {
+        width: 17.5%;
+    }
+
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
     .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-        font-size: 15px;
-        width: 80px;
-        height: 35px;
+        font-size: 12.5px;
     }
 
     .admin-inventory-form-label {
@@ -140,10 +147,10 @@
     .admin-inventory-body td {
         font-size: 12.5px;
     }
-
+    
     .admin-inventory-add-equipment-button {
-        width: 125px;
-        height: 50px;
+        width: 20%;
+        height: 45px;
         font-size: 12.5px;
     }
 
@@ -153,11 +160,15 @@
         font-size: 12.5px;
     }
 
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
+        margin-right: 5px;
+    }
+
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
     .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-        font-size: 12.5px;
-        width: 70px;
-        height: 30px;
+        font-size: 10px;
+        width: 60px;
+        height: 37.5px;
     }
 
     .admin-inventory-form-label {
@@ -191,8 +202,8 @@
     }
 
     .admin-inventory-add-equipment-button {
-        width: 125px;
-        height: 50px;
+        width: 22.5%;
+        height: 45px;
         font-size: 12.5px;
     }
 
@@ -202,11 +213,21 @@
         font-size: 12.5px;
     }
 
+    .admin-inventory-actions-buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
+        margin-right: 0;
+        margin-bottom: 2.5px;
+    }
+
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
     .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-        font-size: 12.5px;
-        width: 70px;
-        height: 30px;
+        font-size: 10px;
+        width: 60px;
+        height: 35px;
     }
 
     .admin-inventory-form-label {
@@ -240,8 +261,8 @@
     }
 
     .admin-inventory-add-equipment-button {
-        width: 100px;
-        height: 45px;
+        width: 25%;
+        height: 35px;
         font-size: 10px;
     }
 
@@ -251,10 +272,20 @@
         font-size: 12.5px;
     }
 
+    .admin-inventory-actions-buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
+        margin-right: 0;
+        margin-bottom: 2.5px;
+    }
+
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
     .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-        font-size: 10px;
-        width: 60px;
+        font-size: 7.5px;
+        width: 45px;
         height: 30px;
     }
 

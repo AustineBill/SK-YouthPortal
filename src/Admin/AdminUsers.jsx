@@ -8,7 +8,7 @@ const Users = () => {
     const generatePassword = () => {
         return Math.floor(10000 + Math.random() * 90000).toString();
     };
-    
+
     const [users, setUsers] = useState([]);
     const [newUser, setNewUser] = useState({
         username: 'User',
@@ -60,7 +60,7 @@ const Users = () => {
     // Handle input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
-    
+
         // If the input is for 'birthday', calculate the age
         if (name === 'birthday') {
             const age = calculateAge(value); // Calculate age based on the birthday
@@ -77,7 +77,7 @@ const Users = () => {
                     alert("Cannot add user. Age is over the limit.");
                     return prev; // Prevent setting the user if age exceeds 30
                 }
-    
+
                 // Set the new user state with calculated age and youth classification
                 return {
                     ...prev,
@@ -106,13 +106,13 @@ const Users = () => {
                 },
                 body: JSON.stringify(newUser), // Send the data as JSON
             });
-    
+
             if (response.ok) {
                 const createdUser = await response.json();  // Receive the created user response from backend
-    
+
                 // Update the users state to reflect the newly added user
                 setUsers(prevUsers => [...prevUsers, createdUser]);
-    
+
                 // Reset the form fields after adding the user
                 resetForm();
                 setShowModal(false);  // Close the modal after adding the user
@@ -130,7 +130,7 @@ const Users = () => {
             alert('Error: There was a problem with adding the user.');
         }
     };
-    
+
 
     // Edit an existing user
     const handleEdit = (userId) => {
@@ -246,28 +246,30 @@ const Users = () => {
                 <h2 className='admin-users-label-h2 fst-italic'>Manage Users</h2>
             </div>
 
-            <div className='admin-users-add-user-container position-fixed'>
-                <button className='admin-users-add-user-button rounded'
-                    onClick={() => setShowModal(true)}>
-                    Add User
-                </button>
-            </div>
-
             <div className="admin-users-contents-container d-flex flex-column align-items-center justify-content-center">
 
-                <div className='admin-users-classification-container'>
-                    <select
-                        value={selectedClassification}
-                        onChange={(e) => setSelectedClassification(e.target.value)}
-                        className='admin-users-classification rounded'
-                    >
-                        <option value=''>Select Youth Classification</option>
-                        {youthClassifications.map((classification, index) => (
-                            <option key={index} value={classification}>
-                                {classification}
-                            </option>
-                        ))}
-                    </select>
+                <div className='admin-users-add-classification-container d-flex align-items-center'>
+                    <div className='admin-users-classification-container m-0'>
+                        <select
+                            value={selectedClassification}
+                            onChange={(e) => setSelectedClassification(e.target.value)}
+                            className='admin-users-classification rounded'
+                        >
+                            <option value=''>Select Youth Classification</option>
+                            {youthClassifications.map((classification, index) => (
+                                <option key={index} value={classification}>
+                                    {classification}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className='admin-users-add-user-container d-flex justify-content-end'>
+                        <button className='admin-users-add-user-button rounded'
+                            onClick={() => setShowModal(true)}>
+                            Add User
+                        </button>
+                    </div>
                 </div>
 
                 <div className="users-list-container">
@@ -591,15 +593,15 @@ const Users = () => {
                                                 <option value="Widowed">Widowed</option>
                                             </select>
                                         </div>
-                                            <div className='admin-users-form d-flex flex-column'>
-                                                <label className='admin-users-modal-label'>Youth Age Group</label>
-                                                <input
-                                                    type="text"
-                                                    name="youth_age_group"
-                                                    value={newUser.youth_age_group || ''}
-                                                    readOnly
-                                                    disabled
-                                                />
+                                        <div className='admin-users-form d-flex flex-column'>
+                                            <label className='admin-users-modal-label'>Youth Age Group</label>
+                                            <input
+                                                type="text"
+                                                name="youth_age_group"
+                                                value={newUser.youth_age_group || ''}
+                                                readOnly
+                                                disabled
+                                            />
                                         </div>
                                     </div>
 

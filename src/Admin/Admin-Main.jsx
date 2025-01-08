@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../WebStructure/AuthContext';
 // import './styles/adminmain.css';
 import './styles/Admin-Main.css';
-// import './styles/Admin-CSS.css';
 import { Bar, Pie, Line } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
