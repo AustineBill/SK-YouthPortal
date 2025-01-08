@@ -4,7 +4,7 @@
 
 .admin-reports-container {
     position: relative;
-    top: 75px;
+    padding-top: 75px;
     left: 22.5%;
     width: 77.5%;
     background-color: #FFFFFF;
@@ -13,133 +13,146 @@
 }
 
 .admin-reports-label-h2 {
-    font-size: 45px;
+    font-size: 40px;
     margin: 20px 40px 20px 40px;
 }
 
-.admin-reports-nav-tabs {
-    cursor: pointer;
-    font-size: 25px;
-    margin: 0 0 20px 60px;
-    gap: 1in;
-    color: #766F6F;
+.admin-reports-generate-classification-date-container {
+    width: 90%;
+    gap: 0.25in;
+    margin: 0 auto 20px;
+}
+
+.admin-reports-classification-container,
+.admin-reports-date-container {
+    width: 42.5%;
+}
+
+.admin-reports-classification,
+.admin-reports-date {
+    width: 100%;
+    height: 50px;
+    font-size: 17.5px;
+    border-style: solid;
     transition: all 0.35s;
 }
 
-.admin-reports-nav-tabs li:hover {
-    color: #E3DFDF;
+.admin-reports-classification:hover,
+.admin-reports-date:hover {
+    color: #FFFFFF;
+    background-color: #858585;
 }
 
-.admin-reports-nav-tabs li.active-tab {
-    color: red;
-    text-decoration: underline;
-    text-decoration-color: #C1C1C1;
-    text-underline-offset: 10px;
-}
-
-.admin-reports-contents-container {
-    margin-bottom: 40px;
-}
-
-.admin-reservation-reports-details-container,
-.admin-generate-report-container {
-    background-color: #c5c1c1;
-    width: 90%;
-}
-
-.admin-reservation-reports-table {
-    margin: 25px 0 25px 0;
-    background-color: #FFFFFF;
-    width: 95%;
-}
-
-.all-reservation-reports-th {
-    /* font-family: 'Roboto', sans-serif; */
-    font-size: 20px;
-}
-
-.admin-generate-report-group {
-    width: 90%;
-    margin: 25px 0 25px 0;
-}
-
-.admin-generate-report-group .admin-generate-report-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 25px;
-}
-
-.generate-report-form {
-    width: 100%;
-}
-
-.generate-report-date-time {
-    width: 100%;
-    gap: 1in;
-}
-
-.generate-report-date-time .generate-report-date,
-.generate-report-date-time .generate-report-time {
-    width: 50%;
-    border-style: none;
-    border-radius: 10px;
-    outline: none;
-    transition: all 0.35s;
-}
-
-.generate-report-form input[type="text"],
-.generate-report-date-time input[type="date"],
-.generate-report-date-time input[type="time"] {
-    height: 60px;
-    margin-bottom: 0;
-    font-size: 20px;
-}
-
-.generate-report-form input[type="text"]:focus,
-.generate-report-date-time input[type="date"]:focus,
-.generate-report-date-time input[type="time"]:focus {
+.admin-reports-classification:focus,
+.admin-reports-date:focus {
     outline: 1px solid #007bff;
 }
 
-.admin-generate-report-button {
+.admin-reports-classification option,
+.admin-reports-date option {
+    background-color: #FFFFFF;
+    color: #000000;
+    pointer-events: none;
+}
+
+.admin-reports-generate-pdf-container {
+    width: 15%;
+}
+
+.admin-reports-generate-pdf-button {
     background-color: #25327A;
     color: #FFFFFF;
-    margin-top: 10px;
-    width: 175px;
-    height: 55px;
+    width: 100%;
+    height: 50px;
     font-size: 15px;
-    border-style: none;
+    border-style: solid;
+    border-width: 1px;
     transition: all 0.35s;
 }
 
-.admin-generate-report-button:hover {
+.admin-reports-generate-pdf-button:hover {
     color: rgb(2, 107, 107);
+}
+
+.reports-list-container {
+    width: 90%;
+    margin: 0 auto 40px;
+}
+
+.admin-reports-users-table,
+.admin-reports-equipment-table,
+.admin-reports-gym-table,
+.admin-reports-inventory-table {
+    width: 100%;
+}
+
+.reports-users-label-h2,
+.reports-equipment-label-h2,
+.reports-gym-label-h2,
+.reports-inventory-label-h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.admin-reports-users-table-container,
+.admin-reports-equipment-table-container,
+.admin-reports-gym-table-container,
+.admin-reports-inventory-table-container {
+    width: 100%;
+}
+
+.reports-list-container tr {
+    height: 35px;
+}
+
+.reports-list-container th {
+    font-size: 17.5px;
+    font-weight: bold;
+}
+
+.reports-list-container td {
+    font-size: 17.5px;
 }
 
 
 /* Media */
-/* MISSING: RESERVATION REPORTS */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
 
     .admin-reports-label-h2 {
-        font-size: 40px;
+        font-size: 37.5px;
     }
 
-    .admin-generate-report-group .admin-generate-report-label {
-        font-size: 20px;
+    .admin-reports-classification-container,
+    .admin-reports-date-container {
+        width: 40%;
     }
 
-    .admin-reports-nav-tabs {
-        font-size: 22.5px;
-        margin: 0 0 20px 45px;
-        gap: 0.75in;
+    .admin-reports-generate-pdf-container {
+        width: 20%;
     }
 
-    .generate-report-form input[type="text"],
-    .generate-report-date-time input[type="date"],
-    .generate-report-date-time input[type="time"] {
-        height: 50px;
-        font-size: 20px;
+    .admin-reports-generate-pdf-button {
+        font-size: 15px;
+    }
+
+    .reports-users-label-h2,
+    .reports-equipment-label-h2,
+    .reports-gym-label-h2,
+    .reports-inventory-label-h2 {
+        font-size: 27.5px;
+    }
+
+    .reports-list-container tr {
+        height: 32.5px;
+    }
+
+    .reports-list-container th {
+        font-size: 15px;
+    }
+
+    .reports-list-container td {
+        font-size: 15px;
     }
 }
 
@@ -149,104 +162,146 @@
         font-size: 35px;
     }
 
-    .admin-generate-report-group .admin-generate-report-label {
-        font-size: 17.5px;
+    .admin-reports-classification-container,
+    .admin-reports-date-container {
+        width: 37.5%;
     }
 
-    .generate-report-date-time {
-        gap: 0.75in;
+    .admin-reports-generate-pdf-container {
+        width: 25%;
     }
 
-    .admin-reports-nav-tabs {
-        font-size: 20px;
-        margin: 0 0 20px 45px;
-        gap: 1in;
-    }
-
-    .generate-report-form input[type="text"],
-    .generate-report-date-time input[type="date"],
-    .generate-report-date-time input[type="time"] {
+    .admin-reports-classification,
+    .admin-reports-date {
         height: 45px;
-        font-size: 17.5px;
+        font-size: 12.5px;
+    }
+
+    .admin-reports-generate-pdf-button {
+        height: 45px;
+        font-size: 12.5px;
+    }
+
+    .reports-users-label-h2,
+    .reports-equipment-label-h2,
+    .reports-gym-label-h2,
+    .reports-inventory-label-h2 {
+        font-size: 25px;
+    }
+
+    .reports-list-container tr {
+        height: 30px;
+    }
+
+    .reports-list-container th {
+        font-size: 12.5px;
+    }
+
+    .reports-list-container td {
+        font-size: 12.5px;
     }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
 
     .admin-reports-container {
-        left: 0;
+        left: 0%;
         width: 100%;
     }
 
     .admin-reports-label-h2 {
-        font-size: 30px;
+        font-size: 35px;
         margin: 20px 0 20px 25px;
     }
 
-    .admin-reports-nav-tabs {
-        font-size: 17.5px;
-        margin: 0 0 20px 45px;
-        gap: 0.5in;
+    .admin-reports-classification-container,
+    .admin-reports-date-container {
+        width: 35%;
     }
 
-    .admin-generate-report-group .admin-generate-report-label {
-        font-size: 15px;
+    .admin-reports-generate-pdf-container {
+        width: 30%;
     }
 
-    .generate-report-date-time {
-        gap: 0.50in;
-    }
-
-    .generate-report-form input[type="text"],
-    .generate-report-date-time input[type="date"],
-    .generate-report-date-time input[type="time"] {
+    .admin-reports-classification,
+    .admin-reports-date {
         height: 45px;
         font-size: 12.5px;
     }
 
-    .admin-generate-report-button {
-        width: 150px;
-        height: 50px;
+    .admin-reports-generate-pdf-button {
+        height: 45px;
         font-size: 12.5px;
+    }
+
+    .reports-users-label-h2,
+    .reports-equipment-label-h2,
+    .reports-gym-label-h2,
+    .reports-inventory-label-h2 {
+        font-size: 22.5px;
+    }
+
+    .reports-list-container tr {
+        height: 30px;
+    }
+
+    .reports-list-container th {
+        font-size: 10px;
+    }
+
+    .reports-list-container td {
+        font-size: 10px;
     }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
 
     .admin-reports-container {
-        left: 0;
+        left: 0%;
         width: 100%;
     }
 
     .admin-reports-label-h2 {
-        font-size: 25px;
+        font-size: 30px;
         margin: 20px 0 20px 20px;
     }
 
-    .admin-reports-nav-tabs {
-        font-size: 15px;
-        margin: 0 0 20px 40px;
-        gap: 0.5in;
+    .admin-reports-classification-container,
+    .admin-reports-date-container {
+        width: 32.5%;
     }
 
-    .admin-generate-report-group .admin-generate-report-label {
-        font-size: 12.5px;
+    .admin-reports-generate-pdf-container {
+        width: 35%;
     }
 
-    .generate-report-date-time {
-        gap: 0.25in;
-    }
-
-    .generate-report-form input[type="text"],
-    .generate-report-date-time input[type="date"],
-    .generate-report-date-time input[type="time"] {
-        height: 45px;
+    .admin-reports-classification,
+    .admin-reports-date {
+        height: 35px;
         font-size: 10px;
     }
 
-    .admin-generate-report-button {
-        width: 125px;
-        height: 50px;
+    .admin-reports-generate-pdf-button {
+        height: 35px;
+        font-size: 10px;
+    }
+
+    .reports-users-label-h2,
+    .reports-equipment-label-h2,
+    .reports-gym-label-h2,
+    .reports-inventory-label-h2 {
+        font-size: 20px;
+    }
+
+    .reports-list-container tr {
+        height: 22.5px;
+    }
+
+    .reports-list-container th {
+        font-size: 10px;
+    }
+
+    .reports-list-container td {
         font-size: 10px;
     }
 }
