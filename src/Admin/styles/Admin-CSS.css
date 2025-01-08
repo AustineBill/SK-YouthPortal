@@ -123,6 +123,325 @@
 
 
 /* ____________________________________________________________________________________________________ */
+/* Admin Home */
+/* ____________________________________________________________________________________________________ */
+
+.admin-dashboard-container {
+    position: relative;
+    padding-top: 75px;
+    left: 22.5%;
+    width: 77.5%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
+}
+
+.admin-dashboard-label-h2 {
+    font-size: 40px;
+    margin: 20px 0 10px 40px;
+}
+
+.reservations-label-h2,
+.users-label-h2,
+.equipment-label-h2,
+.sm-label-h2 {
+    font-size: 30px;
+}
+
+.admin-dashboard-label-p {
+    font-size: 20px;
+    margin: 0 0 10px 40px;
+}
+
+.admin-dashboard-filters-container {
+    margin: 0 auto 10px;
+    width: 90%;
+}
+
+.month-dropdown,
+.year-dropdown {
+    height: 50px;
+    gap: 0.10in;
+    font-size: 20px;
+}
+
+#year,
+#month {
+    width: 250px;
+    height: 40px;
+}
+
+.month-classification,
+.year-classification {
+    font-size: 17.5px;
+    border-style: solid;
+    transition: all 0.35s;
+}
+
+.month-classification:hover,
+.year-classification:hover {
+    color: #FFFFFF;
+    background-color: #858585;
+}
+
+.month-classification:focus,
+.year-classification:focus {
+    outline: 1px solid #007bff;
+}
+
+.month-classification option,
+.year-classification option {
+    background-color: #FFFFFF;
+    color: #000000;
+    pointer-events: none;
+}
+
+.admin-dashboard-charts-section {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.reservations-users-container {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: orange;
+}
+
+.reservations-chart-container,
+.users-chart-container {
+    width: 45%;
+    /* gap: 0.25in; */
+}
+
+.equipment-chart-container {
+    width: 100%;
+    margin: 0 auto;
+    background-color: orange;
+}
+
+.dashboard-summary-table-container {
+    width: 90%;
+    margin: 20px auto;
+}
+
+.dashboard-summary-table tr {
+    height: 35px;
+}
+
+.admin-summary-table-head th {
+    font-size: 17.5px;
+    font-weight: bold;
+}
+
+.admin-summary-table-body td {
+    font-size: 17.5px;
+}
+
+.dashboard-summary-table {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+
+/* Media */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    .admin-dashboard-label-h2 {
+        font-size: 37.5px;
+    }
+
+    .reservations-label-h2,
+    .users-label-h2,
+    .equipment-label-h2,
+    .sm-label-h2 {
+        font-size: 27.5px;
+    }
+
+    .admin-dashboard-label-p {
+        font-size: 17.5px;
+    }
+
+    .month-dropdown,
+    .year-dropdown {
+        height: 50px;
+        gap: 0.10in;
+        font-size: 17.5px;
+    }
+
+    .dashboard-summary-table tr {
+        height: 32.5px;
+    }
+
+    .admin-summary-table-head th {
+        font-size: 15px;
+    }
+
+    .admin-summary-table-body td {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .admin-dashboard-label-h2 {
+        font-size: 35px;
+    }
+
+    .reservations-label-h2,
+    .users-label-h2,
+    .equipment-label-h2,
+    .sm-label-h2 {
+        font-size: 25px;
+    }
+
+    .admin-dashboard-label-p {
+        font-size: 15px;
+    }
+
+    .month-dropdown,
+    .year-dropdown {
+        height: 45px;
+        gap: 0.075in;
+        font-size: 15px;
+    }
+
+    #year,
+    #month {
+        width: 250px;
+        height: 35px;
+    }
+
+    .month-classification,
+    .year-classification {
+        font-size: 15px;
+    }
+
+    .dashboard-summary-table tr {
+        height: 30px;
+    }
+
+    .admin-summary-table-head th {
+        font-size: 12.5px;
+    }
+
+    .admin-summary-table-body td {
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    .admin-dashboard-container {
+        left: 0%;
+        width: 100%;
+    }
+
+    .admin-dashboard-label-h2 {
+        font-size: 35px;
+        margin: 20px 0 15px 25px;
+    }
+
+    .reservations-label-h2,
+    .users-label-h2,
+    .equipment-label-h2,
+    .sm-label-h2 {
+        font-size: 22.5px;
+    }
+
+    .admin-dashboard-label-p {
+        font-size: 15px;
+        margin: 0 0 20px 25px;
+    }
+
+    .month-dropdown,
+    .year-dropdown {
+        height: 40px;
+        gap: 0.075in;
+        font-size: 12.5px;
+    }
+
+    #year,
+    #month {
+        width: 225px;
+        height: 30px;
+    }
+
+    .month-classification,
+    .year-classification {
+        font-size: 12.5px;
+    }
+
+    .dashboard-summary-table tr {
+        height: 30px;
+    }
+
+    .admin-summary-table-head th {
+        font-size: 10px;
+    }
+
+    .admin-summary-table-body td {
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .admin-dashboard-container {
+        left: 0%;
+        width: 100%;
+    }
+
+    .admin-dashboard-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 10px 20px;
+    }
+
+    .reservations-label-h2,
+    .users-label-h2,
+    .equipment-label-h2,
+    .sm-label-h2 {
+        font-size: 20px;
+    }
+
+    .admin-dashboard-label-p {
+        font-size: 12.5px;
+        margin: 0 0 20px 20px;
+    }
+
+    .month-dropdown,
+    .year-dropdown {
+        height: 35px;
+        gap: 0.050in;
+        font-size: 10px;
+    }
+
+    #year,
+    #month {
+        width: 200px;
+        height: 25px;
+    }
+
+    .month-classification,
+    .year-classification {
+        font-size: 10px;
+    }
+
+    .dashboard-summary-table tr {
+        height: 22.5px;
+    }
+
+    .admin-summary-table-head th {
+        font-size: 10px;
+    }
+
+    .admin-summary-table-body td {
+        font-size: 10px;
+    }
+}
+
+
+/* ____________________________________________________________________________________________________ */
 /* Admin Manage Home */
 /* ____________________________________________________________________________________________________ */
 
