@@ -90,8 +90,10 @@ const Reports = () => {
 
   return (
     <div className="admin-reports-container">
-      <div className='admin-reports-label'>
-        <h2 className='admin-reports-label-h2 fst-italic'>Reservation Reports</h2>
+      <div className="admin-reports-label">
+        <h2 className="admin-reports-label-h2 fst-italic">
+          Reservation Reports
+        </h2>
       </div>
 
       <div className="admin-reports-generate-classification-date-container d-flex">
@@ -134,15 +136,16 @@ const Reports = () => {
       </div>
 
       {/* Show selected table */}
-      <div 
-      id="admin-reports-tables-container" 
-      className="reports-list-container">
+      <div
+        id="admin-reports-tables-container"
+        className="reports-list-container"
+      >
         {/* Show selected table */}
         {activeTable === "users" && (
           <div className="admin-reports-users-table">
             <h2 className="reports-users-label-h2">Users</h2>
             <table className="admin-reports-users-table-container table-bordered">
-              <thead className='admin-reports-users-head text-center'>
+              <thead className="admin-reports-users-head text-center">
                 <tr>
                   <th>Date</th>
                   <th>User ID</th>
@@ -151,7 +154,7 @@ const Reports = () => {
                   <th>Email Address</th>
                 </tr>
               </thead>
-              <tbody className='admin-reports-users-body text-center'>
+              <tbody className="admin-reports-users-body text-center">
                 {Object.entries(groupedUsers).length === 0 ? (
                   <tr>
                     <td colSpan="5" className="text-center">
@@ -194,9 +197,11 @@ const Reports = () => {
 
         {activeTable === "equipment" && (
           <div className="admin-reports-equipment-table">
-            <h2 className="reports-equipment-label-h2">Equipment Reservations</h2>
+            <h2 className="reports-equipment-label-h2">
+              Equipment Reservations
+            </h2>
             <table className="admin-reports-equipment-table-container table-bordered">
-              <thead className='admin-reports-equipment-head text-center'>
+              <thead className="admin-reports-equipment-head text-center">
                 <tr>
                   <th>Date</th>
                   <th>User ID</th>
@@ -206,7 +211,7 @@ const Reports = () => {
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody className='admin-reports-equipment-body text-center'>
+              <tbody className="admin-reports-equipment-body text-center">
                 {Object.entries(groupedEquipmentReservations).length === 0 ? (
                   <tr>
                     <td colSpan="6" className="text-center">
@@ -264,7 +269,7 @@ const Reports = () => {
           <div className="admin-reports-gym-table">
             <h2 className="reports-gym-label-h2">Gym Reservations</h2>
             <table className="admin-reports-gym-table-container table-bordered">
-              <thead className='admin-reports-gym-head text-center'>
+              <thead className="admin-reports-gym-head text-center">
                 <tr>
                   <th>Date</th>
                   <th>Reservation ID</th>
@@ -274,7 +279,7 @@ const Reports = () => {
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody className='admin-reports-gym-body text-center'>
+              <tbody className="admin-reports-gym-body text-center">
                 {Object.entries(groupedSchedules).length === 0 ? (
                   <tr>
                     <td colSpan="6" className="text-center">
@@ -332,7 +337,7 @@ const Reports = () => {
           <div className="admin-reports-inventory-table">
             <h2 className="reports-inventory-label-h2">Inventory</h2>
             <table className="admin-reports-inventory-table-container table-bordered">
-              <thead className='admin-reports-inventory-head text-center'>
+              <thead className="admin-reports-inventory-head text-center">
                 <tr>
                   <th>Date</th>
                   <th>ID</th>
@@ -342,7 +347,7 @@ const Reports = () => {
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody className='admin-reports-inventory-body text-center'>
+              <tbody className="admin-reports-inventory-body text-center">
                 {Object.entries(groupedInventory).length === 0 ? (
                   <tr>
                     <td colSpan="6" className="text-center">
@@ -386,7 +391,7 @@ const Reports = () => {
           </div>
         )}
       </div>
-    </div >
+    </div>
   );
 };
 
