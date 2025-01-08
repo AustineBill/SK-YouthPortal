@@ -1329,7 +1329,7 @@ app.post("/approveEquipment", async (req, res) => {
   });
 });
 
-//mamageprograms.
+//Manage Website
 
 app.get("/api/programs", async (req, res) => {
   try {
@@ -1485,6 +1485,17 @@ app.delete("/programs/:id", async (req, res) => {
   }
 });
 
+const EventStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/Asset/Events"); // Store in the desired folder
+  },
+  filename: (req, file, cb) => {
+    const fileName = file.originalname.replace(/\s+/g, "_"); // Optionally replace spaces with underscores
+    cb(null, fileName); // Save the file with its original name
+  },
+});
+const Eventupload = multer({ storage: EventStorage });
+
 app.get("/events", async (req, res) => {
   try {
     const result = await pool.query(
@@ -1512,13 +1523,14 @@ app.get("/events/:id", async (req, res) => {
   }
 });
 
-// Create a new event
-app.post("/events", async (req, res) => {
-  const { event_name, event_description, amenities, event_image } = req.body;
+app.post("/events", Eventupload.single("event_image"), async (req, res) => {
+  const { event_name, event_description } = req.body;
+
   try {
+    const event_image = `/Asset/Events/${req.file.filename}`; // Construct the file path
     const result = await pool.query(
-      "INSERT INTO home (event_name, event_description, amenities, event_image_base64) VALUES ($1, $2, $3, $4) RETURNING *",
-      [event_name, event_description, amenities, event_image]
+      "INSERT INTO home (event_name, event_description, event_image) VALUES ($1, $2, $3) RETURNING *",
+      [event_name, event_description, event_image]
     );
     res.status(201).json(result.rows[0]); // Return the newly created event
   } catch (err) {
@@ -1530,12 +1542,12 @@ app.post("/events", async (req, res) => {
 // Update an existing event
 app.put("/events/:id", async (req, res) => {
   const { id } = req.params;
-  const { event_name, event_description, amenities, event_image } = req.body;
+  const { event_name, event_description, event_image } = req.body;
 
   try {
     const result = await pool.query(
-      "UPDATE home SET event_name = $1, event_description = $2, amenities = $3, event_image_base64 = $4, updated_at = CURRENT_TIMESTAMP WHERE id = $5 RETURNING *",
-      [event_name, event_description, amenities, event_image, id]
+      "UPDATE home SET event_name = $1, event_description = $2, event_image = $3, updated_at = CURRENT_TIMESTAMP WHERE id = $4 RETURNING *",
+      [event_name, event_description, event_image, id]
     );
 
     if (result.rows.length === 0) {

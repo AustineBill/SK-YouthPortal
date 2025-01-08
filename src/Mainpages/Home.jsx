@@ -32,12 +32,7 @@ const Intro = () => {
       try {
         const response = await axios.get("http://localhost:5000/events"); // API endpoint for events
         console.log("Fetched events:", response.data); // Log the response data for debugging
-
-        if (response.data.length > 0) {
-          setEvents(response.data); // Set the events in state
-        } else {
-          setError("No events available"); // Handle case when there are no events
-        }
+        setEvents(response.data); // Set the events in state
 
         setLoading(false); // Set loading to false after data is fetched
       } catch (error) {
@@ -137,7 +132,7 @@ const Intro = () => {
       {/* Card Container for Programs*/}
       <div className="card-container">
         {programs.length === 0 ? (
-          <p>No events available</p>
+          <p>No program available</p>
         ) : (
           programs.map((programs) => (
             <Card key={programs.id} className="ProgramCard">
@@ -145,6 +140,7 @@ const Intro = () => {
                 variant="top"
                 src={programs.image_url}
                 alt={programs.program_name}
+                className="program-card-img"
               />
               <Card.Body>
                 <Card.Title>{programs.program_name}</Card.Title>
@@ -162,25 +158,26 @@ const Intro = () => {
       </div>
 
       {/* Highlighted Events Section */}
+
       <h1 className="NewEveHead">NEWS & EVENTS</h1>
-      <div className="row g-4 justify-content-center">
-        <div className="card-container highlighted-events">
-          {events.map((event) => (
-            <Card key={event.id} className="ProgramCard">
+      <div className="card-container">
+        {events.length === 0 ? (
+          <p>No events available</p>
+        ) : (
+          events.map((events) => (
+            <Card key={events.id} className="ProgramCard">
               <Card.Img
                 variant="top"
-                src={`data:image/${event.event_image_format};base64,${event.event_image}`}
+                src={events.event_image}
+                className="program-card-img"
               />
               <Card.Body>
-                <Card.Title>{event.event_name}</Card.Title>
-                <Card.Text>{event.event_description}</Card.Text>
-                <Button to={`/event/${event.id}`} className="btn-db">
-                  Learn More
-                </Button>
+                <Card.Title>{events.event_name}</Card.Title>
+                <Card.Text>{events.event_description}</Card.Text>
               </Card.Body>
             </Card>
-          ))}
-        </div>
+          ))
+        )}
       </div>
 
       <Link className="spotlight-button btn-db m-2" to="/news">
