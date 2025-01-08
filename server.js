@@ -45,18 +45,92 @@ app.get("/", (req, res) => {
   res.send("Welcome to the iSKed API");
 });
 
-// In-memory storage for simplicity (replace with a DB table in production)
-const passwordResetTokens = {};
-
 // Nodemailer transporter
 const transporter = nodemailer.createTransport({
-  service: "Gmail", // Use your email service provider
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // Ensures SSL is used
   auth: {
-    user: "your-email@gmail.com", // Replace with your email
-    pass: "your-email-password", // Use app-specific password if necessary
+    user: "austinebillryannmalic@gmail.com", // Your Gmail address
+    pass: "htsyzbfwazgqmxzo", // Your app password for Gmail (don't use your regular Gmail password)
   },
 });
+
 /********* Website ******** */
+
+const verificationCodes = {};
+
+// Route to check email existence and send verification code
+app.post("/check-email", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM Users WHERE email_address = $1",
+      [email]
+    );
+
+    if (result.rows.length > 0) {
+      // Generate a verification code
+      const verificationCode = crypto.randomInt(100000, 999999).toString();
+      verificationCodes[email] = verificationCode;
+
+      // Send email with the verification code
+      await transporter.sendMail({
+        from: '"SK Western Bicutan" <austinebillryannmalic@gmail.com>',
+        to: email,
+        subject: "Password Reset Verification Code",
+        text: `Your verification code is: ${verificationCode}`,
+      });
+
+      res.json({ success: true, message: "Verification code sent to email." });
+    } else {
+      res.status(404).json({ success: false, message: "Email not found." });
+    }
+  } catch (error) {
+    console.error("Error checking email:", error);
+    res.status(500).json({ success: false, message: "Internal server error." });
+  }
+});
+
+// Route to verify the code
+app.post("/verify-code", (req, res) => {
+  const { email, verificationCode } = req.body;
+
+  if (verificationCodes[email] === verificationCode) {
+    res.json({ success: true, message: "Verification code is correct." });
+  } else {
+    res
+      .status(400)
+      .json({ success: false, message: "Incorrect verification code." });
+  }
+});
+
+app.post("/change-password", async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10); // 10 salt rounds
+
+    // Update the password in the database
+    await pool.query(
+      "UPDATE users SET password = $1 WHERE email_address = $2",
+      [hashedPassword, email]
+    );
+
+    // Remove the verification code (assuming a `verificationCodes` object is being used for email verification)
+    if (verificationCodes[email]) {
+      delete verificationCodes[email];
+    }
+
+    res.json({ success: true, message: "Password updated successfully." });
+  } catch (error) {
+    console.error("Error changing password:", error);
+    res.status(500).json({ success: false, message: "Internal server error." });
+  }
+});
+
 app.post("/ValidateCode", async (req, res) => {
   const { activationCode } = req.body;
   try {
@@ -1057,10 +1131,10 @@ app.post("/users", async (req, res) => {
   const userId = generateRandomId(); // Call the random ID function
 
   try {
-    // Check if a user with the same username, email_address, or combination of first name, last name, and birthday exists
+    // Check for duplicate user data
     const checkDuplicateQuery = `
       SELECT * FROM Users 
-      WHERE email_address = $1 OR (firstname = $2 AND lastname = $3 )
+      WHERE email_address = $1 OR (firstname = $2 AND lastname = $3)
     `;
     const checkResult = await pool.query(checkDuplicateQuery, [
       email_address,
@@ -1069,11 +1143,13 @@ app.post("/users", async (req, res) => {
     ]);
 
     if (checkResult.rows.length > 0) {
-      // If duplicate found, send a conflict error response
       return res.status(400).json({ error: "Duplicate user data found." });
     }
 
-    // Proceed with inserting the new user if no duplicates are found
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds, you can adjust if needed
+
+    // Insert the new user into the database
     const result = await pool.query(
       `INSERT INTO Users (
         id, username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
@@ -1085,7 +1161,7 @@ app.post("/users", async (req, res) => {
       [
         userId,
         username,
-        password,
+        hashedPassword, // Store the hashed password
         firstname,
         lastname,
         region,
@@ -1641,97 +1717,107 @@ app.get("/inventory-reports", async (req, res) => {
   }
 });
 
-
 // Forgot Password - Send Verification Code
-app.post('/forgot-password', async (req, res) => {
+app.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
 
   try {
-      // Find user by email address in the database
-      const userResult = await pool.query('SELECT * FROM users WHERE email_address = $1', [email]);
+    // Find user by email address in the database
+    const userResult = await pool.query(
+      "SELECT * FROM users WHERE email_address = $1",
+      [email]
+    );
 
-      if (userResult.rows.length === 0) {
-          return res.status(404).json({ message: 'Email address not found' });
-      }
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ message: "Email address not found" });
+    }
 
-      const user = userResult.rows[0];
+    const user = userResult.rows[0];
 
-      // Generate a reset password token and its expiration
-      const resetToken = generateRandomId(); // Unique random token
-      const resetTokenExpiration = moment().add(1, 'hour').toISOString(); // Token expires in 1 hour
+    // Generate a reset password token and its expiration
+    const resetToken = generateRandomId(); // Unique random token
+    const resetTokenExpiration = moment().add(1, "hour").toISOString(); // Token expires in 1 hour
 
-      // Store token and expiration date in the database (hash the token for security)
-      const hashedToken = bcrypt.hashSync(resetToken, 10);
-      await pool.query('UPDATE users SET reset_token = $1, reset_token_expiration = $2 WHERE email_address = $3', [
-          hashedToken,
-          resetTokenExpiration,
-          email
-      ]);
+    // Store token and expiration date in the database (hash the token for security)
+    const hashedToken = bcrypt.hashSync(resetToken, 10);
+    await pool.query(
+      "UPDATE users SET reset_token = $1, reset_token_expiration = $2 WHERE email_address = $3",
+      [hashedToken, resetTokenExpiration, email]
+    );
 
-      // Send reset password email
-      const mailOptions = {
-          from: 'your-email@gmail.com',
-          to: email,
-          subject: 'Password Reset Request',
-          html: `
+    // Send reset password email
+    const mailOptions = {
+      from: "your-email@gmail.com",
+      to: email,
+      subject: "Password Reset Request",
+      html: `
               <h1>Password Reset</h1>
               <p>You requested a password reset. Please click the link below to reset your password:</p>
               <a href="http://localhost:5000/reset-password?token=${resetToken}">Reset Password</a>
           `,
-      };
+    };
 
-      await transporter.sendMail(mailOptions);
-      res.status(200).json({ message: 'Password reset email sent!' });
-
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: "Password reset email sent!" });
   } catch (error) {
-      console.error('Error sending email:', error);
-      res.status(500).json({ message: 'Server error, please try again later.' });
+    console.error("Error sending email:", error);
+    res.status(500).json({ message: "Server error, please try again later." });
   }
 });
 // Reset Password
-app.post('/reset-password', async (req, res) => {
+app.post("/reset-password", async (req, res) => {
   const { email, token, newPassword } = req.body;
 
   if (!email || !token || !newPassword) {
-      return res.status(400).json({ message: 'All fields are required.' });
+    return res.status(400).json({ message: "All fields are required." });
   }
 
   try {
-      // Find the user in the database and retrieve the reset token and expiration
-      const userResult = await pool.query('SELECT * FROM users WHERE email_address = $1', [email]);
+    // Find the user in the database and retrieve the reset token and expiration
+    const userResult = await pool.query(
+      "SELECT * FROM users WHERE email_address = $1",
+      [email]
+    );
 
-      if (userResult.rows.length === 0) {
-          return res.status(404).json({ message: 'User not found' });
-      }
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-      const user = userResult.rows[0];
-      
-      // Check if the reset token exists and if it is still valid
-      const isTokenValid = bcrypt.compareSync(token, user.reset_token);
-      
-      if (!isTokenValid || Date.now() > new Date(user.reset_token_expiration).getTime()) {
-          return res.status(400).json({ message: 'Invalid or expired reset token' });
-      }
+    const user = userResult.rows[0];
 
-      // Hash the new password
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
+    // Check if the reset token exists and if it is still valid
+    const isTokenValid = bcrypt.compareSync(token, user.reset_token);
 
-      // Update the password in the database
-      await pool.query('UPDATE users SET password = $1 WHERE email_address = $2', [
-          hashedPassword,
-          email
-      ]);
+    if (
+      !isTokenValid ||
+      Date.now() > new Date(user.reset_token_expiration).getTime()
+    ) {
+      return res
+        .status(400)
+        .json({ message: "Invalid or expired reset token" });
+    }
 
-      // Clear the reset token and expiration
-      await pool.query('UPDATE users SET reset_token = NULL, reset_token_expiration = NULL WHERE email_address = $1', [email]);
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-      res.status(200).json({ message: 'Password successfully updated!' });
+    // Update the password in the database
+    await pool.query(
+      "UPDATE users SET password = $1 WHERE email_address = $2",
+      [hashedPassword, email]
+    );
+
+    // Clear the reset token and expiration
+    await pool.query(
+      "UPDATE users SET reset_token = NULL, reset_token_expiration = NULL WHERE email_address = $1",
+      [email]
+    );
+
+    res.status(200).json({ message: "Password successfully updated!" });
   } catch (error) {
-      console.error('Error resetting password:', error);
-      res.status(500).json({ message: 'Failed to reset password.' });
+    console.error("Error resetting password:", error);
+    res.status(500).json({ message: "Failed to reset password." });
   }
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
