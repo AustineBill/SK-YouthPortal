@@ -7,6 +7,8 @@ const fs = require("fs");
 const path = require("path");
 const bcrypt = require("bcrypt");
 const moment = require("moment-timezone");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 
 const { generateRandomId } = require("./src/WebStructure/Codex");
 
@@ -37,8 +39,22 @@ pool.connect((err) => {
     console.log("Connected to the database successfully.");
   }
 });
+
+// Welcome endpoint
 app.get("/", (req, res) => {
   res.send("Welcome to the iSKed API");
+});
+
+// In-memory storage for simplicity (replace with a DB table in production)
+const passwordResetTokens = {};
+
+// Nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: "Gmail", // Use your email service provider
+  auth: {
+    user: "your-email@gmail.com", // Replace with your email
+    pass: "your-email-password", // Use app-specific password if necessary
+  },
 });
 /********* Website ******** */
 app.post("/ValidateCode", async (req, res) => {
@@ -1624,6 +1640,98 @@ app.get("/inventory-reports", async (req, res) => {
     res.status(500).send("Error fetching inventory data");
   }
 });
+
+
+// Forgot Password - Send Verification Code
+app.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+      // Find user by email address in the database
+      const userResult = await pool.query('SELECT * FROM users WHERE email_address = $1', [email]);
+
+      if (userResult.rows.length === 0) {
+          return res.status(404).json({ message: 'Email address not found' });
+      }
+
+      const user = userResult.rows[0];
+
+      // Generate a reset password token and its expiration
+      const resetToken = generateRandomId(); // Unique random token
+      const resetTokenExpiration = moment().add(1, 'hour').toISOString(); // Token expires in 1 hour
+
+      // Store token and expiration date in the database (hash the token for security)
+      const hashedToken = bcrypt.hashSync(resetToken, 10);
+      await pool.query('UPDATE users SET reset_token = $1, reset_token_expiration = $2 WHERE email_address = $3', [
+          hashedToken,
+          resetTokenExpiration,
+          email
+      ]);
+
+      // Send reset password email
+      const mailOptions = {
+          from: 'your-email@gmail.com',
+          to: email,
+          subject: 'Password Reset Request',
+          html: `
+              <h1>Password Reset</h1>
+              <p>You requested a password reset. Please click the link below to reset your password:</p>
+              <a href="http://localhost:5000/reset-password?token=${resetToken}">Reset Password</a>
+          `,
+      };
+
+      await transporter.sendMail(mailOptions);
+      res.status(200).json({ message: 'Password reset email sent!' });
+
+  } catch (error) {
+      console.error('Error sending email:', error);
+      res.status(500).json({ message: 'Server error, please try again later.' });
+  }
+});
+// Reset Password
+app.post('/reset-password', async (req, res) => {
+  const { email, token, newPassword } = req.body;
+
+  if (!email || !token || !newPassword) {
+      return res.status(400).json({ message: 'All fields are required.' });
+  }
+
+  try {
+      // Find the user in the database and retrieve the reset token and expiration
+      const userResult = await pool.query('SELECT * FROM users WHERE email_address = $1', [email]);
+
+      if (userResult.rows.length === 0) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      const user = userResult.rows[0];
+      
+      // Check if the reset token exists and if it is still valid
+      const isTokenValid = bcrypt.compareSync(token, user.reset_token);
+      
+      if (!isTokenValid || Date.now() > new Date(user.reset_token_expiration).getTime()) {
+          return res.status(400).json({ message: 'Invalid or expired reset token' });
+      }
+
+      // Hash the new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      // Update the password in the database
+      await pool.query('UPDATE users SET password = $1 WHERE email_address = $2', [
+          hashedPassword,
+          email
+      ]);
+
+      // Clear the reset token and expiration
+      await pool.query('UPDATE users SET reset_token = NULL, reset_token_expiration = NULL WHERE email_address = $1', [email]);
+
+      res.status(200).json({ message: 'Password successfully updated!' });
+  } catch (error) {
+      console.error('Error resetting password:', error);
+      res.status(500).json({ message: 'Failed to reset password.' });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
