@@ -184,34 +184,37 @@ const UserAuthentication = () => {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
-
+  
     try {
-      if (username === "admin123" && password === "123") {
-        adminlogin("isAdmin");
-        navigate("/admin");
-      } else {
-        const response = await fetch("http://localhost:5000/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          const { id, username } = data.user;
-          sessionStorage.setItem("userId", id);
-          login("isAuthenticated", username);
-          navigate("/Dashboard");
+      // Make a request to the backend to verify the credentials
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        const { id, username, role } = data.user;
+        sessionStorage.setItem("userId", id);
+        login("isAuthenticated", username); // Call the login method from your context
+  
+        if (role === "admin") {
+          adminlogin("isAdmin");
+          navigate("/admin");
         } else {
-          alert(data.message || "Invalid user credentials");
+          navigate("/Dashboard");
         }
+      } else {
+        alert(data.message || "Invalid user credentials");
       }
     } catch (error) {
       console.error("Error during login:", error);
       alert("An error occurred. Please try again.");
     }
   };
+  
 
   return (
     <div className="user-authentication-contents d-flex justify-content-center">
