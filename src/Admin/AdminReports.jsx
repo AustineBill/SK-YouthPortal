@@ -80,43 +80,43 @@ const Reports = () => {
 
   // Generate PDF
   const generatePDF = () => {
+    if (!adminName.trim()) {
+      alert("Admin name is required to generate the report.");
+      return;
+    }
+
     const input = document.getElementById("admin-reports-tables-container");
-    const backgroundImage = `${process.env.PUBLIC_URL}/Asset/WebImages/NEW SK LETTER LEGAL SIZE.png`;
-  
+    const backgroundImage = `${process.env.PUBLIC_URL}/Asset/WebImages/bgreportskadmin.jpg`;
+
     html2canvas(input, {
       useCORS: true,
       backgroundColor: "transparent",
-      scale: 3, // Increase scale for better rendering quality
+      scale: 2, // Decrease scale for smaller content size
     }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
-  
+
       const pdf = new jsPDF({
         orientation: "landscape", // Use landscape for better table fitting
         unit: "mm",
-        format: [355.6, 215.9], // Legal paper size in landscape (355.6mm x 215.9mm)
+        format: [330.6, 216.9], // Legal paper size in landscape (355.6mm x 215.9mm)
       });
-  
+
       const pageWidth = pdf.internal.pageSize.width;
       const pageHeight = pdf.internal.pageSize.height;
-  
+
       // Add the background image to the first page
       pdf.addImage(backgroundImage, "PNG", 0, 0, pageWidth, pageHeight);
-  
+
       const margin = 15; // Add margin to prevent content cutoff
       const contentWidth = pageWidth - margin * 2;
       const contentHeight = (canvas.height * contentWidth) / canvas.width;
-  
-      // Define the signature box position at the lower-right corner
-      const signatureBoxX = pageWidth - 65; // X position (right side)
-      const signatureBoxY = pageHeight - 30; // Y position (bottom side)
-      const signatureBoxHeight = 15; // Height of the signature box
-  
-      const maxHeightPerPage = pageHeight - margin * 2 - 40; // Adjusted space for table (keeping some space for header/footer)
+
+      const maxHeightPerPage = pageHeight - margin * 2 - 50; // Adjusted space for table (keeping some space for header/footer)
       let currentYPosition = margin + 50; // Starting position of content (below the header)
-  
+
       // Check if content fits on one page
       let contentRemainingHeight = contentHeight;
-  
+
       // Add content for the first page
       if (contentRemainingHeight <= maxHeightPerPage) {
         pdf.addImage(imgData, "PNG", margin, currentYPosition, contentWidth, contentRemainingHeight);
@@ -124,42 +124,48 @@ const Reports = () => {
         // If content exceeds one page, split it across multiple pages
         while (contentRemainingHeight > 0) {
           const currentPageHeight = Math.min(contentRemainingHeight, maxHeightPerPage);
-  
-          // If the content is close to the signature box area, start a new page
-          if (currentYPosition + currentPageHeight + signatureBoxHeight >= pageHeight - margin) {
+
+          // If the content is close to the signature form area, start a new page
+          if (currentYPosition + currentPageHeight + 50 >= pageHeight - margin) {
             pdf.addPage(); // Add new page
             pdf.addImage(backgroundImage, "PNG", 0, 0, pageWidth, pageHeight);
             currentYPosition = margin + 50; // Reset Y position for the new page
           }
-  
+
           // Add the current page content (table data)
           pdf.addImage(imgData, "PNG", margin, currentYPosition, contentWidth, currentPageHeight);
-  
+
           // Decrease remaining content height and adjust Y position for the next page
           contentRemainingHeight -= currentPageHeight;
           currentYPosition += currentPageHeight;
         }
       }
-  
-      // Automatically set the current date
+
+      // Add admin name and date, signature area
+      const adminFontSize = 13;
+      const dateFontSize = 13;
+      const signatureFontSize = 12;
+
+      pdf.setFont("times", "Bold");
+      pdf.setFontSize(adminFontSize);
+      const adminNameYPosition = pageHeight - 50;
+      pdf.text(`Printed by: ${adminName}`, margin, adminNameYPosition);
+
+      pdf.setFontSize(dateFontSize);
       const currentDate = new Date().toLocaleDateString();
-  
-      // Add the admin's name and date at the upper-left corner
-      pdf.setFontSize(12);
-      pdf.text(`Admin: ${adminName}`, margin, margin + 40); // Admin name at the top-left
-      pdf.text(`Date: ${currentDate}`, margin, margin + 50); // Date below the admin name
-  
-      // Add the signature box at the lower-right corner
-      pdf.rect(signatureBoxX, signatureBoxY, 50, signatureBoxHeight); // Signature box position
-      pdf.text("Signature:", signatureBoxX + 5, signatureBoxY + 10); // Adjusted position for the text
-  
-      // Save the PDF
+      const dateYPosition = adminNameYPosition + 5;
+      pdf.text(`Printed date: ${currentDate}`, margin, dateYPosition);
+
+      pdf.setFontSize(signatureFontSize);
+      const signatureXPosition = pageWidth - margin - 90;
+      const signatureYPosition = pageHeight - 45;
+      pdf.line(signatureXPosition, signatureYPosition, signatureXPosition + 85, signatureYPosition);
+      const centeredXPosition = signatureXPosition + (85 - pdf.getStringUnitWidth("Signature over Printed Name") * pdf.getFontSize() / pdf.internal.scaleFactor) / 2;
+      pdf.text("Signature over Printed Name", centeredXPosition, signatureYPosition + 10);
+
       pdf.save(`${activeTable}-report.pdf`);
     });
   };
-  
-  
-  
 
   return (
     <div className="admin-reports-container">
@@ -300,40 +306,34 @@ const Reports = () => {
                   </tr>
                 ) : (
                   Object.entries(groupedEquipmentReservations).map(
-                    ([date, reservations]) => (
+                    ([date, equipmentReservations]) => (
                       <tr key={date}>
                         <td>{date}</td>
                         <td>
-                          {reservations.map((res) => (
-                            <div key={res.id}>{res.user_id}</div>
+                          {equipmentReservations.map((reservation) => (
+                            <div key={reservation.id}>{reservation.user_id}</div>
                           ))}
                         </td>
                         <td>
-                          {reservations.map((res) => (
-                            <div key={res.id}>
-                              {new Date(res.start_date).toLocaleString()}
+                          {equipmentReservations.map((reservation) => (
+                            <div key={reservation.id}>{reservation.start_date}</div>
+                          ))}
+                        </td>
+                        <td>
+                          {equipmentReservations.map((reservation) => (
+                            <div key={reservation.id}>{reservation.end_date}</div>
+                          ))}
+                        </td>
+                        <td>
+                          {equipmentReservations.map((reservation) => (
+                            <div key={reservation.id}>
+                              {reservation.equipment_name}
                             </div>
                           ))}
                         </td>
                         <td>
-                          {reservations.map((res) => (
-                            <div key={res.id}>
-                              {new Date(res.end_date).toLocaleString()}
-                            </div>
-                          ))}
-                        </td>
-                        <td>
-                          {reservations.map((res) =>
-                            res.reserved_equipment.map((equip, index) => (
-                              <div key={index}>
-                                {equip.name} (Quantity: {equip.quantity})
-                              </div>
-                            ))
-                          )}
-                        </td>
-                        <td>
-                          {reservations.map((res) => (
-                            <div key={res.id}>{res.status}</div>
+                          {equipmentReservations.map((reservation) => (
+                            <div key={reservation.id}>{reservation.status}</div>
                           ))}
                         </td>
                       </tr>
@@ -352,39 +352,41 @@ const Reports = () => {
               <thead className="admin-reports-schedules-head text-center">
                 <tr>
                   <th>Date</th>
+                  <th>User ID</th>
                   <th>Event Name</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
                 </tr>
               </thead>
               <tbody className="admin-reports-schedules-body text-center">
                 {Object.entries(groupedSchedules).length === 0 ? (
                   <tr>
-                    <td colSpan="4" className="text-center">
+                    <td colSpan="5" className="text-center">
                       No records found
                     </td>
                   </tr>
                 ) : (
-                  Object.entries(groupedSchedules).map(([date, events]) => (
+                  Object.entries(groupedSchedules).map(([date, schedules]) => (
                     <tr key={date}>
                       <td>{date}</td>
                       <td>
-                        {events.map((event) => (
-                          <div key={event.id}>{event.name}</div>
+                        {schedules.map((schedule) => (
+                          <div key={schedule.id}>{schedule.user_id}</div>
                         ))}
                       </td>
                       <td>
-                        {events.map((event) => (
-                          <div key={event.id}>
-                            {new Date(event.start_date).toLocaleString()}
-                          </div>
+                        {schedules.map((schedule) => (
+                          <div key={schedule.id}>{schedule.event_name}</div>
                         ))}
                       </td>
                       <td>
-                        {events.map((event) => (
-                          <div key={event.id}>
-                            {new Date(event.end_date).toLocaleString()}
-                          </div>
+                        {schedules.map((schedule) => (
+                          <div key={schedule.id}>{schedule.start_time}</div>
+                        ))}
+                      </td>
+                      <td>
+                        {schedules.map((schedule) => (
+                          <div key={schedule.id}>{schedule.end_time}</div>
                         ))}
                       </td>
                     </tr>
@@ -405,38 +407,32 @@ const Reports = () => {
                   <th>Item ID</th>
                   <th>Item Name</th>
                   <th>Quantity</th>
-                  <th>Status</th>
                 </tr>
               </thead>
               <tbody className="admin-reports-inventory-body text-center">
                 {Object.entries(groupedInventory).length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="text-center">
+                    <td colSpan="4" className="text-center">
                       No records found
                     </td>
                   </tr>
                 ) : (
-                  Object.entries(groupedInventory).map(([date, items]) => (
+                  Object.entries(groupedInventory).map(([date, inventoryItems]) => (
                     <tr key={date}>
                       <td>{date}</td>
                       <td>
-                        {items.map((item) => (
-                          <div key={item.id}>{item.id}</div>
+                        {inventoryItems.map((item) => (
+                          <div key={item.id}>{item.item_id}</div>
                         ))}
                       </td>
                       <td>
-                        {items.map((item) => (
-                          <div key={item.id}>{item.name}</div>
+                        {inventoryItems.map((item) => (
+                          <div key={item.id}>{item.item_name}</div>
                         ))}
                       </td>
                       <td>
-                        {items.map((item) => (
+                        {inventoryItems.map((item) => (
                           <div key={item.id}>{item.quantity}</div>
-                        ))}
-                      </td>
-                      <td>
-                        {items.map((item) => (
-                          <div key={item.id}>{item.status}</div>
                         ))}
                       </td>
                     </tr>
