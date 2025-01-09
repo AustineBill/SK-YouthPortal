@@ -703,7 +703,7 @@ app.get("/ViewEquipment", async (req, res) => {
 
 const MilestoneStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./public/Asset/SK_Officials"); // Store in the desired folder
+    cb(null, "./public/Asset/Milestone"); // Store in the desired folder
   },
   filename: (req, file, cb) => {
     // Retain the original filename and just add a suffix to ensure uniqueness
@@ -1087,6 +1087,35 @@ app.get("/spotlight", async (req, res) => {
   }
 });
 
+app.post(
+  "/spotlight",
+  Milestonesupload.array("additionalImages", 10), // Handle only additional images
+  async (req, res) => {
+    try {
+      // Process additional images
+      const additionalImages = req.files
+        ? req.files.map((file) => `/Asset/Milestone/${file.filename}`)
+        : [];
+
+      if (additionalImages.length === 0) {
+        return res.status(400).json({ error: "No additional images provided." });
+      }
+
+      // Insert milestone data into the database
+      const result = await pool.query(
+        "INSERT INTO Spotlight (images) VALUES ($1) RETURNING *",
+        [additionalImages.join(",")]
+      );
+
+      res.status(201).json(result.rows[0]);
+    } catch (error) {
+      console.error("Error adding milestone:", error);
+      res.status(500).json({ error: "Failed to add milestone" });
+    }
+  }
+);
+
+
 // Update contact details
 app.put("/contact", async (req, res) => {
   const { contact_number, location, gmail } = req.body;
@@ -1331,30 +1360,38 @@ app.delete("/users/:id", async (req, res) => {
 
 // Assuming you have the 'pool' object for your database connection (pg module).
 app.get("/admindashboard", async (req, res) => {
-  const { month } = req.query; // Get the month from the query parameter
+  const { year } = req.query; // Get the year from the query parameter
 
   try {
+    // SQL query to fetch the dashboard data
     const query = `
       SELECT 
-        (SELECT COUNT(*) FROM Users WHERE $1::int IS NULL OR EXTRACT(MONTH FROM created_at) = $1) AS total_users,
-        (SELECT COUNT(*) FROM Schedules WHERE $1::int IS NULL OR EXTRACT(MONTH FROM created_at) = $1) AS total_reservations,
-        (SELECT COUNT(*) FROM Equipment WHERE $1::int IS NULL OR EXTRACT(MONTH FROM created_at) = $1) AS total_equipment
+        (SELECT COUNT(*) FROM "Users" WHERE $1::int IS NULL OR EXTRACT(YEAR FROM created_at) = $1) AS total_users,
+        (SELECT COUNT(*) FROM "Schedules" WHERE $1::int IS NULL OR EXTRACT(YEAR FROM created_at) = $1) AS total_reservations,
+        (SELECT COUNT(*) FROM "Equipment" WHERE $1::int IS NULL OR EXTRACT(YEAR FROM created_at) = $1) AS total_equipment,
+        (SELECT json_agg(feedback) 
+         FROM "feedback" 
+         WHERE $1::int IS NULL OR EXTRACT(YEAR FROM created_at) = $1) AS feedback_data
     `;
 
-    const values = [month ? parseInt(month, 10) : null];
+    const values = [year ? parseInt(year, 10) : null];
 
+    // Execute the query
     const result = await pool.query(query, values);
 
+    // Return the dashboard data along with feedback data
     res.json({
-      total_users: result.rows[0].total_users,
-      total_reservations: result.rows[0].total_reservations,
-      total_equipment: result.rows[0].total_equipment,
+      total_users: result.rows[0].total_users || 0,
+      total_reservations: result.rows[0].total_reservations || 0,
+      total_equipment: result.rows[0].total_equipment || 0,
+      feedback_data: result.rows[0].feedback_data || [], // Handle empty feedback data
     });
   } catch (err) {
     console.error("Error fetching dashboard data:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 app.get("/Allreservations", async (req, res) => {
   try {
