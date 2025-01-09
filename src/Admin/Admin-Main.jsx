@@ -1111,7 +1111,6 @@ import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { AuthContext } from '../WebStructure/AuthContext';
 import './styles/Admin-Main.css';
 import { Bar, Doughnut } from 'react-chartjs-2';
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -1142,11 +1141,13 @@ const AdminMain = () => {
     totalEquipment: 0,
     monthlyReservations: new Array(12).fill(0),
     monthlyEquipmentReservations: new Array(12).fill(0),
-    yearlyRatings: new Array(5).fill(0), // Now we expect yearly ratings to be part of this
+    yearlyRatings: new Array(5).fill(0),
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedYear, setSelectedYear] = useState(2025);
+
+  const currentYear = new Date().getFullYear(); // Get current year dynamically
 
   const fetchDashboardData = useCallback(() => {
     setLoading(true);
@@ -1162,8 +1163,8 @@ const AdminMain = () => {
           totalUsers: data.total_users,
           totalReservations: data.total_reservations,
           totalEquipment: data.total_equipment,
-          activeUsers: data.active_users,  // Add this field
-          inactiveUsers: data.inactive_users,  // Add this field
+          activeUsers: data.active_users,
+          inactiveUsers: data.inactive_users,
           monthlyReservations: data.monthly_reservations || new Array(12).fill(0),
           monthlyEquipmentReservations: data.monthly_equipment_reservations || new Array(12).fill(0),
           yearlyRatings: data.yearly_ratings || new Array(5).fill(0),
@@ -1176,7 +1177,6 @@ const AdminMain = () => {
         setLoading(false);
       });
   }, [selectedYear]);
-  
 
   useEffect(() => {
     if (isAdmin) {
@@ -1187,31 +1187,26 @@ const AdminMain = () => {
   const handleYearChange = (event) => {
     const year = parseInt(event.target.value);
     setSelectedYear(year);
-    fetchDashboardData();
   };
 
-  // Create an array of years from 2025 to 2078
+  // Create an array of years from the current year to the max year (e.g., 2078)
   const years = [];
-  for (let year = 2025; year <= 2078; year++) {
+  for (let year = currentYear; year <= 2078; year++) {
     years.push(year);
   }
 
   // Donut Chart for Total Users Distribution
-  // Donut Chart for User Distribution (Active vs Inactive)
-  // Donut Chart for Active vs Inactive Users Distribution
   const donutChartData = {
     labels: ['Active Users', 'Inactive Users'],
     datasets: [
       {
-        data: [dashboardData.activeUsers, dashboardData.inactiveUsers],  // Use active and inactive users from backend
+        data: [dashboardData.activeUsers, dashboardData.inactiveUsers],
         backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
         borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
         borderWidth: 1,
       },
     ],
   };
-  
-  
 
   // Bar Chart for Monthly Reservations
   const reservationChartData = {
@@ -1282,7 +1277,15 @@ const AdminMain = () => {
           onChange={handleYearChange}
         >
           {years.map((year) => (
-            <option key={year} value={year}>
+            <option
+              key={year}
+              value={year}
+              disabled={year > currentYear} // Disable future years
+              style={{
+                color: year > currentYear ? 'gray' : 'black',
+                cursor: year > currentYear ? 'not-allowed' : 'pointer',
+              }}
+            >
               {year}
             </option>
           ))}
