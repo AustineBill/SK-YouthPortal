@@ -131,6 +131,8 @@ const UserAuthentication = () => {
       return;
     }
 
+    sessionStorage.setItem("decryptedCode", decryptedCode);
+
     // Send decrypted code to backend for validation
     fetch("http://localhost:5000/ValidateCode", {
       method: "POST",
@@ -160,14 +162,25 @@ const UserAuthentication = () => {
 
   const handleAccountUpdate = async (e) => {
     e.preventDefault();
-    console.log("Updating account with:", signupUsername, signupPassword); // Debugging line
+
+    const decryptedCode = sessionStorage.getItem("decryptedCode"); // Retrieve the decrypted code from sessionStorage
+
+    if (!decryptedCode) {
+      alert("Session expired. Please validate the activation code again.");
+      return;
+    }
+
     try {
-      await axios.post("http://localhost:5000/UpdateAccount", {
+      // Send updated account details along with the decryptedCode to the server
+      const response = await axios.post("http://localhost:5000/UpdateAccount", {
         username: signupUsername,
         password: signupPassword,
+        decryptedCode, // Send the decryptedCode to the backend
       });
-      alert("Account successfully updated!");
-      setView("signIn"); // Redirect to sign in after sign up
+
+      alert(response.data.message);
+      sessionStorage.removeItem("decryptedCode"); // Remove decryptedCode from sessionStorage after successful update
+      setView("signIn"); // Redirect to sign in after account update
     } catch (error) {
       console.error(
         "Update Error:",
@@ -184,7 +197,7 @@ const UserAuthentication = () => {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
-  
+
     try {
       // Make a request to the backend to verify the credentials
       const response = await fetch("http://localhost:5000/login", {
@@ -192,14 +205,14 @@ const UserAuthentication = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
         const { id, username, role } = data.user;
         sessionStorage.setItem("userId", id);
         login("isAuthenticated", username); // Call the login method from your context
-  
+
         if (role === "admin") {
           adminlogin("isAdmin");
           navigate("/admin");
@@ -214,7 +227,6 @@ const UserAuthentication = () => {
       alert("An error occurred. Please try again.");
     }
   };
-  
 
   return (
     <div className="user-authentication-contents d-flex justify-content-center">

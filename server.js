@@ -156,17 +156,18 @@ app.post("/ValidateCode", async (req, res) => {
     res.status(500).json({ message: "An error occurred during validation" });
   }
 });
+
 app.post("/UpdateAccount", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, decryptedCode } = req.body; // Add decryptedCode from the client
 
   try {
     // Hash the new password before saving it to the database
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Update query to modify both username and password
+    // Update query to modify both username and password using the decryptedCode as a locator
     const updateQuery = await pool.query(
-      "UPDATE Users SET username = $1, password = $2 WHERE username = $3 RETURNING *",
-      [username, hashedPassword, username]
+      "UPDATE Users SET username = $1, password = $2 WHERE id = $3 RETURNING *",
+      [username, hashedPassword, decryptedCode] // Use decryptedCode as the identifier
     );
 
     if (updateQuery.rowCount === 0) {
@@ -175,7 +176,7 @@ app.post("/UpdateAccount", async (req, res) => {
         .json({ message: "Account update failed: User not found" });
     }
 
-    // Respond with success message
+    // Respond with success message and remove the decryptedCode from sessionStorage on the client
     res.status(200).json({
       message: "Account updated successfully",
       user: updateQuery.rows[0], // Send the updated user info if necessary
@@ -238,13 +239,15 @@ app.put("/updateUser", async (req, res) => {
   }
 });
 
-
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   try {
     // Check for Admin credentials in the Admins table
-    const adminResult = await pool.query("SELECT * FROM Admins WHERE username = $1", [username]);
+    const adminResult = await pool.query(
+      "SELECT * FROM Admins WHERE username = $1",
+      [username]
+    );
 
     if (adminResult.rows.length > 0) {
       const admin = adminResult.rows[0];
@@ -261,7 +264,10 @@ app.post("/login", async (req, res) => {
     }
 
     // If not admin, check for regular user credentials in Users table
-    const userResult = await pool.query("SELECT * FROM Users WHERE username = $1", [username]);
+    const userResult = await pool.query(
+      "SELECT * FROM Users WHERE username = $1",
+      [username]
+    );
 
     if (userResult.rows.length > 0) {
       const user = userResult.rows[0];
@@ -269,7 +275,9 @@ app.post("/login", async (req, res) => {
       // Validate password for user login (bcrypt used for users)
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-        return res.status(400).json({ message: "Invalid username or password" });
+        return res
+          .status(400)
+          .json({ message: "Invalid username or password" });
       }
 
       // Return user details including ID
@@ -282,7 +290,7 @@ app.post("/login", async (req, res) => {
           fullName: user.full_name,
           email: user.email,
           phone: user.phone,
-          role: "user",  // Adding role for user
+          role: "user", // Adding role for user
         },
       });
     } else {
@@ -626,25 +634,25 @@ app.delete("/equipment/:reservation_id", async (req, res) => {
   }
 });
 
-/********* Auto Fill Details  *********
-app.get('/Details/:id', async (req, res) => {
-    const { id } = req.params;
-  
-    try {
-      const result = await pool.query(
-        'SELECT username, age, email_address AS email FROM Users WHERE id = $1',
-        [id]
-      );
-  
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: 'User not found' });
-      }
-  
-      res.json(result.rows[0]);
-    } catch (err) {
-      console.error('Error fetching user details:', err);
-      res.status(500).json({ error: 'Internal server error' });
+/********* Auto Fill Details  *********/
+app.get("/Details/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      "SELECT username, age, email_address AS email FROM Users WHERE id = $1",
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
     }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Error fetching user details:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 /******** View Schedules ********/
 app.get("/ViewSched", async (req, res) => {
