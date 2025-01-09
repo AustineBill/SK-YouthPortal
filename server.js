@@ -1456,34 +1456,112 @@ app.get("/admindashboard", async (req, res) => {
   const { year } = req.query; // Get the year from the query parameter
 
   try {
-    // SQL query to fetch the dashboard data
-    const query = `
+    const selectedYear = year ? parseInt(year, 10) : new Date().getFullYear(); // Default to current year if no year provided
+
+    // Query for total counts including active and inactive users per year
+    const mainQuery = `
       SELECT 
-        (SELECT COUNT(*) FROM "Users" WHERE $1::int IS NULL OR EXTRACT(YEAR FROM created_at) = $1) AS total_users,
-        (SELECT COUNT(*) FROM "Schedules" WHERE $1::int IS NULL OR EXTRACT(YEAR FROM created_at) = $1) AS total_reservations,
-        (SELECT COUNT(*) FROM "Equipment" WHERE $1::int IS NULL OR EXTRACT(YEAR FROM created_at) = $1) AS total_equipment,
+        EXTRACT(YEAR FROM created_at) AS year,
+        COUNT(*) AS total_users,
+        COUNT(CASE WHEN status = 'active' THEN 1 END) AS active_users,
+        COUNT(CASE WHEN status = 'inactive' THEN 1 END) AS inactive_users,
+        (SELECT COUNT(*) FROM "schedules" WHERE EXTRACT(YEAR FROM created_at) = COALESCE($1, EXTRACT(YEAR FROM CURRENT_DATE))) AS total_reservations,
+        (SELECT COUNT(*) FROM "equipment" WHERE EXTRACT(YEAR FROM created_at) = COALESCE($1, EXTRACT(YEAR FROM CURRENT_DATE))) AS total_equipment,
         (SELECT json_agg(feedback) 
          FROM "feedback" 
-         WHERE $1::int IS NULL OR EXTRACT(YEAR FROM created_at) = $1) AS feedback_data
+         WHERE EXTRACT(YEAR FROM created_at) = COALESCE($1, EXTRACT(YEAR FROM CURRENT_DATE))) AS feedback_data
+      FROM "users"
+      WHERE EXTRACT(YEAR FROM created_at) = COALESCE($1, EXTRACT(YEAR FROM CURRENT_DATE))
+      GROUP BY EXTRACT(YEAR FROM created_at);
     `;
 
-    const values = [year ? parseInt(year, 10) : null];
+    // Query for monthly reservations from the "schedules" table
+    const monthlySchedulesQuery = `
+      SELECT
+        EXTRACT(MONTH FROM created_at) AS month,
+        COUNT(*) AS total_reservations
+      FROM "schedules"
+      WHERE EXTRACT(YEAR FROM created_at) = $1
+      GROUP BY EXTRACT(MONTH FROM created_at)
+      ORDER BY EXTRACT(MONTH FROM created_at);
+    `;
 
-    // Execute the query
-    const result = await pool.query(query, values);
+    // Query for monthly reservations from the "equipment" table
+    const monthlyEquipmentQuery = `
+      SELECT
+        EXTRACT(MONTH FROM created_at) AS month,
+        COUNT(*) AS total_equipment_reservations
+      FROM "equipment"
+      WHERE EXTRACT(YEAR FROM created_at) = $1
+      GROUP BY EXTRACT(MONTH FROM created_at)
+      ORDER BY EXTRACT(MONTH FROM created_at);
+    `;
 
-    // Return the dashboard data along with feedback data
-    res.json({
-      total_users: result.rows[0].total_users || 0,
-      total_reservations: result.rows[0].total_reservations || 0,
-      total_equipment: result.rows[0].total_equipment || 0,
-      feedback_data: result.rows[0].feedback_data || [], // Handle empty feedback data
+    // Query for yearly rating counts (1 to 5) from the "feedback" table
+    const yearlyRatingsQuery = `
+      SELECT 
+        rating, 
+        COUNT(*) AS rating_count
+      FROM "feedback"
+      WHERE EXTRACT(YEAR FROM created_at) = $1
+      GROUP BY rating
+      ORDER BY rating;
+    `;
+
+    const values = [selectedYear];
+
+    console.log('Running queries with values:', values);
+
+    // Execute all queries
+    const [mainResult, schedulesResult, equipmentResult, ratingsResult] = await Promise.all([
+      pool.query(mainQuery, values),
+      pool.query(monthlySchedulesQuery, values),
+      pool.query(monthlyEquipmentQuery, values),
+      pool.query(yearlyRatingsQuery, values),
+    ]);
+
+    // If no data is found for the given year, respond with a message
+    if (!mainResult.rows.length) {
+      return res.status(404).json({ message: `No data found for the year ${selectedYear}` });
+    }
+
+    // Map the monthly data into arrays for easier use in the frontend
+    const monthlySchedules = new Array(12).fill(0);
+    const monthlyEquipment = new Array(12).fill(0);
+
+    schedulesResult.rows.forEach((row) => {
+      monthlySchedules[row.month - 1] = parseInt(row.total_reservations, 10);
     });
+
+    equipmentResult.rows.forEach((row) => {
+      monthlyEquipment[row.month - 1] = parseInt(row.total_equipment_reservations, 10);
+    });
+
+    // Prepare the ratings data (1-5) from the query result
+    const ratingsCount = [0, 0, 0, 0, 0]; // Index 0 corresponds to rating 1, index 4 corresponds to rating 5
+    ratingsResult.rows.forEach((row) => {
+      ratingsCount[row.rating - 1] = row.rating_count; // Place the count of each rating in the corresponding index
+    });
+
+    // Return the dashboard data, including active and inactive users
+    res.json({
+      total_users: mainResult.rows[0].total_users || 0,
+      active_users: mainResult.rows[0].active_users || 0, // Active users count
+      inactive_users: mainResult.rows[0].inactive_users || 0, // Inactive users count
+      total_reservations: mainResult.rows[0].total_reservations || 0,
+      total_equipment: mainResult.rows[0].total_equipment || 0,
+      feedback_data: mainResult.rows[0].feedback_data || [], // Handle empty feedback data
+      monthly_reservations: monthlySchedules, // Monthly data for schedules
+      monthly_equipment_reservations: monthlyEquipment, // Monthly data for equipment
+      yearly_ratings: ratingsCount, // Ratings data for 1-5 scale
+    });
+
   } catch (err) {
     console.error("Error fetching dashboard data:", err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+
 
 app.get("/Allreservations", async (req, res) => {
   try {
