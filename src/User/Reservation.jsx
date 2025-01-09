@@ -100,16 +100,17 @@ const Reservation = () => {
 
     // Ensure start and end dates are at local midnight
     const startDate = new Date(selectedDates[0]);
-    startDate.setHours(23, 59, 59, 999); // Set to local midnight
+    startDate.setHours(0, 0, 0, 0); // Ensure time is set to 12:00 AM
 
     const endDate = new Date(selectedDates[1]);
-    endDate.setHours(23, 59, 59, 999); // Include the end day completely
+    endDate.setDate(startDate.getDate() + 1); // Add 1 day
+    endDate.setHours(0, 0, 0, 0); // Ensure time is set to 12:00 AM
 
     const reservationData = {
       user_id: userId,
       reservation_type: reservationType,
-      start_date: startDate.toISOString(),
-      end_date: endDate.toISOString(),
+      start_date: startDate.toString(),
+      end_date: endDate.toString(),
       time_slot: selectedTime,
     };
 
