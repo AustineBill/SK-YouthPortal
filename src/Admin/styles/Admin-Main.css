@@ -313,3 +313,64 @@
         font-size: 10px;
     }
 }
+
+.admin-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    padding: 20px;
+  }
+  
+  .admin-dashboard-header-labels {
+    text-align: center;
+  }
+  
+  .year-dropdown-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .year-dropdown-container select {
+    padding: 5px 10px;
+    margin-left: 10px;
+  }
+  
+  .admin-dashboard-charts-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 900px;  /* Adjusted max-width for smaller container */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 40px;
+  }
+  
+  .admin-chart-container {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;  /* Ensure it takes up full width within the grid */
+    max-width: 400px; /* Make the chart container smaller */
+  }
+  
+  .admin-chart-container h3 {
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 16px; /* Reduced font size */
+    font-weight: bold;
+  }
+  
+  .chart {
+    width: 100%;  /* Ensure the chart fits within the container */
+    height: 250px; /* Adjust the height of the chart */
+  }
+  
