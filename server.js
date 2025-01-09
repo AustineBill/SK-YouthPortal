@@ -8,6 +8,7 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const moment = require("moment-timezone");
 const nodemailer = require("nodemailer");
+const cron = require("node-cron");
 const crypto = require("crypto");
 
 const { generateRandomId } = require("./src/WebStructure/Codex");
@@ -177,30 +178,61 @@ app.post("/UpdateAccount", async (req, res) => {
   const { decryptedCode, username, password } = req.body;
 
   try {
-    // Hash the new password before saving it to the database
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Update query to modify both username and password using decryptedCode
-    const updateQuery = await pool.query(
-      "UPDATE Users SET username = $1, password = $2 WHERE id = $3 RETURNING *",
-      [username, hashedPassword, decryptedCode] // Use decryptedCode to find the user
-    );
-
-    if (updateQuery.rowCount === 0) {
-      return res
-        .status(400)
-        .json({ message: "Account update failed: User not found" });
+    // Ensure required fields are provided
+    if (!decryptedCode || !username || !password) {
+      return res.status(400).json({ message: "All fields are required." });
     }
 
-    // Respond with success message
+    // Retrieve the existing user details
+    const userQuery = await pool.query("SELECT * FROM Users WHERE id = $1", [
+      decryptedCode,
+    ]);
+
+    if (userQuery.rowCount === 0) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    const existingUser = userQuery.rows[0];
+
+    // Check if username or password has changed
+    const isUsernameChanged = existingUser.username !== username;
+    const isPasswordChanged = !(await bcrypt.compare(
+      password,
+      existingUser.password
+    ));
+
+    if (!isUsernameChanged && !isPasswordChanged) {
+      return res.status(400).json({
+        message: "No changes detected. Username or password must be updated.",
+      });
+    }
+
+    // Hash the new password if it has changed
+    const hashedPassword = isPasswordChanged
+      ? await bcrypt.hash(password, 10)
+      : existingUser.password;
+
+    // Update the user with new username, password, and set status to active
+    const updateQuery = await pool.query(
+      `UPDATE Users 
+       SET username = $1, password = $2, status = 'active'
+       WHERE id = $3 
+       RETURNING *`,
+      [username, hashedPassword, decryptedCode]
+    );
+
     res.status(200).json({
-      message: "Account updated successfully",
-      user: updateQuery.rows[0], // Optionally return the updated user details
+      message: "Account updated successfully. Status set to active.",
+      user: {
+        id: updateQuery.rows[0].id,
+        username: updateQuery.rows[0].username,
+        status: updateQuery.rows[0].status,
+      },
     });
   } catch (error) {
     console.error("Error during account update:", error);
     res.status(500).json({
-      message: "An error occurred while updating your account",
+      message: "An error occurred while updating your account.",
       error: error.message,
     });
   }
@@ -1202,6 +1234,7 @@ app.get("/users", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 // Insert into the database with random ID generation
 app.post("/users", async (req, res) => {
   console.log("Request Body:", req.body); // Log the incoming data
@@ -1230,7 +1263,7 @@ app.post("/users", async (req, res) => {
   } = req.body;
 
   // Generate a random 6-character ID
-  const userId = generateRandomId(); // Call the random ID function
+  const userId = generateRandomId();
 
   try {
     // Check for duplicate user data
@@ -1249,21 +1282,21 @@ app.post("/users", async (req, res) => {
     }
 
     // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds, you can adjust if needed
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Insert the new user into the database
+    // Insert the new user into the database with a default "inactive" status
     const result = await pool.query(
       `INSERT INTO Users (
         id, username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
         birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
-        educational_background, registered_sk_voter, registered_national_voter
+        educational_background, registered_sk_voter, registered_national_voter, status
       ) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, 'inactive')
       RETURNING *`,
       [
         userId,
         username,
-        hashedPassword, // Store the hashed password
+        hashedPassword,
         firstname,
         lastname,
         region,
@@ -1319,45 +1352,52 @@ app.put("/users/:id", async (req, res) => {
   } = req.body;
 
   try {
-    const result = await pool.query(
-      `UPDATE users SET
-              username = $1, password = $2, firstname = $3, lastname = $4, region = $5, province = $6, 
-              city = $7, barangay = $8, zone = $9, sex = $10, age = $11, birthday = $12, 
-              email_address = $13, contact_number = $14, civil_status = $15, youth_age_group = $16, 
-              work_status = $17, educational_background = $18, registered_sk_voter = $19, 
-              registered_national_voter = $20
-          WHERE id = $21 RETURNING *`,
-      [
-        username,
-        password,
-        firstname,
-        lastname,
-        region,
-        province,
-        city,
-        barangay,
-        zone,
-        sex,
-        age,
-        birthday,
-        email_address,
-        contact_number,
-        civil_status,
-        youth_age_group,
-        work_status,
-        educational_background,
-        registered_sk_voter,
-        registered_national_voter,
-        id,
-      ]
-    );
+    const hashedPassword = password
+      ? await bcrypt.hash(password, 10)
+      : undefined;
 
+    const query = `
+      UPDATE users SET
+        username = $1, 
+        ${password ? "password = $2," : ""}
+        firstname = $3, lastname = $4, region = $5, province = $6, 
+        city = $7, barangay = $8, zone = $9, sex = $10, age = $11, 
+        birthday = $12, email_address = $13, contact_number = $14, civil_status = $15, 
+        youth_age_group = $16, work_status = $17, educational_background = $18, 
+        registered_sk_voter = $19, registered_national_voter = $20
+      WHERE id = $21 RETURNING *`;
+    const values = [
+      username,
+      ...(password ? [hashedPassword] : []),
+      firstname,
+      lastname,
+      region,
+      province,
+      city,
+      barangay,
+      zone,
+      sex,
+      age,
+      birthday,
+      email_address,
+      contact_number,
+      civil_status,
+      youth_age_group,
+      work_status,
+      educational_background,
+      registered_sk_voter,
+      registered_national_voter,
+      id,
+    ];
+
+    const result = await pool.query(query, values);
     res.json(result.rows[0]);
   } catch (err) {
     console.error("Error updating user:", err);
     res.status(500).send("Server error");
   }
 });
+
 app.delete("/users/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -1926,6 +1966,38 @@ app.post("/reset-password", async (req, res) => {
     console.error("Error resetting password:", error);
     res.status(500).json({ message: "Failed to reset password." });
   }
+});
+
+// Function to increment age and update status
+async function updateAgeAndStatus() {
+  try {
+    // Update the age for users with birthdays today
+    const updateAgeQuery = `
+      UPDATE Users
+      SET age = age + 1
+      WHERE EXTRACT(MONTH FROM CURRENT_DATE) = EXTRACT(MONTH FROM birthday)
+        AND EXTRACT(DAY FROM CURRENT_DATE) = EXTRACT(DAY FROM birthday);
+    `;
+    await pool.query(updateAgeQuery);
+
+    // Update the status to 'inactive' for users 31 or older
+    const updateStatusQuery = `
+      UPDATE Users
+      SET status = 'inactive'
+      WHERE age >= 31;
+    `;
+    await pool.query(updateStatusQuery);
+
+    console.log("Age and status updated successfully.");
+  } catch (err) {
+    console.error("Error updating age and status:", err);
+  }
+}
+
+// Schedule the task to run once a day at midnight
+cron.schedule("0 0 * * *", () => {
+  console.log("Running the age and status update task...");
+  updateAgeAndStatus();
 });
 
 app.listen(PORT, () => {
