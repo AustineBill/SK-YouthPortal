@@ -278,3 +278,15 @@
     display: none;
   }
 }
+
+.admin-reports-users-caption,
+.admin-reports-equipment-caption,
+.admin-reports-schedules-caption,
+.admin-reports-inventory-caption {
+  font-family: "Poppins", sans-serif; /* Use the Poppins font for table captions */
+  font-size: 24px; /* Adjust the font size */
+  font-weight: 600; /* Make it bold */
+  text-align: center; /* Center the text */
+  margin: 10px 0; /* Add some spacing around the captions */
+  color: #25327a; /* Set a distinct color for captions */
+}
