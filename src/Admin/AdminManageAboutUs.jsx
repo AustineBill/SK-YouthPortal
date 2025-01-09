@@ -178,6 +178,7 @@ const ManageAboutUs = () => {
         <h2 className="admin-about-us-label-h2 fst-italic">
           {pageLabels[activeContent]}
         </h2>
+
         {activeContent !== "manageAboutDetails" && (
           <div className="admin-about-us-back-button">
             <button
@@ -190,75 +191,72 @@ const ManageAboutUs = () => {
         )}
       </div>
 
-      <div className="admin-about-us-contents-container d-flex justify-content-center">
+      <div className="admin-about-us-contents-container d-flex flex-column align-items-center">
         {loading && <p>Loading...</p>}
         {error && <p className="error-text">{error}</p>}
 
         {activeContent === "manageAboutDetails" && !loading && (
-          <div className="admin-current-about-details-container">
-            <div className="admin-about-details-group">
+          <div className="admin-current-about-details-container d-flex justify-content-center">
+            <div className="admin-about-details-group d-flex flex-column align-items-center">
               {/* Custom section for each field */}
-              <div className="admin-description-form">
-                <label className="admin-description-label">Description</label>
+              <div className="admin-current-about-form d-flex flex-column">
+                <label className="admin-current-about-label">Description</label>
                 <textarea
-                  className="admin-description-textarea form-control"
+                  className="admin-description-textarea"
                   value={aboutDetails.description}
                   readOnly
                 />
               </div>
 
-              <div className="admin-mandate-form">
-                <label className="admin-mandate-label">Mandate</label>
+              <div className="admin-current-about-form d-flex flex-column">
+                <label className="admin-current-about-label">Mandate</label>
                 <textarea
-                  className="admin-mandate-textarea form-control"
+                  className="admin-mandate-textarea"
                   value={aboutDetails.mandate}
                   readOnly
                 />
               </div>
 
-              <div className="admin-mission-form">
-                <label className="admin-mission-label">Mission</label>
+              <div className="admin-current-about-form d-flex flex-column">
+                <label className="admin-current-about-label">Mission</label>
                 <textarea
-                  className="admin-mission-textarea form-control"
+                  className="admin-mission-textarea"
                   value={aboutDetails.mission}
                   readOnly
                 />
               </div>
 
-              <div className="admin-vision-form">
-                <label className="admin-vision-label">Vision</label>
+              <div className="admin-current-about-form d-flex flex-column">
+                <label className="admin-current-about-label">Vision</label>
                 <textarea
-                  className="admin-vision-textarea form-control"
+                  className="admin-vision-textarea"
                   value={aboutDetails.vision}
                   readOnly
                 />
               </div>
 
-              <div className="admin-objectives-form">
-                <label className="admin-objectives-label">Objectives</label>
+              <div className="admin-current-about-form d-flex flex-column">
+                <label className="admin-current-about-label">Objectives</label>
                 <textarea
-                  className="admin-objectives-textarea form-control"
+                  className="admin-objectives-textarea"
                   value={aboutDetails.objectives}
                   readOnly
                 />
               </div>
 
-              <div className="admin-objectives-form">
-                <label className="admin-photos-label">Objectives</label>
-                <div className="mb-3">
-                  <label>Upload Image</label>
-                  <input
-                    type="file"
-                    className="form-control"
-                    onChange={(e) => handleImageChange(e)}
-                  />
-                </div>
+              <div className="admin-current-about-form d-flex flex-column">
+                {/* <label className="admin-current-about-label">Objectives</label> */}
+                <label>Upload Image</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  onChange={(e) => handleImageChange(e)}
+                />
               </div>
 
               <button
                 onClick={() => setActiveContent("editAboutDetails")}
-                className="admin-edit-about-details-button rounded"
-              >
+                className="admin-edit-about-details-button rounded">
                 Edit Details
               </button>
             </div>
@@ -266,7 +264,7 @@ const ManageAboutUs = () => {
         )}
 
         {activeContent === "editAboutDetails" && (
-          <div className="admin-edit-about-details-container">
+          <div className="admin-edit-about-details-container d-flex justify-content-center">
             <form
               onSubmit={handleSave}
               className="admin-edit-about-details-group"
@@ -275,9 +273,11 @@ const ManageAboutUs = () => {
               {Object.keys(newAboutDetails).map(
                 (field, idx) =>
                   field !== "id" && (
-                    <div className={`admin-${field}-form`} key={idx}>
-                      <label className={`admin-${field}-label`}>
-                        {field.replace(/([A-Z])/g, " $1").toUpperCase()}
+                    <div className={`admin-edit-${field}-form d-flex flex-column`} key={idx}>
+                      <label className={`admin-edit-${field}-label`}>
+                        {field.replace(/([A-Z])/g, " $1")
+                          .toLowerCase()
+                          .replace(/^\w|\s\w/g, (match) => match.toUpperCase())}
                       </label>
                       <textarea
                         value={newAboutDetails[field]}
@@ -288,6 +288,7 @@ const ManageAboutUs = () => {
                     </div>
                   )
               )}
+              
               <button
                 type="submit"
                 className="admin-save-about-details-button rounded text-white"
@@ -299,28 +300,32 @@ const ManageAboutUs = () => {
         )}
 
         {activeContent === "manageAboutDetails" && !loading && (
-          <div className="admin-current-about-details-container">
-            <h3>SK Council Members</h3>
-            <table className="table table-bordered">
-              <thead>
+          <div className="admin-current-SK-details-container d-flex flex-column align-items-center">
+            <div className="admin-current-SK-label-container">
+              <h2 className="SK-label-h2">SK Council Members</h2>
+            </div>
+
+            <table className="admin-SK-table table-bordered">
+              <thead className="admin-SK-table-head text-center">
                 <tr>
                   <th>Image</th>
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>
+
+              <tbody className="admin-SK-table-body text-center">
                 {skCouncilInputs.map((member, index) => (
                   <tr key={index}>
                     <td>
                       <img
                         src={member.image}
                         alt={`SK Member ${index + 1}`}
-                        style={{ width: "100px", height: "auto" }}
+                        style={{ width: "150px", height: "auto" }}
                       />
                     </td>
                     <td>
                       <button
-                        className="btn btn-primary btn-sm me-2"
+                        className="admin-SK-edit-button bg-primary text-white rounded-pill"
                         onClick={() => editSkCouncilInput(member)}
                       >
                         Edit
@@ -332,8 +337,7 @@ const ManageAboutUs = () => {
             </table>
             <button
               onClick={addSkCouncilInput}
-              className="btn btn-secondary mt-3"
-            >
+              className="admin-add-SK-button rounded">
               Add SK Council Member
             </button>
           </div>
@@ -365,7 +369,7 @@ const ManageAboutUs = () => {
                       }
                     }}
                   >
-                    <div className="mb-3">
+                    <div className="">
                       <label>Upload Image</label>
                       <input
                         type="file"
