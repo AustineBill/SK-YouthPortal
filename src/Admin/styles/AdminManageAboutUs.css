@@ -4,9 +4,9 @@
 
 .admin-about-us-container {
     position: relative;
-    top: 75px;
-    left: 25%;
-    width: 75%;
+    padding-top: 75px;
+    left: 22.5%;
+    width: 77.5%;
     background-color: #FFFFFF;
     font-family: 'Inter', sans-serif;
     z-index: 1;
@@ -38,23 +38,34 @@
 }
 
 .admin-current-about-form,
-.admin-edit-about-form {
+[class^="admin-edit-"][class*="-form"] {
     width: 100%;
 }
 
-.admin-about-details-group .admin-current-about-label, 
+.admin-current-about-details-group .admin-current-about-label, 
 .admin-edit-about-details-group .admin-edit-about-label {
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
+    font-size: 17.5px;
 }
 
-.admin-current-about-form textarea, 
-.admin-edit-about-form textarea {
+.admin-current-about-form textarea,
+.admin-current-about-form [type='file'] {
     height: 50px;
     border-style: none;
     border-radius: 10px;
     outline: none;
     margin-bottom: 10px;
+    font-size: 17.5px;
+    transition: all 0.35s;
+}
+
+[class^="admin-edit-"][class*="-form"] textarea {
+    height: 50px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 0;
+    font-size: 17.5px;
     transition: all 0.35s;
 }
 
@@ -65,23 +76,38 @@
 
 .admin-edit-about-details-back-button {
     background-color: #25327A;
+    color: #FFFFFF;
     width: 100px;
     height: 40px;
     font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
 }
 
 .admin-edit-about-details-button {
     background-color: #25327A;
+    color: #FFFFFF;
     margin-top: 10px;
     width: 150px;
     height: 55px;
     font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
 }
 
 .admin-save-about-details-button {
     background-color: #42BB4E;
+    color: #FFFFFF;
     margin-top: 10px;
     width: 150px;
     height: 55px;
     font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-edit-about-details-back-button:hover,
+.admin-edit-about-details-button:hover,
+.admin-save-about-details-button:hover {
+    color: rgb(2, 107, 107);
 }
