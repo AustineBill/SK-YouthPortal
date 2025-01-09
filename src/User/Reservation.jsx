@@ -29,9 +29,37 @@ const Reservation = () => {
 
   const handleDateChange = (range) => {
     if (Array.isArray(range)) {
-      setSelectedDates(range);
+      const [start, end] = range;
+
+      // Normalize the dates to remove time zone offset
+      const startLocal = new Date(
+        start.getFullYear(),
+        start.getMonth(),
+        start.getDate()
+      );
+      const endLocal = new Date(
+        end.getFullYear(),
+        end.getMonth(),
+        end.getDate()
+      );
+
+      const diffDays = (endLocal - startLocal) / (1000 * 60 * 60 * 24);
+
+      if (diffDays > 4) {
+        setModalMessage("You can select a maximum of 4 days.");
+        setShowModal(true);
+        setSelectedDates([startLocal, startLocal]); // Reset to the start date
+      } else {
+        setSelectedDates([startLocal, endLocal]);
+      }
     } else {
-      setSelectedDates([range, range]);
+      // Single date selection
+      const localDate = new Date(
+        range.getFullYear(),
+        range.getMonth(),
+        range.getDate()
+      );
+      setSelectedDates([localDate, localDate]);
     }
   };
 
@@ -65,11 +93,28 @@ const Reservation = () => {
 
     const userId = sessionStorage.getItem("userId");
     if (!userId) {
+      alert("No user ID found. Please log in again.");
       console.error("No userId found in sessionStorage");
       return;
     }
 
+    // Ensure start and end dates are at local midnight
+    const startDate = new Date(selectedDates[0]);
+    startDate.setHours(23, 59, 59, 999); // Set to local midnight
+
+    const endDate = new Date(selectedDates[1]);
+    endDate.setHours(23, 59, 59, 999); // Include the end day completely
+
+    const reservationData = {
+      user_id: userId,
+      reservation_type: reservationType,
+      start_date: startDate.toISOString(),
+      end_date: endDate.toISOString(),
+      time_slot: selectedTime,
+    };
+
     try {
+      // Validate the reservation
       const response = await fetch(
         "http://localhost:5000/ValidateReservation",
         {
@@ -77,29 +122,25 @@ const Reservation = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            user_id: userId,
-            date: selectedDates[0],
-          }),
+          body: JSON.stringify(reservationData),
         }
       );
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to validate reservation. Status: ${response.status}`
+        );
+      }
 
       const result = await response.json();
 
       if (!result.success) {
-        setModalMessage(result.message);
+        setModalMessage(result.message); // Show the error message in the modal
         setShowModal(true);
         return;
       }
 
-      const reservationData = {
-        user_id: userId,
-        reservation_type: reservationType,
-        start_date: selectedDates[0],
-        end_date: selectedDates[1],
-        time_slot: selectedTime,
-      };
-
+      // If validation passes, save the reservation to sessionStorage and navigate
       sessionStorage.setItem(
         "reservationData",
         JSON.stringify(reservationData)
@@ -109,6 +150,9 @@ const Reservation = () => {
       });
     } catch (error) {
       console.error("Error validating reservation:", error);
+      alert(
+        "An error occurred while validating your reservation. Please try again later."
+      );
     }
   };
 

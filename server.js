@@ -822,19 +822,39 @@ app.delete("/inventory/:id", async (req, res) => {
   }
 });
 /***** Check Reservatoion *******/
-app.post("/Checkreservation", async (req, res) => {
-  const { user_id, date } = req.body;
+
+app.post("/ValidateReservation", async (req, res) => {
+  const { user_id, start_date, end_date } = req.body;
+
   try {
-    const query =
-      "SELECT * FROM Schedules WHERE user_id = $1 AND DATE(start_date) = $2";
-    const values = [user_id, date];
-    const result = await pool.query(query, values);
-    res.json({ exists: result.rowCount > 0 });
-  } catch (error) {
-    console.error("Error checking reservation:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
+    // Convert start_date and end_date to Date objects
+    const startDate = new Date(start_date);
+    const endDate = new Date(end_date);
+
+    // Query to check for overlapping reservations
+    const overlapQuery = `
+      SELECT * FROM Schedules 
+      WHERE user_id = $1 
+      AND (
+        (start_date <= $2 AND end_date >= $2) OR -- Overlap with new start date
+        (start_date <= $3 AND end_date >= $3) OR -- Overlap with new end date
+        (start_date >= $2 AND end_date <= $3)    -- Fully contained within new range
+      )
+    `;
+    const overlapValues = [user_id, startDate, endDate];
+    const overlapResult = await pool.query(overlapQuery, overlapValues);
+
+    // If any rows are returned, there is an overlap
+    if (overlapResult.rowCount > 0) {
+      return res.json({
+        success: false,
+        message: "Your selected dates overlap with an existing reservation.",
+      });
+    }
+
+    // If no overlaps, allow the reservation
+    return res.json({ success: true, message: "Reservation allowed." });
+
 app.post("/CheckEquipment", async (req, res) => {
   const { user_id, date } = req.body;
   try {
