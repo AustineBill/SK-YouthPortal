@@ -273,18 +273,6 @@ const ManageAboutUs = () => {
               {Object.keys(newAboutDetails).map(
                 (field, idx) =>
                   field !== "id" && (
-                    // <div className={`admin-${field}-form`} key={idx}>
-                    //   <label className={`admin-${field}-label`}>
-                    //     {field.replace(/([A-Z])/g, " $1").toUpperCase()}
-                    //   </label>
-                    //   <textarea
-                    //     value={newAboutDetails[field]}
-                    //     onChange={(e) =>
-                    //       handleAboutDetailsChange(field, e.target.value)
-                    //     }
-                    //   />
-                    // </div>
-
                     <div className={`admin-edit-${field}-form d-flex flex-column`} key={idx}>
                       <label className={`admin-edit-${field}-label`}>
                         {field.replace(/([A-Z])/g, " $1")
@@ -300,6 +288,7 @@ const ManageAboutUs = () => {
                     </div>
                   )
               )}
+              
               <button
                 type="submit"
                 className="admin-save-about-details-button rounded text-white"
@@ -311,28 +300,32 @@ const ManageAboutUs = () => {
         )}
 
         {activeContent === "manageAboutDetails" && !loading && (
-          <div className="admin-current-about-details-container">
-            <h2 className="equipment-label-h2">SK Council Members</h2>
-            <table className="table table-bordered">
-              <thead>
+          <div className="admin-current-SK-details-container d-flex flex-column align-items-center">
+            <div className="admin-current-SK-label-container">
+              <h2 className="SK-label-h2">SK Council Members</h2>
+            </div>
+
+            <table className="admin-SK-table table-bordered">
+              <thead className="admin-SK-table-head text-center">
                 <tr>
                   <th>Image</th>
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>
+
+              <tbody className="admin-SK-table-body text-center">
                 {skCouncilInputs.map((member, index) => (
                   <tr key={index}>
                     <td>
                       <img
                         src={member.image}
                         alt={`SK Member ${index + 1}`}
-                        style={{ width: "100px", height: "auto" }}
+                        style={{ width: "150px", height: "auto" }}
                       />
                     </td>
                     <td>
                       <button
-                        className="btn btn-primary btn-sm me-2"
+                        className="admin-SK-edit-button bg-primary text-white rounded-pill"
                         onClick={() => editSkCouncilInput(member)}
                       >
                         Edit
@@ -344,8 +337,7 @@ const ManageAboutUs = () => {
             </table>
             <button
               onClick={addSkCouncilInput}
-              className="btn btn-secondary mt-3"
-            >
+              className="admin-add-SK-button rounded">
               Add SK Council Member
             </button>
           </div>

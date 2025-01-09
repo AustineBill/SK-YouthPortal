@@ -764,6 +764,390 @@
 
 
 /* ____________________________________________________________________________________________________ */
+/* Admin Manage About Us */
+/* ____________________________________________________________________________________________________ */
+
+.admin-about-us-container {
+    position: relative;
+    padding-top: 75px;
+    left: 22.5%;
+    width: 77.5%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
+}
+
+.admin-about-us-label-h2 {
+    font-size: 40px;
+    margin: 20px 0 20px 40px;
+}
+
+.SK-label-h2 {
+    font-size: 30px;
+}
+
+.admin-edit-about-details-back-button {
+    margin: 20px 40px 20px 0;
+}
+
+.admin-about-us-contents-container {
+    margin-bottom: 40px;
+}
+
+.admin-current-about-details-container,
+.admin-edit-about-details-container,
+.admin-current-SK-details-container {
+    background-color: #c5c1c1;
+    width: 90%;
+}
+
+.admin-about-details-group,
+.admin-edit-about-details-group {
+    width: 90%;
+    margin: 25px 0 25px 0;
+}
+
+.admin-current-about-form,
+[class^="admin-edit-"][class*="-form"] {
+    width: 100%;
+}
+
+.admin-current-about-details-group .admin-current-about-label,
+.admin-edit-about-details-group .admin-edit-about-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 17.5px;
+}
+
+.admin-current-about-form textarea,
+.admin-current-about-form [type='file'] {
+    height: 50px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 10px;
+    font-size: 17.5px;
+    transition: all 0.35s;
+}
+
+[class^="admin-edit-"][class*="-form"] textarea {
+    height: 50px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 0;
+    font-size: 17.5px;
+    transition: all 0.35s;
+}
+
+.admin-current-about-form textarea:focus,
+.admin-edit-about-form textarea:focus {
+    outline: 1px solid #007bff;
+}
+
+.admin-edit-about-details-back-button {
+    background-color: #25327A;
+    color: #FFFFFF;
+    width: 100px;
+    height: 40px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-edit-about-details-button {
+    background-color: #25327A;
+    color: #FFFFFF;
+    margin-top: 10px;
+    width: 150px;
+    height: 55px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-save-about-details-button {
+    background-color: #42BB4E;
+    color: #FFFFFF;
+    margin-top: 10px;
+    width: 150px;
+    height: 55px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+.admin-edit-about-details-back-button:hover,
+.admin-edit-about-details-button:hover,
+.admin-save-about-details-button:hover,
+.admin-add-SK-button:hover {
+    color: rgb(2, 107, 107);
+}
+
+.admin-current-SK-details-container {
+    margin-top: 20px;
+}
+
+.admin-current-SK-label-container {
+    margin: 25px 0 10px;
+}
+
+.admin-SK-table {
+    width: 90%;
+    margin: 0 auto 10px;
+    background-color: #FFFFFF;
+}
+
+.admin-SK-table tr {
+    height: 35px;
+}
+
+.admin-SK-edit-button {
+    font-size: 15px;
+    width: 100px;
+    height: 40px;
+    border-style: none;
+}
+
+.admin-add-SK-button {
+    background-color: #42BB4E;
+    color: #FFFFFF;
+    margin: 10px 0 25px 0;
+    width: 150px;
+    height: 55px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
+}
+
+
+/* Media */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    .admin-about-us-label-h2 {
+        font-size: 37.5px;
+    }
+
+    .admin-current-about-details-group .admin-current-about-label,
+    .admin-edit-about-details-group .admin-edit-about-label {
+        font-size: 15px;
+    }
+
+    .admin-current-about-form textarea,
+    .admin-current-about-form [type='file'] {
+        height: 45px;
+        font-size: 15px;
+    }
+
+    [class^="admin-edit-"][class*="-form"] textarea {
+        height: 45px;
+        font-size: 15px;
+    }
+
+    .admin-SK-table tr {
+        height: 32.5px;
+    }
+    
+    .admin-SK-edit-button {
+        font-size: 12.5px;
+        width: 95px;
+        height: 40px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .admin-about-us-label-h2 {
+        font-size: 35px;
+    }
+
+    .admin-current-about-details-group .admin-current-about-label,
+    .admin-edit-about-details-group .admin-edit-about-label {
+        font-size: 12.5px;
+    }
+
+    .admin-current-about-form textarea,
+    .admin-current-about-form [type='file'] {
+        height: 40px;
+        font-size: 15px;
+    }
+
+    [class^="admin-edit-"][class*="-form"] textarea {
+        height: 40px;
+        font-size: 15px;
+    }
+
+    .admin-SK-table tr {
+        height: 30px;
+    }
+    
+    .admin-SK-edit-button {
+        font-size: 10px;
+        width: 85px;
+        height: 37.5px;
+    }
+
+    .admin-edit-about-details-back-button {
+        width: 90px;
+        height: 37.5px;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-about-details-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+
+    .admin-save-about-details-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+
+    .admin-add-SK-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    .admin-about-us-container {
+        left: 0%;
+        width: 100%;
+    }
+
+    .admin-about-us-label-h2 {
+        font-size: 35px;
+        margin: 20px 0 20px 25px;
+    }
+
+    .admin-edit-about-details-back-button {
+        margin: 20px 25px 20px 0;
+    }
+
+    .admin-current-about-details-group .admin-current-about-label,
+    .admin-edit-about-details-group .admin-edit-about-label {
+        font-size: 12.5px;
+    }
+
+    .admin-current-about-form textarea,
+    .admin-current-about-form [type='file'] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    [class^="admin-edit-"][class*="-form"] textarea {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-SK-table tr {
+        height: 30px;
+    }
+    
+    .admin-SK-edit-button {
+        font-size: 10px;
+        width: 75px;
+        height: 37.5px;
+    }
+
+    .admin-edit-about-details-back-button {
+        width: 75px;
+        height: 35px;
+        font-size: 10px;
+    }
+
+    .admin-edit-about-details-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+
+    .admin-save-about-details-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+
+    .admin-add-SK-button {
+        width: 125px;
+        height: 50px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .admin-about-us-container {
+        left: 0%;
+        width: 100%;
+    }
+
+    .admin-about-us-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 20px 20px;
+    }
+
+    .admin-edit-about-details-back-button {
+        margin: 20px 20px 20px 0;
+    }
+
+    .admin-current-about-details-group .admin-current-about-label,
+    .admin-edit-about-details-group .admin-edit-about-label {
+        font-size: 10px;
+    }
+
+    .admin-current-about-form textarea,
+    .admin-current-about-form [type='file'] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    [class^="admin-edit-"][class*="-form"] textarea {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-SK-table tr {
+        height: 22.5px;
+    }
+    
+    .admin-SK-edit-button {
+        font-size: 7.5px;
+        width: 65px;
+        height: 35px;
+    }
+
+    .admin-edit-about-details-back-button {
+        width: 75px;
+        height: 35px;
+        font-size: 10px;
+    }
+
+    .admin-edit-about-details-button {
+        width: 100px;
+        height: 45px;
+        font-size: 10px;
+    }
+
+    .admin-save-about-details-button {
+        width: 100px;
+        height: 45px;
+        font-size: 10px;
+    }
+
+    .admin-add-SK-button {
+        width: 100px;
+        height: 45px;
+        font-size: 10px;
+    }
+}
+
+
+/* ____________________________________________________________________________________________________ */
 /* Admin Manage Contact Us */
 /* ____________________________________________________________________________________________________ */
 
