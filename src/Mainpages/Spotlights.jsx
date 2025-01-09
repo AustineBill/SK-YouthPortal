@@ -109,11 +109,11 @@ const Spotlight = () => {
 
       <div className="bg-secondary">
         <div className="Divider">
-          <h1 className="text-dark fw-bold fs-4">Milestones</h1>
+          <h1 className="text-dark fw-bold fs-4">Spotlight</h1>
         </div>
       </div>
 
-      {/* Cards Section */}
+      {/* Cards Sectioon */}
       <div className="d-flex flex-wrap justify-content-center">
         {spotlightData.length > 0 ? (
           spotlightData.map((spotlight, index) =>
@@ -122,19 +122,19 @@ const Spotlight = () => {
                 <Card.Img
                   variant="top"
                   src={image}
-                  alt={`Milestone ${imgIndex + 1}`}
+                  alt={`Spotlight ${imgIndex + 1}`}
                   style={{ height: "200px", objectFit: "cover" }}
                 />
                 <Card.Body className="d-flex flex-column align-items-center">
                   <Card.Title className="fs-5 fw-bold text-dark">
-                    Milestone {imgIndex + 1}
+                    Spotlight {imgIndex + 1}
                   </Card.Title>
                 </Card.Body>
               </Card>
             ))
           )
         ) : (
-          <p className="text-center text-muted py-5">No milestones available</p>
+          <p className="text-center text-muted py-5">No Spotlight available</p>
         )}
       </div>
     </div>
