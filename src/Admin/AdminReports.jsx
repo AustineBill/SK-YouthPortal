@@ -79,10 +79,16 @@ const Reports = () => {
   const groupedInventory = groupDataByDate(inventory);
 
   // Generate PDF
-  // Generate PDF
   const generatePDF = () => {
     if (!adminName.trim()) {
       alert("Admin name is required to generate the report.");
+      return;
+    }
+
+    // Check if admin name contains special characters or numbers
+    const nameRegex = /^[A-Za-z\s]+$/; // Only allows letters and spaces
+    if (!nameRegex.test(adminName)) {
+      alert("Admin name cannot contain special characters or numbers.");
       return;
     }
 
@@ -167,10 +173,6 @@ const Reports = () => {
       pdf.save(`${activeTable}-report.pdf`);
     });
   };
-
-  
-  
-  
 
   return (
     <div className="admin-reports-container">
