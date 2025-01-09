@@ -17,50 +17,43 @@
   margin: 20px 40px;
 }
 
-/* Form container for classification and date inputs */
-.admin-reports-generate-classification-date-container {
+/* Table container */
+.reports-list-container {
   width: 90%;
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto 20px;
-  gap: 0.25in;
+  margin: 0 auto 40px;
+  overflow-x: auto;  /* Makes the table horizontally scrollable on smaller screens */
 }
 
-.admin-reports-classification-container,
-.admin-reports-date-container {
-  width: 42.5%;
-}
-
-/* Styling for dropdowns */
-.admin-reports-classification,
-.admin-reports-date {
+/* Table styles */
+.admin-reports-schedules-table-container {
   width: 100%;
-  height: 50px;
+  border-collapse: collapse;
+}
+
+.admin-reports-schedules-table-container th,
+.admin-reports-schedules-table-container td {
   font-size: 17.5px;
+  text-align: center;
   border: 1px solid #ccc;
-  transition: all 0.35s;
+  padding: 8px;
 }
 
-.admin-reports-classification:hover,
-.admin-reports-date:hover {
-  color: #ffffff;
-  background-color: #858585;
+/* Table headers */
+.admin-reports-schedules-table-container th {
+  font-weight: bold;
+  background-color: #f1f1f1;
 }
 
-.admin-reports-classification:focus,
-.admin-reports-date:focus {
-  outline: 1px solid #007bff;
+.admin-reports-schedules-table-container tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
-/* Options in dropdowns */
-.admin-reports-classification option,
-.admin-reports-date option {
-  background-color: #ffffff;
-  color: #000000;
-  pointer-events: none;
+/* Table column alignment */
+.admin-reports-schedules-table-container td {
+  text-align: center;
 }
 
-/* Generate PDF button */
+/* Section for generating PDF */
 .admin-reports-generate-pdf-container {
   width: 15%;
 }
@@ -79,42 +72,6 @@
   background-color: #ffffff;
   color: #25327a;
   border-color: #25327a;
-}
-
-/* Table container */
-.reports-list-container {
-  width: 90%;
-  margin: 0 auto 40px;
-}
-
-/* Table styles */
-.admin-reports-users-table,
-.admin-reports-equipment-table,
-.admin-reports-gym-table,
-.admin-reports-inventory-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.reports-list-container tr {
-  height: 35px;
-}
-
-.reports-list-container th,
-.reports-list-container td {
-  font-size: 17.5px;
-  text-align: center;
-  border: 1px solid #ccc;
-}
-
-/* Table headers */
-.reports-list-container th {
-  font-weight: bold;
-  background-color: #f1f1f1;
-}
-
-.reports-list-container tr:nth-child(even) {
-  background-color: #f9f9f9;
 }
 
 /* Media Queries for Responsiveness */
@@ -233,7 +190,6 @@
 }
 
 /* Print Styles */
-/* Print Styles */
 @media print {
   body {
     margin: 0;
@@ -251,7 +207,6 @@
     margin: 0;
   }
 
-  /* Adjusting table position in the PDF */
   .reports-list-container {
     margin-top: 120px; /* Further increase margin to move table down */
     width: 90%;
@@ -279,14 +234,12 @@
   }
 }
 
-.admin-reports-users-caption,
-.admin-reports-equipment-caption,
-.admin-reports-schedules-caption,
-.admin-reports-inventory-caption {
-  font-family: "Poppins", sans-serif; /* Use the Poppins font for table captions */
-  font-size: 24px; /* Adjust the font size */
-  font-weight: 600; /* Make it bold */
-  text-align: center; /* Center the text */
-  margin: 10px 0; /* Add some spacing around the captions */
-  color: #25327a; /* Set a distinct color for captions */
+/* Table caption styles */
+.admin-reports-schedules-caption {
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin: 10px 0;
+  color: #25327a;
 }

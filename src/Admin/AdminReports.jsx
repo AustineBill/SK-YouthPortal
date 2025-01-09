@@ -79,6 +79,7 @@ const Reports = () => {
   const groupedInventory = groupDataByDate(inventory);
 
   // Generate PDF
+  // Generate PDF
   const generatePDF = () => {
     if (!adminName.trim()) {
       alert("Admin name is required to generate the report.");
@@ -166,6 +167,10 @@ const Reports = () => {
       pdf.save(`${activeTable}-report.pdf`);
     });
   };
+
+  
+  
+  
 
   return (
     <div className="admin-reports-container">
@@ -306,34 +311,40 @@ const Reports = () => {
                   </tr>
                 ) : (
                   Object.entries(groupedEquipmentReservations).map(
-                    ([date, equipmentReservations]) => (
+                    ([date, reservations]) => (
                       <tr key={date}>
                         <td>{date}</td>
                         <td>
-                          {equipmentReservations.map((reservation) => (
-                            <div key={reservation.id}>{reservation.user_id}</div>
+                          {reservations.map((res) => (
+                            <div key={res.id}>{res.user_id}</div>
                           ))}
                         </td>
                         <td>
-                          {equipmentReservations.map((reservation) => (
-                            <div key={reservation.id}>{reservation.start_date}</div>
-                          ))}
-                        </td>
-                        <td>
-                          {equipmentReservations.map((reservation) => (
-                            <div key={reservation.id}>{reservation.end_date}</div>
-                          ))}
-                        </td>
-                        <td>
-                          {equipmentReservations.map((reservation) => (
-                            <div key={reservation.id}>
-                              {reservation.equipment_name}
+                          {reservations.map((res) => (
+                            <div key={res.id}>
+                              {new Date(res.start_date).toLocaleString()}
                             </div>
                           ))}
                         </td>
                         <td>
-                          {equipmentReservations.map((reservation) => (
-                            <div key={reservation.id}>{reservation.status}</div>
+                          {reservations.map((res) => (
+                            <div key={res.id}>
+                              {new Date(res.end_date).toLocaleString()}
+                            </div>
+                          ))}
+                        </td>
+                        <td>
+                          {reservations.map((res) =>
+                            res.reserved_equipment.map((equip, index) => (
+                              <div key={index}>
+                                {equip.name} (Quantity: {equip.quantity})
+                              </div>
+                            ))
+                          )}
+                        </td>
+                        <td>
+                          {reservations.map((res) => (
+                            <div key={res.id}>{res.status}</div>
                           ))}
                         </td>
                       </tr>
@@ -347,46 +358,56 @@ const Reports = () => {
 
         {activeTable === "schedules" && (
           <div className="admin-reports-schedules-table">
-            <h2 className="reports-schedules-label-h2">Schedules</h2>
+            <h2 className="reports-schedules-label-h2">Reservations</h2>
             <table className="admin-reports-schedules-table-container table-bordered">
               <thead className="admin-reports-schedules-head text-center">
                 <tr>
                   <th>Date</th>
                   <th>User ID</th>
-                  <th>Event Name</th>
-                  <th>Start Time</th>
-                  <th>End Time</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Time Slot</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody className="admin-reports-schedules-body text-center">
                 {Object.entries(groupedSchedules).length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="text-center">
+                    <td colSpan="6" className="text-center">
                       No records found
                     </td>
                   </tr>
                 ) : (
-                  Object.entries(groupedSchedules).map(([date, schedules]) => (
+                  Object.entries(groupedSchedules).map(([date, reservations]) => (
                     <tr key={date}>
                       <td>{date}</td>
                       <td>
-                        {schedules.map((schedule) => (
-                          <div key={schedule.id}>{schedule.user_id}</div>
+                        {reservations.map((reservation) => (
+                          <div key={reservation.id}>{reservation.user_id}</div>
                         ))}
                       </td>
                       <td>
-                        {schedules.map((schedule) => (
-                          <div key={schedule.id}>{schedule.event_name}</div>
+                        {reservations.map((reservation) => (
+                          <div key={reservation.id}>
+                            {new Date(reservation.start_date).toLocaleString()}
+                          </div>
                         ))}
                       </td>
                       <td>
-                        {schedules.map((schedule) => (
-                          <div key={schedule.id}>{schedule.start_time}</div>
+                        {reservations.map((reservation) => (
+                          <div key={reservation.id}>
+                            {new Date(reservation.end_date).toLocaleString()}
+                          </div>
                         ))}
                       </td>
                       <td>
-                        {schedules.map((schedule) => (
-                          <div key={schedule.id}>{schedule.end_time}</div>
+                        {reservations.map((reservation) => (
+                          <div key={reservation.id}>{reservation.time_slot}</div>
+                        ))}
+                      </td>
+                      <td>
+                        {reservations.map((reservation) => (
+                          <div key={reservation.id}>{reservation.status}</div>
                         ))}
                       </td>
                     </tr>
@@ -396,6 +417,7 @@ const Reports = () => {
             </table>
           </div>
         )}
+
 
         {activeTable === "inventory" && (
           <div className="admin-reports-inventory-table">
@@ -407,32 +429,38 @@ const Reports = () => {
                   <th>Item ID</th>
                   <th>Item Name</th>
                   <th>Quantity</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody className="admin-reports-inventory-body text-center">
                 {Object.entries(groupedInventory).length === 0 ? (
                   <tr>
-                    <td colSpan="4" className="text-center">
+                    <td colSpan="5" className="text-center">
                       No records found
                     </td>
                   </tr>
                 ) : (
-                  Object.entries(groupedInventory).map(([date, inventoryItems]) => (
+                  Object.entries(groupedInventory).map(([date, items]) => (
                     <tr key={date}>
                       <td>{date}</td>
                       <td>
-                        {inventoryItems.map((item) => (
-                          <div key={item.id}>{item.item_id}</div>
+                        {items.map((item) => (
+                          <div key={item.id}>{item.id}</div>
                         ))}
                       </td>
                       <td>
-                        {inventoryItems.map((item) => (
-                          <div key={item.id}>{item.item_name}</div>
+                        {items.map((item) => (
+                          <div key={item.id}>{item.name}</div>
                         ))}
                       </td>
                       <td>
-                        {inventoryItems.map((item) => (
+                        {items.map((item) => (
                           <div key={item.id}>{item.quantity}</div>
+                        ))}
+                      </td>
+                      <td>
+                        {items.map((item) => (
+                          <div key={item.id}>{item.status}</div>
                         ))}
                       </td>
                     </tr>
