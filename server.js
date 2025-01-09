@@ -827,20 +827,73 @@ app.delete("/inventory/:id", async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
 /***** Check Reservatoion *******/
-app.post("/Checkreservation", async (req, res) => {
+app.post("/ValidateReservation", async (req, res) => {
   const { user_id, date } = req.body;
+
   try {
-    const query =
-      "SELECT * FROM Schedules WHERE user_id = $1 AND DATE(start_date) = $2";
-    const values = [user_id, date];
-    const result = await pool.query(query, values);
-    res.json({ exists: result.rowCount > 0 });
+    // Calculate the start and end of the current week
+    const today = new Date();
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay()); // Sunday
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6); // Saturday
+    endOfWeek.setHours(23, 59, 59, 999);
+
+    // Query to check for reservations on the same day
+    const dayQuery = `
+      SELECT * FROM Schedules 
+      WHERE user_id = $1 AND DATE(start_date) = $2
+    `;
+    const dayValues = [user_id, date];
+    const dayResult = await pool.query(dayQuery, dayValues);
+
+    if (dayResult.rowCount > 0) {
+      return res.json({
+        success: false,
+        message:
+          "You already have a booking on this date. Only one reservation is allowed per day.",
+      });
+    }
+
+    // Query to count reservations for the current week
+    const weekQuery = `
+      SELECT COUNT(*) AS reservation_count 
+      FROM Schedules 
+      WHERE user_id = $1 
+      AND DATE(start_date) BETWEEN $2 AND $3
+    `;
+    const weekValues = [
+      user_id,
+      startOfWeek.toISOString(),
+      endOfWeek.toISOString(),
+    ];
+    const weekResult = await pool.query(weekQuery, weekValues);
+
+    const weeklyReservationCount = parseInt(
+      weekResult.rows[0].reservation_count,
+      10
+    );
+
+    if (weeklyReservationCount >= 4) {
+      return res.json({
+        success: false,
+        message:
+          "You have reached the maximum limit of 4 reservations for this week.",
+      });
+    }
+
+    // If no conflicts, allow the reservation
+    return res.json({ success: true, message: "Reservation allowed." });
   } catch (error) {
-    console.error("Error checking reservation:", error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Error validating reservation:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
+
 app.post("/CheckEquipment", async (req, res) => {
   const { user_id, date } = req.body;
   try {

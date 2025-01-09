@@ -1,23 +1,31 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import '../WebStyles/UserStyle.css';
-import StepIndicator from '../Classes/StepIndicator';
-import { Modal, Button} from 'react-bootstrap';
-
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "../WebStyles/CalendarStyles.css";
+import StepIndicator from "../Classes/StepIndicator";
+import { Modal, Button } from "react-bootstrap";
 
 const Reservation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { reservationType } = location.state || { reservationType: 'Solo' };
+  const { reservationType } = location.state || { reservationType: "Solo" };
 
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
-  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedTime, setSelectedTime] = useState("");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+  const [modalMessage, setModalMessage] = useState("");
   const dropdownRef = useRef(null);
+
+  const timeSlots = [
+    "9:00 am - 10:00 am",
+    "10:00 am - 11:00 am",
+    "11:00 am - 12:00 nn",
+    "12:00 nn - 1:00 pm",
+    "1:00 pm - 2:00 pm",
+    "2:00 pm - 3:00 pm",
+  ];
 
   const handleDateChange = (range) => {
     if (Array.isArray(range)) {
@@ -43,45 +51,47 @@ const Reservation = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
   const saveReservation = async () => {
     if (!selectedDates || !selectedTime) {
-      alert('Please select both a date and a time slot before proceeding.');
+      alert("Please select both a date and a time slot before proceeding.");
       return;
     }
 
-    const userId = sessionStorage.getItem('userId');
+    const userId = sessionStorage.getItem("userId");
     if (!userId) {
-      console.error('No userId found in sessionStorage');
+      console.error("No userId found in sessionStorage");
       return;
     }
-    // Backend validation
+
     try {
-      const response = await fetch('http://localhost:5000/Checkreservation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          date: selectedDates[0],
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/ValidateReservation",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: userId,
+            date: selectedDates[0],
+          }),
+        }
+      );
 
       const result = await response.json();
 
-      if (result.exists) {
-        setModalMessage('You already have a booking on this date. The policy allows only one reservation per day.');
+      if (!result.success) {
+        setModalMessage(result.message);
         setShowModal(true);
         return;
       }
 
-      // Save reservation if no conflict
       const reservationData = {
         user_id: userId,
         reservation_type: reservationType,
@@ -90,10 +100,15 @@ const Reservation = () => {
         time_slot: selectedTime,
       };
 
-      sessionStorage.setItem('reservationData', JSON.stringify(reservationData));
-      navigate('/ScheduleDetails', { state: { reservationData, reservationType } });
+      sessionStorage.setItem(
+        "reservationData",
+        JSON.stringify(reservationData)
+      );
+      navigate("/ScheduleDetails", {
+        state: { reservationData, reservationType },
+      });
     } catch (error) {
-      console.error('Error checking reservation:', error);
+      console.error("Error validating reservation:", error);
     }
   };
 
@@ -104,71 +119,105 @@ const Reservation = () => {
         <p className="Subtext">Selected Type: {reservationType}</p>
       </div>
 
-      <div className="calendar-container">
-        <StepIndicator currentStep={1} />
-        <div className="grid-container">
-          <div className="legend">
-            <h2>Legend</h2>
-            <div className="legend-item">
-              <span className="circle available"></span>
-              <h3>Available</h3>
-            </div>
-            <div className="legend-item">
-              <span className="circle unavailable"></span>
-              <h3>Unavailable</h3>
-            </div>
-            <div className="legend-item">
-              <span className="circle maximize"></span>
-              <h3>Maximize Capacity</h3>
-            </div>
-          </div>
-
-          <div className="selected-date large">
-            <p>
-              <strong>Selected Date:</strong>{' '}
-              {selectedDates[0].toDateString() === selectedDates[1].toDateString()
-                ? selectedDates[0].toLocaleDateString()
-                : `${selectedDates[0].toLocaleDateString()} to ${selectedDates[1].toLocaleDateString()}`}
-            </p>
-            <p>
-              <strong>Selected Time:</strong> {selectedTime || 'No time selected'}
-            </p>
-          </div>
-
-          <button className="apply-dates" onClick={saveReservation}>
-            Apply Dates
-          </button>
-        </div>
-
-        <div className="dropdown-container" ref={dropdownRef}>
-          <div className="time-dropdown">
-            <button
-              className="btn btn-secondary dropdown-toggle"
-              type="button"
-              onClick={toggleDropdown}
-            >
-              Select Time
-            </button>
-            {isDropdownVisible && (
-              <div className="time-dropdown-menu">
-                {['9:00 am - 10:00 am', '10:00 am - 11:00 am', '11:00 am - 12:00 nn', '12:00 nn - 1:00 pm', '1:00 pm - 2:00 pm', '2:00 pm - 3:00 pm'].map((time) => (
-                  <h6 key={time} className="dropdown-item" onClick={() => selectTime(time)}>
-                    {time}
-                  </h6>
-                ))}
+      <div className="row">
+        {/* Left Section: Legend and Selected Info */}
+        <div className="col-lg-3 col-md-4">
+          <div className="left-section">
+            <div className="legend mb-4">
+              <h2>Legend</h2>
+              <div className="legend-item">
+                <span className="circle available"></span>
+                <h3>Available</h3>
               </div>
-            )}
+              <div className="legend-item">
+                <span className="circle unavailable"></span>
+                <h3>Unavailable</h3>
+              </div>
+              <div className="legend-item">
+                <span className="circle maximize"></span>
+                <h3>Maximize Capacity</h3>
+              </div>
+            </div>
+
+            {/* Selected Dates and Time */}
+            <div className="legend">
+              <p>
+                <strong>Selected Date:</strong>{" "}
+                {selectedDates[0].toDateString() ===
+                selectedDates[1].toDateString()
+                  ? selectedDates[0].toLocaleDateString()
+                  : `${selectedDates[0].toLocaleDateString()} to ${selectedDates[1].toLocaleDateString()}`}
+              </p>
+              <p>
+                <strong>Selected Time:</strong>{" "}
+                {selectedTime || "No time selected"}
+              </p>
+            </div>
           </div>
         </div>
 
-        <Calendar
-          minDate={new Date()}
-          onChange={handleDateChange}
-          selectRange={true}
-          value={selectedDates}
-        />
+        {/* Center Section: Calendar */}
+        <div className="col-lg-6 col-md-8">
+          <div className="calendar-section">
+            {/* Step Indicator */}
+            <StepIndicator currentStep={1} />
+
+            {/* Calendar */}
+            <Calendar
+              minDate={new Date()}
+              onChange={handleDateChange}
+              selectRange={true}
+              value={selectedDates}
+            />
+          </div>
+        </div>
+
+        <div className="col-lg-3 col-md-4">
+          <div className="right-section">
+            <div className="dropdown-container mb-3" ref={dropdownRef}>
+              <div className="time-dropdown">
+                <button
+                  className="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  onClick={toggleDropdown}
+                >
+                  Select Time
+                </button>
+                {isDropdownVisible && (
+                  <div className="time-dropdown-menu">
+                    {timeSlots.map((time) => (
+                      <h6
+                        key={time}
+                        className="dropdown-item"
+                        onClick={() => selectTime(time)}
+                      >
+                        {time}
+                      </h6>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="legend">
+              <button
+                className="apply-dates btn btn-primary m-3"
+                onClick={saveReservation}
+              >
+                Apply Dates
+              </button>
+            </div>
+
+            <div className="legend">
+              <button className="apply-dates btn btn-primary">
+                Exception Day
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
+      {/* Modal for Reservation Conflict */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Reservation Conflict</Modal.Title>
