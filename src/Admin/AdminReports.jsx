@@ -9,6 +9,11 @@ const Reports = () => {
   const [dateSortOption, setDateSortOption] = useState("date");
   const [usersData, setUsersData] = useState([]);
   const [equipmentReservations, setEquipmentReservations] = useState([]);
+  const [schedules, setSchedules] = useState([]);
+  const [inventory, setInventory] = useState([]);
+
+  const [adminName, setAdminName] = useState(""); // State for admin's name
+  const [adminDate, setAdminDate] = useState(""); // State for the current date
 
   // Fetch data based on active table
   useEffect(() => {
@@ -23,6 +28,14 @@ const Reports = () => {
           url = "http://localhost:5000/equipment-reports";
           const response = await axios.get(url);
           setEquipmentReservations(response.data);
+        } else if (activeTable === "schedules") {
+          url = "http://localhost:5000/schedule-reports";
+          const response = await axios.get(url);
+          setSchedules(response.data);
+        } else if (activeTable === "inventory") {
+          url = "http://localhost:5000/inventory-reports";
+          const response = await axios.get(url);
+          setInventory(response.data);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -62,42 +75,102 @@ const Reports = () => {
 
   const groupedUsers = groupDataByDate(usersData);
   const groupedEquipmentReservations = groupDataByDate(equipmentReservations);
+  const groupedSchedules = groupDataByDate(schedules);
+  const groupedInventory = groupDataByDate(inventory);
 
   // Generate PDF
+  // Generate PDF
   const generatePDF = () => {
+    if (!adminName.trim()) {
+      alert("Admin name is required to generate the report.");
+      return;
+    }
+
     const input = document.getElementById("admin-reports-tables-container");
+    const backgroundImage = `${process.env.PUBLIC_URL}/Asset/WebImages/bgreportskadmin.jpg`;
 
-    const backgroundImage = `${process.env.PUBLIC_URL}/Asset/WebImages/NEW SK LETTER LEGAL SIZE.png`;
+    html2canvas(input, {
+      useCORS: true,
+      backgroundColor: "transparent",
+      scale: 2, // Decrease scale for smaller content size
+    }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
 
-    // Wait for the data to be fully rendered
-    setTimeout(() => {
-      html2canvas(input, {
-        useCORS: true,
-        backgroundColor: "transparent",
-        scale: 2, // Increase scale for better quality
-      }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-
-        const pdf = new jsPDF({
-          orientation: "portrait",
-          unit: "mm",
-          format: "a4",
-        });
-
-        const pageWidth = pdf.internal.pageSize.width;
-        const pageHeight = pdf.internal.pageSize.height;
-
-        // Add the background image
-        pdf.addImage(backgroundImage, "PNG", 0, 0, pageWidth, pageHeight);
-
-        // Add the content as an overlay
-        pdf.addImage(imgData, "PNG", 0, 0, pageWidth, pageHeight);
-
-        // Save the PDF
-        pdf.save(`${activeTable}-report.pdf`);
+      const pdf = new jsPDF({
+        orientation: "landscape", // Use landscape for better table fitting
+        unit: "mm",
+        format: [330.6, 216.9], // Legal paper size in landscape (355.6mm x 215.9mm)
       });
-    }, 500); // Delay by 500ms
+
+      const pageWidth = pdf.internal.pageSize.width;
+      const pageHeight = pdf.internal.pageSize.height;
+
+      // Add the background image to the first page
+      pdf.addImage(backgroundImage, "PNG", 0, 0, pageWidth, pageHeight);
+
+      const margin = 15; // Add margin to prevent content cutoff
+      const contentWidth = pageWidth - margin * 2;
+      const contentHeight = (canvas.height * contentWidth) / canvas.width;
+
+      const maxHeightPerPage = pageHeight - margin * 2 - 50; // Adjusted space for table (keeping some space for header/footer)
+      let currentYPosition = margin + 50; // Starting position of content (below the header)
+
+      // Check if content fits on one page
+      let contentRemainingHeight = contentHeight;
+
+      // Add content for the first page
+      if (contentRemainingHeight <= maxHeightPerPage) {
+        pdf.addImage(imgData, "PNG", margin, currentYPosition, contentWidth, contentRemainingHeight);
+      } else {
+        // If content exceeds one page, split it across multiple pages
+        while (contentRemainingHeight > 0) {
+          const currentPageHeight = Math.min(contentRemainingHeight, maxHeightPerPage);
+
+          // If the content is close to the signature form area, start a new page
+          if (currentYPosition + currentPageHeight + 50 >= pageHeight - margin) {
+            pdf.addPage(); // Add new page
+            pdf.addImage(backgroundImage, "PNG", 0, 0, pageWidth, pageHeight);
+            currentYPosition = margin + 50; // Reset Y position for the new page
+          }
+
+          // Add the current page content (table data)
+          pdf.addImage(imgData, "PNG", margin, currentYPosition, contentWidth, currentPageHeight);
+
+          // Decrease remaining content height and adjust Y position for the next page
+          contentRemainingHeight -= currentPageHeight;
+          currentYPosition += currentPageHeight;
+        }
+      }
+
+      // Add admin name and date, signature area
+      const adminFontSize = 13;
+      const dateFontSize = 13;
+      const signatureFontSize = 12;
+
+      pdf.setFont("times", "Bold");
+      pdf.setFontSize(adminFontSize);
+      const adminNameYPosition = pageHeight - 50;
+      pdf.text(`Printed by: ${adminName}`, margin, adminNameYPosition);
+
+      pdf.setFontSize(dateFontSize);
+      const currentDate = new Date().toLocaleDateString();
+      const dateYPosition = adminNameYPosition + 5;
+      pdf.text(`Printed date: ${currentDate}`, margin, dateYPosition);
+
+      pdf.setFontSize(signatureFontSize);
+      const signatureXPosition = pageWidth - margin - 90;
+      const signatureYPosition = pageHeight - 45;
+      pdf.line(signatureXPosition, signatureYPosition, signatureXPosition + 85, signatureYPosition);
+      const centeredXPosition = signatureXPosition + (85 - pdf.getStringUnitWidth("Signature over Printed Name") * pdf.getFontSize() / pdf.internal.scaleFactor) / 2;
+      pdf.text("Signature over Printed Name", centeredXPosition, signatureYPosition + 10);
+
+      pdf.save(`${activeTable}-report.pdf`);
+    });
   };
+
+  
+  
+  
 
   return (
     <div className="admin-reports-container">
@@ -117,6 +190,8 @@ const Reports = () => {
           >
             <option value="users">Users</option>
             <option value="equipment">Equipment Reservations</option>
+            <option value="schedules">Schedules</option>
+            <option value="inventory">Inventory</option>
           </select>
         </div>
 
@@ -133,6 +208,17 @@ const Reports = () => {
           </select>
         </div>
 
+        {/* Admin Name and Date Input Fields */}
+        <div className="admin-reports-info-container">
+          <input
+            type="text"
+            placeholder="Enter Admin Name"
+            value={adminName}
+            onChange={(e) => setAdminName(e.target.value)}
+            className="admin-reports-input rounded"
+          />
+        </div>
+
         {/* Generate PDF Button */}
         <div className="admin-reports-generate-pdf-container d-flex justify-content-end">
           <button
@@ -145,11 +231,7 @@ const Reports = () => {
       </div>
 
       {/* Show selected table */}
-      <div
-        id="admin-reports-tables-container"
-        className="reports-list-container"
-      >
-        {/* Show selected table */}
+      <div id="admin-reports-tables-container" className="reports-list-container">
         {activeTable === "users" && (
           <div className="admin-reports-users-table">
             <h2 className="reports-users-label-h2">Users</h2>
@@ -268,6 +350,121 @@ const Reports = () => {
                       </tr>
                     )
                   )
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activeTable === "schedules" && (
+          <div className="admin-reports-schedules-table">
+            <h2 className="reports-schedules-label-h2">Reservations</h2>
+            <table className="admin-reports-schedules-table-container table-bordered">
+              <thead className="admin-reports-schedules-head text-center">
+                <tr>
+                  <th>Date</th>
+                  <th>User ID</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Time Slot</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody className="admin-reports-schedules-body text-center">
+                {Object.entries(groupedSchedules).length === 0 ? (
+                  <tr>
+                    <td colSpan="6" className="text-center">
+                      No records found
+                    </td>
+                  </tr>
+                ) : (
+                  Object.entries(groupedSchedules).map(([date, reservations]) => (
+                    <tr key={date}>
+                      <td>{date}</td>
+                      <td>
+                        {reservations.map((reservation) => (
+                          <div key={reservation.id}>{reservation.user_id}</div>
+                        ))}
+                      </td>
+                      <td>
+                        {reservations.map((reservation) => (
+                          <div key={reservation.id}>
+                            {new Date(reservation.start_date).toLocaleString()}
+                          </div>
+                        ))}
+                      </td>
+                      <td>
+                        {reservations.map((reservation) => (
+                          <div key={reservation.id}>
+                            {new Date(reservation.end_date).toLocaleString()}
+                          </div>
+                        ))}
+                      </td>
+                      <td>
+                        {reservations.map((reservation) => (
+                          <div key={reservation.id}>{reservation.time_slot}</div>
+                        ))}
+                      </td>
+                      <td>
+                        {reservations.map((reservation) => (
+                          <div key={reservation.id}>{reservation.status}</div>
+                        ))}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+
+        {activeTable === "inventory" && (
+          <div className="admin-reports-inventory-table">
+            <h2 className="reports-inventory-label-h2">Inventory</h2>
+            <table className="admin-reports-inventory-table-container table-bordered">
+              <thead className="admin-reports-inventory-head text-center">
+                <tr>
+                  <th>Date</th>
+                  <th>Item ID</th>
+                  <th>Item Name</th>
+                  <th>Quantity</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody className="admin-reports-inventory-body text-center">
+                {Object.entries(groupedInventory).length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="text-center">
+                      No records found
+                    </td>
+                  </tr>
+                ) : (
+                  Object.entries(groupedInventory).map(([date, items]) => (
+                    <tr key={date}>
+                      <td>{date}</td>
+                      <td>
+                        {items.map((item) => (
+                          <div key={item.id}>{item.id}</div>
+                        ))}
+                      </td>
+                      <td>
+                        {items.map((item) => (
+                          <div key={item.id}>{item.name}</div>
+                        ))}
+                      </td>
+                      <td>
+                        {items.map((item) => (
+                          <div key={item.id}>{item.quantity}</div>
+                        ))}
+                      </td>
+                      <td>
+                        {items.map((item) => (
+                          <div key={item.id}>{item.status}</div>
+                        ))}
+                      </td>
+                    </tr>
+                  ))
                 )}
               </tbody>
             </table>
