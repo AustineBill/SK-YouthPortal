@@ -108,6 +108,11 @@ const UserAuthentication = () => {
       if (response.data.success) {
         alert("Your password has been changed successfully.");
         setShowChangePasswordField(false); // Reset the form
+        setIsVerificationCodeCorrect(false); // Reset the verification code state
+        setEmail(""); // Clear the email input
+        setNewPassword(""); // Clear the new password input
+        setVerificationCode(""); // Clear the verification code
+        setView("signIn"); // Redirect to the sign-in form
       } else {
         alert(response.data.message); // Show error if any issue occurs
       }
