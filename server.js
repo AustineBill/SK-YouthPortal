@@ -17,8 +17,6 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.json({ limit: "20mb" })); // Allow up to 20MB for JSON payloads
-app.use(express.urlencoded({ limit: "20mb", extended: true })); // Allow up to 20MB for URL-encoded payloads
 
 const pool = new Pool({
   user: "postgres",
@@ -156,17 +154,18 @@ app.post("/ValidateCode", async (req, res) => {
     res.status(500).json({ message: "An error occurred during validation" });
   }
 });
+
 app.post("/UpdateAccount", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, decryptedCode } = req.body; // Add decryptedCode from the client
 
   try {
     // Hash the new password before saving it to the database
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Update query to modify both username and password
+    // Update query to modify both username and password using the decryptedCode as a locator
     const updateQuery = await pool.query(
-      "UPDATE Users SET username = $1, password = $2 WHERE username = $3 RETURNING *",
-      [username, hashedPassword, username]
+      "UPDATE Users SET username = $1, password = $2 WHERE id = $3 RETURNING *",
+      [username, hashedPassword, decryptedCode] // Use decryptedCode as the identifier
     );
 
     if (updateQuery.rowCount === 0) {
@@ -175,7 +174,7 @@ app.post("/UpdateAccount", async (req, res) => {
         .json({ message: "Account update failed: User not found" });
     }
 
-    // Respond with success message
+    // Respond with success message and remove the decryptedCode from sessionStorage on the client
     res.status(200).json({
       message: "Account updated successfully",
       user: updateQuery.rows[0], // Send the updated user info if necessary
@@ -238,13 +237,15 @@ app.put("/updateUser", async (req, res) => {
   }
 });
 
-
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   try {
     // Check for Admin credentials in the Admins table
-    const adminResult = await pool.query("SELECT * FROM Admins WHERE username = $1", [username]);
+    const adminResult = await pool.query(
+      "SELECT * FROM Admins WHERE username = $1",
+      [username]
+    );
 
     if (adminResult.rows.length > 0) {
       const admin = adminResult.rows[0];
@@ -261,7 +262,10 @@ app.post("/login", async (req, res) => {
     }
 
     // If not admin, check for regular user credentials in Users table
-    const userResult = await pool.query("SELECT * FROM Users WHERE username = $1", [username]);
+    const userResult = await pool.query(
+      "SELECT * FROM Users WHERE username = $1",
+      [username]
+    );
 
     if (userResult.rows.length > 0) {
       const user = userResult.rows[0];
@@ -269,7 +273,9 @@ app.post("/login", async (req, res) => {
       // Validate password for user login (bcrypt used for users)
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-        return res.status(400).json({ message: "Invalid username or password" });
+        return res
+          .status(400)
+          .json({ message: "Invalid username or password" });
       }
 
       // Return user details including ID
@@ -282,7 +288,7 @@ app.post("/login", async (req, res) => {
           fullName: user.full_name,
           email: user.email,
           phone: user.phone,
-          role: "user",  // Adding role for user
+          role: "user", // Adding role for user
         },
       });
     } else {
@@ -626,25 +632,25 @@ app.delete("/equipment/:reservation_id", async (req, res) => {
   }
 });
 
-/********* Auto Fill Details  *********
-app.get('/Details/:id', async (req, res) => {
-    const { id } = req.params;
-  
-    try {
-      const result = await pool.query(
-        'SELECT username, age, email_address AS email FROM Users WHERE id = $1',
-        [id]
-      );
-  
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: 'User not found' });
-      }
-  
-      res.json(result.rows[0]);
-    } catch (err) {
-      console.error('Error fetching user details:', err);
-      res.status(500).json({ error: 'Internal server error' });
+/********* Auto Fill Details  *********/
+app.get("/Details/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      "SELECT username, age, email_address AS email FROM Users WHERE id = $1",
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
     }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Error fetching user details:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 /******** View Schedules ********/
 app.get("/ViewSched", async (req, res) => {
@@ -821,20 +827,73 @@ app.delete("/inventory/:id", async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
 /***** Check Reservatoion *******/
-app.post("/Checkreservation", async (req, res) => {
+app.post("/ValidateReservation", async (req, res) => {
   const { user_id, date } = req.body;
+
   try {
-    const query =
-      "SELECT * FROM Schedules WHERE user_id = $1 AND DATE(start_date) = $2";
-    const values = [user_id, date];
-    const result = await pool.query(query, values);
-    res.json({ exists: result.rowCount > 0 });
+    // Calculate the start and end of the current week
+    const today = new Date();
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay()); // Sunday
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6); // Saturday
+    endOfWeek.setHours(23, 59, 59, 999);
+
+    // Query to check for reservations on the same day
+    const dayQuery = `
+      SELECT * FROM Schedules 
+      WHERE user_id = $1 AND DATE(start_date) = $2
+    `;
+    const dayValues = [user_id, date];
+    const dayResult = await pool.query(dayQuery, dayValues);
+
+    if (dayResult.rowCount > 0) {
+      return res.json({
+        success: false,
+        message:
+          "You already have a booking on this date. Only one reservation is allowed per day.",
+      });
+    }
+
+    // Query to count reservations for the current week
+    const weekQuery = `
+      SELECT COUNT(*) AS reservation_count 
+      FROM Schedules 
+      WHERE user_id = $1 
+      AND DATE(start_date) BETWEEN $2 AND $3
+    `;
+    const weekValues = [
+      user_id,
+      startOfWeek.toISOString(),
+      endOfWeek.toISOString(),
+    ];
+    const weekResult = await pool.query(weekQuery, weekValues);
+
+    const weeklyReservationCount = parseInt(
+      weekResult.rows[0].reservation_count,
+      10
+    );
+
+    if (weeklyReservationCount >= 4) {
+      return res.json({
+        success: false,
+        message:
+          "You have reached the maximum limit of 4 reservations for this week.",
+      });
+    }
+
+    // If no conflicts, allow the reservation
+    return res.json({ success: true, message: "Reservation allowed." });
   } catch (error) {
-    console.error("Error checking reservation:", error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Error validating reservation:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
+
 app.post("/CheckEquipment", async (req, res) => {
   const { user_id, date } = req.body;
   try {
@@ -849,6 +908,65 @@ app.post("/CheckEquipment", async (req, res) => {
   } catch (error) {
     console.error("Error checking reservation:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Endpoint to save feedback
+app.post("/Feedback", async (req, res) => {
+  const { user_id, rating, comment } = req.body;
+
+  if (!user_id || !rating || !comment) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
+
+  try {
+    // Check if the user has already submitted feedback
+    const existingFeedback = await pool.query(
+      "SELECT * FROM feedback WHERE user_id = $1",
+      [user_id]
+    );
+
+    if (existingFeedback.rows.length > 0) {
+      return res
+        .status(400)
+        .json({ error: "You have already submitted feedback." });
+    }
+
+    // Insert the feedback into the database
+    await pool.query(
+      "INSERT INTO feedback (user_id, rating, comment) VALUES ($1, $2, $3)",
+      [user_id, rating, comment]
+    );
+
+    res.status(201).json({ message: "Feedback submitted successfully!" });
+  } catch (error) {
+    console.error("Error saving feedback:", error);
+    res.status(500).json({ error: "An error occurred while saving feedback." });
+  }
+});
+
+// Endpoint to retrieve feedback for a user
+app.get("/Feedback/:user_id", async (req, res) => {
+  const { user_id } = req.params;
+
+  try {
+    const feedback = await pool.query(
+      "SELECT * FROM feedback WHERE user_id = $1",
+      [user_id]
+    );
+
+    if (feedback.rows.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "No feedback found for this user." });
+    }
+
+    res.status(200).json(feedback.rows[0]); // Return the first feedback record
+  } catch (error) {
+    console.error("Error retrieving feedback:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while retrieving feedback." });
   }
 });
 
