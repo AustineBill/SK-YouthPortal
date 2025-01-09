@@ -830,63 +830,35 @@ app.delete("/inventory/:id", async (req, res) => {
 
 /***** Check Reservatoion *******/
 app.post("/ValidateReservation", async (req, res) => {
-  const { user_id, date } = req.body;
+  const { user_id, start_date, end_date } = req.body;
 
   try {
-    // Calculate the start and end of the current week
-    const today = new Date();
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay()); // Sunday
-    startOfWeek.setHours(0, 0, 0, 0);
+    // Convert start_date and end_date to Date objects
+    const startDate = new Date(start_date);
+    const endDate = new Date(end_date);
 
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6); // Saturday
-    endOfWeek.setHours(23, 59, 59, 999);
-
-    // Query to check for reservations on the same day
-    const dayQuery = `
+    // Query to check for overlapping reservations
+    const overlapQuery = `
       SELECT * FROM Schedules 
-      WHERE user_id = $1 AND DATE(start_date) = $2
-    `;
-    const dayValues = [user_id, date];
-    const dayResult = await pool.query(dayQuery, dayValues);
-
-    if (dayResult.rowCount > 0) {
-      return res.json({
-        success: false,
-        message:
-          "You already have a booking on this date. Only one reservation is allowed per day.",
-      });
-    }
-
-    // Query to count reservations for the current week
-    const weekQuery = `
-      SELECT COUNT(*) AS reservation_count 
-      FROM Schedules 
       WHERE user_id = $1 
-      AND DATE(start_date) BETWEEN $2 AND $3
+      AND (
+        (start_date <= $2 AND end_date >= $2) OR -- Overlap with new start date
+        (start_date <= $3 AND end_date >= $3) OR -- Overlap with new end date
+        (start_date >= $2 AND end_date <= $3)    -- Fully contained within new range
+      )
     `;
-    const weekValues = [
-      user_id,
-      startOfWeek.toISOString(),
-      endOfWeek.toISOString(),
-    ];
-    const weekResult = await pool.query(weekQuery, weekValues);
+    const overlapValues = [user_id, startDate, endDate];
+    const overlapResult = await pool.query(overlapQuery, overlapValues);
 
-    const weeklyReservationCount = parseInt(
-      weekResult.rows[0].reservation_count,
-      10
-    );
-
-    if (weeklyReservationCount >= 4) {
+    // If any rows are returned, there is an overlap
+    if (overlapResult.rowCount > 0) {
       return res.json({
         success: false,
-        message:
-          "You have reached the maximum limit of 4 reservations for this week.",
+        message: "Your selected dates overlap with an existing reservation.",
       });
     }
 
-    // If no conflicts, allow the reservation
+    // If no overlaps, allow the reservation
     return res.json({ success: true, message: "Reservation allowed." });
   } catch (error) {
     console.error("Error validating reservation:", error);
