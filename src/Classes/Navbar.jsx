@@ -1,33 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Nav, Dropdown } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import Logo from "../Asset/WebImages/Logo.png";
 import "../App.css"; // Ensure your custom CSS file is imported
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [showDropdown, setShowDropdown] = useState(false);
   const [hamburgerVisible, setHamburgerVisible] = useState(false); // State for hamburger menu
   const [activeButton, setActiveButton] = useState("login"); // State for active button
-  const dropdownRef = useRef(null); // Ref to handle clicks outside
-
-  const handleDropdownToggle = (e) => {
-    e.preventDefault();
-    setShowDropdown((prevState) => !prevState);
-  };
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setShowDropdown(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const [activeLink, setActiveLink] = useState(""); // State to track active link
+  const [fade, setFade] = useState(false); // Fade effect for hover state
+  const [dropdownVisible, setDropdownVisible] = useState(false); // State for dropdown visibility
 
   const toggleHamburgerMenu = () => {
     setHamburgerVisible(!hamburgerVisible);
@@ -38,12 +21,21 @@ const Navbar = () => {
     navigate(`/userauth?view=${buttonType}`);
   };
 
+  const handleLinkClick = (linkName) => {
+    setActiveLink(linkName); // Set the active link
+  };
+
+  const handleHover = (isHovering) => {
+    setFade(isHovering);
+  };
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible); // Toggle the dropdown visibility
+  };
+
   return (
     <Nav className="navbar">
-      <div
-        className="navbar-links"
-        style={{ display: "flex", alignItems: "center" }}
-      >
+      <div className="navbar-links" style={{ display: "flex", alignItems: "center" }}>
         <h2 className="Website-Name">
           <img src={Logo} alt="Logo" /> iSKed
         </h2>
@@ -57,35 +49,62 @@ const Navbar = () => {
 
         {/* Navbar Links */}
         <div className={`nav-links ${hamburgerVisible ? "active" : ""}`}>
-          <Link className="nav-item nav-link" to="/Home">
+          <Link
+            className={`nav-item home-link ${activeLink === "Home" ? "active" : ""}`}
+            to="/Home"
+            onClick={() => handleLinkClick("Home")}
+            onMouseEnter={() => handleHover(true)}
+            onMouseLeave={() => handleHover(false)}
+          >
             Home
           </Link>
-          <div className="dropdown-about" ref={dropdownRef}>
+
+          {/* About Link with Dropdown */}
+          <div
+            className="dropdown-about"
+            onMouseEnter={() => setDropdownVisible(true)}
+            onMouseLeave={() => setDropdownVisible(false)}
+          >
             <Link
-              to="/"
-              className="nav-item nav-link"
-              onClick={handleDropdownToggle}
+              className={`nav-item about-link ${activeLink === "About" ? "active" : ""}`}
+              to="/About"
+              onClick={() => handleLinkClick("About")}
+              onMouseEnter={() => handleHover(true)}
+              onMouseLeave={() => handleHover(false)}
             >
               About
             </Link>
-            {showDropdown && (
+            {dropdownVisible && (
               <div className="dropdown-content">
-                <Dropdown.Item as={Link} to="/About">
-                  SK Youth
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/Mandate">
-                  Mandate
-                </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/Council">
-                  SK Council
-                </Dropdown.Item>
+                <Link className="dropdown-item" to="/AboutHistory">
+                  History
+                </Link>
+                <Link className="dropdown-item" to="/AboutTeam">
+                  Our Team
+                </Link>
+                <Link className="dropdown-item" to="/AboutVision">
+                  Vision
+                </Link>
               </div>
             )}
           </div>
-          <Link className="nav-item nav-link" to="/UserProgram">
+
+          <Link
+            className={`nav-item programs-link ${activeLink === "Programs" ? "active" : ""}`}
+            to="/UserProgram"
+            onClick={() => handleLinkClick("Programs")}
+            onMouseEnter={() => handleHover(true)}
+            onMouseLeave={() => handleHover(false)}
+          >
             Programs
           </Link>
-          <Link className="nav-item nav-link" to="/ContactUs">
+          <Link
+            className={`nav-item contact-link ${activeLink === "Contact Us" ? "active" : ""}`}
+            to="/ContactUs"
+            onClick={() => handleLinkClick("Contact Us")}
+            onMouseEnter={() => handleHover(true)}
+            onMouseLeave={() => handleHover(false)}
+          >
             Contact Us
           </Link>
         </div>
@@ -94,17 +113,13 @@ const Navbar = () => {
       {/* Buttons */}
       <div className={`navbar-buttons ${hamburgerVisible ? "active" : ""}`}>
         <button
-          className={`login-button ${
-            activeButton === "signIn" ? "active" : ""
-          }`}
+          className={`login-button ${activeButton === "signIn" ? "active" : ""}`}
           onClick={() => handleButtonClick("signIn")}
         >
           Log In
         </button>
         <button
-          className={`signup-button ms-2 ${
-            activeButton === "signUp" ? "active" : ""
-          }`}
+          className={`signup-button ms-2 ${activeButton === "signUp" ? "active" : ""}`}
           onClick={() => handleButtonClick("signUp")}
         >
           Sign Up

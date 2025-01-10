@@ -246,10 +246,11 @@ body {
   font-family: "Sansita";
   font-style: italic;
   font-weight: bold;
-  font-size: 1.8rem;
+  font-size: 5rem;
   color: #ffffff;
   display: flex;
   align-items: center;
+  margin-right: 80px;
 }
 
 .Website-Name img {
@@ -258,11 +259,24 @@ body {
 }
 
 .card-container {
+  background: linear-gradient(to right, #2036a8, #6a9eff);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 1rem;
+  width: 100%; 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
 }
+
+.card-container-news {
+  background-color: #ffffff; 
+  padding: 15px 5px;
+  border-radius: 8px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 
 .Maintext {
   font-weight: bolder;
@@ -296,96 +310,212 @@ body {
   width: 30%;
 }
 
-/*** Navbar ***/
-.sticky-top {
-  transition: 0.5s;
+/* Reset Styles */
+body, h2, .navbar, .nav-links {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+/*** Navbar ***/
 
 .navbar {
   height: 100px;
-  position: sticky; /* Fix the navbar to the top */
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 1000;
-  background-color: white; /* Background color to make sure it is visible */
-  display: flex;
-  align-items: center;
-  border: none;
-  width: 100%;
   background-color: #25327a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.nav-item {
-  font-family: "Poppins";
-  font-size: 2rem;
-  margin: 1rem 1rem;
-  color: rgb(248, 241, 241) !important;
-  text-decoration: none; /* No underline */
-  cursor: pointer; /* Cursor as pointer */
+.Website-Name {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 1.8rem;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
+  gap: 85px;
 }
 
 .nav-links.active {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #25327a;
+  padding: 20px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+.nav-item {
+  font-family: "Poppins", sans-serif;
+  font-size: .9rem;
+  margin: 1rem 1rem;
+  color: #f8f1f1;
+  text-decoration: none; /* Remove underline */
+  transition: color 0.3s, opacity 0.3s; /* Smooth transition for color and fade */
+  cursor: pointer;
+}
+
+/* Default link color */
+.nav-item {
+  color: #f8f1f1;
+}
+
+/* Hover effect (Fade effect on hover) */
+.nav-item:hover {
+  opacity: 0.7; /* Slight fade on hover */
+}
+
+/* Active state for the clicked links */
+.nav-item.active {
+  opacity: 0.5; /* Fade effect on clicked link */
+  color: #ffcc00;
+}
+
+/* Specific colors for navigation links */
+.nav-item.home-link {
+  color: #ffffff !important;
+}
+
+.nav-item.about-link {
+  color: #ffffff !important;
+}
+
+.nav-item.programs-link {
+  color: #ffffff !important;
+}
+
+.nav-item.contact-link {
+  color: #ffffff !important;
+}
+
+/* Dropdown Styles */
+.dropdown-about {
+  position: relative;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #25327a;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+  z-index: 999;
+}
+
+.dropdown-about:hover .dropdown-content {
   display: block;
 }
 
-.navbar-buttons {
-  display: inline;
-  align-items: center;
-  margin-right: 1rem;
+.dropdown-content .dropdown-item {
+  color: #f8f1f1;
+  padding: 5px 10px;
   text-decoration: none;
 }
 
-.signup-button {
-  margin-right: 3rem;
+.dropdown-content .dropdown-item:hover {
+  background-color: #ffcc00;
+  color: #25327a;
+}
+
+/* Buttons */
+.navbar-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar-buttons.active {
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 20px;
+  background: #162266;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .login-button,
 .signup-button {
-  transition: background-color 0.3s ease;
-  background-color: #25327a; /* Dark color similar to Bootstrap's .btn-dark */
-  color: #ffffff;
-  padding: 0.5rem 1rem; /* Padding: py-2 (top/bottom) and px-4 (left/right) */
-  border-radius: 0.25rem; /* Rounded corners similar to Bootstrap button */
-  text-decoration: none;
+  background-color: #25327a;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
   border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button.active,
+.signup-button.active {
+  background-color: #ffcc00;
+  color: #25327a;
 }
 
 .login-button:hover,
 .signup-button:hover {
-  cursor: pointer;
   background: transparent;
   color: #25327a;
 }
 
-/* Active styles when buttons are clicked */
-.login-button.active,
-.signup-button.active {
-  background-color: #ffffff;
-  color: #000;
-}
-
-/* Hamburger icon */
+/* Hamburger Icon */
 .hamburger-icon {
   display: none;
   flex-direction: column;
+  gap: 5px;
   cursor: pointer;
 }
 
 .hamburger-icon .bar {
-  width: 30px;
-  height: 4px;
-  margin: 5px 0;
-  background-color: #333;
-  border-radius: 4px;
+  width: 25px;
+  height: 3px;
+  background-color: #f8f1f1;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hamburger-icon {
+    display: flex;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+}
+
+
 /* Media query for mobile/tablet (screen width less than or equal to 768px) */
+
+.sangguniang-text{
+  font-size: 5rem;
+}
+.kabataan-color {
+  color: red; /* Red color for Kabataan */
+  font-size: 5rem; 
+}
+
+.western-bicutan-color {
+  color: yellow; /* Yellow color for Western Bicutan */
+  font-size: 3rem; 
+  font-family: 'Poppins', sans-serif;
+}
 
 .western-header {
   position: relative;
@@ -397,9 +527,11 @@ body {
 /*** Hero Header ***/
 .hero-header {
   position: relative;
-  padding: 10em 0rem;
-  background: url(/public/Asset/WebImages/Bg_noLOGO.png) center center no-repeat;
-  background-size: cover;
+  padding: 18em 0; 
+  background: url(/public/Asset/WebImages/Bg_noLOGO.png) no-repeat center center;
+  background-size: 100% 100%; 
+  width: 100%; 
+  height: 90vh; 
 }
 
 .intro-text {
@@ -442,17 +574,34 @@ body {
 }
 
 .IntroButton {
-  display: inline-flex; /* Use flex to align items */
-  align-items: center; /* Vertically align icon and text */
-  justify-content: center; /* Center content horizontally */
-  text-align: center;
-  padding: 0.5rem 1rem; /* Adjust padding as needed */
-  font-size: 1rem;
-  border-radius: 0.25rem;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: slideInRight;
-  height: auto;
+    font-size: 1rem;
+    padding: 6px 16px;
+    border-radius: 4px;
+    background-color: #014284;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    max-width: 250px;
+    width: auto;
+  }
+  
+  .IntroButton i {
+    margin-left: 8px;
+  }
+  
+  .IntroButton:hover {
+    background-color: #147ae7;
+  }
+  
+.IntroButton i {
+  margin-left: 8px; 
+}
+.IntroButton:hover {
+  background-color: #147ae7; /* Change color when hovering */
 }
 
 .IntroButton .bi {
@@ -492,6 +641,9 @@ body {
   max-height: 150%;
   width: 20em; /* Make the width responsive to the card */
   margin: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 8px;
 }
 
 .program-card-img {
@@ -499,6 +651,7 @@ body {
   width: 25em; /* Make the width responsive to the card */
   object-fit: cover; /* Ensure the image fills the dimensions without distortion */
   border-radius: 5px; /* Optional: Add rounded corners */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
 /* About */

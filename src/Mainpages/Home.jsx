@@ -84,11 +84,14 @@ const Intro = () => {
             Barangay at sa Bayan
             <span className="custom-name clr-db txt-i-db">
               {" "}
-              Sangguniang Kabataan
+              <span className="sangguniang-text">Sangguniang</span>{" "}
+              <span className="kabataan-color">Kabataan</span>
             </span>
           </h1>
           <div className="IntroContainer">
-            <p className="IntroDetails">Western Bicutan</p>
+            <p className="IntroDetails">
+              <span className="western-bicutan-color">Western Bicutan</span>
+            </p>
             <button className="IntroButton after-small btn-db">
               Explore Now <i className="bi bi-arrow-right"></i>
             </button>
@@ -158,9 +161,8 @@ const Intro = () => {
       </div>
 
       {/* Highlighted Events Section */}
-
       <h1 className="NewEveHead">NEWS & EVENTS</h1>
-      <div className="card-container">
+      <div className="card-container-news">
         {events.length === 0 ? (
           <p>No events available</p>
         ) : (
