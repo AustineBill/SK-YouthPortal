@@ -247,8 +247,8 @@ const ManageProgram = () => {
                             ) : (
                               <p className="program-p">No amenities available.</p>
                             )}
-                              <h5 className="admin-program-pt-label">Program Type</h5>
-                              <p className="program-p">{program.program_type}</p>
+                            <h5 className="admin-program-pt-label">Program Type</h5>
+                            <p className="program-p">{program.program_type}</p>
                           </div>
                         )}
                       </Card.Body>
@@ -262,109 +262,182 @@ const ManageProgram = () => {
         }
 
         {/* Add Program Section */}
-        {
-          activeContent === "addProgram" && (
-            <div className="admin-add-program-details-container d-flex justify-content-center">
-              <form className="admin-add-program-details-group d-flex flex-column align-items-center">
-                <div className="admin-add-program-form d-flex flex-column">
-                  <label className="admin-add-program-label">Program Name</label>
-                  <input
-                    type="text"
-                    placeholder="Program Name"
-                    name="name"
-                    value={newProgram.name}
-                    onChange={(e) =>
-                      setNewProgram((prev) => ({ ...prev, name: e.target.value }))
-                    }
-                    className="add-program-form-control"
-                  />
-                </div>
+        {activeContent === "addProgram" && (
+          <div className="admin-add-program-details-container d-flex justify-content-center">
+            <form className="admin-add-program-details-group d-flex flex-column">
+              <div className="admin-add-program-form d-flex flex-column">
+                <label className="admin-add-program-label">Program Name</label>
+                <input
+                  type="text"
+                  placeholder="Program Name"
+                  name="name"
+                  value={newProgram.name}
+                  onChange={(e) =>
+                    setNewProgram((prev) => ({ ...prev, name: e.target.value }))
+                  }
+                  className="add-program-form-control"
+                />
+              </div>
 
-                <div className="admin-add-program-form d-flex flex-column">
-                  <label className="admin-add-program-label">
-                    Program Description
-                  </label>
-                  <textarea
-                    placeholder="Program Description"
-                    name="description"
-                    value={newProgram.description}
-                    onChange={(e) =>
-                      setNewProgram((prev) => ({
-                        ...prev,
-                        description: e.target.value,
-                      }))
-                    }
-                    className="add-program-form-control"
-                  />
-                </div>
+              <div className="admin-add-program-form d-flex flex-column">
+                <label className="admin-add-program-label">
+                  Program Description
+                </label>
+                <textarea
+                  placeholder="Program Description"
+                  name="description"
+                  value={newProgram.description}
+                  onChange={(e) =>
+                    setNewProgram((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }))
+                  }
+                  className="add-program-form-control"
+                />
+              </div>
 
-                <div className="admin-add-program-form d-flex flex-column">
-                  <label className="admin-add-program-label">Heading</label>
-                  <input
-                    type="text"
-                    placeholder="Heading"
-                    name="heading"
-                    value={newProgram.heading}
-                    onChange={(e) =>
-                      setNewProgram((prev) => ({
-                        ...prev,
-                        heading: e.target.value,
-                      }))
-                    }
-                    className="add-program-form-control"
-                  />
-                </div>
+              <div className="admin-add-program-form d-flex flex-column">
+                <label className="admin-add-program-label">Heading</label>
+                <input
+                  type="text"
+                  placeholder="Heading"
+                  name="heading"
+                  value={newProgram.heading}
+                  onChange={(e) =>
+                    setNewProgram((prev) => ({
+                      ...prev,
+                      heading: e.target.value,
+                    }))
+                  }
+                  className="add-program-form-control"
+                />
+              </div>
 
-                <div className="admin-add-program-form d-flex flex-column">
-                  <label className="admin-add-program-label">Program Type</label>
-                  <input
-                    type="text"
-                    placeholder="Program Type"
-                    name="program_type"
-                    value={newProgram.program_type}
-                    onChange={(e) =>
-                      setNewProgram((prev) => ({
-                        ...prev,
-                        program_type: e.target.value,
-                      }))
-                    }
-                    className="add-program-form-control"
-                  />
-                </div>
+              <div className="admin-add-program-form d-flex flex-column">
+                <label className="admin-add-program-label">Program Type</label>
+                <input
+                  type="text"
+                  placeholder="Program Type"
+                  name="program_type"
+                  value={newProgram.program_type}
+                  onChange={(e) =>
+                    setNewProgram((prev) => ({
+                      ...prev,
+                      program_type: e.target.value,
+                    }))
+                  }
+                  className="add-program-form-control"
+                />
+              </div>
 
-                <div className="admin-add-program-form d-flex flex-column">
-                  <label className="admin-add-program-label">Program Image</label>
-                  <input
-                    type="file"
-                    onChange={handleImageUpload}
-                    className="add-program-form-control"
-                  />
-                  {imagePreview && <img src={imagePreview} alt="Preview" />}
-                </div>
+              <div className="admin-add-program-form d-flex flex-column">
+                <label className="admin-add-program-label">Program Image</label>
+                <input
+                  type="file"
+                  onChange={handleImageUpload}
+                  className="add-program-form-control"
+                />
+                {imagePreview && <img src={imagePreview} alt="Preview" />}
+              </div>
 
-                <div className="admin-add-program-form d-flex flex-column">
-                  <label className="admin-add-program-label">
-                    Amenity Images
-                  </label>
-                  <input
-                    type="file"
-                    multiple
-                    onChange={handleAmenityImageUpload}
-                    className="add-program-form-control"
-                  />
-                </div>
+              <div className="admin-add-program-form d-flex flex-column">
+                <label className="admin-add-program-label">
+                  Amenity Images
+                </label>
+                <input
+                  type="file"
+                  multiple
+                  onChange={handleAmenityImageUpload}
+                  className="add-program-form-control"
+                />
+              </div>
 
-                <button onClick={handleAddProgram}
-                  className='admin-add-program-button rounded text-white'>
-                  Add Program
-                </button>
-              </form>
-            </div>
-          )
+              <button onClick={handleAddProgram}
+                className='admin-add-program-button rounded text-white'>
+                Add Program
+              </button>
+            </form>
+          </div>
+        )
         }
 
         {/* Edit Modal */}
         {showEditModal && selectedProgram && (
+          <div className="edit-program-modal d-flex flex-column">
+            <div className="edit-program-content">
+              <h3 className="text-center">Edit Program</h3>
+              <form className="admin-edit-program-details-group d-flex flex-column align-items-center">
+                <div className="admin-edit-program-form d-flex flex-column">
+                  <label className="admin-edit-program-label">Program Name</label>
+                  <input
+                    type="text"
+                    name="program_name"
+                    value={selectedProgram.program_name}
+                    onChange={handleFormChange}
+                  />
+                </div>
+
+                <div className="admin-edit-program-form d-flex flex-column">
+                  <label className="admin-edit-program-label">Program Description</label>
+                  <textarea
+                    name="description"
+                    value={selectedProgram.description}
+                    onChange={handleFormChange}
+                  ></textarea>
+                </div>
+
+                <div className="admin-edit-program-form d-flex flex-column">
+                  <label className="admin-edit-program-label">Program Type</label>
+                  <input
+                    type="text"
+                    name="program_type"
+                    value={selectedProgram.program_type}
+                    onChange={handleFormChange}
+                  />
+                </div>
+
+                <div className="admin-edit-program-form d-flex flex-column">
+                  <label className="admin-edit-program-label">Program Image</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                  />
+                </div>
+
+                <div className="admin-edit-program-form d-flex flex-column">
+                  <label className="admin-edit-program-label">Program Ameneties</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAmenityImageUpload}
+                    multiple
+                  />
+                </div>
+                
+                <div className="edit-modal-buttons-container d-flex">
+                  <Button
+                    variant="success"
+                    onClick={handleSaveChanges}
+                    className="edit-save-button">
+                    Save Changes
+                  </Button>
+
+                  <Button
+                    variant="danger"
+                    onClick={() => setShowEditModal(false)}
+                    className="edit-cancel-button">
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )
+        }
+
+        {/* {showEditModal && selectedProgram && (
             <div className="edit-program-modal">
               <div className="edit-program-content">
                 <h3>Edit Program</h3>
@@ -413,7 +486,7 @@ const ManageProgram = () => {
               </div>
             </div>
           )
-        }
+        } */}
       </div >
     </div >
   );

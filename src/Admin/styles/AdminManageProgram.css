@@ -112,6 +112,57 @@
   margin: 5px;
 }
 
+/* Edit Program Modal */
+
+.edit-program-modal {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: #c5c1c1;
+}
+
+.edit-program-content {
+  margin: 20px 0 20px 0;
+}
+
+.admin-edit-program-details-group {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.admin-edit-program-label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 17.5px;
+}
+
+.admin-edit-program-form input[type="text"],
+.admin-edit-program-form textarea {
+  height: 50px;
+  border-style: none;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 0px;
+  font-size: 17.5px;
+  transition: all 0.35s;
+}
+
+.edit-modal-buttons-container {
+  margin-top: 10px;
+}
+
+.edit-save-button {
+  margin-right: 10px;
+}
+
 
 /* Admin Add Program */
 
