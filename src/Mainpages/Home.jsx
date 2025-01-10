@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Card, Spinner } from "react-bootstrap";
+import { Card, Spinner } from "react-bootstrap";
 import axios from "axios";
 
 const Intro = () => {
@@ -77,25 +77,28 @@ const Intro = () => {
     <div className="container-fluid">
       <div className="hero-header">
         <div className="text-center text-lg-start m-4 mv-8">
-          <h1 className="MainText ms-5 offset-content">
-            Lagi't lagi para sa Kabataan,{" "}
+          <h1 className="MainText ms-5 offset-content custom-font">
+            Lagi't lagi para sa Kabataan, Barangay at sa Bayan
           </h1>
-          <h1 className="SubText animated slideInRight offset-content">
-            Barangay at sa Bayan
+          <div className="custom-name-wrapper">
             <span className="custom-name clr-db txt-i-db">
-              {" "}
               <span className="sangguniang-text">Sangguniang</span>{" "}
               <span className="kabataan-color">Kabataan</span>
             </span>
-          </h1>
+          </div>
           <div className="IntroContainer">
             <p className="IntroDetails">
-              <span className="western-bicutan-color">Western Bicutan</span>
+              <span className="western-bicutan-color">WESTERN BICUTAN</span>
             </p>
-            <button className="IntroButton after-small btn-db">
-              Explore Now <i className="bi bi-arrow-right"></i>
-            </button>
           </div>
+                  {/* New Image Section */}
+        <div className="image-container">
+          <img
+            src="/Asset/WebImages/icons.png"
+            alt="SK Western Bicutan"
+            className="below-image"
+            />
+            </div>
         </div>
       </div>
 
@@ -148,12 +151,12 @@ const Intro = () => {
               <Card.Body>
                 <Card.Title>{programs.program_name}</Card.Title>
                 <Card.Text>{programs.heading}</Card.Text>
-                <Button
+                <button
                   onClick={() => handleNavigate(programs.program_type)}
-                  className="btn-db"
+                  className="spotlight-button btn-db m-2"
                 >
                   Learn More
-                </Button>
+                </button>
               </Card.Body>
             </Card>
           ))
@@ -196,7 +199,6 @@ const Intro = () => {
                 key={index}
                 src={spotlight.frontimage}
                 alt={`Milestone ${index + 1}`}
-                style={{ height: "500px", objectFit: "cover" }}
               />
             ) : (
               <p className="text-center text-muted py-5" key={index}></p>
@@ -213,15 +215,16 @@ const Intro = () => {
       <div className="BodyContainer" data-wow-delay="0.5s">
         <h1 className="BlockQuote">SANGGUNIANG KABATAAN - WESTERN BICUTAN</h1>
         <Card>
-          <Card.Body>
+          <Card.Body className="CardBodyWithText">
             <blockquote className="blockquote">
+
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                posuere erat a ante.
+              {"\u00A0\u00A0\u00A0\u00A0The"} Sangguniang Kabataan (SK) of Western Bicutan, Taguig City serves as the youth governing body dedicated to empowering young
+               individuals through programs, projects, and activities that promote leadership, community engagement, and development. Focused on 
+               addressing the needs and aspirations of the youth, the SK fosters initiatives in education, sports, health, and cultural enrichment
+                while ensuring active participation in nation-building within the barangay.
               </p>
-              <footer className="blockquote-footer">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </footer>
+        
             </blockquote>
           </Card.Body>
         </Card>

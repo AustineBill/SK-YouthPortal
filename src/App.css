@@ -231,13 +231,45 @@ body {
   overflow-x: hidden;
 }
 
+/* Apply to the container or body surrounding the .BodyContainer */
+body, .BodyContainer {
+  margin: 0;
+  padding: 0;
+}
+
 .BodyContainer {
-  width: 80%; /* Equivalent to col-lg-10 */
-  margin: 0 auto; /* Center the container horizontally */
+  margin-top: 0 !important;
+  padding-top: 0;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items horizontally */
+  align-items: center;
   text-align: center;
+  padding: 2rem;
+}
+
+.CardBodyWithText {
+  color: #ffffff;
+  background-color: #25327a; /* Change this to your desired color */
+  padding: 2rem; /* Optional: Add padding around the text */
+  border-radius: 8px; /* Optional: rounded corners */
+  width: 100%; /* Ensure it stretches to full width */
+}
+
+.BodyContainer blockquote p {
+  color: #ffffff !important; /* Force text color to white */
+}
+
+.BlockQuote {
+  text-align: center; /* If you want the heading centered */
+  font-size: 2.5rem;
+}
+
+.blockquote p {
+  text-align: justify; /* Justify the text inside the blockquote */
+  font-size: 1.1rem;
+  line-height: 1.6; /* Optional: improve line spacing for readability */
 }
 
 .Website-Name {
@@ -246,7 +278,7 @@ body {
   font-family: "Sansita";
   font-style: italic;
   font-weight: bold;
-  font-size: 5rem;
+  font-size: 10rem;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -259,18 +291,20 @@ body {
 }
 
 .card-container {
-  background: linear-gradient(to right, #2036a8, #6a9eff);
+  background: linear-gradient(to right, #ffffff, #ffffff);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
   margin: 0;
+  gap: 20px;
   padding: 0;
   box-sizing: border-box;
+  border-radius: 8px;
 }
 
 .card-container-news {
-  background-color: #ffffff;
+  background-color: #25327a;
   padding: 15px 5px;
   border-radius: 8px;
   max-width: 100%;
@@ -344,7 +378,7 @@ h2,
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 85px;
+  gap: 70px;
 }
 
 .nav-links.active {
@@ -391,10 +425,10 @@ h2,
 
 .login-button,
 .signup-button {
-  background-color: #25327a;
+  background-color: #10d0f3d8;
   color: white;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 3px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -446,6 +480,7 @@ h2,
 .sangguniang-text {
   font-size: 5rem;
 }
+
 .kabataan-color {
   color: red; /* Red color for Kabataan */
   font-size: 5rem;
@@ -493,8 +528,24 @@ h2,
 
 .custom-name {
   font-weight: bold;
-  font-size: 72px;
-  margin-top: 30px;
+  font-size: 80px;
+  margin: 20px 0 0 20%;
+  width: 100%;
+}
+
+.custom-name-wrapper {
+  text-align: right; /* Aligns the Sangguniang Kabataan to the right */
+  margin-top: -3.5rem; /* Adjust this to position it properly */
+  margin-right: 1.7rem;
+}
+
+.sangguniang-text {
+  font-size: 7.6rem;
+  font-style: italic; /* Optional: If you want the "Sangguniang" to be italicized */
+}
+
+.kabataan-color {
+  font-size: 7.6rem; /* Adjust this value for a different size for "Kabataan" */
 }
 
 .IntroDetails {
@@ -504,8 +555,29 @@ h2,
   animation-fill-mode: both;
   animation-name: slideInRight;
   font-size: 30px;
-  margin: 0rem 1rem 0rem 55%; /* Remove default margin */
+  margin-top: -2.2rem;  /* Use a negative value to move it upwards */
+  margin-right: 1.5rem;  /* Moves the text to the right */
+  margin-left: 68%;  /* Keeps the left margin for positioning */
 }
+
+.custom-font {
+  color: white;
+  font-size: 2rem; /* Adjust the size as needed */
+  font-family: "Arial", sans-serif; /* Or use any font you like */
+  
+}
+
+.image-container {
+  text-align: center; /* Centers the image horizontally */
+  margin-top: 10px; /* Adjusts the space above the image */
+}
+
+.below-image {
+  justify-content: center;
+  max-width: 600px; /* Prevents the image from being too large */
+}
+
+
 
 .IntroContainer {
   display: flex; /* Use Flexbox for alignment */
@@ -577,13 +649,20 @@ h2,
 }
 
 .ProgramCard {
-  height: auto; /* Set a fixed height */
+  height: auto; /* Allow content to dictate height */
   max-height: 150%;
-  width: 20em; /* Make the width responsive to the card */
+  width: 20em; /* Responsive width */
   margin: 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Initial shadow */
   padding: 8px;
+  background-color: #ffffff; /* Background color for the card */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+}
+
+.ProgramCard:hover {
+  transform: translateY(-10px); /* Move upward slightly */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
 }
 
 .program-card-img {
@@ -691,20 +770,33 @@ h2,
 .image-content {
   justify-self: end; /* Align image to the end (right) */
   align-self: center;
+  max-width: 100%;
 }
 
+.image-content img {
+  width: 100%; /* Adjust the width to fit the container */
+  max-width: 3000px; /* Set a maximum width for responsiveness */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure image fills the container without distortion */
+  border-radius: 8px; /* Optional: rounded corners */
+}
+
+
 .spotlight-head {
-  color: #060707; /* Equivalent to text-primary */
+  color: #ff1a01ee; /* Default color for the whole text */
   margin-bottom: 4rem; /* Equivalent to mb-4 */
   font-weight: 700; /* Adjust the font-weight as needed */
-  text-align: left; /* Center the text */
-  font-size: 6rem;
+  text-align: left; /* Align the text to the left */
+  margin: 30px 0 0 0;
+  font-size: 7rem; /* Keep the font size as it is */
+  display: inline-block; /* Ensure inline elements don't break layout */
 }
+
 
 .spotlight-button {
   font-weight: 400;
   display: inline-block;
-  text-align: center;
+  text-align: right;
   padding: 0.5rem 1rem; /* Adjusted padding for a smaller button */
   font-size: 0.875rem; /* Smaller font size */
   line-height: 1.5;
@@ -714,7 +806,7 @@ h2,
   margin-top: 2rem; /* Add space between the image and button */
   margin-left: auto;
   margin-right: 2rem;
-  justify-self: center; /* Center the button horizontally */
+  justify-self: end; /* Align the button to the right */
 }
 
 .spotlight-button:hover {
@@ -731,6 +823,9 @@ h2,
   margin-top: 2rem;
 }
 
+
+
+
 /*Text*/
 
 .TextContent {
@@ -745,30 +840,30 @@ h2,
   font-optical-sizing: auto;
   font-weight: 900;
   font-style: oblique;
-  font-size: 3rem;
+  font-size: 3.8rem;
 }
 
 .Text-2 {
   font-optical-sizing: auto;
   font-weight: 900;
   font-style: oblique;
-  font-size: 3rem;
+  font-size: 4.2rem;
 }
 
 .Text-3 {
   font-optical-sizing: auto;
   font-weight: 900;
   font-style: normal;
-  color: #111111;
   font-size: 1.5rem;
   font-family: "Poppins";
+  color:#002f4e
 }
 
 /*** Footer ***/
 
 .footer-name {
   font-family: "Sansita";
-  font-size: 4rem;
+  font-size: 4.5rem;
   font-weight: bold;
   color: #ffffff;
   margin-bottom: 30px;
