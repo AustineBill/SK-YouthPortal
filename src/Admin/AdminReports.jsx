@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import axios from "axios";
-import "./styles/AdminReport.css";
+// import "./styles/AdminReport.css";
+import './styles/AdminReports.css';
 
 const Reports = () => {
   const [activeTable, setActiveTable] = useState("users");
@@ -217,7 +218,7 @@ const Reports = () => {
             placeholder="Enter Admin Name"
             value={adminName}
             onChange={(e) => setAdminName(e.target.value)}
-            className="admin-reports-input rounded"
+            className="admin-reports-info rounded"
           />
         </div>
 
@@ -359,10 +360,10 @@ const Reports = () => {
         )}
 
         {activeTable === "schedules" && (
-          <div className="admin-reports-schedules-table">
-            <h2 className="reports-schedules-label-h2">Reservations</h2>
-            <table className="admin-reports-schedules-table-container table-bordered">
-              <thead className="admin-reports-schedules-head text-center">
+          <div className="admin-reports-reservation-table">
+            <h2 className="reports-reservation-label-h2">Reservations</h2>
+            <table className="admin-reports-reservation-table-container table-bordered">
+              <thead className="admin-reports-reservation-head text-center">
                 <tr>
                   <th>Date</th>
                   <th>User ID</th>
@@ -372,7 +373,7 @@ const Reports = () => {
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody className="admin-reports-schedules-body text-center">
+              <tbody className="admin-reports-reservation-body text-center">
                 {Object.entries(groupedSchedules).length === 0 ? (
                   <tr>
                     <td colSpan="6" className="text-center">
@@ -419,7 +420,6 @@ const Reports = () => {
             </table>
           </div>
         )}
-
 
         {activeTable === "inventory" && (
           <div className="admin-reports-inventory-table">
