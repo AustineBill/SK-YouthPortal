@@ -72,34 +72,8 @@ const UserNavbar = () => {
             Programs
           </Link>
           <Link className="nav-item nav-link" to="/ReservationLog">
-            Reservation Log
+            Reservation
           </Link>
-
-          {/* Profile and Logout on the right side */}
-          {isAuthenticated && (
-            <div className="navbar-buttons" ref={dropdownRef}>
-              <div
-                onClick={() => setDropdownVisible(!dropdownVisible)}
-                style={{ cursor: "pointer" }}
-              >
-                <Avatar name={loggedInUser} round={true} size="50" />
-              </div>
-              {dropdownVisible && (
-                <div className="dropdown-menu">
-                  <Link
-                    to={`/Profile/${loggedInUser}`}
-                    className="dropdown-item"
-                    onClick={() => setDropdownVisible(false)}
-                  >
-                    Profile
-                  </Link>
-                  <div className="dropdown-item" onClick={openLogoutModal}>
-                    Logout
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
         </div>
       </div>
 
@@ -124,8 +98,47 @@ const UserNavbar = () => {
           </div>
         </div>
       )}
+
+      {/* User Avatar and Dropdown */}
+      {isAuthenticated && (
+        <div className="navbar-buttons" ref={dropdownRef}>
+          <div
+            onClick={() => setDropdownVisible(!dropdownVisible)}
+            style={{ cursor: "pointer" }}
+          >
+            <Avatar name={loggedInUser} round={true} size="50" />
+          </div>
+          {dropdownVisible && (
+            <div style={dropdownStyles}>
+              <Link
+                to={`/Profile/${loggedInUser}`}
+                className="dropdown-item"
+                onClick={() => setDropdownVisible(false)}
+              >
+                Profile
+              </Link>
+              <div className="dropdown-item" onClick={openLogoutModal}>
+                Logout
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </Nav>
   );
+};
+
+const dropdownStyles = {
+  position: "absolute",
+  right: 0,
+  top: "50px",
+  backgroundColor: "#fff",
+  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  borderRadius: "5px",
+  width: "150px",
+  zIndex: 1000,
+  display: "flex",
+  flexDirection: "column",
 };
 
 export default UserNavbar;
