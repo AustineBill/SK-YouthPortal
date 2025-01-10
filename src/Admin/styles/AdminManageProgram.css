@@ -1,32 +1,24 @@
 /* ManagePrograms.css */
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap");
-
-.amenity-preview {
-  width: 50px; /* Adjust the size as needed */
-  height: 50px;
-  object-fit: cover; /* This will ensure that the aspect ratio is maintained while scaling the image */
-  margin-right: 10px; /* Adds space between images */
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
 
 .admin-program-container {
   position: relative;
   padding-top: 75px;
   left: 22.5%;
   width: 77.5%;
-  background-color: #ffffff;
-  font-family: "Inter", sans-serif;
+  background-color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
   z-index: 1;
 }
 
 .admin-program-label-h2 {
-  font-size: 45px;
-  margin: 20px 40px 20px 40px;
+  font-size: 40px;
+  margin: 20px 0 20px 40px;
 }
 
 .admin-program-nav-tabs {
   cursor: pointer;
-  font-size: 25px;
+  font-size: 20px;
   margin: 0 0 20px 60px;
   gap: 1in;
   color: #766f6f;
@@ -44,14 +36,92 @@
   text-underline-offset: 10px;
 }
 
-.admin-programs-details-container,
+.admin-program-contents-container {
+  margin-bottom: 40px;
+}
+
+/* Admin All Programs */
+
+/* .admin-programs-details-container {
+  background-color: red;
+} */
+
+.admin-program-card {
+  width: 90%;
+  margin-bottom: 10px;
+}
+
+.admin-programs-details-container {
+  width: 90%;
+}
+
+.admin-program-card {
+  width: 100%;
+}
+
+.admin-program-image-container {
+  width: 40%;
+}
+
+.admin-program-details-container {
+  width: 60%;
+}
+
+.admin-program-image {
+  height: 200px;
+  width: 250px;
+}
+
+.admin-program-text {
+  font-size: 20px;
+}
+
+.program-details-button,
+.program-edit-button {
+  margin-right: 10px;
+}
+
+
+/* Admin Program Extended Details */
+
+.admin-program-expanded-details-container {
+  width: 90%;
+  margin: 20px auto 0;
+}
+
+.admin-program-description-label {
+  font-size: 22.5px;
+}
+
+.admin-program-amenities-label {
+  font-size: 22.5px;
+}
+
+.admin-program-pt-label {
+  font-size: 22.5px;
+  margin-top: 20px;
+}
+
+.program-p {
+  font-size: 17.5px;
+}
+
+.amenity-preview {
+  width: 75px;
+  height: 75px;
+  margin: 5px;
+}
+
+
+/* Admin Add Program */
+
 .admin-add-program-details-container {
   background-color: #c5c1c1;
   width: 90%;
 }
 
 .admin-add-program-details-group {
-  margin: 25px 0 20px 0;
+  margin: 25px 0 25px 0;
   width: 90%;
 }
 
@@ -60,147 +130,60 @@
 }
 
 .admin-add-program-label {
-  font-family: "Roboto", sans-serif;
-  font-size: 25px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 17.5px;
 }
 
-.admin-add-program-group input[type="text"],
-.admin-add-program-group textarea {
-  height: 60px;
+.admin-add-program-form input[type="text"],
+.admin-add-program-form textarea {
+  height: 50px;
   border-style: none;
   border-radius: 10px;
   outline: none;
-  margin-bottom: 10px;
-  font-size: 25px;
+  margin-bottom: 0px;
+  font-size: 17.5px;
   transition: all 0.35s;
 }
 
-.admin-add-program-group input[type="text"]:focus,
-.admin-add-program-group textarea:focus {
+.admin-add-program-form input[type="text"]:focus,
+.admin-add-program-form textarea:focus {
   outline: 1px solid #007bff;
 }
 
 .admin-add-program-button {
-  background-color: #42bb4e;
-  color: #ffffff;
+  background-color: #42BB4E;
+  color: #FFFFFF;
   margin-top: 10px;
-  width: 125px;
+  width: 150px;
   height: 55px;
   font-size: 15px;
   border-style: none;
   transition: all 0.35s;
 }
 
+.admin-add-program-button:hover {
+  color: rgb(2, 107, 107);
+}
+
+
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
-  .admin-program-label-h2 {
-    font-size: 40px;
-  }
 
-  .admin-add-program-label {
-    font-size: 20px;
-  }
 
-  .admin-program-nav-tabs {
-    font-size: 22.5px;
-    margin: 0 0 20px 45px;
-    gap: 0.75in;
-  }
-
-  .admin-add-program-group input[type="text"],
-  .admin-add-program-group textarea {
-    height: 50px;
-    font-size: 20px;
-  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .admin-program-label-h2 {
-    font-size: 35px;
-  }
 
-  .admin-add-program-label {
-    font-size: 17.5px;
-  }
 
-  .admin-program-nav-tabs {
-    font-size: 20px;
-    margin: 0 0 20px 45px;
-    gap: 1in;
-  }
-
-  .admin-add-program-group input[type="text"],
-  .admin-add-program-group textarea {
-    height: 50px;
-    font-size: 17.5px;
-  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-  .admin-program-container {
-    left: 0;
-    width: 100%;
-  }
+  
 
-  .admin-program-label-h2 {
-    font-size: 30px;
-    margin: 20px 0 20px 25px;
-  }
-
-  .admin-program-nav-tabs {
-    font-size: 17.5px;
-    margin: 0 0 20px 45px;
-    gap: 0.5in;
-  }
-
-  .admin-add-program-label {
-    font-size: 15px;
-  }
-
-  .admin-add-program-group input[type="text"],
-  .admin-add-program-group textarea {
-    height: 45px;
-    font-size: 12.5px;
-  }
-
-  .admin-add-program-button {
-    width: 150px;
-    height: 50px;
-    font-size: 12.5px;
-  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  .admin-program-container {
-    left: 0;
-    width: 100%;
-  }
 
-  .admin-program-label-h2 {
-    font-size: 25px;
-    margin: 20px 0 20px 20px;
-  }
 
-  .admin-program-nav-tabs {
-    font-size: 15px;
-    margin: 0 0 20px 40px;
-    gap: 0.5in;
-  }
-
-  .admin-add-program-label {
-    font-size: 12.5px;
-  }
-
-  .admin-add-program-group input[type="text"],
-  .admin-add-program-group textarea {
-    height: 45px;
-    font-size: 10px;
-  }
-
-  .admin-add-program-button {
-    width: 125px;
-    height: 50px;
-    font-size: 10px;
-  }
 }
