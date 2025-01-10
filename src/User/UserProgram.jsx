@@ -33,6 +33,7 @@ const Programs = () => {
                 variant="top" 
                 src={program.image_url} 
                 alt={program.program_name} 
+                 className="program-card-img"
               />
               <Card.Body className="d-flex flex-column align-items-center">
                 <Card.Title className="fs-5 fw-bold text-dark">{program.program_name}</Card.Title>

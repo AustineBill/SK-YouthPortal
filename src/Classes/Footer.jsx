@@ -7,20 +7,20 @@ const Footer = () => (
     <div className="row d-flex justify-content-between py-5">
       {/* iSKed Section */}
       <div className="col-md-3 d-flex flex-column align-items-start">
-        <h4 className="footer-name">iSKed</h4>
+      <h4 className="footer-name" style={{ fontStyle: 'italic' }}>iSKed</h4>
       </div>
 
       {/* Get In Touch Section */}
       <div className="col-md-3 d-flex flex-column align-items-start get-in-touch">
         <h6>Get In Touch</h6>
         <p>
-          <i className="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA
+          <i className="fa fa-map-marker-alt me-2"></i> 1 Sampaguita, Taguig, 1630 Metro Manila
         </p>
         <p>
-          <i className="fa fa-phone-alt me-2"></i>+012 345 67890
+          <i className="fa fa-phone-alt me-2"></i>+63 918 453 5868
         </p>
         <p>
-          <i className="fa fa-envelope me-2"></i>info@example.com
+          <i className="fa fa-envelope me-2"></i>skwesternbicutanofficial@gmail.com
         </p>
       </div>
 

@@ -39,9 +39,9 @@ const Navbar = () => {
         className="navbar-links"
         style={{ display: "flex", alignItems: "center" }}
       >
-        <h2 className="Website-Name">
+        <h1 className="Website-Name">
           <img src={Logo} alt="Logo" /> iSKed
-        </h2>
+        </h1>
 
         {/* Hamburger Icon */}
         <div className="hamburger-icon" onClick={toggleHamburgerMenu}>
@@ -78,13 +78,13 @@ const Navbar = () => {
             {dropdownVisible && (
               <div className="dropdown-content">
                 <Link className="dropdown-item" to="/AboutHistory">
-                  History
+                  About Us
                 </Link>
                 <Link className="dropdown-item" to="/AboutTeam">
-                  Our Team
+                  SK Officials
                 </Link>
                 <Link className="dropdown-item" to="/AboutVision">
-                  Vision
+                  Mandate
                 </Link>
               </div>
             )}
