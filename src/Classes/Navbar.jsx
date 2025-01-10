@@ -77,13 +77,13 @@ const Navbar = () => {
             </Link>
             {dropdownVisible && (
               <div className="dropdown-content">
-                <Link className="dropdown-item" to="/AboutHistory">
+                <Link className="dropdown-item" to="/About">
                   About Us
                 </Link>
-                <Link className="dropdown-item" to="/AboutTeam">
+                <Link className="dropdown-item" to="/Council">
                   SK Officials
                 </Link>
-                <Link className="dropdown-item" to="/AboutVision">
+                <Link className="dropdown-item" to="/Mandate">
                   Mandate
                 </Link>
               </div>

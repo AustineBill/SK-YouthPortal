@@ -76,8 +76,8 @@ const Intro = () => {
   return (
     <div className="container-fluid">
       <div className="hero-header">
-        <div className="text-center text-lg-start m-4 mv-8">
-          <h1 className="MainText ms-5 offset-content custom-font">
+        <div className="text-center text-lg-start m-2 mv-8">
+          <h1 className="MainText ms-5 mb-3 offset-content custom-font">
             Lagi't lagi para sa Kabataan, Barangay at sa Bayan
           </h1>
           <div className="custom-name-wrapper">
@@ -91,14 +91,13 @@ const Intro = () => {
               <span className="western-bicutan-color">WESTERN BICUTAN</span>
             </p>
           </div>
-                  {/* New Image Section */}
-        <div className="image-container">
-          <img
-            src="/Asset/WebImages/icons.png"
-            alt="SK Western Bicutan"
-            className="below-image"
+          <div className="image-container">
+            <img
+              src="/Asset/WebImages/icons.png"
+              alt="SK Western Bicutan"
+              className="below-image"
             />
-            </div>
+          </div>
         </div>
       </div>
 
@@ -217,14 +216,17 @@ const Intro = () => {
         <Card>
           <Card.Body className="CardBodyWithText">
             <blockquote className="blockquote">
-
               <p>
-              {"\u00A0\u00A0\u00A0\u00A0The"} Sangguniang Kabataan (SK) of Western Bicutan, Taguig City serves as the youth governing body dedicated to empowering young
-               individuals through programs, projects, and activities that promote leadership, community engagement, and development. Focused on 
-               addressing the needs and aspirations of the youth, the SK fosters initiatives in education, sports, health, and cultural enrichment
-                while ensuring active participation in nation-building within the barangay.
+                {"\u00A0\u00A0\u00A0\u00A0The"} Sangguniang Kabataan (SK) of
+                Western Bicutan, Taguig City serves as the youth governing body
+                dedicated to empowering young individuals through programs,
+                projects, and activities that promote leadership, community
+                engagement, and development. Focused on addressing the needs and
+                aspirations of the youth, the SK fosters initiatives in
+                education, sports, health, and cultural enrichment while
+                ensuring active participation in nation-building within the
+                barangay.
               </p>
-        
             </blockquote>
           </Card.Body>
         </Card>

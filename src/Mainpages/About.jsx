@@ -52,7 +52,7 @@ const About = () => {
       {/* Header Section */}
       <div className="text-center text-lg-start m-4 mv-8">
         <h1 className="Maintext animated slideInRight">SK Youth</h1>
-        <p className="Subtext">The Team at your Service</p>
+        <p className="Subtext">The Team at your Service.</p>
       </div>
 
       {/* Carousel Section */}
@@ -107,7 +107,7 @@ const About = () => {
       {/* Description Section */}
       <div className="youth-container">
         <h1 className="youth-head">SANGGUNIANG KABATAAN - WESTERN BICUTAN</h1>
-        <p className="yout-text-content">{description}</p>
+        <p className="youth-text-content text-justify">{description}</p>
       </div>
     </div>
   );

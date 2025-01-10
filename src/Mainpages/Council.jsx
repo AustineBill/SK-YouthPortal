@@ -56,7 +56,7 @@ const Council = () => {
 
       <div className="text-center text-lg-start m-4 mv-8">
         <h1 className="Maintext animated slideInRight">SK Council</h1>
-        <p className="Subtext">Visionary leaders who shaped our barangay</p>
+        <p className="Subtext">Visionary leaders who shaped our barangay.</p>
       </div>
 
       {/* Carousel Section */}
