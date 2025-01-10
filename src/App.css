@@ -540,12 +540,12 @@ h2,
 }
 
 .sangguniang-text {
-  font-size: 7.6rem;
+  font-size: 6rem;
   font-style: italic; /* Optional: If you want the "Sangguniang" to be italicized */
 }
 
 .kabataan-color {
-  font-size: 7.6rem; /* Adjust this value for a different size for "Kabataan" */
+  font-size: 6rem; /* Adjust this value for a different size for "Kabataan" */
 }
 
 .IntroDetails {
@@ -554,10 +554,10 @@ h2,
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: slideInRight;
-  font-size: 30px;
-  margin-top: -2.2rem;  /* Use a negative value to move it upwards */
+  font-size: 7px;
+  margin-top: -1.5rem;  /* Use a negative value to move it upwards */
   margin-right: 1.5rem;  /* Moves the text to the right */
-  margin-left: 68%;  /* Keeps the left margin for positioning */
+  margin-left: 65%;  /* Keeps the left margin for positioning */
 }
 
 .custom-font {
@@ -576,8 +576,6 @@ h2,
   justify-content: center;
   max-width: 600px; /* Prevents the image from being too large */
 }
-
-
 
 .IntroContainer {
   display: flex; /* Use Flexbox for alignment */
