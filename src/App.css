@@ -263,20 +263,19 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 100%; 
-  margin: 0; 
-  padding: 0; 
-  box-sizing: border-box; 
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .card-container-news {
-  background-color: #ffffff; 
+  background-color: #ffffff;
   padding: 15px 5px;
   border-radius: 8px;
   max-width: 100%;
   margin: 0 auto;
 }
-
 
 .Maintext {
   font-weight: bolder;
@@ -311,7 +310,10 @@ body {
 }
 
 /* Reset Styles */
-body, h2, .navbar, .nav-links {
+body,
+h2,
+.navbar,
+.nav-links {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -360,17 +362,12 @@ body, h2, .navbar, .nav-links {
 
 .nav-item {
   font-family: "Poppins", sans-serif;
-  font-size: .9rem;
+  font-size: 0.9rem;
   margin: 1rem 1rem;
-  color: #f8f1f1;
+  color: #ffffff !important;
   text-decoration: none; /* Remove underline */
   transition: color 0.3s, opacity 0.3s; /* Smooth transition for color and fade */
   cursor: pointer;
-}
-
-/* Default link color */
-.nav-item {
-  color: #f8f1f1;
 }
 
 /* Hover effect (Fade effect on hover) */
@@ -381,71 +378,15 @@ body, h2, .navbar, .nav-links {
 /* Active state for the clicked links */
 .nav-item.active {
   opacity: 0.5; /* Fade effect on clicked link */
-  color: #ffcc00;
-}
-
-/* Specific colors for navigation links */
-.nav-item.home-link {
-  color: #ffffff !important;
-}
-
-.nav-item.about-link {
-  color: #ffffff !important;
-}
-
-.nav-item.programs-link {
-  color: #ffffff !important;
-}
-
-.nav-item.contact-link {
-  color: #ffffff !important;
-}
-
-/* Dropdown Styles */
-.dropdown-about {
-  position: relative;
-}
-
-.dropdown-content {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #25327a;
-  padding: 10px;
-  border-radius: 5px;
-  display: none;
-  z-index: 999;
-}
-
-.dropdown-about:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown-content .dropdown-item {
-  color: #f8f1f1;
-  padding: 5px 10px;
-  text-decoration: none;
-}
-
-.dropdown-content .dropdown-item:hover {
-  background-color: #ffcc00;
-  color: #25327a;
+  color: #ffffff;
 }
 
 /* Buttons */
 .navbar-buttons {
   display: flex;
-  gap: 15px;
-}
-
-.navbar-buttons.active {
-  flex-direction: column;
-  position: absolute;
-  top: 100%;
-  right: 20px;
-  background: #162266;
-  padding: 10px;
-  border-radius: 5px;
+  gap: 5px;
+  margin-right: 40px; /* Adjust as needed */
+  align-items: center;
 }
 
 .login-button,
@@ -461,7 +402,7 @@ body, h2, .navbar, .nav-links {
 
 .login-button.active,
 .signup-button.active {
-  background-color: #ffcc00;
+  background-color: #ffffff;
   color: #25327a;
 }
 
@@ -500,21 +441,20 @@ body, h2, .navbar, .nav-links {
   }
 }
 
-
 /* Media query for mobile/tablet (screen width less than or equal to 768px) */
 
-.sangguniang-text{
+.sangguniang-text {
   font-size: 5rem;
 }
 .kabataan-color {
   color: red; /* Red color for Kabataan */
-  font-size: 5rem; 
+  font-size: 5rem;
 }
 
 .western-bicutan-color {
   color: yellow; /* Yellow color for Western Bicutan */
-  font-size: 3rem; 
-  font-family: 'Poppins', sans-serif;
+  font-size: 3rem;
+  font-family: "Poppins", sans-serif;
 }
 
 .western-header {
@@ -527,11 +467,11 @@ body, h2, .navbar, .nav-links {
 /*** Hero Header ***/
 .hero-header {
   position: relative;
-  padding: 18em 0; 
+  padding: 18em 0;
   background: url(/public/Asset/WebImages/Bg_noLOGO.png) no-repeat center center;
-  background-size: 100% 100%; 
-  width: 100%; 
-  height: 90vh; 
+  background-size: 100% 100%;
+  width: 100%;
+  height: 90vh;
 }
 
 .intro-text {
@@ -574,31 +514,31 @@ body, h2, .navbar, .nav-links {
 }
 
 .IntroButton {
-    font-size: 1rem;
-    padding: 6px 16px;
-    border-radius: 4px;
-    background-color: #014284;
-    color: white;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 120px;
-    max-width: 250px;
-    width: auto;
-  }
-  
-  .IntroButton i {
-    margin-left: 8px;
-  }
-  
-  .IntroButton:hover {
-    background-color: #147ae7;
-  }
-  
+  font-size: 1rem;
+  padding: 6px 16px;
+  border-radius: 4px;
+  background-color: #014284;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  max-width: 250px;
+  width: auto;
+}
+
 .IntroButton i {
-  margin-left: 8px; 
+  margin-left: 8px;
+}
+
+.IntroButton:hover {
+  background-color: #147ae7;
+}
+
+.IntroButton i {
+  margin-left: 8px;
 }
 .IntroButton:hover {
   background-color: #147ae7; /* Change color when hovering */
@@ -826,9 +766,8 @@ body, h2, .navbar, .nav-links {
 
 /*** Footer ***/
 
-/*** Footer ***/
-
 .footer-name {
+  font-family: "Sansita";
   font-size: 4rem;
   font-weight: bold;
   color: #ffffff;
@@ -877,6 +816,32 @@ body, h2, .navbar, .nav-links {
 .dropdown-about {
   position: relative;
   display: inline-block;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #25327a;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+  z-index: 999;
+}
+
+.dropdown-about:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content .dropdown-item {
+  color: #f8f1f1;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+
+.dropdown-content .dropdown-item:hover {
+  background-color: #ffcc00;
+  color: #25327a;
 }
 
 .dropbtn {
