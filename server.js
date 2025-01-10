@@ -684,6 +684,59 @@ app.delete("/equipment/:reservation_id", async (req, res) => {
   }
 });
 
+app.post("/Feedback", async (req, res) => {
+  const { user_id, rating, comment } = req.body;
+
+  if (!user_id || !rating || !comment) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
+
+  try {
+    const existingFeedback = await pool.query(
+      "SELECT * FROM feedback WHERE user_id = $1",
+      [user_id]
+    );
+
+    if (existingFeedback.rows.length > 0) {
+      return res
+        .status(400)
+        .json({ error: "You have already submitted feedback." });
+    }
+
+    await pool.query(
+      "INSERT INTO feedback (user_id, rating, comment) VALUES ($1, $2, $3)",
+      [user_id, rating, comment]
+    );
+
+    res.status(201).json({ message: "Feedback submitted successfully!" });
+  } catch (error) {
+    console.error("Error saving feedback:", error);
+    res.status(500).json({ error: "An error occurred while saving feedback." });
+  }
+});
+
+app.get("/Feedback/:user_id", async (req, res) => {
+  const { user_id } = req.params;
+
+  try {
+    const feedback = await pool.query(
+      "SELECT * FROM feedback WHERE user_id = $1",
+      [user_id]
+    );
+
+    if (feedback.rows.length === 0) {
+      return res.status(200).json({ message: "No feedback submitted yet." });
+    }
+
+    res.status(200).json(feedback.rows[0]); // Return the user's feedback
+  } catch (error) {
+    console.error("Error retrieving feedback:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while retrieving feedback." });
+  }
+});
+
 /********* Auto Fill Details  *********/
 app.get("/Details/:id", async (req, res) => {
   const { id } = req.params;
