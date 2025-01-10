@@ -190,26 +190,17 @@ const Intro = () => {
       <div className="spotlight-container">
         <h1 className="spotlight-head">SK YOUTH SPOTLIGHTS</h1>
         <div className="image-content">
-          {spotlightData.length > 0 ? (
-            spotlightData.map((spotlight, index) =>
-              // Check if frontimage exists and display it as a single image
-              spotlight.frontimage ? (
-                <img
-                  key={index}
-                  src={spotlight.frontimage}
-                  alt={`Milestone ${index + 1}`}
-                  style={{ height: "300px", objectFit: "cover" }}
-                />
-              ) : (
-                <p className="text-center text-muted py-5" key={index}>
-                  No front image available
-                </p>
-              )
+          {spotlightData.map((spotlight, index) =>
+            spotlight.frontimage ? (
+              <img
+                key={index}
+                src={spotlight.frontimage}
+                alt={`Milestone ${index + 1}`}
+                style={{ height: "500px", objectFit: "cover" }}
+              />
+            ) : (
+              <p className="text-center text-muted py-5" key={index}></p>
             )
-          ) : (
-            <p className="text-center text-muted py-5">
-              No milestones available
-            </p>
           )}
         </div>
 

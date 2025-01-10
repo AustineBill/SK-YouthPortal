@@ -54,9 +54,17 @@ const ViewEquipment = () => {
   const tileClassName = ({ date, view }) => {
     if (view !== "month") return ""; // Apply styles only in month view
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Remove time component for comparison
+
+    const isSunday = date.getDay() === 0; // Check if the day is Sunday (0 represents Sunday)
+
+    if (date < today || isSunday) {
+      return "unavailable"; // Past dates and Sundays should always be unavailable
+    }
     const dailyReservations = filterReservations(date);
 
-    if (dailyReservations.length === 0) return "vacant";
+    if (dailyReservations.length === 0) return "available";
     if (dailyReservations.length >= 5) return "unavailable";
     return "available";
   };
@@ -105,10 +113,6 @@ const ViewEquipment = () => {
             <div className="legend-item">
               <span className="circle unavailable"></span>
               <h3>Unavailable</h3>
-            </div>
-            <div className="legend-item">
-              <span className="circle vacant"></span>
-              <h3>Vacant</h3>
             </div>
           </div>
         </div>

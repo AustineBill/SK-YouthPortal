@@ -65,10 +65,19 @@ const ViewFacilities = () => {
   const tileClassName = ({ date, view }) => {
     if (view !== "month") return ""; // Apply styles only in month view
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Remove time component for comparison
+
+    const isSunday = date.getDay() === 0; // Check if the day is Sunday (0 represents Sunday)
+
+    if (date < today || isSunday) {
+      return "unavailable"; // Past dates and Sundays should always be unavailable
+    }
+
     const dailyReservations = filterReservations(date);
 
     if (dailyReservations.length === 0) {
-      return "vacant"; // No reservations: Vacant
+      return "available"; // No reservations: Vacant
     }
 
     const soloReservationsCount = dailyReservations.filter(
@@ -114,53 +123,49 @@ const ViewFacilities = () => {
           <div className="legend">
             <h2>Legend</h2>
             <div className="legend-item">
-              <span className="circle vacant"></span>
-              <h3>Vacant</h3>
+              <span className="circle available"></span>
+              <h3>Available</h3>
             </div>
             <div className="legend-item">
               <span className="circle unavailable"></span>
               <h3>Unavailable</h3>
             </div>
-            <div className="legend-item">
-              <span className="circle available"></span>
-              <h3>Available</h3>
-            </div>
           </div>
-        </div>
 
-        <div className="dropdown-container" ref={dropdownRef}>
-          <div className="time-dropdown">
-            <button
-              className="btn-db dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              onClick={toggleDropdown}
-            >
-              {selectedTimeSlot || "Select Time"}
-            </button>
-            {isDropdownVisible && (
-              <div
-                className="time-dropdown-menu"
-                aria-labelledby="dropdownMenuButton"
+          <div className="dropdown-container" ref={dropdownRef}>
+            <div className="time-dropdown">
+              <button
+                className="btn-db dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                onClick={toggleDropdown}
               >
-                {[
-                  "9:00 am - 10:00 am",
-                  "10:00 am - 11:00 am",
-                  "11:00 am - 12:00 nn",
-                  "12:00 nn - 1:00 pm",
-                  "1:00 pm - 2:00 pm",
-                  "2:00 pm - 3:00 pm",
-                ].map((time) => (
-                  <h6
-                    key={time}
-                    className="dropdown-item"
-                    onClick={() => selectTime(time)}
-                  >
-                    {time}
-                  </h6>
-                ))}
-              </div>
-            )}
+                {selectedTimeSlot || "Select Time"}
+              </button>
+              {isDropdownVisible && (
+                <div
+                  className="time-dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  {[
+                    "9:00 am - 10:00 am",
+                    "10:00 am - 11:00 am",
+                    "11:00 am - 12:00 nn",
+                    "12:00 nn - 1:00 pm",
+                    "1:00 pm - 2:00 pm",
+                    "2:00 pm - 3:00 pm",
+                  ].map((time) => (
+                    <h6
+                      key={time}
+                      className="dropdown-item"
+                      onClick={() => selectTime(time)}
+                    >
+                      {time}
+                    </h6>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

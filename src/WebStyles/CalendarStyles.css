@@ -47,10 +47,13 @@
 
 /* Calendar Container */
 .calendar-container {
-  padding: 20px;
-  background: #fff;
+  background-color: #fff;
   border-radius: 12px;
+  padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  width: 90%; /* Increased width for a wider container */
+  max-width: 1200px; /* Optional: Set a maximum width for large screens */
+  margin: 0 auto 20px; /* Center the container */
 }
 
 /* React Calendar Styling */
@@ -93,12 +96,19 @@
 }
 
 /* Legend styling */
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
+  align-items: center; /* Vertically center all elements */
+  margin: 20px 0px 20px 0px;
+  gap: 20px;
+}
+
 .legend {
   padding: 15px;
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .legend h2 {
@@ -158,10 +168,10 @@
   transition: all 0.3s ease;
 }
 
-.react-calendar__tile.vacant {
+/*.react-calendar__tile.vacant {
   background-color: #e9f7ef;
   color: #28a745;
-}
+}*/
 
 .react-calendar__tile.available {
   background-color: #fff3cd;

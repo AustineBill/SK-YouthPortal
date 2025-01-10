@@ -2,40 +2,43 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import Logo from "../Asset/WebImages/Logo.png";
-import "../App.css"; // Ensure your custom CSS file is imported
+import "../App.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [hamburgerVisible, setHamburgerVisible] = useState(false); // State for hamburger menu
-  const [activeButton, setActiveButton] = useState("login"); // State for active button
-  const [activeLink, setActiveLink] = useState(""); // State to track active link
-  const [fade, setFade] = useState(false); // Fade effect for hover state
-  const [dropdownVisible, setDropdownVisible] = useState(false); // State for dropdown visibility
+  const [hamburgerVisible, setHamburgerVisible] = useState(false);
+  const [activeButton, setActiveButton] = useState("login");
+  const [activeLink, setActiveLink] = useState("");
+  const [fade, setFade] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const toggleHamburgerMenu = () => {
     setHamburgerVisible(!hamburgerVisible);
   };
 
   const handleButtonClick = (buttonType) => {
-    setActiveButton(buttonType); // Update active button state
+    setActiveButton(buttonType);
     navigate(`/userauth?view=${buttonType}`);
   };
 
   const handleLinkClick = (linkName) => {
-    setActiveLink(linkName); // Set the active link
+    setActiveLink(linkName);
   };
 
   const handleHover = (isHovering) => {
-    setFade(isHovering);
+    setFade(isHovering); // Set fade on hover
   };
 
   const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible); // Toggle the dropdown visibility
+    setDropdownVisible(!dropdownVisible); // Toggle dropdown on click
   };
 
   return (
-    <Nav className="navbar">
-      <div className="navbar-links" style={{ display: "flex", alignItems: "center" }}>
+    <Nav className={`navbar ${fade ? "fade-effect" : ""}`}>
+      <div
+        className="navbar-links"
+        style={{ display: "flex", alignItems: "center" }}
+      >
         <h2 className="Website-Name">
           <img src={Logo} alt="Logo" /> iSKed
         </h2>
@@ -50,7 +53,7 @@ const Navbar = () => {
         {/* Navbar Links */}
         <div className={`nav-links ${hamburgerVisible ? "active" : ""}`}>
           <Link
-            className={`nav-item home-link ${activeLink === "Home" ? "active" : ""}`}
+            className={`nav-item ${activeLink === "Home" ? "active" : ""}`}
             to="/Home"
             onClick={() => handleLinkClick("Home")}
             onMouseEnter={() => handleHover(true)}
@@ -62,15 +65,13 @@ const Navbar = () => {
           {/* About Link with Dropdown */}
           <div
             className="dropdown-about"
-            onMouseEnter={() => setDropdownVisible(true)}
-            onMouseLeave={() => setDropdownVisible(false)}
+            onMouseEnter={toggleDropdown} // Use toggleDropdown here
+            onMouseLeave={toggleDropdown}
           >
             <Link
-              className={`nav-item about-link ${activeLink === "About" ? "active" : ""}`}
+              className={`nav-item ${activeLink === "About" ? "active" : ""}`}
               to="/About"
               onClick={() => handleLinkClick("About")}
-              onMouseEnter={() => handleHover(true)}
-              onMouseLeave={() => handleHover(false)}
             >
               About
             </Link>
@@ -90,7 +91,7 @@ const Navbar = () => {
           </div>
 
           <Link
-            className={`nav-item programs-link ${activeLink === "Programs" ? "active" : ""}`}
+            className={`nav-item ${activeLink === "Programs" ? "active" : ""}`}
             to="/UserProgram"
             onClick={() => handleLinkClick("Programs")}
             onMouseEnter={() => handleHover(true)}
@@ -99,7 +100,9 @@ const Navbar = () => {
             Programs
           </Link>
           <Link
-            className={`nav-item contact-link ${activeLink === "Contact Us" ? "active" : ""}`}
+            className={`nav-item ${
+              activeLink === "Contact Us" ? "active" : ""
+            }`}
             to="/ContactUs"
             onClick={() => handleLinkClick("Contact Us")}
             onMouseEnter={() => handleHover(true)}
@@ -113,13 +116,17 @@ const Navbar = () => {
       {/* Buttons */}
       <div className={`navbar-buttons ${hamburgerVisible ? "active" : ""}`}>
         <button
-          className={`login-button ${activeButton === "signIn" ? "active" : ""}`}
+          className={`login-button ${
+            activeButton === "signIn" ? "active" : ""
+          }`}
           onClick={() => handleButtonClick("signIn")}
         >
           Log In
         </button>
         <button
-          className={`signup-button ms-2 ${activeButton === "signUp" ? "active" : ""}`}
+          className={`signup-button ${
+            activeButton === "signUp" ? "active" : ""
+          }`}
           onClick={() => handleButtonClick("signUp")}
         >
           Sign Up
