@@ -4,11 +4,12 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../WebStyles/CalendarStyles.css";
 import StepIndicator from "../Classes/StepIndicator";
-import { Modal, Button } from "react-bootstrap";
-
+import { Breadcrumb, Modal, Button } from "react-bootstrap";
 const Reservation = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { state } = location; // Access the passed state
+  const { programType } = state || {}; // Destructure programType from state
   const { reservationType } = location.state || { reservationType: "Solo" };
   const [reservations, setReservations] = useState([]);
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
@@ -221,6 +222,19 @@ const Reservation = () => {
 
   return (
     <div className="container-fluid">
+      <Breadcrumb className="ms-5 mt-3">
+        <Breadcrumb.Item onClick={() => navigate("/UserProgram")}>
+          Programs
+        </Breadcrumb.Item>
+        <Breadcrumb.Item
+          onClick={() =>
+            navigate("/ProgramDetails", { state: { programType } })
+          }
+        >
+          Program Details
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Reservation</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="text-center text-lg-start m-4 mb-3">
         <h1 className="Maintext animated slideInRight">Schedule</h1>
         <p className="Subtext">Selected Type: {reservationType}</p>

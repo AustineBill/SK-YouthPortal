@@ -1,27 +1,129 @@
-@media (min-width: 992px) { /* Large screen (lg) breakpoint */
-    .login-button .signup-button  {
-        display: inline-block; /* Display button inline on lg screens and up */
-    }
+/* Large Screen (lg) - min-width: 992px */
+@media (min-width: 992px) {
+  .login-button .signup-button {
+    display: inline-block; /* Display button inline on lg screens and up */
   }
 
+  .hamburger-icon {
+    display: none; /* Hide hamburger icon on large screens */
+  }
+
+  .nav-links {
+    display: flex; /* Display nav links normally on large screens */
+    flex-direction: row;
+  }
+
+  .navbar-buttons {
+    display: flex; /* Show navbar buttons (e.g., avatar) */
+  }
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* Hide links by default on mobile */
+  }
+
+  .nav-links.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #25327a;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+  }
+
+  .hamburger-icon {
+    display: block; /* Show hamburger menu */
+    cursor: pointer;
+  }
+
+  .navbar-buttons {
+    display: none; /* Hide avatar and buttons on mobile */
+  }
+}
 
 @media (max-width: 768px) {
-    .hamburger-icon {
-      display: flex; /* Show hamburger icon on small screens */
-    }
-
-    .navbar-buttons {
-      display: inline-flex; /* Hide buttons on small screens */
-    }
-
-    .nav-links {
-      display: none; /* Hide links by default */
-      width: 100%;
-      flex-direction: column;
-      background-color: #fff;
-      position: absolute;
-      top: 60px; /* Adjust based on navbar height */
-      right: 0;
-      z-index: 999;
-    }
+  .container-fluid {
+    padding-left: 10px;
+    padding-right: 10px;
   }
+
+  .breadcrumb {
+    font-size: 14px;
+  }
+
+  .Maintext {
+    font-size: 2rem;
+  }
+
+  .Subtext {
+    font-size: 1.2rem;
+  }
+
+  .table th,
+  .table td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  /* Hide some table columns on small screens */
+  .table th:nth-child(5),
+  .table td:nth-child(5) {
+    display: none; /* Hide Time Slot column for smaller screens */
+  }
+
+  /* Make the dropdown full-width on small screens */
+  .dropdown-toggle {
+    width: 100%;
+  }
+
+  /* Adjust the action button for smaller screens */
+  .btn-danger {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+
+/* Media Query for Mobile (480px or less) */
+@media (max-width: 480px) {
+  .breadcrumb {
+    font-size: 12px;
+  }
+
+  .Maintext {
+    font-size: 1.5rem;
+  }
+
+  .Subtext {
+    font-size: 1rem;
+  }
+
+  .table th,
+  .table td {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  /* Hide the Action column completely on mobile */
+  .table th:nth-child(7),
+  .table td:nth-child(7) {
+    display: none;
+  }
+
+  /* Make the dropdown full-width */
+  .dropdown-menu {
+    width: 100%;
+  }
+
+  /* Adjust button size */
+  .btn-danger {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}

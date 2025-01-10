@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import StepIndicator from "../Classes/StepIndicator";
-import { Row, Col, Card, Table } from "react-bootstrap";
+import { Breadcrumb, Row, Col, Card, Table } from "react-bootstrap";
 
 function ScheduleDone() {
   const navigate = useNavigate();
@@ -61,6 +61,29 @@ function ScheduleDone() {
 
   return (
     <div className="container-fluid">
+      <Breadcrumb className="ms-5 mt-3">
+        {programType !== "Facilities" && (
+          <Breadcrumb.Item onClick={() => navigate("/Equipment")}>
+            Equipment
+          </Breadcrumb.Item>
+        )}
+        <Breadcrumb.Item
+          onClick={() => {
+            sessionStorage.removeItem("reservationData");
+            navigate(
+              programType === "Equipment"
+                ? "/EquipmentReservation"
+                : "/Reservation"
+            );
+          }}
+        >
+          Reservation
+        </Breadcrumb.Item>
+        <Breadcrumb.Item onClick={() => navigate("/ScheduleDetails")}>
+          Schedule Details
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active> Review and Confirm </Breadcrumb.Item>
+      </Breadcrumb>
       <div className="text-center text-lg-start m-4 mb-4">
         <h1 className="Maintext animated slideInRight">
           Reservation Confirmation

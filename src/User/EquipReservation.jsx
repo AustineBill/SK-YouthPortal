@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import StepIndicator from "../Classes/StepIndicator";
-import { Modal, Button } from "react-bootstrap";
+import { Breadcrumb, Modal, Button } from "react-bootstrap";
 
 const EquipReservation = () => {
   const navigate = useNavigate();
@@ -103,6 +103,12 @@ const EquipReservation = () => {
 
   return (
     <div className="container-fluid">
+      <Breadcrumb className="ms-5 mt-3">
+        <Breadcrumb.Item onClick={() => navigate("/Equipment")}>
+          Equipment
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active> Reservation </Breadcrumb.Item>
+      </Breadcrumb>
       <div className="text-center text-lg-start m-4 mb-3">
         <h1 className="Maintext animated slideInRight">Equipment Schedule</h1>
         <p className="Subtext">Choose the Date</p>

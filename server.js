@@ -438,6 +438,7 @@ app.get("/reservations", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 app.post("/schedule/equipment", async (req, res) => {
   const { user_id, reservation_id, reservedEquipment, startDate, endDate } =
     req.body;
@@ -515,6 +516,7 @@ app.post("/schedule/equipment", async (req, res) => {
     if (client) client.release(); // Release the client back to the pool
   }
 });
+
 app.get("/schedule/equipment", async (req, res) => {
   const { userId } = req.query;
   try {
@@ -682,6 +684,59 @@ app.delete("/equipment/:reservation_id", async (req, res) => {
   }
 });
 
+app.post("/Feedback", async (req, res) => {
+  const { user_id, rating, comment } = req.body;
+
+  if (!user_id || !rating || !comment) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
+
+  try {
+    const existingFeedback = await pool.query(
+      "SELECT * FROM feedback WHERE user_id = $1",
+      [user_id]
+    );
+
+    if (existingFeedback.rows.length > 0) {
+      return res
+        .status(400)
+        .json({ error: "You have already submitted feedback." });
+    }
+
+    await pool.query(
+      "INSERT INTO feedback (user_id, rating, comment) VALUES ($1, $2, $3)",
+      [user_id, rating, comment]
+    );
+
+    res.status(201).json({ message: "Feedback submitted successfully!" });
+  } catch (error) {
+    console.error("Error saving feedback:", error);
+    res.status(500).json({ error: "An error occurred while saving feedback." });
+  }
+});
+
+app.get("/Feedback/:user_id", async (req, res) => {
+  const { user_id } = req.params;
+
+  try {
+    const feedback = await pool.query(
+      "SELECT * FROM feedback WHERE user_id = $1",
+      [user_id]
+    );
+
+    if (feedback.rows.length === 0) {
+      return res.status(200).json({ message: "No feedback submitted yet." });
+    }
+
+    res.status(200).json(feedback.rows[0]); // Return the user's feedback
+  } catch (error) {
+    console.error("Error retrieving feedback:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while retrieving feedback." });
+  }
+});
+
 /********* Auto Fill Details  *********/
 app.get("/Details/:id", async (req, res) => {
   const { id } = req.params;
@@ -813,8 +868,11 @@ app.post("/inventory", upload.single("image"), async (req, res) => {
       return res.status(400).send("No file uploaded");
     }
 
-    const { name, quantity, specification, status } = req.body;
+    const { name, quantity, specification } = req.body; // Exclude 'status' from the request
     const imageFileName = "/Equipment/" + req.file.filename; // Save only the relative path
+
+    // Automatically set status based on quantity
+    const status = quantity > 0 ? "Available" : "Out of Stock";
 
     // Insert the item data into your database
     const query =
@@ -828,12 +886,14 @@ app.post("/inventory", upload.single("image"), async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
 app.get("/inventory", (req, res) => {
   pool
     .query("SELECT * FROM inventory")
     .then((result) => res.json(result.rows))
     .catch((error) => res.status(500).send(error.message));
 });
+
 app.put("/inventory/:id", upload.single("image"), async (req, res) => {
   try {
     const { id } = req.params;
@@ -880,8 +940,8 @@ app.delete("/inventory/:id", async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-/***** Check Reservatoion *******/
 
+/***** Check Reservatoion *******/
 app.post("/ValidateReservation", async (req, res) => {
   const { user_id, start_date, end_date } = req.body;
 
@@ -1510,19 +1570,22 @@ app.get("/admindashboard", async (req, res) => {
 
     const values = [selectedYear];
 
-    console.log('Running queries with values:', values);
+    console.log("Running queries with values:", values);
 
     // Execute all queries
-    const [mainResult, schedulesResult, equipmentResult, ratingsResult] = await Promise.all([
-      pool.query(mainQuery, values),
-      pool.query(monthlySchedulesQuery, values),
-      pool.query(monthlyEquipmentQuery, values),
-      pool.query(yearlyRatingsQuery, values),
-    ]);
+    const [mainResult, schedulesResult, equipmentResult, ratingsResult] =
+      await Promise.all([
+        pool.query(mainQuery, values),
+        pool.query(monthlySchedulesQuery, values),
+        pool.query(monthlyEquipmentQuery, values),
+        pool.query(yearlyRatingsQuery, values),
+      ]);
 
     // If no data is found for the given year, respond with a message
     if (!mainResult.rows.length) {
-      return res.status(404).json({ message: `No data found for the year ${selectedYear}` });
+      return res
+        .status(404)
+        .json({ message: `No data found for the year ${selectedYear}` });
     }
 
     // Map the monthly data into arrays for easier use in the frontend
@@ -1534,7 +1597,10 @@ app.get("/admindashboard", async (req, res) => {
     });
 
     equipmentResult.rows.forEach((row) => {
-      monthlyEquipment[row.month - 1] = parseInt(row.total_equipment_reservations, 10);
+      monthlyEquipment[row.month - 1] = parseInt(
+        row.total_equipment_reservations,
+        10
+      );
     });
 
     // Prepare the ratings data (1-5) from the query result
@@ -1555,13 +1621,11 @@ app.get("/admindashboard", async (req, res) => {
       monthly_equipment_reservations: monthlyEquipment, // Monthly data for equipment
       yearly_ratings: ratingsCount, // Ratings data for 1-5 scale
     });
-
   } catch (err) {
     console.error("Error fetching dashboard data:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
-
 
 app.get("/Allreservations", async (req, res) => {
   try {
