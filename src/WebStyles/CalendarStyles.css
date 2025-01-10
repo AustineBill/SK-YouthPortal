@@ -54,6 +54,7 @@
   width: 90%; /* Increased width for a wider container */
   max-width: 1200px; /* Optional: Set a maximum width for large screens */
   margin: 0 auto 20px; /* Center the container */
+  text-align: justify;
 }
 
 /* React Calendar Styling */
@@ -148,13 +149,6 @@
 }
 
 /* Calendar styling */
-.calendar-container {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
 .react-calendar {
   border: none;
   font-family: "Arial", sans-serif;

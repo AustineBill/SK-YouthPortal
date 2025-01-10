@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Container, Col, Row, Button, Modal, Card } from "react-bootstrap";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+  Breadcrumb,
+  Container,
+  Col,
+  Row,
+  Button,
+  Modal,
+  Card,
+} from "react-bootstrap";
 import axios from "axios";
 
 function Equipment() {
+  const location = useLocation();
+  const { state } = location; // Access the passed state
+  const { programType } = state || {}; // Destructure programType from state
   const [inventory, setInventory] = useState([]);
   const [quantities, setQuantities] = useState([]);
   const [modalMessage, setModalMessage] = useState("");
@@ -16,7 +27,7 @@ function Equipment() {
       try {
         const response = await axios.get("http://localhost:5000/inventory");
         setInventory(response.data);
-        setQuantities(Array(response.data.length).fill(0));
+        setQuantities(Array(response.data.length).fill(0)); // Initialize quantities array
       } catch (error) {
         console.error("Error fetching inventory:", error);
       }
@@ -66,35 +77,62 @@ function Equipment() {
       handleShowModal("Please reserve at least one piece of equipment.");
       return;
     }
+
+    // Store the reserved items in sessionStorage and navigate to the reservation page
     sessionStorage.setItem("reservedEquipment", JSON.stringify(reserved));
     navigate("/EquipReservation");
   };
 
   return (
     <Container fluid className="my-5">
-      <h1 className="text-center text-dark display-3">EQUIPMENTS</h1>
-      <Row className="justify-content-center">
+      <Breadcrumb className="ms-5 mt-3">
+        <Breadcrumb.Item onClick={() => navigate("/UserProgram")}>
+          Programs
+        </Breadcrumb.Item>
+        <Breadcrumb.Item
+          onClick={() =>
+            navigate("/ProgramDetails", { state: { programType } })
+          }
+        >
+          Program Details
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Equipments</Breadcrumb.Item>
+      </Breadcrumb>
+
+      <div className="text-center text-lg-start m-4 mv-8 mb-3">
+        <h1 className="Maintext animated slideInRight">EQUIPMENTS</h1>
+        <p className="Subtext">Choose Your Equipment/s</p>
+      </div>
+      <Row className="justify-content-center g-4">
         {inventory.length === 0 ? (
-          <p>No program available</p>
+          <p>No equipment available</p>
         ) : (
           inventory.map((item, index) => (
-            <Col md={3} className="mb-4" key={item.id}>
+            <Col
+              key={item.id}
+              xs={12}
+              sm={6}
+              md={6}
+              lg={3}
+              className="d-flex justify-content-center"
+            >
               <Card className="ProgramCard text-center">
                 {item.image ? (
                   <Card.Img
                     variant="top"
-                    src={item.image} // Adjust the URL to point to your server's upload folder
+                    src={item.image}
                     alt={item.name}
                     style={{
                       width: "100%",
-                      height: "300px",
-                      objectFit: "cover",
+                      height: "100px",
+                      objectFit: "contain", // Prevent stretching or zooming
+                      backgroundColor: "#f8f9fa", // Optional: Clean background for 'contain'
                     }}
                   />
                 ) : (
                   <Card.Img
                     variant="top"
-                    src="/Asset/Equipment/Chairs.png" // Fallback image if no image available
+                    src="/Asset/Equipment/Chairs.png" // Default fallback image
                     alt="Default"
                     style={{
                       width: "100%",
@@ -107,14 +145,24 @@ function Equipment() {
                   <Card.Title>{item.name}</Card.Title>
                   <Card.Text>{item.specification}</Card.Text>
                   <Card.Text>
-                    {item.status}: {item.quantity}
+                    Status:{" "}
+                    <span
+                      className={
+                        item.status === "Out of Stock"
+                          ? "text-danger"
+                          : "text-success"
+                      }
+                    >
+                      {item.status}
+                    </span>
                   </Card.Text>
-                  {/* Quantity controls */}
+                  <Card.Text>Available Quantity: {item.quantity}</Card.Text>
                   <div className="d-flex justify-content-center align-items-center">
                     <Button
                       variant="outline-secondary"
                       size="sm"
                       onClick={() => decreaseQuantity(index)}
+                      disabled={item.status === "Out of Stock"}
                     >
                       -
                     </Button>
@@ -123,6 +171,7 @@ function Equipment() {
                       variant="outline-secondary"
                       size="sm"
                       onClick={() => increaseQuantity(index)}
+                      disabled={item.status === "Out of Stock"}
                     >
                       +
                     </Button>
@@ -138,8 +187,7 @@ function Equipment() {
       <Row className="d-flex justify-content-center mt-4">
         <div className="text-center">
           <Button
-            variant="dark"
-            className="py-3 px-5 fw-bold"
+            className="py-3 px-5 fw-bold clr-db"
             onClick={handleReserve}
             disabled={quantities.every((qty) => qty === 0)}
           >

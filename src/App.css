@@ -49,6 +49,17 @@ body {
   color: Text; /* Default text color */
 }
 
+.breadcrumb-item {
+  color: blue;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.breadcrumb-item.active {
+  color: gray;
+  font-weight: bold;
+}
+
 .clr-db {
   color: #25327a;
 }
