@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
 
-.admin-dashboard-container {
+/* .admin-dashboard-container {
     position: relative;
     padding-top: 75px;
     left: 22.5%;
@@ -85,7 +85,7 @@
 .users-chart-container {
     width: 45%;
     /* gap: 0.25in; */
-}
+/* }
 
 .equipment-chart-container {
     width: 100%;
@@ -114,12 +114,12 @@
 .dashboard-summary-table {
     width: 100%;
     margin-bottom: 40px;
-}
+} */
 
 
 /* Media */
 
-@media (min-width: 1025px) and (max-width: 1440px) {
+/* @media (min-width: 1025px) and (max-width: 1440px) {
 
     .admin-dashboard-label-h2 {
         font-size: 37.5px;
@@ -312,9 +312,9 @@
     .admin-summary-table-body td {
         font-size: 10px;
     }
-}
+} */
 
-.admin-dashboard-container {
+/* .admin-dashboard-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -342,14 +342,15 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    max-width: 900px;  /* Adjusted max-width for smaller container */
-    width: 100%;
+    max-width: 900px;   */
+/* Adjusted max-width for smaller container */
+/* width: 100%;
     padding: 20px;
     box-sizing: border-box;
     margin-top: 40px;
-  }
-  
-  .admin-chart-container {
+  } */
+
+/* .admin-chart-container {
     background-color: #fff;
     padding: 15px;
     border-radius: 10px;
@@ -358,19 +359,141 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;  /* Ensure it takes up full width within the grid */
-    max-width: 400px; /* Make the chart container smaller */
-  }
+    width: 100%;   */
+/* Ensure it takes up full width within the grid */
+/* max-width: 400px;  */
+/* Make the chart container smaller */
+/* } */
+
+/* .admin-chart-container h3 { */
+/* margin-bottom: 15px; */
+/* text-align: center; */
+/* font-size: 16px;  */
+/* Reduced font size */
+/* font-weight: bold; */
+/* } */
+
+/* .chart { */
+/* width: 100%;   */
+/* Ensure the chart fits within the container */
+/* height: 250px;  */
+/* Adjust the height of the chart */
+/* } */
+
+
+.admin-dashboard-container {
+    position: relative;
+    padding-top: 75px;
+    left: 22.5%;
+    width: 77.5%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
+}
+
+.admin-dashboard-label-h2 {
+    font-size: 40px;
+    margin: 20px 0 10px 40px;
+}
+
+.admin-dashboard-label-p {
+    font-size: 20px;
+    margin: 0 0 10px 40px;
+}
+
+.reservations-label-h2,
+.userd-label-h2,
+.equipment-label-h2,
+.yearlyrd-label-h2 {
+    font-size: 30px;
+}
+
+.year-dropdown-container {
+    width: 90%;
+    margin: 0 auto 20px;
+}
+
+.year-selection-container {
+    height: 50px;
+    width: 100%;
+}
+
+.year-selection-label {
+    font-size: 17.5px;
+}
+
+.year-select {
+    width: 30%;
+    height: 50px;
+    font-size: 17.5px;
+    margin-left: 10px;
+}
+
+.year-select:hover {
+    color: #FFFFFF;
+    background-color: #858585;
+}
+
+.year-select:focus {
+    outline: 1px solid #007bff;
+}
+
+.year-select option {
+    background-color: #FFFFFF;
+    color: #000000;
+    pointer-events: none;
+}
+
+.admin-dashboard-charts-section {
+    margin-bottom: 40px;
+}
+
+.admin-contacts-details-group .admin-current-contact-label,
+.admin-edit-contacts-details-group .admin-edit-contact-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 17.5px;
+}
+
+.admin-dashboard-charts-container {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10%;
+}
+
+.admin-chart-container {
+    width: 40%;
+    margin-bottom: 40px;
+}
+
+.piechart {
+    max-height: 250px;
+    height: 100%;
+}
+
+.chart {
+    max-height: 250px;
+    height: 100%;
+}
+
+
+/* Media */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
   
-  .admin-chart-container h3 {
-    margin-bottom: 15px;
-    text-align: center;
-    font-size: 16px; /* Reduced font size */
-    font-weight: bold;
-  }
-  
-  .chart {
-    width: 100%;  /* Ensure the chart fits within the container */
-    height: 250px; /* Adjust the height of the chart */
-  }
-  
+
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+
+}
