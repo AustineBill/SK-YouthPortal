@@ -186,71 +186,85 @@ const ManageProgram = () => {
               <p>No programs available</p>
             ) : (
               programs.map((program) => (
-                <Card key={program.id} className="admin-program-card mb-3">
-                  <Card.Img
-                    variant="top"
-                    src={program.image_url || "https://via.placeholder.com/100"}
-                    alt={program.program_name}
-                  />
-                  <Card.Body>
-                    <Card.Title>{program.program_name}</Card.Title>
-                    <Card.Text>{program.heading}</Card.Text>
-                    <Button
-                      variant="info"
-                      onClick={() => handleExpandCard(program)}
-                    >
-                      {program === selectedProgram
-                        ? "Hide Details"
-                        : "View Details"}
-                    </Button>
-                    <Button
-                      variant="warning"
-                      onClick={() => handleEditProgram(program)}
-                    >
-                      Edit Details
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDeleteProgram(program.id)}
-                    >
-                      Delete Program
-                    </Button>
-                    {/* Expanded Details */}
-                    {program === selectedProgram && (
-                      <div className="expanded-details">
-                        <h5>Description</h5>
-                        <p>{program.description}</p>
-                        <h5>Amenities</h5>
-                        {program.amenities && program.amenities.length > 0 ? (
-                          <div className="amenities-container">
-                            {program.amenities.map((image, index) => (
-                              <img
-                                key={index}
-                                src={image}
-                                alt={`Amenity ${index}`}
-                                className="amenity-preview"
-                              />
-                            ))}
-                          </div>
-                        ) : (
-                          <p>No amenities available.</p>
-                        )}
+                <Card key={program.id} className="admin-program-card d-flex">
+                  <div className="admin-program-card-details d-flex">
+                    <div className="admin-program-image-container d-flex justify-content-center align-items-center">
+                      <Card.Img
+                        variant="top"
+                        src={program.image_url || "https://via.placeholder.com/100"}
+                        alt={program.program_name}
+                        className="admin-program-image"
+                      />
+                    </div>
 
-                        <h5>Program Type</h5>
-                        <p>{program.program_type}</p>
-                      </div>
-                    )}
-                  </Card.Body>
+                    <div className="admin-program-details-container d-flex align-items-center text-center">
+                      <Card.Body>
+                        <Card.Title>{program.program_name}</Card.Title>
+                        <Card.Text className="admin-program-text">{program.heading}</Card.Text>
+                        <div className="admin-program-details-buttons-container d-flex justify-content-center">
+                          <Button
+                            variant="info"
+                            onClick={() => handleExpandCard(program)}
+                            className="program-details-button"
+                          >
+                            {program === selectedProgram
+                              ? "Hide Details"
+                              : "View Details"}
+                          </Button>
+                          <Button
+                            variant="warning"
+                            onClick={() => handleEditProgram(program)}
+                            className="program-edit-button"
+                          >
+                            Edit Details
+                          </Button>
+                          <Button
+                            variant="danger"
+                            onClick={() => handleDeleteProgram(program.id)}
+                            className="program-delete-button"
+                          >
+                            Delete Program
+                          </Button>
+                        </div>
+
+                        {/* Expanded Details */}
+                        {program === selectedProgram && (
+                          <div className="admin-program-expanded-details-container d-flex flex-column text-center">
+                            <h3 className="admin-program-description-label">Description</h3>
+                            <p className="program-p">{program.description}</p>
+                            <h4 className="admin-program-amenities-label">Amenities</h4>
+                            {program.amenities && program.amenities.length > 0 ? (
+                              <div className="amenities-image-container d-flex justify-content-center">
+                                {program.amenities.map((image, index) => (
+                                  <img
+                                    key={index}
+                                    src={image}
+                                    alt={`Amenity ${index}`}
+                                    className="amenity-preview"
+                                  />
+                                ))}
+                              </div>
+                            ) : (
+                              <p className="program-p">No amenities available.</p>
+                            )}
+                            <h5 className="admin-program-pt-label">Program Type</h5>
+                            <p className="program-p">{program.program_type}</p>
+                          </div>
+                        )}
+                      </Card.Body>
+                    </div>
+                  </div>
                 </Card>
               ))
             )}
           </div>
-        )}
+        )
+        }
 
         {/* Add Program Section */}
         {activeContent === "addProgram" && (
           <div className="admin-add-program-details-container d-flex justify-content-center">
-            <form className="admin-add-program-details-group d-flex flex-column align-items-center">
+            <form className="admin-add-program-details-group d-flex flex-column">
               <div className="admin-add-program-form d-flex flex-column">
                 <label className="admin-add-program-label">Program Name</label>
                 <input
@@ -339,64 +353,142 @@ const ManageProgram = () => {
                 />
               </div>
 
-              <Button variant="primary" onClick={handleAddProgram}>
+              <button onClick={handleAddProgram}
+                className='admin-add-program-button rounded text-white'>
                 Add Program
-              </Button>
+              </button>
             </form>
           </div>
-        )}
+        )
+        }
+
         {/* Edit Modal */}
         {showEditModal && selectedProgram && (
-          <div className="edit-program-modal">
+          <div className="edit-program-modal d-flex flex-column">
             <div className="edit-program-content">
-              <h3>Edit Program</h3>
-              <form>
-                <label>Program Name</label>
-                <input
-                  type="text"
-                  name="program_name"
-                  value={selectedProgram.program_name}
-                  onChange={handleFormChange}
-                />
+              <h3 className="text-center">Edit Program</h3>
+              <form className="admin-edit-program-details-group d-flex flex-column align-items-center">
+                <div className="admin-edit-program-form d-flex flex-column">
+                  <label className="admin-edit-program-label">Program Name</label>
+                  <input
+                    type="text"
+                    name="program_name"
+                    value={selectedProgram.program_name}
+                    onChange={handleFormChange}
+                  />
+                </div>
 
-                <label>Program Description</label>
-                <textarea
-                  name="description"
-                  value={selectedProgram.description}
-                  onChange={handleFormChange}
-                ></textarea>
+                <div className="admin-edit-program-form d-flex flex-column">
+                  <label className="admin-edit-program-label">Program Description</label>
+                  <textarea
+                    name="description"
+                    value={selectedProgram.description}
+                    onChange={handleFormChange}
+                  ></textarea>
+                </div>
 
-                <label>Program Type</label>
-                <input
-                  type="text"
-                  name="program_type"
-                  value={selectedProgram.program_type}
-                  onChange={handleFormChange}
-                />
+                <div className="admin-edit-program-form d-flex flex-column">
+                  <label className="admin-edit-program-label">Program Type</label>
+                  <input
+                    type="text"
+                    name="program_type"
+                    value={selectedProgram.program_type}
+                    onChange={handleFormChange}
+                  />
+                </div>
 
-                <label>Program Image</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                />
+                <div className="admin-edit-program-form d-flex flex-column">
+                  <label className="admin-edit-program-label">Program Image</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                  />
+                </div>
 
-                <label>Program Ameneties</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleAmenityImageUpload}
-                  multiple
-                />
+                <div className="admin-edit-program-form d-flex flex-column">
+                  <label className="admin-edit-program-label">Program Ameneties</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAmenityImageUpload}
+                    multiple
+                  />
+                </div>
+                
+                <div className="edit-modal-buttons-container d-flex">
+                  <Button
+                    variant="success"
+                    onClick={handleSaveChanges}
+                    className="edit-save-button">
+                    Save Changes
+                  </Button>
 
-                <Button onClick={handleSaveChanges}>Save Changes</Button>
-                <Button onClick={() => setShowEditModal(false)}>Cancel</Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => setShowEditModal(false)}
+                    className="edit-cancel-button">
+                    Cancel
+                  </Button>
+                </div>
               </form>
             </div>
           </div>
-        )}
-      </div>
-    </div>
+        )
+        }
+
+        {/* {showEditModal && selectedProgram && (
+            <div className="edit-program-modal">
+              <div className="edit-program-content">
+                <h3>Edit Program</h3>
+                <form>
+                  <label>Program Name</label>
+                  <input
+                    type="text"
+                    name="program_name"
+                    value={selectedProgram.program_name}
+                    onChange={handleFormChange}
+                  />
+
+                  <label>Program Description</label>
+                  <textarea
+                    name="description"
+                    value={selectedProgram.description}
+                    onChange={handleFormChange}
+                  ></textarea>
+
+                  <label>Program Type</label>
+                  <input
+                    type="text"
+                    name="program_type"
+                    value={selectedProgram.program_type}
+                    onChange={handleFormChange}
+                  />
+
+                  <label>Program Image</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                  />
+
+                  <label>Program Ameneties</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAmenityImageUpload}
+                    multiple
+                  />
+
+                  <Button onClick={handleSaveChanges}>Save Changes</Button>
+                  <Button onClick={() => setShowEditModal(false)}>Cancel</Button>
+                </form>
+              </div>
+            </div>
+          )
+        } */}
+      </div >
+    </div >
   );
 };
 
