@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
 
 /* ____________________________________________________________________________________________________ */
@@ -17,26 +16,26 @@
 
 .admin-home-label-h2 {
     font-size: 40px;
-    margin: 20px 40px 20px 40px;
+    margin: 20px 0 20px 40px;
 }
 
 .admin-home-nav-tabs {
     cursor: pointer;
-    font-size: 25px;
+    font-size: 20px;
     margin: 0 0 20px 60px;
     gap: 1in;
-    color: #766F6F;
+    color: #766f6f;
     transition: all 0.35s;
 }
 
 .admin-home-nav-tabs li:hover {
-    color: #E3DFDF;
+    color: #e3dfdf;
 }
 
 .admin-home-nav-tabs li.active-tab {
     color: red;
     text-decoration: underline;
-    text-decoration-color: #C1C1C1;
+    text-decoration-color: #c1c1c1;
     text-underline-offset: 10px;
 }
 
@@ -44,54 +43,83 @@
     margin-bottom: 40px;
 }
 
-.admin-all-event-details-container {
-    width: 100%;
-}
+/* Admin Events */
 
-.admin-add-event-details-container {
-    background-color: #c5c1c1;
+.admin-events-container {
     width: 90%;
+    margin: 0 auto;
 }
 
-.admin-add-event-details-group {
-    width: 90%;
-    margin: 25px 0 25px 0;
+.admin-event-card {
+    margin-bottom: 10px;
 }
 
-.admin-event-item {
-    background-color: #c5c1c1;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.home-event-image {
+.admin-event-image-container {
     width: 40%;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 
-.home-event-details {
-    margin-top: 20px;
+.admin-event-details-container {
     width: 60%;
 }
 
-.event-name {
-    font-size: 35px;
+.admin-event-image {
+    height: 200px;
+    width: 250px;
 }
 
-.event-description {
-    font-size: 25px;
+.admin-event-name-title {
+    font-size: 20px;
 }
 
-.admin-add-event-form {
-    width: 100%;
+.admin-event-text {
+    font-size: 17.5px;
 }
 
-.admin-all-event-details-group {
+.event-edit-button {
+    margin-right: 10px;
+}
+
+.event-edit-button,
+.event-delete-button {
+    width: 125px;
+    height: 50px;
+    font-size: 15px;
+    border-style: none;
+}
+
+/* Admin Spotlights */
+
+.admin-spotlight-container {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 0.50in;
+}
+
+.spotlight-image {
+    height: 200px;
+}
+
+/* Admin Add Event and Spotlight */
+
+.admin-add-event-details-container,
+.admin-add-spotlight-details-container {
+    background-color: #c5c1c1;
     width: 90%;
 }
 
-.admin-add-event-details-group .admin-add-event-label {
+.admin-add-event-details-group,
+.admin-add-spotlight-details-group {
+    margin: 25px 0 25px 0;
+    width: 90%;
+}
+
+.admin-add-event-form,
+.admin-add-spotlight-form {
+    width: 100%;
+}
+
+.admin-add-event-details-group .admin-add-event-label,
+.admin-add-spotlight-details-group .admin-add-spotlight-label {
     font-family: 'Roboto', sans-serif;
     font-size: 17.5px;
 }
@@ -102,7 +130,7 @@
     border-style: none;
     border-radius: 10px;
     outline: none;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     font-size: 17.5px;
     transition: all 0.35s;
 }
@@ -112,31 +140,72 @@
     outline: 1px solid #007bff;
 }
 
-.admin-add-event-button {
+.admin-add-event-button,
+.admin-add-spotlight-button {
     background-color: #42BB4E;
     color: #FFFFFF;
     margin-top: 10px;
     width: 150px;
-    height: 55px;
+    height: 50px;
     font-size: 15px;
     border-style: none;
     transition: all 0.35s;
 }
 
-.admin-delete-event-button {
-    background-color: #E1D142;
-    color: #000000;
-    margin-bottom: 20px;
-    width: 125px;
-    height: 55px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
-}
-
-.admin-delete-event-button:hover,
-.admin-add-event-button:hover {
+.admin-add-event-button:hover,
+.admin-add-spotlight-button:hover {
     color: rgb(2, 107, 107);
+}
+
+/* Edit Modal */
+
+.edit-event-modal {
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1050;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background-color: #c5c1c1;
+}
+
+.edit-event-content {
+    margin: 20px 0 20px 0;
+}
+
+.admin-edit-event-details-group {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.admin-edit-event-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 17.5px;
+}
+
+.admin-edit-event-form input[type="text"],
+.admin-edit-event-form textarea {
+    height: 50px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 0px;
+    font-size: 17.5px;
+    transition: all 0.35s;
+}
+
+.edit-modal-buttons-container {
+    margin-top: 10px;
+}
+
+.edit-cancel-button {
+    margin-right: 10px;
 }
 
 
@@ -148,27 +217,54 @@
         font-size: 37.5px;
     }
 
-    .admin-add-event-details-group .admin-add-event-label {
+    .admin-home-nav-tabs {
+        font-size: 17.5px;
+    }
+
+    .admin-event-image {
+        height: 170px;
+        width: 250px;
+    }
+
+    .admin-event-name-title {
+        font-size: 17.5px;
+    }
+    
+    .admin-event-text {
         font-size: 15px;
     }
 
-    .admin-home-nav-tabs {
-        font-size: 22.5px;
-        margin: 0 0 20px 45px;
-        gap: 0.75in;
+    .admin-spotlight-container {
+        gap: 0.40in;
     }
 
-    .event-name {
-        font-size: 30px;
+    .spotlight-image {
+        height: 150px;
     }
 
-    .event-description {
-        font-size: 20px;
+    .admin-add-event-details-group .admin-add-event-label,
+    .admin-add-spotlight-details-group .admin-add-spotlight-label {
+        font-size: 15px;
     }
 
     .admin-add-event-form input[type="text"],
     .admin-add-event-form textarea {
-        height: 50px;
+        height: 45px;
+        font-size: 15px;
+    }
+
+    .event-edit-button,
+    .event-delete-button {
+        width: 100px;
+        height: 45px;
+        font-size: 12.5px;
+    }
+
+    .admin-add-event-button,
+    .admin-add-spotlight-button {
+        margin-top: 7.5px;
+        width: 140px;
+        height: 45px;
         font-size: 15px;
     }
 }
@@ -179,41 +275,67 @@
         font-size: 35px;
     }
 
-    .admin-add-event-details-group .admin-add-event-label {
-        font-size: 17.5px;
-    }
-
     .admin-home-nav-tabs {
-        font-size: 20px;
-        margin: 0 0 20px 45px;
-        gap: 1in;
+        font-size: 15px;
+        gap: 0.75in;
+    }
+    
+    .admin-event-image {
+        height: 150px;
+        width: 250px;
     }
 
-    .event-name {
-        font-size: 25px;
-    }
-
-    .event-description {
+    .admin-event-name-title {
         font-size: 15px;
     }
+    
+    .admin-event-text {
+        font-size: 12.5px;
+    }
 
-    .admin-delete-event-button {
-        width: 125px;
-        height: 47.5px;
-        font-size: 13px;
+    .admin-spotlight-container {
+        gap: 0.30in;
+    }
+
+    .spotlight-image {
+        height: 125px;
+    }
+
+    .admin-add-event-details-group .admin-add-event-label,
+    .admin-add-spotlight-details-group .admin-add-spotlight-label {
+        font-size: 12.5px;
     }
 
     .admin-add-event-form input[type="text"],
     .admin-add-event-form textarea {
-        height: 45px;
-        font-size: 17.5px;
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .event-edit-button {
+        margin-right: 7.5px;
+    }
+
+    .event-edit-button,
+    .event-delete-button {
+        width: 75px;
+        height: 40px;
+        font-size: 10px;
+    }
+
+    .admin-add-event-button,
+    .admin-add-spotlight-button {
+        margin-top: 7.5px;
+        width: 130px;
+        height: 40px;
+        font-size: 12.5px;
     }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
 
     .admin-home-container {
-        left: 0;
+        left: 0%;
         width: 100%;
     }
 
@@ -223,38 +345,59 @@
     }
 
     .admin-home-nav-tabs {
-        font-size: 17.5px;
-        margin: 0 0 20px 45px;
-        gap: 0.5in;
+        font-size: 15px;
+        margin: 0 0 20px 40px;
+        gap: 0.50in;
+    }
+    
+    .admin-event-image {
+        height: 150px;
+        width: 250px;
     }
 
-    .event-name {
-        font-size: 25px;
-    }
-
-    .event-description {
+    .admin-event-name-title {
         font-size: 15px;
     }
-
-    .admin-delete-event-button {
-        width: 125px;
-        height: 45px;
+    
+    .admin-event-text {
         font-size: 12.5px;
     }
 
-    .admin-add-event-details-group .admin-add-event-label {
-        font-size: 15px;
+    .admin-spotlight-container {
+        gap: 0.20in;
+    }
+
+    .spotlight-image {
+        height: 100px;
+    }
+
+    .admin-add-event-details-group .admin-add-event-label,
+    .admin-add-spotlight-details-group .admin-add-spotlight-label {
+        font-size: 12.5px;
     }
 
     .admin-add-event-form input[type="text"],
     .admin-add-event-form textarea {
-        height: 45px;
+        height: 40px;
         font-size: 12.5px;
     }
 
-    .admin-add-event-button {
-        width: 150px;
-        height: 50px;
+    .event-edit-button {
+        margin-right: 7.5px;
+    }
+
+    .event-edit-button,
+    .event-delete-button {
+        width: 75px;
+        height: 40px;
+        font-size: 10px;
+    }
+
+    .admin-add-event-button,
+    .admin-add-spotlight-button {
+        margin-top: 7.5px;
+        width: 130px;
+        height: 40px;
         font-size: 12.5px;
     }
 }
@@ -262,7 +405,7 @@
 @media (min-width: 320px) and (max-width: 480px) {
 
     .admin-home-container {
-        left: 0;
+        left: 0%;
         width: 100%;
     }
 
@@ -272,52 +415,72 @@
     }
 
     .admin-home-nav-tabs {
-        font-size: 15px;
-        margin: 0 0 20px 40px;
-        gap: 0.5in;
+        font-size: 12.5px;
+        margin: 0 0 20px 30px;
+        gap: 0.25in;
     }
 
-    .admin-event-item {
+    .admin-event-card-details {
         flex-direction: column;
         align-items: center;
     }
 
-    .home-event-image {
-        width: 90%;
+    .admin-event-image-container {
+        width: 50%;
     }
-
-    .home-event-details {
-        width: 90%;
-        align-items: center;
+    
+    .admin-event-details-container {
+        width: 100%;
     }
-
-    .event-name {
-        font-size: 20px;
+    
+    .admin-event-image {
+        height: 100px;
+        width: 250px;
     }
-
-    .event-description {
+    
+    .admin-event-name-title {
         font-size: 12.5px;
     }
-
-    .admin-delete-event-button {
-        width: 100px;
-        height: 40px;
+    
+    .admin-event-text {
         font-size: 10px;
     }
 
-    .admin-add-event-details-group .admin-add-event-label {
-        font-size: 12.5px;
+    .admin-spotlight-container {
+        gap: 0.10in;
+    }
+
+    .spotlight-image {
+        height: 75px;
+    }
+
+    .admin-add-event-details-group .admin-add-event-label,
+    .admin-add-spotlight-details-group .admin-add-spotlight-label {
+        font-size: 10px;
     }
 
     .admin-add-event-form input[type="text"],
     .admin-add-event-form textarea {
-        height: 45px;
+        height: 35px;
         font-size: 10px;
     }
 
-    .admin-add-event-button {
-        width: 125px;
-        height: 50px;
+    .event-edit-button {
+        margin-right: 7.5px;
+    }
+
+    .event-edit-button,
+    .event-delete-button {
+        width: 75px;
+        height: 35px;
+        font-size: 7.5px;
+    }
+
+    .admin-add-event-button,
+    .admin-add-spotlight-button {
+        margin-top: 5px;
+        width: 110px;
+        height: 35px;
         font-size: 10px;
     }
 }
