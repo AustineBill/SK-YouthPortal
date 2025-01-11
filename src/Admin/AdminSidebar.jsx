@@ -29,6 +29,7 @@ const AdminSidebar = () => {
             reservations: [
                 '/admin/gym-reservation',
                 '/admin/equipment-reservation',
+                '/admin/Inventory',
             ],
         };
 
