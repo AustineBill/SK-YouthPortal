@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Popover, OverlayTrigger } from "react-bootstrap";
+import { Breadcrumb, Popover, OverlayTrigger } from "react-bootstrap";
 import "../WebStyles/CalendarStyles.css";
 
 const ViewFacilities = () => {
@@ -9,6 +10,10 @@ const ViewFacilities = () => {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location; // Access the passed state
+  const { programType } = state || {}; // Destructure programType from state
 
   // Fetch reservations from the backend
   const fetchReservations = async () => {
@@ -50,14 +55,18 @@ const ViewFacilities = () => {
     };
   }, []);
 
-  // Filter reservations by date
-  const filterReservations = (date) => {
+  // Filter reservations by date and time
+  const filterReservations = (date, timeSlot) => {
     return reservations.filter((res) => {
       const startDate = new Date(res.start_date);
       const endDate = new Date(res.end_date);
       const selectedDate = new Date(date);
 
-      return selectedDate >= startDate && selectedDate <= endDate;
+      const matchesDate = selectedDate >= startDate && selectedDate <= endDate;
+
+      const matchesTime = !timeSlot || res.time_slot === timeSlot; // Filter by time slot if selected
+
+      return matchesDate && matchesTime;
     });
   };
 
@@ -74,7 +83,7 @@ const ViewFacilities = () => {
       return "unavailable"; // Past dates and Sundays should always be unavailable
     }
 
-    const dailyReservations = filterReservations(date);
+    const dailyReservations = filterReservations(date, selectedTimeSlot);
 
     if (dailyReservations.length === 0) {
       return "available"; // No reservations: Vacant
@@ -111,6 +120,19 @@ const ViewFacilities = () => {
 
   return (
     <div className="container-fluid">
+      <Breadcrumb className="ms-5 mt-3">
+        <Breadcrumb.Item onClick={() => navigate("/UserProgram")}>
+          Programs
+        </Breadcrumb.Item>
+        <Breadcrumb.Item
+          onClick={() =>
+            navigate("/ProgramDetails", { state: { programType } })
+          }
+        >
+          Program Details
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>View Facilities Reservation</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="text-center text-lg-start m-4 mv-8 mb-3">
         <h1 className="Maintext animated slideInRight">
           View Facilities Schedules
@@ -176,7 +198,10 @@ const ViewFacilities = () => {
           tileContent={({ date, view }) => {
             if (view !== "month") return null;
 
-            const dailyReservations = filterReservations(date);
+            const dailyReservations = filterReservations(
+              date,
+              selectedTimeSlot
+            );
 
             if (dailyReservations.length > 0) {
               const displayCount = dailyReservations.some(

@@ -119,7 +119,7 @@ const ReservationLog = () => {
             {reservations.length === 0 ? (
               <tr>
                 <td colSpan="6" className="text-center">
-                  No transactions found. Inventory has been restored.
+                  No Reservation found.
                 </td>
               </tr>
             ) : (
