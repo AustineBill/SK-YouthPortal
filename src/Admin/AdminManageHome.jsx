@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 // import "./styles/Admin-CSS.css";
-import './styles/AdminManageHome.css';
-import { Button, CardFooter, Card } from "react-bootstrap";
+import "./styles/AdminManageHome.css";
+import { Card } from "react-bootstrap";
 
 const ManageHomePage = () => {
   const [activeContent, setActiveContent] = useState("allEvents");
@@ -141,16 +141,6 @@ const ManageHomePage = () => {
 
   // Handle event update
   const handleUpdateEvent = async () => {
-    if (
-      !newEvent.title ||
-      !newEvent.description ||
-      !newEvent.amenities ||
-      !newEvent.image
-    ) {
-      alert("Please fill in all event details");
-      return;
-    }
-
     const eventData = {
       event_name: newEvent.title,
       event_description: newEvent.description,
@@ -176,7 +166,6 @@ const ManageHomePage = () => {
       alert("Failed to update event.");
     }
   };
-
 
   // Updated Spotlight upload handler
   const handleSpotlightUpload = (e) => {
@@ -212,7 +201,6 @@ const ManageHomePage = () => {
       alert("Failed to add Spotlight. Please check the console for details.");
     }
   };
-
 
   return (
     <div className="admin-home-container d-flex flex-column">
@@ -264,8 +252,12 @@ const ManageHomePage = () => {
 
                     <div className="admin-event-details-container d-flex align-items-center text-center">
                       <Card.Body>
-                        <p className="admin-event-name-title fw-bold">{events.event_name}</p>
-                        <p className="admin-event-text">{events.event_description}</p>
+                        <p className="admin-event-name-title fw-bold">
+                          {events.event_name}
+                        </p>
+                        <p className="admin-event-text">
+                          {events.event_description}
+                        </p>
 
                         <div className="admin-program-details-buttons-container d-flex justify-content-center">
                           <button
@@ -294,7 +286,10 @@ const ManageHomePage = () => {
               {spotlight.length > 0 ? (
                 spotlight.map((spotlight, index) =>
                   (spotlight.images || []).map((image, imgIndex) => (
-                    <Card className="spotlight-card-container" key={`${index}-${imgIndex}`}>
+                    <Card
+                      className="spotlight-card-container"
+                      key={`${index}-${imgIndex}`}
+                    >
                       <Card.Img
                         variant="top"
                         src={image}
@@ -311,7 +306,9 @@ const ManageHomePage = () => {
                   ))
                 )
               ) : (
-                <p className="text-center text-muted py-5">No Spotlight available</p>
+                <p className="text-center text-muted py-5">
+                  No Spotlight available
+                </p>
               )}
             </div>
           </div>
@@ -331,7 +328,9 @@ const ManageHomePage = () => {
               </div>
 
               <div className="admin-add-event-form d-flex flex-column">
-                <label className="admin-add-event-label">Event Description</label>
+                <label className="admin-add-event-label">
+                  Event Description
+                </label>
                 <textarea
                   name="description"
                   value={newEvent.description}
@@ -341,13 +340,19 @@ const ManageHomePage = () => {
 
               <div className="admin-add-event-form d-flex flex-column">
                 <label className="admin-add-event-label">Upload Image</label>
-                <input type="file" accept="image/*" onChange={handleImageUpload} />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                />
                 {imagePreview && <img src={imagePreview} alt="Preview" />}
               </div>
 
-              <button onClick={handleAddEvent}
+              <button
+                onClick={handleAddEvent}
                 type="button"
-                className='admin-add-event-button rounded'>
+                className="admin-add-event-button rounded"
+              >
                 Add Event
               </button>
             </form>
@@ -358,7 +363,9 @@ const ManageHomePage = () => {
           <div className="admin-add-spotlight-details-container d-flex justify-content-center">
             <form className="admin-add-spotlight-details-group d-flex flex-column">
               <div className="admin-add-spotlight-form d-flex flex-column">
-                <label className="admin-add-spotlight-label">Additional Images</label>
+                <label className="admin-add-spotlight-label">
+                  Additional Images
+                </label>
                 <input
                   type="file"
                   accept="image/*"
@@ -370,7 +377,8 @@ const ManageHomePage = () => {
               <button
                 onClick={handleAddSpotlight}
                 type="button"
-                className='admin-add-spotlight-button rounded'>
+                className="admin-add-spotlight-button rounded"
+              >
                 Add Spotlight
               </button>
             </form>
@@ -393,7 +401,9 @@ const ManageHomePage = () => {
                 </div>
 
                 <div className="admin-edit-event-form d-flex flex-column">
-                  <label className="admin-edit-event-label">Event Description</label>
+                  <label className="admin-edit-event-label">
+                    Event Description
+                  </label>
                   <textarea
                     name="description"
                     value={newEvent.description}
@@ -404,13 +414,15 @@ const ManageHomePage = () => {
                 <div className="edit-modal-buttons-container d-flex">
                   <button
                     onClick={() => setShowEditModal(false)}
-                    className="edit-cancel-button bg-primary">
+                    className="edit-cancel-button bg-primary"
+                  >
                     Cancel
                   </button>
 
                   <button
                     onClick={handleUpdateEvent}
-                    className="edit-save-button bg-success">
+                    className="edit-save-button bg-success"
+                  >
                     Update Event
                   </button>
                 </div>
