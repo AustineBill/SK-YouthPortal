@@ -16,6 +16,7 @@ const ManageProgram = () => {
     program_type: "",
     image: null,
   });
+  
   const [imagePreview, setImagePreview] = useState(null);
   const [amenityImages, setAmenityImages] = useState([]);
 
@@ -34,41 +35,70 @@ const ManageProgram = () => {
   }, []);
 
   const handleSaveChanges = async () => {
-    const formData = new FormData();
-    formData.append("program_name", selectedProgram.program_name);
-    formData.append("description", selectedProgram.description);
-    formData.append("heading", selectedProgram.heading);
-    formData.append("program_type", selectedProgram.program_type);
-
-    // Handle main image upload (only if changed)
-    if (selectedProgram.image) {
-      formData.append("image", selectedProgram.image);
-    }
-
-    // Handle amenity images (only if added/changed)
-    if (amenityImages.length > 0) {
-      amenityImages.forEach((image) => formData.append("amenities", image));
-    }
-
     try {
+      // Check if the selected program ID exists
+      if (!selectedProgram.id) {
+        throw new Error('Program ID is missing!');
+      }
+  
+      // Create the FormData object
+      const formData = new FormData();
+      formData.append("program_name", selectedProgram.program_name);
+      formData.append("description", selectedProgram.description);
+      formData.append("heading", selectedProgram.heading);
+      formData.append("program_type", selectedProgram.program_type);
+  
+      // Check for missing required fields
+      if (!selectedProgram.program_name || !selectedProgram.description) {
+        throw new Error('Program name and description are required!');
+      }
+  
+      // Handle image upload for program image
+      if (selectedProgram.image) {
+        formData.append("image", selectedProgram.image);
+      }
+  
+      // Handle amenity images
+      if (amenityImages.length > 0) {
+        amenityImages.forEach((image) => formData.append("amenities", image));
+      }
+  
+      // Log FormData for debugging
+      for (let pair of formData.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+      }
+  
+      // Make the API call
       const response = await axios.put(
         `http://localhost:5000/programs/${selectedProgram.id}`,
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
-      const updatedProgram = response.data;
-
-      // Update the program list with the edited program
-      setPrograms((prev) =>
-        prev.map((program) =>
-          program.id === updatedProgram.id ? updatedProgram : program
-        )
-      );
-      setShowEditModal(false);
+  
+      // Handle successful response
+      alert("Program updated successfully!");
+      console.log("Response:", response.data);
+  
+      // Optionally refresh the program list or update state
+      fetchPrograms(); // Ensure this function updates your UI
     } catch (error) {
-      console.error("Error saving changes:", error);
+      // Improved error handling
+      if (error.response) {
+        console.error("Error response:", error.response.data);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error:", error.message);
+      }
+      alert("Failed to save changes. Please try again.");
     }
   };
+  
+  
 
   const handleAddProgram = async () => {
     const formData = new FormData();
@@ -117,11 +147,20 @@ const ManageProgram = () => {
   };
 
   const handleEditProgram = (program) => {
-    setSelectedProgram(program);
+    setSelectedProgram({
+      id: program.id,
+      program_name: program.program_name || program.name,
+      description: program.description,
+      heading: program.heading,
+      program_type: program.program_type,
+      image_url: program.image_url,
+      amenities: program.amenities || [],
+    });
     setShowEditModal(true);
     setImagePreview(program.image_url);
     setAmenityImages(program.amenities || []);
   };
+  
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
