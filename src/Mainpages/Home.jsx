@@ -76,7 +76,7 @@ const Intro = () => {
   return (
     <div className="container-fluid">
       <div className="hero-header">
-        <div className="text-center text-lg-start m-2 mv-8">
+        <div className="text-center text-lg-start m-3 mv-8">
           <h1 className="MainText ms-5 mb-3 offset-content custom-font">
             Lagi't lagi para sa Kabataan, Barangay at sa Bayan
           </h1>

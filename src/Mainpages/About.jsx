@@ -4,6 +4,8 @@ import axios from "axios";
 const About = () => {
   const [description, setDescription] = useState("");
   const [carouselPhotos, setCarouselPhotos] = useState([]); // Default to an empty array
+  const [showMore, setShowMore] = useState(false); // Toggle for Read More functionality
+  const maxInitialLength = 1000; // Set the number of characters to show initially
 
   // Fetch description from /Website API
   useEffect(() => {
@@ -47,6 +49,16 @@ const About = () => {
     }
   }, []);
 
+  // Toggle text visibility (show more or less)
+  const handleToggle = () => {
+    setShowMore(!showMore); // Toggle the value of showMore
+  };
+
+  // Truncate description if not "showMore"
+  const truncatedDescription = description.length > maxInitialLength && !showMore
+    ? description.slice(0, maxInitialLength) + "..."
+    : description;
+
   return (
     <div className="container-fluid">
       {/* Header Section */}
@@ -60,8 +72,8 @@ const About = () => {
         <div
           id="youthCarousel"
           className="carousel w-75 mb-2"
-          data-bs-ride="carousel" // Bootstrap auto-slide functionality
-          data-bs-interval="2000" // Auto-slide every 2 seconds
+          data-bs-ride="carousel"
+          data-bs-interval="2000"
         >
           <div className="carousel-indicators">
             {carouselPhotos.map((_, index) => (
@@ -79,25 +91,20 @@ const About = () => {
             {carouselPhotos.length > 0 ? (
               carouselPhotos.map((photo, index) => (
                 <div
-                  key={`${index}-${photo.image_url}`} // Use index and image_url as a unique key
+                  key={`${index}-${photo.image_url}`}
                   className={`carousel-item ${index === 0 ? "active" : ""}`}
                 >
                   <img
                     src={photo.image_url}
                     className="d-block w-100"
                     alt={`SK Council Slide ${index + 1}`}
-                    style={{
-                      height: "450px", // Ensures equal height for all images
-                      objectFit: "cover", // Maintains aspect ratio while filling the space
-                    }}
+                    style={{ height: "750px", width: "auto", margin: "0 auto" }}
                   />
                 </div>
               ))
             ) : (
               <div className="carousel-item active">
-                <p className="text-center text-light py-5">
-                  No images available
-                </p>
+                <p className="text-center text-light py-5">No images available</p>
               </div>
             )}
           </div>
@@ -107,7 +114,17 @@ const About = () => {
       {/* Description Section */}
       <div className="youth-container">
         <h1 className="youth-head">SANGGUNIANG KABATAAN - WESTERN BICUTAN</h1>
-        <p className="youth-text-content text-justify">{description}</p>
+        <div className="youth-text-wrapper">
+          <p className="youth-text-content text-justify">
+            {truncatedDescription}
+          </p>
+          {/* Read More button */}
+          {description.length > maxInitialLength && (
+            <button className="btn-toggle" onClick={handleToggle}>
+              {showMore ? "Show Less" : "Read More"}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
