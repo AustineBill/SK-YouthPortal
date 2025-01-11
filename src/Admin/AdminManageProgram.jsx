@@ -35,62 +35,53 @@ const ManageProgram = () => {
   }, []);
 
   const handleSaveChanges = async () => {
+    console.log("Save Details button clicked!");
+  
+    // Check the data before overwriting
+    console.log("Selected Program Before Update:", selectedProgram);
+  
     try {
-      // Check if the selected program ID exists
-      if (!selectedProgram.id) {
-        throw new Error('Program ID is missing!');
-      }
-  
-      // Create the FormData object
+      // Create FormData and add the key-value pairs
       const formData = new FormData();
-      formData.append("program_name", selectedProgram.program_name);
-      formData.append("description", selectedProgram.description);
-      formData.append("heading", selectedProgram.heading);
-      formData.append("program_type", selectedProgram.program_type);
   
-      // Check for missing required fields
-      if (!selectedProgram.program_name || !selectedProgram.description) {
-        throw new Error('Program name and description are required!');
+      // Set program details - overwrite instead of append
+      formData.set("program_name", selectedProgram.program_name);
+      formData.set("description", selectedProgram.description);
+      formData.set("heading", selectedProgram.heading);
+      formData.set("program_type", selectedProgram.program_type);
+  
+      // Log FormData contents to check what is being added
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
       }
   
-      // Handle image upload for program image
+      // Handle the image if present
       if (selectedProgram.image) {
-        formData.append("image", selectedProgram.image);
+        console.log("Image attached:", selectedProgram.image);
+        formData.set("image", selectedProgram.image); // Overwrite any existing "image" key
       }
   
-      // Handle amenity images
+      // Handle amenity images - send as a JSON string
       if (amenityImages.length > 0) {
-        amenityImages.forEach((image) => formData.append("amenities", image));
+        formData.set("amenities", JSON.stringify(amenityImages)); // Send amenities as a JSON string
       }
   
-      // Log FormData for debugging
-      for (let pair of formData.entries()) {
-        console.log(`${pair[0]}: ${pair[1]}`);
-      }
-  
-      // Make the API call
+      // Send the PUT request with FormData
       const response = await axios.put(
         `http://localhost:5000/programs/${selectedProgram.id}`,
         formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
   
-      // Handle successful response
+      console.log("Response from backend:", response.data);
       alert("Program updated successfully!");
-      console.log("Response:", response.data);
-  
-      // Optionally refresh the program list or update state
-      fetchPrograms(); // Ensure this function updates your UI
+      fetchPrograms(); // Refresh the list of programs
     } catch (error) {
-      // Improved error handling
+      // Error handling
       if (error.response) {
-        console.error("Error response:", error.response.data);
+        console.error("Backend Error:", error.response.data);
       } else if (error.request) {
-        console.error("No response received:", error.request);
+        console.error("No Response from Server:", error.request);
       } else {
         console.error("Error:", error.message);
       }
@@ -99,7 +90,6 @@ const ManageProgram = () => {
   };
   
   
-
   const handleAddProgram = async () => {
     const formData = new FormData();
     formData.append("program_name", newProgram.name);
