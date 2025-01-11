@@ -1,0 +1,111 @@
+.admin-equipment-reservation-container {
+    position: relative;
+    padding-top: 75px;
+    left: 22.5%;
+    width: 77.5%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
+}
+
+.admin-ereservation-label-h2 {
+    font-size: 40px;
+    margin: 20px 0 20px 40px;
+}
+
+.admin-ereservation-buttons-table-container {
+    width: 90%;
+    margin: 0 auto 40px;
+}
+
+/* .admin-ereservation-buttons-container {
+    height: 50px;
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: orange;
+} */
+
+.admin-er-toggle-buttons-container {
+    width: 100%;
+    margin-bottom: 20px;
+    gap: 0.25in;
+}
+
+.er-toggle {
+    font-size: 12.5px;
+    width: 75px;
+    height: 50px;
+    transition: all 0.35s;
+}
+
+/* .admin-ereservation-buttons-container {
+    background-color: pink;
+    gap: 0.25in;
+    width: 100%;
+} */
+
+.admin-er-approve-button,
+.admin-er-disapprove-button {
+    font-size: 15px;
+    width: 175px;
+    height: 50px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.admin-ereservation-head {
+    font-size: 17.5px;
+    font-weight: bold;
+}
+
+.admin-ereservation-body {
+    font-size: 17.5px;
+}
+
+.admin-ereservation-action-button-container .admin-ereservation-delete-button {
+    font-size: 15px;
+    width: 80px;
+    height: 40px;
+    transition: all 0.35s;
+}
+
+/* Calendar */
+
+.time-dropdown-container {
+    width: 90%;
+    margin: 0 auto;
+    height: 50px;
+}
+
+.time-dropdown-button {
+    font-size: 15px;
+    height: 50px;
+}
+
+.admin-ereservation-calendar-container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.er-calendar {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #25327A;
+}
+
+
+/* Media */
+
+@media (min-width: 1025px) and (max-width: 1440px) {}
+
+@media (min-width: 768px) and (max-width: 1024px) {}
+
+@media (min-width: 481px) and (max-width: 767px) {}
+
+@media (min-width: 320px) and (max-width: 480px) {}
