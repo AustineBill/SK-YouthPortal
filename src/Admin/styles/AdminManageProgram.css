@@ -48,6 +48,7 @@
 
 .admin-program-card {
   width: 90%;
+  height: 20%;
   margin-bottom: 10px;
 }
 
@@ -60,7 +61,8 @@
 }
 
 .admin-program-image-container {
-  width: 40%;
+  width: 35%;
+  height: auto;
 }
 
 .admin-program-details-container {
@@ -68,7 +70,7 @@
 }
 
 .admin-program-image {
-  height: 200px;
+  height: 180px;
   width: 250px;
 }
 
