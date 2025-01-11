@@ -62,6 +62,7 @@ import StepIndicator from "./Classes/StepIndicator";
 
 import "./App.css";
 import "./WebStyles/WebStyle.css";
+import "./WebStyles/CalendarStyles.css";
 import "./WebStyles/MediaQuiries.css";
 
 import "./Admin/styles/Admin-Style.css";

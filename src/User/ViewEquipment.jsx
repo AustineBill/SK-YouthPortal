@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Popover, OverlayTrigger } from "react-bootstrap";
+import { Breadcrumb, Popover, OverlayTrigger } from "react-bootstrap";
 import "../WebStyles/CalendarStyles.css";
 
 const ViewEquipment = () => {
   const [reservations, setReservations] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location; // Access the passed state
+  const { programType } = state || {}; // Destructure programType from state
 
   // Fetch reservations from the backend
   const fetchReservations = async () => {
@@ -95,6 +100,19 @@ const ViewEquipment = () => {
 
   return (
     <div className="container-fluid">
+      <Breadcrumb className="ms-5 mt-3">
+        <Breadcrumb.Item onClick={() => navigate("/UserProgram")}>
+          Programs
+        </Breadcrumb.Item>
+        <Breadcrumb.Item
+          onClick={() =>
+            navigate("/ProgramDetails", { state: { programType } })
+          }
+        >
+          Program Details
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>View Equipment Reservation</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="text-center text-lg-start m-4 mv-8 mb-3">
         <h1 className="Maintext animated slideInRight">
           View Equipment Schedule

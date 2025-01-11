@@ -1570,7 +1570,7 @@ app.get("/admindashboard", async (req, res) => {
 
     const values = [selectedYear];
 
-    console.log("Running queries with values:", values);
+    //console.log("Running queries with values:", values);
 
     // Execute all queries
     const [mainResult, schedulesResult, equipmentResult, ratingsResult] =
@@ -1670,6 +1670,7 @@ app.post("/disapproveReservations", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 app.get("/Allequipments", async (req, res) => {
   try {
     const result = await pool.query(
@@ -1677,12 +1678,67 @@ app.get("/Allequipments", async (req, res) => {
        FROM Equipment 
        ORDER BY start_date ASC`
     );
-    res.json(result.rows);
+
+    const formattedResult = result.rows.map((row) => ({
+      ...row,
+      reserved_equipment:
+        typeof row.reserved_equipment === "string"
+          ? JSON.parse(row.reserved_equipment)
+          : row.reserved_equipment, // Use as-is if it's already an object
+    }));
+
+    res.json(formattedResult);
   } catch (error) {
     console.error("Error fetching equipment reservations:", error);
     res.status(500).send("Server error");
   }
 });
+
+app.get("/Allschedules", async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT id, user_id, reservation_id, start_date, end_date, reserved_equipment, status
+       FROM E 
+       ORDER BY start_date ASC`
+    );
+
+    const formattedResult = result.rows.map((row) => ({
+      ...row,
+      reserved_equipment:
+        typeof row.reserved_equipment === "string"
+          ? JSON.parse(row.reserved_equipment)
+          : row.reserved_equipment, // Use as-is if it's already an object
+    }));
+
+    res.json(formattedResult);
+  } catch (error) {
+    console.error("Error fetching equipment reservations:", error);
+    res.status(500).send("Server error");
+  }
+});
+
+app.get("/AllSchedules", async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT id, user_id, reservation_type, start_date, end_date, time_slot, created_at, status
+       FROM Schedules
+       ORDER BY start_date ASC`
+    );
+
+    // Format the results (if any fields need parsing or transformation)
+    const formattedResult = result.rows.map((row) => ({
+      ...row,
+      start_date: new Date(row.start_date).toISOString().split("T")[0], // Optional: Format date
+      end_date: new Date(row.end_date).toISOString().split("T")[0], // Optional: Format date
+    }));
+
+    res.json(formattedResult);
+  } catch (error) {
+    console.error("Error fetching schedules:", error);
+    res.status(500).send("Server error");
+  }
+});
+
 // Route to approve equipment reservations
 app.post("/approveEquipment", async (req, res) => {
   const { ids } = req.body; // Array of reservation IDs to approve

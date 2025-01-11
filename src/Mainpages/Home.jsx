@@ -105,8 +105,8 @@ const Intro = () => {
       <div className="row g-5 justify-content-center">
         <div className="col-lg-3 wow fadeIn" data-wow-delay="0.1s">
           <div className="custom-feature-item ">
-            <i className="fa fa-search fa-2x text-primary mb-2"></i>
-            <span className="fw-bold mb-2 fs-4 d-block">Search</span>
+            <i className="fa fa-search fa-2x mb-2 text-primary "></i>
+            <span className="fw-bold  fs-4 mb-2 d-block">Search</span>
             <span className="text-dark mb-0 fs-6">
               Unleash the champion with SK Youth's Program
             </span>
@@ -114,19 +114,18 @@ const Intro = () => {
         </div>
         <div className="col-lg-3 wow fadeIn" data-wow-delay="0.3s">
           <div className="custom-feature-item ">
-            <i className="fa fa-book fa-2x text-success mb-2"></i>
-            <span className="fw-bold mb-2 fs-4 d-block">Book</span>
+            <i className="fa fa-book fa-2x mb-2 text-success"></i>
+            <span className="fw-bold fs-4 mb-2 d-block">Book</span>
             <span className="text-dark mb-0 fs-6">Secure your spot</span>
           </div>
         </div>
         <div className="col-lg-3 wow fadeIn" data-wow-delay="0.5s">
           <div className="custom-feature-item ">
             <i
-              className="fa fa-check fa-2x"
+              className="fa fa-check fa-2x mb-2"
               style={{ color: "#ff6347" }}
-              mb-2
             ></i>
-            <span className="fw-bold text-dark mb-2 fs-4 d-block">Manage</span>
+            <span className="fw-bold text-dark fs-4 mb-2 d-block">Manage</span>
             <span className="text-dark mb-0 fs-6">
               Own your Schedule, your way!
             </span>

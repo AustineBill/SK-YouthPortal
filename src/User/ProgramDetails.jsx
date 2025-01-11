@@ -91,7 +91,7 @@ const Program_details = () => {
             </p>
             <button
               className="LargeButton btn-dark"
-              onClick={() => navigate("/UserPrograms")}
+              onClick={() => navigate("/UserProgram")}
             >
               <i className="bi bi-arrow-left-circle" aria-hidden="true"></i>{" "}
               Back to Programs
