@@ -1846,7 +1846,7 @@ app.put("/programs/:id", upload.fields([{ name: "image" }, { name: "amenities" }
 
     // Delete existing image file from filesystem if new one is provided
     if (imageFile && program.image_url) {
-      const imagePath = `./public${program.image_url}`; // Path to the existing image file
+      const imagePath = `./public/Asset/Programs${program.image_url}`; // Path to the existing image file
       if (fs.existsSync(imagePath)) {
         fs.unlinkSync(imagePath); // Remove the existing image from the filesystem
         console.log("Deleted existing image:", imagePath);
@@ -1857,7 +1857,7 @@ app.put("/programs/:id", upload.fields([{ name: "image" }, { name: "amenities" }
     if (amenityFiles.length > 0) {
       const existingAmenities = program.amenities || [];
       existingAmenities.forEach((amenityUrl) => {
-        const amenityPath = `./public${amenityUrl}`; // Path to the existing amenity image
+        const amenityPath = `./public/Asset/Programs${amenityUrl}`; // Path to the existing amenity image
         if (fs.existsSync(amenityPath)) {
           fs.unlinkSync(amenityPath); // Remove the existing amenity image from the filesystem
           console.log("Deleted existing amenity:", amenityPath);
