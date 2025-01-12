@@ -42,22 +42,13 @@
 
 /* Admin All Programs */
 
-/* .admin-programs-details-container {
-  background-color: red;
-} */
-
-.admin-program-card {
-  width: 90%;
-  height: 20%;
-  margin-bottom: 10px;
-}
-
 .admin-programs-details-container {
   width: 90%;
 }
 
 .admin-program-card {
   width: 100%;
+  margin-bottom: 10px;
 }
 
 .admin-program-image-container {
@@ -71,16 +62,32 @@
 
 .admin-program-image {
   height: 200px;
-  width: 250px;
+}
+
+.admin-program-title {
+  font-size: 25px;
 }
 
 .admin-program-text {
   font-size: 20px;
 }
 
+.admin-program-details-buttons-container {
+  width: 100%;
+}
+
 .program-details-button,
 .program-edit-button {
   margin-right: 10px;
+}
+
+.program-details-button,
+.program-edit-button,
+.program-delete-button {
+  border-style: none;
+  width: 150px;
+  height: 45px;
+  font-size: 17.5px;
 }
 
 /* Admin Program Extended Details */
@@ -225,7 +232,7 @@
   margin-top: 10px;
   width: 150px;
   height: 45px;
-  font-size: 15px;
+  font-size: 17.5px;
   border-style: none;
   transition: all 0.35s;
 }
@@ -239,238 +246,475 @@
 
 @media (min-width: 1025px) and (max-width: 1440px) {
 
+  .admin-program-label-h2 {
+      font-size: 37.5px;
+  }
+
+  .admin-program-nav-tabs {
+      font-size: 17.5px;
+      margin: 0 0 20px 60px;
+      gap: 1in;
+  }
+
+  /* Admin All Programs */
+
+  .admin-program-card {
+      margin-bottom: 10px;
+  }
+
+  .admin-program-image-container {
+      width: 30%;
+      height: auto;
+  }
+
+  .admin-program-details-container {
+      width: 70%;
+  }
+
+  .admin-program-image {
+      height: 175px;
+  }
+
+  .admin-program-title {
+      font-size: 22.5px;
+  }
+
+  .admin-program-text {
+      font-size: 17.5px;
+  }
+
+  .program-details-button,
+  .program-edit-button {
+      margin-right: 10px;
+  }
+
+  .program-details-button,
+  .program-edit-button,
+  .program-delete-button {
+      width: 125px;
+      height: 40px;
+      font-size: 15px;
+  }
+
   /* Edit Program Modal */
 
   .edit-program-modal {
-    width: 100%;
-    height: 90%;
+      width: 100%;
+      height: 90%;
   }
 
   .edit-program-content {
-    margin: 20px 0 20px 0;
+      margin: 20px 0 20px 0;
   }
 
   .edit-program-content h3 {
-    font-size: 22.5px;
+      font-size: 22.5px;
   }
 
   .admin-edit-program-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 15px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px;
   }
 
   .admin-edit-program-form input[type="text"],
   .admin-edit-program-form textarea {
-    height: 40px;
-    font-size: 12.5px;
+      height: 40px;
+      font-size: 12.5px;
   }
 
   .edit-modal-buttons-container {
-    margin-top: 10px;
+      margin-top: 10px;
   }
 
   .edit-cancel-button {
-    margin-right: 20px;
+      margin-right: 20px;
   }
 
   .edit-cancel-button,
   .edit-save-button {
-    width: 125px;
-    height: 40px;
-    border-style: none;
-    font-size: 12.5px;
+      width: 125px;
+      height: 40px;
+      border-style: none;
+      font-size: 12.5px;
   }
 
   /* Add Program */
 
   .admin-add-program-label {
-    font-size: 15px;
+      font-size: 15px;
   }
 
   .admin-add-program-form input[type="text"],
   .admin-add-program-form textarea {
-    height: 40px;
-    font-size: 12.5px;
+      height: 40px;
+      font-size: 12.5px;
+  }
+
+  .admin-add-program-button {
+      width: 125px;
+      height: 40px;
+      font-size: 15px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
 
+  .admin-program-label-h2 {
+      font-size: 35px;
+  }
+
+  .admin-program-nav-tabs {
+      font-size: 15px;
+      margin: 0 0 20px 60px;
+      gap: 1in;
+  }
+
+  /* Admin All Programs */
+
+  .admin-program-card {
+      margin-bottom: 10px;
+  }
+
+  .admin-program-image-container {
+      width: 35%;
+      height: auto;
+  }
+
+  .admin-program-details-container {
+      width: 65%;
+  }
+
+  .admin-program-image {
+      height: 150px;
+  }
+
+  .admin-program-title {
+      font-size: 20px;
+  }
+
+  .admin-program-text {
+      font-size: 15px;
+  }
+
+  .program-details-button,
+  .program-edit-button {
+      margin-right: 5px;
+  }
+
+  .program-details-button,
+  .program-edit-button,
+  .program-delete-button {
+      width: 100px;
+      height: 35px;
+      font-size: 12.5px;
+  }
+
   /* Edit Program Modal */
 
   .edit-program-modal {
-    width: 100%;
-    height: 80%;
+      width: 100%;
+      height: 80%;
   }
 
   .edit-program-content {
-    margin: 20px 0 20px 0;
+      margin: 20px 0 20px 0;
   }
 
   .edit-program-content h3 {
-    font-size: 20px;
+      font-size: 20px;
   }
 
   .admin-edit-program-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 12.5px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 12.5px;
   }
 
   .admin-edit-program-form input[type="text"],
   .admin-edit-program-form textarea {
-    height: 35px;
-    font-size: 10px;
+      height: 35px;
+      font-size: 10px;
   }
 
   .edit-modal-buttons-container {
-    margin-top: 10px;
+      margin-top: 10px;
   }
 
   .edit-cancel-button {
-    margin-right: 20px;
+      margin-right: 20px;
   }
 
   .edit-cancel-button,
   .edit-save-button {
-    width: 100px;
-    height: 35px;
-    border-style: none;
-    font-size: 10px;
+      width: 100px;
+      height: 35px;
+      border-style: none;
+      font-size: 10px;
   }
 
   /* Add Program */
 
   .admin-add-program-label {
-    font-size: 12.5px;
+      font-size: 12.5px;
   }
 
   .admin-add-program-form input[type="text"],
   .admin-add-program-form textarea {
-    height: 35px;
-    font-size: 10px;
+      height: 35px;
+      font-size: 10px;
+  }
+
+  .admin-add-program-button {
+      width: 100px;
+      height: 35px;
+      font-size: 12.5px;
   }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
 
   .admin-program-container {
-    left: 0%;
-    width: 100%;
+      left: 0%;
+      width: 100%;
+  }
+
+  .admin-program-label-h2 {
+      font-size: 35px;
+      margin: 20px 0 20px 25px;
+  }
+
+  .admin-program-nav-tabs {
+      font-size: 15px;
+      margin: 0 0 20px 30px;
+      gap: 0.50in;
+  }
+
+  /* Admin All Programs */
+
+  .admin-program-card {
+      margin-bottom: 10px;
+  }
+
+  .admin-program-image-container {
+      width: 40%;
+      height: auto;
+  }
+
+  .admin-program-details-container {
+      width: 60%;
+  }
+
+  .admin-program-image {
+      height: 150px;
+  }
+
+  .admin-program-title {
+      font-size: 17.5px;
+  }
+
+  .admin-program-text {
+      font-size: 12.5px;
+  }
+
+  .admin-program-details-buttons-container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .program-details-button,
+  .program-edit-button {
+      margin-right: 0;
+      margin-bottom: 5px;
+  }
+
+  .program-details-button,
+  .program-edit-button,
+  .program-delete-button {
+      width: 100px;
+      height: 35px;
+      font-size: 10px;
   }
 
   /* Edit Program Modal */
 
   .edit-program-modal {
-    width: 100%;
-    height: 80%;
+      width: 100%;
+      height: 80%;
   }
 
   .edit-program-content {
-    margin: 20px 0 20px 0;
+      margin: 20px 0 20px 0;
   }
 
   .edit-program-content h3 {
-    font-size: 20px;
+      font-size: 20px;
   }
 
   .admin-edit-program-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 12.5px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 12.5px;
   }
 
   .admin-edit-program-form input[type="text"],
   .admin-edit-program-form textarea {
-    height: 35px;
-    font-size: 10px;
+      height: 35px;
+      font-size: 10px;
   }
 
   .edit-modal-buttons-container {
-    margin-top: 10px;
+      margin-top: 10px;
   }
 
   .edit-cancel-button {
-    margin-right: 20px;
+      margin-right: 20px;
   }
 
   .edit-cancel-button,
   .edit-save-button {
-    width: 100px;
-    height: 35px;
-    border-style: none;
-    font-size: 10px;
+      width: 100px;
+      height: 35px;
+      border-style: none;
+      font-size: 10px;
   }
 
   /* Add Program */
 
   .admin-add-program-label {
-    font-size: 12.5px;
+      font-size: 12.5px;
   }
 
   .admin-add-program-form input[type="text"],
   .admin-add-program-form textarea {
-    height: 35px;
-    font-size: 10px;
+      height: 35px;
+      font-size: 10px;
+  }
+
+  .admin-add-program-button {
+      width: 100px;
+      height: 35px;
+      font-size: 12.5px;
   }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
 
   .admin-program-container {
-    left: 0%;
-    width: 100%;
+      left: 0%;
+      width: 100%;
+  }
+
+  .admin-program-label-h2 {
+      font-size: 30px;
+      margin: 20px 0 20px 20px;
+  }
+
+  .admin-program-nav-tabs {
+      font-size: 15px;
+      margin: 0 0 20px 25px;
+      gap: 0.25in;
+  }
+
+  /* Admin All Programs */
+
+  .admin-program-card-details {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .admin-program-card {
+      margin-bottom: 10px;
+  }
+
+  .admin-program-image-container {
+      width: 60%;
+      height: auto;
+  }
+
+  .admin-program-details-container {
+      width: 100%;
+  }
+
+  .admin-program-image {
+      height: 125px;
+  }
+
+  .admin-program-title {
+      font-size: 15px;
+  }
+
+  .admin-program-text {
+      font-size: 12.5px;
+  }
+
+  .program-details-button,
+  .program-edit-button {
+      margin-right: 5px;
+  }
+
+  .program-details-button,
+  .program-edit-button,
+  .program-delete-button {
+      width: 75px;
+      height: 25px;
+      font-size: 7.5px;
   }
 
   /* Edit Program Modal */
 
   .edit-program-modal {
-    width: 80%;
-    height: 70%;
+      width: 80%;
+      height: 70%;
   }
 
   .edit-program-content {
-    margin: 20px 0 20px 0;
+      margin: 20px 0 20px 0;
   }
 
   .edit-program-content h3 {
-    font-size: 17.5px;
+      font-size: 17.5px;
   }
 
   .admin-edit-program-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 10px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 10px;
   }
 
   .admin-edit-program-form input[type="text"],
   .admin-edit-program-form textarea {
-    height: 25px;
-    font-size: 7.5px;
+      height: 25px;
+      font-size: 7.5px;
   }
 
   .edit-modal-buttons-container {
-    margin-top: 10px;
+      margin-top: 10px;
   }
 
   .edit-cancel-button {
-    margin-right: 10px;
+      margin-right: 10px;
   }
 
   .edit-cancel-button,
   .edit-save-button {
-    width: 75px;
-    height: 25px;
-    border-style: none;
-    font-size: 7.5px;
+      width: 75px;
+      height: 25px;
+      border-style: none;
+      font-size: 7.5px;
   }
 
   /* Add Program */
 
   .admin-add-program-label {
-    font-size: 10px;
+      font-size: 10px;
   }
 
   .admin-add-program-form input[type="text"],
   .admin-add-program-form textarea {
-    height: 25px;
-    font-size: 7.5px;
+      height: 30px;
+      font-size: 7.5px;
+  }
+
+  .admin-add-program-button {
+      width: 100px;
+      height: 25px;
+      font-size: 10px;
   }
 }

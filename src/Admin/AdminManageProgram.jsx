@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Button, Card } from "react-bootstrap";
-import "./styles/AdminManageProgram.css";
+import { Card } from "react-bootstrap";
+// import "./styles/AdminManageProgram.css";
+import '../WebStyles/Admin-CSS.css';
 
 const ManageProgram = () => {
   const [programs, setPrograms] = useState([]);
@@ -228,32 +229,29 @@ const ManageProgram = () => {
 
                     <div className="admin-program-details-container d-flex align-items-center text-center">
                       <Card.Body>
-                        <Card.Title>{program.program_name}</Card.Title>
-                        <Card.Text className="admin-program-text">{program.heading}</Card.Text>
+                        <p className="admin-program-title fw-bold">{program.program_name}</p>
+                        <p className="admin-program-text">{program.heading}</p>
                         <div className="admin-program-details-buttons-container d-flex justify-content-center">
-                          <Button
-                            variant="info"
+                          <button
                             onClick={() => handleExpandCard(program)}
-                            className="program-details-button"
+                            className="program-details-button rounded-pill bg-info text-white"
                           >
                             {program === selectedProgram
                               ? "Hide Details"
                               : "View Details"}
-                          </Button>
-                          <Button
-                            variant="warning"
+                          </button>
+                          <button
                             onClick={() => handleEditProgram(program)}
-                            className="program-edit-button"
+                            className="program-edit-button rounded-pill bg-warning text-white"
                           >
                             Edit Details
-                          </Button>
-                          <Button
-                            variant="danger"
+                          </button>
+                          <button
                             onClick={() => handleDeleteProgram(program.id)}
-                            className="program-delete-button"
+                            className="program-delete-button rounded-pill bg-danger text-white"
                           >
                             Delete Program
-                          </Button>
+                          </button>
                         </div>
 
                         {/* Expanded Details */}
