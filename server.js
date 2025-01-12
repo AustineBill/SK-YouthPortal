@@ -737,6 +737,40 @@ app.get("/Feedback/:user_id", async (req, res) => {
   }
 });
 
+app.put("/Feedback/:user_id", async (req, res) => {
+  const { user_id } = req.params; // Extract user_id from the URL parameters
+  const { rating, comment } = req.body; // Extract rating and comment from the request body
+
+  if (!rating || !comment) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
+
+  try {
+    // Check if feedback exists for the given user ID
+    const existingFeedback = await pool.query(
+      "SELECT * FROM feedback WHERE user_id = $1",
+      [user_id]
+    );
+
+    if (existingFeedback.rows.length === 0) {
+      return res.status(404).json({ error: "Feedback not found." });
+    }
+
+    // Update the feedback record
+    await pool.query(
+      "UPDATE feedback SET rating = $1, comment = $2 WHERE user_id = $3",
+      [rating, comment, user_id]
+    );
+
+    res.status(200).json({ message: "Feedback updated successfully!" });
+  } catch (error) {
+    console.error("Error updating feedback:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while updating feedback." });
+  }
+});
+
 /********* Auto Fill Details  *********/
 app.get("/Details/:id", async (req, res) => {
   const { id } = req.params;
@@ -1868,83 +1902,79 @@ app.get("/programs/:id", async (req, res) => {
   }
 });
 
-
-
 // Configure Multer for handling file uploads
 
-app.put("/programs/:id", upload.fields([{ name: "image" }, { name: "amenities" }]), async (req, res) => {
-  const { id } = req.params;
+app.put(
+  "/programs/:id",
+  upload.fields([{ name: "image" }, { name: "amenities" }]),
+  async (req, res) => {
+    const { id } = req.params;
 
-  // Extract text fields from FormData
-  const {
-    program_name,
-    description,
-    heading,
-    program_type,
-  } = req.body;
+    // Extract text fields from FormData
+    const { program_name, description, heading, program_type } = req.body;
 
-  // Extract file paths (if any)
-  const imageFile = req.files?.image ? req.files.image[0] : null; // Single image
-  const amenityFiles = req.files?.amenities || []; // Array of amenities
+    // Extract file paths (if any)
+    const imageFile = req.files?.image ? req.files.image[0] : null; // Single image
+    const amenityFiles = req.files?.amenities || []; // Array of amenities
 
-  try {
-    // Get current program data to check existing values
-    const currentProgram = await pool.query(
-      'SELECT * FROM programs WHERE id = $1',
-      [id]
-    );
+    try {
+      // Get current program data to check existing values
+      const currentProgram = await pool.query(
+        "SELECT * FROM programs WHERE id = $1",
+        [id]
+      );
 
-    if (currentProgram.rows.length === 0) {
-      return res.status(404).send("Program not found");
-    }
-
-    const program = currentProgram.rows[0];
-
-    // Delete existing image file from filesystem if new one is provided
-    if (imageFile && program.image_url) {
-      const imagePath = `./public/Asset/Programs${program.image_url}`; // Path to the existing image file
-      if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath); // Remove the existing image from the filesystem
-        console.log("Deleted existing image:", imagePath);
+      if (currentProgram.rows.length === 0) {
+        return res.status(404).send("Program not found");
       }
-    }
 
-    // Delete existing amenity images if new ones are provided
-    if (amenityFiles.length > 0) {
-      const existingAmenities = program.amenities || [];
-      existingAmenities.forEach((amenityUrl) => {
-        const amenityPath = `./public/Asset/Programs${amenityUrl}`; // Path to the existing amenity image
-        if (fs.existsSync(amenityPath)) {
-          fs.unlinkSync(amenityPath); // Remove the existing amenity image from the filesystem
-          console.log("Deleted existing amenity:", amenityPath);
+      const program = currentProgram.rows[0];
+
+      // Delete existing image file from filesystem if new one is provided
+      if (imageFile && program.image_url) {
+        const imagePath = `./public/Asset/Programs${program.image_url}`; // Path to the existing image file
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath); // Remove the existing image from the filesystem
+          console.log("Deleted existing image:", imagePath);
         }
-      });
-    }
+      }
 
-    // Prepare the new image URL
-    let imageUrl = null;
-    if (imageFile) {
-      console.log("Saved image file to:", imageFile.path);
-      imageUrl = `/Asset/Programs/${imageFile.filename}`; // Public path to the file
-    }
+      // Delete existing amenity images if new ones are provided
+      if (amenityFiles.length > 0) {
+        const existingAmenities = program.amenities || [];
+        existingAmenities.forEach((amenityUrl) => {
+          const amenityPath = `./public/Asset/Programs${amenityUrl}`; // Path to the existing amenity image
+          if (fs.existsSync(amenityPath)) {
+            fs.unlinkSync(amenityPath); // Remove the existing amenity image from the filesystem
+            console.log("Deleted existing amenity:", amenityPath);
+          }
+        });
+      }
 
-    // Prepare the new amenities URLs
-    let amenitiesUrls = [];
-    if (amenityFiles.length > 0) {
-      amenitiesUrls = amenityFiles.map((file) => {
-        console.log("Saved amenity file to:", file.path);
-        return `/Asset/Programs/${file.filename}`; // Public path to each amenity file
-      });
-    }
+      // Prepare the new image URL
+      let imageUrl = null;
+      if (imageFile) {
+        console.log("Saved image file to:", imageFile.path);
+        imageUrl = `/Asset/Programs/${imageFile.filename}`; // Public path to the file
+      }
 
-    // If no amenities images, set amenities as null (empty array)
-    if (amenitiesUrls.length === 0) {
-      amenitiesUrls = null;
-    }
+      // Prepare the new amenities URLs
+      let amenitiesUrls = [];
+      if (amenityFiles.length > 0) {
+        amenitiesUrls = amenityFiles.map((file) => {
+          console.log("Saved amenity file to:", file.path);
+          return `/Asset/Programs/${file.filename}`; // Public path to each amenity file
+        });
+      }
 
-    // Update program in database
-    const result = await pool.query(
-      `UPDATE programs
+      // If no amenities images, set amenities as null (empty array)
+      if (amenitiesUrls.length === 0) {
+        amenitiesUrls = null;
+      }
+
+      // Update program in database
+      const result = await pool.query(
+        `UPDATE programs
        SET program_name = $1,
            description = $2,
            heading = $3,
@@ -1953,24 +1983,24 @@ app.put("/programs/:id", upload.fields([{ name: "image" }, { name: "amenities" }
            program_type = $6
        WHERE id = $7
        RETURNING *`,
-      [
-        program_name || null, // If program_name is missing, set it as null
-        description || null,   // If description is missing, set it as null
-        heading || null,       // If heading is missing, set it as null
-        amenitiesUrls ? JSON.stringify(amenitiesUrls) : null, // Handle null for empty amenities
-        imageUrl || null,      // If no image, set image_url as null
-        program_type || null,  // If program_type is missing, set it as null
-        id,                    // ID from the URL
-      ]
-    );
+        [
+          program_name || null, // If program_name is missing, set it as null
+          description || null, // If description is missing, set it as null
+          heading || null, // If heading is missing, set it as null
+          amenitiesUrls ? JSON.stringify(amenitiesUrls) : null, // Handle null for empty amenities
+          imageUrl || null, // If no image, set image_url as null
+          program_type || null, // If program_type is missing, set it as null
+          id, // ID from the URL
+        ]
+      );
 
-    res.json(result.rows[0]); // Send back the updated program as a response
-  } catch (err) {
-    console.error("Error updating program:", err);
-    res.status(500).send("Internal Server Error");
+      res.json(result.rows[0]); // Send back the updated program as a response
+    } catch (err) {
+      console.error("Error updating program:", err);
+      res.status(500).send("Internal Server Error");
+    }
   }
-});
-
+);
 
 app.delete("/programs/:id", async (req, res) => {
   const { id } = req.params;
