@@ -161,23 +161,23 @@ const Intro = () => {
         )}
       </div>
 
-      {/* Highlighted Events Section */}
-      <h1 className="NewEveHead">NEWS & EVENTS</h1>
-      <div className="card-container-news">
-        {events.length === 0 ? (
-          <p>No events available</p>
-        ) : (
-          events.map((events) => (
-            <Card key={events.id} className="ProgramCard">
-              <Card.Img
-                variant="top"
-                src={events.event_image}
-                className="program-card-img"
-              />
-              <Card.Body>
-                <Card.Title>{events.event_name}</Card.Title>
-                <Card.Text>{events.event_description}</Card.Text>
-              </Card.Body>
+     {/* Highlighted Events Section */}
+        <div className="card-container-news">
+          <h1 className="NewEveHead">NEWS & EVENTS</h1>
+            {events.length === 0 ? (
+              <p>No events available</p>
+               ) : (
+              events.map((event) => (
+            <Card key={event.id} className="ProgramCard">
+             <Card.Img
+          variant="top"
+          src={event.event_image}
+          className="program-card-img"
+        />
+            <Card.Body>
+              <Card.Title>{event.event_name}</Card.Title>
+              <Card.Text>{event.event_description}</Card.Text>
+            </Card.Body>
             </Card>
           ))
         )}
@@ -186,6 +186,18 @@ const Intro = () => {
       <Link className="spotlight-button btn-db m-2" to="/news">
         Find Out More
       </Link>
+      
+      <p className="centered-text">
+        <p>Growing directly easy with a reservation button.</p>
+      </p>
+         <p className="small-phrase">
+            <span className="yellow">PAGKAKAISA</span>
+            <span>I</span>
+            <span className="red">KABATAAN</span>
+            <span>I</span>
+            <span className="green">PROGRESO</span>
+        </p>
+
 
       {/* Spotlight Section */}
       <div className="spotlight-container">
