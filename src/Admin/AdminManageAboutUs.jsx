@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./styles/AdminManageAboutUs.css";
+// import "./styles/AdminManageAboutUs.css";
+import '../WebStyles/Admin-CSS.css';
 
 const pageLabels = {
   manageAboutDetails: "Manage About Us Details",

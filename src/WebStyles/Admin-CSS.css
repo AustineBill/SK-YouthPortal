@@ -5,7 +5,512 @@
 /* User Authentication */
 /* ____________________________________________________________________________________________________ */
 
+.user-authentication-contents {
+    width: 100%;
+    margin: 30px 0 30px 0;
+}
 
+/* Left side */
+
+.left-side-responsive {
+    width: 60%;
+}
+
+.top-part {
+    font-weight: normal;
+    font-size: 35px;
+}
+
+.middle-part {
+    font-weight: normal;
+    font-size: 30px;
+}
+
+.bottom-part {
+    font-family: 'Sansita', sans-serif;
+    color: #25327A;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.SK-location {
+    font-weight: bolder;
+    font-size: 30px;
+    margin-left: 60%;
+}
+
+/* Right side */
+
+.right-side-contents-container {
+    width: 40%;
+}
+
+.sign-in-welcome,
+.forgot-password-fp,
+.sign-up-su {
+    font-family: 'Sansita', sans-serif;
+    font-size: 50px;
+    color: #25327A;
+    margin: 25px 0 25px 0;
+}
+
+.sign-in-details-container,
+.forgot-password-details-container,
+.sign-up-details-container {
+    width: 80%;
+    background-color: #E4E4E4;
+}
+
+.sign-in-details-group,
+.forgot-password-details-group,
+.sign-up-details-group {
+    width: 90%;
+    margin: 0;
+    padding: 0;
+}
+
+.sign-in-details-group .sign-in-label,
+.forgot-password-details-group .forgot-password-label,
+.sign-up-details-group .sign-up-label {
+    font-size: 17.5px
+}
+
+.user-auth-sign-in-form,
+.user-auth-forgot-password-form,
+.user-auth-sign-up-form {
+    width: 75%;
+}
+
+.user-auth-sign-in-form input[type='text'],
+.user-auth-sign-in-form input[type='password'],
+.user-auth-forgot-password-form input[type='email'],
+.user-auth-forgot-password-form input[type='text'],
+.user-auth-forgot-password-form input[type='password'],
+.user-auth-sign-up-form input[type='text'],
+.user-auth-sign-up-form input[type='password'] {
+    height: 45px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 0;
+    font-size: 15px;
+    transition: all 0.35s;
+}
+
+.user-auth-sign-in-form input[type='text']:focus,
+.user-auth-sign-in-form input[type='password']:focus,
+.user-auth-forgot-password-form input[type='email']:focus,
+.user-auth-forgot-password-form input[type='text']:focus,
+.user-auth-forgot-password-form input[type='password']:focus,
+.user-auth-sign-up-form input[type='text']:focus,
+.user-auth-sign-up-form input[type='password']:focus {
+    outline: 1px solid #007bff;
+}
+
+.forgot-password-link {
+    color: #868686;
+    font-size: 15px;
+}
+
+.sign-up-link {
+    color: #25327A;
+    margin-bottom: 25px;
+}
+
+.forgot-password-email-description,
+.sign-up-description {
+    color: #838383;
+    font-size: 15px;
+}
+
+.no-account-p,
+.sign-up-link {
+    font-size: 15px;
+}
+
+.sign-in-button,
+.fp-proceed-button,
+.fp-submit-button,
+.su-proceed-button,
+.su-submit-button {
+    background-color: #FFFFFF;
+    color: #25327A;
+    width: 150px;
+    height: 50px;
+    border: none;
+    font-size: 17.5px;
+    transition: all 0.35s;
+}
+
+.fp-proceed-button,
+.fp-submit-button,
+.su-proceed-button,
+.su-submit-button {
+    margin: 10px 0 25px 0;
+}
+
+.sign-in-button:hover,
+.fp-proceed-button:hover,
+.fp-submit-button:hover,
+.su-proceed-button:hover,
+.su-submit-button:hover {
+    background-color: #948a8a;
+    color: #FFFFFF;
+}
+
+
+/* Media */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    /* Left side */
+
+    .left-side-responsive {
+        width: 60%;
+    }
+
+    .top-part {
+        font-size: 30px;
+    }
+
+    .middle-part {
+        font-size: 25px;
+    }
+
+    .bottom-part {
+        font-size: 35px;
+    }
+
+    .SK-location {
+        font-size: 25px;
+        margin-left: 60%;
+    }
+
+    /* Right side */
+
+    .right-side-contents-container {
+        width: 40%;
+    }
+
+    .sign-in-welcome,
+    .forgot-password-fp,
+    .sign-up-su {
+        font-size: 40px;
+        margin: 25px 0 20px 0;
+    }
+
+    .sign-in-details-container,
+    .forgot-password-details-container,
+    .sign-up-details-container {
+        width: 85%;
+    }
+
+    .sign-in-details-group .sign-in-label,
+    .forgot-password-details-group .forgot-password-label,
+    .sign-up-details-group .sign-up-label {
+        font-size: 15px
+    }
+
+    .user-auth-sign-in-form,
+    .user-auth-forgot-password-form,
+    .user-auth-sign-up-form {
+        width: 75%;
+    }
+
+    .user-auth-sign-in-form input[type='text'],
+    .user-auth-sign-in-form input[type='password'],
+    .user-auth-forgot-password-form input[type='email'],
+    .user-auth-forgot-password-form input[type='text'],
+    .user-auth-forgot-password-form input[type='password'],
+    .user-auth-sign-up-form input[type='text'],
+    .user-auth-sign-up-form input[type='password'] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .forgot-password-link {
+        font-size: 12.5px;
+    }
+
+    .sign-up-link {
+        margin-bottom: 25px;
+    }
+
+    .forgot-password-email-description,
+    .sign-up-description {
+        font-size: 12.5px;
+    }
+
+    .no-account-p,
+    .sign-up-link {
+        font-size: 12.5px;
+    }
+
+    .sign-in-button,
+    .fp-proceed-button,
+    .fp-submit-button,
+    .su-proceed-button,
+    .su-submit-button {
+        width: 125px;
+        height: 45px;
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    /* Left side */
+
+    .left-side-responsive {
+        width: 55%;
+    }
+
+    .top-part {
+        font-size: 25px;
+    }
+
+    .middle-part {
+        font-size: 20px;
+    }
+
+    .bottom-part {
+        font-size: 30px;
+    }
+
+    .SK-location {
+        font-size: 20px;
+        margin-left: 50%;
+    }
+
+    /* Right side */
+
+    .right-side-contents-container {
+        width: 45%;
+    }
+
+    .sign-in-welcome,
+    .forgot-password-fp,
+    .sign-up-su {
+        font-size: 30px;
+        margin: 25px 0 15px 0;
+    }
+
+    .sign-in-details-container,
+    .forgot-password-details-container,
+    .sign-up-details-container {
+        width: 90%;
+    }
+
+    .sign-in-details-group .sign-in-label,
+    .forgot-password-details-group .forgot-password-label,
+    .sign-up-details-group .sign-up-label {
+        font-size: 12.5px
+    }
+
+    .user-auth-sign-in-form,
+    .user-auth-forgot-password-form,
+    .user-auth-sign-up-form {
+        width: 75%;
+    }
+
+    .user-auth-sign-in-form input[type='text'],
+    .user-auth-sign-in-form input[type='password'],
+    .user-auth-forgot-password-form input[type='email'],
+    .user-auth-forgot-password-form input[type='text'],
+    .user-auth-forgot-password-form input[type='password'],
+    .user-auth-sign-up-form input[type='text'],
+    .user-auth-sign-up-form input[type='password'] {
+        height: 35px;
+        font-size: 10px;
+    }
+
+    .forgot-password-link {
+        font-size: 10px;
+    }
+
+    .sign-up-link {
+        margin-bottom: 25px;
+    }
+
+    .forgot-password-email-description,
+    .sign-up-description {
+        font-size: 10px;
+    }
+
+    .no-account-p,
+    .sign-up-link {
+        font-size: 10px;
+    }
+
+    .sign-in-button,
+    .fp-proceed-button,
+    .fp-submit-button,
+    .su-proceed-button,
+    .su-submit-button {
+        width: 100px;
+        height: 40px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    /* Left side */
+
+    .left-side-responsive {
+        width: 0%;
+    }
+
+    /* Right side */
+
+    .right-side-contents-container {
+        width: 100%;
+    }
+
+    .sign-in-welcome,
+    .forgot-password-fp,
+    .sign-up-su {
+        font-size: 30px;
+        margin: 25px 0 10px 0;
+    }
+
+    .sign-in-details-container,
+    .forgot-password-details-container,
+    .sign-up-details-container {
+        width: 90%;
+    }
+
+    .sign-in-details-group .sign-in-label,
+    .forgot-password-details-group .forgot-password-label,
+    .sign-up-details-group .sign-up-label {
+        font-size: 12.5px
+    }
+
+    .user-auth-sign-in-form,
+    .user-auth-forgot-password-form,
+    .user-auth-sign-up-form {
+        width: 75%;
+    }
+
+    .user-auth-sign-in-form input[type='text'],
+    .user-auth-sign-in-form input[type='password'],
+    .user-auth-forgot-password-form input[type='email'],
+    .user-auth-forgot-password-form input[type='text'],
+    .user-auth-forgot-password-form input[type='password'],
+    .user-auth-sign-up-form input[type='text'],
+    .user-auth-sign-up-form input[type='password'] {
+        height: 35px;
+        font-size: 10px;
+    }
+
+    .forgot-password-link {
+        font-size: 10px;
+    }
+
+    .sign-up-link {
+        margin-bottom: 25px;
+    }
+
+    .forgot-password-email-description,
+    .sign-up-description {
+        font-size: 10px;
+    }
+
+    .no-account-p,
+    .sign-up-link {
+        font-size: 10px;
+    }
+
+    .sign-in-button,
+    .fp-proceed-button,
+    .fp-submit-button,
+    .su-proceed-button,
+    .su-submit-button {
+        width: 100px;
+        height: 40px;
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    /* Left side */
+
+    .left-side-responsive {
+        width: 0%;
+    }
+
+    /* Right side */
+
+    .right-side-contents-container {
+        width: 100%;
+    }
+
+    .sign-in-welcome,
+    .forgot-password-fp,
+    .sign-up-su {
+        font-size: 20px;
+        margin: 25px 0 5px 0;
+    }
+
+    .sign-in-details-container,
+    .forgot-password-details-container,
+    .sign-up-details-container {
+        width: 90%;
+        background-color: #E4E4E4;
+    }
+
+    .sign-in-details-group .sign-in-label,
+    .forgot-password-details-group .forgot-password-label,
+    .sign-up-details-group .sign-up-label {
+        font-size: 10px
+    }
+
+    .user-auth-sign-in-form,
+    .user-auth-forgot-password-form,
+    .user-auth-sign-up-form {
+        width: 75%;
+    }
+
+    .user-auth-sign-in-form input[type='text'],
+    .user-auth-sign-in-form input[type='password'],
+    .user-auth-forgot-password-form input[type='email'],
+    .user-auth-forgot-password-form input[type='text'],
+    .user-auth-forgot-password-form input[type='password'],
+    .user-auth-sign-up-form input[type='text'],
+    .user-auth-sign-up-form input[type='password'] {
+        height: 30px;
+        font-size: 7.5px;
+    }
+
+    .forgot-password-link {
+        font-size: 7.5px;
+    }
+
+    .sign-up-link {
+        margin-bottom: 25px;
+    }
+
+    .forgot-password-email-description,
+    .sign-up-description {
+        font-size: 7.5px;
+    }
+
+    .no-account-p,
+    .sign-up-link {
+        font-size: 7.5px;
+    }
+
+    .sign-in-button,
+    .fp-proceed-button,
+    .fp-submit-button,
+    .su-proceed-button,
+    .su-submit-button {
+        width: 75px;
+        height: 35px;
+        font-size: 10px;
+    }
+}
 
 
 /* ____________________________________________________________________________________________________ */
@@ -123,7 +628,91 @@
 
 
 /* ____________________________________________________________________________________________________ */
-/* Admin Home */
+/* Admin Sidebar */
+/* ____________________________________________________________________________________________________ */
+
+.admin-bs-sidebar {
+    position: fixed;
+    padding-top: 75px;
+    width: 22.5%;
+    height: 100%;
+    background-color: #e2dbdb;
+    z-index: 2;
+}
+
+.admin-bs-sidebar-links a {
+    text-decoration: none;
+}
+
+.admin-sidebar-link {
+    height: 50px;
+}
+
+.admin-bs-list,
+.admin-bs-list a {
+    color: black;
+    font-family: 'Inter', 'sans-serif';
+    transition: all 0.35s ease;
+}
+
+.admin-bs-list:hover,
+.admin-bs-list a:hover {
+    color: #FFFFFF;
+    background-color: #3f3d3d;
+}
+
+.admin-bs-list.active {
+    background-color: #E1D142;
+    transition: all 0.35s ease;
+}
+
+.admin-sidebar-icon {
+    margin: 0 10px 0 30px;
+    font-size: 30px;
+}
+
+.admin-sidebar-title {
+    font-size: 15px;
+}
+
+.admin-sidebar-MW-close,
+.admin-sidebar-R-close,
+.admin-sidebar-MW-open,
+.admin-sidebar-R-open {
+    color: gray;
+    margin: 0 0 0 10px;
+}
+
+
+/* Media */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+    
+    .admin-sidebar-icon {
+        margin: 0 10px 0 25px;
+        font-size: 27.5px;
+    }
+    
+    .admin-sidebar-title {
+        font-size: 12.5px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    
+    .admin-sidebar-icon {
+        margin: 0 10px 0 20px;
+        font-size: 25px;
+    }
+    
+    .admin-sidebar-title {
+        font-size: 10px;
+    }
+}
+
+
+/* ____________________________________________________________________________________________________ */
+/* Admin Home Dashboard */
 /* ____________________________________________________________________________________________________ */
 
 .admin-dashboard-container {
@@ -141,105 +730,83 @@
     margin: 20px 0 10px 40px;
 }
 
-.reservations-label-h2,
-.users-label-h2,
-.equipment-label-h2,
-.sm-label-h2 {
-    font-size: 30px;
-}
-
 .admin-dashboard-label-p {
     font-size: 20px;
     margin: 0 0 10px 40px;
 }
 
-.admin-dashboard-filters-container {
-    margin: 0 auto 10px;
+.reservations-label-h2,
+.userd-label-h2,
+.equipment-label-h2,
+.yearlyrd-label-h2 {
+    font-size: 30px;
+}
+
+.year-dropdown-container {
     width: 90%;
+    margin: 0 auto 20px;
 }
 
-.month-dropdown,
-.year-dropdown {
-    height: 50px;
-    gap: 0.10in;
-    font-size: 20px;
+.year-selection-container {
+    height: 450x;
+    width: 100%;
 }
 
-#year,
-#month {
-    width: 250px;
-    height: 40px;
-}
-
-.month-classification,
-.year-classification {
+.year-selection-label {
     font-size: 17.5px;
-    border-style: solid;
-    transition: all 0.35s;
 }
 
-.month-classification:hover,
-.year-classification:hover {
+.year-select {
+    width: 30%;
+    height: 45px;
+    font-size: 17.5px;
+    margin-left: 10px;
+}
+
+.year-select:hover {
     color: #FFFFFF;
     background-color: #858585;
 }
 
-.month-classification:focus,
-.year-classification:focus {
+.year-select:focus {
     outline: 1px solid #007bff;
 }
 
-.month-classification option,
-.year-classification option {
+.year-select option {
     background-color: #FFFFFF;
     color: #000000;
     pointer-events: none;
 }
 
 .admin-dashboard-charts-section {
-    margin: 0 auto;
-    width: 90%;
-}
-
-.reservations-users-container {
-    width: 100%;
-    margin-bottom: 20px;
-    background-color: orange;
-}
-
-.reservations-chart-container,
-.users-chart-container {
-    width: 45%;
-    /* gap: 0.25in; */
-}
-
-.equipment-chart-container {
-    width: 100%;
-    margin: 0 auto;
-    background-color: orange;
-}
-
-.dashboard-summary-table-container {
-    width: 90%;
-    margin: 20px auto;
-}
-
-.dashboard-summary-table tr {
-    height: 35px;
-}
-
-.admin-summary-table-head th {
-    font-size: 17.5px;
-    font-weight: bold;
-}
-
-.admin-summary-table-body td {
-    font-size: 17.5px;
-}
-
-.dashboard-summary-table {
-    width: 100%;
     margin-bottom: 40px;
+}
+
+.admin-contacts-details-group .admin-current-contact-label,
+.admin-edit-contacts-details-group .admin-edit-contact-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 17.5px;
+}
+
+.admin-dashboard-charts-container {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10%;
+}
+
+.admin-chart-container {
+    width: 40%;
+    margin-bottom: 40px;
+}
+
+.piechart {
+    max-height: 250px;
+    height: 100%;
+}
+
+.chart {
+    max-height: 250px;
+    height: 100%;
 }
 
 
@@ -249,36 +816,52 @@
 
     .admin-dashboard-label-h2 {
         font-size: 37.5px;
-    }
-
-    .reservations-label-h2,
-    .users-label-h2,
-    .equipment-label-h2,
-    .sm-label-h2 {
-        font-size: 27.5px;
+        margin: 20px 0 7.5px 40px;
     }
 
     .admin-dashboard-label-p {
         font-size: 17.5px;
+        margin: 0 0 10px 40px;
     }
 
-    .month-dropdown,
-    .year-dropdown {
-        height: 50px;
-        gap: 0.10in;
-        font-size: 17.5px;
+    .year-selection-container {
+        height: 40px;
     }
-
-    .dashboard-summary-table tr {
-        height: 32.5px;
-    }
-
-    .admin-summary-table-head th {
+    
+    .year-selection-label {
         font-size: 15px;
     }
-
-    .admin-summary-table-body td {
+    
+    .year-select {
+        width: 30%;
+        height: 40px;
         font-size: 15px;
+        margin-left: 10px;
+    }
+
+    .reservations-label-h2,
+    .userd-label-h2,
+    .equipment-label-h2,
+    .yearlyrd-label-h2 {
+        font-size: 25px;
+    }
+
+    .admin-dashboard-charts-container {
+        gap: 7.5%;
+    }
+
+    .admin-chart-container {
+        width: 45%;
+    }
+
+    .piechart {
+        max-height: 200px;
+        height: 100%;
+    }
+
+    .chart {
+        max-height: 200px;
+        height: 100%;
     }
 }
 
@@ -286,47 +869,52 @@
 
     .admin-dashboard-label-h2 {
         font-size: 35px;
-    }
-
-    .reservations-label-h2,
-    .users-label-h2,
-    .equipment-label-h2,
-    .sm-label-h2 {
-        font-size: 25px;
+        margin: 20px 0 5px 40px;
     }
 
     .admin-dashboard-label-p {
         font-size: 15px;
+        margin: 0 0 10px 40px;
     }
 
-    .month-dropdown,
-    .year-dropdown {
-        height: 45px;
-        gap: 0.075in;
-        font-size: 15px;
-    }
-
-    #year,
-    #month {
-        width: 250px;
+    .year-selection-container {
         height: 35px;
     }
-
-    .month-classification,
-    .year-classification {
-        font-size: 15px;
-    }
-
-    .dashboard-summary-table tr {
-        height: 30px;
-    }
-
-    .admin-summary-table-head th {
+    
+    .year-selection-label {
         font-size: 12.5px;
     }
-
-    .admin-summary-table-body td {
+    
+    .year-select {
+        width: 30%;
+        height: 35px;
         font-size: 12.5px;
+        margin-left: 7.5px;
+    }
+
+    .reservations-label-h2,
+    .userd-label-h2,
+    .equipment-label-h2,
+    .yearlyrd-label-h2 {
+        font-size: 20px;
+    }
+
+    .admin-dashboard-charts-container {
+        gap: 2.5%;
+    }
+
+    .admin-chart-container {
+        width: 47.5%;
+    }
+
+    .piechart {
+        max-height: 150px;
+        height: 100%;
+    }
+
+    .chart {
+        max-height: 150px;
+        height: 100%;
     }
 }
 
@@ -339,49 +927,52 @@
 
     .admin-dashboard-label-h2 {
         font-size: 35px;
-        margin: 20px 0 15px 25px;
-    }
-
-    .reservations-label-h2,
-    .users-label-h2,
-    .equipment-label-h2,
-    .sm-label-h2 {
-        font-size: 22.5px;
+        margin: 20px 0 5px 25px;
     }
 
     .admin-dashboard-label-p {
         font-size: 15px;
-        margin: 0 0 20px 25px;
+        margin: 0px 0 20px 25px;
     }
 
-    .month-dropdown,
-    .year-dropdown {
-        height: 40px;
-        gap: 0.075in;
+    .year-selection-container {
+        height: 35px;
+    }
+    
+    .year-selection-label {
         font-size: 12.5px;
     }
-
-    #year,
-    #month {
-        width: 225px;
-        height: 30px;
-    }
-
-    .month-classification,
-    .year-classification {
+    
+    .year-select {
+        width: 30%;
+        height: 35px;
         font-size: 12.5px;
+        margin-left: 5px;
     }
 
-    .dashboard-summary-table tr {
-        height: 30px;
+    .reservations-label-h2,
+    .userd-label-h2,
+    .equipment-label-h2,
+    .yearlyrd-label-h2 {
+        font-size: 20px;
     }
 
-    .admin-summary-table-head th {
-        font-size: 10px;
+    .admin-dashboard-charts-container {
+        gap: 2.5%;
     }
 
-    .admin-summary-table-body td {
-        font-size: 10px;
+    .admin-chart-container {
+        width: 47.5%;
+    }
+
+    .piechart {
+        max-height: 150px;
+        height: 100%;
+    }
+
+    .chart {
+        max-height: 150px;
+        height: 100%;
     }
 }
 
@@ -394,14 +985,7 @@
 
     .admin-dashboard-label-h2 {
         font-size: 30px;
-        margin: 20px 0 10px 20px;
-    }
-
-    .reservations-label-h2,
-    .users-label-h2,
-    .equipment-label-h2,
-    .sm-label-h2 {
-        font-size: 20px;
+        margin: 20px 0 2.5px 20px;
     }
 
     .admin-dashboard-label-p {
@@ -409,38 +993,50 @@
         margin: 0 0 20px 20px;
     }
 
-    .month-dropdown,
-    .year-dropdown {
+    .year-selection-container {
         height: 35px;
-        gap: 0.050in;
-        font-size: 10px;
     }
-
-    #year,
-    #month {
-        width: 200px;
+    
+    .year-selection-label {
+        font-size: 12.5px;
+    }
+    
+    .year-select {
+        width: 30%;
         height: 25px;
-    }
-
-    .month-classification,
-    .year-classification {
         font-size: 10px;
+        margin-left: 2.5px;
     }
 
-    .dashboard-summary-table tr {
-        height: 22.5px;
+    .reservations-label-h2,
+    .userd-label-h2,
+    .equipment-label-h2,
+    .yearlyrd-label-h2 {
+        font-size: 15px;
     }
 
-    .admin-summary-table-head th {
-        font-size: 10px;
+    .admin-dashboard-charts-container {
+        flex-direction: column;
+        gap: 0;
     }
 
-    .admin-summary-table-body td {
-        font-size: 10px;
+    .admin-chart-container {
+        width: 75%;
+    }
+
+    .piechart {
+        max-height: 100px;
+        height: 100%;
+    }
+
+    .chart {
+        max-height: 100px;
+        height: 100%;
     }
 }
 
 
+/* RAWR! */
 /* ____________________________________________________________________________________________________ */
 /* Admin Manage Home */
 /* ____________________________________________________________________________________________________ */
@@ -1147,6 +1743,14 @@
 }
 
 
+/* RAWR! */
+/* ____________________________________________________________________________________________________ */
+/* Admin Manage Program */
+/* ____________________________________________________________________________________________________ */
+
+
+
+
 /* ____________________________________________________________________________________________________ */
 /* Admin Manage Contact Us */
 /* ____________________________________________________________________________________________________ */
@@ -1434,6 +2038,20 @@
         font-size: 10px;
     }
 }
+
+/* RAWR! */
+/* ____________________________________________________________________________________________________ */
+/* Admin Gym Reservation */
+/* ____________________________________________________________________________________________________ */
+
+
+
+/* RAWR! */
+/* ____________________________________________________________________________________________________ */
+/* Admin Gym Reservation */
+/* ____________________________________________________________________________________________________ */
+
+
 
 
 /* ____________________________________________________________________________________________________ */
@@ -1761,27 +2379,32 @@
 }
 
 .admin-reports-classification-container,
-.admin-reports-date-container {
-    width: 42.5%;
+.admin-reports-date-container,
+.admin-reports-info-container {
+    width: 28.33%;
 }
 
 .admin-reports-classification,
-.admin-reports-date {
+.admin-reports-date,
+.admin-reports-info {
     width: 100%;
     height: 50px;
     font-size: 17.5px;
     border-style: solid;
+    border-width: 1px;
     transition: all 0.35s;
 }
 
 .admin-reports-classification:hover,
-.admin-reports-date:hover {
+.admin-reports-date:hover,
+.admin-reports-info:hover {
     color: #FFFFFF;
     background-color: #858585;
 }
 
 .admin-reports-classification:focus,
-.admin-reports-date:focus {
+.admin-reports-date:focus,
+.admin-reports-info:focus {
     outline: 1px solid #007bff;
 }
 
@@ -1818,14 +2441,14 @@
 
 .admin-reports-users-table,
 .admin-reports-equipment-table,
-.admin-reports-gym-table,
+.admin-reports-reservation-table,
 .admin-reports-inventory-table {
     width: 100%;
 }
 
 .reports-users-label-h2,
 .reports-equipment-label-h2,
-.reports-gym-label-h2,
+.reports-reservation-label-h2,
 .reports-inventory-label-h2 {
     font-size: 30px;
     margin-bottom: 10px;
@@ -1833,7 +2456,7 @@
 
 .admin-reports-users-table-container,
 .admin-reports-equipment-table-container,
-.admin-reports-gym-table-container,
+.admin-reports-reservation-table-container,
 .admin-reports-inventory-table-container {
     width: 100%;
 }
@@ -1861,8 +2484,9 @@
     }
 
     .admin-reports-classification-container,
-    .admin-reports-date-container {
-        width: 40%;
+    .admin-reports-date-container,
+    .admin-reports-info-container {
+        width: 26.66%;
     }
 
     .admin-reports-generate-pdf-container {
@@ -1875,7 +2499,7 @@
 
     .reports-users-label-h2,
     .reports-equipment-label-h2,
-    .reports-gym-label-h2,
+    .reports-reservation-label-h2,
     .reports-inventory-label-h2 {
         font-size: 27.5px;
     }
@@ -1900,8 +2524,9 @@
     }
 
     .admin-reports-classification-container,
-    .admin-reports-date-container {
-        width: 37.5%;
+    .admin-reports-date-container,
+    .admin-reports-info-container {
+        width: 25%;
     }
 
     .admin-reports-generate-pdf-container {
@@ -1909,7 +2534,8 @@
     }
 
     .admin-reports-classification,
-    .admin-reports-date {
+    .admin-reports-date,
+    .admin-reports-info {
         height: 45px;
         font-size: 12.5px;
     }
@@ -1921,7 +2547,7 @@
 
     .reports-users-label-h2,
     .reports-equipment-label-h2,
-    .reports-gym-label-h2,
+    .reports-reservation-label-h2,
     .reports-inventory-label-h2 {
         font-size: 25px;
     }
@@ -1952,8 +2578,9 @@
     }
 
     .admin-reports-classification-container,
-    .admin-reports-date-container {
-        width: 35%;
+    .admin-reports-date-container,
+    .admin-reports-info-container {
+        width: 23.33%;
     }
 
     .admin-reports-generate-pdf-container {
@@ -1961,7 +2588,8 @@
     }
 
     .admin-reports-classification,
-    .admin-reports-date {
+    .admin-reports-date,
+    .admin-reports-info {
         height: 45px;
         font-size: 12.5px;
     }
@@ -1973,7 +2601,7 @@
 
     .reports-users-label-h2,
     .reports-equipment-label-h2,
-    .reports-gym-label-h2,
+    .reports-reservation-label-h2,
     .reports-inventory-label-h2 {
         font-size: 22.5px;
     }
@@ -2004,8 +2632,9 @@
     }
 
     .admin-reports-classification-container,
-    .admin-reports-date-container {
-        width: 32.5%;
+    .admin-reports-date-container,
+    .admin-reports-info-container {
+        width: 21.66%;
     }
 
     .admin-reports-generate-pdf-container {
@@ -2013,7 +2642,8 @@
     }
 
     .admin-reports-classification,
-    .admin-reports-date {
+    .admin-reports-date,
+    .admin-reports-info {
         height: 35px;
         font-size: 10px;
     }

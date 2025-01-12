@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import "./styles/Admin-CSS.css";
-import "./styles/AdminManageHome.css";
 import { Card } from "react-bootstrap";
+// import "./styles/AdminManageHome.css";
+import '../WebStyles/Admin-CSS.css';
 
 const ManageHomePage = () => {
   const [activeContent, setActiveContent] = useState("allEvents");

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { AuthContext } from '../WebStructure/AuthContext';
-import './styles/Admin-Main.css';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -12,6 +11,8 @@ import {
     Legend,
     ArcElement,
 } from 'chart.js';
+// import './styles/Admin-Main.css';
+import '../WebStyles/Admin-CSS.css';
 
 // Register necessary chart components
 ChartJS.register(
