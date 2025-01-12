@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 // import './styles/AdminManageContactUs.css';
-import './styles/Admin-CSS.css';
-// import { Container } from 'react-bootstrap'; Idk kung gagamitin pa to ni Rej.
+import '../WebStyles/Admin-CSS.css';
 
 const pageLabels = {
   manageContactDetails: 'Manage Contact Us Details',

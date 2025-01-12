@@ -2,15 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../WebStructure/AuthContext";
 import axios from "axios";
+// import "./UserAuthentication.css";
+import '../WebStyles/Admin-CSS.css';
 
-// import '../App.css';
-import "./UserAuthentication.css";
 const { DecryptionCode } = require("../WebStructure/Codex");
 
 const UserAuthentication = () => {
   const [view, setView] = useState("signIn");
-  const [showAccountActivationFields, setShowAccountActivationFields] =
-    useState(false);
+  const [showAccountActivationFields, setShowAccountActivationFields] = useState(false);
   const [showChangePasswordField, setShowChangePasswordField] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -193,7 +192,7 @@ const UserAuthentication = () => {
       );
       alert(
         error.response?.data?.message ||
-          "An error occurred while updating your account"
+        "An error occurred while updating your account"
       );
     }
   };
@@ -235,16 +234,11 @@ const UserAuthentication = () => {
 
   return (
     <div className="user-authentication-contents d-flex justify-content-center">
-      <div className="left-side-responsive d-none d-md-block">
+      <div className='left-side-responsive d-none d-md-flex align-items-center justify-content-center'>
         <div className="left-side-contents-container d-flex flex-column justify-content-center text-center text-lg-center">
-          <h1 className=" w-normal fs-1">Lagi't lagi para sa Kabataan,</h1>
-          <h1 className="fw-normal fs-2">
-            {" "}
-            Barangay at sa Bayan
-            <span className="bottom-part fst-italic fs-1">
-              {" "}
-              Sangguniang Kabataan
-            </span>
+          <h1 className="top-part">Lagi't lagi para sa Kabataan,</h1>
+          <h1 className="middle-part"> Barangay at sa Bayan
+            <span className="bottom-part fst-italic"> Sangguniang Kabataan</span>
           </h1>
           <p className="SK-location">Western Bicutan</p>
         </div>
@@ -312,7 +306,7 @@ const UserAuthentication = () => {
               {!showChangePasswordField && !isVerificationCodeCorrect && (
                 <>
                   <div className="fp-group-container">
-                    <h1 className="forgot-password-fp fw-bold fst-italic mb-3">
+                    <h1 className="forgot-password-fp fw-bold fst-italic">
                       Change Password
                     </h1>
                     <p className="forgot-password-email-description">
@@ -436,7 +430,7 @@ const UserAuthentication = () => {
               {showAccountActivationFields && (
                 <>
                   <div className="aa-group-container">
-                    <h1 className="sign-up-su fw-bold fst-italic mb-3">
+                    <h1 className="sign-up-su fw-bold fst-italic">
                       Account Activation
                     </h1>
                     <p className="sign-up-description">Set up your account</p>
