@@ -30,27 +30,28 @@ const Mandate = () => {
   return (
     <div className="container-fluid">
       <Breadcrumb className="ms-5 mt-3">
-        <Breadcrumb.Item onClick={() => navigate("/About")}>
-          About
-        </Breadcrumb.Item>
+        <Breadcrumb.Item onClick={() => navigate("/About")}>About</Breadcrumb.Item>
         <Breadcrumb.Item active>Mandate</Breadcrumb.Item>
       </Breadcrumb>
 
       <div className="text-center text-lg-start m-4 mv-8">
         <h1 className="Maintext animated slideInRight">Mandate</h1>
-        <p className="Subtext">
-          {" "}
-          Trailblazing Leaders Who Transformed Our Barangay.{" "}
-        </p>
+        <p className="Subtext">Trailblazing Leaders Who Transformed Our Barangay.</p>
       </div>
 
       {/* Timeline Container */}
       <div className="main-timeline">
         {/* Mandate */}
         <div className="timeline-left">
+          <div className="icon-container-outside">
+            <img
+              src="path/to/mandate-icon.png" // Replace with your Mandate icon path
+              alt="Mandate Icon"
+              className="icon-img-outside"
+            />
+          </div>
           <Card className="gradient-custom">
             <Card.Body className="p-4">
-              <i class="bi bi-card-checklist fs-1"></i>
               <h2>Mandate</h2>
               <p className="text-white-50 fs-4">
                 {mandateInfo.mandate || "Loading Mandate..."}
@@ -61,9 +62,15 @@ const Mandate = () => {
 
         {/* Mission */}
         <div className="timeline-right">
+          <div className="icon-container-outside">
+            <img
+              src="path/to/mission-icon.png" // Replace with your Mission icon path
+              alt="Mission Icon"
+              className="icon-img-outside"
+            />
+          </div>
           <Card className="gradient-custom-4">
             <Card.Body className="p-4">
-              <i class="bi bi-bullseye fs-1"></i>
               <h2>Mission</h2>
               <p className="text-white-50 fs-4">
                 {mandateInfo.mission || "Loading Mission..."}
@@ -74,9 +81,15 @@ const Mandate = () => {
 
         {/* Vision */}
         <div className="timeline-left">
+          <div className="icon-container-outside">
+            <img
+              src="path/to/vision-icon.png" // Replace with your Vision icon path
+              alt="Vision Icon"
+              className="icon-img-outside"
+            />
+          </div>
           <Card className="gradient-custom">
             <Card.Body className="p-4">
-              <i class="bi bi-eye-fill fs-1"></i>
               <h2>Vision</h2>
               <p className="text-white-50 fs-4">
                 {mandateInfo.vision || "Loading Vision..."}
@@ -87,9 +100,15 @@ const Mandate = () => {
 
         {/* Objectives */}
         <div className="timeline-right">
+          <div className="icon-container-outside">
+            <img
+              src="path/to/objectives-icon.png" // Replace with your Objectives icon path
+              alt="Objectives Icon"
+              className="icon-img-outside"
+            />
+          </div>
           <Card className="gradient-custom-4">
             <Card.Body className="p-4">
-              <i class="bi bi-calendar-check-fill fs-1"></i>
               <h2>Objectives</h2>
               <p className="text-white-50 fs-4">
                 {mandateInfo.objectives || "Loading Objectives..."}

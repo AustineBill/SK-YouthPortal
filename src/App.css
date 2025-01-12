@@ -292,29 +292,29 @@ body,
 
 .CardBodyWithText {
   color: #ffffff;
-  background-color: #25327a; /* Change this to your desired color */
-  padding: 2rem; /* Optional: Add padding around the text */
-  border-radius: 8px; /* Optional: rounded corners */
-  width: 100%; /* Ensure it stretches to full width */
+  background-color: #25327a; 
+  padding: 2rem;
+  border-radius: 10px; 
+  width: 100%;
 }
 
 .BodyContainer blockquote p {
-  color: #ffffff !important; /* Force text color to white */
+  color: #ffffff !important; 
 }
 
 .BlockQuote {
-  text-align: center; /* If you want the heading centered */
+  text-align: center;
   font-size: 2.5rem;
 }
 
 .blockquote p {
-  text-align: justify; /* Justify the text inside the blockquote */
+  text-align: justify; 
   font-size: 1.1rem;
-  line-height: 1.6; /* Optional: improve line spacing for readability */
+  line-height: 2; 
 }
 
 .Website-Name {
-  margin-left: 1rem; /* Equivalent to Bootstrap's `ms-4` */
+  margin-left: 1rem; 
   margin-right: 1rem;
   font-family: "Sansita";
   font-style: italic;
@@ -332,25 +332,29 @@ body,
 }
 
 .card-container {
-  background: linear-gradient(to right, #ffffff, #ffffff);
+  background: linear-gradient(to top,#fdfbfb, #cdd3f4, #9facfb);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
   margin: 0;
-  gap: 20px;
+  gap: 100px;
   padding: 0;
   box-sizing: border-box;
   border-radius: 8px;
+  margin-top: 25px;
 }
 
 .card-container-news {
-  background-color: #25327a;
-  padding: 15px 5px;
+  background: linear-gradient(to top,#d9d6ff, #ebeefe, #ffffff);
+  padding: 15px 180px;
+  padding-top: 30px; 
   border-radius: 8px;
   max-width: 100%;
   margin: 0 auto;
+  margin-top: 10px;
 }
+
 
 .Maintext {
   font-weight: bolder;
@@ -555,6 +559,7 @@ h2,
   }
 }
 
+
 /* Media query for mobile/tablet (screen width less than or equal to 768px) */
 
 .sangguniang-text {
@@ -654,6 +659,8 @@ h2,
 .below-image {
   justify-content: center;
   max-width: 600px; /* Prevents the image from being too large */
+  margin-top: 50px;
+
 }
 
 .IntroContainer {
@@ -697,6 +704,34 @@ h2,
   font-size: 1.5rem;
   margin-left: 0.5rem; /* Space between text and icon */
 }
+
+
+/***Mandate***/
+
+/* Inside the container - keeps the previous style */
+.icon-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.icon-img {
+  width: 50px;
+  height: 50px;
+}
+
+/* Outside the container - places the icon outside the card, above it */
+.icon-container-outside {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; /* Adjust the space between the icon and the card */
+}
+
+.icon-img-outside {
+  width: 50px; /* Adjust the size */
+  height: 50px; /* Adjust the size */
+}
+
 
 /***Program***/
 
@@ -778,11 +813,11 @@ h2,
 }
 
 .NewEveHead {
-  color: #060707; /* Equivalent to text-primary */
-  margin-top: 6rem; /* Equivalent to mb-4 */
+  color: #1d0053; /* Equivalent to text-primary */
+  margin-top: 5rem; /* Equivalent to mb-4 */
   font-weight: 700; /* Adjust the font-weight as needed */
   text-align: center; /* Center the text */
-  font-size: 4rem;
+  font-size: 6rem;
 }
 
 .NewEveSubHeadLine {
@@ -807,6 +842,52 @@ h2,
   margin-left: 150px;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.centered-text {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  font-size: 2.5rem; 
+  color: #3f0e99;
+  letter-spacing: 1px; 
+  text-transform: uppercase;
+  transition: all 0.3s ease; 
+  cursor: pointer; 
+  margin: 0; 
+  margin-top: 50px;
+  font-weight: bold;
+}
+
+.small-phrase {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  font-size: 2rem !important;
+  color: #2d0872;
+  letter-spacing: 2.5px; 
+  margin: 0; 
+  margin-top: -20px;
+  
+}
+
+.small-phrase span {
+  margin-right: 50px; /* Adds space between words */
+}
+
+.yellow {
+  color: rgba(42, 102, 254, 0.84);  
+}
+
+.red {
+  color: rgba(42, 102, 254, 0.84); 
+}
+.green {
+  color: rgba(42, 102, 254, 0.84);
+}
+.centered-text:hover {
+  color: #72b4ff; 
+  transform: scale(1.2); 
 }
 
 /*Announcement*/
@@ -835,6 +916,7 @@ h2,
 /*** Spotlight ***/
 
 .spotlight-container {
+  background: linear-gradient(to bottom, #edebf9);
   display: grid;
   grid-template-columns: 1fr auto; /* 2 columns: text, image */
   grid-template-rows: auto 1fr auto; /* 3 rows: headline, image, button */
@@ -843,6 +925,7 @@ h2,
   padding: 1rem; /* Optional padding */
   margin-top: 7rem;
   justify-items: center; /* Center items horizontally */
+  margin-top: 8px;
 }
 
 .image-content {
@@ -860,7 +943,7 @@ h2,
 }
 
 .spotlight-head {
-  color: #ff1a01ee; /* Default color for the whole text */
+  color: #1d0053; /* Default color for the whole text */
   margin-bottom: 4rem; /* Equivalent to mb-4 */
   font-weight: 700; /* Adjust the font-weight as needed */
   text-align: left; /* Align the text to the left */
@@ -1106,7 +1189,8 @@ h2,
   justify-content: flex-start;
   align-items: flex-start; 
   gap: 1rem; 
-  padding: 1rem 2rem;
+  padding: 5rem 2rem;
+  color: #1d0053;
   
 }
 
@@ -1114,8 +1198,9 @@ h2,
   font-size: 1.1rem; /* Adjust text size */
   line-height: 1.6; /* Adjust line height for readability */
   max-width: 100%; /* Limit the width of the description text */
-  margin-top: 150px;
+  margin-top: 160px;
   overflow: hidden;
+  color: #131313;
 
 }
 
