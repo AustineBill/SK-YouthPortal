@@ -83,7 +83,6 @@
   margin-right: 10px;
 }
 
-
 /* Admin Program Extended Details */
 
 .admin-program-expanded-details-container {
@@ -123,17 +122,21 @@
   transform: translate(-50%, -50%);
   z-index: 1050;
   background-color: #FFFFFF;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  max-width: 500px;
-  max-height: 80vh;
+  width: 100%;
+  height: 100%;
+  max-width: 450px;
+  max-height: 85vh;
   overflow-y: auto;
-  background-color: #c5c1c1;
+  border-style: solid;
+  border-width: 1px;
 }
 
 .edit-program-content {
   margin: 20px 0 20px 0;
+}
+
+.edit-program-content h3 {
+  font-size: 25px;
 }
 
 .admin-edit-program-details-group {
@@ -148,23 +151,36 @@
 
 .admin-edit-program-form input[type="text"],
 .admin-edit-program-form textarea {
-  height: 50px;
-  border-style: none;
+  height: 45px;
+  border-style: solid;
+  border-width: 1px;
   border-radius: 10px;
-  outline: none;
   margin-bottom: 0px;
-  font-size: 17.5px;
+  font-size: 15px;
+  overflow-y: auto;
   transition: all 0.35s;
+}
+
+.admin-edit-program-form input[type="text"]:focus,
+.admin-edit-program-form textarea:focus {
+  outline: 1px solid #007bff;
 }
 
 .edit-modal-buttons-container {
   margin-top: 10px;
 }
 
-.edit-save-button {
-  margin-right: 10px;
+.edit-cancel-button {
+  margin-right: 20px;
 }
 
+.edit-cancel-button,
+.edit-save-button {
+  width: 150px;
+  height: 45px;
+  border-style: none;
+  font-size: 15px;
+}
 
 /* Admin Add Program */
 
@@ -189,12 +205,12 @@
 
 .admin-add-program-form input[type="text"],
 .admin-add-program-form textarea {
-  height: 50px;
+  height: 45px;
   border-style: none;
   border-radius: 10px;
   outline: none;
   margin-bottom: 0px;
-  font-size: 17.5px;
+  font-size: 15px;
   transition: all 0.35s;
 }
 
@@ -208,7 +224,7 @@
   color: #FFFFFF;
   margin-top: 10px;
   width: 150px;
-  height: 55px;
+  height: 45px;
   font-size: 15px;
   border-style: none;
   transition: all 0.35s;
@@ -223,20 +239,238 @@
 
 @media (min-width: 1025px) and (max-width: 1440px) {
 
+  /* Edit Program Modal */
 
+  .edit-program-modal {
+    width: 100%;
+    height: 90%;
+  }
+
+  .edit-program-content {
+    margin: 20px 0 20px 0;
+  }
+
+  .edit-program-content h3 {
+    font-size: 22.5px;
+  }
+
+  .admin-edit-program-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+  }
+
+  .admin-edit-program-form input[type="text"],
+  .admin-edit-program-form textarea {
+    height: 40px;
+    font-size: 12.5px;
+  }
+
+  .edit-modal-buttons-container {
+    margin-top: 10px;
+  }
+
+  .edit-cancel-button {
+    margin-right: 20px;
+  }
+
+  .edit-cancel-button,
+  .edit-save-button {
+    width: 125px;
+    height: 40px;
+    border-style: none;
+    font-size: 12.5px;
+  }
+
+  /* Add Program */
+
+  .admin-add-program-label {
+    font-size: 15px;
+  }
+
+  .admin-add-program-form input[type="text"],
+  .admin-add-program-form textarea {
+    height: 40px;
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
 
+  /* Edit Program Modal */
 
+  .edit-program-modal {
+    width: 100%;
+    height: 80%;
+  }
+
+  .edit-program-content {
+    margin: 20px 0 20px 0;
+  }
+
+  .edit-program-content h3 {
+    font-size: 20px;
+  }
+
+  .admin-edit-program-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12.5px;
+  }
+
+  .admin-edit-program-form input[type="text"],
+  .admin-edit-program-form textarea {
+    height: 35px;
+    font-size: 10px;
+  }
+
+  .edit-modal-buttons-container {
+    margin-top: 10px;
+  }
+
+  .edit-cancel-button {
+    margin-right: 20px;
+  }
+
+  .edit-cancel-button,
+  .edit-save-button {
+    width: 100px;
+    height: 35px;
+    border-style: none;
+    font-size: 10px;
+  }
+
+  /* Add Program */
+
+  .admin-add-program-label {
+    font-size: 12.5px;
+  }
+
+  .admin-add-program-form input[type="text"],
+  .admin-add-program-form textarea {
+    height: 35px;
+    font-size: 10px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-  
 
+  .admin-program-container {
+    left: 0%;
+    width: 100%;
+  }
+
+  /* Edit Program Modal */
+
+  .edit-program-modal {
+    width: 100%;
+    height: 80%;
+  }
+
+  .edit-program-content {
+    margin: 20px 0 20px 0;
+  }
+
+  .edit-program-content h3 {
+    font-size: 20px;
+  }
+
+  .admin-edit-program-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12.5px;
+  }
+
+  .admin-edit-program-form input[type="text"],
+  .admin-edit-program-form textarea {
+    height: 35px;
+    font-size: 10px;
+  }
+
+  .edit-modal-buttons-container {
+    margin-top: 10px;
+  }
+
+  .edit-cancel-button {
+    margin-right: 20px;
+  }
+
+  .edit-cancel-button,
+  .edit-save-button {
+    width: 100px;
+    height: 35px;
+    border-style: none;
+    font-size: 10px;
+  }
+
+  /* Add Program */
+
+  .admin-add-program-label {
+    font-size: 12.5px;
+  }
+
+  .admin-add-program-form input[type="text"],
+  .admin-add-program-form textarea {
+    height: 35px;
+    font-size: 10px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
 
+  .admin-program-container {
+    left: 0%;
+    width: 100%;
+  }
 
+  /* Edit Program Modal */
+
+  .edit-program-modal {
+    width: 80%;
+    height: 70%;
+  }
+
+  .edit-program-content {
+    margin: 20px 0 20px 0;
+  }
+
+  .edit-program-content h3 {
+    font-size: 17.5px;
+  }
+
+  .admin-edit-program-label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 10px;
+  }
+
+  .admin-edit-program-form input[type="text"],
+  .admin-edit-program-form textarea {
+    height: 25px;
+    font-size: 7.5px;
+  }
+
+  .edit-modal-buttons-container {
+    margin-top: 10px;
+  }
+
+  .edit-cancel-button {
+    margin-right: 10px;
+  }
+
+  .edit-cancel-button,
+  .edit-save-button {
+    width: 75px;
+    height: 25px;
+    border-style: none;
+    font-size: 7.5px;
+  }
+
+  /* Add Program */
+
+  .admin-add-program-label {
+    font-size: 10px;
+  }
+
+  .admin-add-program-form input[type="text"],
+  .admin-add-program-form textarea {
+    height: 25px;
+    font-size: 7.5px;
+  }
 }
