@@ -43,36 +43,41 @@
     margin-bottom: 40px;
 }
 
-/* Admin Events */
+/* Admin All Events */
 
-.admin-events-container {
+.admin-events-details-container {
     width: 90%;
-    margin: 0 auto;
+    /* margin: 0 auto; */
 }
 
 .admin-event-card {
+    width: 100%;
     margin-bottom: 10px;
 }
 
 .admin-event-image-container {
-    width: 40%;
+    width: 30%;
+    height: auto;
 }
 
 .admin-event-details-container {
-    width: 60%;
+    width: 70%;
 }
 
 .admin-event-image {
     height: 200px;
-    width: 250px;
 }
 
 .admin-event-name-title {
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .admin-event-text {
-    font-size: 17.5px;
+    font-size: 20px;
+}
+
+.admin-event-details-buttons-container {
+    width: 100%;
 }
 
 .event-edit-button {
@@ -81,10 +86,10 @@
 
 .event-edit-button,
 .event-delete-button {
-    width: 125px;
-    height: 50px;
-    font-size: 15px;
     border-style: none;
+    width: 150px;
+    height: 45px;
+    font-size: 17.5px;
 }
 
 /* Admin Spotlights */
@@ -96,7 +101,7 @@
 }
 
 .spotlight-image {
-    height: 200px;
+    height: 175px;
 }
 
 /* Admin Add Event and Spotlight */
@@ -126,12 +131,12 @@
 
 .admin-add-event-form input[type="text"],
 .admin-add-event-form textarea {
-    height: 50px;
+    height: 45px;
     border-style: none;
     border-radius: 10px;
     outline: none;
     margin-bottom: 0px;
-    font-size: 17.5px;
+    font-size: 15px;
     transition: all 0.35s;
 }
 
@@ -146,8 +151,8 @@
     color: #FFFFFF;
     margin-top: 10px;
     width: 150px;
-    height: 50px;
-    font-size: 15px;
+    height: 45px;
+    font-size: 17.5px;
     border-style: none;
     transition: all 0.35s;
 }
@@ -157,7 +162,7 @@
     color: rgb(2, 107, 107);
 }
 
-/* Edit Modal */
+/* Edit Event Modal */
 
 .edit-event-modal {
     position: fixed;
@@ -166,17 +171,21 @@
     transform: translate(-50%, -50%);
     z-index: 1050;
     background-color: #FFFFFF;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 500px;
-    max-height: 80vh;
+    width: 100%;
+    height: 100%;
+    max-width: 450px;
+    max-height: 85vh;
     overflow-y: auto;
-    background-color: #c5c1c1;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .edit-event-content {
     margin: 20px 0 20px 0;
+}
+
+.edit-event-content h3 {
+    font-size: 25px;
 }
 
 .admin-edit-event-details-group {
@@ -191,13 +200,19 @@
 
 .admin-edit-event-form input[type="text"],
 .admin-edit-event-form textarea {
-    height: 50px;
-    border-style: none;
+    height: 45px;
+    border-style: solid;
+    border-width: 1px;
     border-radius: 10px;
-    outline: none;
     margin-bottom: 0px;
-    font-size: 17.5px;
+    font-size: 15px;
+    overflow-y: auto;
     transition: all 0.35s;
+}
+
+.admin-edit-event-form input[type="text"]:focus,
+.admin-edit-event-form textarea:focus {
+    outline: 1px solid #007bff;
 }
 
 .edit-modal-buttons-container {
@@ -205,7 +220,15 @@
 }
 
 .edit-cancel-button {
-    margin-right: 10px;
+    margin-right: 20px;
+}
+
+.edit-cancel-button,
+.edit-save-button {
+    width: 150px;
+    height: 45px;
+    border-style: none;
+    font-size: 15px;
 }
 
 
@@ -219,28 +242,101 @@
 
     .admin-home-nav-tabs {
         font-size: 17.5px;
+        margin: 0 0 20px 60px;
+        gap: 1in;
+    }
+
+    /* Admin All Events */
+
+    .admin-event-card {
+        margin-bottom: 10px;
+    }
+
+    .admin-event-image-container {
+        width: 30%;
+        height: auto;
+    }
+
+    .admin-event-details-container {
+        width: 70%;
     }
 
     .admin-event-image {
-        height: 170px;
-        width: 250px;
+        height: 175px;
     }
 
-    .admin-event-name-title {
+    .admin-event-title {
+        font-size: 22.5px;
+    }
+
+    .admin-event-text {
         font-size: 17.5px;
     }
-    
-    .admin-event-text {
+
+    .event-edit-button {
+        margin-right: 10px;
+    }
+
+    .event-edit-button,
+    .event-delete-button {
+        width: 125px;
+        height: 40px;
         font-size: 15px;
     }
+
+    /* Admin All Spotlights */
 
     .admin-spotlight-container {
         gap: 0.40in;
     }
 
     .spotlight-image {
-        height: 150px;
+        height: 125px;
     }
+
+    /* Edit Program Modal */
+
+    .edit-event-modal {
+        width: 100%;
+        height: 90%;
+    }
+
+    .edit-event-content {
+        margin: 20px 0 20px 0;
+    }
+
+    .edit-event-content h3 {
+        font-size: 22.5px;
+    }
+
+    .admin-edit-event-label {
+        font-family: 'Roboto', sans-serif;
+        font-size: 15px;
+    }
+
+    .admin-edit-event-form input[type="text"],
+    .admin-edit-event-form textarea {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .edit-modal-buttons-container {
+        margin-top: 10px;
+    }
+
+    .edit-cancel-button {
+        margin-right: 20px;
+    }
+
+    .edit-cancel-button,
+    .edit-save-button {
+        width: 125px;
+        height: 40px;
+        border-style: none;
+        font-size: 12.5px;
+    }
+
+    /* Add Event and Spotlight */
 
     .admin-add-event-details-group .admin-add-event-label,
     .admin-add-spotlight-details-group .admin-add-spotlight-label {
@@ -249,22 +345,14 @@
 
     .admin-add-event-form input[type="text"],
     .admin-add-event-form textarea {
-        height: 45px;
-        font-size: 15px;
-    }
-
-    .event-edit-button,
-    .event-delete-button {
-        width: 100px;
-        height: 45px;
+        height: 40px;
         font-size: 12.5px;
     }
 
     .admin-add-event-button,
     .admin-add-spotlight-button {
-        margin-top: 7.5px;
-        width: 140px;
-        height: 45px;
+        width: 125px;
+        height: 40px;
         font-size: 15px;
     }
 }
@@ -277,21 +365,49 @@
 
     .admin-home-nav-tabs {
         font-size: 15px;
-        gap: 0.75in;
-    }
-    
-    .admin-event-image {
-        height: 150px;
-        width: 250px;
+        margin: 0 0 20px 60px;
+        gap: 1in;
     }
 
-    .admin-event-name-title {
+    /* Admin All Events */
+
+    .admin-event-card {
+        margin-bottom: 10px;
+    }
+
+    .admin-event-image-container {
+        width: 35%;
+        height: auto;
+    }
+
+    .admin-event-details-container {
+        width: 65%;
+    }
+
+    .admin-event-image {
+        height: 150px;
+    }
+
+    .admin-event-title {
+        font-size: 20px;
+    }
+
+    .admin-event-text {
         font-size: 15px;
     }
-    
-    .admin-event-text {
+
+    .event-edit-button {
+        margin-right: 5px;
+    }
+
+    .event-edit-button,
+    .event-delete-button {
+        width: 100px;
+        height: 35px;
         font-size: 12.5px;
     }
+
+    /* Admin All Spotlights */
 
     .admin-spotlight-container {
         gap: 0.30in;
@@ -301,6 +417,50 @@
         height: 125px;
     }
 
+    /* Edit Program Modal */
+
+    .edit-event-modal {
+        width: 100%;
+        height: 80%;
+    }
+
+    .edit-event-content {
+        margin: 20px 0 20px 0;
+    }
+
+    .edit-event-content h3 {
+        font-size: 20px;
+    }
+
+    .admin-edit-event-label {
+        font-family: 'Roboto', sans-serif;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-event-form input[type="text"],
+    .admin-edit-event-form textarea {
+        height: 35px;
+        font-size: 10px;
+    }
+
+    .edit-modal-buttons-container {
+        margin-top: 10px;
+    }
+
+    .edit-cancel-button {
+        margin-right: 20px;
+    }
+
+    .edit-cancel-button,
+    .edit-save-button {
+        width: 100px;
+        height: 35px;
+        border-style: none;
+        font-size: 10px;
+    }
+
+    /* Add Event and Spotlight */
+
     .admin-add-event-details-group .admin-add-event-label,
     .admin-add-spotlight-details-group .admin-add-spotlight-label {
         font-size: 12.5px;
@@ -308,26 +468,14 @@
 
     .admin-add-event-form input[type="text"],
     .admin-add-event-form textarea {
-        height: 40px;
-        font-size: 12.5px;
-    }
-
-    .event-edit-button {
-        margin-right: 7.5px;
-    }
-
-    .event-edit-button,
-    .event-delete-button {
-        width: 75px;
-        height: 40px;
+        height: 35px;
         font-size: 10px;
     }
 
     .admin-add-event-button,
     .admin-add-spotlight-button {
-        margin-top: 7.5px;
-        width: 130px;
-        height: 40px;
+        width: 100px;
+        height: 35px;
         font-size: 12.5px;
     }
 }
@@ -346,22 +494,55 @@
 
     .admin-home-nav-tabs {
         font-size: 15px;
-        margin: 0 0 20px 40px;
+        margin: 0 0 20px 30px;
         gap: 0.50in;
     }
-    
-    .admin-event-image {
-        height: 150px;
-        width: 250px;
+
+    /* Admin All Programs */
+
+    .admin-event-card {
+        margin-bottom: 10px;
     }
 
-    .admin-event-name-title {
-        font-size: 15px;
+    .admin-event-image-container {
+        width: 40%;
+        height: auto;
     }
-    
+
+    .admin-event-details-container {
+        width: 60%;
+    }
+
+    .admin-event-image {
+        height: 150px;
+    }
+
+    .admin-event-title {
+        font-size: 17.5px;
+    }
+
     .admin-event-text {
         font-size: 12.5px;
     }
+
+    .admin-event-details-buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .event-edit-button {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    .event-edit-button,
+    .event-delete-button {
+        width: 100px;
+        height: 35px;
+        font-size: 10px;
+    }
+
+    /* Admin All Spotlights */
 
     .admin-spotlight-container {
         gap: 0.20in;
@@ -382,10 +563,6 @@
         font-size: 12.5px;
     }
 
-    .event-edit-button {
-        margin-right: 7.5px;
-    }
-
     .event-edit-button,
     .event-delete-button {
         width: 75px;
@@ -393,11 +570,65 @@
         font-size: 10px;
     }
 
+    /* Edit Program Modal */
+
+    .edit-event-modal {
+        width: 100%;
+        height: 80%;
+    }
+
+    .edit-event-content {
+        margin: 20px 0 20px 0;
+    }
+
+    .edit-event-content h3 {
+        font-size: 20px;
+    }
+
+    .admin-edit-event-label {
+        font-family: 'Roboto', sans-serif;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-event-form input[type="text"],
+    .admin-edit-event-form textarea {
+        height: 35px;
+        font-size: 10px;
+    }
+
+    .edit-modal-buttons-container {
+        margin-top: 10px;
+    }
+
+    .edit-cancel-button {
+        margin-right: 20px;
+    }
+
+    .edit-cancel-button,
+    .edit-save-button {
+        width: 100px;
+        height: 35px;
+        border-style: none;
+        font-size: 10px;
+    }
+
+    /* Add Event and Spotlight */
+
+    .admin-add-event-details-group .admin-add-event-label,
+    .admin-add-spotlight-details-group .admin-add-spotlight-label {
+        font-size: 12.5px;
+    }
+
+    .admin-add-event-form input[type="text"],
+    .admin-add-event-form textarea {
+        height: 35px;
+        font-size: 10px;
+    }
+
     .admin-add-event-button,
     .admin-add-spotlight-button {
-        margin-top: 7.5px;
-        width: 130px;
-        height: 40px;
+        width: 100px;
+        height: 35px;
         font-size: 12.5px;
     }
 }
@@ -415,36 +646,55 @@
     }
 
     .admin-home-nav-tabs {
-        font-size: 12.5px;
-        margin: 0 0 20px 30px;
+        font-size: 15px;
+        margin: 0 0 20px 25px;
         gap: 0.25in;
     }
+
+    /* Admin All Events */
 
     .admin-event-card-details {
         flex-direction: column;
         align-items: center;
     }
 
-    .admin-event-image-container {
-        width: 50%;
+    .admin-event-card {
+        margin-bottom: 10px;
     }
-    
+
+    .admin-event-image-container {
+        width: 60%;
+        height: auto;
+    }
+
     .admin-event-details-container {
         width: 100%;
     }
-    
+
     .admin-event-image {
-        height: 100px;
-        width: 250px;
+        height: 125px;
     }
-    
-    .admin-event-name-title {
+
+    .admin-event-title {
+        font-size: 15px;
+    }
+
+    .admin-event-text {
         font-size: 12.5px;
     }
-    
-    .admin-event-text {
-        font-size: 10px;
+
+    .event-edit-button {
+        margin-right: 5px;
     }
+
+    .event-edit-button,
+    .event-delete-button {
+        width: 75px;
+        height: 25px;
+        font-size: 7.5px;
+    }
+
+    /* Admin All Spotlights */
 
     .admin-spotlight-container {
         gap: 0.10in;
@@ -454,6 +704,50 @@
         height: 75px;
     }
 
+    /* Edit Event Modal */
+
+    .edit-event-modal {
+        width: 80%;
+        height: 70%;
+    }
+
+    .edit-event-content {
+        margin: 20px 0 20px 0;
+    }
+
+    .edit-event-content h3 {
+        font-size: 17.5px;
+    }
+
+    .admin-edit-event-label {
+        font-family: 'Roboto', sans-serif;
+        font-size: 10px;
+    }
+
+    .admin-edit-event-form input[type="text"],
+    .admin-edit-event-form textarea {
+        height: 25px;
+        font-size: 7.5px;
+    }
+
+    .edit-modal-buttons-container {
+        margin-top: 10px;
+    }
+
+    .edit-cancel-button {
+        margin-right: 10px;
+    }
+
+    .edit-cancel-button,
+    .edit-save-button {
+        width: 75px;
+        height: 25px;
+        border-style: none;
+        font-size: 7.5px;
+    }
+
+    /* Add Event and Spotlight */
+
     .admin-add-event-details-group .admin-add-event-label,
     .admin-add-spotlight-details-group .admin-add-spotlight-label {
         font-size: 10px;
@@ -461,26 +755,14 @@
 
     .admin-add-event-form input[type="text"],
     .admin-add-event-form textarea {
-        height: 35px;
-        font-size: 10px;
-    }
-
-    .event-edit-button {
-        margin-right: 7.5px;
-    }
-
-    .event-edit-button,
-    .event-delete-button {
-        width: 75px;
-        height: 35px;
+        height: 30px;
         font-size: 7.5px;
     }
 
     .admin-add-event-button,
     .admin-add-spotlight-button {
-        margin-top: 5px;
-        width: 110px;
-        height: 35px;
+        width: 100px;
+        height: 25px;
         font-size: 10px;
     }
 }
