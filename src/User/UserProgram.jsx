@@ -20,23 +20,25 @@ const Programs = () => {
 
   return (
     <div className="container-fluid">
+      {/* Heading and Subtext */}
       <div className="text-center text-lg-start m-4 mv-8 mb-5">
         <h1 className="Maintext animated slideInRight">Programs</h1>
-        <p className="Subtext">Don't Miss out, Explore now</p>
+        <p className="Subtext">Don't miss out, explore now!</p>
       </div>
 
+      {/* Programs List */}
       <div className="d-flex flex-column align-items-center">
         {programs.map((program) => (
           <div className="w-100 d-flex justify-content-center mb-4" key={program.id}>
-            <Card className="w-50">
-              <Card.Img 
-                variant="top" 
-                src={program.image_url} 
-                alt={program.program_name} 
-                 className="program-card-img"
+            <Card className="custom-card">
+              <Card.Img
+                variant="top"
+                src={program.image_url}
+                alt={program.program_name}
+                className="custom-card-img"
               />
               <Card.Body className="d-flex flex-column align-items-center">
-                <Card.Title className="fs-5 fw-bold text-dark">{program.program_name}</Card.Title>
+                <Card.Title className="fs-5 fw-bold" style={{ color: "#1d0053" }}>{program.program_name}</Card.Title>
                 <Card.Text>{program.heading}</Card.Text>
                 <Button
                   variant="dark"
@@ -49,8 +51,6 @@ const Programs = () => {
           </div>
         ))}
       </div>
-
-
     </div>
   );
 };

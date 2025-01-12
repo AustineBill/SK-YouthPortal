@@ -40,22 +40,22 @@ const Contact = () => {
           <p className="Subtext">Reserve yours now!</p>
 
           <div className="d-flex justify-content-center mb-3">
-            <Card className="ContactCard mx-2">
-              <i className="bi bi-phone fa-4x"></i>
+            <Card className="ContactCard mx-3">
+              <i className="bi bi-phone fa-4x" style={{ color: '#FFD700' }}></i>
               <Card.Body>
                 <Card.Text>{contactDetails.contact_number || 'Not available'}</Card.Text>
               </Card.Body>
             </Card>
 
-            <Card className="ContactCard mx-2">
-              <i className="bi bi-geo-alt fa-4x"></i>
+            <Card className="ContactCard mx-3">
+              <i className="bi bi-geo-alt fa-4x" style={{ color: '#00008B' }}></i>
               <Card.Body>
                 <Card.Text>{contactDetails.location || 'Not available'}</Card.Text>
               </Card.Body>
             </Card>
 
-            <Card className="ContactCard mx-2">
-              <i className="bi bi-envelope fa-4x"></i>
+            <Card className="ContactCard mx-3">
+              <i className="bi bi-envelope fa-4x" style={{ color: '#FF0000' }}></i>
               <Card.Body>
                 <Card.Text>{contactDetails.gmail || 'Not available'}</Card.Text>
               </Card.Body>
@@ -64,19 +64,17 @@ const Contact = () => {
         </div>
       </div>
 
-      <div className="bg-secondary">
+      <div className="custom-bg">
         <div className="DividerType2">
-          <h1 className="DividerText">SK Youth - Western Bicutan is open Monday to Friday, 8:00 AM - 5:00 PM</h1>
+           <h1 className="DividerText"> SK Youth - Western Bicutan is open Monday to Saturday,</h1>
+           <p className="DividerText"> 8:00 AM - 5:00 PM</p>
         </div>
       </div>
+
+
       <p className="Text-3">Find us here!</p>
       <div className="d-flex justify-content-center">
         <img src={Location} alt="Location" />
-      </div>
-      <div className="d-flex justify-content-center">
-        <Button variant="dark">
-          <i className="bi bi-hand-index me-3"></i>Appoint with us
-        </Button>
       </div>
     </div>
   );

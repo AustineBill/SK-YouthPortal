@@ -77,7 +77,9 @@ const Intro = () => {
     <div className="container-fluids">
       <div className="hero-header">
         <div className="text-center text-lg-start">
-          <h1 className="MainText ms-5 offset-content custom-font">
+          <h1 className="MainText ms-5 offset-content custom-font"
+          style={{ marginTop: '43px' }}
+          >
             Lagi't lagi para sa Kabataan, Barangay at sa Bayan
           </h1>
           <div className="custom-name-wrapper">
@@ -274,7 +276,7 @@ const Intro = () => {
           )}
         </div>
 
-        <Link className="spotlight-button btn-db" to="/Spotlight">
+        <Link className="spotlight-button btn-db move-link" to="/Spotlight">
           View Gallery
         </Link>
       </div>

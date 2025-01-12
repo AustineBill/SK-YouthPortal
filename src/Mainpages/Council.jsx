@@ -108,7 +108,7 @@ const Council = () => {
         </div>
       </div>
 
-      <div className="bg-custom mt-5">
+      <div className="bg-custom mt-2.5">
         <div className="Divider">
           <h1 className="text-light fw-bold fs-4">SK COUNCIL</h1>
         </div>
@@ -135,8 +135,8 @@ const Council = () => {
                 width: "100%", 
                 maxHeight: "400px", 
                 objectFit: "contain", 
-                marginTop: "20px",
-                marginBottom: "20px",
+                marginTop: "25px",
+                marginBottom: "25px",
               }}
             />
           </div>
