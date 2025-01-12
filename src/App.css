@@ -33,38 +33,17 @@ img.animated.pulse {
 
 /****** Colors ******/
 
-@media (forced-colors: active) {
-  container-fluid {
-    background-color: Window; /* background-color: Window; Background color for forced colors */
-    color: WindowText; /* Text color for forced colors */
-  }
-}
 
 :root {
   forced-color-adjust: auto; /* or none */
 }
 
-body {
-  background-color: Canvas; /* This will use the system's color scheme */
-  color: Text; /* Default text color */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%; /* Ensure the body fills the entire viewport */
 }
-
-/*.breadcrumb-item {
-  color: rgb(16, 16, 180);
-  cursor: pointer;
-  font-weight: 300;
-  font-style: normal;
-  margin-right: 15px;
-  font-size: 13px;
-  line-height: 5; 
-}
-
-.breadcrumb-item.active {
-  color: gray;
-  margin-right: 15px;
-  font-size: 13px;
-  line-height: 5;
-} */
 
 .breadcrumb-item {
   color: gray;
@@ -264,10 +243,20 @@ body {
 /*Overall*/
 
 .container-fluid {
+  margin: 0;
+  padding: 0;
   width: 100%;
   height: auto;
   font-family: "Poppins", sans-serif;
-  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+
+.container-fluids {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: "Poppins", sans-serif;
   overflow-x: hidden;
 }
 
@@ -397,7 +386,6 @@ body,
 }
 
 /* Reset Styles */
-body,
 h2,
 .navbar,
 .nav-links {
@@ -596,6 +584,7 @@ h2,
   background-size: 100% 100%;
   width: 100%;
   height: 90vh;
+  margin: 0;
 }
 
 .intro-text {
@@ -895,28 +884,6 @@ h2,
   transform: scale(1.2); 
 }
 
-/*Announcement*/
-
-.carousel-item {
-  width: 100%;
-  height: 36rem;
-}
-
-/* Remove the background color and outline when focused */
-.carousel-control-prev:focus,
-.carousel-control-next:focus {
-  outline: none; /* Remove outline */
-  box-shadow: none; /* Remove the blue shadow (focus ring) */
-  background-color: transparent; /* Ensure background is transparent */
-}
-
-/* Ensure the buttons do not show any color when active */
-.carousel-control-prev,
-.carousel-control-next {
-  background-color: transparent !important; /* Make sure background stays transparent */
-  border: none; /* Remove border */
-}
-
 
 /*** Spotlight ***/
 
@@ -927,7 +894,6 @@ h2,
   grid-template-rows: auto 1fr auto; /* 3 rows: headline, image, button */
   align-items: center; /* Center items vertically in each row */
   gap: 1rem; /* Space between rows and columns */
-  padding: 1rem; /* Optional padding */
   margin-top: 7rem;
   justify-items: center; /* Center items horizontally */
   margin-top: 8px;
@@ -991,9 +957,9 @@ h2,
 
 .TextContent {
   justify-self: start; /* Align text to the start (left) */
-  margin-left: 20px;
   margin-bottom: 5rem;
   margin-top: 5rem;
+  margin: 5rem 0 5rem 2rem;
   font-family: "Sansita";
 }
 

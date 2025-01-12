@@ -115,8 +115,6 @@ const App = () => {
           ) : (
             <>
               <NavBarSwitcher />
-
-              <div className="d-flex flex-column min-vh-100">
                 <Routes>
                   {/* Landing Page Routes */}
                   <Route path="/" element={<Intro />} />
@@ -300,7 +298,6 @@ const App = () => {
                   <Route path="/admin/users" element={<Users />} />
                   <Route path="/user/:id" element={<UserDetails />} />
                 </Routes>
-              </div>
               {!isAdmin && <Footer />}
             </>
           )}

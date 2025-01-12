@@ -74,7 +74,7 @@ const Intro = () => {
   if (error) return <div className="text-center">{error}</div>;
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluids">
       <div className="hero-header">
         <div className="text-center text-lg-start m-3 mv-8">
           <h1 className="MainText ms-5 offset-content custom-font">
