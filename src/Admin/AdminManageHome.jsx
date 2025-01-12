@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card } from "react-bootstrap";
-// import "./styles/AdminManageHome.css";
-import '../WebStyles/Admin-CSS.css';
+import "./styles/AdminManageHome.css";
+// import '../WebStyles/Admin-CSS.css';
 
 const ManageHomePage = () => {
   const [activeContent, setActiveContent] = useState("allEvents");
@@ -41,7 +41,7 @@ const ManageHomePage = () => {
         const response = await axios.get("http://localhost:5000/events");
         setEvents(response.data);
       } catch (error) {
-        console.error("Error fetching programs:", error);
+        console.error("Error fetching events:", error);
       }
     };
 
@@ -231,7 +231,7 @@ const ManageHomePage = () => {
 
       <div className="admin-home-contents-container d-flex justify-content-center">
         {activeContent === "allEvents" && (
-          <div className="admin-events-container d-flex flex-column">
+          <div className="admin-events-details-container d-flex flex-column">
             {/* <div className="card-container"> */}
             {events.length === 0 ? (
               <p>No events available</p>
@@ -259,7 +259,7 @@ const ManageHomePage = () => {
                           {events.event_description}
                         </p>
 
-                        <div className="admin-program-details-buttons-container d-flex justify-content-center">
+                        <div className="admin-event-details-buttons-container d-flex justify-content-center">
                           <button
                             onClick={() => handleEditEvent(events)}
                             className="event-edit-button bg-warning rounded-pill text-white"
@@ -386,7 +386,7 @@ const ManageHomePage = () => {
         )}
 
         {showEditModal && (
-          <div className="edit-event-modal d-flex flex-column">
+          <div className="edit-event-modal d-flex flex-column rounded">
             <div className="edit-event-content">
               <h3 className="text-center">Edit Event</h3>
               <form className="admin-edit-event-details-group d-flex flex-column align-items-center">
@@ -414,16 +414,16 @@ const ManageHomePage = () => {
                 <div className="edit-modal-buttons-container d-flex">
                   <button
                     onClick={() => setShowEditModal(false)}
-                    className="edit-cancel-button bg-primary"
+                    className="edit-cancel-button bg-danger text-white rounded-pill"
                   >
                     Cancel
                   </button>
 
                   <button
                     onClick={handleUpdateEvent}
-                    className="edit-save-button bg-success"
+                    className="edit-save-button bg-success text-white rounded-pill"
                   >
-                    Update Event
+                    Save Changes
                   </button>
                 </div>
               </form>
