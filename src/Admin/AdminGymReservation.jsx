@@ -8,7 +8,8 @@ import {
   OverlayTrigger,
   Popover,
 } from "react-bootstrap";
-import "../WebStyles/CalendarStyles.css";
+// import "../WebStyles/CalendarStyles.css";
+import "./styles/AdminGymReservation.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -207,15 +208,16 @@ const AdminGymReservation = () => {
   };
 
   return (
-    <div className="admin-equipment-reservation-container">
-      <h2 className="admin-ereservation-label-h2 fst-italic">
+    <div className="admin-gym-reservation-container">
+      <h2 className="admin-greservation-label-h2 fst-italic">
         Gym Reservation
       </h2>
 
-      <div className="dropdown-container" ref={dropdownRef}>
+      <div className="time-dropdown-container"
+        ref={dropdownRef}>
         <div className="time-dropdown">
           <button
-            className="btn-db dropdown-toggle"
+            className="time-dropdown-button dropdown-toggle bg-primary"
             type="button"
             id="dropdownMenuButton"
             onClick={toggleDropdown}
@@ -248,44 +250,47 @@ const AdminGymReservation = () => {
         </div>
       </div>
 
-      <Calendar
-        minDate={new Date()}
-        selectRange={true}
-        tileClassName={tileClassName}
-        tileContent={({ date, view }) => {
-          if (view !== "month") return null;
+      <div className="admin-greservation-calendar-container">
+        <Calendar
+          className={"gr-calendar rounded"}
+          minDate={new Date()}
+          selectRange={true}
+          tileClassName={tileClassName}
+          tileContent={({ date, view }) => {
+            if (view !== "month") return null;
 
-          const dailyReservations = filterReservations(date);
+            const dailyReservations = filterReservations(date);
 
-          if (dailyReservations.length > 0) {
-            const displayCount = dailyReservations.some(
-              (res) => res.reservation_type === "Group"
-            )
-              ? 5
-              : dailyReservations.length;
+            if (dailyReservations.length > 0) {
+              const displayCount = dailyReservations.some(
+                (res) => res.reservation_type === "Group"
+              )
+                ? 5
+                : dailyReservations.length;
 
-            return (
-              <OverlayTrigger
-                trigger="click"
-                placement="top"
-                overlay={renderPopover(dailyReservations)}
-              >
-                <div className="overlay-content">
-                  {displayCount > 0 && (
-                    <div className="reservation-count">{displayCount}</div>
-                  )}
-                </div>
-              </OverlayTrigger>
-            );
-          }
-          return null;
-        }}
-      />
+              return (
+                <OverlayTrigger
+                  trigger="click"
+                  placement="top"
+                  overlay={renderPopover(dailyReservations)}
+                >
+                  <div className="overlay-content">
+                    {displayCount > 0 && (
+                      <div className="reservation-count">{displayCount}</div>
+                    )}
+                  </div>
+                </OverlayTrigger>
+              );
+            }
+            return null;
+          }}
+        />
+      </div>
 
-      <div className="admin-ereservation-buttons-table-container">
-        <div className="admin-er-toggle-buttons-container d-flex align-items-center">
-          <Dropdown className="er-toggle-container">
-            <Dropdown.Toggle className="er-toggle">
+      <div className="admin-greservation-buttons-table-container">
+        <div className="admin-gr-toggle-buttons-container d-flex align-items-center">
+          <Dropdown className="gr-toggle-container">
+            <Dropdown.Toggle className="gr-toggle">
               {filterOption}
             </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -307,21 +312,21 @@ const AdminGymReservation = () => {
           <button
             disabled={selectedReservations.length === 0}
             onClick={handleApprove}
-            className="admin-er-disapprove-button bg-success text-white rounded"
+            className="admin-gr-disapprove-button bg-success text-white rounded"
           >
             Approve
           </button>
           <button
             disabled={selectedReservations.length === 0}
             onClick={handleDisapprove}
-            className="admin-er-disapprove-button bg-danger text-white rounded"
+            className="admin-gr-disapprove-button bg-danger text-white rounded"
           >
             Disapprove
           </button>
         </div>
 
-        <Table className="admin-ereservation-table-container table-bordered">
-          <thead className="admin-ereservation-head text-center">
+        <Table className="admin-greservation-table-container table-bordered">
+          <thead className="admin-greservation-head text-center">
             <tr>
               <th>
                 <input
@@ -352,7 +357,7 @@ const AdminGymReservation = () => {
             </tr>
           </thead>
 
-          <tbody className="admin-ereservation-body">
+          <tbody className="admin-greservation-body">
             {filteredReservations.map((reservation) => (
               <tr key={reservation.id}>
                 <td>
@@ -368,9 +373,10 @@ const AdminGymReservation = () => {
                 <td>{formatDate(reservation.end_date)}</td>
                 <td>{reservation.time_slot}</td>
                 <td>{reservation.status}</td>
-                <td>
+                <td className="admin-greservation-action-button-container d-flex justify-content-center">
                   <Button
-                    className="btn btn-primary"
+                    variant="primary"
+                    className="admin-greservation-edit-button rounded-pill"
                     onClick={() =>
                       navigate(`/editReservation/${reservation.id}`)
                     }

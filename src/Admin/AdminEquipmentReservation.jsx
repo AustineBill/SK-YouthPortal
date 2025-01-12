@@ -223,7 +223,7 @@ const AdminEquipmentReservation = () => {
             <Dropdown.Toggle className="er-toggle">
               {filterOption}
             </Dropdown.Toggle>
-            <Dropdown.Menu>
+            <Dropdown.Menu className="er-toggle-text">
               <Dropdown.Item onClick={() => setFilterOption("Now")}>
                 Now
               </Dropdown.Item>

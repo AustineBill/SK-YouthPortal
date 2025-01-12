@@ -33,7 +33,7 @@
 }
 
 .year-selection-container {
-    height: 50px;
+    height: 450x;
     width: 100%;
 }
 
@@ -43,7 +43,7 @@
 
 .year-select {
     width: 30%;
-    height: 50px;
+    height: 45px;
     font-size: 17.5px;
     margin-left: 10px;
 }
@@ -101,10 +101,52 @@
 
     .admin-dashboard-label-h2 {
         font-size: 37.5px;
+        margin: 20px 0 7.5px 40px;
     }
-    
+
     .admin-dashboard-label-p {
         font-size: 17.5px;
+        margin: 0 0 10px 40px;
+    }
+
+    .year-selection-container {
+        height: 40px;
+    }
+    
+    .year-selection-label {
+        font-size: 15px;
+    }
+    
+    .year-select {
+        width: 30%;
+        height: 40px;
+        font-size: 15px;
+        margin-left: 10px;
+    }
+
+    .reservations-label-h2,
+    .userd-label-h2,
+    .equipment-label-h2,
+    .yearlyrd-label-h2 {
+        font-size: 25px;
+    }
+
+    .admin-dashboard-charts-container {
+        gap: 7.5%;
+    }
+
+    .admin-chart-container {
+        width: 45%;
+    }
+
+    .piechart {
+        max-height: 200px;
+        height: 100%;
+    }
+
+    .chart {
+        max-height: 200px;
+        height: 100%;
     }
 }
 
@@ -112,15 +154,57 @@
 
     .admin-dashboard-label-h2 {
         font-size: 35px;
+        margin: 20px 0 5px 40px;
     }
 
     .admin-dashboard-label-p {
         font-size: 15px;
+        margin: 0 0 10px 40px;
+    }
+
+    .year-selection-container {
+        height: 35px;
+    }
+    
+    .year-selection-label {
+        font-size: 12.5px;
+    }
+    
+    .year-select {
+        width: 30%;
+        height: 35px;
+        font-size: 12.5px;
+        margin-left: 7.5px;
+    }
+
+    .reservations-label-h2,
+    .userd-label-h2,
+    .equipment-label-h2,
+    .yearlyrd-label-h2 {
+        font-size: 20px;
+    }
+
+    .admin-dashboard-charts-container {
+        gap: 2.5%;
+    }
+
+    .admin-chart-container {
+        width: 47.5%;
+    }
+
+    .piechart {
+        max-height: 150px;
+        height: 100%;
+    }
+
+    .chart {
+        max-height: 150px;
+        height: 100%;
     }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-  
+
     .admin-dashboard-container {
         left: 0%;
         width: 100%;
@@ -128,12 +212,52 @@
 
     .admin-dashboard-label-h2 {
         font-size: 35px;
-        margin: 20px 0 20px 25px;
+        margin: 20px 0 5px 25px;
     }
 
     .admin-dashboard-label-p {
         font-size: 15px;
-        margin: 20px 0 20px 25px;
+        margin: 0px 0 20px 25px;
+    }
+
+    .year-selection-container {
+        height: 35px;
+    }
+    
+    .year-selection-label {
+        font-size: 12.5px;
+    }
+    
+    .year-select {
+        width: 30%;
+        height: 35px;
+        font-size: 12.5px;
+        margin-left: 5px;
+    }
+
+    .reservations-label-h2,
+    .userd-label-h2,
+    .equipment-label-h2,
+    .yearlyrd-label-h2 {
+        font-size: 20px;
+    }
+
+    .admin-dashboard-charts-container {
+        gap: 2.5%;
+    }
+
+    .admin-chart-container {
+        width: 47.5%;
+    }
+
+    .piechart {
+        max-height: 150px;
+        height: 100%;
+    }
+
+    .chart {
+        max-height: 150px;
+        height: 100%;
     }
 }
 
@@ -142,5 +266,56 @@
     .admin-dashboard-container {
         left: 0%;
         width: 100%;
+    }
+
+    .admin-dashboard-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 2.5px 20px;
+    }
+
+    .admin-dashboard-label-p {
+        font-size: 12.5px;
+        margin: 0 0 20px 20px;
+    }
+
+    .year-selection-container {
+        height: 35px;
+    }
+    
+    .year-selection-label {
+        font-size: 12.5px;
+    }
+    
+    .year-select {
+        width: 30%;
+        height: 25px;
+        font-size: 10px;
+        margin-left: 2.5px;
+    }
+
+    .reservations-label-h2,
+    .userd-label-h2,
+    .equipment-label-h2,
+    .yearlyrd-label-h2 {
+        font-size: 15px;
+    }
+
+    .admin-dashboard-charts-container {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .admin-chart-container {
+        width: 75%;
+    }
+
+    .piechart {
+        max-height: 100px;
+        height: 100%;
+    }
+
+    .chart {
+        max-height: 100px;
+        height: 100%;
     }
 }
