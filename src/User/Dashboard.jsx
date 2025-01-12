@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { FaPen } from "react-icons/fa";
 import axios from "axios";
 
 const Dashboard = () => {
   const [programs, setPrograms] = useState([]);
-  const [rating, setRating] = useState(0); // State for selected rating
-  const [hover, setHover] = useState(0); // State for hover effect on stars
-  const [feedback, setFeedback] = useState(""); // State for feedback text
-  const [userFeedback, setUserFeedback] = useState(null); // State to store the user's submitted feedback
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+  const [feedback, setFeedback] = useState("");
+  const [userFeedback, setUserFeedback] = useState(null);
+  const [isEditing, setIsEditing] = useState(false); // State for editing mode
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch available programs from backend
     const fetchProgramData = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/programs");
@@ -39,9 +40,15 @@ const Dashboard = () => {
         const response = await axios.get(
           `http://localhost:5000/Feedback/${userId}`
         );
-        setUserFeedback(response.data); // Set retrieved feedback
+
+        if (response.data) {
+          setUserFeedback(response.data);
+        } else {
+          setUserFeedback(null);
+        }
       } catch (error) {
         console.error("Error fetching user feedback:", error);
+        setUserFeedback(null);
       }
     };
 
@@ -53,7 +60,7 @@ const Dashboard = () => {
   };
 
   const handleFeedbackSubmit = async () => {
-    const userId = sessionStorage.getItem("userId"); // Retrieve user ID from sessionStorage
+    const userId = sessionStorage.getItem("userId");
 
     if (!userId) {
       console.error("User ID not found in session storage.");
@@ -62,15 +69,32 @@ const Dashboard = () => {
 
     try {
       const feedbackData = {
-        user_id: userId, // Include user ID
+        user_id: userId,
         rating,
         comment: feedback,
       };
 
-      await axios.post("http://localhost:5000/Feedback", feedbackData);
-      setUserFeedback(feedbackData); // Store feedback in state
-      setRating(0); // Reset rating
-      setFeedback(""); // Reset feedback
+      let response;
+      if (isEditing) {
+        // Update existing feedback
+        response = await axios.put(
+          `http://localhost:5000/Feedback/${userId}`,
+          feedbackData
+        );
+      } else {
+        // Submit new feedback
+        response = await axios.post(
+          "http://localhost:5000/Feedback",
+          feedbackData
+        );
+      }
+
+      // Update the userFeedback state and exit editing mode
+      setUserFeedback(response.data);
+      setIsEditing(false); // Exit editing mode immediately
+      setRating(response.data.rating); // Make sure the updated rating is shown
+      setFeedback(response.data.comment);
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting feedback:", error);
     }
@@ -123,10 +147,18 @@ const Dashboard = () => {
         className="feedback-container container mt-4 p-4 rounded shadow mb-3"
         style={{ maxWidth: "600px", backgroundColor: "#f8f9fa" }}
       >
-        {userFeedback ? (
-          // Display submitted feedback
-          <div className="text-center">
+        {userFeedback && userFeedback.rating && !isEditing ? (
+          <div className="position-relative text-center">
             <h2 className="text-dark fw-bold">Your Feedback</h2>
+            <FaPen
+              className="position-absolute top-0 end-0 text-dark"
+              style={{ cursor: "pointer", fontSize: "1.5rem" }}
+              onClick={() => {
+                setIsEditing(true); // Enable editing mode
+                setRating(userFeedback.rating);
+                setFeedback(userFeedback.comment);
+              }}
+            />
             <div className="stars">
               {[...Array(5)].map((_, index) => (
                 <span
@@ -145,10 +177,9 @@ const Dashboard = () => {
             <p className="mt-3">{userFeedback.comment}</p>
           </div>
         ) : (
-          // Display feedback form
           <>
             <h2 className="text-dark fw-bold text-center">
-              Rate and Provide Feedback
+              {isEditing ? "Edit Your Feedback" : "Rate and Provide Feedback"}
             </h2>
             <div className="stars text-center">
               {[...Array(5)].map((_, index) => {
@@ -188,7 +219,7 @@ const Dashboard = () => {
                 onClick={handleFeedbackSubmit}
                 disabled={!rating || !feedback.trim()}
               >
-                Submit Feedback
+                {isEditing ? "Update Feedback" : "Submit Feedback"}
               </Button>
             </div>
           </>
