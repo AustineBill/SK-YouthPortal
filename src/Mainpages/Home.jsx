@@ -76,7 +76,7 @@ const Intro = () => {
   return (
     <div className="container-fluids">
       <div className="hero-header">
-        <div className="text-center text-lg-start m-3 mv-8">
+        <div className="text-center text-lg-start">
           <h1 className="MainText ms-5 offset-content custom-font">
             Lagi't lagi para sa Kabataan, Barangay at sa Bayan
           </h1>
@@ -86,11 +86,9 @@ const Intro = () => {
               <span className="kabataan-color">Kabataan</span>
             </span>
           </div>
-          <div className="IntroContainer">
-            <p className="IntroDetails">
-              <span className="western-bicutan-color">WESTERN BICUTAN</span>
-            </p>
-          </div>
+
+          <p className="IntroDetails">WESTERN BICUTAN</p>
+
           <div className="image-container">
             <img
               src="/Asset/WebImages/icons.png"
@@ -161,43 +159,103 @@ const Intro = () => {
         )}
       </div>
 
-     {/* Highlighted Events Section */}
-        <div className="card-container-news">
-          <h1 className="NewEveHead">NEWS & EVENTS</h1>
-            {events.length === 0 ? (
-              <p>No events available</p>
-               ) : (
-              events.map((event) => (
-            <Card key={event.id} className="ProgramCard">
-             <Card.Img
-          variant="top"
-          src={event.event_image}
-          className="program-card-img"
-        />
-            <Card.Body>
-              <Card.Title>{event.event_name}</Card.Title>
-              <Card.Text>{event.event_description}</Card.Text>
-            </Card.Body>
-            </Card>
-          ))
+      {/* Highlighted Events Section */}
+      <div className="card-container-news">
+        <h1 className="NewEveHead">NEWS & EVENTS</h1>
+
+        {/* Bootstrap Carousel */}
+        {events.length === 0 ? (
+          <p>No events available</p>
+        ) : (
+          <div
+            id="newsCarousel"
+            className="carousel slide"
+            data-bs-ride="carousel"
+          >
+            {/* Carousel Indicators */}
+            <div className="carousel-indicators">
+              {events.map((_, index) => (
+                <button
+                  type="button"
+                  data-bs-target="#newsCarousel"
+                  data-bs-slide-to={index}
+                  className={index === 0 ? "active" : ""}
+                  aria-current={index === 0 ? "true" : undefined}
+                  aria-label={`Slide ${index + 1}`}
+                  key={index}
+                ></button>
+              ))}
+            </div>
+
+            {/* Carousel Items */}
+            <div className="carousel-inner">
+              {events.map((event, index) => (
+                <div
+                  key={event.id}
+                  className={`carousel-item ${index === 0 ? "active" : ""}`}
+                >
+                  <Card
+                    className="ProgramCard mx-auto"
+                    style={{ maxWidth: "18rem" }}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={event.event_image}
+                      alt={event.event_name}
+                      className="program-card-img"
+                    />
+                    <Card.Body>
+                      <Card.Title>{event.event_name}</Card.Title>
+                      <Card.Text>{event.event_description}</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </div>
+              ))}
+            </div>
+
+            {/* Carousel Controls */}
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#newsCarousel"
+              data-bs-slide="prev"
+            >
+              <span
+                className="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#newsCarousel"
+              data-bs-slide="next"
+            >
+              <span
+                className="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
         )}
       </div>
 
       <Link className="spotlight-button btn-db m-2" to="/news">
         Find Out More
       </Link>
-      
-      <p className="centered-text">
-        <p>Growing directly easy with a reservation button.</p>
-      </p>
-         <p className="small-phrase">
-            <span className="yellow">PAGKAKAISA</span>
-            <span>I</span>
-            <span className="red">KABATAAN</span>
-            <span>I</span>
-            <span className="green">PROGRESO</span>
-        </p>
 
+      <div className="centered-text">
+        <p>Growing directly easy with a reservation button.</p>
+      </div>
+      <p className="small-phrase">
+        <span className="yellow">PAGKAKAISA</span>
+        <span>I</span>
+        <span className="red">KABATAAN</span>
+        <span>I</span>
+        <span className="green">PROGRESO</span>
+      </p>
 
       {/* Spotlight Section */}
       <div className="spotlight-container">
