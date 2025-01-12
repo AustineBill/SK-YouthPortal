@@ -68,17 +68,6 @@ button:disabled {
 
 /* Calendar */
 
-.time-dropdown-container {
-    width: 90%;
-    margin: 0 auto;
-    height: 50px;
-}
-
-.time-dropdown-button {
-    font-size: 15px;
-    height: 50px;
-}
-
 .admin-ereservation-calendar-container {
     width: 90%;
     margin: 0 auto;

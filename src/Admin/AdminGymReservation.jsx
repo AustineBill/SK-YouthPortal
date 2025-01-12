@@ -250,40 +250,42 @@ const AdminGymReservation = () => {
         </div>
       </div>
 
-      <Calendar
-        className={"gr-calendar rounded"}
-        minDate={new Date()}
-        selectRange={true}
-        tileClassName={tileClassName}
-        tileContent={({ date, view }) => {
-          if (view !== "month") return null;
+      <div className="admin-greservation-calendar-container">
+        <Calendar
+          className={"gr-calendar rounded"}
+          minDate={new Date()}
+          selectRange={true}
+          tileClassName={tileClassName}
+          tileContent={({ date, view }) => {
+            if (view !== "month") return null;
 
-          const dailyReservations = filterReservations(date);
+            const dailyReservations = filterReservations(date);
 
-          if (dailyReservations.length > 0) {
-            const displayCount = dailyReservations.some(
-              (res) => res.reservation_type === "Group"
-            )
-              ? 5
-              : dailyReservations.length;
+            if (dailyReservations.length > 0) {
+              const displayCount = dailyReservations.some(
+                (res) => res.reservation_type === "Group"
+              )
+                ? 5
+                : dailyReservations.length;
 
-            return (
-              <OverlayTrigger
-                trigger="click"
-                placement="top"
-                overlay={renderPopover(dailyReservations)}
-              >
-                <div className="overlay-content">
-                  {displayCount > 0 && (
-                    <div className="reservation-count">{displayCount}</div>
-                  )}
-                </div>
-              </OverlayTrigger>
-            );
-          }
-          return null;
-        }}
-      />
+              return (
+                <OverlayTrigger
+                  trigger="click"
+                  placement="top"
+                  overlay={renderPopover(dailyReservations)}
+                >
+                  <div className="overlay-content">
+                    {displayCount > 0 && (
+                      <div className="reservation-count">{displayCount}</div>
+                    )}
+                  </div>
+                </OverlayTrigger>
+              );
+            }
+            return null;
+          }}
+        />
+      </div>
 
       <div className="admin-greservation-buttons-table-container">
         <div className="admin-gr-toggle-buttons-container d-flex align-items-center">
