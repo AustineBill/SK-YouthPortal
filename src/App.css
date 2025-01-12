@@ -333,7 +333,7 @@ body,
   margin-top: 15px;
 }
 .card-container-news {
-  background: linear-gradient(to top, #d9d6ff, #ebeefe, #ffffff);
+  background: linear-gradient(to top, #cecbf8, #ebeefe, #ffffff);
   padding: 15px 180px;
   padding-top: 30px;
   border-radius: 8px;
@@ -342,6 +342,7 @@ body,
   margin-top: 10px;
 }
 
+/*SK Council*/
 .Divider {
   display: flex; /* Change to flex to use Flexbox for centering */
   justify-content: center; /* Center horizontally */
@@ -567,8 +568,8 @@ h2,
 
 .custom-name-wrapper {
   text-align: right;
-  margin-top: -3rem;
-  margin-right: 1rem;
+  margin-top: -3.5rem;
+  margin-right: 2rem;
 }
 
 .sangguniang-text {
@@ -585,27 +586,27 @@ h2,
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: slideInRight;
-  margin-right: 1.5rem; /* Moves the text to the right */
-  margin-left: 60%; /* Keeps the left margin for positioning */
-  color: yellow; /* Yellow color for Western Bicutan */
+  margin-right: 1.5rem; 
+  margin-left: 65%;
+  color: yellow; 
   font-size: 3rem;
   font-family: "Poppins", sans-serif;
-  margin-top: -0.5em;
+  margin-top: -0.6em;
 }
 
 .custom-font {
   color: white;
-  font-size: 1.7rem; /* Adjust the size as needed */
-  font-family: "Arial", sans-serif; /* Or use any font you like */
+  font-size: 1.5rem; 
+  font-family: "Poppins", sans-serif;
 }
 
 .image-container {
-  text-align: center; /* Centers the image horizontally */
+  text-align: center;
   margin-bottom: 20px;
 }
 .below-image {
   justify-content: center;
-  max-width: 600px; /* Prevents the image from being too large */
+  max-width: 600px; 
 }
 
 /***Mandate***/
@@ -662,15 +663,15 @@ h2,
 }
 
 .ProgramCard {
-  height: auto; /* Allow content to dictate height */
+  height: auto; 
   max-height: 150%;
-  width: 20em; /* Responsive width */
+  width: 20em; 
   margin: 25px;
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Initial shadow */
+  border-radius: 8px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   padding: 8px;
-  background-color: #ffffff; /* Background color for the card */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+  background-color: #ffffff; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
 }
 
 .ProgramCard:hover {
@@ -707,8 +708,8 @@ h2,
 /*/* News and Events */
 
 .NewEveHead {
-  color: #1d0053; /* Equivalent to text-primary */
-  margin-top: 5rem; /* Equivalent to mb-4 */
+  color: #1d0053; 
+  margin-top: 4rem;
   font-weight: 700; /* Adjust the font-weight as needed */
   text-align: center; /* Center the text */
   font-size: 6rem;
@@ -720,7 +721,7 @@ h2,
   align-items: center;
   font-size: 2.5rem;
   color: #3f0e99;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -734,14 +735,14 @@ h2,
   justify-content: center;
   align-items: center;
   font-size: 2rem !important;
-  color: #2d0872;
+  color: #280961;
   letter-spacing: 2.5px;
   margin: 0;
   margin-top: -20px;
 }
 
 .small-phrase span {
-  margin-right: 50px; /* Adds space between words */
+  margin-right: 40px; /* Adds space between words */
 }
 
 .yellow {
@@ -764,37 +765,38 @@ h2,
 .spotlight-container {
   background: linear-gradient(to bottom, #edebf9);
   display: grid;
-  grid-template-columns: 1fr auto; /* 2 columns: text, image */
-  grid-template-rows: auto 1fr auto; /* 3 rows: headline, image, button */
-  align-items: center; /* Center items vertically in each row */
-  gap: 1rem; /* Space between rows and columns */
+  grid-template-columns: 1fr auto; 
+  grid-template-rows: auto 1fr auto; 
+  align-items: center; 
+  gap: 2rem; 
   margin-top: 7rem;
-  justify-items: center; /* Center items horizontally */
+  justify-items: center; 
   margin-top: 8px;
 }
 
 .image-content {
-  justify-self: end; /* Align image to the end (right) */
+  justify-self: end; 
   align-self: center;
   max-width: 100%;
 }
 
 .image-content img {
-  width: 100%; /* Adjust the width to fit the container */
-  max-width: 3000px; /* Set a maximum width for responsiveness */
-  height: auto; /* Maintain aspect ratio */
-  object-fit: cover; /* Ensure image fills the container without distortion */
-  border-radius: 8px; /* Optional: rounded corners */
+  width: 100%; 
+  max-width: 3500px; 
+  height: auto; 
+  object-fit: cover; 
+  border-radius: 2px;
+  margin-top: 1rem;
 }
 
 .spotlight-head {
-  color: #1d0053; /* Default color for the whole text */
-  margin-bottom: 4rem; /* Equivalent to mb-4 */
-  font-weight: 700; /* Adjust the font-weight as needed */
-  text-align: left; /* Align the text to the left */
-  margin: 30px 0 0 0;
-  font-size: 7rem; /* Keep the font size as it is */
-  display: inline-block; /* Ensure inline elements don't break layout */
+  color: #1d0053; 
+  margin-bottom: 4rem; 
+  font-weight: 700; 
+  text-align: left; 
+  margin: 40px 3px 0 6px;
+  font-size: 7rem;
+  display: inline-block; 
 }
 
 .spotlight-button {
@@ -815,17 +817,25 @@ h2,
 
 .spotlight-button:hover {
   color: #fff;
-  background-color: #23272b;
-  border-color: #1d2124;
+  background-color: #1c014d;
+  border-color: #1d0053;
   text-decoration: none;
 }
 
 .spotlight-text-content {
-  justify-self: start; /* Align text to the start (left) */
+  justify-self: start; 
   margin-left: 30px;
   margin-bottom: 5rem;
   margin-top: 2rem;
 }
+
+.move-link {
+  text-align: center;
+  margin-top: 1rem; 
+  margin-right: -13rem; 
+  display: block;     
+}
+
 
 /*Text*/
 
@@ -859,6 +869,106 @@ h2,
   font-family: "Poppins";
   color: #002f4e;
 }
+
+/**PROGRAMS**/
+
+.custom-card {
+  width: 1000px;
+  max-width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 1rem;
+}
+
+.custom-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 12px 24px rgb(197, 200, 255);
+}
+
+.custom-card .btn {
+  background-color: #1d0053;
+  color: white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border: none;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.custom-card .btn:hover {
+  background-color: #ffffff;
+  color: #1d0053;
+  transform: translateY(-2px);
+}
+
+.custom-card-img {
+  height: 500px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+.card-row {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+}
+
+
+
+/*PROGRAM HEADING*/
+.Maintext {
+  font-size: 3.5rem; 
+  color: #1d0053;     
+  font-weight: bold;   
+}
+
+.Subtext {
+  font-size: 1rem;  
+  color: #0c0c0c;        
+}
+
+/*CONTACT*/
+
+.custom-bg {
+  background-color: #1d0053 !important;
+  padding: -1px;
+}
+
+.DividerText {
+  color: #e1e7f5; 
+  font-size: 2rem !important;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 550 !important; 
+  text-align: center; 
+  margin: 0;
+}
+
+.DividerText + .DividerText {
+  margin-top: 2px; 
+}
+
+.Text-3 {
+  color: #072b7e; 
+  font-style: "Poppins", sans-serif;
+  font-size: 1.7rem; 
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 20px; 
+  text-align: left; 
+}
+
+.d-flex img {
+  margin-bottom: 40px; 
+}
+
 
 /*** Footer ***/
 
@@ -918,9 +1028,9 @@ h2,
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #25327a;
-  padding: 10px;
-  border-radius: 5px;
+  background-color: #172363;
+  padding: 12px;
+  border-radius: 6px;
   display: none;
   z-index: 999;
 }
@@ -930,40 +1040,40 @@ h2,
 }
 
 .dropdown-content .dropdown-item {
-  color: #f8f1f1;
+  color: #f5f5f5;
   padding: 5px 10px;
   text-decoration: none;
 }
 
 .dropdown-content .dropdown-item:hover {
-  background-color: #ffcc00;
-  color: #25327a;
+  background-color: #00379d;
+  color: #02092e;
 }
 
 .dropbtn {
-  padding: 16px;
+  padding: 40px;
   border: none;
-  background: none; /* Remove any background from button */
+  background: none; 
 }
 
 .dropdown-content {
-  display: block; /* Will be controlled by state in React */
+  display: block; 
   position: absolute;
-  background-color: #070707; /* Dropdown background color */
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); /* Shadow effect */
-  z-index: 1100; /* Higher than navbar to overlay properly */
-  top: 100%; /* Position below the dropdown button */
-  left: 0; /* Align to the left of the button */
-  padding: 0; /* Optional: Removes extra padding */
+  background-color: #277cfc; 
+  min-width: 150px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); 
+  z-index: 1100; 
+  top: 100%; 
+  left: 0; 
+  padding: 0; 
 }
 
 .dropdown-content a {
-  color: white; /* White text for visibility on dark background */
+  color: rgb(11, 23, 113); 
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  cursor: pointer; /* Optional: Makes it clear these are clickable */
+  cursor: pointer; 
 }
 
 .dropdown:hover .dropdown-content {

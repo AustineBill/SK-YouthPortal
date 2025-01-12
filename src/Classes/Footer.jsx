@@ -31,10 +31,10 @@ const Footer = () => (
           About Us
         </Link>
         <Link className="btn btn-link p-0" to="">
-          Privacy Policy
+          SK Officials
         </Link>
         <Link className="btn btn-link p-0" to="">
-          Terms & Condition
+          Mandate
         </Link>
       </div>
 
