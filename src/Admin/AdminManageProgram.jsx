@@ -16,7 +16,7 @@ const ManageProgram = () => {
     program_type: "",
     image: null,
   });
-  
+
   const [imagePreview, setImagePreview] = useState(null);
   const [amenityImages, setAmenityImages] = useState([]);
 
@@ -36,43 +36,43 @@ const ManageProgram = () => {
 
   const handleSaveChanges = async () => {
     console.log("Save Details button clicked!");
-  
+
     // Check the data before overwriting
     console.log("Selected Program Before Update:", selectedProgram);
-  
+
     try {
       // Create FormData and add the key-value pairs
       const formData = new FormData();
-  
+
       // Set program details - overwrite instead of append
       formData.set("program_name", selectedProgram.program_name);
       formData.set("description", selectedProgram.description);
       formData.set("heading", selectedProgram.heading);
       formData.set("program_type", selectedProgram.program_type);
-  
+
       // Log FormData contents to check what is being added
       for (let [key, value] of formData.entries()) {
         console.log(`${key}:`, value);
       }
-  
+
       // Handle the image if present
       if (selectedProgram.image) {
         console.log("Image attached:", selectedProgram.image);
         formData.set("image", selectedProgram.image); // Overwrite any existing "image" key
       }
-  
+
       // Handle amenity images - send as a JSON string
       if (amenityImages.length > 0) {
         formData.set("amenities", JSON.stringify(amenityImages)); // Send amenities as a JSON string
       }
-  
+
       // Send the PUT request with FormData
       const response = await axios.put(
         `http://localhost:5000/programs/${selectedProgram.id}`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-  
+
       console.log("Response from backend:", response.data);
       alert("Program updated successfully!");
       fetchPrograms(); // Refresh the list of programs
@@ -88,8 +88,8 @@ const ManageProgram = () => {
       alert("Failed to save changes. Please try again.");
     }
   };
-  
-  
+
+
   const handleAddProgram = async () => {
     const formData = new FormData();
     formData.append("program_name", newProgram.name);
@@ -150,7 +150,7 @@ const ManageProgram = () => {
     setImagePreview(program.image_url);
     setAmenityImages(program.amenities || []);
   };
-  
+
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -393,7 +393,8 @@ const ManageProgram = () => {
 
         {/* Edit Modal */}
         {showEditModal && selectedProgram && (
-          <div className="edit-program-modal d-flex flex-column">
+          <div 
+          className="edit-program-modal d-flex flex-column rounded">
             <div className="edit-program-content">
               <h3 className="text-center">Edit Program</h3>
               <form className="admin-edit-program-details-group d-flex flex-column align-items-center">
@@ -444,21 +445,18 @@ const ManageProgram = () => {
                     multiple
                   />
                 </div>
-                
-                <div className="edit-modal-buttons-container d-flex">
-                  <Button
-                    variant="success"
-                    onClick={handleSaveChanges}
-                    className="edit-save-button">
-                    Save Changes
-                  </Button>
 
-                  <Button
-                    variant="danger"
+                <div className="edit-modal-buttons-container d-flex">
+                  <button
                     onClick={() => setShowEditModal(false)}
-                    className="edit-cancel-button">
+                    className="edit-cancel-button bg-danger text-white rounded-pill">
                     Cancel
-                  </Button>
+                  </button>
+                  <button
+                    onClick={handleSaveChanges}
+                    className="edit-save-button bg-success text-white rounded-pill">
+                    Save Changes
+                  </button>
                 </div>
               </form>
             </div>
