@@ -5,9 +5,14 @@
 /* User Authentication */
 /* ____________________________________________________________________________________________________ */
 
+
 .user-authentication-contents {
+    position: relative;
+    padding: 9em 0;
+    background: url(/public/Asset/WebImages/login_bg.png) no-repeat center center;
+    background-size: 100% 100%;
     width: 100%;
-    margin: 30px 0 30px 0;
+    height: 100%;
 }
 
 /* Left side */
@@ -57,8 +62,8 @@
 .sign-in-details-container,
 .forgot-password-details-container,
 .sign-up-details-container {
-    width: 80%;
-    background-color: #E4E4E4;
+    width: 75%;
+    background-color: #87c0f0;
 }
 
 .sign-in-details-group,

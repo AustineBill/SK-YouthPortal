@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../WebStructure/AuthContext";
-import axios from "axios";
-// import "./UserAuthentication.css";
+import axios from "axios";  
 import "../WebStyles/Admin-CSS.css";
 
 const { DecryptionCode } = require("../WebStructure/Codex");
@@ -236,7 +235,7 @@ const UserAuthentication = () => {
   return (
     <div className="user-authentication-contents d-flex justify-content-center">
       <div className="left-side-responsive d-none d-md-flex align-items-center justify-content-center">
-        <div className="left-side-contents-container d-flex flex-column justify-content-center text-center text-lg-center">
+        <div className=" d-flex flex-column justify-content-center text-center text-lg-center">
           <h1 className="top-part">Lagi't lagi para sa Kabataan,</h1>
           <h1 className="middle-part">
             {" "}
