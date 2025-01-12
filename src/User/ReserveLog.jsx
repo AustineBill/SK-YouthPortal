@@ -33,7 +33,13 @@ const ReservationLog = () => {
         const response = await axios.get(endpoint, {
           params: { userId },
         });
-        setReservations(response.data);
+
+        const activeReservations = response.data.filter(
+          (reservation) =>
+            reservation.is_archived !== true && reservation.is_archived !== "t"
+        );
+
+        setReservations(activeReservations);
       } catch (error) {
         console.error(`Error fetching ${selectedCategory} data:`, error);
       }
