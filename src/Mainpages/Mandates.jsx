@@ -41,33 +41,23 @@ const Mandate = () => {
 
       {/* Timeline Container */}
       <div className="main-timeline">
-        {/* Mandate */}
-        <div className="timeline-left">
-          <div className="icon-container-outside">
-            <img
-              src="path/to/mandate-icon.png" // Replace with your Mandate icon path
-              alt="Mandate Icon"
-              className="icon-img-outside"
-            />
-          </div>
-          <Card className="gradient-custom">
-            <Card.Body className="p-4">
-              <h2>Mandate</h2>
-              <p className="text-white-50 fs-4">
-                {mandateInfo.mandate || "Loading Mandate..."}
-              </p>
-            </Card.Body>
-          </Card>
-        </div>
 
         {/* Mission */}
-        <div className="timeline-right">
-          <div className="icon-container-outside">
+        <div className="timeline-left">
+          <div className="icon-container-outside" style={{ marginBottom: "-.01px" }}>
             <img
-              src="path/to/mission-icon.png" // Replace with your Mission icon path
+              src="Asset/WebImages/pngegg.png" 
               alt="Mission Icon"
               className="icon-img-outside"
+              style={{
+                width: "600px",
+                height: "500px",
+                objectFit: "contain",
+                marginTop: "-150px",
+              }}
             />
+
+
           </div>
           <Card className="gradient-custom-4">
             <Card.Body className="p-4">
@@ -79,14 +69,24 @@ const Mandate = () => {
           </Card>
         </div>
 
+
         {/* Vision */}
-        <div className="timeline-left">
-          <div className="icon-container-outside">
+        <div className="timeline-right">
+          <div className="icon-container-outside"
+          style={{ marginBottom: "-10px" }}>
             <img
-              src="path/to/vision-icon.png" // Replace with your Vision icon path
+              src="Asset/WebImages/vision.png" 
               alt="Vision Icon"
               className="icon-img-outside"
+              style={{
+                width: "350px",
+                height: "350px",
+                objectFit: "contain",
+                marginTop: "-300px",
+              }}
             />
+
+
           </div>
           <Card className="gradient-custom">
             <Card.Body className="p-4">
@@ -98,13 +98,24 @@ const Mandate = () => {
           </Card>
         </div>
 
+        
+
         {/* Objectives */}
-        <div className="timeline-right">
-          <div className="icon-container-outside">
+        <div className="timeline-left">
+          <div className="icon-container-outside"
+            style={{ marginBottom: "-135px" }}
+          >
+            
             <img
-              src="path/to/objectives-icon.png" // Replace with your Objectives icon path
+              src="Asset/WebImages/objective.png" 
               alt="Objectives Icon"
               className="icon-img-outside"
+              style={{
+                width: "580px",
+                height: "450px",
+                objectFit: "contain",
+                marginTop: "-190px",
+              }}
             />
           </div>
           <Card className="gradient-custom-4">

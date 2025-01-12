@@ -98,7 +98,7 @@ const About = () => {
                     src={photo.image_url}
                     className="d-block w-100"
                     alt={`SK Council Slide ${index + 1}`}
-                    style={{ height: "750px", width: "auto", margin: "0 auto" }}
+                    style={{ height: "570px", width: "auto", margin: "0 auto" }}
                   />
                 </div>
               ))

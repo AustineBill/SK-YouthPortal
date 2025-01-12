@@ -91,7 +91,7 @@ const Council = () => {
                     className="d-block w-100"
                     alt={`SK Council Slide ${index + 1}`}
                     style={{
-                      height: "500px", // Ensures equal height for all images
+                      height: "600px", // Ensures equal height for all images
                       objectFit: "cover", // Maintains aspect ratio while filling the space
                     }}
                   />
@@ -108,9 +108,9 @@ const Council = () => {
         </div>
       </div>
 
-      <div className="bg-secondary mt-4">
+      <div className="bg-custom mt-5">
         <div className="Divider">
-          <h1 className="text-dark fw-bold fs-4">SK COUNCIL</h1>
+          <h1 className="text-light fw-bold fs-4">SK COUNCIL</h1>
         </div>
       </div>
 
@@ -128,13 +128,15 @@ const Council = () => {
             key={index}
           >
             <img
-              src={item.image} // Direct URL from the backend
+              src={item.image} 
               alt={`SK Council Member ${index + 1}`}
               className="img-responsive"
               style={{
-                width: "100%", // Ensures the image scales properly
-                maxHeight: "400px", // Restrict height for consistent appearance
-                objectFit: "contain", // Keeps aspect ratio intact
+                width: "100%", 
+                maxHeight: "400px", 
+                objectFit: "contain", 
+                marginTop: "20px",
+                marginBottom: "20px",
               }}
             />
           </div>

@@ -385,11 +385,15 @@ body,
   display: flex; /* Change to flex to use Flexbox for centering */
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
-  padding: 2.5rem;
+  padding: 2rem;
   animation: fadeIn 1s ease-in-out;
-  border-right: 2px solid rgb(10, 10, 10);
+  border-right: 1px solid rgb(249, 249, 249);
   border-left: 2px solid rgb(10, 10, 10);
   width: 30%;
+}
+
+.bg-custom {
+  background-color: #27036a;
 }
 
 /* Reset Styles */
@@ -620,8 +624,8 @@ h2,
 
 .custom-name-wrapper {
   text-align: right; 
-  margin-top: 1rem; 
-  margin-right: 4rem;
+  margin-top: -3rem; 
+  margin-right: 1rem;
 }
 
 .sangguniang-text {
@@ -640,7 +644,7 @@ h2,
   animation-fill-mode: both;
   animation-name: slideInRight;
   font-size: 5px;
-  margin-top: -1.5rem; /* Use a negative value to move it upwards */
+  margin-top: -1.9rem; /* Use a negative value to move it upwards */
   margin-right: 1.5rem; /* Moves the text to the right */
   margin-left: 60%; /* Keeps the left margin for positioning */
 }
@@ -649,6 +653,7 @@ h2,
   color: white;
   font-size: 1.7rem; /* Adjust the size as needed */
   font-family: "Arial", sans-serif; /* Or use any font you like */
+  margin-top: -.01rem; 
 }
 
 .image-container {
@@ -1195,21 +1200,20 @@ h2,
 }
 
 .youth-text-content {
-  font-size: 1.1rem; /* Adjust text size */
-  line-height: 1.6; /* Adjust line height for readability */
-  max-width: 100%; /* Limit the width of the description text */
-  margin-top: 160px;
+  font-size: 1.1rem; 
+  line-height: 1.6; 
+  max-width: 100%; 
+  margin-top: 40px;
   overflow: hidden;
   color: #131313;
 
 }
 
 .youth-head {
- /* color: #111b54; /* Equivalent to text-primary */
-  font-weight: 600; /* Adjust the font-weight as needed */
-  text-align: left; /* Center the text */
-  font-size: 6rem;
-  margin-top: 130px;
+  font-weight: 600; 
+  text-align: left;
+  font-size: 5.5rem;
+  margin-top: 20px;
   margin-right: 2rem;
   font-family: 'Poppins', sans-serif; 
 }
@@ -1231,7 +1235,7 @@ h2,
 
 /* Gradient Backgrounds */
 .gradient-custom {
-  background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+  background: linear-gradient(45deg, #c45dff 5%, #2172ff 100%);
   color: white;
   border: none;
   border-radius: 10px;
@@ -1239,7 +1243,7 @@ h2,
 }
 
 .gradient-custom-4 {
-  background: linear-gradient(45deg, #ff6a00 0%, #ee0979 100%); /*!important*/
+  background: linear-gradient(45deg, #ff6a00 0%, #ff0c81 100%); /*!important*/
   color: white;
   border: none;
   border-radius: 10px;
