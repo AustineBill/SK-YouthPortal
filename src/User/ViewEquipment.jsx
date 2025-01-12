@@ -87,7 +87,7 @@ const ViewEquipment = () => {
           placement="top"
           overlay={renderPopover(dailyReservations)}
         >
-          <div className="tile-content">
+          <div className="overlay-content">
             <span className="reservation-count">
               {dailyReservations.length}
             </span>

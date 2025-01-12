@@ -20,43 +20,43 @@ const AdminEquipmentReservation = () => {
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
   const [selectedReservations, setSelectedReservations] = useState([]);
+  const [calendarReservations, setCalendarReservations] = useState([]);
 
-  useEffect(() => {
-    const fetchReservations = async () => {
-      try {
-        const endpoint = "http://localhost:5000/Allequipments"; // Updated endpoint to fetch equipment reservations
-        const response = await axios.get(endpoint);
-        setReservations(response.data);
-        setFilteredReservations(response.data);
-      } catch (error) {
-        console.error("Error fetching reservation data:", error);
-      }
-    };
-    fetchReservations();
-  }, []);
-
-  // Fetch reservations from the backend
-  const fetchReservations = async () => {
+  // Fetch reservations for the calendar from /ViewEquipment endpoint
+  const fetchCalendarReservations = async () => {
     try {
       const response = await fetch("http://localhost:5000/ViewEquipment");
       if (!response.ok) {
-        throw new Error("Error fetching reservations");
+        throw new Error("Error fetching calendar reservations");
       }
       const data = await response.json();
-      setReservations(data);
+      setCalendarReservations(data);
     } catch (error) {
-      console.error("Error fetching reservations:", error);
+      console.error("Error fetching calendar reservations:", error);
+    }
+  };
+
+  // Fetch reservations for the table from /Allequipments endpoint
+  const fetchTableReservations = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/Allequipments");
+      setReservations(response.data);
+      setFilteredReservations(response.data);
+    } catch (error) {
+      console.error("Error fetching table reservation data:", error);
     }
   };
 
   useEffect(() => {
-    fetchReservations();
+    fetchCalendarReservations(); // Fetch data for the calendar
+    fetchTableReservations(); // Fetch data for the table
   }, []);
 
+  // Filter reservations based on selected option
   useEffect(() => {
     let filteredData = reservations;
-
     const now = new Date();
+
     if (filterOption === "Now") {
       filteredData = reservations.filter((reservation) => {
         const reservationDate = new Date(reservation.start_date);
@@ -94,15 +94,10 @@ const AdminEquipmentReservation = () => {
 
   const handleApprove = async () => {
     try {
-      // Update the status of the selected reservations to 'Approved'
       await axios.post("http://localhost:5000/approveEquipment", {
         ids: selectedReservations,
       });
-
-      // Refresh the reservations list
-      const response = await axios.get("http://localhost:5000/Allequipments");
-      setReservations(response.data);
-      setFilteredReservations(response.data);
+      fetchTableReservations(); // Refresh the reservations list
       setSelectedReservations([]); // Clear selected reservations
     } catch (error) {
       console.error("Error updating reservation status:", error);
@@ -111,51 +106,40 @@ const AdminEquipmentReservation = () => {
 
   const handleDisapprove = async () => {
     try {
-      // Update the status of the selected reservations to 'Disapproved'
       await axios.post("http://localhost:5000/disapproveEquipment", {
         ids: selectedReservations,
       });
-
-      // Refresh the reservations list
-      const response = await axios.get("http://localhost:5000/Allequipments");
-      setReservations(response.data);
-      setFilteredReservations(response.data);
+      fetchTableReservations(); // Refresh the reservations list
       setSelectedReservations([]); // Clear selected reservations
     } catch (error) {
       console.error("Error updating reservation status:", error);
     }
   };
 
-  // Filter reservations by start_date
   const filterReservations = (date) => {
-    return reservations.filter((res) => {
+    return calendarReservations.filter((res) => {
       const startDate = new Date(res.start_date).toDateString();
       const currentDate = date.toDateString();
       return startDate === currentDate;
     });
   };
 
-  // Assign classes to tiles based on reservation data
   const tileClassName = ({ date, view }) => {
-    if (view !== "month") return ""; // Apply styles only in month view
-
+    if (view !== "month") return "";
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Remove time component for comparison
-
-    const isSunday = date.getDay() === 0; // Check if the day is Sunday (0 represents Sunday)
-
+    today.setHours(0, 0, 0, 0);
+    const isSunday = date.getDay() === 0;
     if (date < today || isSunday) {
       return "unavailable"; // Past dates and Sundays should always be unavailable
     }
     const dailyReservations = filterReservations(date);
-
     if (dailyReservations.length === 0) return "available";
     if (dailyReservations.length >= 5) return "unavailable";
     return "available";
   };
 
   const renderPopover = (dailyReservations) => (
-    <Popover id="reservation-popover">
+    <Popover id="popover-basic">
       <Popover.Header as="h3">Reservation Details</Popover.Header>
       <Popover.Body>
         {dailyReservations.map((res, index) => (
@@ -172,15 +156,14 @@ const AdminEquipmentReservation = () => {
   const tileContent = ({ date, view }) => {
     if (view !== "month") return null;
     const dailyReservations = filterReservations(date);
-
     if (dailyReservations.length > 0) {
       return (
         <OverlayTrigger
           trigger="click"
           placement="top"
-          overlay={renderPopover(dailyReservations)}
+          overlay={renderPopover(dailyReservations)} // Ensure the popover renders correctly
         >
-          <div className="tile-content">
+          <div className="overlay-content">
             <span className="reservation-count">
               {dailyReservations.length}
             </span>
@@ -207,9 +190,8 @@ const AdminEquipmentReservation = () => {
         Equipment Reservation
       </h2>
 
-      <div className="admin-ereservation-calendar-container">
+      <div className="calendar-container">
         <Calendar
-          className={"er-calendar rounded"}
           minDate={new Date()}
           selectRange={true}
           tileClassName={tileClassName}
@@ -332,7 +314,7 @@ const AdminEquipmentReservation = () => {
                         reservation.status === "Pending"
                       }
                     >
-                      Delete
+                      Archive
                     </Button>
                   </td>
                 </tr>

@@ -8,14 +8,14 @@ import {
   OverlayTrigger,
   Popover,
 } from "react-bootstrap";
-// import "../WebStyles/CalendarStyles.css";
 import "./styles/AdminGymReservation.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AdminGymReservation = () => {
   const navigate = useNavigate();
-  const [reservations, setReservations] = useState([]);
+  const [reservations, setReservations] = useState([]); // Used for table data
+  const [calendarReservations, setCalendarReservations] = useState([]); // Used for calendar data
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
   const [selectedReservations, setSelectedReservations] = useState([]);
@@ -23,7 +23,7 @@ const AdminGymReservation = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Fetch all reservations on component mount
+  // Fetch all reservations for the table (Allreservations)
   useEffect(() => {
     const fetchReservations = async () => {
       try {
@@ -31,33 +31,33 @@ const AdminGymReservation = () => {
           "http://localhost:5000/Allreservations"
         );
         setReservations(response.data);
-        setFilteredReservations(response.data);
+        setFilteredReservations(response.data); // For filtering
       } catch (error) {
-        console.error("Error fetching reservation data:", error);
+        console.error("Error fetching reservation data for table:", error);
       }
     };
-
     fetchReservations();
   }, []);
 
-  const fetchReservations = async () => {
+  // Fetch scheduled reservations for the calendar (ViewSched)
+  const fetchCalendarReservations = async () => {
     try {
       const response = await fetch("http://localhost:5000/ViewSched");
       if (!response.ok) {
-        throw new Error("Error fetching reservations");
+        throw new Error("Error fetching calendar reservations");
       }
       const data = await response.json();
-      setReservations(data);
+      setCalendarReservations(data); // For calendar view
     } catch (error) {
-      console.error("Error fetching reservations:", error);
+      console.error("Error fetching calendar data:", error);
     }
   };
 
   useEffect(() => {
-    fetchReservations();
+    fetchCalendarReservations();
   }, []);
 
-  // Filter reservations based on selected filter option
+  // Filter reservations for the table based on selected filter option
   useEffect(() => {
     let filteredData = reservations;
     const now = new Date();
@@ -145,9 +145,9 @@ const AdminGymReservation = () => {
     };
   }, []);
 
-  // Filter reservations based on date and time slot
-  const filterReservations = (date) => {
-    return reservations.filter((res) => {
+  // Filter reservations for the calendar based on the selected time slot
+  const filterCalendarReservations = (date) => {
+    return calendarReservations.filter((res) => {
       const startDate = new Date(res.start_date);
       const endDate = new Date(res.end_date);
       const selectedDate = new Date(date);
@@ -163,7 +163,7 @@ const AdminGymReservation = () => {
   const tileClassName = ({ date, view }) => {
     if (view !== "month") return ""; // Apply styles only in month view
 
-    const dailyReservations = filterReservations(date);
+    const dailyReservations = filterCalendarReservations(date);
 
     if (dailyReservations.length === 0) {
       return "vacant"; // No reservations: Vacant
@@ -213,8 +213,7 @@ const AdminGymReservation = () => {
         Gym Reservation
       </h2>
 
-      <div className="time-dropdown-container"
-        ref={dropdownRef}>
+      <div className="time-dropdown-container" ref={dropdownRef}>
         <div className="time-dropdown">
           <button
             className="time-dropdown-button dropdown-toggle bg-primary"
@@ -250,7 +249,7 @@ const AdminGymReservation = () => {
         </div>
       </div>
 
-      <div className="admin-greservation-calendar-container">
+      <div className="calendar-container">
         <Calendar
           className={"gr-calendar rounded"}
           minDate={new Date()}
@@ -259,7 +258,7 @@ const AdminGymReservation = () => {
           tileContent={({ date, view }) => {
             if (view !== "month") return null;
 
-            const dailyReservations = filterReservations(date);
+            const dailyReservations = filterCalendarReservations(date);
 
             if (dailyReservations.length > 0) {
               const displayCount = dailyReservations.some(
@@ -348,7 +347,7 @@ const AdminGymReservation = () => {
                 />
               </th>
               <th>ID</th>
-              <th>Program</th>
+              <th>Type</th>
               <th>Start Date</th>
               <th>End Date</th>
               <th>Time Slot</th>
@@ -368,11 +367,11 @@ const AdminGymReservation = () => {
                   />
                 </td>
                 <td>{reservation.id}</td>
-                <td>{reservation.program_name}</td>
-                <td>{formatDate(reservation.start_date)}</td>
+                <td>{reservation.program}</td>
+                <td>{formatDate(reservation.date)}</td>
                 <td>{formatDate(reservation.end_date)}</td>
                 <td>{reservation.time_slot}</td>
-                <td>{reservation.status}</td>
+                <td>{reservation.status || "Pending"}</td>
                 <td className="admin-greservation-action-button-container d-flex justify-content-center">
                   <Button
                     variant="primary"
@@ -381,7 +380,7 @@ const AdminGymReservation = () => {
                       navigate(`/editReservation/${reservation.id}`)
                     }
                   >
-                    Edit
+                    Archive
                   </Button>
                 </td>
               </tr>

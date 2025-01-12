@@ -3,13 +3,14 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../WebStructure/AuthContext";
 import axios from "axios";
 // import "./UserAuthentication.css";
-import '../WebStyles/Admin-CSS.css';
+import "../WebStyles/Admin-CSS.css";
 
 const { DecryptionCode } = require("../WebStructure/Codex");
 
 const UserAuthentication = () => {
   const [view, setView] = useState("signIn");
-  const [showAccountActivationFields, setShowAccountActivationFields] = useState(false);
+  const [showAccountActivationFields, setShowAccountActivationFields] =
+    useState(false);
   const [showChangePasswordField, setShowChangePasswordField] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -192,7 +193,7 @@ const UserAuthentication = () => {
       );
       alert(
         error.response?.data?.message ||
-        "An error occurred while updating your account"
+          "An error occurred while updating your account"
       );
     }
   };
@@ -234,11 +235,16 @@ const UserAuthentication = () => {
 
   return (
     <div className="user-authentication-contents d-flex justify-content-center">
-      <div className='left-side-responsive d-none d-md-flex align-items-center justify-content-center'>
+      <div className="left-side-responsive d-none d-md-flex align-items-center justify-content-center">
         <div className="left-side-contents-container d-flex flex-column justify-content-center text-center text-lg-center">
           <h1 className="top-part">Lagi't lagi para sa Kabataan,</h1>
-          <h1 className="middle-part"> Barangay at sa Bayan
-            <span className="bottom-part fst-italic"> Sangguniang Kabataan</span>
+          <h1 className="middle-part">
+            {" "}
+            Barangay at sa Bayan
+            <span className="bottom-part fst-italic">
+              {" "}
+              Sangguniang Kabataan
+            </span>
           </h1>
           <p className="SK-location">Western Bicutan</p>
         </div>
@@ -457,6 +463,10 @@ const UserAuthentication = () => {
                       required
                     />
                   </div>
+
+                  <p className="sign-up-description">
+                    Kindly Change your Username and Password Before Signing Up
+                  </p>
 
                   <button
                     type="submit"
