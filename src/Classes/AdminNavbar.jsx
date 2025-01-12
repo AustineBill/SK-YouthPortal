@@ -42,6 +42,7 @@ const AdminNavbar = () => {
         { to: "/admin/manage-contact-us", label: "Manage Contact Us Page" },
         { to: "/admin/gym-reservation", label: "Gym Reservation" },
         { to: "/admin/equipment-reservation", label: "Equipment Reservation" },
+        { to: "/admin/Inventory", label: "Inventory" },
         { to: "/admin/reports", label: "Reports" },
         { to: "/admin/users", label: "Users" }
     ];
