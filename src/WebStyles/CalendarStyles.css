@@ -87,15 +87,6 @@
   background-color: #f8f9fa;
 }
 
-/* Reservations Popover Styling */
-.overlay-content .reservation-count {
-  background-color: #ffc107;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 0.9rem;
-  font-weight: bold;
-}
-
 /* Legend styling */
 
 .grid-container {
@@ -136,10 +127,6 @@
   display: inline-block;
 }
 
-.circle.vacant {
-  background-color: #d4f8e8;
-}
-
 .circle.available {
   background-color: #ffeeba;
 }
@@ -161,12 +148,6 @@
   border-radius: 8px;
   transition: all 0.3s ease;
 }
-
-/*.react-calendar__tile.vacant {
-  background-color: #e9f7ef;
-  color: #28a745;
-}*/
-
 .react-calendar__tile.available {
   background-color: #fff3cd;
   color: #856404;
@@ -219,9 +200,17 @@
 /* Popover styling */
 .overlay-content .reservation-count {
   font-size: 0.8rem;
-  font-weight: bold;
-  color: #555;
-  background: #ffc107;
+  color: #080808;
+  background: #ffffff;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+/* Reservations Popover Styling */
+/*.overlay-content .reservation-count {
+  background-color: #ffc107;
   padding: 5px 10px;
   border-radius: 5px;
-}
+  font-size: 0.9rem;
+  font-weight: bold;
+}*/

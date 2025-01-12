@@ -421,6 +421,7 @@ app.post("/reservations", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 app.get("/reservations", async (req, res) => {
   const { userId } = req.query; // Get userId from query parameters
 
@@ -1674,6 +1675,7 @@ app.get("/Allreservations", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 app.post("/approveReservations", async (req, res) => {
   const { ids } = req.body; // Array of reservation IDs to approve
 
