@@ -1,36 +1,36 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Container, Row, Col, Button, Breadcrumb, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect, useCallback } from "react";
+import { Container, Row, Col, Button, Breadcrumb, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const CancelReservation = () => {
   const [error, setError] = useState(null);
   const [selectedReason, setSelectedReason] = useState("");
-  const [otherReason, setOtherReason] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [reservationDetails, setReservationDetails] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
 
-  const reservationId = sessionStorage.getItem('reservationId');
-  const reservationType = sessionStorage.getItem('reservationType'); // Facility or Equipment
+  const reservationId = sessionStorage.getItem("reservationId");
+  const reservationType = sessionStorage.getItem("reservationType"); // Facility or Equipment
 
   const fetchReservationDetails = useCallback(async () => {
     try {
-      const endpoint = reservationType === 'Facility' 
-        ? `http://localhost:5000/reservations/${reservationId}`
-        : `http://localhost:5000/equipment/${reservationId}`;
+      const endpoint =
+        reservationType === "Facility"
+          ? `http://localhost:5000/reservations/${reservationId}`
+          : `http://localhost:5000/equipment/${reservationId}`;
 
       const response = await axios.get(endpoint);
       if (response.status === 200) {
         setReservationDetails(response.data);
       } else {
-        setError('No reservation found');
+        setError("No reservation found");
       }
     } catch (error) {
-      console.error('Error fetching reservation details:', error);
-      setError('Failed to load reservation details');
+      console.error("Error fetching reservation details:", error);
+      setError("Failed to load reservation details");
     }
   }, [reservationId, reservationType]);
 
@@ -40,32 +40,37 @@ const CancelReservation = () => {
 
   const handleCancellation = async () => {
     if (!isConfirmed) {
-      console.log('Cancellation not confirmed');
+      console.log("Cancellation not confirmed");
       return;
     }
-  
+
     try {
       const endpoint =
-        reservationType === 'Facility'
+        reservationType === "Facility"
           ? `http://localhost:5000/reservations/${reservationId}`
           : `http://localhost:5000/equipment/${reservationId}`;
-  
-      const response = await axios.delete(endpoint);
+
+      // Send PATCH request to update is_archived and reason
+      const response = await axios.patch(endpoint, {
+        is_archived: true, // Set to true to archive
+      });
+
       if (response.status === 200) {
         setShowModal(true);
       }
     } catch (error) {
-      console.error('Error cancelling reservation:', error);
+      console.error("Error cancelling reservation:", error);
       alert("There was an error cancelling your reservation.");
     }
   };
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+    return date.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -80,8 +85,8 @@ const CancelReservation = () => {
 
       <div className="text-center text-lg-start m-4 mv-8 mb-3">
         <h1 className="Maintext animated slideInRight">Reservation Log</h1>
-        <p className="Subtext text-danger">Cancellation</p> 
-      </div> 
+        <p className="Subtext text-danger">Cancellation</p>
+      </div>
 
       <Container>
         <div className="cancel-reservation-box p-4 rounded bg-light">
@@ -93,19 +98,40 @@ const CancelReservation = () => {
               <Container className="bg-light p-4 rounded">
                 <Row>
                   <Col xs={12} md={6}>
-                    <p><strong>Type:</strong> {reservationType}</p>
+                    <p>
+                      <strong>Type:</strong> {reservationType}
+                    </p>
                   </Col>
                   <Col xs={12} md={6}>
-                    <p><strong>Date:</strong> {formatDate(reservationDetails.start_date)} to {formatDate(reservationDetails.end_date)}</p>
+                    <p>
+                      <strong>Date:</strong>{" "}
+                      {formatDate(reservationDetails.start_date)} to{" "}
+                      {formatDate(reservationDetails.end_date)}
+                    </p>
                   </Col>
-                  <Col xs={12} md={6}>
-                    <p><strong>Time Slot:</strong> {reservationDetails.time_slot || 'N/A'}</p>
-                  </Col>
+                  {/* Condition to check if the reservation is for Equipment */}
+                  {reservationType === "Facility" ? (
+                    <Col xs={12} md={6}>
+                      <p>
+                        <strong>Time Slot:</strong>{" "}
+                        {reservationDetails.time_slot || "N/A"}
+                      </p>
+                    </Col>
+                  ) : (
+                    <Col xs={12} md={6}>
+                      <p>
+                        <strong>Reserved Equipment:</strong>{" "}
+                        {reservationDetails.reserved_equipment
+                          ? reservationDetails.reserved_equipment
+                          : "No equipment reserved"}
+                      </p>
+                    </Col>
+                  )}
                 </Row>
               </Container>
             </Form.Group>
           ) : (
-            <p>{error ? error : 'Loading reservation details...'}</p>
+            <p>{error ? error : "Loading reservation details..."}</p>
           )}
 
           <Form.Group className="mb-4">
@@ -132,9 +158,11 @@ const CancelReservation = () => {
               name="cancelReason"
               className="mb-2"
               label="Weather or Environmental Factors"
-              onChange={() => setSelectedReason("Weather or Environmental Factors")}
+              onChange={() =>
+                setSelectedReason("Weather or Environmental Factors")
+              }
             />
-            {reservationType === 'Equipment' && (
+            {reservationType === "Equipment" && (
               <Form.Check
                 type="radio"
                 id="reason4"
@@ -143,25 +171,6 @@ const CancelReservation = () => {
                 label="Equipment No Longer Needed"
                 onChange={() => setSelectedReason("Equipment No Longer Needed")}
               />
-            )}
-            <Form.Check
-              type="radio"
-              id="reason4"
-              name="cancelReason"
-              className="mb-2"
-              label="Other"
-              onChange={() => setSelectedReason("Other")}
-            />
-            {selectedReason === "Other" && (
-              <Form.Group className="mt-3">
-                <Form.Label>Please specify:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your reason"
-                  value={otherReason}
-                  onChange={(e) => setOtherReason(e.target.value)}
-                />
-              </Form.Group>
             )}
           </Form.Group>
 
@@ -177,7 +186,12 @@ const CancelReservation = () => {
 
           <Row className="justify-content-end">
             <Col xs="auto">
-              <Button variant="secondary" className="btn-danger" disabled={!isConfirmed} onClick={handleCancellation}>
+              <Button
+                variant="secondary"
+                className="btn-danger"
+                disabled={!isConfirmed}
+                onClick={handleCancellation}
+              >
                 Confirm
               </Button>
             </Col>
@@ -186,7 +200,7 @@ const CancelReservation = () => {
                 variant="outline-secondary"
                 className="btn-dark text-white"
                 onClick={() => {
-                  sessionStorage.removeItem('reservationId'); 
+                  sessionStorage.removeItem("reservationId");
                   navigate("/ReservationLog");
                 }}
               >
@@ -210,8 +224,13 @@ const CancelReservation = () => {
                 <i className="bi bi-x-circle"></i>
               </button>
               <div className="text-center">
-                <i className="bi bi-check2-circle text-danger" style={{ fontSize: '4rem' }}></i>
-                <h2 className="mt-3 mb-3">Your reservation cancelled successfully!</h2>
+                <i
+                  className="bi bi-check2-circle text-danger"
+                  style={{ fontSize: "4rem" }}
+                ></i>
+                <h2 className="mt-3 mb-3">
+                  Your reservation was archived successfully!
+                </h2>
                 <p>We hope to see you again soon.</p>
               </div>
               <div className="d-flex justify-content-center mt-3">
@@ -220,8 +239,8 @@ const CancelReservation = () => {
                   className="btn-dark"
                   onClick={() => navigate("/ReservationLog")}
                 >
-                  <i className="bi bi-house m-1"></i> 
-                    Return to Log
+                  <i className="bi bi-house m-1"></i>
+                  Return to Log
                 </Button>
               </div>
             </div>

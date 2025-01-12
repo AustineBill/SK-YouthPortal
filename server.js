@@ -376,10 +376,12 @@ app.get("/Profile/:username", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-app.post("/change-password", async (req, res) => {
+
+app.post("/change-password-only", async (req, res) => {
   const { id, oldPassword, newPassword } = req.body;
 
   try {
+    // Fetch the current user's password hash from the database
     const user = await pool.query("SELECT password FROM users WHERE id = $1", [
       id,
     ]);
@@ -388,14 +390,24 @@ app.post("/change-password", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const currentPassword = user.rows[0].password;
+    const currentPasswordHash = user.rows[0].password;
 
-    if (currentPassword !== oldPassword) {
+    // Compare the old password with the stored hash
+    const isOldPasswordCorrect = await bcrypt.compare(
+      oldPassword,
+      currentPasswordHash
+    );
+
+    if (!isOldPasswordCorrect) {
       return res.status(400).json({ message: "Old password is incorrect" });
     }
 
+    // Hash the new password before saving it
+    const newPasswordHash = await bcrypt.hash(newPassword, 10);
+
+    // Update the password in the database with the hashed new password
     await pool.query("UPDATE users SET password = $1 WHERE id = $2", [
-      newPassword,
+      newPasswordHash,
       id,
     ]);
 
@@ -405,6 +417,7 @@ app.post("/change-password", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 app.post("/reservations", async (req, res) => {
   const { user_id, reservation_type, start_date, end_date, status, time_slot } =
     req.body;
@@ -429,7 +442,7 @@ app.get("/reservations", async (req, res) => {
     const result = await pool.query(
       `SELECT id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
          FROM Schedules 
-         WHERE user_id = $1
+         WHERE user_id = $1 AND is_archived = false
          ORDER BY start_date ASC`,
       [userId]
     );
@@ -584,6 +597,7 @@ app.get("/schedule/equipment", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 app.get("/reservations/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
 
@@ -601,7 +615,32 @@ app.get("/reservations/:reservationId", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-app.delete("/reservations/:reservationId", async (req, res) => {
+
+app.patch("/reservations/:reservationId", async (req, res) => {
+  const { reservationId } = req.params;
+  const { is_archived } = req.body;
+
+  try {
+    const result = await pool.query(
+      "UPDATE Schedules SET is_archived = $1 WHERE id = $2 RETURNING *",
+      [is_archived, reservationId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Reservation not found" });
+    }
+
+    res.status(200).json({
+      message: "Reservation archived successfully",
+      updatedReservation: result.rows[0],
+    });
+  } catch (error) {
+    console.error("Error archiving reservation:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+/*app.delete("/reservations/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
 
   try {
@@ -619,8 +658,127 @@ app.delete("/reservations/:reservationId", async (req, res) => {
     console.error("Error cancelling reservation:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
+});*/
+
+app.get("/equipment/:reservationId", async (req, res) => {
+  const { reservationId } = req.params;
+
+  try {
+    const result = await pool.query(
+      `SELECT reservation_id, reserved_equipment, start_date, end_date
+       FROM Equipment
+       WHERE reservation_id = $1`,
+      [reservationId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).send("Reservation not found");
+    }
+
+    const row = result.rows[0];
+    let equipmentInfo = "No Equipment Reserved"; // Default value for no equipment
+
+    if (row.reserved_equipment) {
+      let reservedEquipment = row.reserved_equipment;
+      // Handle array of arrays (if any)
+      if (
+        Array.isArray(reservedEquipment) &&
+        reservedEquipment[0] &&
+        Array.isArray(reservedEquipment[0])
+      ) {
+        reservedEquipment = reservedEquipment.flat();
+      }
+      if (Array.isArray(reservedEquipment)) {
+        equipmentInfo = reservedEquipment
+          .map((item) => {
+            const name = item.name || "Unknown Item";
+            const quantity = item.quantity || 0;
+            return `${name} - ${quantity}`;
+          })
+          .join(", ");
+      }
+    }
+
+    res.status(200).json({
+      reservation_id: row.reservation_id,
+      reserved_equipment: equipmentInfo,
+      start_date: new Date(row.start_date).toLocaleString(),
+      end_date: new Date(row.end_date).toLocaleString(),
+    });
+  } catch (error) {
+    console.error("Error fetching equipment reservation details:", error);
+    res.status(500).send("Error fetching equipment reservation details");
+  }
 });
-app.delete("/equipment/:reservation_id", async (req, res) => {
+
+app.patch("/equipment/:reservationId", async (req, res) => {
+  const { reservationId } = req.params;
+
+  try {
+    // Step 1: Get the reservation details to identify the reserved equipment
+    const reservationResult = await pool.query(
+      "SELECT * FROM Equipment WHERE reservation_id = $1",
+      [reservationId]
+    );
+
+    if (reservationResult.rows.length === 0) {
+      return res.status(404).json({ message: "Reservation not found" });
+    }
+
+    // Step 2: Get the reserved equipment
+    const reservedEquipment = reservationResult.rows[0].reserved_equipment;
+
+    // Step 3: Check if reserved_equipment is a string and parse it if necessary
+    let equipmentList;
+    if (typeof reservedEquipment === "string") {
+      // Parse the JSON string if it's in string format
+      equipmentList = JSON.parse(reservedEquipment);
+    } else {
+      // If it's already an object/array, use it directly
+      equipmentList = reservedEquipment;
+    }
+
+    // Step 4: Update the inventory for each equipment in the reservation
+    for (const equipment of equipmentList) {
+      const { id, quantity } = equipment;
+
+      // Update the inventory by increasing the quantity of the equipment
+      const updateInventoryResult = await pool.query(
+        "UPDATE Inventory SET quantity = quantity + $1 WHERE id = $2 RETURNING *",
+        [quantity, id]
+      );
+
+      if (updateInventoryResult.rowCount === 0) {
+        return res
+          .status(404)
+          .json({ message: `Equipment with id ${id} not found in inventory` });
+      }
+    }
+
+    // Step 5: Archive the reservation (Set is_archived = true)
+    const archiveReservationResult = await pool.query(
+      "UPDATE Equipment SET is_archived = true WHERE reservation_id = $1 RETURNING *",
+      [reservationId]
+    );
+
+    if (archiveReservationResult.rowCount === 0) {
+      return res
+        .status(404)
+        .json({ message: "Reservation not found or already archived" });
+    }
+
+    // Step 6: Return success response
+    res.status(200).json({
+      message:
+        "Reservation archived and equipment quantity updated successfully",
+    });
+  } catch (error) {
+    console.error("Error archiving reservation:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+/*app.delete("/equipment/:reservation_id", async (req, res) => {
   const { reservation_id } = req.params;
 
   try {
@@ -683,7 +841,7 @@ app.delete("/equipment/:reservation_id", async (req, res) => {
     console.error("Error cancelling reservation:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
-});
+});*/
 
 app.post("/Feedback", async (req, res) => {
   const { user_id, rating, comment } = req.body;
