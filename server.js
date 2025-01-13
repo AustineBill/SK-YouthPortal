@@ -42,7 +42,7 @@ pool.connect((err) => {
 });
 
 // Welcome endpoint
-app.get("/", (req, res) => {
+app.put("/", (req, res) => {
   res.send("Welcome to the iSKed API");
 });
 
