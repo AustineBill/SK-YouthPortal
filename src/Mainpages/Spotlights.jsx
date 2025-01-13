@@ -102,7 +102,7 @@ const Spotlight = () => {
         </div>
       </div>
 
-      <div className="bg-secondary">
+      <div className="bg-custom mt-2.5">
         <div className="Divider">
           <h1 className="text-light fw-bold fs-4">Spotlight</h1>
         </div>

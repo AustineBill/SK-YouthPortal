@@ -101,12 +101,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluids">
       <div className="western-header"></div>
 
-      <div className="bg-secondary mt-2">
+      <div className="bg-custom mt-2.5">
         <div className="Divider">
-          <h1 className="text-dark fw-bold fs-4">Discover more Programs</h1>
+          <h1 className="text-light fw-bold fs-4">Discover more Programs</h1>
         </div>
       </div>
 
@@ -134,7 +134,7 @@ const Dashboard = () => {
                   onClick={() => handleNavigate(program.program_type)}
                   className="btn-db"
                 >
-                  Learn More
+                  More Details
                 </Button>
               </Card.Body>
             </Card>
