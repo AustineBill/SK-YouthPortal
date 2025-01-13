@@ -15,10 +15,7 @@
   margin: 20px 0 20px 40px;
 }
 
-.admin-greservation-buttons-table-container {
-  width: 90%;
-  margin: 0 auto 40px;
-}
+/* Time */
 
 .time-dropdown-container {
   height: 50px;
@@ -37,7 +34,15 @@
   font-size: 15px;
 }
 
+/* Table Decision Buttons */
+
+.admin-greservation-buttons-table-container {
+  width: 90%;
+  margin: 0 auto 40px;
+}
+
 .admin-gr-toggle-buttons-container {
+  height: 45px;
   width: 100%;
   margin-bottom: 20px;
   gap: 0.25in;
@@ -45,7 +50,7 @@
 
 .gr-toggle-container .gr-toggle {
   font-size: 15px;
-  height: 50px;
+  height: 45px;
 }
 
 .gr-toggle-container .gr-toggle-text .dropdown-item {
@@ -56,7 +61,7 @@
 .admin-gr-disapprove-button {
   font-size: 15px;
   width: 175px;
-  height: 50px;
+  height: 45px;
   border-style: solid;
   border-width: 1px;
   border-color: #000000;
@@ -67,18 +72,24 @@ button:disabled {
   opacity: 0.5;
 }
 
-.admin-greservation-head th {
+/* Gym Reservation Table */
+
+.admin-greservation-table-container tr {
+  height: 40px;
+}
+
+.admin-greservation-table-container th {
   font-size: 17.5px;
   font-weight: bold;
 }
 
-.admin-greservation-body td {
+.admin-greservation-table-container td {
   font-size: 15px;
 }
 
 .admin-greservation-action-button-container .admin-greservation-edit-button {
-  font-size: 15px;
-  width: 80px;
+  font-size: 12.5px;
+  width: 70px;
   height: 40px;
   transition: all 0.35s;
 }
@@ -103,6 +114,8 @@ button:disabled {
     font-size: 37.5px;
   }
 
+  /* Time */
+
   .time-dropdown-container {
     height: 45px;
   }
@@ -120,21 +133,16 @@ button:disabled {
     font-size: 12.5px;
   }
 
-  .admin-greservation-head th {
-    font-size: 15px;
-  }
-
-  .admin-greservation-body td {
-    font-size: 15px;
-  }
+  /* Table Decision Buttons */
 
   .admin-gr-toggle-buttons-container {
-    gap: 0.2in;
+    height: 40px;
+    gap: 0.20in;
   }
 
   .gr-toggle-container .gr-toggle {
     font-size: 12.5px;
-    height: 45px;
+    height: 40px;
   }
 
   .gr-toggle-container .gr-toggle-text .dropdown-item {
@@ -145,12 +153,26 @@ button:disabled {
   .admin-gr-disapprove-button {
     font-size: 12.5px;
     width: 150px;
-    height: 45px;
+    height: 40px;
+  }
+
+  /* Gym Reservation Table */
+
+  .admin-greservation-table-container tr {
+    height: 35px;
+  }
+
+  .admin-greservation-table-container th {
+    font-size: 15px;
+  }
+
+  .admin-greservation-table-container td {
+    font-size: 12.5px;
   }
 
   .admin-greservation-action-button-container .admin-greservation-edit-button {
-    font-size: 12.5px;
-    width: 70px;
+    font-size: 10px;
+    width: 60px;
     height: 35px;
   }
 }
@@ -159,6 +181,8 @@ button:disabled {
   .admin-greservation-label-h2 {
     font-size: 35px;
   }
+
+  /* Time */
 
   .time-dropdown-container {
     height: 40px;
@@ -177,27 +201,16 @@ button:disabled {
     font-size: 10px;
   }
 
-  .admin-greservation-head th {
-    font-size: 15px;
-  }
+  /* Table Decision Buttons */
 
-  .admin-greservation-body td {
-    font-size: 12.5px;
-  }
-
-  .admin-greservation-action-button-container .admin-greservation-edit-button {
-    font-size: 10px;
-    width: 60px;
-    height: 30px;
-  }
-
-  .admin-er-toggle-buttons-container {
+  .admin-gr-toggle-buttons-container {
+    height: 35px;
     gap: 0.15in;
   }
 
   .gr-toggle-container .gr-toggle {
     font-size: 10px;
-    height: 40px;
+    height: 35px;
   }
 
   .gr-toggle-container .gr-toggle-text .dropdown-item {
@@ -208,7 +221,27 @@ button:disabled {
   .admin-gr-disapprove-button {
     font-size: 10px;
     width: 125px;
-    height: 40px;
+    height: 35px;
+  }
+
+  /* Gym Reservation Table */
+
+  .admin-greservation-table-container tr {
+    height: 30px;
+  }
+
+  .admin-greservation-table-container th {
+    font-size: 12.5px;
+  }
+
+  .admin-greservation-table-container td {
+    font-size: 10px;
+  }
+
+  .admin-greservation-action-button-container .admin-greservation-edit-button {
+    font-size: 7.5px;
+    width: 50px;
+    height: 30px;
   }
 }
 
@@ -222,6 +255,8 @@ button:disabled {
     font-size: 35px;
     margin: 20px 0 20px 25px;
   }
+
+  /* Time */
 
   .time-dropdown-container {
     height: 40px;
@@ -240,21 +275,16 @@ button:disabled {
     font-size: 10px;
   }
 
-  .admin-greservation-head th {
-    font-size: 15px;
-  }
-
-  .admin-greservation-body td {
-    font-size: 12.5px;
-  }
+  /* Table Decision Buttons */
 
   .admin-gr-toggle-buttons-container {
+    height: 35px;
     gap: 0.15in;
   }
 
   .gr-toggle-container .gr-toggle {
     font-size: 10px;
-    height: 40px;
+    height: 35px;
   }
 
   .gr-toggle-container .gr-toggle-text .dropdown-item {
@@ -264,13 +294,27 @@ button:disabled {
   .admin-gr-approve-button,
   .admin-gr-disapprove-button {
     font-size: 10px;
-    width: 100px;
-    height: 40px;
+    width: 125px;
+    height: 35px;
+  }
+
+  /* Gym Reservation Table */
+
+  .admin-greservation-table-container tr {
+    height: 30px;
+  }
+
+  .admin-greservation-table-container th {
+    font-size: 12.5px;
+  }
+
+  .admin-greservation-table-container td {
+    font-size: 10px;
   }
 
   .admin-greservation-action-button-container .admin-greservation-edit-button {
-    font-size: 10px;
-    width: 60px;
+    font-size: 7.5px;
+    width: 50px;
     height: 30px;
   }
 }
@@ -285,6 +329,8 @@ button:disabled {
     font-size: 30px;
     margin: 20px 0 20px 20px;
   }
+
+  /* Time */
 
   .time-dropdown-container {
     height: 35px;
@@ -303,37 +349,46 @@ button:disabled {
     font-size: 10px;
   }
 
-  .admin-greservation-head th {
-    font-size: 12.5px;
-  }
-
-  .admin-greservation-body td {
-    font-size: 10px;
-  }
+  /* Table Decision Buttons */
 
   .admin-gr-toggle-buttons-container {
-    gap: 0.1in;
+    height: 25px;
+    gap: 0.10in;
   }
-
+  
   .gr-toggle-container .gr-toggle {
-    font-size: 10px;
-    height: 35px;
+    font-size: 7.5px;
+    height: 25px;
   }
-
+  
   .gr-toggle-container .gr-toggle-text .dropdown-item {
-    font-size: 10px;
+    font-size: 7.5px;
   }
-
+  
   .admin-gr-approve-button,
   .admin-gr-disapprove-button {
+    font-size: 7.5px;
+    width: 100px;
+    height: 25px;
+  }
+
+  /* Gym Reservation Table */
+
+  .admin-greservation-table-container tr {
+    height: 20px;
+  }
+
+  .admin-greservation-table-container th {
     font-size: 10px;
-    width: 75px;
-    height: 35px;
+  }
+
+  .admin-greservation-table-container td {
+    font-size: 7.5px;
   }
 
   .admin-greservation-action-button-container .admin-greservation-edit-button {
-    font-size: 7.5px;
-    width: 50px;
+    font-size: 5px;
+    width: 40px;
     height: 25px;
   }
 }
