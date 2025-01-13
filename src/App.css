@@ -266,41 +266,6 @@ body,
   padding: 0;
 }
 
-.BodyContainer {
-  margin-top: 0 !important;
-  padding-top: 0;
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-}
-
-.CardBodyWithText {
-  color: #ffffff;
-  background-color: #25327a;
-  padding: 2rem;
-  border-radius: 10px;
-  width: 100%;
-}
-
-.BodyContainer blockquote p {
-  color: #ffffff !important;
-}
-
-.BlockQuote {
-  text-align: center;
-  font-size: 2.5rem;
-}
-
-.blockquote p {
-  text-align: justify;
-  font-size: 1.1rem;
-  line-height: 2;
-}
-
 .Website-Name {
   margin-left: 1rem;
   margin-right: 1rem;
@@ -396,6 +361,7 @@ h2,
   display: flex;
   align-items: center;
   gap: 85px;
+  transition: right 0.3s ease;
 }
 
 .nav-item {
@@ -432,15 +398,12 @@ h2,
 
 .nav-links.active {
   display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
+  transform: translateX(-100%);
   background-color: #25327a;
-  padding: 20px;
+  padding: 0 0 0 0;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   z-index: 999;
+  gap: 10px;
 }
 
 .nav-item {
@@ -469,6 +432,14 @@ h2,
   display: flex;
   gap: 5px;
   margin-right: 40px; /* Adjust as needed */
+  align-items: center;
+}
+
+.desktop-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  margin: auto;
   align-items: center;
 }
 
@@ -501,6 +472,9 @@ h2,
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
+  position: absolute;
+  right: 20px; /* Positioned in the right corner */
+  top: 30px; /* Adjust if needed */
 }
 
 .hamburger-icon .bar {
@@ -551,7 +525,7 @@ h2,
 /*** Hero Header ***/
 .hero-header {
   position: relative;
-  padding: 15em 0;
+  padding: 13em 0;
   background: url(/public/Asset/WebImages/Bg_noLOGO.png) no-repeat center center;
   background-size: 100% 100%;
   width: 100%;
@@ -586,17 +560,17 @@ h2,
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: slideInRight;
-  margin-right: 1.5rem; 
-  margin-left: 65%;
-  color: yellow; 
+  margin-right: 1.5rem;
+  margin-left: 60%;
+  color: yellow;
   font-size: 3rem;
   font-family: "Poppins", sans-serif;
-  margin-top: -0.6em;
+  margin-top: -0.5em;
 }
 
 .custom-font {
   color: white;
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   font-family: "Poppins", sans-serif;
 }
 
@@ -606,7 +580,7 @@ h2,
 }
 .below-image {
   justify-content: center;
-  max-width: 600px; 
+  max-width: 600px;
 }
 
 /***Mandate***/
@@ -663,15 +637,15 @@ h2,
 }
 
 .ProgramCard {
-  height: auto; 
+  height: auto;
   max-height: 150%;
-  width: 20em; 
+  width: 20em;
   margin: 25px;
-  border-radius: 8px; 
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 8px;
-  background-color: #ffffff; 
-  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  background-color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .ProgramCard:hover {
@@ -689,17 +663,39 @@ h2,
 
 /* About */
 
-.about-container {
-  width: 100%; /* Equivalent to col-lg-10 */
-  animation-duration: 1s; /* Equivalent to wow */
-  animation-fill-mode: both; /* Equivalent to wow */
-  animation-name: fadeIn; /* Equivalent to fadeIn */
+.BodyContainer {
+  margin-top: 0 !important;
+  padding-top: 0;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.CardBodyWithText {
+  color: #ffffff;
+  background-color: #25327a;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.BodyContainer blockquote p {
+  color: #ffffff !important;
+}
+
+.blockquote p {
+  text-align: justify;
+  font-size: 1.1rem;
+  line-height: 2;
 }
 
 .BlockQuote {
   color: #060707; /* Equivalent to text-primary */
-  margin-bottom: 1.5rem; /* Equivalent to mb-4 */
-  margin-top: 8rem; /* Equivalent to mb-4 */
+  margin-top: 5rem; /* Equivalent to mb-4 */
   font-weight: 700; /* Adjust the font-weight as needed */
   text-align: center; /* Center the text */
   font-size: 2.5rem;
@@ -708,7 +704,7 @@ h2,
 /*/* News and Events */
 
 .NewEveHead {
-  color: #1d0053; 
+  color: #1d0053;
   margin-top: 4rem;
   font-weight: 700; /* Adjust the font-weight as needed */
   text-align: center; /* Center the text */
@@ -763,64 +759,57 @@ h2,
 /*** Spotlight ***/
 
 .bg-secondary {
-  background-color: #04294f;  /* Dark blue */
+  background-color: #04294f; /* Dark blue */
 }
 
 .text-light {
-  color: #ffffff;  /* White text */
+  color: #ffffff; /* White text */
 }
 
 .spotlight-container {
   background: linear-gradient(to bottom, #edebf9);
   display: grid;
-  grid-template-columns: 1fr auto; 
-  grid-template-rows: auto 1fr auto; 
-  align-items: center; 
-  gap: 2rem; 
-  margin-top: 7rem;
-  justify-items: center; 
-  margin-top: 8px;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 2rem;
+  justify-items: center;
+  padding: 2rem 0;
 }
 
 .image-content {
-  justify-self: end; 
+  justify-self: end;
   align-self: center;
   max-width: 100%;
 }
 
 .image-content img {
-  width: 100%; 
-  max-width: 3500px; 
-  height: auto; 
-  object-fit: cover; 
+  width: 100%;
+  max-width: 3500px;
+  height: auto;
+  object-fit: cover;
   border-radius: 2px;
   margin-top: 1rem;
 }
 
 .spotlight-head {
-  color: #1d0053; 
-  margin-bottom: 4rem; 
-  font-weight: 700; 
-  text-align: left; 
-  margin: 40px 3px 0 6px;
+  color: #1d0053;
+  font-weight: 700;
   font-size: 7rem;
-  display: inline-block; 
+  justify-self: start;
+  margin: 0 0 0 30px;
 }
 
 .spotlight-button {
   font-weight: 400;
   display: inline-block;
-  text-align: right;
   padding: 0.5rem 1rem; /* Adjusted padding for a smaller button */
   font-size: 0.875rem; /* Smaller font size */
   line-height: 1.5;
   border-radius: 0.25rem;
   color: #fff;
   text-decoration: none;
-  margin-top: 2rem; /* Add space between the image and button */
-  margin-left: auto;
-  margin-right: 2rem;
-  justify-self: end; /* Align the button to the right */
+  margin: 0 0 0 auto;
 }
 
 .spotlight-button:hover {
@@ -829,21 +818,6 @@ h2,
   border-color: #1d0053;
   text-decoration: none;
 }
-
-.spotlight-text-content {
-  justify-self: start; 
-  margin-left: 30px;
-  margin-bottom: 5rem;
-  margin-top: 2rem;
-}
-
-.move-link {
-  text-align: center;
-  margin-top: 1rem; 
-  margin-right: -13rem; 
-  display: block;     
-}
-
 
 /*Text*/
 
@@ -929,18 +903,16 @@ h2,
   padding: 1rem 0;
 }
 
-
-
 /*PROGRAM HEADING*/
 .Maintext {
-  font-size: 3.5rem; 
-  color: #1d0053;     
-  font-weight: bold;   
+  font-size: 3.5rem;
+  color: #1d0053;
+  font-weight: bold;
 }
 
 .Subtext {
-  font-size: 1rem;  
-  color: #0c0c0c;        
+  font-size: 1rem;
+  color: #0c0c0c;
 }
 
 /*CONTACT*/
@@ -951,32 +923,31 @@ h2,
 }
 
 .DividerText {
-  color: #e1e7f5; 
+  color: #e1e7f5;
   font-size: 2rem !important;
-  font-family: 'Poppins', sans-serif; 
-  font-weight: 550 !important; 
-  text-align: center; 
+  font-family: "Poppins", sans-serif;
+  font-weight: 550 !important;
+  text-align: center;
   margin: 0;
 }
 
 .DividerText + .DividerText {
-  margin-top: 2px; 
+  margin-top: 2px;
 }
 
 .Text-3 {
-  color: #072b7e; 
+  color: #072b7e;
   font-style: "Poppins", sans-serif;
-  font-size: 1.7rem; 
+  font-size: 1.7rem;
   font-weight: 600;
   margin-top: 20px;
-  margin-bottom: 20px; 
-  text-align: left; 
+  margin-bottom: 20px;
+  text-align: left;
 }
 
 .d-flex img {
-  margin-bottom: 40px; 
+  margin-bottom: 40px;
 }
-
 
 /*** Footer ***/
 
@@ -1027,6 +998,13 @@ h2,
 
 /* Dropdown styles */
 
+.dropdownAvatar {
+  color: #000000;
+  padding: 5px 5px;
+  text-decoration: none;
+  text-align: center;
+}
+
 .dropdown-about {
   position: relative;
   display: inline-block;
@@ -1061,27 +1039,27 @@ h2,
 .dropbtn {
   padding: 40px;
   border: none;
-  background: none; 
+  background: none;
 }
 
 .dropdown-content {
-  display: block; 
+  display: block;
   position: absolute;
-  background-color: #277cfc; 
+  background-color: #277cfc;
   min-width: 150px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); 
-  z-index: 1100; 
-  top: 100%; 
-  left: 0; 
-  padding: 0; 
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+  top: 100%;
+  left: 0;
+  padding: 0;
 }
 
 .dropdown-content a {
-  color: rgb(11, 23, 113); 
+  color: rgb(11, 23, 113);
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .dropdown:hover .dropdown-content {

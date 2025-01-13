@@ -77,8 +77,9 @@ const Intro = () => {
     <div className="container-fluids">
       <div className="hero-header">
         <div className="text-center text-lg-start">
-          <h1 className="MainText ms-5 offset-content custom-font"
-          style={{ marginTop: '43px' }}
+          <h1
+            className="MainText ms-5 offset-content custom-font"
+            style={{ marginTop: "43px" }}
           >
             Lagi't lagi para sa Kabataan, Barangay at sa Bayan
           </h1>
@@ -276,14 +277,16 @@ const Intro = () => {
           )}
         </div>
 
-        <Link className="spotlight-button btn-db move-link" to="/Spotlight">
+        <Link className="spotlight-button btn-db" to="/Spotlight">
           View Gallery
         </Link>
       </div>
 
       {/* Quote Section */}
       <div className="BodyContainer" data-wow-delay="0.5s">
-        <h1 className="BlockQuote">SANGGUNIANG KABATAAN - WESTERN BICUTAN</h1>
+        <h1 className="BlockQuoteBlockQuote">
+          SANGGUNIANG KABATAAN - WESTERN BICUTAN
+        </h1>
         <Card>
           <Card.Body className="CardBodyWithText">
             <blockquote className="blockquote">

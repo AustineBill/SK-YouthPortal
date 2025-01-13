@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
     sessionStorage.removeItem("authToken");
     sessionStorage.removeItem("isAdmin");
     setIsAdmin(false);
+    setLoading(loading);
   };
 
   const login = (token, username) => {
@@ -53,7 +54,6 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     sessionStorage.clear(); // Clears all session data
-    //localStorage.clear(); // Clears all session data
     setIsAuthenticated(false);
     setIsAdmin(false);
   };

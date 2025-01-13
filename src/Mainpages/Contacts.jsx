@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Card, Button } from 'react-bootstrap';
-import Location from '../Asset/location.png'; // Ensure this image path is correct
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Card } from "react-bootstrap";
+import Location from "../Asset/location.png"; // Ensure this image path is correct
 
 const Contact = () => {
   const [contactDetails, setContactDetails] = useState({
-    contact_number: '',
-    location: '',
-    gmail: ''
+    contact_number: "",
+    location: "",
+    gmail: "",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,18 +16,18 @@ const Contact = () => {
     // Fetch the contact details using Axios
     const fetchContactDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/contact');
+        const response = await axios.get("http://localhost:5000/contact");
         setContactDetails(response.data);
         setLoading(false);
       } catch (err) {
-        console.error('Error fetching contact details:', err);
-        setError('Error fetching contact details');
+        console.error("Error fetching contact details:", err);
+        setError("Error fetching contact details");
         setLoading(false);
       }
     };
 
     fetchContactDetails();
-  }, []);  // Empty dependency array means this runs only once when the component mounts
+  }, []); // Empty dependency array means this runs only once when the component mounts
 
   if (loading) return <div>Loading contact details...</div>;
   if (error) return <div>{error}</div>;
@@ -41,23 +41,33 @@ const Contact = () => {
 
           <div className="d-flex justify-content-center mb-3">
             <Card className="ContactCard mx-3">
-              <i className="bi bi-phone fa-4x" style={{ color: '#FFD700' }}></i>
+              <i className="bi bi-phone fa-4x" style={{ color: "#FFD700" }}></i>
               <Card.Body>
-                <Card.Text>{contactDetails.contact_number || 'Not available'}</Card.Text>
+                <Card.Text>
+                  {contactDetails.contact_number || "Not available"}
+                </Card.Text>
               </Card.Body>
             </Card>
 
             <Card className="ContactCard mx-3">
-              <i className="bi bi-geo-alt fa-4x" style={{ color: '#00008B' }}></i>
+              <i
+                className="bi bi-geo-alt fa-4x"
+                style={{ color: "#00008B" }}
+              ></i>
               <Card.Body>
-                <Card.Text>{contactDetails.location || 'Not available'}</Card.Text>
+                <Card.Text>
+                  {contactDetails.location || "Not available"}
+                </Card.Text>
               </Card.Body>
             </Card>
 
             <Card className="ContactCard mx-3">
-              <i className="bi bi-envelope fa-4x" style={{ color: '#FF0000' }}></i>
+              <i
+                className="bi bi-envelope fa-4x"
+                style={{ color: "#FF0000" }}
+              ></i>
               <Card.Body>
-                <Card.Text>{contactDetails.gmail || 'Not available'}</Card.Text>
+                <Card.Text>{contactDetails.gmail || "Not available"}</Card.Text>
               </Card.Body>
             </Card>
           </div>
@@ -66,11 +76,13 @@ const Contact = () => {
 
       <div className="custom-bg">
         <div className="DividerType2">
-           <h1 className="DividerText"> SK Youth - Western Bicutan is open Monday to Saturday,</h1>
-           <p className="DividerText"> 8:00 AM - 5:00 PM</p>
+          <h1 className="DividerText">
+            {" "}
+            SK Youth - Western Bicutan is open Monday to Saturday,
+          </h1>
+          <p className="DividerText"> 8:00 AM - 5:00 PM</p>
         </div>
       </div>
-
 
       <p className="Text-3">Find us here!</p>
       <div className="d-flex justify-content-center">

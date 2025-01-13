@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../WebStructure/AuthContext";
-import axios from "axios";  
+import axios from "axios";
 import "../WebStyles/Admin-CSS.css";
 
 const { DecryptionCode } = require("../WebStructure/Codex");
@@ -236,11 +236,10 @@ const UserAuthentication = () => {
     <div className="user-authentication-contents d-flex justify-content-center">
       <div className="left-side-responsive text-left-container">
         <div className=" d-flex flex-column justify-content-center text-center text-lg-center">
-        <h1 className="middle-part">
-         Lagi't lagi para sa Kabataan, Barangay at sa Bayan
-              {" "}
-              </h1>
-              <h2 className="bottom-part fst-italic">Sangguniang Kabataan</h2>
+          <h1 className="middle-part">
+            Lagi't lagi para sa Kabataan, Barangay at sa Bayan{" "}
+          </h1>
+          <h2 className="bottom-part fst-italic">Sangguniang Kabataan</h2>
           <p className="SK-location">WESTERN BICUTAN</p>
         </div>
       </div>
@@ -270,7 +269,7 @@ const UserAuthentication = () => {
                     e.preventDefault();
                     setView("forgotPassword");
                   }}
-                  className="forgot-password-link text-decoration-none"
+                  className="forgot-password-link  text-decoration-none"
                 >
                   Forgot your password?
                 </Link>
