@@ -104,30 +104,41 @@ const Intro = () => {
 
       {/* Feature Cards Section */}
       <div className="row g-5 justify-content-center">
-        <div className="col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-          <div className="custom-feature-item ">
-            <i className="fa fa-search fa-2x mb-2 text-primary "></i>
-            <span className="fw-bold  fs-4 mb-2 d-block">Search</span>
-            <span className="text-dark mb-0 fs-6">
+        <div
+          className="col-3 col-sm-3 col-md-3 col-lg-3 wow fadeIn"
+          data-wow-delay="0.1s"
+        >
+          <div className="custom-feature-item">
+            <i className="fa fa-search fa-2x mb-2 text-primary"></i>
+            <span className="fw-bold fs-4 mb-2 d-block">Search</span>
+            <span className="text-feature text-dark mb-0 fs-6">
               Unleash the champion with SK Youth's Program
             </span>
           </div>
         </div>
-        <div className="col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-          <div className="custom-feature-item ">
+        <div
+          className="col-3 col-sm-3 col-md-3 col-lg-3 wow fadeIn"
+          data-wow-delay="0.3s"
+        >
+          <div className="custom-feature-item">
             <i className="fa fa-book fa-2x mb-2 text-success"></i>
             <span className="fw-bold fs-4 mb-2 d-block">Book</span>
-            <span className="text-dark mb-0 fs-6">Secure your spot</span>
+            <span className="text-feature text-dark mb-0 fs-6">
+              Secure your spot
+            </span>
           </div>
         </div>
-        <div className="col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-          <div className="custom-feature-item ">
+        <div
+          className="col-3 col-sm-3 col-md-3 col-lg-3 wow fadeIn"
+          data-wow-delay="0.5s"
+        >
+          <div className="custom-feature-item">
             <i
               className="fa fa-check fa-2x mb-2"
               style={{ color: "#ff6347" }}
             ></i>
             <span className="fw-bold text-dark fs-4 mb-2 d-block">Manage</span>
-            <span className="text-dark mb-0 fs-6">
+            <span className="text-feature text-dark mb-0 fs-6">
               Own your Schedule, your way!
             </span>
           </div>
@@ -162,11 +173,9 @@ const Intro = () => {
         )}
       </div>
 
-      {/* Highlighted Events Section */}
       <div className="card-container-news">
         <h1 className="NewEveHead">NEWS & EVENTS</h1>
 
-        {/* Bootstrap Carousel */}
         {events.length === 0 ? (
           <p>No events available</p>
         ) : (
@@ -177,70 +186,90 @@ const Intro = () => {
           >
             {/* Carousel Indicators */}
             <div className="carousel-indicators">
-              {events.map((_, index) => (
-                <button
-                  type="button"
-                  data-bs-target="#newsCarousel"
-                  data-bs-slide-to={index}
-                  className={index === 0 ? "active" : ""}
-                  aria-current={index === 0 ? "true" : undefined}
-                  aria-label={`Slide ${index + 1}`}
-                  key={index}
-                ></button>
-              ))}
+              {Array.from(
+                { length: Math.ceil(events.length / 4) },
+                (_, index) => (
+                  <button
+                    type="button"
+                    data-bs-target="#newsCarousel"
+                    data-bs-slide-to={index}
+                    className={index === 0 ? "active" : ""}
+                    aria-current={index === 0 ? "true" : undefined}
+                    aria-label={`Slide ${index + 1}`}
+                    key={index}
+                  ></button>
+                )
+              )}
             </div>
 
             {/* Carousel Items */}
             <div className="carousel-inner">
-              {events.map((event, index) => (
-                <div
-                  key={event.id}
-                  className={`carousel-item ${index === 0 ? "active" : ""}`}
-                >
-                  <Card
-                    className="ProgramCard mx-auto"
-                    style={{ maxWidth: "18rem" }}
+              {Array.from(
+                { length: Math.ceil(events.length / 4) }, // Group events in chunks of 4
+                (_, groupIndex) => (
+                  <div
+                    key={groupIndex}
+                    className={`carousel-item ${
+                      groupIndex === 0 ? "active" : ""
+                    }`}
                   >
-                    <Card.Img
-                      variant="top"
-                      src={event.event_image}
-                      alt={event.event_name}
-                      className="program-card-img"
-                    />
-                    <Card.Body>
-                      <Card.Title>{event.event_name}</Card.Title>
-                      <Card.Text>{event.event_description}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </div>
-              ))}
+                    <div className="row g-3">
+                      {events
+                        .slice(groupIndex * 4, groupIndex * 4 + 4)
+                        .map((event) => (
+                          <div
+                            className="col-12 col-sm-6 col-md-4 col-lg-3"
+                            key={event.id}
+                          >
+                            <Card className="EventCard">
+                              <Card.Img
+                                variant="top"
+                                src={event.event_image}
+                                alt={event.event_name}
+                                className="program-card-img"
+                              />
+                              <Card.Body>
+                                <Card.Title>{event.event_name}</Card.Title>
+                                <Card.Text>{event.event_description}</Card.Text>
+                              </Card.Body>
+                            </Card>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                )
+              )}
             </div>
 
             {/* Carousel Controls */}
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#newsCarousel"
-              data-bs-slide="prev"
-            >
-              <span
-                className="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#newsCarousel"
-              data-bs-slide="next"
-            >
-              <span
-                className="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Next</span>
-            </button>
+            {Math.ceil(events.length / 4) > 1 && (
+              <>
+                <button
+                  className="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#newsCarousel"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    className="carousel-control-prev-icon custom-carousel-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="visually-hidden">Previous</span>
+                </button>
+                <button
+                  className="carousel-control-next"
+                  type="button"
+                  data-bs-target="#newsCarousel"
+                  data-bs-slide="next"
+                >
+                  <span
+                    className="carousel-control-next-icon custom-carousel-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="visually-hidden">Next</span>
+                </button>
+              </>
+            )}
           </div>
         )}
       </div>

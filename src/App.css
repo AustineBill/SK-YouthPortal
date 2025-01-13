@@ -284,45 +284,6 @@ body,
   margin-right: 10px;
 }
 
-.card-container {
-  background: linear-gradient(to top, #fdfbfb, #cdd3f4, #9facfb);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
-  margin: 0;
-  gap: 100px;
-  padding: 0;
-  box-sizing: border-box;
-  border-radius: 8px;
-  margin-top: 15px;
-}
-.card-container-news {
-  background: linear-gradient(to top, #cecbf8, #ebeefe, #ffffff);
-  padding: 15px 180px;
-  padding-top: 30px;
-  border-radius: 8px;
-  max-width: 100%;
-  margin: 0 auto;
-  margin-top: 10px;
-}
-
-/*SK Council*/
-.Divider {
-  display: flex; /* Change to flex to use Flexbox for centering */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  padding: 2rem;
-  animation: fadeIn 1s ease-in-out;
-  border-right: 1px solid rgb(249, 249, 249);
-  border-left: 2px solid rgb(10, 10, 10);
-  width: 30%;
-}
-
-.bg-custom {
-  background-color: #27036a;
-}
-
 /* Reset Styles */
 h2,
 .navbar,
@@ -398,7 +359,7 @@ h2,
 
 .nav-links.active {
   display: flex;
-  transform: translateX(-100%);
+  transform: translateX(0%);
   background-color: #25327a;
   padding: 0 0 0 0;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -611,6 +572,7 @@ h2,
 
 /***Program***/
 
+/* Default styles for the feature items */
 .feature-item::before {
   position: absolute;
   content: "";
@@ -634,6 +596,30 @@ h2,
   text-align: center;
   padding: 1rem;
   margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-feature {
+  color: #343a40; /* Dark text color, you can adjust this to your needs */
+  margin-bottom: 0 !important; /* Removes bottom margin */
+  font-size: 0.875rem; /* Equivalent to fs-6 in Bootstrap */
+}
+
+.card-container {
+  background: linear-gradient(to top, #fdfbfb, #cdd3f4, #9facfb);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  gap: 80px;
+  padding: 0;
+  box-sizing: border-box;
+  border-radius: 8px;
+  margin-top: 15px;
 }
 
 .ProgramCard {
@@ -661,47 +647,16 @@ h2,
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
-/* About */
-
-.BodyContainer {
-  margin-top: 0 !important;
-  padding-top: 0;
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-}
-
-.CardBodyWithText {
-  color: #ffffff;
-  background-color: #25327a;
-  padding: 2rem;
-  border-radius: 10px;
-  width: 100%;
-}
-
-.BodyContainer blockquote p {
-  color: #ffffff !important;
-}
-
-.blockquote p {
-  text-align: justify;
-  font-size: 1.1rem;
-  line-height: 2;
-}
-
-.BlockQuote {
-  color: #060707; /* Equivalent to text-primary */
-  margin-top: 5rem; /* Equivalent to mb-4 */
-  font-weight: 700; /* Adjust the font-weight as needed */
-  text-align: center; /* Center the text */
-  font-size: 2.5rem;
-}
-
 /*/* News and Events */
+
+.card-container-news {
+  background: linear-gradient(to top, #cecbf8, #ebeefe, #ffffff);
+  padding: 20px 0;
+  border-radius: 8px;
+  max-width: 100%;
+  margin: 0 auto;
+  margin-top: 10px;
+}
 
 .NewEveHead {
   color: #1d0053;
@@ -709,6 +664,23 @@ h2,
   font-weight: 700; /* Adjust the font-weight as needed */
   text-align: center; /* Center the text */
   font-size: 6rem;
+}
+
+.custom-carousel-icon {
+  display: block; /* Makes it a block element */
+  width: 30px; /* Increase the width */
+  height: 30px; /* Increase the height */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.6
+  ); /* Add a background color for visibility */
+  border-radius: 50%; /* Make it circular */
+}
+
+.custom-carousel-icon::before {
+  content: "";
 }
 
 .centered-text {
@@ -769,54 +741,139 @@ h2,
 .spotlight-container {
   background: linear-gradient(to bottom, #edebf9);
   display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto;
+  grid-template-columns: 1fr 1fr; /* Two columns: headline and image */
+  grid-template-rows: auto auto; /* Rows for button below */
   align-items: center;
-  gap: 2rem;
   justify-items: center;
-  padding: 2rem 0;
-}
-
-.image-content {
-  justify-self: end;
-  align-self: center;
-  max-width: 100%;
-}
-
-.image-content img {
-  width: 100%;
-  max-width: 3500px;
-  height: auto;
-  object-fit: cover;
-  border-radius: 2px;
-  margin-top: 1rem;
+  gap: 2rem; /* Space between columns */
+  padding: 2rem;
 }
 
 .spotlight-head {
   color: #1d0053;
   font-weight: 700;
-  font-size: 7rem;
-  justify-self: start;
-  margin: 0 0 0 30px;
+  font-size: 3rem;
+  text-align: left; /* Align text to the left */
+  justify-self: start; /* Align within the grid cell */
+  margin: 0;
+}
+
+.image-content {
+  max-width: 100%;
+  text-align: right; /* Align image to the right */
+}
+
+.image-content img {
+  width: 100%;
+  max-width: 3500px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .spotlight-button {
+  grid-column: span 2; /* Make the button span both columns */
+  justify-self: center; /* Center the button horizontally */
   font-weight: 400;
   display: inline-block;
-  padding: 0.5rem 1rem; /* Adjusted padding for a smaller button */
-  font-size: 0.875rem; /* Smaller font size */
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
   color: #fff;
   text-decoration: none;
-  margin: 0 0 0 auto;
 }
 
 .spotlight-button:hover {
-  color: #fff;
-  background-color: #1c014d;
-  border-color: #1d0053;
+  background-color: #4a148c;
   text-decoration: none;
+  color: #fff;
+}
+
+@media (max-width: 992px) {
+  .spotlight-container {
+    grid-template-columns: 1fr; /* Single-column layout for smaller screens */
+    grid-template-rows: auto auto auto; /* Each element gets its own row */
+    gap: 1.5rem; /* Reduce spacing */
+  }
+
+  .spotlight-head {
+    text-align: center;
+    font-size: 2.5rem;
+  }
+
+  .image-content {
+    text-align: center;
+  }
+
+  .image-content img {
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .spotlight-head {
+    font-size: 2rem;
+  }
+
+  .image-content img {
+    max-width: 300px;
+  }
+}
+
+/* About */
+
+.BodyContainer {
+  margin-top: 0 !important;
+  padding-top: 0;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.CardBodyWithText {
+  color: #ffffff;
+  background-color: #25327a;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.BodyContainer blockquote p {
+  color: #ffffff !important;
+}
+
+.blockquote p {
+  text-align: justify;
+  font-size: 1.1rem;
+  line-height: 2;
+}
+
+.BlockQuote {
+  color: #060707; /* Equivalent to text-primary */
+  margin-top: 5rem; /* Equivalent to mb-4 */
+  font-weight: 700; /* Adjust the font-weight as needed */
+  text-align: center; /* Center the text */
+  font-size: 2.5rem;
+}
+
+/*SK Council*/
+.Divider {
+  display: flex; /* Change to flex to use Flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  padding: 2rem;
+  animation: fadeIn 1s ease-in-out;
+  border-right: 1px solid rgb(249, 249, 249);
+  border-left: 2px solid rgb(10, 10, 10);
+  width: 30%;
+}
+
+.bg-custom {
+  background-color: #27036a;
 }
 
 /*Text*/
@@ -994,6 +1051,53 @@ h2,
   font-size: 13px;
   padding: 0;
   margin: 0;
+}
+
+/* Responsive Layout */
+@media (max-width: 992px) {
+  .footer-content {
+    text-align: center; /* Center content for medium screens */
+  }
+
+  .footer-name {
+    font-size: 3rem; /* Smaller font size for footer name */
+  }
+
+  .footer .col-md-3 {
+    width: 24%; /* Adjust column width for medium screens */
+  }
+
+  .footer-text {
+    font-size: 12px; /* Smaller footer text */
+  }
+}
+
+@media (max-width: 768px) {
+  .footer .col-md-3 {
+    width: 30%; /* Adjust column width for small screens */
+  }
+
+  .footer-name {
+    font-size: 2.5rem; /* Further reduce font size */
+  }
+
+  .footer-text {
+    font-size: 11px; /* Smaller footer text */
+  }
+}
+
+@media (max-width: 500px) {
+  .footer .col-md-3 {
+    width: 20%; /* Further adjust column width for mobile screens */
+  }
+
+  .footer-name {
+    font-size: 2rem; /* Further reduce font size for small screens */
+  }
+
+  .footer-text {
+    font-size: 10px; /* Smaller footer text */
+  }
 }
 
 /* Dropdown styles */
