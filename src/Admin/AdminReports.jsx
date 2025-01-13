@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import axios from "axios";
-import './styles/AdminReports.css';
-// import '../WebStyles/Admin-CSS.css';
+// import './styles/AdminReports.css';
+import '../WebStyles/Admin-CSS.css';
 
 const Reports = () => {
   const [activeTable, setActiveTable] = useState("users");
@@ -183,7 +183,7 @@ const Reports = () => {
         </h2>
       </div>
 
-      <div className="admin-reports-generate-classification-date-container d-flex align-items-center">
+      <div className="admin-reports-generate-classification-date-container d-flex">
         <div className="admin-reports-classification-container">
           {/* Dropdown for selecting table */}
           <select

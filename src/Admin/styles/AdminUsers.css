@@ -21,8 +21,6 @@
     margin-bottom: 40px;
 }
 
-/* Users Classification */
-
 .admin-users-add-classification-container {
     width: 90%;
     gap: 0.25in;
@@ -35,10 +33,9 @@
 
 .admin-users-classification {
     width: 100%;
-    height: 45px;
+    height: 50px;
     font-size: 17.5px;
     border-style: solid;
-    border-width: 1px;
     transition: all 0.35s;
 }
 
@@ -65,7 +62,7 @@
     background-color: #42BB4E;
     color: #FFFFFF;
     width: 100%;
-    height: 45px;
+    height: 50px;
     font-size: 15px;
     border-style: solid;
     border-width: 1px;
@@ -76,14 +73,8 @@
     color: rgb(2, 107, 107);
 }
 
-/* Users Table */
-
 .users-list-container {
     width: 90%;
-}
-
-.admin-users-table-container .admin-users-head tr {
-    height: 40px;
 }
 
 .admin-users-head th {
@@ -91,8 +82,8 @@
     font-weight: bold;
 }
 
-.admin-users-head td {
-    font-size: 15px;
+.admin-users-body td {
+    font-size: 17.5px;
 }
 
 .admin-users-actions-buttons-container .admin-users-view-button,
@@ -103,13 +94,14 @@
 .admin-users-actions-buttons-container .admin-users-view-button,
 .admin-users-actions-buttons-container .admin-users-edit-button,
 .admin-users-actions-buttons-container .admin-users-delete-button {
-    font-size: 12.5px;
-    width: 70px;
-    height: 40px;
+    font-size: 15px;
+    width: 75px;
+    height: 35px;
     transition: all 0.35s;
 }
 
-/* Modal */
+
+
 
 .admin-users-add-edit-modal {
     padding-top: 75px;
@@ -142,10 +134,10 @@
 
 .admin-users-group1-form-container,
 .admin-users-group2-form-container,
-.admin-users-group3-form-container,
+.admin-users-group3-form-container, 
 .admin-users-group4-form-container,
-.admin-users-group5-form-container,
-.admin-users-group6-form-container,
+.admin-users-group5-form-container, 
+.admin-users-group6-form-container, 
 .admin-users-group7-form-container {
     width: 90%;
     gap: 10px;
@@ -159,59 +151,33 @@
     .admin-users-label-h2 {
         font-size: 37.5px;
     }
-
-    /* Users Classification */
-
-    /* .admin-users-add-classification-container {
-        gap: 0.25in;
-    } */
-
+    
     .admin-users-classification-container {
         width: 87.5%;
-    }
-
-    .admin-users-classification {
-        height: 40px;
-        font-size: 15px;
     }
 
     .admin-users-add-user-container {
         width: 12.5%;
     }
-
+    
     .admin-users-add-user-button {
-        height: 40px;
-        font-size: 12.5px;
-    }
-
-    /* Users Table */
-
-    .admin-users-table-container .admin-users-head tr {
-        height: 35px;
+        height: 50px;
+        font-size: 15px;
     }
 
     .admin-users-head th {
         font-size: 15px;
     }
 
-    .admin-users-head td {
-        font-size: 12.5px;
-    }
-
-    .admin-users-actions-buttons-container .admin-users-view-button,
-    .admin-users-actions-buttons-container .admin-users-edit-button {
-        margin-right: 10px;
+    .admin-users-body td {
+        font-size: 15px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
     .admin-users-actions-buttons-container .admin-users-edit-button,
     .admin-users-actions-buttons-container .admin-users-delete-button {
-        font-size: 10px;
-        width: 60px;
-        height: 35px;
+        font-size: 12.5px;
     }
-
-    /* Modal */
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -220,58 +186,44 @@
         font-size: 35px;
     }
 
-    /* Users Classification */
-
-    /* .admin-users-add-classification-container {
-        gap: 0.25in;
-    } */
-
     .admin-users-classification-container {
         width: 85%;
     }
-
+    
     .admin-users-classification {
-        height: 35px;
+        height: 45px;
         font-size: 12.5px;
     }
 
     .admin-users-add-user-container {
         width: 15%;
     }
-
+    
     .admin-users-add-user-button {
-        height: 35px;
-        font-size: 10px;
-    }
-
-    /* Users Table */
-
-    .admin-users-table-container .admin-users-head tr {
-        height: 30px;
+        height: 45px;
+        font-size: 12.5px;
     }
 
     .admin-users-head th {
         font-size: 12.5px;
     }
 
-    .admin-users-head td {
-        font-size: 10px;
+    .admin-users-body td {
+        font-size: 12.5px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
     .admin-users-actions-buttons-container .admin-users-edit-button {
-        margin-right: 0;
+        margin-right: 5px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
     .admin-users-actions-buttons-container .admin-users-edit-button,
     .admin-users-actions-buttons-container .admin-users-delete-button {
-        font-size: 7.5px;
-        width: 50px;
-        height: 30px;
+        font-size: 10px;
+        width: 55px;
+        height: 32.5px;
     }
-
-    /* Modal */
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
@@ -286,41 +238,29 @@
         margin: 20px 0 20px 25px;
     }
 
-    /* Users Classification */
-
-    /* .admin-users-add-classification-container {
-        gap: 0.25in;
-    } */
-
     .admin-users-classification-container {
         width: 82.5%;
     }
-
+    
     .admin-users-classification {
-        height: 35px;
+        height: 45px;
         font-size: 12.5px;
     }
 
     .admin-users-add-user-container {
         width: 17.5%;
     }
-
+    
     .admin-users-add-user-button {
-        height: 35px;
-        font-size: 10px;
-    }
-
-    /* Users Table */
-
-    .admin-users-table-container .admin-users-head tr {
-        height: 30px;
-    }
-
-    .admin-users-head th {
+        height: 45px;
         font-size: 12.5px;
     }
 
-    .admin-users-head td {
+    .admin-users-head th {
+        font-size: 10px;
+    }
+
+    .admin-users-body td {
         font-size: 10px;
     }
 
@@ -338,12 +278,10 @@
     .admin-users-actions-buttons-container .admin-users-view-button,
     .admin-users-actions-buttons-container .admin-users-edit-button,
     .admin-users-actions-buttons-container .admin-users-delete-button {
-        font-size: 7.5px;
-        width: 50px;
+        font-size: 10px;
+        width: 55px;
         height: 30px;
     }
-
-    /* Modal */
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
@@ -358,41 +296,29 @@
         margin: 20px 0 20px 20px;
     }
 
-    /* Users Classification */
-
-    /* .admin-users-add-classification-container {
-        gap: 0.25in;
-    } */
-
     .admin-users-classification-container {
         width: 80%;
     }
-
+    
     .admin-users-classification {
-        height: 25px;
+        height: 35px;
         font-size: 10px;
     }
 
     .admin-users-add-user-container {
         width: 20%;
     }
-
+    
     .admin-users-add-user-button {
-        height: 25px;
-        font-size: 7.5px;
-    }
-
-    /* Users Table */
-
-    .admin-users-table-container .admin-users-head tr {
-        height: 20px;
-    }
-
-    .admin-users-head th {
+        height: 35px;
         font-size: 10px;
     }
 
-    .admin-users-head td {
+    .admin-users-head th {
+        font-size: 7.5px;
+    }
+
+    .admin-users-body td {
         font-size: 7.5px;
     }
 
@@ -410,10 +336,8 @@
     .admin-users-actions-buttons-container .admin-users-view-button,
     .admin-users-actions-buttons-container .admin-users-edit-button,
     .admin-users-actions-buttons-container .admin-users-delete-button {
-        font-size: 5px;
+        font-size: 7.5px;
         width: 40px;
         height: 25px;
     }
-
-    /* Modal */
 }

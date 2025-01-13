@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "react-bootstrap";
-import "./styles/AdminUsers.css";
-// import '../WebStyles/Admin-CSS.css';
+// import "./styles/AdminUsers.css";
+import '../WebStyles/Admin-CSS.css';
 
 const { EncryptionCode } = require("../WebStructure/Codex");
 const Users = () => {

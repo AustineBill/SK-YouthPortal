@@ -356,7 +356,7 @@ const AdminGymReservation = () => {
             </tr>
           </thead>
 
-          <tbody className="admin-greservation-body text-center">
+          <tbody className="admin-greservation-body">
             {filteredReservations.map((reservation) => (
               <tr key={reservation.id}>
                 <td>

@@ -57,7 +57,7 @@ const AdminNavbar = () => {
             <img
               src={iSKedLogo}
               alt="iSKed Logo"
-              className="admin-iSKed-logo me-2 d-none d-md-block m-0"
+              className="admin-iSKed-logo me-2 d-none d-md-block"
             />
             <h1 className="admin-iSKed-name fst-italic text-white h1 m-0 p-0 d-none d-md-block">
               iSKed - Admin Panel
