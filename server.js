@@ -360,7 +360,7 @@ app.get("/Profile/:username", async (req, res) => {
             id, username, firstname, lastname, region, province, city, barangay, zone,
             sex, age, birthday, email_address, contact_number, civil_status,
             youth_age_group, work_status, educational_background, 
-            registered_sk_voter
+            registered_sk_voter, registered_national_voter
         FROM Users
         WHERE username = $1
     `;
@@ -369,7 +369,7 @@ app.get("/Profile/:username", async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
-
+    //console.log(result.rows[0]); // Log the result to see if fields are included
     res.json(result.rows[0]);
   } catch (err) {
     console.error("Error fetching profile:", err.message);
