@@ -23,25 +23,38 @@
 
 .top-part {
     font-weight: normal;
-    font-size: 35px;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .middle-part {
     font-weight: normal;
-    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    text-align: left; 
+    margin-left: 80px; 
+    margin-top: 150px;
+}
+
+.text-left-container {
+    text-align: left;
 }
 
 .bottom-part {
     font-family: 'Sansita', sans-serif;
+    margin-left: 30%;
     color: #25327A;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 61px;
+    margin-top: -20px;
 }
 
 .SK-location {
     font-weight: bolder;
-    font-size: 30px;
+    font-size: 35px;
     margin-left: 60%;
+    margin-top: -10px;
+    color: rgb(230, 209, 28);
 }
 
 /* Right side */
@@ -55,21 +68,21 @@
 .sign-up-su {
     font-family: 'Sansita', sans-serif;
     font-size: 50px;
-    color: #25327A;
+    color: #ced5ff;
     margin: 25px 0 25px 0;
 }
 
 .sign-in-details-container,
 .forgot-password-details-container,
 .sign-up-details-container {
-    width: 75%;
-    background-color: #87c0f0;
+    width: 73%;
+    background-color: #124f82;
 }
 
 .sign-in-details-group,
 .forgot-password-details-group,
 .sign-up-details-group {
-    width: 90%;
+    width: 92%;
     margin: 0;
     padding: 0;
 }
@@ -77,13 +90,18 @@
 .sign-in-details-group .sign-in-label,
 .forgot-password-details-group .forgot-password-label,
 .sign-up-details-group .sign-up-label {
-    font-size: 17.5px
+    font-size: 14px;
+    color: #ffffff;
+    margin-top: 5px;
+    height: 22%;
 }
 
 .user-auth-sign-in-form,
 .user-auth-forgot-password-form,
 .user-auth-sign-up-form {
     width: 75%;
+    height: 40%;
+
 }
 
 .user-auth-sign-in-form input[type='text'],
@@ -93,9 +111,9 @@
 .user-auth-forgot-password-form input[type='password'],
 .user-auth-sign-up-form input[type='text'],
 .user-auth-sign-up-form input[type='password'] {
-    height: 45px;
+    height: 40px;
     border-style: none;
-    border-radius: 10px;
+    border-radius: 18px;
     outline: none;
     margin-bottom: 0;
     font-size: 15px;
@@ -113,19 +131,19 @@
 }
 
 .forgot-password-link {
-    color: #868686;
-    font-size: 15px;
+    color: #b7bac7;
+    font-size: 13px;
 }
 
 .sign-up-link {
-    color: #25327A;
+    color: #cad2ff;
     margin-bottom: 25px;
 }
 
 .forgot-password-email-description,
 .sign-up-description {
     color: #838383;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .no-account-p,
@@ -139,8 +157,8 @@
 .su-proceed-button,
 .su-submit-button {
     background-color: #FFFFFF;
-    color: #25327A;
-    width: 150px;
+    color: #00056b;
+    width: 160px;
     height: 50px;
     border: none;
     font-size: 17.5px;
