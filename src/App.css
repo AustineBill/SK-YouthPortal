@@ -762,6 +762,14 @@ h2,
 
 /*** Spotlight ***/
 
+.bg-secondary {
+  background-color: #04294f;  /* Dark blue */
+}
+
+.text-light {
+  color: #ffffff;  /* White text */
+}
+
 .spotlight-container {
   background: linear-gradient(to bottom, #edebf9);
   display: grid;
