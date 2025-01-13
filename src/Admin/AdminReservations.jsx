@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import axios from 'axios'; // Import axios
+import React, { useState, useEffect, useRef } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import axios from "axios"; // Import axios
 
 const AdminReservations = () => {
-  const navigate = useNavigate();
-
   // State for managing reservations and time slots
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
-  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedTime, setSelectedTime] = useState("");
   const [reservations, setReservations] = useState([]);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
@@ -26,7 +23,7 @@ const AdminReservations = () => {
         setReservations(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching reservations:', error);
+        console.error("Error fetching reservations:", error);
       });
   }, []);
 
@@ -58,25 +55,27 @@ const AdminReservations = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
   // Handle reservation actions (Edit, Cancel, Approve)
   const handleReservationAction = (action, reservation) => {
-    console.log(`${action} reservation for ${reservation.time} on ${reservation.date}`);
-    if (action === 'Cancel') {
+    console.log(
+      `${action} reservation for ${reservation.time} on ${reservation.date}`
+    );
+    if (action === "Cancel") {
       // Call backend API to delete reservation
       axios
         .delete(`/reservations/${reservation.id}`)
         .then((response) => {
-          console.log('Reservation canceled:', response.data);
+          console.log("Reservation canceled:", response.data);
           setReservations(reservations.filter((r) => r.id !== reservation.id)); // Update local state
         })
         .catch((error) => {
-          console.error('Error canceling reservation:', error);
+          console.error("Error canceling reservation:", error);
         });
     }
     // Add additional logic for "Edit" and "Approve" actions as needed
@@ -86,20 +85,20 @@ const AdminReservations = () => {
     const userId = 1; // Example userId
     const reservationData = {
       user_id: userId,
-      reservation_type: 'Event', // Can be dynamic based on user input
+      reservation_type: "Event", // Can be dynamic based on user input
       start_date: selectedDates[0].toISOString(),
       end_date: selectedDates[1].toISOString(),
       time_slot: selectedTime,
     };
 
     axios
-      .post('/reservations', reservationData)
+      .post("/reservations", reservationData)
       .then((response) => {
-        console.log('Reservation created:', response.data);
+        console.log("Reservation created:", response.data);
         setReservations([...reservations, response.data]); // Update local state with new reservation
       })
       .catch((error) => {
-        console.error('Error creating reservation:', error);
+        console.error("Error creating reservation:", error);
       });
   };
 
@@ -109,8 +108,12 @@ const AdminReservations = () => {
       <div className="content-container">
         <div className="admin-calendar-container">
           <div className="text-center text-lg-start mt-4">
-            <h1 className="Maintext-Calendar animated slideInRight">Admin Schedule Management</h1>
-            <p className="Subtext-Calendar">Manage venue reservations and availability</p>
+            <h1 className="Maintext-Calendar animated slideInRight">
+              Admin Schedule Management
+            </h1>
+            <p className="Subtext-Calendar">
+              Manage venue reservations and availability
+            </p>
           </div>
 
           <div className="grid-container">
@@ -140,11 +143,30 @@ const AdminReservations = () => {
                 reservations.map((reservation, index) => (
                   <div key={index} className="reservation-item">
                     <p>
-                      {new Date(reservation.start_date).toDateString()} - {reservation.time_slot} ({reservation.reservation_type})
+                      {new Date(reservation.start_date).toDateString()} -{" "}
+                      {reservation.time_slot} ({reservation.reservation_type})
                     </p>
-                    <button onClick={() => handleReservationAction('Edit', reservation)}>Edit</button>
-                    <button onClick={() => handleReservationAction('Cancel', reservation)}>Cancel</button>
-                    <button onClick={() => handleReservationAction('Approve', reservation)}>Approve</button>
+                    <button
+                      onClick={() =>
+                        handleReservationAction("Edit", reservation)
+                      }
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleReservationAction("Cancel", reservation)
+                      }
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleReservationAction("Approve", reservation)
+                      }
+                    >
+                      Approve
+                    </button>
                   </div>
                 ))
               )}
@@ -152,7 +174,8 @@ const AdminReservations = () => {
 
             {/* Selected Date and Time */}
             <div className="selected-date">
-              {selectedDates[0].toDateString() === selectedDates[1].toDateString()
+              {selectedDates[0].toDateString() ===
+              selectedDates[1].toDateString()
                 ? `Selected Date: ${selectedDates[0].toDateString()}`
                 : `Selected Dates: ${selectedDates[0].toDateString()} to ${selectedDates[1].toDateString()}`}
               {selectedTime && <div>Selected Time: {selectedTime}</div>}
@@ -176,9 +199,23 @@ const AdminReservations = () => {
                 Select Time
               </button>
               {isDropdownVisible && (
-                <div className="time-dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  {['9:00 am - 10:00 am', '10:00 am - 11:00 am', '11:00 am - 12:00 nn', '12:00 nn - 1:00 pm', '1:00 pm - 2:00 pm', '2:00 pm - 3:00 pm'].map(time => (
-                    <h6 className="dropdown-item" key={time} onClick={() => selectTime(time)}>
+                <div
+                  className="time-dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  {[
+                    "9:00 am - 10:00 am",
+                    "10:00 am - 11:00 am",
+                    "11:00 am - 12:00 nn",
+                    "12:00 nn - 1:00 pm",
+                    "1:00 pm - 2:00 pm",
+                    "2:00 pm - 3:00 pm",
+                  ].map((time) => (
+                    <h6
+                      className="dropdown-item"
+                      key={time}
+                      onClick={() => selectTime(time)}
+                    >
                       {time}
                     </h6>
                   ))}
