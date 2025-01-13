@@ -24,7 +24,6 @@ import Profile from "./User/Profile";
 import Dashboard from "./User/Dashboard";
 import Programs from "./User/UserProgram";
 import Log from "./User/ReserveLog";
-import HelpSupport from "./User/HelpSupport";
 import ProgramDescript from "./User/ProgramDetails";
 
 import Equipment from "./User/Equipment";
@@ -164,14 +163,6 @@ const App = () => {
                   element={
                     <ProtectedRoute>
                       <ProgramDescript />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/Contact"
-                  element={
-                    <ProtectedRoute>
-                      <HelpSupport />
                     </ProtectedRoute>
                   }
                 />

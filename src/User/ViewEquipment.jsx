@@ -140,6 +140,7 @@ const ViewEquipment = () => {
           selectRange={false}
           tileClassName={tileClassName}
           tileContent={tileContent}
+          tileDisabled={({ date }) => date.getDay() === 0}
         />
       </div>
     </div>

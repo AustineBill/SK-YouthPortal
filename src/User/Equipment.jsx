@@ -13,21 +13,29 @@ import axios from "axios";
 
 function Equipment() {
   const location = useLocation();
-  const { state } = location; // Access the passed state
-  const { programType } = state || {}; // Destructure programType from state
+  const { state } = location;
+  const programType =
+    state?.programType || sessionStorage.getItem("programType"); // Retrieve from sessionStorage if missing
   const [inventory, setInventory] = useState([]);
   const [quantities, setQuantities] = useState([]);
   const [modalMessage, setModalMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-  // Fetch inventory data on component mount
+  // Redirect if programType is missing
+  useEffect(() => {
+    if (!programType) {
+      navigate("/UserProgram"); // Redirect to a safe page
+    }
+  }, [programType, navigate]);
+
+  // Fetch inventory data
   useEffect(() => {
     const fetchInventory = async () => {
       try {
         const response = await axios.get("http://localhost:5000/inventory");
         setInventory(response.data);
-        setQuantities(Array(response.data.length).fill(0)); // Initialize quantities array
+        setQuantities(Array(response.data.length).fill(0));
       } catch (error) {
         console.error("Error fetching inventory:", error);
       }
@@ -68,17 +76,16 @@ function Equipment() {
     const reserved = inventory
       .map((item, index) => ({
         id: item.id,
-        name: item.name, // Equipment name
-        quantity: quantities[index], // Quantity reserved by the user
+        name: item.name,
+        quantity: quantities[index],
       }))
-      .filter((item) => item.quantity > 0); // Only include items with quantity > 0
+      .filter((item) => item.quantity > 0);
 
     if (reserved.length === 0) {
       handleShowModal("Please reserve at least one piece of equipment.");
       return;
     }
 
-    // Store the reserved items in sessionStorage and navigate to the reservation page
     sessionStorage.setItem("reservedEquipment", JSON.stringify(reserved));
     navigate("/EquipReservation");
   };
@@ -125,14 +132,14 @@ function Equipment() {
                     style={{
                       width: "100%",
                       height: "100px",
-                      objectFit: "contain", // Prevent stretching or zooming
-                      backgroundColor: "#f8f9fa", // Optional: Clean background for 'contain'
+                      objectFit: "contain",
+                      backgroundColor: "#f8f9fa",
                     }}
                   />
                 ) : (
                   <Card.Img
                     variant="top"
-                    src="/Asset/Equipment/Chairs.png" // Default fallback image
+                    src="/Asset/Equipment/Chairs.png"
                     alt="Default"
                     style={{
                       width: "100%",
@@ -183,7 +190,6 @@ function Equipment() {
         )}
       </Row>
 
-      {/* Reserve Button */}
       <Row className="d-flex justify-content-center mt-4">
         <div className="text-center">
           <Button
@@ -196,7 +202,6 @@ function Equipment() {
         </div>
       </Row>
 
-      {/* Modal */}
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>Notice</Modal.Title>

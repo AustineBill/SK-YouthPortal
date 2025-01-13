@@ -206,6 +206,22 @@
   border-radius: 10px;
 }
 
+.apply-dates {
+  background-color: #d9534f;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  justify-self: right;
+  margin-right: 40px;
+}
+
+.apply-dates:hover {
+  background-color: #c9302c;
+}
+
 /* Reservations Popover Styling */
 /*.overlay-content .reservation-count {
   background-color: #ffc107;

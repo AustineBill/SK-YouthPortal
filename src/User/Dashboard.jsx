@@ -11,6 +11,7 @@ const Dashboard = () => {
   const [feedback, setFeedback] = useState("");
   const [userFeedback, setUserFeedback] = useState(null);
   const [isEditing, setIsEditing] = useState(false); // State for editing mode
+  const [showModal, setShowModal] = useState(false); // Modal visibility state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -94,7 +95,9 @@ const Dashboard = () => {
       setIsEditing(false); // Exit editing mode immediately
       setRating(response.data.rating); // Make sure the updated rating is shown
       setFeedback(response.data.comment);
-      window.location.reload();
+
+      // Show the modal after feedback submission
+      setShowModal(true);
     } catch (error) {
       console.error("Error submitting feedback:", error);
     }
@@ -225,6 +228,45 @@ const Dashboard = () => {
           </>
         )}
       </div>
+
+      {/* Feedback Submission Modal */}
+      {showModal && (
+        <div className="ModalOverlayStyles">
+          <div className="ModalStyles large">
+            <button
+              className="closeButton"
+              onClick={() => {
+                setShowModal(false);
+              }}
+              aria-label="Close"
+            >
+              <i className="bi bi-x-circle"></i>
+            </button>
+            <div className="text-center">
+              <i
+                className="bi bi-emoji-smile-fill text-warning"
+                style={{ fontSize: "4rem" }}
+              ></i>
+              <h2 className="mt-3 mb-3">
+                Your feedback was submitted successfully!
+              </h2>
+              <p>Thank you for your feedback!</p>
+            </div>
+            <div className="d-flex justify-content-center mt-3">
+              <Button
+                variant="dark"
+                className="btn-dark"
+                onClick={() => {
+                  window.location.reload(); // This will reload the page
+                }}
+              >
+                <i className="bi bi-house m-1"></i>
+                Return to Log
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

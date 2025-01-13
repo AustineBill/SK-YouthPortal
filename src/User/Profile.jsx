@@ -107,36 +107,32 @@ const ProfilePage = () => {
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <Container className="py-5">
-        <Row>
-          <Col>
-            <Breadcrumb className="bg-light rounded-3 p-3 mb-4">
-              <Breadcrumb.Item onClick={() => navigate("/Dashboard")}>
-                Home
-              </Breadcrumb.Item>
-              <Breadcrumb.Item active>User Profile</Breadcrumb.Item>
-            </Breadcrumb>
-          </Col>
-        </Row>
+        <Breadcrumb>
+          <Breadcrumb.Item onClick={() => navigate("/Dashboard")}>
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>User Profile</Breadcrumb.Item>
+        </Breadcrumb>
 
         <Row>
           <Col lg="4">
             <Card className="mb-4 text-center">
               <Card.Body>
                 <Avatar
-                  className="m-2"
+                  className="text-center"
                   name={profileInfo?.username}
                   round={true}
-                  size="150"
-                  style={{ text: "40px" }}
+                  size="130"
+                  textSizeRatio={1.75}
                 />
                 <Card.Text className="m-2 fs-2">
                   {profileInfo?.username}
                 </Card.Text>
-                <Card.Text className="text-muted mb-1">
-                  {profileInfo?.educational_background}
+                <Card.Text className="text-muted mb-1 fs-2">
+                  {profileInfo?.youth_age_group}
                 </Card.Text>
 
-                <div className="d-flex justify-content-center mb-2">
+                <div className="d-flex justify-content-center m-5">
                   <Button
                     variant="outline-primary btn-block"
                     className="ms-1"
@@ -213,30 +209,30 @@ const ProfilePage = () => {
                       </Card.Text>
                     </Col>
                     <Col sm="3">
-                      <Card.Text>Work Status</Card.Text>
+                      <Card.Text>Registered National Voter</Card.Text>
                     </Col>
                     <Col sm="3">
                       <Card.Text className="text-muted">
-                        {profileInfo?.work_status}
+                        {profileInfo?.registered_national_voter ? "Yes" : "No"}
                       </Card.Text>
                     </Col>
                   </Row>
                   <hr />
                   <Row>
                     <Col sm="3">
-                      <Card.Text> Youth Age Group</Card.Text>
+                      <Card.Text> Education Background</Card.Text>
                     </Col>
                     <Col sm="3">
                       <Card.Text className="text-muted">
-                        {profileInfo?.youth_age_group}
+                        {profileInfo?.educational_background}
                       </Card.Text>
                     </Col>
-                    <Col sm="5">
+                    <Col sm="3">
                       <Card.Text>Registered SK Voter</Card.Text>
                     </Col>
                     <Col sm="3">
                       <Card.Text className="text-muted">
-                        {profileInfo?.registered_sk_voter}
+                        {profileInfo?.registered_sk_voter ? "Yes" : "No"}
                       </Card.Text>
                     </Col>
                   </Row>
@@ -269,9 +265,17 @@ const ProfilePage = () => {
                     <Col sm="3">
                       <Card.Text>Province</Card.Text>
                     </Col>
-                    <Col sm="9">
+                    <Col sm="3">
                       <Card.Text className="text-muted">
-                        {profileInfo?.province} {profileInfo?.region}
+                        {profileInfo?.province}
+                      </Card.Text>
+                    </Col>
+                    <Col sm="3">
+                      <Card.Text>Region</Card.Text>
+                    </Col>
+                    <Col sm="3">
+                      <Card.Text className="text-muted">
+                        {profileInfo?.region}
                       </Card.Text>
                     </Col>
                   </Row>

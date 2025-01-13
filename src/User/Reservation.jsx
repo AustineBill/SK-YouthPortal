@@ -120,12 +120,6 @@ const Reservation = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Remove time component for comparison
 
-    // Check if the date is in the past or is a Sunday
-    const isSunday = date.getDay() === 0; // 0 represents Sunday
-    if (date < today || isSunday) {
-      return "unavailable"; // Past dates and Sundays should always be unavailable
-    }
-
     const dailyReservations = filterReservations(date);
 
     if (dailyReservations.length === 0) {
@@ -146,6 +140,25 @@ const Reservation = () => {
     }
 
     return "available"; // Partially booked: Available
+  };
+
+  const tileDisabled = ({ date }) => {
+    // Check if the date is a Sunday
+    if (date.getDay() === 0) return true;
+
+    // Check for reservations on this date
+    const dailyReservations = filterReservations(date);
+
+    // Group reservation or fully booked?
+    const hasGroupReservation = dailyReservations.some(
+      (res) => res.reservation_type === "Group"
+    );
+    const soloReservationsCount = dailyReservations.filter(
+      (res) => res.reservation_type === "Solo"
+    ).length;
+    const isFullyBooked = soloReservationsCount >= 5;
+
+    return hasGroupReservation || isFullyBooked; // Disable unavailable dates
   };
 
   const saveReservation = async () => {
@@ -268,10 +281,7 @@ const Reservation = () => {
             </p>
           </div>
 
-          <button
-            className="apply-dates btn btn-primary m-3"
-            onClick={saveReservation}
-          >
+          <button className="apply-dates" onClick={saveReservation}>
             Apply Dates
           </button>
         </div>
@@ -309,6 +319,7 @@ const Reservation = () => {
           selectRange={true} // Allow date range selection
           value={selectedDates} // Set the selected dates
           tileClassName={tileClassName} // Apply custom styles to each tile
+          tileDisabled={tileDisabled}
         />
 
         {/* Modal for Reservation Conflict */}
