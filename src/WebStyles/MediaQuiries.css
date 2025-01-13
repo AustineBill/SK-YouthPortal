@@ -18,112 +18,121 @@
   }
 }
 
-/* Mobile view */
+/* Hamburger Menu Style for Small Screens */
 @media (max-width: 768px) {
+  .hamburger-icon {
+    display: flex;
+  }
+
   .nav-links {
-    display: none; /* Hide links by default on mobile */
+    display: none;
+    flex-direction: column;
+    background-color: #f8f9fa;
+    width: 100%;
+    padding: 20px;
   }
 
   .nav-links.active {
     display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #25327a;
-    padding: 20px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    z-index: 999;
   }
 
-  .hamburger-icon {
-    display: block; /* Show hamburger menu */
-    cursor: pointer;
+  .nav-links .nav-item {
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
   }
 
   .navbar-buttons {
-    display: none; /* Hide avatar and buttons on mobile */
-  }
-}
-
-@media (max-width: 768px) {
-  .container-fluid {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  .breadcrumb {
-    font-size: 14px;
-  }
-
-  .Maintext {
-    font-size: 2rem;
-  }
-
-  .Subtext {
-    font-size: 1.2rem;
-  }
-
-  .table th,
-  .table td {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-  /* Hide some table columns on small screens */
-  .table th:nth-child(5),
-  .table td:nth-child(5) {
-    display: none; /* Hide Time Slot column for smaller screens */
-  }
-
-  /* Make the dropdown full-width on small screens */
-  .dropdown-toggle {
-    width: 100%;
-  }
-
-  /* Adjust the action button for smaller screens */
-  .btn-danger {
-    width: 100%;
-    padding: 8px;
-    font-size: 14px;
-  }
-}
-
-/* Media Query for Mobile (480px or less) */
-@media (max-width: 480px) {
-  .breadcrumb {
-    font-size: 12px;
-  }
-
-  .Maintext {
-    font-size: 1.5rem;
-  }
-
-  .Subtext {
-    font-size: 1rem;
-  }
-
-  .table th,
-  .table td {
-    font-size: 12px;
-    padding: 6px;
-  }
-
-  /* Hide the Action column completely on mobile */
-  .table th:nth-child(7),
-  .table td:nth-child(7) {
     display: none;
   }
 
-  /* Make the dropdown full-width */
-  .dropdown-menu {
-    width: 100%;
+  .hero-header {
+    padding: 10em 0;
+    background-size: cover;
+    height: 80vh;
   }
 
-  /* Adjust button size */
-  .btn-danger {
-    font-size: 12px;
-    padding: 6px 12px;
+  .sangguniang-text,
+  .kabataan-color {
+    font-size: 4rem; /* Adjust font sizes */
+  }
+
+  .western-bicutan-color {
+    font-size: 2rem;
+  }
+
+  .custom-name {
+    font-size: 60px; /* Adjust custom name size */
+  }
+
+  .custom-name-wrapper {
+    text-align: center; /* Center text on smaller screens */
+    margin-top: -2.5rem;
+  }
+
+  .IntroDetails {
+    font-size: 2rem;
+    margin-right: 2rem;
+    margin-left: 10%;
+    margin-top: -0.5em;
+  }
+
+  .image-container {
+    margin-bottom: 15px;
+  }
+
+  .below-image {
+    max-width: 90%; /* Ensure image is responsive */
+  }
+
+  .custom-font {
+    font-size: 1.2rem; /* Reduce text size */
+  }
+}
+
+@media (max-width: 500px) {
+  .navbar-links .nav-item {
+    font-size: 14px;
+  }
+
+  .hero-header {
+    padding: 0;
+    height: 40vh;
+  }
+
+  .sangguniang-text,
+  .kabataan-color {
+    font-size: 2rem; /* Adjust font sizes further */
+  }
+
+  .western-bicutan-color {
+    font-size: 1.8rem;
+  }
+
+  .custom-name {
+    font-size: 45px; /* Smaller custom name size */
+  }
+
+  .custom-name-wrapper {
+    margin-top: -2rem;
+  }
+
+  .IntroDetails {
+    font-size: 1.8rem;
+    margin-right: 1rem;
+    margin-left: 5%;
+    margin-top: -0.5em;
+  }
+
+  .image-container {
+    margin-bottom: 10px;
+  }
+
+  .below-image {
+    max-width: 100%; /* Image fills container on smaller screens */
+  }
+
+  .custom-font {
+    font-size: 1rem; /* Further reduce text size */
   }
 }

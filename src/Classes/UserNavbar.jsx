@@ -112,12 +112,16 @@ const UserNavbar = () => {
             <div style={dropdownStyles}>
               <Link
                 to={`/Profile/${loggedInUser}`}
-                className="dropdown-item"
+                className="dropdownAvatar text-decoration-none"
                 onClick={() => setDropdownVisible(false)}
               >
                 Profile
               </Link>
-              <div className="dropdown-item" onClick={openLogoutModal}>
+              <div
+                className="dropdownAvatar"
+                style={{ cursor: "pointer" }}
+                onClick={openLogoutModal}
+              >
                 Logout
               </div>
             </div>
@@ -130,12 +134,12 @@ const UserNavbar = () => {
 
 const dropdownStyles = {
   position: "absolute",
-  right: 0,
-  top: "50px",
+  right: "10px",
+  top: "70px",
   backgroundColor: "#fff",
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
   borderRadius: "5px",
-  width: "150px",
+  width: "100px",
   zIndex: 1000,
   display: "flex",
   flexDirection: "column",

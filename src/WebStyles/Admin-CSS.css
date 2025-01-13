@@ -1,154 +1,152 @@
 /* Admin CSS file */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap");
 
 /* ____________________________________________________________________________________________________ */
 /* User Authentication */
 /* ____________________________________________________________________________________________________ */
 
-
 .user-authentication-contents {
-    position: relative;
-    padding: 9em 0;
-    background: url(/public/Asset/WebImages/login_bg.png) no-repeat center center;
-    background-size: 100% 100%;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  padding: 9em 0;
+  background: url(/public/Asset/WebImages/login_bg.png) no-repeat center center;
+  background-size: 100% 100%;
+  width: 100%;
+  height: 100%;
 }
 
 /* Left side */
 
 .left-side-responsive {
-    width: 60%;
+  width: 60%;
 }
 
 .top-part {
-    font-weight: normal;
-    font-size: 20px;
-    font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
 }
 
 .middle-part {
-    font-weight: normal;
-    font-family: 'Roboto', sans-serif;
-    font-size: 20px;
-    text-align: left; 
-    margin-left: 80px; 
-    margin-top: 150px;
+  font-weight: normal;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  text-align: left;
+  margin-left: 80px;
+  margin-top: 150px;
 }
 
 .text-left-container {
-    text-align: left;
+  text-align: left;
 }
 
 .bottom-part {
-    font-family: 'Sansita', sans-serif;
-    margin-left: 30%;
-    color: #25327A;
-    font-weight: bold;
-    font-size: 61px;
-    margin-top: -20px;
+  font-family: "Sansita", sans-serif;
+  margin-left: 30%;
+  color: #25327a;
+  font-weight: bold;
+  font-size: 61px;
+  margin-top: -20px;
 }
 
 .SK-location {
-    font-weight: bolder;
-    font-size: 35px;
-    margin-left: 60%;
-    margin-top: -10px;
-    color: rgb(230, 209, 28);
+  font-weight: bolder;
+  font-size: 35px;
+  margin-left: 60%;
+  margin-top: -10px;
+  color: rgb(230, 209, 28);
 }
 
 /* Right side */
 
 .right-side-contents-container {
-    width: 40%;
+  width: 40%;
 }
 
 .sign-in-welcome,
 .forgot-password-fp,
 .sign-up-su {
-    font-family: 'Sansita', sans-serif;
-    font-size: 50px;
-    color: #ced5ff;
-    margin: 25px 0 25px 0;
+  font-family: "Sansita", sans-serif;
+  font-size: 50px;
+  color: #ced5ff;
+  margin: 25px 0 25px 0;
 }
 
 .sign-in-details-container,
 .forgot-password-details-container,
 .sign-up-details-container {
-    width: 73%;
-    background-color: #124f82;
+  width: 73%;
+  background-color: #124f82;
 }
 
 .sign-in-details-group,
 .forgot-password-details-group,
 .sign-up-details-group {
-    width: 92%;
-    margin: 0;
-    padding: 0;
+  width: 92%;
+  margin: 0;
+  padding: 0;
 }
 
 .sign-in-details-group .sign-in-label,
 .forgot-password-details-group .forgot-password-label,
 .sign-up-details-group .sign-up-label {
-    font-size: 14px;
-    color: #ffffff;
-    margin-top: 5px;
-    height: 22%;
+  font-size: 14px;
+  color: #ffffff;
+  margin-top: 5px;
+  height: 22%;
 }
 
 .user-auth-sign-in-form,
 .user-auth-forgot-password-form,
 .user-auth-sign-up-form {
-    width: 75%;
-    height: 40%;
-
+  width: 75%;
+  height: 40%;
 }
 
-.user-auth-sign-in-form input[type='text'],
-.user-auth-sign-in-form input[type='password'],
-.user-auth-forgot-password-form input[type='email'],
-.user-auth-forgot-password-form input[type='text'],
-.user-auth-forgot-password-form input[type='password'],
-.user-auth-sign-up-form input[type='text'],
-.user-auth-sign-up-form input[type='password'] {
-    height: 40px;
-    border-style: none;
-    border-radius: 18px;
-    outline: none;
-    margin-bottom: 0;
-    font-size: 15px;
-    transition: all 0.35s;
+.user-auth-sign-in-form input[type="text"],
+.user-auth-sign-in-form input[type="password"],
+.user-auth-forgot-password-form input[type="email"],
+.user-auth-forgot-password-form input[type="text"],
+.user-auth-forgot-password-form input[type="password"],
+.user-auth-sign-up-form input[type="text"],
+.user-auth-sign-up-form input[type="password"] {
+  height: 40px;
+  border-style: none;
+  border-radius: 18px;
+  outline: none;
+  margin-bottom: 0;
+  font-size: 15px;
+  transition: all 0.35s;
 }
 
-.user-auth-sign-in-form input[type='text']:focus,
-.user-auth-sign-in-form input[type='password']:focus,
-.user-auth-forgot-password-form input[type='email']:focus,
-.user-auth-forgot-password-form input[type='text']:focus,
-.user-auth-forgot-password-form input[type='password']:focus,
-.user-auth-sign-up-form input[type='text']:focus,
-.user-auth-sign-up-form input[type='password']:focus {
-    outline: 1px solid #007bff;
+.user-auth-sign-in-form input[type="text"]:focus,
+.user-auth-sign-in-form input[type="password"]:focus,
+.user-auth-forgot-password-form input[type="email"]:focus,
+.user-auth-forgot-password-form input[type="text"]:focus,
+.user-auth-forgot-password-form input[type="password"]:focus,
+.user-auth-sign-up-form input[type="text"]:focus,
+.user-auth-sign-up-form input[type="password"]:focus {
+  outline: 1px solid #007bff;
 }
 
 .forgot-password-link {
-    color: #b7bac7;
-    font-size: 13px;
+  color: #b7bac7;
+  font-size: 13px;
 }
 
 .sign-up-link {
-    color: #cad2ff;
-    margin-bottom: 25px;
+  color: #cad2ff;
+  margin-bottom: 25px;
 }
 
 .forgot-password-email-description,
 .sign-up-description {
-    color: #838383;
-    font-size: 14px;
+  color: #838383;
+  font-size: 14px;
 }
 
 .no-account-p,
 .sign-up-link {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .sign-in-button,
@@ -156,20 +154,20 @@
 .fp-submit-button,
 .su-proceed-button,
 .su-submit-button {
-    background-color: #FFFFFF;
-    color: #00056b;
-    width: 160px;
-    height: 50px;
-    border: none;
-    font-size: 17.5px;
-    transition: all 0.35s;
+  background-color: #ffffff;
+  color: #00056b;
+  width: 200px;
+  height: 50px;
+  border: none;
+  font-size: 20px;
+  transition: all 0.35s;
 }
 
 .fp-proceed-button,
 .fp-submit-button,
 .su-proceed-button,
 .su-submit-button {
-    margin: 10px 0 25px 0;
+  margin: 25px 0 25px 0;
 }
 
 .sign-in-button:hover,
@@ -177,887 +175,867 @@
 .fp-submit-button:hover,
 .su-proceed-button:hover,
 .su-submit-button:hover {
-    background-color: #948a8a;
-    color: #FFFFFF;
+  background-color: #948a8a;
+  color: #ffffff;
 }
-
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+  /* Left side */
 
-    /* Left side */
+  .left-side-responsive {
+    width: 60%;
+  }
 
-    .left-side-responsive {
-        width: 60%;
-    }
+  .top-part {
+    font-size: 30px;
+  }
 
-    .top-part {
-        font-size: 30px;
-    }
+  .middle-part {
+    font-size: 25px;
+  }
 
-    .middle-part {
-        font-size: 25px;
-    }
+  .bottom-part {
+    font-size: 35px;
+  }
 
-    .bottom-part {
-        font-size: 35px;
-    }
+  .SK-location {
+    font-size: 25px;
+    margin-left: 60%;
+  }
 
-    .SK-location {
-        font-size: 25px;
-        margin-left: 60%;
-    }
+  /* Right side */
 
-    /* Right side */
+  .right-side-contents-container {
+    width: 40%;
+  }
 
-    .right-side-contents-container {
-        width: 40%;
-    }
+  .sign-in-welcome,
+  .forgot-password-fp,
+  .sign-up-su {
+    font-size: 40px;
+    margin: 25px 0 20px 0;
+  }
 
-    .sign-in-welcome,
-    .forgot-password-fp,
-    .sign-up-su {
-        font-size: 40px;
-        margin: 25px 0 20px 0;
-    }
+  .sign-in-details-container,
+  .forgot-password-details-container,
+  .sign-up-details-container {
+    width: 85%;
+  }
 
-    .sign-in-details-container,
-    .forgot-password-details-container,
-    .sign-up-details-container {
-        width: 85%;
-    }
+  .sign-in-details-group .sign-in-label,
+  .forgot-password-details-group .forgot-password-label,
+  .sign-up-details-group .sign-up-label {
+    font-size: 15px;
+  }
 
-    .sign-in-details-group .sign-in-label,
-    .forgot-password-details-group .forgot-password-label,
-    .sign-up-details-group .sign-up-label {
-        font-size: 15px
-    }
+  .user-auth-sign-in-form,
+  .user-auth-forgot-password-form,
+  .user-auth-sign-up-form {
+    width: 75%;
+  }
 
-    .user-auth-sign-in-form,
-    .user-auth-forgot-password-form,
-    .user-auth-sign-up-form {
-        width: 75%;
-    }
+  .user-auth-sign-in-form input[type="text"],
+  .user-auth-sign-in-form input[type="password"],
+  .user-auth-forgot-password-form input[type="email"],
+  .user-auth-forgot-password-form input[type="text"],
+  .user-auth-forgot-password-form input[type="password"],
+  .user-auth-sign-up-form input[type="text"],
+  .user-auth-sign-up-form input[type="password"] {
+    height: 40px;
+    font-size: 12.5px;
+  }
 
-    .user-auth-sign-in-form input[type='text'],
-    .user-auth-sign-in-form input[type='password'],
-    .user-auth-forgot-password-form input[type='email'],
-    .user-auth-forgot-password-form input[type='text'],
-    .user-auth-forgot-password-form input[type='password'],
-    .user-auth-sign-up-form input[type='text'],
-    .user-auth-sign-up-form input[type='password'] {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .forgot-password-link {
+    font-size: 12.5px;
+  }
 
-    .forgot-password-link {
-        font-size: 12.5px;
-    }
+  .sign-up-link {
+    margin-bottom: 25px;
+  }
 
-    .sign-up-link {
-        margin-bottom: 25px;
-    }
+  .forgot-password-email-description,
+  .sign-up-description {
+    font-size: 12.5px;
+  }
 
-    .forgot-password-email-description,
-    .sign-up-description {
-        font-size: 12.5px;
-    }
+  .no-account-p,
+  .sign-up-link {
+    font-size: 12.5px;
+  }
 
-    .no-account-p,
-    .sign-up-link {
-        font-size: 12.5px;
-    }
-
-    .sign-in-button,
-    .fp-proceed-button,
-    .fp-submit-button,
-    .su-proceed-button,
-    .su-submit-button {
-        width: 125px;
-        height: 45px;
-        font-size: 15px;
-    }
+  .sign-in-button,
+  .fp-proceed-button,
+  .fp-submit-button,
+  .su-proceed-button,
+  .su-submit-button {
+    width: 125px;
+    height: 45px;
+    font-size: 15px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  /* Left side */
 
-    /* Left side */
+  .left-side-responsive {
+    width: 55%;
+  }
 
-    .left-side-responsive {
-        width: 55%;
-    }
+  .top-part {
+    font-size: 25px;
+  }
 
-    .top-part {
-        font-size: 25px;
-    }
+  .middle-part {
+    font-size: 20px;
+  }
 
-    .middle-part {
-        font-size: 20px;
-    }
+  .bottom-part {
+    font-size: 30px;
+  }
 
-    .bottom-part {
-        font-size: 30px;
-    }
+  .SK-location {
+    font-size: 20px;
+    margin-left: 50%;
+  }
 
-    .SK-location {
-        font-size: 20px;
-        margin-left: 50%;
-    }
+  /* Right side */
 
-    /* Right side */
+  .right-side-contents-container {
+    width: 45%;
+  }
 
-    .right-side-contents-container {
-        width: 45%;
-    }
+  .sign-in-welcome,
+  .forgot-password-fp,
+  .sign-up-su {
+    font-size: 30px;
+    margin: 25px 0 15px 0;
+  }
 
-    .sign-in-welcome,
-    .forgot-password-fp,
-    .sign-up-su {
-        font-size: 30px;
-        margin: 25px 0 15px 0;
-    }
+  .sign-in-details-container,
+  .forgot-password-details-container,
+  .sign-up-details-container {
+    width: 90%;
+  }
 
-    .sign-in-details-container,
-    .forgot-password-details-container,
-    .sign-up-details-container {
-        width: 90%;
-    }
+  .sign-in-details-group .sign-in-label,
+  .forgot-password-details-group .forgot-password-label,
+  .sign-up-details-group .sign-up-label {
+    font-size: 12.5px;
+  }
 
-    .sign-in-details-group .sign-in-label,
-    .forgot-password-details-group .forgot-password-label,
-    .sign-up-details-group .sign-up-label {
-        font-size: 12.5px
-    }
+  .user-auth-sign-in-form,
+  .user-auth-forgot-password-form,
+  .user-auth-sign-up-form {
+    width: 75%;
+  }
 
-    .user-auth-sign-in-form,
-    .user-auth-forgot-password-form,
-    .user-auth-sign-up-form {
-        width: 75%;
-    }
+  .user-auth-sign-in-form input[type="text"],
+  .user-auth-sign-in-form input[type="password"],
+  .user-auth-forgot-password-form input[type="email"],
+  .user-auth-forgot-password-form input[type="text"],
+  .user-auth-forgot-password-form input[type="password"],
+  .user-auth-sign-up-form input[type="text"],
+  .user-auth-sign-up-form input[type="password"] {
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .user-auth-sign-in-form input[type='text'],
-    .user-auth-sign-in-form input[type='password'],
-    .user-auth-forgot-password-form input[type='email'],
-    .user-auth-forgot-password-form input[type='text'],
-    .user-auth-forgot-password-form input[type='password'],
-    .user-auth-sign-up-form input[type='text'],
-    .user-auth-sign-up-form input[type='password'] {
-        height: 35px;
-        font-size: 10px;
-    }
+  .forgot-password-link {
+    font-size: 10px;
+  }
 
-    .forgot-password-link {
-        font-size: 10px;
-    }
+  .sign-up-link {
+    margin-bottom: 25px;
+  }
 
-    .sign-up-link {
-        margin-bottom: 25px;
-    }
+  .forgot-password-email-description,
+  .sign-up-description {
+    font-size: 10px;
+  }
 
-    .forgot-password-email-description,
-    .sign-up-description {
-        font-size: 10px;
-    }
+  .no-account-p,
+  .sign-up-link {
+    font-size: 10px;
+  }
 
-    .no-account-p,
-    .sign-up-link {
-        font-size: 10px;
-    }
-
-    .sign-in-button,
-    .fp-proceed-button,
-    .fp-submit-button,
-    .su-proceed-button,
-    .su-submit-button {
-        width: 100px;
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .sign-in-button,
+  .fp-proceed-button,
+  .fp-submit-button,
+  .su-proceed-button,
+  .su-submit-button {
+    width: 100px;
+    height: 40px;
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+  /* Left side */
 
-    /* Left side */
+  .left-side-responsive {
+    width: 0%;
+  }
 
-    .left-side-responsive {
-        width: 0%;
-    }
+  /* Right side */
 
-    /* Right side */
+  .right-side-contents-container {
+    width: 100%;
+  }
 
-    .right-side-contents-container {
-        width: 100%;
-    }
+  .sign-in-welcome,
+  .forgot-password-fp,
+  .sign-up-su {
+    font-size: 30px;
+    margin: 25px 0 10px 0;
+  }
 
-    .sign-in-welcome,
-    .forgot-password-fp,
-    .sign-up-su {
-        font-size: 30px;
-        margin: 25px 0 10px 0;
-    }
+  .sign-in-details-container,
+  .forgot-password-details-container,
+  .sign-up-details-container {
+    width: 90%;
+  }
 
-    .sign-in-details-container,
-    .forgot-password-details-container,
-    .sign-up-details-container {
-        width: 90%;
-    }
+  .sign-in-details-group .sign-in-label,
+  .forgot-password-details-group .forgot-password-label,
+  .sign-up-details-group .sign-up-label {
+    font-size: 12.5px;
+  }
 
-    .sign-in-details-group .sign-in-label,
-    .forgot-password-details-group .forgot-password-label,
-    .sign-up-details-group .sign-up-label {
-        font-size: 12.5px
-    }
+  .user-auth-sign-in-form,
+  .user-auth-forgot-password-form,
+  .user-auth-sign-up-form {
+    width: 75%;
+  }
 
-    .user-auth-sign-in-form,
-    .user-auth-forgot-password-form,
-    .user-auth-sign-up-form {
-        width: 75%;
-    }
+  .user-auth-sign-in-form input[type="text"],
+  .user-auth-sign-in-form input[type="password"],
+  .user-auth-forgot-password-form input[type="email"],
+  .user-auth-forgot-password-form input[type="text"],
+  .user-auth-forgot-password-form input[type="password"],
+  .user-auth-sign-up-form input[type="text"],
+  .user-auth-sign-up-form input[type="password"] {
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .user-auth-sign-in-form input[type='text'],
-    .user-auth-sign-in-form input[type='password'],
-    .user-auth-forgot-password-form input[type='email'],
-    .user-auth-forgot-password-form input[type='text'],
-    .user-auth-forgot-password-form input[type='password'],
-    .user-auth-sign-up-form input[type='text'],
-    .user-auth-sign-up-form input[type='password'] {
-        height: 35px;
-        font-size: 10px;
-    }
+  .forgot-password-link {
+    font-size: 10px;
+  }
 
-    .forgot-password-link {
-        font-size: 10px;
-    }
+  .sign-up-link {
+    margin-bottom: 25px;
+  }
 
-    .sign-up-link {
-        margin-bottom: 25px;
-    }
+  .forgot-password-email-description,
+  .sign-up-description {
+    font-size: 10px;
+  }
 
-    .forgot-password-email-description,
-    .sign-up-description {
-        font-size: 10px;
-    }
+  .no-account-p,
+  .sign-up-link {
+    font-size: 10px;
+  }
 
-    .no-account-p,
-    .sign-up-link {
-        font-size: 10px;
-    }
-
-    .sign-in-button,
-    .fp-proceed-button,
-    .fp-submit-button,
-    .su-proceed-button,
-    .su-submit-button {
-        width: 100px;
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .sign-in-button,
+  .fp-proceed-button,
+  .fp-submit-button,
+  .su-proceed-button,
+  .su-submit-button {
+    width: 100px;
+    height: 40px;
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+  /* Left side */
 
-    /* Left side */
+  .left-side-responsive {
+    width: 0%;
+  }
 
-    .left-side-responsive {
-        width: 0%;
-    }
+  /* Right side */
 
-    /* Right side */
+  .right-side-contents-container {
+    width: 100%;
+  }
 
-    .right-side-contents-container {
-        width: 100%;
-    }
+  .sign-in-welcome,
+  .forgot-password-fp,
+  .sign-up-su {
+    font-size: 20px;
+    margin: 25px 0 5px 0;
+  }
 
-    .sign-in-welcome,
-    .forgot-password-fp,
-    .sign-up-su {
-        font-size: 20px;
-        margin: 25px 0 5px 0;
-    }
+  .sign-in-details-container,
+  .forgot-password-details-container,
+  .sign-up-details-container {
+    width: 90%;
+    background-color: #e4e4e4;
+  }
 
-    .sign-in-details-container,
-    .forgot-password-details-container,
-    .sign-up-details-container {
-        width: 90%;
-        background-color: #E4E4E4;
-    }
+  .sign-in-details-group .sign-in-label,
+  .forgot-password-details-group .forgot-password-label,
+  .sign-up-details-group .sign-up-label {
+    font-size: 10px;
+  }
 
-    .sign-in-details-group .sign-in-label,
-    .forgot-password-details-group .forgot-password-label,
-    .sign-up-details-group .sign-up-label {
-        font-size: 10px
-    }
+  .user-auth-sign-in-form,
+  .user-auth-forgot-password-form,
+  .user-auth-sign-up-form {
+    width: 75%;
+  }
 
-    .user-auth-sign-in-form,
-    .user-auth-forgot-password-form,
-    .user-auth-sign-up-form {
-        width: 75%;
-    }
+  .user-auth-sign-in-form input[type="text"],
+  .user-auth-sign-in-form input[type="password"],
+  .user-auth-forgot-password-form input[type="email"],
+  .user-auth-forgot-password-form input[type="text"],
+  .user-auth-forgot-password-form input[type="password"],
+  .user-auth-sign-up-form input[type="text"],
+  .user-auth-sign-up-form input[type="password"] {
+    height: 30px;
+    font-size: 7.5px;
+  }
 
-    .user-auth-sign-in-form input[type='text'],
-    .user-auth-sign-in-form input[type='password'],
-    .user-auth-forgot-password-form input[type='email'],
-    .user-auth-forgot-password-form input[type='text'],
-    .user-auth-forgot-password-form input[type='password'],
-    .user-auth-sign-up-form input[type='text'],
-    .user-auth-sign-up-form input[type='password'] {
-        height: 30px;
-        font-size: 7.5px;
-    }
+  .forgot-password-link {
+    font-size: 7.5px;
+  }
 
-    .forgot-password-link {
-        font-size: 7.5px;
-    }
+  .sign-up-link {
+    margin-bottom: 25px;
+  }
 
-    .sign-up-link {
-        margin-bottom: 25px;
-    }
+  .forgot-password-email-description,
+  .sign-up-description {
+    font-size: 7.5px;
+  }
 
-    .forgot-password-email-description,
-    .sign-up-description {
-        font-size: 7.5px;
-    }
+  .no-account-p,
+  .sign-up-link {
+    font-size: 7.5px;
+  }
 
-    .no-account-p,
-    .sign-up-link {
-        font-size: 7.5px;
-    }
-
-    .sign-in-button,
-    .fp-proceed-button,
-    .fp-submit-button,
-    .su-proceed-button,
-    .su-submit-button {
-        width: 75px;
-        height: 35px;
-        font-size: 10px;
-    }
+  .sign-in-button,
+  .fp-proceed-button,
+  .fp-submit-button,
+  .su-proceed-button,
+  .su-submit-button {
+    width: 75px;
+    height: auto;
+    font-size: 10px;
+  }
 }
-
 
 /* ____________________________________________________________________________________________________ */
 /* Admin Navbar */
 /* ____________________________________________________________________________________________________ */
 
 .admin-navbar {
-    height: 75px;
-    background-color: #25327A;
-    z-index: 3;
+  height: 75px;
+  background-color: #25327a;
+  z-index: 3;
 }
 
 .admin-navbar-details {
-    width: 100%;
+  width: 100%;
 }
 
 .admin-iSKed-logo {
-    height: 50px;
-    width: 50px;
+  height: 50px;
+  width: 50px;
 }
 
 .admin-iSKed-name,
 .admin-iSKed-name-h4 {
-    font-family: 'Sansita', sans-serif;
+  font-family: "Sansita", sans-serif;
 }
 
 .admin-hamburger-nav {
-    color: white;
+  color: white;
 }
 
 .admin-sign-out-button {
-    font-size: 15px;
-    color: #FFFFFF;
-    height: 45px;
-    width: 100px;
-    cursor: pointer;
-    border-style: none;
-    transition: all 0.35s;
+  font-size: 15px;
+  color: #ffffff;
+  height: 45px;
+  width: 100px;
+  cursor: pointer;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-sign-out-button:hover {
-    color: rgb(2, 107, 107);
+  color: rgb(2, 107, 107);
 }
 
 /* Sidebar */
 
 .admin-sidebar {
-    background-color: #000b49;
-    position: fixed;
-    padding-top: 75px;
-    left: -250px;
-    width: 250px;
-    height: 100%;
-    transition: left 0.35s ease-in-out;
-    z-index: 2;
+  background-color: #000b49;
+  position: fixed;
+  padding-top: 75px;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  transition: left 0.35s ease-in-out;
+  z-index: 2;
 }
 
 .admin-sidebar-open {
-    left: 0;
+  left: 0;
 }
 
 .admin-sidebar-closed {
-    left: -250px;
+  left: -250px;
 }
 
 .admin-sidebar .admin-sidebar-links {
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
 }
-
 
 /* Media */
 
 @media (min-width: 481px) and (max-width: 767px) {
-
-    .admin-sign-out-button {
-        font-size: 12.5px;
-        height: 42.5px;
-        width: 90px;
-    }
+  .admin-sign-out-button {
+    font-size: 12.5px;
+    height: 42.5px;
+    width: 90px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .admin-iSKed-name-h4 {
+    font-size: 17.5px;
+  }
 
-    .admin-iSKed-name-h4 {
-        font-size: 17.5px;
-    }
+  .admin-sign-out-button {
+    font-size: 10px;
+    height: 40px;
+    width: 80px;
+  }
 
-    .admin-sign-out-button {
-        font-size: 10px;
-        height: 40px;
-        width: 80px;
-    }
+  /* Sidebar */
 
-    /* Sidebar */
+  .admin-sidebar {
+    left: -225px;
+    width: 225px;
+  }
 
-    .admin-sidebar {
-        left: -225px;
-        width: 225px;
-    }
+  .admin-sidebar-open {
+    left: 0;
+  }
 
-    .admin-sidebar-open {
-        left: 0;
-    }
+  .admin-sidebar-closed {
+    left: -225px;
+  }
 
-    .admin-sidebar-closed {
-        left: -225px;
-    }
-
-    .admin-sidebar .admin-sidebar-links {
-        font-size: 12.5px;
-    }
+  .admin-sidebar .admin-sidebar-links {
+    font-size: 12.5px;
+  }
 }
-
 
 /* ____________________________________________________________________________________________________ */
 /* Admin Sidebar */
 /* ____________________________________________________________________________________________________ */
 
 .admin-bs-sidebar {
-    position: fixed;
-    padding-top: 75px;
-    width: 22.5%;
-    height: 100%;
-    background-color: #e2dbdb;
-    z-index: 2;
+  position: fixed;
+  padding-top: 75px;
+  width: 22.5%;
+  height: 100%;
+  background-color: #e2dbdb;
+  z-index: 2;
 }
 
 .admin-bs-sidebar-links a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .admin-sidebar-link {
-    height: 50px;
+  height: 50px;
 }
 
 .admin-bs-list,
 .admin-bs-list a {
-    color: black;
-    font-family: 'Inter', 'sans-serif';
-    transition: all 0.35s ease;
+  color: black;
+  font-family: "Inter", "sans-serif";
+  transition: all 0.35s ease;
 }
 
 .admin-bs-list:hover,
 .admin-bs-list a:hover {
-    color: #FFFFFF;
-    background-color: #3f3d3d;
+  color: #ffffff;
+  background-color: #3f3d3d;
 }
 
 .admin-bs-list.active {
-    background-color: #E1D142;
-    transition: all 0.35s ease;
+  background-color: #e1d142;
+  transition: all 0.35s ease;
 }
 
 .admin-sidebar-icon {
-    margin: 0 10px 0 30px;
-    font-size: 30px;
+  margin: 0 10px 0 30px;
+  font-size: 30px;
 }
 
 .admin-sidebar-title {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .admin-sidebar-MW-close,
 .admin-sidebar-R-close,
 .admin-sidebar-MW-open,
 .admin-sidebar-R-open {
-    color: gray;
-    margin: 0 0 0 10px;
+  color: gray;
+  margin: 0 0 0 10px;
 }
-
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+  .admin-sidebar-icon {
+    margin: 0 10px 0 25px;
+    font-size: 27.5px;
+  }
 
-    .admin-sidebar-icon {
-        margin: 0 10px 0 25px;
-        font-size: 27.5px;
-    }
-
-    .admin-sidebar-title {
-        font-size: 12.5px;
-    }
+  .admin-sidebar-title {
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .admin-sidebar-icon {
+    margin: 0 10px 0 20px;
+    font-size: 25px;
+  }
 
-    .admin-sidebar-icon {
-        margin: 0 10px 0 20px;
-        font-size: 25px;
-    }
-
-    .admin-sidebar-title {
-        font-size: 10px;
-    }
+  .admin-sidebar-title {
+    font-size: 10px;
+  }
 }
-
 
 /* ____________________________________________________________________________________________________ */
 /* Admin Home Dashboard */
 /* ____________________________________________________________________________________________________ */
 
 .admin-dashboard-container {
-    position: relative;
-    padding-top: 75px;
-    left: 22.5%;
-    width: 77.5%;
-    background-color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
-    z-index: 1;
+  position: relative;
+  padding-top: 75px;
+  left: 22.5%;
+  width: 77.5%;
+  background-color: #ffffff;
+  font-family: "Inter", sans-serif;
+  z-index: 1;
 }
 
 .admin-dashboard-label-h2 {
-    font-size: 40px;
-    margin: 20px 0 10px 40px;
+  font-size: 40px;
+  margin: 20px 0 10px 40px;
 }
 
 .admin-dashboard-label-p {
-    font-size: 20px;
-    margin: 0 0 10px 40px;
+  font-size: 20px;
+  margin: 0 0 10px 40px;
 }
 
 .reservations-label-h2,
 .userd-label-h2,
 .equipment-label-h2,
 .yearlyrd-label-h2 {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .year-dropdown-container {
-    width: 90%;
-    margin: 0 auto 20px;
+  width: 90%;
+  margin: 0 auto 20px;
 }
 
 .year-selection-container {
-    height: 450x;
-    width: 100%;
+  height: 450x;
+  width: 100%;
 }
 
 .year-selection-label {
-    font-size: 17.5px;
+  font-size: 17.5px;
 }
 
 .year-select {
-    width: 30%;
-    height: 45px;
-    font-size: 17.5px;
-    margin-left: 10px;
+  width: 30%;
+  height: 45px;
+  font-size: 17.5px;
+  margin-left: 10px;
 }
 
 .year-select:hover {
-    color: #FFFFFF;
-    background-color: #858585;
+  color: #ffffff;
+  background-color: #858585;
 }
 
 .year-select:focus {
-    outline: 1px solid #007bff;
+  outline: 1px solid #007bff;
 }
 
 .year-select option {
-    background-color: #FFFFFF;
-    color: #000000;
-    pointer-events: none;
+  background-color: #ffffff;
+  color: #000000;
+  pointer-events: none;
 }
 
 .admin-dashboard-charts-section {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .admin-contacts-details-group .admin-current-contact-label,
 .admin-edit-contacts-details-group .admin-edit-contact-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 17.5px;
+  font-family: "Roboto", sans-serif;
+  font-size: 17.5px;
 }
 
 .admin-dashboard-charts-container {
-    width: 100%;
-    flex-wrap: wrap;
-    gap: 10%;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 10%;
 }
 
 .admin-chart-container {
-    width: 40%;
-    margin-bottom: 40px;
+  width: 40%;
+  margin-bottom: 40px;
 }
 
 .piechart {
-    max-height: 250px;
-    height: 100%;
+  max-height: 250px;
+  height: 100%;
 }
 
 .chart {
-    max-height: 250px;
-    height: 100%;
+  max-height: 250px;
+  height: 100%;
 }
-
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+  .admin-dashboard-label-h2 {
+    font-size: 37.5px;
+    margin: 20px 0 7.5px 40px;
+  }
 
-    .admin-dashboard-label-h2 {
-        font-size: 37.5px;
-        margin: 20px 0 7.5px 40px;
-    }
+  .admin-dashboard-label-p {
+    font-size: 17.5px;
+    margin: 0 0 10px 40px;
+  }
 
-    .admin-dashboard-label-p {
-        font-size: 17.5px;
-        margin: 0 0 10px 40px;
-    }
+  .year-selection-container {
+    height: 40px;
+  }
 
-    .year-selection-container {
-        height: 40px;
-    }
+  .year-selection-label {
+    font-size: 15px;
+  }
 
-    .year-selection-label {
-        font-size: 15px;
-    }
+  .year-select {
+    width: 30%;
+    height: 40px;
+    font-size: 15px;
+    margin-left: 10px;
+  }
 
-    .year-select {
-        width: 30%;
-        height: 40px;
-        font-size: 15px;
-        margin-left: 10px;
-    }
+  .reservations-label-h2,
+  .userd-label-h2,
+  .equipment-label-h2,
+  .yearlyrd-label-h2 {
+    font-size: 25px;
+  }
 
-    .reservations-label-h2,
-    .userd-label-h2,
-    .equipment-label-h2,
-    .yearlyrd-label-h2 {
-        font-size: 25px;
-    }
+  .admin-dashboard-charts-container {
+    gap: 7.5%;
+  }
 
-    .admin-dashboard-charts-container {
-        gap: 7.5%;
-    }
+  .admin-chart-container {
+    width: 45%;
+  }
 
-    .admin-chart-container {
-        width: 45%;
-    }
+  .piechart {
+    max-height: 200px;
+    height: 100%;
+  }
 
-    .piechart {
-        max-height: 200px;
-        height: 100%;
-    }
-
-    .chart {
-        max-height: 200px;
-        height: 100%;
-    }
+  .chart {
+    max-height: 200px;
+    height: 100%;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .admin-dashboard-label-h2 {
+    font-size: 35px;
+    margin: 20px 0 5px 40px;
+  }
 
-    .admin-dashboard-label-h2 {
-        font-size: 35px;
-        margin: 20px 0 5px 40px;
-    }
+  .admin-dashboard-label-p {
+    font-size: 15px;
+    margin: 0 0 10px 40px;
+  }
 
-    .admin-dashboard-label-p {
-        font-size: 15px;
-        margin: 0 0 10px 40px;
-    }
+  .year-selection-container {
+    height: 35px;
+  }
 
-    .year-selection-container {
-        height: 35px;
-    }
+  .year-selection-label {
+    font-size: 12.5px;
+  }
 
-    .year-selection-label {
-        font-size: 12.5px;
-    }
+  .year-select {
+    width: 30%;
+    height: 35px;
+    font-size: 12.5px;
+    margin-left: 7.5px;
+  }
 
-    .year-select {
-        width: 30%;
-        height: 35px;
-        font-size: 12.5px;
-        margin-left: 7.5px;
-    }
+  .reservations-label-h2,
+  .userd-label-h2,
+  .equipment-label-h2,
+  .yearlyrd-label-h2 {
+    font-size: 20px;
+  }
 
-    .reservations-label-h2,
-    .userd-label-h2,
-    .equipment-label-h2,
-    .yearlyrd-label-h2 {
-        font-size: 20px;
-    }
+  .admin-dashboard-charts-container {
+    gap: 2.5%;
+  }
 
-    .admin-dashboard-charts-container {
-        gap: 2.5%;
-    }
+  .admin-chart-container {
+    width: 47.5%;
+  }
 
-    .admin-chart-container {
-        width: 47.5%;
-    }
+  .piechart {
+    max-height: 150px;
+    height: 100%;
+  }
 
-    .piechart {
-        max-height: 150px;
-        height: 100%;
-    }
-
-    .chart {
-        max-height: 150px;
-        height: 100%;
-    }
+  .chart {
+    max-height: 150px;
+    height: 100%;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+  .admin-dashboard-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-dashboard-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-dashboard-label-h2 {
+    font-size: 35px;
+    margin: 20px 0 5px 25px;
+  }
 
-    .admin-dashboard-label-h2 {
-        font-size: 35px;
-        margin: 20px 0 5px 25px;
-    }
+  .admin-dashboard-label-p {
+    font-size: 15px;
+    margin: 0px 0 20px 25px;
+  }
 
-    .admin-dashboard-label-p {
-        font-size: 15px;
-        margin: 0px 0 20px 25px;
-    }
+  .year-selection-container {
+    height: 35px;
+  }
 
-    .year-selection-container {
-        height: 35px;
-    }
+  .year-selection-label {
+    font-size: 12.5px;
+  }
 
-    .year-selection-label {
-        font-size: 12.5px;
-    }
+  .year-select {
+    width: 30%;
+    height: 35px;
+    font-size: 12.5px;
+    margin-left: 5px;
+  }
 
-    .year-select {
-        width: 30%;
-        height: 35px;
-        font-size: 12.5px;
-        margin-left: 5px;
-    }
+  .reservations-label-h2,
+  .userd-label-h2,
+  .equipment-label-h2,
+  .yearlyrd-label-h2 {
+    font-size: 20px;
+  }
 
-    .reservations-label-h2,
-    .userd-label-h2,
-    .equipment-label-h2,
-    .yearlyrd-label-h2 {
-        font-size: 20px;
-    }
+  .admin-dashboard-charts-container {
+    gap: 2.5%;
+  }
 
-    .admin-dashboard-charts-container {
-        gap: 2.5%;
-    }
+  .admin-chart-container {
+    width: 47.5%;
+  }
 
-    .admin-chart-container {
-        width: 47.5%;
-    }
+  .piechart {
+    max-height: 150px;
+    height: 100%;
+  }
 
-    .piechart {
-        max-height: 150px;
-        height: 100%;
-    }
-
-    .chart {
-        max-height: 150px;
-        height: 100%;
-    }
+  .chart {
+    max-height: 150px;
+    height: 100%;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .admin-dashboard-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-dashboard-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-dashboard-label-h2 {
+    font-size: 30px;
+    margin: 20px 0 2.5px 20px;
+  }
 
-    .admin-dashboard-label-h2 {
-        font-size: 30px;
-        margin: 20px 0 2.5px 20px;
-    }
+  .admin-dashboard-label-p {
+    font-size: 12.5px;
+    margin: 0 0 20px 20px;
+  }
 
-    .admin-dashboard-label-p {
-        font-size: 12.5px;
-        margin: 0 0 20px 20px;
-    }
+  .year-selection-container {
+    height: 35px;
+  }
 
-    .year-selection-container {
-        height: 35px;
-    }
+  .year-selection-label {
+    font-size: 12.5px;
+  }
 
-    .year-selection-label {
-        font-size: 12.5px;
-    }
+  .year-select {
+    width: 30%;
+    height: 25px;
+    font-size: 10px;
+    margin-left: 2.5px;
+  }
 
-    .year-select {
-        width: 30%;
-        height: 25px;
-        font-size: 10px;
-        margin-left: 2.5px;
-    }
+  .reservations-label-h2,
+  .userd-label-h2,
+  .equipment-label-h2,
+  .yearlyrd-label-h2 {
+    font-size: 15px;
+  }
 
-    .reservations-label-h2,
-    .userd-label-h2,
-    .equipment-label-h2,
-    .yearlyrd-label-h2 {
-        font-size: 15px;
-    }
+  .admin-dashboard-charts-container {
+    flex-direction: column;
+    gap: 0;
+  }
 
-    .admin-dashboard-charts-container {
-        flex-direction: column;
-        gap: 0;
-    }
+  .admin-chart-container {
+    width: 75%;
+  }
 
-    .admin-chart-container {
-        width: 75%;
-    }
+  .piechart {
+    max-height: 100px;
+    height: 100%;
+  }
 
-    .piechart {
-        max-height: 100px;
-        height: 100%;
-    }
-
-    .chart {
-        max-height: 100px;
-        height: 100%;
-    }
+  .chart {
+    max-height: 100px;
+    height: 100%;
+  }
 }
-
 
 /* RAWR! */
 /* ____________________________________________________________________________________________________ */
@@ -1065,1716 +1043,1694 @@
 /* ____________________________________________________________________________________________________ */
 
 .admin-home-container {
-    position: relative;
-    padding-top: 75px;
-    left: 22.5%;
-    width: 77.5%;
-    background-color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
-    z-index: 1;
+  position: relative;
+  padding-top: 75px;
+  left: 22.5%;
+  width: 77.5%;
+  background-color: #ffffff;
+  font-family: "Inter", sans-serif;
+  z-index: 1;
 }
 
 .admin-home-label-h2 {
-    font-size: 40px;
-    margin: 20px 40px 20px 40px;
+  font-size: 40px;
+  margin: 20px 40px 20px 40px;
 }
 
 .admin-home-nav-tabs {
-    cursor: pointer;
-    font-size: 25px;
-    margin: 0 0 20px 60px;
-    gap: 1in;
-    color: #766F6F;
-    transition: all 0.35s;
+  cursor: pointer;
+  font-size: 25px;
+  margin: 0 0 20px 60px;
+  gap: 1in;
+  color: #766f6f;
+  transition: all 0.35s;
 }
 
 .admin-home-nav-tabs li:hover {
-    color: #E3DFDF;
+  color: #e3dfdf;
 }
 
 .admin-home-nav-tabs li.active-tab {
-    color: red;
-    text-decoration: underline;
-    text-decoration-color: #C1C1C1;
-    text-underline-offset: 10px;
+  color: red;
+  text-decoration: underline;
+  text-decoration-color: #c1c1c1;
+  text-underline-offset: 10px;
 }
 
 .admin-home-contents-container {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .admin-all-event-details-container {
-    width: 100%;
+  width: 100%;
 }
 
 .admin-add-event-details-container {
-    background-color: #c5c1c1;
-    width: 90%;
+  background-color: #c5c1c1;
+  width: 90%;
 }
 
 .admin-add-event-details-group {
-    width: 90%;
-    margin: 25px 0 25px 0;
+  width: 90%;
+  margin: 25px 0 25px 0;
 }
 
 .admin-event-item {
-    background-color: #c5c1c1;
-    width: 100%;
-    margin-bottom: 20px;
+  background-color: #c5c1c1;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .home-event-image {
-    width: 40%;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  width: 40%;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .home-event-details {
-    margin-top: 20px;
-    width: 60%;
+  margin-top: 20px;
+  width: 60%;
 }
 
 .event-name {
-    font-size: 35px;
+  font-size: 35px;
 }
 
 .event-description {
-    font-size: 25px;
+  font-size: 25px;
 }
 
 .admin-add-event-form {
-    width: 100%;
+  width: 100%;
 }
 
 .admin-all-event-details-group {
-    width: 90%;
+  width: 90%;
 }
 
 .admin-add-event-details-group .admin-add-event-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 17.5px;
+  font-family: "Roboto", sans-serif;
+  font-size: 17.5px;
 }
 
 .admin-add-event-form input[type="text"],
 .admin-add-event-form textarea {
-    height: 50px;
-    border-style: none;
-    border-radius: 10px;
-    outline: none;
-    margin-bottom: 10px;
-    font-size: 17.5px;
-    transition: all 0.35s;
+  height: 50px;
+  border-style: none;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 10px;
+  font-size: 17.5px;
+  transition: all 0.35s;
 }
 
 .admin-add-event-form input[type="text"]:focus,
 .admin-add-event-form textarea:focus {
-    outline: 1px solid #007bff;
+  outline: 1px solid #007bff;
 }
 
 .admin-add-event-button {
-    background-color: #42BB4E;
-    color: #FFFFFF;
-    margin-top: 10px;
-    width: 150px;
-    height: 55px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #42bb4e;
+  color: #ffffff;
+  margin-top: 10px;
+  width: 150px;
+  height: 55px;
+  font-size: 15px;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-delete-event-button {
-    background-color: #E1D142;
-    color: #000000;
-    margin-bottom: 20px;
-    width: 125px;
-    height: 55px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #e1d142;
+  color: #000000;
+  margin-bottom: 20px;
+  width: 125px;
+  height: 55px;
+  font-size: 15px;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-delete-event-button:hover,
 .admin-add-event-button:hover {
-    color: rgb(2, 107, 107);
+  color: rgb(2, 107, 107);
 }
-
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+  .admin-home-label-h2 {
+    font-size: 37.5px;
+  }
 
-    .admin-home-label-h2 {
-        font-size: 37.5px;
-    }
+  .admin-add-event-details-group .admin-add-event-label {
+    font-size: 15px;
+  }
 
-    .admin-add-event-details-group .admin-add-event-label {
-        font-size: 15px;
-    }
+  .admin-home-nav-tabs {
+    font-size: 22.5px;
+    margin: 0 0 20px 45px;
+    gap: 0.75in;
+  }
 
-    .admin-home-nav-tabs {
-        font-size: 22.5px;
-        margin: 0 0 20px 45px;
-        gap: 0.75in;
-    }
+  .event-name {
+    font-size: 30px;
+  }
 
-    .event-name {
-        font-size: 30px;
-    }
+  .event-description {
+    font-size: 20px;
+  }
 
-    .event-description {
-        font-size: 20px;
-    }
-
-    .admin-add-event-form input[type="text"],
-    .admin-add-event-form textarea {
-        height: 50px;
-        font-size: 15px;
-    }
+  .admin-add-event-form input[type="text"],
+  .admin-add-event-form textarea {
+    height: 50px;
+    font-size: 15px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .admin-home-label-h2 {
+    font-size: 35px;
+  }
 
-    .admin-home-label-h2 {
-        font-size: 35px;
-    }
+  .admin-add-event-details-group .admin-add-event-label {
+    font-size: 17.5px;
+  }
 
-    .admin-add-event-details-group .admin-add-event-label {
-        font-size: 17.5px;
-    }
+  .admin-home-nav-tabs {
+    font-size: 20px;
+    margin: 0 0 20px 45px;
+    gap: 1in;
+  }
 
-    .admin-home-nav-tabs {
-        font-size: 20px;
-        margin: 0 0 20px 45px;
-        gap: 1in;
-    }
+  .event-name {
+    font-size: 25px;
+  }
 
-    .event-name {
-        font-size: 25px;
-    }
+  .event-description {
+    font-size: 15px;
+  }
 
-    .event-description {
-        font-size: 15px;
-    }
+  .admin-delete-event-button {
+    width: 125px;
+    height: 47.5px;
+    font-size: 13px;
+  }
 
-    .admin-delete-event-button {
-        width: 125px;
-        height: 47.5px;
-        font-size: 13px;
-    }
-
-    .admin-add-event-form input[type="text"],
-    .admin-add-event-form textarea {
-        height: 45px;
-        font-size: 17.5px;
-    }
+  .admin-add-event-form input[type="text"],
+  .admin-add-event-form textarea {
+    height: 45px;
+    font-size: 17.5px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+  .admin-home-container {
+    left: 0;
+    width: 100%;
+  }
 
-    .admin-home-container {
-        left: 0;
-        width: 100%;
-    }
+  .admin-home-label-h2 {
+    font-size: 35px;
+    margin: 20px 0 20px 25px;
+  }
 
-    .admin-home-label-h2 {
-        font-size: 35px;
-        margin: 20px 0 20px 25px;
-    }
+  .admin-home-nav-tabs {
+    font-size: 17.5px;
+    margin: 0 0 20px 45px;
+    gap: 0.5in;
+  }
 
-    .admin-home-nav-tabs {
-        font-size: 17.5px;
-        margin: 0 0 20px 45px;
-        gap: 0.5in;
-    }
+  .event-name {
+    font-size: 25px;
+  }
 
-    .event-name {
-        font-size: 25px;
-    }
+  .event-description {
+    font-size: 15px;
+  }
 
-    .event-description {
-        font-size: 15px;
-    }
+  .admin-delete-event-button {
+    width: 125px;
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-delete-event-button {
-        width: 125px;
-        height: 45px;
-        font-size: 12.5px;
-    }
+  .admin-add-event-details-group .admin-add-event-label {
+    font-size: 15px;
+  }
 
-    .admin-add-event-details-group .admin-add-event-label {
-        font-size: 15px;
-    }
+  .admin-add-event-form input[type="text"],
+  .admin-add-event-form textarea {
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-add-event-form input[type="text"],
-    .admin-add-event-form textarea {
-        height: 45px;
-        font-size: 12.5px;
-    }
-
-    .admin-add-event-button {
-        width: 150px;
-        height: 50px;
-        font-size: 12.5px;
-    }
+  .admin-add-event-button {
+    width: 150px;
+    height: 50px;
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .admin-home-container {
+    left: 0;
+    width: 100%;
+  }
 
-    .admin-home-container {
-        left: 0;
-        width: 100%;
-    }
+  .admin-home-label-h2 {
+    font-size: 30px;
+    margin: 20px 0 20px 20px;
+  }
 
-    .admin-home-label-h2 {
-        font-size: 30px;
-        margin: 20px 0 20px 20px;
-    }
+  .admin-home-nav-tabs {
+    font-size: 15px;
+    margin: 0 0 20px 40px;
+    gap: 0.5in;
+  }
 
-    .admin-home-nav-tabs {
-        font-size: 15px;
-        margin: 0 0 20px 40px;
-        gap: 0.5in;
-    }
+  .admin-event-item {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .admin-event-item {
-        flex-direction: column;
-        align-items: center;
-    }
+  .home-event-image {
+    width: 90%;
+  }
 
-    .home-event-image {
-        width: 90%;
-    }
+  .home-event-details {
+    width: 90%;
+    align-items: center;
+  }
 
-    .home-event-details {
-        width: 90%;
-        align-items: center;
-    }
+  .event-name {
+    font-size: 20px;
+  }
 
-    .event-name {
-        font-size: 20px;
-    }
+  .event-description {
+    font-size: 12.5px;
+  }
 
-    .event-description {
-        font-size: 12.5px;
-    }
+  .admin-delete-event-button {
+    width: 100px;
+    height: 40px;
+    font-size: 10px;
+  }
 
-    .admin-delete-event-button {
-        width: 100px;
-        height: 40px;
-        font-size: 10px;
-    }
+  .admin-add-event-details-group .admin-add-event-label {
+    font-size: 12.5px;
+  }
 
-    .admin-add-event-details-group .admin-add-event-label {
-        font-size: 12.5px;
-    }
+  .admin-add-event-form input[type="text"],
+  .admin-add-event-form textarea {
+    height: 45px;
+    font-size: 10px;
+  }
 
-    .admin-add-event-form input[type="text"],
-    .admin-add-event-form textarea {
-        height: 45px;
-        font-size: 10px;
-    }
-
-    .admin-add-event-button {
-        width: 125px;
-        height: 50px;
-        font-size: 10px;
-    }
+  .admin-add-event-button {
+    width: 125px;
+    height: 50px;
+    font-size: 10px;
+  }
 }
-
 
 /* ____________________________________________________________________________________________________ */
 /* Admin Manage About Us */
 /* ____________________________________________________________________________________________________ */
 
 .admin-about-us-container {
-    position: relative;
-    padding-top: 75px;
-    left: 22.5%;
-    width: 77.5%;
-    background-color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
-    z-index: 1;
+  position: relative;
+  padding-top: 75px;
+  left: 22.5%;
+  width: 77.5%;
+  background-color: #ffffff;
+  font-family: "Inter", sans-serif;
+  z-index: 1;
 }
 
 .admin-about-us-label-h2 {
-    font-size: 40px;
-    margin: 20px 0 20px 40px;
+  font-size: 40px;
+  margin: 20px 0 20px 40px;
 }
 
 .SK-label-h2 {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .admin-edit-about-details-back-button {
-    margin: 20px 40px 20px 0;
+  margin: 20px 40px 20px 0;
 }
 
 .admin-about-us-contents-container {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .admin-current-about-details-container,
 .admin-edit-about-details-container,
 .admin-current-SK-details-container {
-    background-color: #c5c1c1;
-    width: 90%;
+  background-color: #c5c1c1;
+  width: 90%;
 }
 
 .admin-about-details-group,
 .admin-edit-about-details-group {
-    width: 90%;
-    margin: 25px 0 25px 0;
+  width: 90%;
+  margin: 25px 0 25px 0;
 }
 
 .admin-current-about-form,
 [class^="admin-edit-"][class*="-form"] {
-    width: 100%;
+  width: 100%;
 }
 
 .admin-current-about-details-group .admin-current-about-label,
 .admin-edit-about-details-group .admin-edit-about-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 17.5px;
+  font-family: "Roboto", sans-serif;
+  font-size: 17.5px;
 }
 
 .admin-current-about-form textarea,
-.admin-current-about-form [type='file'] {
-    height: 50px;
-    border-style: none;
-    border-radius: 10px;
-    outline: none;
-    margin-bottom: 10px;
-    font-size: 17.5px;
-    transition: all 0.35s;
+.admin-current-about-form [type="file"] {
+  height: 50px;
+  border-style: none;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 10px;
+  font-size: 17.5px;
+  transition: all 0.35s;
 }
 
 [class^="admin-edit-"][class*="-form"] textarea {
-    height: 50px;
-    border-style: none;
-    border-radius: 10px;
-    outline: none;
-    margin-bottom: 0;
-    font-size: 17.5px;
-    transition: all 0.35s;
+  height: 50px;
+  border-style: none;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 0;
+  font-size: 17.5px;
+  transition: all 0.35s;
 }
 
 .admin-current-about-form textarea:focus,
 .admin-edit-about-form textarea:focus {
-    outline: 1px solid #007bff;
+  outline: 1px solid #007bff;
 }
 
 .admin-edit-about-details-back-button {
-    background-color: #25327A;
-    color: #FFFFFF;
-    width: 100px;
-    height: 40px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #25327a;
+  color: #ffffff;
+  width: 100px;
+  height: 40px;
+  font-size: 15px;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-edit-about-details-button {
-    background-color: #25327A;
-    color: #FFFFFF;
-    margin-top: 10px;
-    width: 150px;
-    height: 55px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #25327a;
+  color: #ffffff;
+  margin-top: 10px;
+  width: 150px;
+  height: 55px;
+  font-size: 15px;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-save-about-details-button {
-    background-color: #42BB4E;
-    color: #FFFFFF;
-    margin-top: 10px;
-    width: 150px;
-    height: 55px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #42bb4e;
+  color: #ffffff;
+  margin-top: 10px;
+  width: 150px;
+  height: 55px;
+  font-size: 15px;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-edit-about-details-back-button:hover,
 .admin-edit-about-details-button:hover,
 .admin-save-about-details-button:hover,
 .admin-add-SK-button:hover {
-    color: rgb(2, 107, 107);
+  color: rgb(2, 107, 107);
 }
 
 .admin-current-SK-details-container {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .admin-current-SK-label-container {
-    margin: 25px 0 10px;
+  margin: 25px 0 10px;
 }
 
 .admin-SK-table {
-    width: 90%;
-    margin: 0 auto 10px;
-    background-color: #FFFFFF;
+  width: 90%;
+  margin: 0 auto 10px;
+  background-color: #ffffff;
 }
 
 .admin-SK-table tr {
-    height: 35px;
+  height: 35px;
 }
 
 .admin-SK-edit-button {
-    font-size: 15px;
-    width: 100px;
-    height: 40px;
-    border-style: none;
+  font-size: 15px;
+  width: 100px;
+  height: 40px;
+  border-style: none;
 }
 
 .admin-add-SK-button {
-    background-color: #42BB4E;
-    color: #FFFFFF;
-    margin: 10px 0 25px 0;
-    width: 150px;
-    height: 55px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #42bb4e;
+  color: #ffffff;
+  margin: 10px 0 25px 0;
+  width: 150px;
+  height: 55px;
+  font-size: 15px;
+  border-style: none;
+  transition: all 0.35s;
 }
-
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+  .admin-about-us-label-h2 {
+    font-size: 37.5px;
+  }
 
-    .admin-about-us-label-h2 {
-        font-size: 37.5px;
-    }
+  .admin-current-about-details-group .admin-current-about-label,
+  .admin-edit-about-details-group .admin-edit-about-label {
+    font-size: 15px;
+  }
 
-    .admin-current-about-details-group .admin-current-about-label,
-    .admin-edit-about-details-group .admin-edit-about-label {
-        font-size: 15px;
-    }
+  .admin-current-about-form textarea,
+  .admin-current-about-form [type="file"] {
+    height: 45px;
+    font-size: 15px;
+  }
 
-    .admin-current-about-form textarea,
-    .admin-current-about-form [type='file'] {
-        height: 45px;
-        font-size: 15px;
-    }
+  [class^="admin-edit-"][class*="-form"] textarea {
+    height: 45px;
+    font-size: 15px;
+  }
 
-    [class^="admin-edit-"][class*="-form"] textarea {
-        height: 45px;
-        font-size: 15px;
-    }
+  .admin-SK-table tr {
+    height: 32.5px;
+  }
 
-    .admin-SK-table tr {
-        height: 32.5px;
-    }
-
-    .admin-SK-edit-button {
-        font-size: 12.5px;
-        width: 95px;
-        height: 40px;
-    }
+  .admin-SK-edit-button {
+    font-size: 12.5px;
+    width: 95px;
+    height: 40px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .admin-about-us-label-h2 {
+    font-size: 35px;
+  }
 
-    .admin-about-us-label-h2 {
-        font-size: 35px;
-    }
+  .admin-current-about-details-group .admin-current-about-label,
+  .admin-edit-about-details-group .admin-edit-about-label {
+    font-size: 12.5px;
+  }
 
-    .admin-current-about-details-group .admin-current-about-label,
-    .admin-edit-about-details-group .admin-edit-about-label {
-        font-size: 12.5px;
-    }
+  .admin-current-about-form textarea,
+  .admin-current-about-form [type="file"] {
+    height: 40px;
+    font-size: 15px;
+  }
 
-    .admin-current-about-form textarea,
-    .admin-current-about-form [type='file'] {
-        height: 40px;
-        font-size: 15px;
-    }
+  [class^="admin-edit-"][class*="-form"] textarea {
+    height: 40px;
+    font-size: 15px;
+  }
 
-    [class^="admin-edit-"][class*="-form"] textarea {
-        height: 40px;
-        font-size: 15px;
-    }
+  .admin-SK-table tr {
+    height: 30px;
+  }
 
-    .admin-SK-table tr {
-        height: 30px;
-    }
+  .admin-SK-edit-button {
+    font-size: 10px;
+    width: 85px;
+    height: 37.5px;
+  }
 
-    .admin-SK-edit-button {
-        font-size: 10px;
-        width: 85px;
-        height: 37.5px;
-    }
+  .admin-edit-about-details-back-button {
+    width: 90px;
+    height: 37.5px;
+    font-size: 12.5px;
+  }
 
-    .admin-edit-about-details-back-button {
-        width: 90px;
-        height: 37.5px;
-        font-size: 12.5px;
-    }
+  .admin-edit-about-details-button {
+    width: 125px;
+    height: 50px;
+    font-size: 12.5px;
+  }
 
-    .admin-edit-about-details-button {
-        width: 125px;
-        height: 50px;
-        font-size: 12.5px;
-    }
+  .admin-save-about-details-button {
+    width: 125px;
+    height: 50px;
+    font-size: 12.5px;
+  }
 
-    .admin-save-about-details-button {
-        width: 125px;
-        height: 50px;
-        font-size: 12.5px;
-    }
-
-    .admin-add-SK-button {
-        width: 125px;
-        height: 50px;
-        font-size: 12.5px;
-    }
+  .admin-add-SK-button {
+    width: 125px;
+    height: 50px;
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+  .admin-about-us-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-about-us-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-about-us-label-h2 {
+    font-size: 35px;
+    margin: 20px 0 20px 25px;
+  }
 
-    .admin-about-us-label-h2 {
-        font-size: 35px;
-        margin: 20px 0 20px 25px;
-    }
+  .admin-edit-about-details-back-button {
+    margin: 20px 25px 20px 0;
+  }
 
-    .admin-edit-about-details-back-button {
-        margin: 20px 25px 20px 0;
-    }
+  .admin-current-about-details-group .admin-current-about-label,
+  .admin-edit-about-details-group .admin-edit-about-label {
+    font-size: 12.5px;
+  }
 
-    .admin-current-about-details-group .admin-current-about-label,
-    .admin-edit-about-details-group .admin-edit-about-label {
-        font-size: 12.5px;
-    }
+  .admin-current-about-form textarea,
+  .admin-current-about-form [type="file"] {
+    height: 40px;
+    font-size: 12.5px;
+  }
 
-    .admin-current-about-form textarea,
-    .admin-current-about-form [type='file'] {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  [class^="admin-edit-"][class*="-form"] textarea {
+    height: 40px;
+    font-size: 12.5px;
+  }
 
-    [class^="admin-edit-"][class*="-form"] textarea {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-SK-table tr {
+    height: 30px;
+  }
 
-    .admin-SK-table tr {
-        height: 30px;
-    }
+  .admin-SK-edit-button {
+    font-size: 10px;
+    width: 75px;
+    height: 37.5px;
+  }
 
-    .admin-SK-edit-button {
-        font-size: 10px;
-        width: 75px;
-        height: 37.5px;
-    }
+  .admin-edit-about-details-back-button {
+    width: 75px;
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-edit-about-details-back-button {
-        width: 75px;
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-edit-about-details-button {
+    width: 125px;
+    height: 50px;
+    font-size: 12.5px;
+  }
 
-    .admin-edit-about-details-button {
-        width: 125px;
-        height: 50px;
-        font-size: 12.5px;
-    }
+  .admin-save-about-details-button {
+    width: 125px;
+    height: 50px;
+    font-size: 12.5px;
+  }
 
-    .admin-save-about-details-button {
-        width: 125px;
-        height: 50px;
-        font-size: 12.5px;
-    }
-
-    .admin-add-SK-button {
-        width: 125px;
-        height: 50px;
-        font-size: 12.5px;
-    }
+  .admin-add-SK-button {
+    width: 125px;
+    height: 50px;
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .admin-about-us-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-about-us-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-about-us-label-h2 {
+    font-size: 30px;
+    margin: 20px 0 20px 20px;
+  }
 
-    .admin-about-us-label-h2 {
-        font-size: 30px;
-        margin: 20px 0 20px 20px;
-    }
+  .admin-edit-about-details-back-button {
+    margin: 20px 20px 20px 0;
+  }
 
-    .admin-edit-about-details-back-button {
-        margin: 20px 20px 20px 0;
-    }
+  .admin-current-about-details-group .admin-current-about-label,
+  .admin-edit-about-details-group .admin-edit-about-label {
+    font-size: 10px;
+  }
 
-    .admin-current-about-details-group .admin-current-about-label,
-    .admin-edit-about-details-group .admin-edit-about-label {
-        font-size: 10px;
-    }
+  .admin-current-about-form textarea,
+  .admin-current-about-form [type="file"] {
+    height: 40px;
+    font-size: 12.5px;
+  }
 
-    .admin-current-about-form textarea,
-    .admin-current-about-form [type='file'] {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  [class^="admin-edit-"][class*="-form"] textarea {
+    height: 40px;
+    font-size: 12.5px;
+  }
 
-    [class^="admin-edit-"][class*="-form"] textarea {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-SK-table tr {
+    height: 22.5px;
+  }
 
-    .admin-SK-table tr {
-        height: 22.5px;
-    }
+  .admin-SK-edit-button {
+    font-size: 7.5px;
+    width: 65px;
+    height: 35px;
+  }
 
-    .admin-SK-edit-button {
-        font-size: 7.5px;
-        width: 65px;
-        height: 35px;
-    }
+  .admin-edit-about-details-back-button {
+    width: 75px;
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-edit-about-details-back-button {
-        width: 75px;
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-edit-about-details-button {
+    width: 100px;
+    height: 45px;
+    font-size: 10px;
+  }
 
-    .admin-edit-about-details-button {
-        width: 100px;
-        height: 45px;
-        font-size: 10px;
-    }
+  .admin-save-about-details-button {
+    width: 100px;
+    height: 45px;
+    font-size: 10px;
+  }
 
-    .admin-save-about-details-button {
-        width: 100px;
-        height: 45px;
-        font-size: 10px;
-    }
-
-    .admin-add-SK-button {
-        width: 100px;
-        height: 45px;
-        font-size: 10px;
-    }
+  .admin-add-SK-button {
+    width: 100px;
+    height: 45px;
+    font-size: 10px;
+  }
 }
-
 
 /* ____________________________________________________________________________________________________ */
 /* Admin Manage Program */
 /* ____________________________________________________________________________________________________ */
 
 .admin-program-container {
-    position: relative;
-    padding-top: 75px;
-    left: 22.5%;
-    width: 77.5%;
-    background-color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
-    z-index: 1;
+  position: relative;
+  padding-top: 75px;
+  left: 22.5%;
+  width: 77.5%;
+  background-color: #ffffff;
+  font-family: "Inter", sans-serif;
+  z-index: 1;
 }
 
 .admin-program-label-h2 {
-    font-size: 40px;
-    margin: 20px 0 20px 40px;
+  font-size: 40px;
+  margin: 20px 0 20px 40px;
 }
 
 .admin-program-nav-tabs {
-    cursor: pointer;
-    font-size: 20px;
-    margin: 0 0 20px 60px;
-    gap: 1in;
-    color: #766f6f;
-    transition: all 0.35s;
+  cursor: pointer;
+  font-size: 20px;
+  margin: 0 0 20px 60px;
+  gap: 1in;
+  color: #766f6f;
+  transition: all 0.35s;
 }
 
 .admin-program-nav-tabs li:hover {
-    color: #e3dfdf;
+  color: #e3dfdf;
 }
 
 .admin-program-nav-tabs li.active-tab {
-    color: red;
-    text-decoration: underline;
-    text-decoration-color: #c1c1c1;
-    text-underline-offset: 10px;
+  color: red;
+  text-decoration: underline;
+  text-decoration-color: #c1c1c1;
+  text-underline-offset: 10px;
 }
 
 .admin-program-contents-container {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 /* Admin All Programs */
 
 .admin-programs-details-container {
-    width: 90%;
+  width: 90%;
 }
 
 .admin-program-card {
-    width: 100%;
-    margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .admin-program-image-container {
-    width: 30%;
-    height: auto;
+  width: 30%;
+  height: auto;
 }
 
 .admin-program-details-container {
-    width: 70%;
+  width: 70%;
 }
 
 .admin-program-image {
-    height: 200px;
+  height: 200px;
 }
 
 .admin-program-title {
-    font-size: 25px;
+  font-size: 25px;
 }
 
 .admin-program-text {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .admin-program-details-buttons-container {
-    width: 100%;
+  width: 100%;
 }
 
 .program-details-button,
 .program-edit-button {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .program-details-button,
 .program-edit-button,
 .program-delete-button {
-    border-style: none;
-    width: 150px;
-    height: 45px;
-    font-size: 17.5px;
+  border-style: none;
+  width: 150px;
+  height: 45px;
+  font-size: 17.5px;
 }
 
 /* Admin Program Extended Details */
 
 .admin-program-expanded-details-container {
-    width: 90%;
-    margin: 20px auto 0;
+  width: 90%;
+  margin: 20px auto 0;
 }
 
 .admin-program-description-label {
-    font-size: 22.5px;
+  font-size: 22.5px;
 }
 
 .admin-program-amenities-label {
-    font-size: 22.5px;
+  font-size: 22.5px;
 }
 
 .admin-program-pt-label {
-    font-size: 22.5px;
-    margin-top: 20px;
+  font-size: 22.5px;
+  margin-top: 20px;
 }
 
 .program-p {
-    font-size: 17.5px;
+  font-size: 17.5px;
 }
 
 .amenity-preview {
-    width: 75px;
-    height: 75px;
-    margin: 5px;
+  width: 75px;
+  height: 75px;
+  margin: 5px;
 }
 
 /* Edit Program Modal */
 
 .edit-program-modal {
-    position: fixed;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1050;
-    background-color: #FFFFFF;
-    width: 100%;
-    height: 100%;
-    max-width: 450px;
-    max-height: 85vh;
-    overflow-y: auto;
-    border-style: solid;
-    border-width: 1px;
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+  background-color: #ffffff;
+  width: 100%;
+  height: 100%;
+  max-width: 450px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-style: solid;
+  border-width: 1px;
 }
 
 .edit-program-content {
-    margin: 20px 0 20px 0;
+  margin: 20px 0 20px 0;
 }
 
 .edit-program-content h3 {
-    font-size: 25px;
+  font-size: 25px;
 }
 
 .admin-edit-program-details-group {
-    width: 90%;
-    margin: 0 auto;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .admin-edit-program-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 17.5px;
+  font-family: "Roboto", sans-serif;
+  font-size: 17.5px;
 }
 
 .admin-edit-program-form input[type="text"],
 .admin-edit-program-form textarea {
-    height: 45px;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 10px;
-    margin-bottom: 0px;
-    font-size: 15px;
-    overflow-y: auto;
-    transition: all 0.35s;
+  height: 45px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  margin-bottom: 0px;
+  font-size: 15px;
+  overflow-y: auto;
+  transition: all 0.35s;
 }
 
 .admin-edit-program-form input[type="text"]:focus,
 .admin-edit-program-form textarea:focus {
-    outline: 1px solid #007bff;
+  outline: 1px solid #007bff;
 }
 
 .edit-modal-buttons-container {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .edit-cancel-button {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 .edit-cancel-button,
 .edit-save-button {
-    width: 150px;
-    height: 45px;
-    border-style: none;
-    font-size: 15px;
+  width: 150px;
+  height: 45px;
+  border-style: none;
+  font-size: 15px;
 }
 
 /* Admin Add Program */
 
 .admin-add-program-details-container {
-    background-color: #c5c1c1;
-    width: 90%;
+  background-color: #c5c1c1;
+  width: 90%;
 }
 
 .admin-add-program-details-group {
-    margin: 25px 0 25px 0;
-    width: 90%;
+  margin: 25px 0 25px 0;
+  width: 90%;
 }
 
 .admin-add-program-form {
-    width: 100%;
+  width: 100%;
 }
 
 .admin-add-program-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 17.5px;
+  font-family: "Roboto", sans-serif;
+  font-size: 17.5px;
 }
 
 .admin-add-program-form input[type="text"],
 .admin-add-program-form textarea {
-    height: 45px;
-    border-style: none;
-    border-radius: 10px;
-    outline: none;
-    margin-bottom: 0px;
-    font-size: 15px;
-    transition: all 0.35s;
+  height: 45px;
+  border-style: none;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 0px;
+  font-size: 15px;
+  transition: all 0.35s;
 }
 
 .admin-add-program-form input[type="text"]:focus,
 .admin-add-program-form textarea:focus {
-    outline: 1px solid #007bff;
+  outline: 1px solid #007bff;
 }
 
 .admin-add-program-button {
-    background-color: #42BB4E;
-    color: #FFFFFF;
-    margin-top: 10px;
-    width: 150px;
-    height: 45px;
-    font-size: 17.5px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #42bb4e;
+  color: #ffffff;
+  margin-top: 10px;
+  width: 150px;
+  height: 45px;
+  font-size: 17.5px;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-add-program-button:hover {
-    color: rgb(2, 107, 107);
+  color: rgb(2, 107, 107);
 }
-
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+  .admin-program-label-h2 {
+    font-size: 37.5px;
+  }
 
-    .admin-program-label-h2 {
-        font-size: 37.5px;
-    }
+  .admin-program-nav-tabs {
+    font-size: 17.5px;
+    margin: 0 0 20px 60px;
+    gap: 1in;
+  }
 
-    .admin-program-nav-tabs {
-        font-size: 17.5px;
-        margin: 0 0 20px 60px;
-        gap: 1in;
-    }
+  /* Admin All Programs */
 
-    /* Admin All Programs */
+  .admin-program-card {
+    margin-bottom: 10px;
+  }
 
-    .admin-program-card {
-        margin-bottom: 10px;
-    }
+  .admin-program-image-container {
+    width: 30%;
+    height: auto;
+  }
 
-    .admin-program-image-container {
-        width: 30%;
-        height: auto;
-    }
+  .admin-program-details-container {
+    width: 70%;
+  }
 
-    .admin-program-details-container {
-        width: 70%;
-    }
+  .admin-program-image {
+    height: 175px;
+  }
 
-    .admin-program-image {
-        height: 175px;
-    }
+  .admin-program-title {
+    font-size: 22.5px;
+  }
 
-    .admin-program-title {
-        font-size: 22.5px;
-    }
+  .admin-program-text {
+    font-size: 17.5px;
+  }
 
-    .admin-program-text {
-        font-size: 17.5px;
-    }
+  .program-details-button,
+  .program-edit-button {
+    margin-right: 10px;
+  }
 
-    .program-details-button,
-    .program-edit-button {
-        margin-right: 10px;
-    }
+  .program-details-button,
+  .program-edit-button,
+  .program-delete-button {
+    width: 125px;
+    height: 40px;
+    font-size: 15px;
+  }
 
-    .program-details-button,
-    .program-edit-button,
-    .program-delete-button {
-        width: 125px;
-        height: 40px;
-        font-size: 15px;
-    }
+  /* Edit Program Modal */
 
-    /* Edit Program Modal */
+  .edit-program-modal {
+    width: 100%;
+    height: 90%;
+  }
 
-    .edit-program-modal {
-        width: 100%;
-        height: 90%;
-    }
+  .edit-program-content {
+    margin: 20px 0 20px 0;
+  }
 
-    .edit-program-content {
-        margin: 20px 0 20px 0;
-    }
+  .edit-program-content h3 {
+    font-size: 22.5px;
+  }
 
-    .edit-program-content h3 {
-        font-size: 22.5px;
-    }
+  .admin-edit-program-label {
+    font-family: "Roboto", sans-serif;
+    font-size: 15px;
+  }
 
-    .admin-edit-program-label {
-        font-family: 'Roboto', sans-serif;
-        font-size: 15px;
-    }
+  .admin-edit-program-form input[type="text"],
+  .admin-edit-program-form textarea {
+    height: 40px;
+    font-size: 12.5px;
+  }
 
-    .admin-edit-program-form input[type="text"],
-    .admin-edit-program-form textarea {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .edit-modal-buttons-container {
+    margin-top: 10px;
+  }
 
-    .edit-modal-buttons-container {
-        margin-top: 10px;
-    }
+  .edit-cancel-button {
+    margin-right: 20px;
+  }
 
-    .edit-cancel-button {
-        margin-right: 20px;
-    }
+  .edit-cancel-button,
+  .edit-save-button {
+    width: 125px;
+    height: 40px;
+    border-style: none;
+    font-size: 12.5px;
+  }
 
-    .edit-cancel-button,
-    .edit-save-button {
-        width: 125px;
-        height: 40px;
-        border-style: none;
-        font-size: 12.5px;
-    }
+  /* Add Program */
 
-    /* Add Program */
+  .admin-add-program-label {
+    font-size: 15px;
+  }
 
-    .admin-add-program-label {
-        font-size: 15px;
-    }
+  .admin-add-program-form input[type="text"],
+  .admin-add-program-form textarea {
+    height: 40px;
+    font-size: 12.5px;
+  }
 
-    .admin-add-program-form input[type="text"],
-    .admin-add-program-form textarea {
-        height: 40px;
-        font-size: 12.5px;
-    }
-
-    .admin-add-program-button {
-        width: 125px;
-        height: 40px;
-        font-size: 15px;
-    }
+  .admin-add-program-button {
+    width: 125px;
+    height: 40px;
+    font-size: 15px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .admin-program-label-h2 {
+    font-size: 35px;
+  }
 
-    .admin-program-label-h2 {
-        font-size: 35px;
-    }
+  .admin-program-nav-tabs {
+    font-size: 15px;
+    margin: 0 0 20px 60px;
+    gap: 1in;
+  }
 
-    .admin-program-nav-tabs {
-        font-size: 15px;
-        margin: 0 0 20px 60px;
-        gap: 1in;
-    }
+  /* Admin All Programs */
 
-    /* Admin All Programs */
+  .admin-program-card {
+    margin-bottom: 10px;
+  }
 
-    .admin-program-card {
-        margin-bottom: 10px;
-    }
+  .admin-program-image-container {
+    width: 35%;
+    height: auto;
+  }
 
-    .admin-program-image-container {
-        width: 35%;
-        height: auto;
-    }
+  .admin-program-details-container {
+    width: 65%;
+  }
 
-    .admin-program-details-container {
-        width: 65%;
-    }
+  .admin-program-image {
+    height: 150px;
+  }
 
-    .admin-program-image {
-        height: 150px;
-    }
+  .admin-program-title {
+    font-size: 20px;
+  }
 
-    .admin-program-title {
-        font-size: 20px;
-    }
+  .admin-program-text {
+    font-size: 15px;
+  }
 
-    .admin-program-text {
-        font-size: 15px;
-    }
+  .program-details-button,
+  .program-edit-button {
+    margin-right: 5px;
+  }
 
-    .program-details-button,
-    .program-edit-button {
-        margin-right: 5px;
-    }
+  .program-details-button,
+  .program-edit-button,
+  .program-delete-button {
+    width: 100px;
+    height: 35px;
+    font-size: 12.5px;
+  }
 
-    .program-details-button,
-    .program-edit-button,
-    .program-delete-button {
-        width: 100px;
-        height: 35px;
-        font-size: 12.5px;
-    }
+  /* Edit Program Modal */
 
-    /* Edit Program Modal */
+  .edit-program-modal {
+    width: 100%;
+    height: 80%;
+  }
 
-    .edit-program-modal {
-        width: 100%;
-        height: 80%;
-    }
+  .edit-program-content {
+    margin: 20px 0 20px 0;
+  }
 
-    .edit-program-content {
-        margin: 20px 0 20px 0;
-    }
+  .edit-program-content h3 {
+    font-size: 20px;
+  }
 
-    .edit-program-content h3 {
-        font-size: 20px;
-    }
+  .admin-edit-program-label {
+    font-family: "Roboto", sans-serif;
+    font-size: 12.5px;
+  }
 
-    .admin-edit-program-label {
-        font-family: 'Roboto', sans-serif;
-        font-size: 12.5px;
-    }
+  .admin-edit-program-form input[type="text"],
+  .admin-edit-program-form textarea {
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-edit-program-form input[type="text"],
-    .admin-edit-program-form textarea {
-        height: 35px;
-        font-size: 10px;
-    }
+  .edit-modal-buttons-container {
+    margin-top: 10px;
+  }
 
-    .edit-modal-buttons-container {
-        margin-top: 10px;
-    }
+  .edit-cancel-button {
+    margin-right: 20px;
+  }
 
-    .edit-cancel-button {
-        margin-right: 20px;
-    }
+  .edit-cancel-button,
+  .edit-save-button {
+    width: 100px;
+    height: 35px;
+    border-style: none;
+    font-size: 10px;
+  }
 
-    .edit-cancel-button,
-    .edit-save-button {
-        width: 100px;
-        height: 35px;
-        border-style: none;
-        font-size: 10px;
-    }
+  /* Add Program */
 
-    /* Add Program */
+  .admin-add-program-label {
+    font-size: 12.5px;
+  }
 
-    .admin-add-program-label {
-        font-size: 12.5px;
-    }
+  .admin-add-program-form input[type="text"],
+  .admin-add-program-form textarea {
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-add-program-form input[type="text"],
-    .admin-add-program-form textarea {
-        height: 35px;
-        font-size: 10px;
-    }
-
-    .admin-add-program-button {
-        width: 100px;
-        height: 35px;
-        font-size: 12.5px;
-    }
+  .admin-add-program-button {
+    width: 100px;
+    height: 35px;
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+  .admin-program-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-program-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-program-label-h2 {
+    font-size: 35px;
+    margin: 20px 0 20px 25px;
+  }
 
-    .admin-program-label-h2 {
-        font-size: 35px;
-        margin: 20px 0 20px 25px;
-    }
+  .admin-program-nav-tabs {
+    font-size: 15px;
+    margin: 0 0 20px 30px;
+    gap: 0.5in;
+  }
 
-    .admin-program-nav-tabs {
-        font-size: 15px;
-        margin: 0 0 20px 30px;
-        gap: 0.50in;
-    }
+  /* Admin All Programs */
 
-    /* Admin All Programs */
+  .admin-program-card {
+    margin-bottom: 10px;
+  }
 
-    .admin-program-card {
-        margin-bottom: 10px;
-    }
+  .admin-program-image-container {
+    width: 40%;
+    height: auto;
+  }
 
-    .admin-program-image-container {
-        width: 40%;
-        height: auto;
-    }
+  .admin-program-details-container {
+    width: 60%;
+  }
 
-    .admin-program-details-container {
-        width: 60%;
-    }
+  .admin-program-image {
+    height: 150px;
+  }
 
-    .admin-program-image {
-        height: 150px;
-    }
+  .admin-program-title {
+    font-size: 17.5px;
+  }
 
-    .admin-program-title {
-        font-size: 17.5px;
-    }
+  .admin-program-text {
+    font-size: 12.5px;
+  }
 
-    .admin-program-text {
-        font-size: 12.5px;
-    }
+  .admin-program-details-buttons-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .admin-program-details-buttons-container {
-        flex-direction: column;
-        align-items: center;
-    }
+  .program-details-button,
+  .program-edit-button {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
 
-    .program-details-button,
-    .program-edit-button {
-        margin-right: 0;
-        margin-bottom: 5px;
-    }
+  .program-details-button,
+  .program-edit-button,
+  .program-delete-button {
+    width: 100px;
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .program-details-button,
-    .program-edit-button,
-    .program-delete-button {
-        width: 100px;
-        height: 35px;
-        font-size: 10px;
-    }
+  /* Edit Program Modal */
 
-    /* Edit Program Modal */
+  .edit-program-modal {
+    width: 100%;
+    height: 80%;
+  }
 
-    .edit-program-modal {
-        width: 100%;
-        height: 80%;
-    }
+  .edit-program-content {
+    margin: 20px 0 20px 0;
+  }
 
-    .edit-program-content {
-        margin: 20px 0 20px 0;
-    }
+  .edit-program-content h3 {
+    font-size: 20px;
+  }
 
-    .edit-program-content h3 {
-        font-size: 20px;
-    }
+  .admin-edit-program-label {
+    font-family: "Roboto", sans-serif;
+    font-size: 12.5px;
+  }
 
-    .admin-edit-program-label {
-        font-family: 'Roboto', sans-serif;
-        font-size: 12.5px;
-    }
+  .admin-edit-program-form input[type="text"],
+  .admin-edit-program-form textarea {
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-edit-program-form input[type="text"],
-    .admin-edit-program-form textarea {
-        height: 35px;
-        font-size: 10px;
-    }
+  .edit-modal-buttons-container {
+    margin-top: 10px;
+  }
 
-    .edit-modal-buttons-container {
-        margin-top: 10px;
-    }
+  .edit-cancel-button {
+    margin-right: 20px;
+  }
 
-    .edit-cancel-button {
-        margin-right: 20px;
-    }
+  .edit-cancel-button,
+  .edit-save-button {
+    width: 100px;
+    height: 35px;
+    border-style: none;
+    font-size: 10px;
+  }
 
-    .edit-cancel-button,
-    .edit-save-button {
-        width: 100px;
-        height: 35px;
-        border-style: none;
-        font-size: 10px;
-    }
+  /* Add Program */
 
-    /* Add Program */
+  .admin-add-program-label {
+    font-size: 12.5px;
+  }
 
-    .admin-add-program-label {
-        font-size: 12.5px;
-    }
+  .admin-add-program-form input[type="text"],
+  .admin-add-program-form textarea {
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-add-program-form input[type="text"],
-    .admin-add-program-form textarea {
-        height: 35px;
-        font-size: 10px;
-    }
-
-    .admin-add-program-button {
-        width: 100px;
-        height: 35px;
-        font-size: 12.5px;
-    }
+  .admin-add-program-button {
+    width: 100px;
+    height: 35px;
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .admin-program-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-program-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-program-label-h2 {
+    font-size: 30px;
+    margin: 20px 0 20px 20px;
+  }
 
-    .admin-program-label-h2 {
-        font-size: 30px;
-        margin: 20px 0 20px 20px;
-    }
+  .admin-program-nav-tabs {
+    font-size: 15px;
+    margin: 0 0 20px 25px;
+    gap: 0.25in;
+  }
 
-    .admin-program-nav-tabs {
-        font-size: 15px;
-        margin: 0 0 20px 25px;
-        gap: 0.25in;
-    }
+  /* Admin All Programs */
 
-    /* Admin All Programs */
+  .admin-program-card-details {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .admin-program-card-details {
-        flex-direction: column;
-        align-items: center;
-    }
+  .admin-program-card {
+    margin-bottom: 10px;
+  }
 
-    .admin-program-card {
-        margin-bottom: 10px;
-    }
+  .admin-program-image-container {
+    width: 60%;
+    height: auto;
+  }
 
-    .admin-program-image-container {
-        width: 60%;
-        height: auto;
-    }
+  .admin-program-details-container {
+    width: 100%;
+  }
 
-    .admin-program-details-container {
-        width: 100%;
-    }
+  .admin-program-image {
+    height: 125px;
+  }
 
-    .admin-program-image {
-        height: 125px;
-    }
+  .admin-program-title {
+    font-size: 15px;
+  }
 
-    .admin-program-title {
-        font-size: 15px;
-    }
+  .admin-program-text {
+    font-size: 12.5px;
+  }
 
-    .admin-program-text {
-        font-size: 12.5px;
-    }
+  .program-details-button,
+  .program-edit-button {
+    margin-right: 5px;
+  }
 
-    .program-details-button,
-    .program-edit-button {
-        margin-right: 5px;
-    }
+  .program-details-button,
+  .program-edit-button,
+  .program-delete-button {
+    width: 75px;
+    height: 25px;
+    font-size: 7.5px;
+  }
 
-    .program-details-button,
-    .program-edit-button,
-    .program-delete-button {
-        width: 75px;
-        height: 25px;
-        font-size: 7.5px;
-    }
+  /* Edit Program Modal */
 
-    /* Edit Program Modal */
+  .edit-program-modal {
+    width: 80%;
+    height: 70%;
+  }
 
-    .edit-program-modal {
-        width: 80%;
-        height: 70%;
-    }
+  .edit-program-content {
+    margin: 20px 0 20px 0;
+  }
 
-    .edit-program-content {
-        margin: 20px 0 20px 0;
-    }
+  .edit-program-content h3 {
+    font-size: 17.5px;
+  }
 
-    .edit-program-content h3 {
-        font-size: 17.5px;
-    }
+  .admin-edit-program-label {
+    font-family: "Roboto", sans-serif;
+    font-size: 10px;
+  }
 
-    .admin-edit-program-label {
-        font-family: 'Roboto', sans-serif;
-        font-size: 10px;
-    }
+  .admin-edit-program-form input[type="text"],
+  .admin-edit-program-form textarea {
+    height: 25px;
+    font-size: 7.5px;
+  }
 
-    .admin-edit-program-form input[type="text"],
-    .admin-edit-program-form textarea {
-        height: 25px;
-        font-size: 7.5px;
-    }
+  .edit-modal-buttons-container {
+    margin-top: 10px;
+  }
 
-    .edit-modal-buttons-container {
-        margin-top: 10px;
-    }
+  .edit-cancel-button {
+    margin-right: 10px;
+  }
 
-    .edit-cancel-button {
-        margin-right: 10px;
-    }
+  .edit-cancel-button,
+  .edit-save-button {
+    width: 75px;
+    height: 25px;
+    border-style: none;
+    font-size: 7.5px;
+  }
 
-    .edit-cancel-button,
-    .edit-save-button {
-        width: 75px;
-        height: 25px;
-        border-style: none;
-        font-size: 7.5px;
-    }
+  /* Add Program */
 
-    /* Add Program */
+  .admin-add-program-label {
+    font-size: 10px;
+  }
 
-    .admin-add-program-label {
-        font-size: 10px;
-    }
+  .admin-add-program-form input[type="text"],
+  .admin-add-program-form textarea {
+    height: 30px;
+    font-size: 7.5px;
+  }
 
-    .admin-add-program-form input[type="text"],
-    .admin-add-program-form textarea {
-        height: 30px;
-        font-size: 7.5px;
-    }
-
-    .admin-add-program-button {
-        width: 100px;
-        height: 25px;
-        font-size: 10px;
-    }
+  .admin-add-program-button {
+    width: 100px;
+    height: 25px;
+    font-size: 10px;
+  }
 }
-
 
 /* ____________________________________________________________________________________________________ */
 /* Admin Manage Contact Us */
 /* ____________________________________________________________________________________________________ */
 
 .admin-contact-us-container {
-    position: relative;
-    padding-top: 75px;
-    left: 22.5%;
-    width: 77.5%;
-    background-color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
-    z-index: 1;
+  position: relative;
+  padding-top: 75px;
+  left: 22.5%;
+  width: 77.5%;
+  background-color: #ffffff;
+  font-family: "Inter", sans-serif;
+  z-index: 1;
 }
 
 .admin-contact-us-label-h2 {
-    font-size: 40px;
-    margin: 20px 0 20px 40px;
+  font-size: 40px;
+  margin: 20px 0 20px 40px;
 }
 
 .admin-edit-contact-details-back-button {
-    margin: 20px 40px 20px 0;
+  margin: 20px 40px 20px 0;
 }
 
 .admin-contact-us-contents-container {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .admin-current-contacts-details-container,
 .admin-edit-contacts-details-container {
-    background-color: #c5c1c1;
-    width: 90%;
+  background-color: #c5c1c1;
+  width: 90%;
 }
 
 .admin-contacts-details-group,
 .admin-edit-contacts-details-group {
-    width: 90%;
-    margin: 25px 0 25px 0;
+  width: 90%;
+  margin: 25px 0 25px 0;
 }
 
 .admin-current-contact-form,
 .admin-edit-contact-form {
-    width: 100%;
+  width: 100%;
 }
 
 .admin-contacts-details-group .admin-current-contact-label,
 .admin-edit-contacts-details-group .admin-edit-contact-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 17.5px;
+  font-family: "Roboto", sans-serif;
+  font-size: 17.5px;
 }
 
 .admin-current-contact-form input[type="text"],
 .admin-current-contact-form input[type="email"] {
-    height: 50px;
-    border-style: none;
-    border-radius: 10px;
-    outline: none;
-    margin-bottom: 10px;
-    font-size: 17.5px;
-    transition: all 0.35s;
+  height: 50px;
+  border-style: none;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 10px;
+  font-size: 17.5px;
+  transition: all 0.35s;
 }
 
 .admin-edit-contact-form input[type="text"],
 .admin-edit-contact-form input[type="email"] {
-    height: 50px;
-    border-style: none;
-    border-radius: 10px;
-    outline: none;
-    margin-bottom: 0;
-    font-size: 17.5px;
-    transition: all 0.35s;
+  height: 50px;
+  border-style: none;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 0;
+  font-size: 17.5px;
+  transition: all 0.35s;
 }
 
 .admin-current-contact-form input[type="text"]:focus,
 .admin-edit-contact-form input[type="text"]:focus,
 .admin-edit-contact-form input[type="email"]:focus {
-    outline: 1px solid #007bff;
+  outline: 1px solid #007bff;
 }
 
 .admin-edit-contact-details-back-button {
-    background-color: #25327A;
-    color: #FFFFFF;
-    width: 100px;
-    height: 40px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #25327a;
+  color: #ffffff;
+  width: 100px;
+  height: 40px;
+  font-size: 15px;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-edit-contact-details-button {
-    background-color: #25327A;
-    color: #FFFFFF;
-    margin-top: 10px;
-    width: 150px;
-    height: 55px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #25327a;
+  color: #ffffff;
+  margin-top: 10px;
+  width: 150px;
+  height: 55px;
+  font-size: 15px;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-save-contact-details-button {
-    background-color: #42BB4E;
-    color: #FFFFFF;
-    margin-top: 10px;
-    width: 150px;
-    height: 55px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #42bb4e;
+  color: #ffffff;
+  margin-top: 10px;
+  width: 150px;
+  height: 55px;
+  font-size: 15px;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-edit-contact-details-back-button:hover,
 .admin-edit-contact-details-button:hover,
 .admin-save-contact-details-button:hover {
-    color: rgb(2, 107, 107);
+  color: rgb(2, 107, 107);
 }
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+  .admin-contact-us-label-h2 {
+    font-size: 37.5px;
+  }
 
-    .admin-contact-us-label-h2 {
-        font-size: 37.5px;
-    }
+  .admin-contacts-details-group .admin-current-contact-label,
+  .admin-edit-contacts-details-group .admin-edit-contact-label {
+    font-size: 15px;
+  }
 
-    .admin-contacts-details-group .admin-current-contact-label,
-    .admin-edit-contacts-details-group .admin-edit-contact-label {
-        font-size: 15px;
-    }
+  .admin-current-contact-form input[type="text"],
+  .admin-current-contact-form input[type="email"] {
+    height: 45px;
+    font-size: 15px;
+  }
 
-    .admin-current-contact-form input[type="text"],
-    .admin-current-contact-form input[type="email"] {
-        height: 45px;
-        font-size: 15px;
-    }
-
-    .admin-edit-contact-form input[type="text"],
-    .admin-edit-contact-form input[type="email"] {
-        height: 45px;
-        font-size: 15px;
-    }
+  .admin-edit-contact-form input[type="text"],
+  .admin-edit-contact-form input[type="email"] {
+    height: 45px;
+    font-size: 15px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .admin-contact-us-label-h2 {
+    font-size: 35px;
+  }
 
-    .admin-contact-us-label-h2 {
-        font-size: 35px;
-    }
+  .admin-contacts-details-group .admin-current-contact-label,
+  .admin-edit-contacts-details-group .admin-edit-contact-label {
+    font-size: 12.5px;
+  }
 
-    .admin-contacts-details-group .admin-current-contact-label,
-    .admin-edit-contacts-details-group .admin-edit-contact-label {
-        font-size: 12.5px;
-    }
+  .admin-current-contact-form input[type="text"],
+  .admin-current-contact-form input[type="email"] {
+    height: 40px;
+    font-size: 12.5px;
+  }
 
-    .admin-current-contact-form input[type="text"],
-    .admin-current-contact-form input[type="email"] {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-edit-contact-form input[type="text"],
+  .admin-edit-contact-form input[type="email"] {
+    height: 40px;
+    font-size: 12.5px;
+  }
 
-    .admin-edit-contact-form input[type="text"],
-    .admin-edit-contact-form input[type="email"] {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-edit-contact-details-back-button {
+    width: 90px;
+    height: 37.5px;
+    font-size: 12.5px;
+  }
 
-    .admin-edit-contact-details-back-button {
-        width: 90px;
-        height: 37.5px;
-        font-size: 12.5px;
-    }
+  .admin-edit-contact-details-button {
+    width: 125px;
+    height: 50px;
+    font-size: 12.5px;
+  }
 
-    .admin-edit-contact-details-button {
-        width: 125px;
-        height: 50px;
-        font-size: 12.5px;
-    }
-
-    .admin-save-contact-details-button {
-        width: 125px;
-        height: 50px;
-        font-size: 12.5px;
-    }
+  .admin-save-contact-details-button {
+    width: 125px;
+    height: 50px;
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+  .admin-contact-us-container {
+    left: 0;
+    width: 100%;
+  }
 
-    .admin-contact-us-container {
-        left: 0;
-        width: 100%;
-    }
+  .admin-contact-us-label-h2 {
+    font-size: 35px;
+    margin: 20px 0 20px 25px;
+  }
 
-    .admin-contact-us-label-h2 {
-        font-size: 35px;
-        margin: 20px 0 20px 25px;
-    }
+  .admin-edit-contact-details-back-button {
+    margin: 20px 25px 20px 0;
+  }
 
-    .admin-edit-contact-details-back-button {
-        margin: 20px 25px 20px 0;
-    }
+  .admin-contacts-details-group .admin-current-contact-label,
+  .admin-edit-contacts-details-group .admin-edit-contact-label {
+    font-size: 12.5px;
+  }
 
-    .admin-contacts-details-group .admin-current-contact-label,
-    .admin-edit-contacts-details-group .admin-edit-contact-label {
-        font-size: 12.5px;
-    }
+  .admin-current-contact-form input[type="text"],
+  .admin-current-contact-form input[type="email"] {
+    height: 40px;
+    font-size: 12.5px;
+  }
 
-    .admin-current-contact-form input[type="text"],
-    .admin-current-contact-form input[type="email"] {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-edit-contact-form input[type="text"],
+  .admin-edit-contact-form input[type="email"] {
+    height: 40px;
+    font-size: 12.5px;
+  }
 
-    .admin-edit-contact-form input[type="text"],
-    .admin-edit-contact-form input[type="email"] {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-edit-contact-details-back-button {
+    width: 75px;
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-edit-contact-details-back-button {
-        width: 75px;
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-edit-contact-details-button {
+    width: 100px;
+    height: 45px;
+    font-size: 10px;
+  }
 
-    .admin-edit-contact-details-button {
-        width: 100px;
-        height: 45px;
-        font-size: 10px;
-    }
-
-    .admin-save-contact-details-button {
-        width: 100px;
-        height: 45px;
-        font-size: 10px;
-    }
+  .admin-save-contact-details-button {
+    width: 100px;
+    height: 45px;
+    font-size: 10px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .admin-contact-us-container {
+    left: 0;
+    width: 100%;
+  }
 
-    .admin-contact-us-container {
-        left: 0;
-        width: 100%;
-    }
+  .admin-contact-us-label-h2 {
+    font-size: 30px;
+    margin: 20px 0 20px 20px;
+  }
 
-    .admin-contact-us-label-h2 {
-        font-size: 30px;
-        margin: 20px 0 20px 20px;
-    }
+  .admin-edit-contact-details-back-button {
+    margin: 20px 20px 20px 0;
+  }
 
-    .admin-edit-contact-details-back-button {
-        margin: 20px 20px 20px 0;
-    }
+  .admin-contacts-details-group .admin-current-contact-label,
+  .admin-edit-contacts-details-group .admin-edit-contact-label {
+    font-size: 10px;
+  }
 
-    .admin-contacts-details-group .admin-current-contact-label,
-    .admin-edit-contacts-details-group .admin-edit-contact-label {
-        font-size: 10px;
-    }
+  .admin-current-contact-form input[type="text"],
+  .admin-current-contact-form input[type="email"] {
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-current-contact-form input[type="text"],
-    .admin-current-contact-form input[type="email"] {
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-edit-contact-form input[type="text"],
+  .admin-edit-contact-form input[type="email"] {
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-edit-contact-form input[type="text"],
-    .admin-edit-contact-form input[type="email"] {
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-edit-contact-details-back-button {
+    width: 75px;
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-edit-contact-details-back-button {
-        width: 75px;
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-edit-contact-details-button {
+    width: 100px;
+    height: 45px;
+    font-size: 10px;
+  }
 
-    .admin-edit-contact-details-button {
-        width: 100px;
-        height: 45px;
-        font-size: 10px;
-    }
-
-    .admin-save-contact-details-button {
-        width: 100px;
-        height: 45px;
-        font-size: 10px;
-    }
+  .admin-save-contact-details-button {
+    width: 100px;
+    height: 45px;
+    font-size: 10px;
+  }
 }
 
 /* RAWR! */
@@ -2782,753 +2738,733 @@
 /* Admin Gym Reservation */
 /* ____________________________________________________________________________________________________ */
 
-
-
 /* RAWR! */
 /* ____________________________________________________________________________________________________ */
 /* Admin Gym Reservation */
 /* ____________________________________________________________________________________________________ */
-
-
-
 
 /* ____________________________________________________________________________________________________ */
 /* Admin Inventory */
 /* ____________________________________________________________________________________________________ */
 
 .admin-inventory-container {
-    position: relative;
-    padding-top: 75px;
-    left: 22.5%;
-    width: 77.5%;
-    background-color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
-    z-index: 1;
+  position: relative;
+  padding-top: 75px;
+  left: 22.5%;
+  width: 77.5%;
+  background-color: #ffffff;
+  font-family: "Inter", sans-serif;
+  z-index: 1;
 }
 
 .admin-inventory-label-h2 {
-    font-size: 40px;
-    margin: 20px 0 20px 40px;
+  font-size: 40px;
+  margin: 20px 0 20px 40px;
 }
 
 .admin-inventory-contents-container {
-    margin: 0 auto;
-    width: 90%;
-    margin-bottom: 40px;
+  margin: 0 auto;
+  width: 90%;
+  margin-bottom: 40px;
 }
 
 .admin-inventory-head th {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .admin-inventory-body td {
-    font-size: 17.5px;
+  font-size: 17.5px;
 }
 
 .admin-inventory-add-equipment-container {
-    width: 90%;
-    margin: 0 auto 20px;
+  width: 90%;
+  margin: 0 auto 20px;
 }
 
 .admin-inventory-add-equipment-button {
-    background-color: #42BB4E;
-    color: #FFFFFF;
-    width: 15%;
-    height: 50px;
-    font-size: 15px;
-    border-style: solid;
-    border-width: 1px;
-    transition: all 0.35s;
+  background-color: #42bb4e;
+  color: #ffffff;
+  width: 15%;
+  height: 50px;
+  font-size: 15px;
+  border-style: solid;
+  border-width: 1px;
+  transition: all 0.35s;
 }
 
 .admin-inventory-add-equipment-button:hover {
-    color: rgb(2, 107, 107);
+  color: rgb(2, 107, 107);
 }
 
 .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
-    margin: 10px 0 10px 0;
-    color: #FFFFFF;
-    width: 150px;
-    height: 50px;
-    font-size: 15px;
-    border-style: none;
+  margin: 10px 0 10px 0;
+  color: #ffffff;
+  width: 150px;
+  height: 50px;
+  font-size: 15px;
+  border-style: none;
 }
 
 .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
 .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-    font-size: 15px;
-    width: 80px;
-    height: 40px;
-    transition: all 0.35s;
+  font-size: 15px;
+  width: 80px;
+  height: 40px;
+  transition: all 0.35s;
 }
 
 .admin-inventory-modal-container .modal-dialog {
-    width: 500px;
+  width: 500px;
 }
 
 .admin-inventory-modal-body {
-    background-color: #c5c1c1;
+  background-color: #c5c1c1;
 }
 
 .admin-inventory-form-group {
-    width: 90%;
+  width: 90%;
 }
 
 .admin-inventory-form-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 17.5px;
+  font-family: "Roboto", sans-serif;
+  font-size: 17.5px;
 }
 
 .admin-inventory-form-group .admin-inventory-form {
-    height: 50px;
-    font-size: 17.5px;
+  height: 50px;
+  font-size: 17.5px;
 }
-
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+  .admin-inventory-label-h2 {
+    font-size: 37.5px;
+  }
 
-    .admin-inventory-label-h2 {
-        font-size: 37.5px;
-    }
+  .admin-inventory-head th {
+    font-size: 17.5px;
+  }
 
-    .admin-inventory-head th {
-        font-size: 17.5px;
-    }
+  .admin-inventory-body td {
+    font-size: 15px;
+  }
 
-    .admin-inventory-body td {
-        font-size: 15px;
-    }
+  .admin-inventory-add-equipment-button {
+    width: 17.5%;
+  }
 
-    .admin-inventory-add-equipment-button {
-        width: 17.5%;
-    }
+  .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+  .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+    font-size: 12.5px;
+  }
 
-    .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
-    .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-        font-size: 12.5px;
-    }
+  .admin-inventory-form-label {
+    font-size: 15px;
+  }
 
-    .admin-inventory-form-label {
-        font-size: 15px;
-    }
-
-    .admin-inventory-form-group .admin-inventory-form {
-        height: 45px;
-        font-size: 15px;
-    }
+  .admin-inventory-form-group .admin-inventory-form {
+    height: 45px;
+    font-size: 15px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .admin-inventory-label-h2 {
+    font-size: 35px;
+  }
 
-    .admin-inventory-label-h2 {
-        font-size: 35px;
-    }
+  .admin-inventory-head th {
+    font-size: 15px;
+  }
 
-    .admin-inventory-head th {
-        font-size: 15px;
-    }
+  .admin-inventory-body td {
+    font-size: 12.5px;
+  }
 
-    .admin-inventory-body td {
-        font-size: 12.5px;
-    }
+  .admin-inventory-add-equipment-button {
+    width: 20%;
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-inventory-add-equipment-button {
-        width: 20%;
-        height: 45px;
-        font-size: 12.5px;
-    }
+  .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
+    width: 150px;
+    height: 50px;
+    font-size: 12.5px;
+  }
 
-    .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
-        width: 150px;
-        height: 50px;
-        font-size: 12.5px;
-    }
+  .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
+    margin-right: 5px;
+  }
 
-    .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
-        margin-right: 5px;
-    }
+  .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+  .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+    font-size: 10px;
+    width: 60px;
+    height: 37.5px;
+  }
 
-    .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
-    .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-        font-size: 10px;
-        width: 60px;
-        height: 37.5px;
-    }
+  .admin-inventory-form-label {
+    font-size: 12.5px;
+  }
 
-    .admin-inventory-form-label {
-        font-size: 12.5px;
-    }
-
-    .admin-inventory-form-group .admin-inventory-form {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-inventory-form-group .admin-inventory-form {
+    height: 40px;
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+  .admin-inventory-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-inventory-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-inventory-label-h2 {
+    font-size: 35px;
+    margin: 20px 0 20px 25px;
+  }
 
-    .admin-inventory-label-h2 {
-        font-size: 35px;
-        margin: 20px 0 20px 25px;
-    }
+  .admin-inventory-head th {
+    font-size: 15px;
+  }
 
-    .admin-inventory-head th {
-        font-size: 15px;
-    }
+  .admin-inventory-body td {
+    font-size: 12.5px;
+  }
 
-    .admin-inventory-body td {
-        font-size: 12.5px;
-    }
+  .admin-inventory-add-equipment-button {
+    width: 22.5%;
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-inventory-add-equipment-button {
-        width: 22.5%;
-        height: 45px;
-        font-size: 12.5px;
-    }
+  .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
+    width: 125px;
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
-        width: 125px;
-        height: 45px;
-        font-size: 12.5px;
-    }
+  .admin-inventory-actions-buttons-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .admin-inventory-actions-buttons-container {
-        flex-direction: column;
-        align-items: center;
-    }
+  .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
+    margin-right: 0;
+    margin-bottom: 2.5px;
+  }
 
-    .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
-        margin-right: 0;
-        margin-bottom: 2.5px;
-    }
+  .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+  .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+    font-size: 10px;
+    width: 60px;
+    height: 35px;
+  }
 
-    .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
-    .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-        font-size: 10px;
-        width: 60px;
-        height: 35px;
-    }
+  .admin-inventory-form-label {
+    font-size: 12.5px;
+  }
 
-    .admin-inventory-form-label {
-        font-size: 12.5px;
-    }
-
-    .admin-inventory-form-group .admin-inventory-form {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-inventory-form-group .admin-inventory-form {
+    height: 40px;
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .admin-inventory-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-inventory-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-inventory-label-h2 {
+    font-size: 30px;
+    margin: 20px 0 20px 20px;
+  }
 
-    .admin-inventory-label-h2 {
-        font-size: 30px;
-        margin: 20px 0 20px 20px;
-    }
+  .admin-inventory-head th {
+    font-size: 12.5px;
+  }
 
-    .admin-inventory-head th {
-        font-size: 12.5px;
-    }
+  .admin-inventory-body td {
+    font-size: 10px;
+  }
 
-    .admin-inventory-body td {
-        font-size: 10px;
-    }
+  .admin-inventory-add-equipment-button {
+    width: 25%;
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-inventory-add-equipment-button {
-        width: 25%;
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
+    width: 125px;
+    height: 40px;
+    font-size: 12.5px;
+  }
 
-    .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
-        width: 125px;
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-inventory-actions-buttons-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .admin-inventory-actions-buttons-container {
-        flex-direction: column;
-        align-items: center;
-    }
+  .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
+    margin-right: 0;
+    margin-bottom: 2.5px;
+  }
 
-    .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
-        margin-right: 0;
-        margin-bottom: 2.5px;
-    }
+  .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+  .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+    font-size: 7.5px;
+    width: 45px;
+    height: 30px;
+  }
 
-    .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
-    .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-        font-size: 7.5px;
-        width: 45px;
-        height: 30px;
-    }
+  .admin-inventory-form-label {
+    font-size: 10px;
+  }
 
-    .admin-inventory-form-label {
-        font-size: 10px;
-    }
-
-    .admin-inventory-form-group .admin-inventory-form {
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-inventory-form-group .admin-inventory-form {
+    height: 35px;
+    font-size: 10px;
+  }
 }
-
 
 /* ____________________________________________________________________________________________________ */
 /* Admin Reports */
 /* ____________________________________________________________________________________________________ */
 
 .admin-reports-container {
-    position: relative;
-    padding-top: 75px;
-    left: 22.5%;
-    width: 77.5%;
-    background-color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
-    z-index: 1;
+  position: relative;
+  padding-top: 75px;
+  left: 22.5%;
+  width: 77.5%;
+  background-color: #ffffff;
+  font-family: "Inter", sans-serif;
+  z-index: 1;
 }
 
 .admin-reports-label-h2 {
-    font-size: 40px;
-    margin: 20px 40px 20px 40px;
+  font-size: 40px;
+  margin: 20px 40px 20px 40px;
 }
 
 .admin-reports-generate-classification-date-container {
-    width: 90%;
-    gap: 0.25in;
-    margin: 0 auto 20px;
+  width: 90%;
+  gap: 0.25in;
+  margin: 0 auto 20px;
 }
 
 .admin-reports-classification-container,
 .admin-reports-date-container,
 .admin-reports-info-container {
-    width: 28.33%;
+  width: 28.33%;
 }
 
 .admin-reports-classification,
 .admin-reports-date,
 .admin-reports-info {
-    width: 100%;
-    height: 50px;
-    font-size: 17.5px;
-    border-style: solid;
-    border-width: 1px;
-    transition: all 0.35s;
+  width: 100%;
+  height: 50px;
+  font-size: 17.5px;
+  border-style: solid;
+  border-width: 1px;
+  transition: all 0.35s;
 }
 
 .admin-reports-classification:hover,
 .admin-reports-date:hover,
 .admin-reports-info:hover {
-    color: #FFFFFF;
-    background-color: #858585;
+  color: #ffffff;
+  background-color: #858585;
 }
 
 .admin-reports-classification:focus,
 .admin-reports-date:focus,
 .admin-reports-info:focus {
-    outline: 1px solid #007bff;
+  outline: 1px solid #007bff;
 }
 
 .admin-reports-classification option,
 .admin-reports-date option {
-    background-color: #FFFFFF;
-    color: #000000;
-    pointer-events: none;
+  background-color: #ffffff;
+  color: #000000;
+  pointer-events: none;
 }
 
 .admin-reports-generate-pdf-container {
-    width: 15%;
+  width: 15%;
 }
 
 .admin-reports-generate-pdf-button {
-    background-color: #25327A;
-    color: #FFFFFF;
-    width: 100%;
-    height: 50px;
-    font-size: 15px;
-    border-style: solid;
-    border-width: 1px;
-    transition: all 0.35s;
+  background-color: #25327a;
+  color: #ffffff;
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+  border-style: solid;
+  border-width: 1px;
+  transition: all 0.35s;
 }
 
 .admin-reports-generate-pdf-button:hover {
-    color: rgb(2, 107, 107);
+  color: rgb(2, 107, 107);
 }
 
 .reports-list-container {
-    width: 90%;
-    margin: 0 auto 40px;
+  width: 90%;
+  margin: 0 auto 40px;
 }
 
 .admin-reports-users-table,
 .admin-reports-equipment-table,
 .admin-reports-reservation-table,
 .admin-reports-inventory-table {
-    width: 100%;
+  width: 100%;
 }
 
 .reports-users-label-h2,
 .reports-equipment-label-h2,
 .reports-reservation-label-h2,
 .reports-inventory-label-h2 {
-    font-size: 30px;
-    margin-bottom: 10px;
+  font-size: 30px;
+  margin-bottom: 10px;
 }
 
 .admin-reports-users-table-container,
 .admin-reports-equipment-table-container,
 .admin-reports-reservation-table-container,
 .admin-reports-inventory-table-container {
-    width: 100%;
+  width: 100%;
 }
 
 .reports-list-container tr {
-    height: 35px;
+  height: 35px;
 }
 
 .reports-list-container th {
-    font-size: 17.5px;
-    font-weight: bold;
+  font-size: 17.5px;
+  font-weight: bold;
 }
 
 .reports-list-container td {
-    font-size: 17.5px;
+  font-size: 17.5px;
 }
-
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+  .admin-reports-label-h2 {
+    font-size: 37.5px;
+  }
 
-    .admin-reports-label-h2 {
-        font-size: 37.5px;
-    }
+  .admin-reports-classification-container,
+  .admin-reports-date-container,
+  .admin-reports-info-container {
+    width: 26.66%;
+  }
 
-    .admin-reports-classification-container,
-    .admin-reports-date-container,
-    .admin-reports-info-container {
-        width: 26.66%;
-    }
+  .admin-reports-generate-pdf-container {
+    width: 20%;
+  }
 
-    .admin-reports-generate-pdf-container {
-        width: 20%;
-    }
+  .admin-reports-generate-pdf-button {
+    font-size: 15px;
+  }
 
-    .admin-reports-generate-pdf-button {
-        font-size: 15px;
-    }
+  .reports-users-label-h2,
+  .reports-equipment-label-h2,
+  .reports-reservation-label-h2,
+  .reports-inventory-label-h2 {
+    font-size: 27.5px;
+  }
 
-    .reports-users-label-h2,
-    .reports-equipment-label-h2,
-    .reports-reservation-label-h2,
-    .reports-inventory-label-h2 {
-        font-size: 27.5px;
-    }
+  .reports-list-container tr {
+    height: 32.5px;
+  }
 
-    .reports-list-container tr {
-        height: 32.5px;
-    }
+  .reports-list-container th {
+    font-size: 15px;
+  }
 
-    .reports-list-container th {
-        font-size: 15px;
-    }
-
-    .reports-list-container td {
-        font-size: 15px;
-    }
+  .reports-list-container td {
+    font-size: 15px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .admin-reports-label-h2 {
+    font-size: 35px;
+  }
 
-    .admin-reports-label-h2 {
-        font-size: 35px;
-    }
+  .admin-reports-classification-container,
+  .admin-reports-date-container,
+  .admin-reports-info-container {
+    width: 25%;
+  }
 
-    .admin-reports-classification-container,
-    .admin-reports-date-container,
-    .admin-reports-info-container {
-        width: 25%;
-    }
+  .admin-reports-generate-pdf-container {
+    width: 25%;
+  }
 
-    .admin-reports-generate-pdf-container {
-        width: 25%;
-    }
+  .admin-reports-classification,
+  .admin-reports-date,
+  .admin-reports-info {
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-reports-classification,
-    .admin-reports-date,
-    .admin-reports-info {
-        height: 45px;
-        font-size: 12.5px;
-    }
+  .admin-reports-generate-pdf-button {
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-reports-generate-pdf-button {
-        height: 45px;
-        font-size: 12.5px;
-    }
+  .reports-users-label-h2,
+  .reports-equipment-label-h2,
+  .reports-reservation-label-h2,
+  .reports-inventory-label-h2 {
+    font-size: 25px;
+  }
 
-    .reports-users-label-h2,
-    .reports-equipment-label-h2,
-    .reports-reservation-label-h2,
-    .reports-inventory-label-h2 {
-        font-size: 25px;
-    }
+  .reports-list-container tr {
+    height: 30px;
+  }
 
-    .reports-list-container tr {
-        height: 30px;
-    }
+  .reports-list-container th {
+    font-size: 12.5px;
+  }
 
-    .reports-list-container th {
-        font-size: 12.5px;
-    }
-
-    .reports-list-container td {
-        font-size: 12.5px;
-    }
+  .reports-list-container td {
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+  .admin-reports-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-reports-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-reports-label-h2 {
+    font-size: 35px;
+    margin: 20px 0 20px 25px;
+  }
 
-    .admin-reports-label-h2 {
-        font-size: 35px;
-        margin: 20px 0 20px 25px;
-    }
+  .admin-reports-classification-container,
+  .admin-reports-date-container,
+  .admin-reports-info-container {
+    width: 23.33%;
+  }
 
-    .admin-reports-classification-container,
-    .admin-reports-date-container,
-    .admin-reports-info-container {
-        width: 23.33%;
-    }
+  .admin-reports-generate-pdf-container {
+    width: 30%;
+  }
 
-    .admin-reports-generate-pdf-container {
-        width: 30%;
-    }
+  .admin-reports-classification,
+  .admin-reports-date,
+  .admin-reports-info {
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-reports-classification,
-    .admin-reports-date,
-    .admin-reports-info {
-        height: 45px;
-        font-size: 12.5px;
-    }
+  .admin-reports-generate-pdf-button {
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-reports-generate-pdf-button {
-        height: 45px;
-        font-size: 12.5px;
-    }
+  .reports-users-label-h2,
+  .reports-equipment-label-h2,
+  .reports-reservation-label-h2,
+  .reports-inventory-label-h2 {
+    font-size: 22.5px;
+  }
 
-    .reports-users-label-h2,
-    .reports-equipment-label-h2,
-    .reports-reservation-label-h2,
-    .reports-inventory-label-h2 {
-        font-size: 22.5px;
-    }
+  .reports-list-container tr {
+    height: 30px;
+  }
 
-    .reports-list-container tr {
-        height: 30px;
-    }
+  .reports-list-container th {
+    font-size: 10px;
+  }
 
-    .reports-list-container th {
-        font-size: 10px;
-    }
-
-    .reports-list-container td {
-        font-size: 10px;
-    }
+  .reports-list-container td {
+    font-size: 10px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .admin-reports-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-reports-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-reports-label-h2 {
+    font-size: 30px;
+    margin: 20px 0 20px 20px;
+  }
 
-    .admin-reports-label-h2 {
-        font-size: 30px;
-        margin: 20px 0 20px 20px;
-    }
+  .admin-reports-classification-container,
+  .admin-reports-date-container,
+  .admin-reports-info-container {
+    width: 21.66%;
+  }
 
-    .admin-reports-classification-container,
-    .admin-reports-date-container,
-    .admin-reports-info-container {
-        width: 21.66%;
-    }
+  .admin-reports-generate-pdf-container {
+    width: 35%;
+  }
 
-    .admin-reports-generate-pdf-container {
-        width: 35%;
-    }
+  .admin-reports-classification,
+  .admin-reports-date,
+  .admin-reports-info {
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-reports-classification,
-    .admin-reports-date,
-    .admin-reports-info {
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-reports-generate-pdf-button {
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-reports-generate-pdf-button {
-        height: 35px;
-        font-size: 10px;
-    }
+  .reports-users-label-h2,
+  .reports-equipment-label-h2,
+  .reports-gym-label-h2,
+  .reports-inventory-label-h2 {
+    font-size: 20px;
+  }
 
-    .reports-users-label-h2,
-    .reports-equipment-label-h2,
-    .reports-gym-label-h2,
-    .reports-inventory-label-h2 {
-        font-size: 20px;
-    }
+  .reports-list-container tr {
+    height: 22.5px;
+  }
 
-    .reports-list-container tr {
-        height: 22.5px;
-    }
+  .reports-list-container th {
+    font-size: 10px;
+  }
 
-    .reports-list-container th {
-        font-size: 10px;
-    }
-
-    .reports-list-container td {
-        font-size: 10px;
-    }
+  .reports-list-container td {
+    font-size: 10px;
+  }
 }
-
 
 /* ____________________________________________________________________________________________________ */
 /* Admin Users */
 /* ____________________________________________________________________________________________________ */
 
 .admin-users-container {
-    position: relative;
-    padding-top: 75px;
-    left: 22.5%;
-    width: 77.5%;
-    background-color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
-    z-index: 1;
+  position: relative;
+  padding-top: 75px;
+  left: 22.5%;
+  width: 77.5%;
+  background-color: #ffffff;
+  font-family: "Inter", sans-serif;
+  z-index: 1;
 }
 
 .admin-users-label-h2 {
-    font-size: 40px;
-    margin: 20px 0 20px 40px;
+  font-size: 40px;
+  margin: 20px 0 20px 40px;
 }
 
 .admin-users-contents-container {
-    width: 100%;
-    margin-bottom: 40px;
+  width: 100%;
+  margin-bottom: 40px;
 }
 
 .admin-users-add-classification-container {
-    width: 90%;
-    gap: 0.25in;
-    margin-bottom: 20px;
+  width: 90%;
+  gap: 0.25in;
+  margin-bottom: 20px;
 }
 
 .admin-users-classification-container {
-    width: 90%;
+  width: 90%;
 }
 
 .admin-users-classification {
-    width: 100%;
-    height: 50px;
-    font-size: 17.5px;
-    border-style: solid;
-    transition: all 0.35s;
+  width: 100%;
+  height: 50px;
+  font-size: 17.5px;
+  border-style: solid;
+  transition: all 0.35s;
 }
 
 .admin-users-classification:hover {
-    color: #FFFFFF;
-    background-color: #858585;
+  color: #ffffff;
+  background-color: #858585;
 }
 
 .admin-users-classification:focus {
-    outline: 1px solid #007bff;
+  outline: 1px solid #007bff;
 }
 
 .admin-users-classification option {
-    background-color: #FFFFFF;
-    color: #000000;
-    pointer-events: none;
+  background-color: #ffffff;
+  color: #000000;
+  pointer-events: none;
 }
 
 .admin-users-add-user-container {
-    width: 10%;
+  width: 10%;
 }
 
 .admin-users-add-user-button {
-    background-color: #42BB4E;
-    color: #FFFFFF;
-    width: 100%;
-    height: 50px;
-    font-size: 15px;
-    border-style: solid;
-    border-width: 1px;
-    transition: all 0.35s;
+  background-color: #42bb4e;
+  color: #ffffff;
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+  border-style: solid;
+  border-width: 1px;
+  transition: all 0.35s;
 }
 
 .admin-users-add-user-button:hover {
-    color: rgb(2, 107, 107);
+  color: rgb(2, 107, 107);
 }
 
 .users-list-container {
-    width: 90%;
+  width: 90%;
 }
 
 .admin-users-head th {
-    font-size: 17.5px;
-    font-weight: bold;
+  font-size: 17.5px;
+  font-weight: bold;
 }
 
 .admin-users-body td {
-    font-size: 17.5px;
+  font-size: 17.5px;
 }
 
 .admin-users-actions-buttons-container .admin-users-view-button,
 .admin-users-actions-buttons-container .admin-users-edit-button {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .admin-users-actions-buttons-container .admin-users-view-button,
 .admin-users-actions-buttons-container .admin-users-edit-button,
 .admin-users-actions-buttons-container .admin-users-delete-button {
-    font-size: 15px;
-    width: 75px;
-    height: 35px;
-    transition: all 0.35s;
+  font-size: 15px;
+  width: 75px;
+  height: 35px;
+  transition: all 0.35s;
 }
 
-
-
-
 .admin-users-add-edit-modal {
-    padding-top: 75px;
+  padding-top: 75px;
 }
 
 .admin-users-form {
-    width: 90%;
+  width: 90%;
 }
 
 .admin-users-add-edit-details-group .admin-users-modal-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 15px;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
 }
 
 .admin-users-form input[type="text"],
@@ -3537,14 +3473,14 @@
 .admin-users-form input[type="date"],
 .admin-users-form input[type="email"],
 .admin-users-form select {
-    height: 50px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #000000;
-    border-radius: 10px;
-    outline: none;
-    font-size: 15px;
-    transition: all 0.35s;
+  height: 50px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  border-radius: 10px;
+  outline: none;
+  font-size: 15px;
+  transition: all 0.35s;
 }
 
 .admin-users-group1-form-container,
@@ -3554,205 +3490,200 @@
 .admin-users-group5-form-container,
 .admin-users-group6-form-container,
 .admin-users-group7-form-container {
-    width: 90%;
-    gap: 10px;
+  width: 90%;
+  gap: 10px;
 }
-
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+  .admin-users-label-h2 {
+    font-size: 37.5px;
+  }
 
-    .admin-users-label-h2 {
-        font-size: 37.5px;
-    }
+  .admin-users-classification-container {
+    width: 87.5%;
+  }
 
-    .admin-users-classification-container {
-        width: 87.5%;
-    }
+  .admin-users-add-user-container {
+    width: 12.5%;
+  }
 
-    .admin-users-add-user-container {
-        width: 12.5%;
-    }
+  .admin-users-add-user-button {
+    height: 50px;
+    font-size: 15px;
+  }
 
-    .admin-users-add-user-button {
-        height: 50px;
-        font-size: 15px;
-    }
+  .admin-users-head th {
+    font-size: 15px;
+  }
 
-    .admin-users-head th {
-        font-size: 15px;
-    }
+  .admin-users-body td {
+    font-size: 15px;
+  }
 
-    .admin-users-body td {
-        font-size: 15px;
-    }
-
-    .admin-users-actions-buttons-container .admin-users-view-button,
-    .admin-users-actions-buttons-container .admin-users-edit-button,
-    .admin-users-actions-buttons-container .admin-users-delete-button {
-        font-size: 12.5px;
-    }
+  .admin-users-actions-buttons-container .admin-users-view-button,
+  .admin-users-actions-buttons-container .admin-users-edit-button,
+  .admin-users-actions-buttons-container .admin-users-delete-button {
+    font-size: 12.5px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .admin-users-label-h2 {
+    font-size: 35px;
+  }
 
-    .admin-users-label-h2 {
-        font-size: 35px;
-    }
+  .admin-users-classification-container {
+    width: 85%;
+  }
 
-    .admin-users-classification-container {
-        width: 85%;
-    }
+  .admin-users-classification {
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-users-classification {
-        height: 45px;
-        font-size: 12.5px;
-    }
+  .admin-users-add-user-container {
+    width: 15%;
+  }
 
-    .admin-users-add-user-container {
-        width: 15%;
-    }
+  .admin-users-add-user-button {
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-users-add-user-button {
-        height: 45px;
-        font-size: 12.5px;
-    }
+  .admin-users-head th {
+    font-size: 12.5px;
+  }
 
-    .admin-users-head th {
-        font-size: 12.5px;
-    }
+  .admin-users-body td {
+    font-size: 12.5px;
+  }
 
-    .admin-users-body td {
-        font-size: 12.5px;
-    }
+  .admin-users-actions-buttons-container .admin-users-view-button,
+  .admin-users-actions-buttons-container .admin-users-edit-button {
+    margin-right: 5px;
+  }
 
-    .admin-users-actions-buttons-container .admin-users-view-button,
-    .admin-users-actions-buttons-container .admin-users-edit-button {
-        margin-right: 5px;
-    }
-
-    .admin-users-actions-buttons-container .admin-users-view-button,
-    .admin-users-actions-buttons-container .admin-users-edit-button,
-    .admin-users-actions-buttons-container .admin-users-delete-button {
-        font-size: 10px;
-        width: 55px;
-        height: 32.5px;
-    }
+  .admin-users-actions-buttons-container .admin-users-view-button,
+  .admin-users-actions-buttons-container .admin-users-edit-button,
+  .admin-users-actions-buttons-container .admin-users-delete-button {
+    font-size: 10px;
+    width: 55px;
+    height: 32.5px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+  .admin-users-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-users-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-users-label-h2 {
+    font-size: 35px;
+    margin: 20px 0 20px 25px;
+  }
 
-    .admin-users-label-h2 {
-        font-size: 35px;
-        margin: 20px 0 20px 25px;
-    }
+  .admin-users-classification-container {
+    width: 82.5%;
+  }
 
-    .admin-users-classification-container {
-        width: 82.5%;
-    }
+  .admin-users-classification {
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-users-classification {
-        height: 45px;
-        font-size: 12.5px;
-    }
+  .admin-users-add-user-container {
+    width: 17.5%;
+  }
 
-    .admin-users-add-user-container {
-        width: 17.5%;
-    }
+  .admin-users-add-user-button {
+    height: 45px;
+    font-size: 12.5px;
+  }
 
-    .admin-users-add-user-button {
-        height: 45px;
-        font-size: 12.5px;
-    }
+  .admin-users-head th {
+    font-size: 10px;
+  }
 
-    .admin-users-head th {
-        font-size: 10px;
-    }
+  .admin-users-body td {
+    font-size: 10px;
+  }
 
-    .admin-users-body td {
-        font-size: 10px;
-    }
+  .admin-users-actions-buttons-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .admin-users-actions-buttons-container {
-        flex-direction: column;
-        align-items: center;
-    }
+  .admin-users-actions-buttons-container .admin-users-view-button,
+  .admin-users-actions-buttons-container .admin-users-edit-button {
+    margin-right: 0;
+    margin-bottom: 2.5px;
+  }
 
-    .admin-users-actions-buttons-container .admin-users-view-button,
-    .admin-users-actions-buttons-container .admin-users-edit-button {
-        margin-right: 0;
-        margin-bottom: 2.5px;
-    }
-
-    .admin-users-actions-buttons-container .admin-users-view-button,
-    .admin-users-actions-buttons-container .admin-users-edit-button,
-    .admin-users-actions-buttons-container .admin-users-delete-button {
-        font-size: 10px;
-        width: 55px;
-        height: 30px;
-    }
+  .admin-users-actions-buttons-container .admin-users-view-button,
+  .admin-users-actions-buttons-container .admin-users-edit-button,
+  .admin-users-actions-buttons-container .admin-users-delete-button {
+    font-size: 10px;
+    width: 55px;
+    height: 30px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .admin-users-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-users-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-users-label-h2 {
+    font-size: 30px;
+    margin: 20px 0 20px 20px;
+  }
 
-    .admin-users-label-h2 {
-        font-size: 30px;
-        margin: 20px 0 20px 20px;
-    }
+  .admin-users-classification-container {
+    width: 80%;
+  }
 
-    .admin-users-classification-container {
-        width: 80%;
-    }
+  .admin-users-classification {
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-users-classification {
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-users-add-user-container {
+    width: 20%;
+  }
 
-    .admin-users-add-user-container {
-        width: 20%;
-    }
+  .admin-users-add-user-button {
+    height: 35px;
+    font-size: 10px;
+  }
 
-    .admin-users-add-user-button {
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-users-head th {
+    font-size: 7.5px;
+  }
 
-    .admin-users-head th {
-        font-size: 7.5px;
-    }
+  .admin-users-body td {
+    font-size: 7.5px;
+  }
 
-    .admin-users-body td {
-        font-size: 7.5px;
-    }
+  .admin-users-actions-buttons-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .admin-users-actions-buttons-container {
-        flex-direction: column;
-        align-items: center;
-    }
+  .admin-users-actions-buttons-container .admin-users-view-button,
+  .admin-users-actions-buttons-container .admin-users-edit-button {
+    margin-right: 0;
+    margin-bottom: 2.5px;
+  }
 
-    .admin-users-actions-buttons-container .admin-users-view-button,
-    .admin-users-actions-buttons-container .admin-users-edit-button {
-        margin-right: 0;
-        margin-bottom: 2.5px;
-    }
-
-    .admin-users-actions-buttons-container .admin-users-view-button,
-    .admin-users-actions-buttons-container .admin-users-edit-button,
-    .admin-users-actions-buttons-container .admin-users-delete-button {
-        font-size: 7.5px;
-        width: 40px;
-        height: 25px;
-    }
+  .admin-users-actions-buttons-container .admin-users-view-button,
+  .admin-users-actions-buttons-container .admin-users-edit-button,
+  .admin-users-actions-buttons-container .admin-users-delete-button {
+    font-size: 7.5px;
+    width: 40px;
+    height: 25px;
+  }
 }

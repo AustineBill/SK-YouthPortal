@@ -361,6 +361,7 @@ h2,
   display: flex;
   align-items: center;
   gap: 85px;
+  transition: right 0.3s ease;
 }
 
 .nav-item {
@@ -397,15 +398,12 @@ h2,
 
 .nav-links.active {
   display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
+  transform: translateX(-100%);
   background-color: #25327a;
-  padding: 20px;
+  padding: 0 0 0 0;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   z-index: 999;
+  gap: 10px;
 }
 
 .nav-item {
@@ -434,6 +432,14 @@ h2,
   display: flex;
   gap: 5px;
   margin-right: 40px; /* Adjust as needed */
+  align-items: center;
+}
+
+.desktop-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  margin: auto;
   align-items: center;
 }
 
@@ -466,6 +472,9 @@ h2,
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
+  position: absolute;
+  right: 20px; /* Positioned in the right corner */
+  top: 30px; /* Adjust if needed */
 }
 
 .hamburger-icon .bar {
@@ -988,6 +997,13 @@ h2,
 }
 
 /* Dropdown styles */
+
+.dropdownAvatar {
+  color: #000000;
+  padding: 5px 5px;
+  text-decoration: none;
+  text-align: center;
+}
 
 .dropdown-about {
   position: relative;

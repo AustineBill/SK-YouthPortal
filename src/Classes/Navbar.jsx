@@ -110,11 +110,30 @@ const Navbar = () => {
           >
             Contact Us
           </Link>
+
+          {hamburgerVisible && (
+            <div className="hamburger-dropdown">
+              <Link
+                className="nav-item"
+                to="/userauth?view=signIn"
+                onClick={() => handleButtonClick("signIn")}
+              >
+                Log In
+              </Link>
+              <Link
+                className="nav-item"
+                to="/userauth?view=signUp"
+                onClick={() => handleButtonClick("signUp")}
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Buttons */}
-      <div className={`navbar-buttons ${hamburgerVisible ? "active" : ""}`}>
+      <div className="navbar-buttons">
         <button
           className={`login-button ${
             activeButton === "signIn" ? "active" : ""
