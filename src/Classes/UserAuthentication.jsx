@@ -234,18 +234,14 @@ const UserAuthentication = () => {
 
   return (
     <div className="user-authentication-contents d-flex justify-content-center">
-      <div className="left-side-responsive d-none d-md-flex align-items-center justify-content-center">
+      <div className="left-side-responsive text-left-container">
         <div className=" d-flex flex-column justify-content-center text-center text-lg-center">
-          <h1 className="top-part">Lagi't lagi para sa Kabataan,</h1>
-          <h1 className="middle-part">
-            {" "}
-            Barangay at sa Bayan
-            <span className="bottom-part fst-italic">
+        <h1 className="middle-part">
+         Lagi't lagi para sa Kabataan, Barangay at sa Bayan
               {" "}
-              Sangguniang Kabataan
-            </span>
-          </h1>
-          <p className="SK-location">Western Bicutan</p>
+              </h1>
+              <h2 className="bottom-part fst-italic">Sangguniang Kabataan</h2>
+          <p className="SK-location">WESTERN BICUTAN</p>
         </div>
       </div>
 
