@@ -1252,6 +1252,7 @@ app.put("/Website", async (req, res) => {
     res.status(500).json({ error: "Error updating website details" });
   }
 });
+
 app.get("/api/sk", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM Website");
