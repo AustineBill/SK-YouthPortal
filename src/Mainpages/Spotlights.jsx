@@ -85,7 +85,7 @@ const Spotlight = () => {
                     className="d-block w-100"
                     alt={`SK Council Slide ${index + 1}`}
                     style={{
-                      height: "450px", // Ensures equal height for all images
+                      height: "580px", // Ensures equal height for all images
                       objectFit: "cover", // Maintains aspect ratio while filling the space
                     }}
                   />
@@ -102,14 +102,9 @@ const Spotlight = () => {
         </div>
       </div>
 
-      <div className="d-flex flex-column align-items-start ms-5">
-        <h1 className="Maintext">SK WESTERN BICUTAN COUNSIL</h1>
-        <p className="Subtext">Celebrating SK Youth Excellents </p>
-      </div>
-
       <div className="bg-secondary">
         <div className="Divider">
-          <h1 className="text-dark fw-bold fs-4">Spotlight</h1>
+          <h1 className="text-light fw-bold fs-4">Spotlight</h1>
         </div>
       </div>
 
@@ -123,7 +118,7 @@ const Spotlight = () => {
                   variant="top"
                   src={image}
                   alt={`Spotlight ${imgIndex + 1}`}
-                  style={{ height: "200px", objectFit: "cover" }}
+                  style={{ height: "250px", objectFit: "cover" }}
                 />
                 <Card.Body className="d-flex flex-column align-items-center">
                   <Card.Title className="fs-5 fw-bold text-dark">
