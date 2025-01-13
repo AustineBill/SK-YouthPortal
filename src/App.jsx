@@ -86,14 +86,28 @@ const NavBarSwitcher = () => {
     return <Navbar />;
   }
 };
+
+const FooterSwitcher = () => {
+  const { isAdmin } = useContext(AuthContext);
+
+  // Only hide footer for admins
+  if (isAdmin) {
+    return null;
+  }
+  // Render footer for everyone else (authenticated and unauthenticated users)
+  return <Footer />;
+};
+
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const { ProtectedRoute, isAdmin } = useContext(AuthContext);
+  const { ProtectedRoute, isAdmin, isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
+
+  console.log({ isAuthenticated, isAdmin });
 
   return (
     <AuthProvider>
@@ -115,190 +129,190 @@ const App = () => {
           ) : (
             <>
               <NavBarSwitcher />
-                <Routes>
-                  {/* Landing Page Routes */}
-                  <Route path="/" element={<Intro />} />
-                  <Route path="/Home" element={<Intro />} />
-                  <Route path="/About" element={<About />} />
-                  <Route path="/Mandate" element={<Mandate />} />
-                  <Route path="/Council" element={<Council />} />
-                  <Route path="/ContactUs" element={<Contact />} />
-                  <Route path="/userauth" element={<UserAuthentication />} />
-                  <Route path="/Spotlight" element={<Spotlight />} />
-                  <Route path="/News" element={<NewsEvents />} />
-                  <Route path="/news-details/:id" element={<ViewDetailed />} />
-                  <Route path="/UserProgram" element={<Programs />} />
-                  {/* User Side Routes */}
-                  <Route
-                    path="/Dashboard"
-                    element={
-                      <ProtectedRoute>
-                        <Dashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/Profile/:username"
-                    element={
-                      <ProtectedRoute>
-                        <Profile />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/ProgramDetails"
-                    element={
-                      <ProtectedRoute>
-                        <ProgramDescript />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/Contact"
-                    element={
-                      <ProtectedRoute>
-                        <HelpSupport />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/ReservationLog"
-                    element={
-                      <ProtectedRoute>
-                        <Log />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/StepIndicator"
-                    element={
-                      <ProtectedRoute>
-                        <StepIndicator />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/Equipment"
-                    element={
-                      <ProtectedRoute>
-                        <Equipment />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/EquipReservation"
-                    element={
-                      <ProtectedRoute>
-                        <EquipReservation />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/ViewEquipment"
-                    element={
-                      <ProtectedRoute>
-                        <ViewEquipment />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/ReservationWaiver"
-                    element={
-                      <ProtectedRoute>
-                        <ReservationWaiver />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/Reservation"
-                    element={
-                      <ProtectedRoute>
-                        <Reservation />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/ViewFacilities"
-                    element={
-                      <ProtectedRoute>
-                        <ViewFacilities />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/BorrowWaiver"
-                    element={
-                      <ProtectedRoute>
-                        <BorrowWaiver />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/ScheduleDetails"
-                    element={
-                      <ProtectedRoute>
-                        <ScheduleDetails />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/ScheduleDone"
-                    element={
-                      <ProtectedRoute>
-                        <ScheduleDone />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/ReservationDetails"
-                    element={
-                      <ProtectedRoute>
-                        <ReservationDetails />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/Cancellation"
-                    element={
-                      <ProtectedRoute>
-                        <CancelReservation />
-                      </ProtectedRoute>
-                    }
-                  />
-                  {/* Admin Side Routes */}
-                  <Route
-                    path="/admin/reservations"
-                    element={<AdminReservations />}
-                  />{" "}
-                  {/* Wala na to. */}
-                  <Route path="/admin" element={<AdminMain />} />
-                  <Route path="/admin/manage-home" element={<ManageHome />} />
-                  <Route
-                    path="/admin/manage-about-us"
-                    element={<ManageAboutUs />}
-                  />
-                  <Route
-                    path="/admin/manage-program"
-                    element={<ManageProgram />}
-                  />
-                  <Route
-                    path="/admin/manage-contact-us"
-                    element={<ManageContactUs />}
-                  />
-                  <Route
-                    path="/admin/gym-reservation"
-                    element={<AdminGymReservation />}
-                  />
-                  <Route
-                    path="/admin/equipment-reservation"
-                    element={<AdminEquipmentReservation />}
-                  />
-                  <Route path="/admin/Inventory" element={<InventoryTable />} />
-                  <Route path="/admin/reports" element={<Reports />} />
-                  <Route path="/admin/users" element={<Users />} />
-                  <Route path="/user/:id" element={<UserDetails />} />
-                </Routes>
-              {!isAdmin && <Footer />}
+              <Routes>
+                {/* Landing Page Routes */}
+                <Route path="/" element={<Intro />} />
+                <Route path="/Home" element={<Intro />} />
+                <Route path="/About" element={<About />} />
+                <Route path="/Mandate" element={<Mandate />} />
+                <Route path="/Council" element={<Council />} />
+                <Route path="/ContactUs" element={<Contact />} />
+                <Route path="/userauth" element={<UserAuthentication />} />
+                <Route path="/Spotlight" element={<Spotlight />} />
+                <Route path="/News" element={<NewsEvents />} />
+                <Route path="/news-details/:id" element={<ViewDetailed />} />
+                <Route path="/UserProgram" element={<Programs />} />
+                {/* User Side Routes */}
+                <Route
+                  path="/Dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/Profile/:username"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ProgramDetails"
+                  element={
+                    <ProtectedRoute>
+                      <ProgramDescript />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/Contact"
+                  element={
+                    <ProtectedRoute>
+                      <HelpSupport />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ReservationLog"
+                  element={
+                    <ProtectedRoute>
+                      <Log />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/StepIndicator"
+                  element={
+                    <ProtectedRoute>
+                      <StepIndicator />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/Equipment"
+                  element={
+                    <ProtectedRoute>
+                      <Equipment />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/EquipReservation"
+                  element={
+                    <ProtectedRoute>
+                      <EquipReservation />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ViewEquipment"
+                  element={
+                    <ProtectedRoute>
+                      <ViewEquipment />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ReservationWaiver"
+                  element={
+                    <ProtectedRoute>
+                      <ReservationWaiver />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/Reservation"
+                  element={
+                    <ProtectedRoute>
+                      <Reservation />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ViewFacilities"
+                  element={
+                    <ProtectedRoute>
+                      <ViewFacilities />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/BorrowWaiver"
+                  element={
+                    <ProtectedRoute>
+                      <BorrowWaiver />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ScheduleDetails"
+                  element={
+                    <ProtectedRoute>
+                      <ScheduleDetails />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ScheduleDone"
+                  element={
+                    <ProtectedRoute>
+                      <ScheduleDone />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/ReservationDetails"
+                  element={
+                    <ProtectedRoute>
+                      <ReservationDetails />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/Cancellation"
+                  element={
+                    <ProtectedRoute>
+                      <CancelReservation />
+                    </ProtectedRoute>
+                  }
+                />
+                {/* Admin Side Routes */}
+                <Route
+                  path="/admin/reservations"
+                  element={<AdminReservations />}
+                />{" "}
+                {/* Wala na to. */}
+                <Route path="/admin" element={<AdminMain />} />
+                <Route path="/admin/manage-home" element={<ManageHome />} />
+                <Route
+                  path="/admin/manage-about-us"
+                  element={<ManageAboutUs />}
+                />
+                <Route
+                  path="/admin/manage-program"
+                  element={<ManageProgram />}
+                />
+                <Route
+                  path="/admin/manage-contact-us"
+                  element={<ManageContactUs />}
+                />
+                <Route
+                  path="/admin/gym-reservation"
+                  element={<AdminGymReservation />}
+                />
+                <Route
+                  path="/admin/equipment-reservation"
+                  element={<AdminEquipmentReservation />}
+                />
+                <Route path="/admin/Inventory" element={<InventoryTable />} />
+                <Route path="/admin/reports" element={<Reports />} />
+                <Route path="/admin/users" element={<Users />} />
+                <Route path="/user/:id" element={<UserDetails />} />
+              </Routes>
+              {!isAdmin && <FooterSwitcher />}
             </>
           )}
         </div>
