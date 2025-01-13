@@ -94,7 +94,7 @@ const ScheduleDetails = () => {
     <div className="container-fluid">
       <Breadcrumb className="ms-5 mt-3">
         {programType !== "Facilities" && (
-          <Breadcrumb.Item onClick={() => navigate("/Equipment")}>
+          <Breadcrumb.Item onClick={() => navigate("/EquipReservation")}>
             Equipment
           </Breadcrumb.Item>
         )}
@@ -102,9 +102,7 @@ const ScheduleDetails = () => {
           onClick={() => {
             sessionStorage.removeItem("reservationData");
             navigate(
-              programType === "Equipment"
-                ? "/EquipmentReservation"
-                : "/Reservation"
+              programType === "Equipment" ? "/EquipReservation" : "/Reservation"
             );
           }}
         >

@@ -195,6 +195,7 @@ const ViewFacilities = () => {
           minDate={new Date()}
           selectRange={true}
           tileClassName={tileClassName}
+          tileDisabled={({ date }) => date.getDay() === 0}
           tileContent={({ date, view }) => {
             if (view !== "month") return null;
 

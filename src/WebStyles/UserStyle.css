@@ -136,22 +136,6 @@
   justify-self: center;
 }
 
-/* Apply Dates button */
-.apply-dates {
-  background-color: #d9534f;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px;
-  justify-self: right;
-}
-
-.apply-dates:hover {
-  background-color: #c9302c;
-}
-
 /****** Step indicator ********/
 
 .step-indicator-container {

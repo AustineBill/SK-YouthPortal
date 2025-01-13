@@ -128,14 +128,11 @@ const EquipReservation = () => {
               <span className="circle unavailable"></span>
               <h3>Unavailable</h3>
             </div>
-            <div className="legend-item">
-              <span className="circle maximize"></span>
-              <h3>Maximize Capacity</h3>
-            </div>
           </div>
 
-          <div className="selected-date after-small">
-            <p>
+          <div className="legend">
+            <p className="text-center ms-4">* Every Sunday is Unavailable</p>
+            <p className="text-center ms-5">
               <strong>Selected Date:</strong>{" "}
               {selectedDate.toLocaleDateString()}
             </p>
@@ -150,6 +147,7 @@ const EquipReservation = () => {
           maxDate={new Date(new Date().setDate(new Date().getDate() + 7))} // 7 days from today
           onChange={handleDateChange}
           value={selectedDate}
+          tileDisabled={({ date }) => date.getDay() === 0}
         />
       </div>
 

@@ -71,9 +71,7 @@ function ScheduleDone() {
           onClick={() => {
             sessionStorage.removeItem("reservationData");
             navigate(
-              programType === "Equipment"
-                ? "/EquipmentReservation"
-                : "/Reservation"
+              programType === "Equipment" ? "/EquipReservation" : "/Reservation"
             );
           }}
         >

@@ -96,7 +96,7 @@ const ReservationLog = () => {
           </Col>
         </Row>
 
-        <Table striped bordered hover className="mt-4">
+        <Table striped bordered hover className="mt-4 mb-5">
           <thead>
             <tr>
               {selectedCategory === "Facility" ? (

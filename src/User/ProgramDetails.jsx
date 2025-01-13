@@ -182,7 +182,7 @@ const Program_details = () => {
           <div className="col-md-7">
             <h5 className="mb-2">Description</h5>
             <p className="lh-lg">{program.description}</p>
-            <h5 className="mb-2">Amenities</h5>
+            <h5>{programType === "Equipment" ? "Highlights" : "Amenities"}</h5>
             <div className="d-flex flex-wrap gap-2">
               {program.amenities &&
                 program.amenities.map((amenity, index) => (

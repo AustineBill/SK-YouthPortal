@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Form } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 
 const ReservationWaiver = () => {
   const navigate = useNavigate();
   const [allData, setAllData] = useState({}); // State for reservation data
+  const [showModal, setShowModal] = useState(false); // Modal visibility state
 
   // Function to save the reservation
   const saveReservation = async () => {
@@ -29,15 +30,12 @@ const ReservationWaiver = () => {
     event.preventDefault();
     const isChecked = event.target.agreementCheckbox.checked;
     if (isChecked) {
-      alert("Thank you for agreeing to the terms and conditions.");
+      saveReservation(); // Save reservation after agreement
       sessionStorage.removeItem("reservationData");
       sessionStorage.removeItem("scheduleDetails");
       sessionStorage.removeItem("reservedEquipment");
       sessionStorage.removeItem("programType");
-      saveReservation(); // Save reservation after agreement
-      navigate("/ReservationLog"); // Navigate to Borrow Waiver
-    } else {
-      alert("Please agree to the terms and conditions to proceed.");
+      setShowModal(true); // Show the success modal
     }
   };
 
@@ -48,7 +46,7 @@ const ReservationWaiver = () => {
     const scheduleDetails =
       JSON.parse(sessionStorage.getItem("scheduleDetails")) || {};
     setAllData({ ...reservationData, ...scheduleDetails }); // Combine session data
-  }, []); // Fetch data on component mount
+  }, []);
 
   return (
     <div className="container-fluid">
@@ -57,8 +55,8 @@ const ReservationWaiver = () => {
         <p className="Subtext">CONTRACT'S SLIP</p>
       </div>
 
-      <Container>
-        <h4>TEENBAYAN: A safe space for youth</h4>
+      <div className="calendar-container">
+        <h1>TEENBAYAN: A safe space for youth</h1>
 
         <h3>Assumption of Risk:</h3>
         <p>
@@ -140,6 +138,18 @@ const ReservationWaiver = () => {
           marketing materials and social media.
         </p>
 
+        <h3>Release and Waiver:</h3>
+        <p>
+          In consideration of being allowed to participate in the activities and
+          programs at TEENBAYAN: A safe space for youth, I hereby release,
+          discharge, and hold harmless TEENBAYAN: A safe space for youth, its
+          owners, employees, instructors, trainers, agents, and representatives
+          from any and all claims, actions, suits, procedures, costs, expenses,
+          damages, and liabilities, including attorney's fees, brought as a
+          result of my involvement at TEENBAYAN: A safe space for youth and to
+          reimburse them for any such expenses incurred.
+        </p>
+
         <h6>5. Severability:</h6>
         <p>
           If any provision of this Contract is found to be unenforceable, the
@@ -159,7 +169,44 @@ const ReservationWaiver = () => {
             Submit
           </button>
         </Form>
-      </Container>
+      </div>
+
+      {/* Success Modal */}
+      {showModal && (
+        <div className="ModalOverlayStyles">
+          <div className="ModalStyles large">
+            <button
+              className="closeButton"
+              onClick={() => {
+                setShowModal(false);
+              }}
+              aria-label="Close"
+            >
+              <i className="bi bi-x-circle"></i>
+            </button>
+            <div className="text-center">
+              <i
+                className="bi bi-check2-circle text-success"
+                style={{ fontSize: "4rem" }}
+              ></i>
+              <h2 className="mt-3 mb-3">
+                Your reservation has been reserve successfully!
+              </h2>
+              <p>We hope to see you again soon.</p>
+            </div>
+            <div className="d-flex justify-content-center mt-3">
+              <Button
+                variant="dark"
+                className="btn-dark"
+                onClick={() => navigate("/ReservationLog")}
+              >
+                <i className="bi bi-house m-1"></i>
+                Return to Log
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
