@@ -13,7 +13,7 @@ const crypto = require("crypto");
 
 const { generateRandomId } = require("./src/WebStructure/Codex");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(cors());
@@ -1252,7 +1252,6 @@ app.put("/Website", async (req, res) => {
     res.status(500).json({ error: "Error updating website details" });
   }
 });
-
 app.get("/api/sk", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM Website");
@@ -1267,7 +1266,7 @@ app.get("/api/sk", async (req, res) => {
           ...item,
           image_url: url.startsWith("http")
             ? url
-            : `http://localhost:3000${url.replace("/Asset", "/public/Asset")}`,
+            : `http://localhost:5000${url.replace("/Asset", "/public/Asset")}`,
         }));
       })
       .flat(); // Flatten the array of image URLs into a single array
@@ -1294,7 +1293,7 @@ app.get("/Skcouncil", async (req, res) => {
             ...item,
             image_url: url.startsWith("http")
               ? url
-              : `http://localhost:3000${url.replace(
+              : `http://localhost:5000${url.replace(
                   "/Asset",
                   "/public/Asset"
                 )}`,
@@ -1403,7 +1402,7 @@ app.get("/spotlight", async (req, res) => {
         return {
           ...item,
           frontImage: item.frontimage
-            ? `http://localhost:3000${item.frontimage.replace(
+            ? `http://localhost:5000${item.frontimage.replace(
                 "/Asset",
                 "/public/Asset"
               )}`
@@ -1411,7 +1410,7 @@ app.get("/spotlight", async (req, res) => {
           images: imageUrls.map((url) =>
             url.startsWith("http")
               ? url
-              : `http://localhost:3000${url.replace("/Asset", "/public/Asset")}`
+              : `http://localhost:5000${url.replace("/Asset", "/public/Asset")}`
           ),
         };
       })
@@ -1973,7 +1972,7 @@ app.get("/api/programs", async (req, res) => {
       const imageUrl = program.image_url
         ? program.image_url.startsWith("http")
           ? program.image_url
-          : `http://localhost:3000${program.image_url.replace(
+          : `http://localhost:5000${program.image_url.replace(
               "/Asset",
               "/public/Asset"
             )}`
@@ -2359,7 +2358,7 @@ app.post("/forgot-password", async (req, res) => {
       html: `
               <h1>Password Reset</h1>
               <p>You requested a password reset. Please click the link below to reset your password:</p>
-              <a href="http://localhost:3000/reset-password?token=${resetToken}">Reset Password</a>
+              <a href="http://localhost:5000/reset-password?token=${resetToken}">Reset Password</a>
           `,
     };
 
