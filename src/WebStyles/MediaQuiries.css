@@ -1,16 +1,3 @@
-@media (max-width: 1024px) {
-  .card-container {
-    grid-template-columns: repeat(
-      3,
-      1fr
-    ); /* Keep 3 cards per row until 1024px */
-  }
-
-  .ProgramCard {
-    max-width: 300px; /* Adjust card size */
-    margin: 0 auto;
-  }
-}
 /* Large Screen (lg) - min-width: 992px */
 @media (min-width: 992px) {
   .login-button .signup-button {
@@ -28,35 +15,6 @@
 
   .navbar-buttons {
     display: flex; /* Show navbar buttons (e.g., avatar) */
-  }
-
-  .spotlight-head {
-    margin: 0 0 0 20px;
-    font-size: 6rem;
-  }
-
-  .spotlight-text {
-    text-align: left;
-  }
-  .spotlight-image img {
-    max-width: 2500px;
-  }
-
-  .BodyContainer {
-    padding: 1.5rem; /* Reduce padding on smaller screens */
-  }
-
-  .BlockQuote {
-    font-size: 2rem; /* Smaller font for smaller screens */
-    margin-top: 3rem; /* Reduce top margin */
-  }
-
-  .blockquote p {
-    font-size: 1rem; /* Reduce font size for better readability */
-  }
-
-  .CardBodyWithText {
-    padding: 1.5rem; /* Adjust padding to fit smaller screens */
   }
 }
 
@@ -89,7 +47,7 @@
   }
 
   .hero-header {
-    padding: 10em 0;
+    padding: 7em 0;
     background-size: cover;
     height: 80vh;
   }
@@ -130,101 +88,6 @@
   .custom-font {
     font-size: 1.2rem; /* Reduce text size */
   }
-  .row {
-    display: flex;
-    flex-wrap: wrap; /* Ensure the items wrap when space is insufficient */
-    justify-content: space-between; /* Space out the items */
-  }
-
-  .custom-feature-item {
-    padding: 1rem 0.5rem;
-    margin-top: 20px;
-    flex-basis: 100%; /* Each item takes up the full width */
-  }
-
-  .custom-feature-item i {
-    font-size: 2rem;
-  }
-
-  .custom-feature-item .fw-bold {
-    font-size: 1.5rem;
-  }
-
-  .custom-feature-item .fs-6 {
-    font-size: 1rem;
-  }
-
-  /* Adjust the before pseudo-element for smaller screens */
-  .feature-item::before {
-    clip-path: polygon(80% 0, 100% 0, 100% 100%, 20% 100%);
-  }
-
-  .card-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .ProgramCard {
-    width: 15em; /* Slightly smaller cards for smaller screens */
-    margin: 10px;
-  }
-
-  .NewEveHead {
-    font-size: 2rem;
-  }
-  .program-card-img {
-    height: 150px;
-  }
-
-  .spotlight-container {
-    padding: 30px 10px;
-  }
-
-  .spotlight-head {
-    text-align: center;
-    font-size: 3rem;
-  }
-
-  .spotlight-image img {
-    max-width: 3000px;
-  }
-
-  .spotlight-button {
-    justify-content: center;
-  }
-
-  .BodyContainer {
-    padding: 1rem; /* Further reduce padding for tablet-sized screens */
-  }
-
-  .BlockQuote {
-    font-size: 1.8rem; /* Even smaller font */
-    margin-top: 2rem; /* Reduce margin */
-  }
-
-  .blockquote p {
-    font-size: 0.95rem; /* Smaller text for readability */
-    line-height: 1.8;
-  }
-
-  .CardBodyWithText {
-    padding: 1rem; /* Adjust padding */
-  }
-
-  .TextContent {
-    margin: 2rem 0 2rem 1rem; /* Further reduce margin */
-  }
-
-  .Text-1 {
-    font-size: 2.5rem; /* Smaller font for Text-1 */
-  }
-
-  .Text-2 {
-    font-size: 3rem; /* Smaller font for Text-2 */
-  }
-
-  .Text-3 {
-    font-size: 1.1rem; /* Smaller font for Text-3 */
-  }
 }
 
 @media (max-width: 500px) {
@@ -245,125 +108,110 @@
   .CardBodyWithText {
     padding: 1rem; /* Keep the padding consistent */
   }
-}
 
-.navbar-links .nav-item {
-  font-size: 14px;
-}
+  .navbar-links .nav-item {
+    font-size: 14px;
+  }
 
-.hero-header {
-  padding: 1em 0 8em 0;
-  height: 50vh;
-}
+  .hero-header {
+    padding: 1em 0;
+    background-size: cover;
+    height: 50vh;
+  }
 
-.sangguniang-text,
-.kabataan-color {
-  font-size: 2rem; /* Adjust font sizes further */
-}
+  .sangguniang-text,
+  .kabataan-color {
+    font-size: 2rem; /* Adjust font sizes further */
+  }
 
-.western-bicutan-color {
-  font-size: 1.8rem;
-}
+  .western-bicutan-color {
+    font-size: 1.8rem;
+  }
 
-.custom-name {
-  font-size: 45px; /* Smaller custom name size */
-}
+  .custom-name {
+    font-size: 45px; /* Smaller custom name size */
+  }
 
-.custom-name-wrapper {
-  margin-top: -2rem;
-}
+  .custom-name-wrapper {
+    margin-top: -2rem;
+  }
 
-.IntroDetails {
-  font-size: 1.8rem;
-  margin-right: 1rem;
-  margin-left: 5%;
-  margin-top: -0.5em;
-}
+  .IntroDetails {
+    font-size: 1.8rem;
+    margin-right: 1rem;
+    margin-left: 5%;
+    margin-top: -0.5em;
+  }
 
-.image-container {
-  margin-bottom: 10px;
-}
+  .image-container {
+    margin-bottom: 10px;
+  }
 
-.below-image {
-  max-width: 100%; /* Image fills container on smaller screens */
-}
+  .below-image {
+    max-width: 100%; /* Image fills container on smaller screens */
+  }
 
-.custom-font {
-  font-size: 1rem; /* Further reduce text size */
-}
-.custom-feature-item {
-  padding: 1rem 0.25rem;
-  margin-top: 15px;
-  flex-basis: 100%;
-}
+  .custom-font {
+    font-size: 1rem; /* Further reduce text size */
+  }
 
-.custom-feature-item i {
-  font-size: 1.5rem;
-}
+  .custom-feature-item {
+    padding: 1rem 0.25rem;
+    margin-top: 15px;
+    flex-basis: 100%;
+  }
 
-.custom-feature-item .fw-bold {
-  font-size: 1.2rem;
-}
+  .custom-feature-item i {
+    font-size: 1.5rem;
+  }
 
-.custom-feature-item .text-feature {
-  display: none;
-}
+  .custom-feature-item .fw-bold {
+    font-size: 1.2rem;
+  }
 
-/* Adjust the before pseudo-element for even smaller screens */
-.feature-item::before {
-  clip-path: polygon(90% 0, 100% 0, 100% 100%, 10% 100%);
-}
+  .custom-feature-item .text-feature {
+    display: none;
+  }
 
-.card-container {
-  grid-template-columns: repeat(3, 1fr);
-}
+  /* Adjust the before pseudo-element for even smaller screens */
+  .feature-item::before {
+    clip-path: polygon(90% 0, 100% 0, 100% 100%, 10% 100%);
+  }
 
-.ProgramCard {
-  width: 11em; /* Make the cards even smaller */
-  margin: 5px;
-}
+  .card-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
-.program-card-img {
-  height: 200px; /* Reduce image size for small screens */
-}
+  .ProgramCard {
+    width: 11em; /* Make the cards even smaller */
+    margin: 5px;
+  }
 
-.NewEveHead {
-  font-size: 1.5rem;
-}
-.program-card-img {
-  height: 120px;
-}
+  .program-card-img {
+    height: 200px; /* Reduce image size for small screens */
+  }
 
-.small-phrase {
-  margin-left: 30px;
-}
+  .NewEveHead {
+    font-size: 1.5rem;
+  }
 
-.spotlight-head {
-  text-align: center;
-  font-size: 2rem;
-}
+  .small-phrase {
+    margin-left: 30px;
+  }
 
-.spotlight-image img {
-  max-width: 3000px;
-}
+  .TextContent {
+    margin: 1.5rem 0 1.5rem 1rem; /* Minimal margin on mobile */
+  }
 
-.spotlight-button {
-  font-size: 0.9rem;
-  padding: 0.4rem 0.8rem;
-}
+  .Text-1 {
+    font-size: 2rem; /* Much smaller font for Text-1 */
+  }
 
-.TextContent {
-  margin: 1.5rem 0 1.5rem 1rem; /* Minimal margin on mobile */
-}
+  .Text-2 {
+    font-size: 2.5rem; /* Smaller font for Text-2 */
+  }
 
-.Text-1 {
-  font-size: 2rem; /* Much smaller font for Text-1 */
-}
-
-.Text-2 {
-  font-size: 2.5rem; /* Smaller font for Text-2 */
-}
-
-.Text-3 {
-  font-size: 1rem; /* Even smaller font for Text-3 */
+  .Text-3 {
+    font-size: 1rem; /* Even smaller font for Text-3 */
+  }
 }

@@ -752,7 +752,7 @@ h2,
 .spotlight-head {
   color: #1d0053;
   font-weight: 700;
-  font-size: 3rem;
+  font-size: 5rem;
   text-align: left; /* Align text to the left */
   justify-self: start; /* Align within the grid cell */
   margin: 0;
