@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-// import './styles/AdminSidebar.css';
-import './styles/Admin-Main.css';
+import './styles/AdminSidebar.css';
+// import './styles/Admin-Main.css';
 
 const AdminSidebar = () => {
     const [openedLinks, setOpenedLinks] = useState({});

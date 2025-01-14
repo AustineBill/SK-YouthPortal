@@ -4,6 +4,7 @@
 .admin-inventory-container {
     position: relative;
     padding-top: 75px;
+    padding-bottom: 40px;
     left: 22.5%;
     width: 77.5%;
     background-color: #FFFFFF;
@@ -74,35 +75,37 @@
 
 /* Modal */
 
-.admin-inventory-save-add-button-container .admin-inventory-save-add-button {
-    margin: 10px 0 10px 0;
-    color: #FFFFFF;
-    width: 150px;
-    height: 45px;
-    font-size: 15px;
-    border-style: none;
+.admin-inventory-item-add-edit-modal {
+    padding-top: 75px;
 }
 
-.admin-inventory-modal-container .modal-dialog {
-    width: 500px;
+.admin-inventory-item-add-edit-modal-header h5 {
+    font-size: 17.5px;
 }
 
-.admin-inventory-modal-body {
+.admin-inventory-item-add-edit-modal-body {
     background-color: #c5c1c1;
+    font-size: 15px;
 }
 
-.admin-inventory-form-group {
+.admin-inventory-group-form {
     width: 90%;
 }
 
-.admin-inventory-form-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 17.5px;
+.admin-inventory-group-form input[type="text"],
+.admin-inventory-group-form input[type="number"],
+.admin-inventory-group-form select,
+.admin-inventory-group-form select option,
+.admin-inventory-group-form input[type="file"] {
+    height: 40px;
+    font-size: 15px;
 }
 
-.admin-inventory-form-group .admin-inventory-form {
-    height: 50px;
-    font-size: 17.5px;
+.admin-inventory-item-button {
+    width: 150px;
+    height: 40px;
+    border-style: none;
+    font-size: 12.5px;
 }
 
 
@@ -153,13 +156,27 @@
 
     /* Modal */
 
-    .admin-inventory-form-label {
+    .admin-inventory-item-add-edit-modal-header h5 {
         font-size: 15px;
     }
 
-    .admin-inventory-form-group .admin-inventory-form {
-        height: 45px;
-        font-size: 15px;
+    .admin-inventory-item-add-edit-modal-body {
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-group-form input[type="text"],
+    .admin-inventory-group-form input[type="number"],
+    .admin-inventory-group-form select,
+    .admin-inventory-group-form select option,
+    .admin-inventory-group-form input[type="file"] {
+        height: 35px;
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-item-button {
+        width: 125px;
+        height: 35px;
+        font-size: 10px;
     }
 }
 
@@ -208,19 +225,27 @@
 
     /* Modal */
 
-    .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
-        width: 150px;
-        height: 50px;
+    .admin-inventory-item-add-edit-modal-header h5 {
         font-size: 12.5px;
     }
 
-    .admin-inventory-form-label {
-        font-size: 12.5px;
+    .admin-inventory-item-add-edit-modal-body {
+        font-size: 10px;
     }
 
-    .admin-inventory-form-group .admin-inventory-form {
-        height: 40px;
-        font-size: 12.5px;
+    .admin-inventory-group-form input[type="text"],
+    .admin-inventory-group-form input[type="number"],
+    .admin-inventory-group-form select,
+    .admin-inventory-group-form select option,
+    .admin-inventory-group-form input[type="file"] {
+        height: 30px;
+        font-size: 10px;
+    }
+
+    .admin-inventory-item-button {
+        width: 100px;
+        height: 30px;
+        font-size: 7.5px;
     }
 }
 
@@ -281,19 +306,27 @@
 
     /* Modal */
 
-    .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
-        width: 125px;
-        height: 45px;
+    .admin-inventory-item-add-edit-modal-header h5 {
         font-size: 12.5px;
     }
 
-    .admin-inventory-form-label {
-        font-size: 12.5px;
+    .admin-inventory-item-add-edit-modal-body {
+        font-size: 10px;
     }
 
-    .admin-inventory-form-group .admin-inventory-form {
-        height: 40px;
-        font-size: 12.5px;
+    .admin-inventory-group-form input[type="text"],
+    .admin-inventory-group-form input[type="number"],
+    .admin-inventory-group-form select,
+    .admin-inventory-group-form select option,
+    .admin-inventory-group-form input[type="file"] {
+        height: 30px;
+        font-size: 10px;
+    }
+
+    .admin-inventory-item-button {
+        width: 100px;
+        height: 30px;
+        font-size: 7.5px;
     }
 }
 
@@ -354,18 +387,26 @@
 
     /* Modal */
 
-    .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
-        width: 125px;
-        height: 40px;
-        font-size: 12.5px;
-    }
-
-    .admin-inventory-form-label {
+    .admin-inventory-item-add-edit-modal-header h5 {
         font-size: 10px;
     }
 
-    .admin-inventory-form-group .admin-inventory-form {
-        height: 35px;
-        font-size: 10px;
+    .admin-inventory-item-add-edit-modal-body {
+        font-size: 7.5px;
+    }
+
+    .admin-inventory-group-form input[type="text"],
+    .admin-inventory-group-form input[type="number"],
+    .admin-inventory-group-form select,
+    .admin-inventory-group-form select option,
+    .admin-inventory-group-form input[type="file"] {
+        height: 20px;
+        font-size: 7.5px;
+    }
+
+    .admin-inventory-item-button {
+        width: 75px;
+        height: 25px;
+        font-size: 5px;
     }
 }

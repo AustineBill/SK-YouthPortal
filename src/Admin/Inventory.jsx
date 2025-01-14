@@ -182,118 +182,107 @@ const InventoryTable = () => {
       </div>
 
       {/* Add/Edit Modal */}
-      <Modal
-        show={showModal}
-        onHide={handleHideModal}
-        centered
-        className="admin-inventory-modal-container d-flex justify-content-center"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title className="admin-inventory-modal-title fst-italic">
-            {currentItem ? "Edit Item" : "Add Item"}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="admin-inventory-modal-body">
-          <Form onSubmit={handleSubmit} className="m-0 p-0">
-            <Form.Group
-              controlId="name"
-              className="admin-inventory-form-group d-flex flex-column"
-            >
-              <Form.Label className="admin-inventory-form-label">
-                Name
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={newItem.name}
-                onChange={handleChange}
-                required
-                className="admin-inventory-form"
-              />
-            </Form.Group>
+      {showModal && (
+        <div
+          className="admin-inventory-item-add-edit-modal modal"
+          style={{ display: "block" }}
+          tabIndex="-1"
+          role="dialog"
+        >
+          <div
+            className="modal-dialog modal-centered"
+            role="document">
+            <div className="modal-content">
+              <div className="admin-inventory-item-add-edit-modal-header modal-header">
+                <h5 className="modal-title">
+                  {currentItem ? "Edit" : "Add"} Item
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={handleHideModal}
+                ></button>
+              </div>
 
-            <Form.Group
-              controlId="quantity"
-              className="admin-inventory-form-group d-flex flex-column"
-            >
-              <Form.Label className="admin-inventory-form-label">
-                Quantity
-              </Form.Label>
-              <Form.Control
-                type="number"
-                name="quantity"
-                value={newItem.quantity}
-                onChange={handleChange}
-                required
-                className="admin-inventory-form"
-              />
-            </Form.Group>
+              <div className="admin-inventory-item-add-edit-modal-body modal-body">
+                <form
+                  onSubmit={handleSubmit}
+                  className="m-0">
+                  <div className="admin-inventory-group-form d-flex flex-column">
+                    <label className="admin-inventory-form-label">Item Name</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={newItem.name}
+                      onChange={handleChange}
+                      required
+                      className="admin-inventory-form"
+                    />
+                  </div>
 
-            <Form.Group
-              controlId="specification"
-              className="admin-inventory-form-group d-flex flex-column"
-            >
-              <Form.Label className="admin-inventory-form-label">
-                Specification
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="specification"
-                value={newItem.specification}
-                onChange={handleChange}
-                required
-                className="admin-inventory-form"
-              />
-            </Form.Group>
+                  <div className="admin-inventory-group-form d-flex flex-column">
+                    <label className="admin-inventory-form-label">Quantity</label>
+                    <input
+                      type="number"
+                      name="quantity"
+                      value={newItem.quantity}
+                      onChange={handleChange}
+                      required
+                      className="admin-inventory-form"
+                    />
+                  </div>
 
-            <Form.Group
-              controlId="status"
-              className="admin-inventory-form-group d-flex flex-column"
-            >
-              <Form.Label className="admin-inventory-form-label">
-                Status
-              </Form.Label>
-              <Form.Control
-                as="select"
-                name="status"
-                value={newItem.status}
-                onChange={handleChange}
-                required
-                className="admin-inventory-form"
-              >
-                <option>Available</option>
-                <option>Out of Stock</option>
-              </Form.Control>
-            </Form.Group>
+                  <div className="admin-inventory-group-form d-flex flex-column">
+                    <label className="admin-inventory-form-label">Specification</label>
+                    <input
+                      type="text"
+                      name="specification"
+                      value={newItem.specification}
+                      onChange={handleChange}
+                      required
+                      className="admin-inventory-form"
+                    />
+                  </div>
 
-            <Form.Group
-              controlId="image"
-              className="admin-inventory-form-group d-flex flex-column"
-            >
-              <Form.Label className="admin-inventory-form-label">
-                Upload Image
-              </Form.Label>
-              <Form.Control
-                type="file"
-                name="image"
-                onChange={handleFileChange}
-                required
-                className="admin-inventory-form"
-              />
-            </Form.Group>
+                  <div className="admin-inventory-group-form d-flex flex-column">
+                    <label className="admin-inventory-form-label">Status</label>
+                    <select
+                      name="status"
+                      value={newItem.status}
+                      onChange={handleChange}
+                      required
+                      className="admin-inventory-form"
+                    >
+                      <option>Available</option>
+                      <option>Out of Stock</option>
+                    </select>
+                  </div>
 
-            <div className="admin-inventory-save-add-button-container">
-              <Button
-                variant="primary"
-                type="submit"
-                className="admin-inventory-save-add-button rounded"
-              >
-                {currentItem ? "Save Changes" : "Add Item"}
-              </Button>
+                  <div className="admin-inventory-group-form d-flex flex-column">
+                    <label className="admin-inventory-form-label">Upload Image</label>
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={handleFileChange}
+                      required
+                      className="admin-inventory-form"
+                    />
+                  </div>
+
+                  <div className="admin-inventory-save-add-button-container">
+                    <button
+                      type="submit"
+                      className="admin-inventory-item-button text-white rounded bg-primary"
+                    >
+                      {currentItem ? "Save Changes" : "Add Item"}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
