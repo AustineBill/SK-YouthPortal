@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -7,9 +7,28 @@ import { Breadcrumb, Modal, Button } from "react-bootstrap";
 
 const EquipReservation = () => {
   const navigate = useNavigate();
+  const [reservations, setReservations] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  useEffect(() => {
+    // Fetch reservations from an API
+    const fetchReservations = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/GetReservations");
+        if (!response.ok) {
+          throw new Error("Failed to fetch reservations");
+        }
+        const data = await response.json();
+        setReservations(data); // Update state with fetched reservations
+      } catch (error) {
+        console.error("Error fetching reservations:", error);
+      }
+    };
+
+    fetchReservations();
+  }, []);
 
   const handleDateChange = (date) => {
     setSelectedDate(date); // Set the selected date (only one date allowed)
@@ -101,6 +120,38 @@ const EquipReservation = () => {
     }
   };
 
+  // Filter reservations by start_date
+  const filterReservations = (date) => {
+    return reservations.filter((res) => {
+      const startDate = new Date(res.start_date).toDateString();
+      const currentDate = date.toDateString();
+      return startDate === currentDate;
+    });
+  };
+
+  const tileClassName = ({ date, view }) => {
+    if (view !== "month") return ""; // Apply styles only in the month view
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Remove time for comparison
+
+    // Sundays and past dates are unavailable
+    if (date < today || date.getDay() === 0) {
+      return "unavailable";
+    }
+
+    // Filter reservations for the specific date
+    const dailyReservations = filterReservations(date);
+
+    // If no reservations, it's available; otherwise, handle based on limit
+    if (dailyReservations.length === 0) {
+      return "available";
+    } else if (dailyReservations.length >= 5) {
+      return "unavailable";
+    }
+    return "available"; // Default to available if reservations are below the limit
+  };
+
   return (
     <div className="container-fluid">
       <Breadcrumb className="ms-5 mt-3">
@@ -147,6 +198,7 @@ const EquipReservation = () => {
           maxDate={new Date(new Date().setDate(new Date().getDate() + 7))} // 7 days from today
           onChange={handleDateChange}
           value={selectedDate}
+          tileClassName={tileClassName}
           tileDisabled={({ date }) => date.getDay() === 0}
         />
       </div>

@@ -478,7 +478,7 @@ h2,
 
 .western-header {
   position: relative;
-  padding: 15rem 0rem;
+  padding: 18.5rem 1rem;
   background: url(./Asset/Western\ Photo.png) center center no-repeat;
   background-size: cover;
 }
@@ -614,19 +614,19 @@ h2,
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  margin: 0;
   gap: 80px;
-  padding: 0;
+  padding: 20px;
   box-sizing: border-box;
-  border-radius: 8px;
-  margin-top: 15px;
+  border-radius: 2px;
+  row-gap: 5px;
 }
 
 .ProgramCard {
+  color: #b4d0ee;
   height: auto;
-  max-height: 150%;
+  max-height: 120%;
   width: 20em;
-  margin: 25px;
+  margin: 50px 0 0 0;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 8px;
@@ -636,14 +636,14 @@ h2,
 
 .ProgramCard:hover {
   transform: translateY(-10px); /* Move upward slightly */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+  box-shadow: 0 10px 20px rgb(168, 153, 255); /* Stronger shadow on hover */
 }
 
 .program-card-img {
   height: 300px; /* Set a fixed height */
-  width: 25em; /* Make the width responsive to the card */
+  width: 30em; /* Make the width responsive to the card */
   object-fit: cover; /* Ensure the image fills the dimensions without distortion */
-  border-radius: 5px; /* Optional: Add rounded corners */
+  border-radius: 8px; /* Optional: Add rounded corners */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
@@ -912,15 +912,12 @@ h2,
 /**PROGRAMS**/
 
 .custom-card {
-  width: 1000px;
-  max-width: 100%;
+  width: 700px; /* Width for landscape effect */
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin: 1rem;
 }
-
 .custom-card:hover {
   transform: translateY(-10px);
   box-shadow: 0px 12px 24px rgb(197, 200, 255);
@@ -946,9 +943,9 @@ h2,
 }
 
 .custom-card-img {
-  height: 500px;
-  object-fit: cover;
-  border-radius: 8px 8px 0 0;
+  width: 100%; /* Image should take full width of the card */
+  height: 400px; /* Set a fixed height for the image to keep it landscape */
+  object-fit: cover; /* Ensures image covers the entire space without distortion */
 }
 
 .card-row {

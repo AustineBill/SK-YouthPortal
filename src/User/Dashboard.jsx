@@ -109,7 +109,7 @@ const Dashboard = () => {
 
       <div className="bg-custom mt-2.5">
         <div className="Divider">
-          <h1 className="text-light fw-bold fs-4">Discover more Programs</h1>
+          <h1 className="text-light  fs-6">Discover more of our programs!</h1>
         </div>
       </div>
 
@@ -131,8 +131,28 @@ const Dashboard = () => {
                 className="program-card-img"
               />
               <Card.Body>
-                <Card.Title>{program.program_name}</Card.Title>
-                <Card.Text>{program.heading}</Card.Text>
+                <Card.Title
+                  style={{
+                    fontFamily: "Poppins, sans-serif",
+                    fontSize: "22px",
+                    fontWeight: "bold",
+                    color: "#1d0053",
+                    marginTop: "-25px",
+                  }}
+                >
+                  {program.program_name}
+                </Card.Title>
+                <Card.Text
+                  style={{
+                    fontFamily: "Arial, sans-serif",
+                    fontSize: "13.5px",
+                    fontWeight: "light",
+                    color: "#000000",
+                    marginTop: "-10px",
+                  }}
+                >
+                  {program.heading}
+                </Card.Text>
                 <Button
                   onClick={() => handleNavigate(program.program_type)}
                   className="btn-db"
@@ -148,11 +168,20 @@ const Dashboard = () => {
       {/* Feedback Section */}
       <div
         className="feedback-container container mt-4 p-4 rounded shadow mb-3"
-        style={{ maxWidth: "600px", backgroundColor: "#f8f9fa" }}
+        style={{ maxWidth: "570px", backgroundColor: "#9facfb" }}
       >
         {userFeedback && userFeedback.rating && !isEditing ? (
           <div className="position-relative text-center">
-            <h2 className="text-dark fw-bold">Your Feedback</h2>
+            <h2
+              style={{
+                color: "#1d0053",
+                fontSize: "1.6rem",
+                fontWeight: "bold",
+                marginTop: "8px",
+              }}
+            >
+              Send us your feedback!
+            </h2>
             <FaPen
               className="position-absolute top-0 end-0 text-dark"
               style={{ cursor: "pointer", fontSize: "1.5rem" }}
@@ -233,15 +262,6 @@ const Dashboard = () => {
       {showModal && (
         <div className="ModalOverlayStyles">
           <div className="ModalStyles large">
-            <button
-              className="closeButton"
-              onClick={() => {
-                setShowModal(false);
-              }}
-              aria-label="Close"
-            >
-              <i className="bi bi-x-circle"></i>
-            </button>
             <div className="text-center">
               <i
                 className="bi bi-emoji-smile-fill text-warning"
@@ -260,8 +280,8 @@ const Dashboard = () => {
                   window.location.reload(); // This will reload the page
                 }}
               >
-                <i className="bi bi-house m-1"></i>
-                Return to Log
+                <i className="bi bi-house m-.5"></i>
+                Return to dashboard
               </Button>
             </div>
           </div>

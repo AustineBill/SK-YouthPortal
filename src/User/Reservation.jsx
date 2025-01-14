@@ -120,10 +120,16 @@ const Reservation = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Remove time component for comparison
 
-    const dailyReservations = filterReservations(date);
+    const isSunday = date.getDay() === 0; // Check if the day is Sunday (0 represents Sunday)
+
+    if (date < today || isSunday) {
+      return "unavailable"; // Past dates and Sundays should always be unavailable
+    }
+
+    const dailyReservations = filterReservations(date, selectedTime);
 
     if (dailyReservations.length === 0) {
-      return "available"; // No reservations: Available
+      return "available"; // No reservations: Vacant
     }
 
     const soloReservationsCount = dailyReservations.filter(
@@ -136,10 +142,10 @@ const Reservation = () => {
     const isFullyBooked = soloReservationsCount >= 5;
 
     if (hasGroupReservation || isFullyBooked) {
-      return "unavailable"; // Fully booked or group reservation: Unavailable
+      return "unavailable"; // Fully booked: Unavailable
     }
 
-    return "available"; // Partially booked: Available
+    return "available"; // Partially booked
   };
 
   const tileDisabled = ({ date }) => {

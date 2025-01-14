@@ -158,16 +158,15 @@ const Intro = () => {
                 alt={programs.program_name}
                 className="program-card-img"
               />
-              <Card.Body>
-                <Card.Title>{programs.program_name}</Card.Title>
-                <Card.Text>{programs.heading}</Card.Text>
-                <button
-                  onClick={() => handleNavigate(programs.program_type)}
-                  className="spotlight-button btn-db m-2"
-                >
-                  Learn More
-                </button>
-              </Card.Body>
+
+              <Card.Title>{programs.program_name}</Card.Title>
+              <Card.Text>{programs.heading}</Card.Text>
+              <button
+                onClick={() => handleNavigate(programs.program_type)}
+                className="spotlight-button btn-db m-2"
+              >
+                Learn More
+              </button>
             </Card>
           ))
         )}
