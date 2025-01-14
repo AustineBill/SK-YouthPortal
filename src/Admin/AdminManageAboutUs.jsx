@@ -336,11 +336,6 @@ const ManageAboutUs = () => {
                 ))}
               </tbody>
             </table>
-            <button
-              onClick={addSkCouncilInput}
-              className="admin-add-SK-button rounded">
-              Add SK Council Member
-            </button>
           </div>
         )}
 
@@ -360,29 +355,37 @@ const ManageAboutUs = () => {
                   ></button>
                 </div>
                 <div className="modal-body">
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      if (imageFile) {
-                        saveSkCouncilMembers();
-                      } else {
-                        alert("Please upload an image");
-                      }
-                    }}
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (imageFile) {
+                      saveSkCouncilMembers();
+                    } else {
+                      alert("Please upload an image");
+                    }
+                  }}
+                >
+                  <div className="">
+                    <label>Upload Image</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      onChange={(e) => handleImageChange(e)}
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary">
+                    Save Member
+                  </button>
+                  {/* Close button outside onSubmit */}
+                  <button
+                    type="button"
+                    className="btn btn-secondary ms-2"
+                    onClick={() => setModalVisible(false)}
                   >
-                    <div className="">
-                      <label>Upload Image</label>
-                      <input
-                        type="file"
-                        className="form-control"
-                        onChange={(e) => handleImageChange(e)}
-                      />
-                    </div>
-                    <button type="submit" className="btn btn-primary">
-                      Save Member
-                    </button>
-                  </form>
-                </div>
+                    Close
+                  </button>
+                </form>
+               </div>
               </div>
             </div>
           </div>
