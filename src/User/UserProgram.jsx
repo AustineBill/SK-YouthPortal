@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, Card } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, Card } from "react-bootstrap";
 
 const Programs = () => {
   const [programs, setPrograms] = useState([]);
@@ -8,14 +8,14 @@ const Programs = () => {
 
   useEffect(() => {
     // Fetch programs data from the backend
-    fetch('http://localhost:5000/api/programs')
+    fetch("http://localhost:5000/api/programs")
       .then((response) => response.json())
       .then((data) => setPrograms(data))
-      .catch((error) => console.error('Error fetching programs:', error));
+      .catch((error) => console.error("Error fetching programs:", error));
   }, []);
 
   const handleNavigate = (type) => {
-    navigate('/ProgramDetails', { state: { programType: type } });
+    navigate("/ProgramDetails", { state: { programType: type } });
   };
 
   return (
@@ -29,7 +29,10 @@ const Programs = () => {
       {/* Programs List */}
       <div className="d-flex flex-column align-items-center">
         {programs.map((program) => (
-          <div className="w-100 d-flex justify-content-center mb-4" key={program.id}>
+          <div
+            className="w-100 d-flex justify-content-center mb-4"
+            key={program.id}
+          >
             <Card className="custom-card">
               <Card.Img
                 variant="top"
@@ -38,8 +41,28 @@ const Programs = () => {
                 className="custom-card-img"
               />
               <Card.Body className="d-flex flex-column align-items-center">
-                <Card.Title className="fs-5 fw-bold" style={{ color: "#1d0053" }}>{program.program_name}</Card.Title>
-                <Card.Text>{program.heading}</Card.Text>
+                <Card.Title
+                  style={{
+                    fontFamily: "Poppins, sans-serif",
+                    fontSize: "27px",
+                    fontWeight: "bold",
+                    color: "#1d0053",
+                    marginTop: "-20px",
+                  }}
+                >
+                  {program.program_name}
+                </Card.Title>
+                <Card.Text
+                  style={{
+                    fontFamily: "Arial, sans-serif",
+                    fontSize: "15px",
+                    fontWeight: "light",
+                    color: "#000000",
+                    marginTop: "-8px",
+                  }}
+                >
+                  {program.heading}
+                </Card.Text>
                 <Button
                   variant="dark"
                   onClick={() => handleNavigate(program.program_type)}

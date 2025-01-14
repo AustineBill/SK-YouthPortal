@@ -217,23 +217,6 @@ span {
   margin-right: 10px;
 }
 
-/* Specific colors for each legend item */
-.available {
-  background-color: green;
-}
-
-.unavailable {
-  background-color: red;
-}
-
-.maximize {
-  background-color: orange;
-}
-
-.unknown {
-  background-color: gray;
-}
-
 /*****Time Dropdown*****/
 
 .time-dropdown {
