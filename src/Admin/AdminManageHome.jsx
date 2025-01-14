@@ -202,6 +202,25 @@ const ManageHomePage = () => {
     }
   };
 
+  // Handle removing a spotlight image
+  // Handle removing a spotlight image
+const removeSpotlightImage = async (spotlightId) => {
+  try {
+    const response = await axios.delete(`http://localhost:5000/spotlight/${spotlightId}`);
+    alert(response.data.message); // Display success message to the user
+    
+    // Optionally update the UI by removing the spotlight from the state
+    setSpotlight((prevSpotlight) => 
+      prevSpotlight.filter((spotlight) => spotlight.id !== spotlightId)
+    );
+  } catch (error) {
+    console.error('Error removing spotlight image:', error);
+    alert('Failed to remove spotlight image.');
+  }
+};
+
+  
+
   return (
     <div className="admin-home-container d-flex flex-column">
       <div className="admin-home-label">
@@ -244,7 +263,6 @@ const ManageHomePage = () => {
                       <Card.Img
                         variant="top"
                         src={events.event_image}
-                        // className="program-card-img"
                         alt={events.event_name}
                         className="admin-event-image"
                       />
@@ -294,13 +312,15 @@ const ManageHomePage = () => {
                         variant="top"
                         src={image}
                         alt={`Spotlight ${imgIndex + 1}`}
-                        // style={{ height: "150px", objectFit: "cover" }}
                         className="spotlight-image"
                       />
                       <Card.Body className="d-flex flex-column align-items-center">
-                        <Card.Title className="spotlight-text">
-                          Spotlight {imgIndex + 1}
-                        </Card.Title>
+                        <button
+                            variant="danger"
+                            onClick={() => removeSpotlightImage(spotlight.id)} // Pass the spotlight ID
+                          >
+                            Remove Spotlight Image
+                          </button>
                       </Card.Body>
                     </Card>
                   ))
