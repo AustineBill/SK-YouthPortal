@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card } from "react-bootstrap";
-// import "./styles/AdminManageProgram.css";
-import '../WebStyles/Admin-CSS.css';
+import { Card, Modal, Alert, Button } from "react-bootstrap";
+import "../WebStyles/Admin-CSS.css";
 
 const ManageProgram = () => {
   const [programs, setPrograms] = useState([]);
@@ -17,10 +16,14 @@ const ManageProgram = () => {
     image: null,
   });
 
-  
   const [imagePreview, setImagePreview] = useState(null);
 
-  // Fetch all programs from backend using axios
+  // Modal state
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalVariant, setModalVariant] = useState("success"); // 'success' or 'danger'
+
+  // Fetch all programs
   const fetchPrograms = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/programs");
@@ -35,55 +38,43 @@ const ManageProgram = () => {
   }, []);
 
   const handleViewProgram = (program) => {
-    // Toggle expanded view for the selected program
     setSelectedProgram((prev) =>
       prev && prev.id === program.id ? null : program
     );
   };
-  
-  const handleSaveChanges = async () => {
-    console.log("Save Details button clicked!");
-  
+
+  const handleSaveChanges = async (e) => {
+    e.preventDefault();
     try {
-      // Create FormData and add the key-value pairs
       const formData = new FormData();
       formData.set("program_name", selectedProgram.program_name);
       formData.set("description", selectedProgram.description);
       formData.set("heading", selectedProgram.heading);
       formData.set("program_type", selectedProgram.program_type);
-  
-      // Handle the main program image if present
+
       if (selectedProgram.image) {
-        console.log("Image attached:", selectedProgram.image);
-        formData.set("image", selectedProgram.image); // Overwrite any existing "image" key
+        formData.set("image", selectedProgram.image);
       }
 
-      
-      // Send the PUT request with FormData
-      const response = await axios.put(
+      await axios.put(
         `http://localhost:5000/programs/${selectedProgram.id}`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
 
+      setModalMessage("Program updated successfully!");
+      setModalVariant("success");
+      setShowModal(true);
 
-      console.log("Response from backend:", response.data);
-      alert("Program updated successfully!");
-      fetchPrograms(); // Refresh the list of programs
-      setShowEditModal(false); // Close the modal
+      fetchPrograms();
+      setShowEditModal(false);
     } catch (error) {
-      // Error handling
-      if (error.response) {
-        console.error("Backend Error:", error.response.data);
-      } else if (error.request) {
-        console.error("No Response from Server:", error.request);
-      } else {
-        console.error("Error:", error.message);
-      }
-      alert("Failed to save changes. Please try again.");
+      setModalMessage("Failed to save changes. Please try again.");
+      setModalVariant("danger");
+      setShowModal(true);
+      console.error(error);
     }
   };
-  
 
   const handleAddProgram = async () => {
     const formData = new FormData();
@@ -92,7 +83,6 @@ const ManageProgram = () => {
     formData.append("heading", newProgram.heading);
     formData.append("program_type", newProgram.program_type);
 
-    // Handle image upload for program image
     if (newProgram.image) {
       formData.append("image", newProgram.image);
     }
@@ -106,10 +96,7 @@ const ManageProgram = () => {
         }
       );
 
-      // Assuming the backend returns the program with the image URL
-      setPrograms((prev) => [...prev, response.data]); // Add newly added program to list
-
-      // Reset form state
+      setPrograms((prev) => [...prev, response.data]);
       setNewProgram({
         name: "",
         description: "",
@@ -119,9 +106,15 @@ const ManageProgram = () => {
       });
       setImagePreview(null);
       setActiveContent("allPrograms");
+
+      setModalMessage("Program added successfully!");
+      setModalVariant("success");
+      setShowModal(true);
     } catch (error) {
-      console.error("Error adding program:", error);
-      alert("There was an error adding the program.");
+      setModalMessage("There was an error adding the program.");
+      setModalVariant("danger");
+      setShowModal(true);
+      console.error(error);
     }
   };
 
@@ -147,16 +140,21 @@ const ManageProgram = () => {
     try {
       await axios.delete(`http://localhost:5000/programs/${programId}`);
       setPrograms(programs.filter((program) => program.id !== programId));
-      setSelectedProgram(null);
+
+      setModalMessage("Program deleted successfully!");
+      setModalVariant("success");
+      setShowModal(true);
     } catch (error) {
-      console.error("Error deleting program:", error);
+      setModalMessage("Error deleting the program. Please try again.");
+      setModalVariant("danger");
+      setShowModal(true);
+      console.error(error);
     }
   };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Check if this is for editing or adding
       if (selectedProgram) {
         setSelectedProgram((prev) => ({ ...prev, image: file }));
       } else {
@@ -166,7 +164,6 @@ const ManageProgram = () => {
       setImagePreview(imageUrl);
     }
   };
-  
 
   return (
     <div className="admin-program-container d-flex flex-column">
@@ -203,7 +200,9 @@ const ManageProgram = () => {
                     <div className="admin-program-image-container d-flex justify-content-center align-items-center">
                       <Card.Img
                         variant="top"
-                        src={program.image_url || "https://via.placeholder.com/100"}
+                        src={
+                          program.image_url || "https://via.placeholder.com/100"
+                        }
                         alt={program.program_name}
                         className="admin-program-image"
                       />
@@ -211,7 +210,9 @@ const ManageProgram = () => {
 
                     <div className="admin-program-expandedn-details-container">
                       <Card.Body>
-                        <p className="admin-program-title fw-bold">{program.program_name}</p>
+                        <p className="admin-program-title fw-bold">
+                          {program.program_name}
+                        </p>
                         <p className="admin-program-text">{program.heading}</p>
                         <div className="admin-program-details-buttons-container d-flex justify-content-center">
                           <button
@@ -237,9 +238,13 @@ const ManageProgram = () => {
                         {/* Expanded Details */}
                         {program === selectedProgram && (
                           <div className="admin-program-expanded-details-container d-flex flex-column text-center">
-                            <h3 className="admin-program-description-label">Description</h3>
+                            <h3 className="admin-program-description-label">
+                              Description
+                            </h3>
                             <p className="program-p">{program.description}</p>
-                            <h5 className="admin-program-pt-label">Program Type</h5>
+                            <h5 className="admin-program-pt-label">
+                              Program Type
+                            </h5>
                             <p className="program-p">{program.program_type}</p>
                           </div>
                         )}
@@ -271,7 +276,9 @@ const ManageProgram = () => {
               </div>
 
               <div className="admin-add-program-form d-flex flex-column">
-                <label className="admin-add-program-label">Program Description</label>
+                <label className="admin-add-program-label">
+                  Program Description
+                </label>
                 <textarea
                   placeholder="Program Description"
                   name="description"
@@ -330,7 +337,10 @@ const ManageProgram = () => {
                 {imagePreview && <img src={imagePreview} alt="Preview" />}
               </div>
 
-              <button onClick={handleAddProgram} className='admin-add-program-button rounded text-white'>
+              <button
+                onClick={handleAddProgram}
+                className="admin-add-program-button rounded text-white"
+              >
                 Add Program
               </button>
             </form>
@@ -344,7 +354,9 @@ const ManageProgram = () => {
               <h3 className="text-center">Edit Program</h3>
               <form className="admin-edit-program-details-group d-flex flex-column align-items-center">
                 <div className="admin-edit-program-form d-flex flex-column">
-                  <label className="admin-edit-program-label">Program Name</label>
+                  <label className="admin-edit-program-label">
+                    Program Name
+                  </label>
                   <input
                     type="text"
                     name="program_name"
@@ -354,7 +366,9 @@ const ManageProgram = () => {
                 </div>
 
                 <div className="admin-edit-program-form d-flex flex-column">
-                  <label className="admin-edit-program-label">Program Description</label>
+                  <label className="admin-edit-program-label">
+                    Program Description
+                  </label>
                   <textarea
                     name="description"
                     value={selectedProgram.description}
@@ -363,7 +377,9 @@ const ManageProgram = () => {
                 </div>
 
                 <div className="admin-edit-program-form d-flex flex-column">
-                  <label className="admin-edit-program-label">Program Type</label>
+                  <label className="admin-edit-program-label">
+                    Program Type
+                  </label>
                   <input
                     type="text"
                     name="program_type"
@@ -373,7 +389,9 @@ const ManageProgram = () => {
                 </div>
 
                 <div className="admin-edit-program-form d-flex flex-column">
-                  <label className="admin-edit-program-label">Program Image</label>
+                  <label className="admin-edit-program-label">
+                    Program Image
+                  </label>
                   <input
                     type="file"
                     accept="image/*"
@@ -384,12 +402,14 @@ const ManageProgram = () => {
                 <div className="edit-modal-buttons-container d-flex">
                   <button
                     onClick={() => setShowEditModal(false)}
-                    className="edit-cancel-button bg-danger text-white rounded-pill">
+                    className="edit-cancel-button bg-danger text-white rounded-pill"
+                  >
                     Cancel
                   </button>
                   <button
                     onClick={handleSaveChanges}
-                    className="edit-save-button bg-success text-white rounded-pill">
+                    className="edit-save-button bg-success text-white rounded-pill"
+                  >
                     Save Changes
                   </button>
                 </div>
@@ -397,6 +417,22 @@ const ManageProgram = () => {
             </div>
           </div>
         )}
+
+        <Modal show={showModal} onHide={() => setShowModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              {modalVariant === "success" ? "Success" : "Error"}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Alert variant={modalVariant}>{modalMessage}</Alert>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={() => setShowModal(false)}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );

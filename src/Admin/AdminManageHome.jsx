@@ -77,7 +77,7 @@ const ManageHomePage = () => {
   const handleAddEvent = async () => {
     if (!newEvent.title || !newEvent.description || !newEvent.image) {
       alert("Please fill in all event details");
-      return;
+      setActiveContent("allEvents");
     }
 
     // Check for duplicate event title
@@ -179,8 +179,7 @@ const ManageHomePage = () => {
   // Upddated Spotlight submission logic
   const handleAddSpotlight = async () => {
     if (SpotlightData.additionalImages.length === 0) {
-      alert("Please upload at least one additional image.");
-      return;
+      setActiveContent("allEvents");
     }
 
     const formData = new FormData();
@@ -204,22 +203,22 @@ const ManageHomePage = () => {
 
   // Handle removing a spotlight image
   // Handle removing a spotlight image
-const removeSpotlightImage = async (spotlightId) => {
-  try {
-    const response = await axios.delete(`http://localhost:5000/spotlight/${spotlightId}`);
-    alert(response.data.message); // Display success message to the user
-    
-    // Optionally update the UI by removing the spotlight from the state
-    setSpotlight((prevSpotlight) => 
-      prevSpotlight.filter((spotlight) => spotlight.id !== spotlightId)
-    );
-  } catch (error) {
-    console.error('Error removing spotlight image:', error);
-    alert('Failed to remove spotlight image.');
-  }
-};
+  const removeSpotlightImage = async (spotlightId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/spotlight/${spotlightId}`
+      );
+      alert(response.data.message); // Display success message to the user
 
-  
+      // Optionally update the UI by removing the spotlight from the state
+      setSpotlight((prevSpotlight) =>
+        prevSpotlight.filter((spotlight) => spotlight.id !== spotlightId)
+      );
+    } catch (error) {
+      console.error("Error removing spotlight image:", error);
+      alert("Failed to remove spotlight image.");
+    }
+  };
 
   return (
     <div className="admin-home-container d-flex flex-column">
@@ -316,11 +315,11 @@ const removeSpotlightImage = async (spotlightId) => {
                       />
                       <Card.Body className="d-flex flex-column align-items-center">
                         <button
-                            variant="danger"
-                            onClick={() => removeSpotlightImage(spotlight.id)} // Pass the spotlight ID
-                          >
-                            Remove Spotlight Image
-                          </button>
+                          variant="danger"
+                          onClick={() => removeSpotlightImage(spotlight.id)} // Pass the spotlight ID
+                        >
+                          Remove Spotlight Image
+                        </button>
                       </Card.Body>
                     </Card>
                   ))
