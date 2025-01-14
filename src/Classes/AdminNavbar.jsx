@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../WebStructure/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import iSKedLogo from "../Asset/WebImages/Logo.png";
-// import "../Admin/styles/AdminNavbar.css";
-import "../WebStyles/Admin-CSS.css";
+import "../Admin/styles/AdminNavbar.css";
+// import "../WebStyles/Admin-CSS.css";
 
 const AdminNavbar = () => {
   const { adminlogout } = useContext(AuthContext);

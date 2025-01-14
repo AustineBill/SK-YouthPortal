@@ -1,9 +1,6 @@
-import "./styles/AdminEquipmentReservation.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
-// New Codes:
 import {
   Table,
   Dropdown,
@@ -11,6 +8,7 @@ import {
   Popover,
   OverlayTrigger,
 } from "react-bootstrap";
+import "./styles/AdminEquipmentReservation.css";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -192,6 +190,7 @@ const AdminEquipmentReservation = () => {
 
       <div className="calendar-container">
         <Calendar
+          className={"er-calendar rounded"}
           minDate={new Date()}
           selectRange={true}
           tileClassName={tileClassName}
@@ -288,7 +287,7 @@ const AdminEquipmentReservation = () => {
                   <td>{reservation.id}</td>
                   <td>
                     {Array.isArray(reservation.reserved_equipment) &&
-                    reservation.reserved_equipment.length > 0 ? (
+                      reservation.reserved_equipment.length > 0 ? (
                       reservation.reserved_equipment.map((item) => (
                         <div key={item.id}>
                           {item.name} (Quantity: {item.quantity})
