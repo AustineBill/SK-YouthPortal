@@ -25,42 +25,12 @@
 }
 
 /* Hamburger Menu Style for Small Screens */
-@media (max-width: 768px) {
-  .hamburger-icon {
-    display: flex;
+@media (min-width: 550px) and (max-width: 768px) {
+  .Website-Name {
+    font-size: 1.6rem; /* Adjust website name font size */
   }
-
   .nav-links {
-    display: none;
-    flex-direction: column;
-    background-color: #f8f9fa;
-    width: 100%;
-    padding: 20px;
-    align-items: center;
-  }
-
-  .nav-links.active {
-    display: flex;
-  }
-
-  .nav-links .nav-item {
-    padding: 10px 0;
-    text-align: center;
-    width: 100%;
-  }
-
-  .nav-links {
-    flex-direction: column; /* Stack items vertically */
-    align-items: center;
-    gap: 5px; /* Reduce gap for smaller screens */
-  }
-
-  .nav-item {
-    margin: 0.5rem 0; /* Reduce margin for smaller screens */
-  }
-
-  .navbar-buttons {
-    display: none;
+    gap: 2px; /* Reduce gap between items */
   }
 
   .hero-header {
@@ -387,5 +357,108 @@
 @media (max-width: 500px) {
   .equipment-container .ProgramCard {
     flex: 1 1 calc(50% - 1.5rem); /* 2 cards per row */
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    gap: 40px; /* Less gap for smaller screens */
+  }
+
+  .ProgramCard {
+    flex: 0 0 calc(33.33% - 40px); /* 3 cards in a row */
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .card-container {
+    gap: 20px; /* Even less gap */
+  }
+
+  .ProgramCard {
+    flex: 0 0 calc(50% - 20px); /* 2 cards in a row */
+    margin-bottom: 20px;
+  }
+
+  .ProgramCard .card-body {
+    font-size: 0.9rem; /* Make content smaller for smaller screens */
+  }
+
+  .ProgramCard .card-title {
+    font-size: 1rem; /* Smaller font for title */
+  }
+
+  .ProgramCard .card-text {
+    font-size: 0.85rem; /* Smaller font for text */
+  }
+
+  #youthCarousel {
+    padding: 1rem 1rem; /* Adjust padding for 500px screens */
+  }
+
+  .carousel-item img {
+    height: 300px; /* Adjust image height for 500px screens */
+  }
+}
+
+@media (max-width: 500px) {
+  .hamburger-icon {
+    display: flex; /* Show hamburger icon on small screens */
+    margin-top: 10px;
+  }
+
+  .nav-links {
+    display: none; /* Hide nav links by default */
+  }
+
+  .nav-links.active {
+    display: flex; /* Show the nav items when hamburger is clicked */
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .nav-links {
+    gap: 30px; /* Further reduce gap between items */
+  }
+
+  .Website-Name {
+    font-size: 1.4rem; /* Adjust website name font size */
+    top: 10px; /* Adjust position */
+  }
+
+  .nav-item {
+    font-size: 0.8rem; /* Adjust font size for smaller screens */
+  }
+
+  .nav-links.active {
+    padding: 2rem; /* Adjust padding for smaller screens */
+  }
+
+  .navbar-buttons {
+    display: none;
+  }
+
+  *
+    User
+    profile
+    and
+    logout
+    inside
+    the
+    hamburger
+    */
+    .navbar
+    .nav-links
+    .profile-logout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .navbar .nav-links .profile-logout .nav-item {
+    margin: 10px 0; /* Adjust margin for mobile */
   }
 }

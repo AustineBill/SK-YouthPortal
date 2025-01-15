@@ -283,7 +283,7 @@ const Reservation = () => {
               {selectedDates[0].toDateString() ===
               selectedDates[1].toDateString()
                 ? selectedDates[0].toLocaleDateString()
-                : `${selectedDates[0].toLocaleDateString()} to ${selectedDates[1].toLocaleDateString()}`}
+                : `${selectedDates[0].toLocaleDateString()} and ${selectedDates[1].toLocaleDateString()}`}
             </p>
             <p>
               <strong>Selected Time:</strong>{" "}

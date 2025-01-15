@@ -55,9 +55,10 @@ const About = () => {
   };
 
   // Truncate description if not "showMore"
-  const truncatedDescription = description.length > maxInitialLength && !showMore
-    ? description.slice(0, maxInitialLength) + "..."
-    : description;
+  const truncatedDescription =
+    description.length > maxInitialLength && !showMore
+      ? description.slice(0, maxInitialLength) + "..."
+      : description;
 
   return (
     <div className="container-fluid">
@@ -71,7 +72,7 @@ const About = () => {
       <div className="d-flex justify-content-center">
         <div
           id="youthCarousel"
-          className="carousel w-75 mb-2"
+          className="carousel"
           data-bs-ride="carousel"
           data-bs-interval="2000"
         >
@@ -104,7 +105,9 @@ const About = () => {
               ))
             ) : (
               <div className="carousel-item active">
-                <p className="text-center text-light py-5">No images available</p>
+                <p className="text-center text-light py-5">
+                  No images available
+                </p>
               </div>
             )}
           </div>

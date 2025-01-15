@@ -63,8 +63,8 @@ const Council = () => {
       <div className="d-flex justify-content-center mb">
         <div
           id="youthCarousel"
-          className="carousel w-75 mb-2"
-          data-bs-ride="carousel" // Bootstrap auto-slide functionality
+          className="carousel"
+          data-bs-ride="carousel"
           data-bs-interval="2000" // Auto-slide every 2 seconds
         >
           <div className="carousel-indicators">
@@ -90,10 +90,7 @@ const Council = () => {
                     src={photo.image_url}
                     className="d-block w-100"
                     alt={`SK Council Slide ${index + 1}`}
-                    style={{
-                      height: "600px", // Ensures equal height for all images
-                      objectFit: "cover", // Maintains aspect ratio while filling the space
-                    }}
+                    style={{ height: "570px", width: "auto", margin: "0 auto" }}
                   />
                 </div>
               ))
@@ -128,13 +125,13 @@ const Council = () => {
             key={index}
           >
             <img
-              src={item.image} 
+              src={item.image}
               alt={`SK Council Member ${index + 1}`}
               className="img-responsive"
               style={{
-                width: "100%", 
-                maxHeight: "400px", 
-                objectFit: "contain", 
+                width: "100%",
+                maxHeight: "400px",
+                objectFit: "contain",
                 marginTop: "25px",
                 marginBottom: "25px",
               }}

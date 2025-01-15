@@ -43,7 +43,6 @@ const Navbar = () => {
         className="navbar-links"
         style={{ display: "flex", alignItems: "center" }}
       >
-        {/* Hamburger Icon */}
         <div className="hamburger-icon" onClick={toggleHamburgerMenu}>
           <div className="bar"></div>
           <div className="bar"></div>
