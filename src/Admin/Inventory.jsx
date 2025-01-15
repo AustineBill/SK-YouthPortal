@@ -151,7 +151,8 @@ const InventoryTable = () => {
                     <img
                       src={item.image}
                       alt={item.name}
-                      style={{ width: "100px", height: "125px" }}
+                      // style={{ width: "100px", height: "125px" }}
+                      className="equipment-image"
                     />
                   ) : (
                     "No Image"

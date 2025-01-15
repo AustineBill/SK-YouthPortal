@@ -292,7 +292,7 @@ const AdminGymReservation = () => {
             <Dropdown.Toggle className="gr-toggle">
               {filterOption}
             </Dropdown.Toggle>
-            <Dropdown.Menu>
+            <Dropdown.Menu className="gr-toggle-text">
               <Dropdown.Item onClick={() => setFilterOption("Now")}>
                 Now
               </Dropdown.Item>
