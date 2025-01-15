@@ -3,6 +3,7 @@
 .admin-dashboard-container {
     position: relative;
     padding-top: 75px;
+    padding-bottom: 40px;
     left: 22.5%;
     width: 77.5%;
     background-color: #FFFFFF;
@@ -20,12 +21,7 @@
     margin: 0 0 10px 40px;
 }
 
-.reservations-label-h2,
-.userd-label-h2,
-.equipment-label-h2,
-.yearlyrd-label-h2 {
-    font-size: 30px;
-}
+/* Year Selection */
 
 .year-dropdown-container {
     width: 90%;
@@ -33,7 +29,7 @@
 }
 
 .year-selection-container {
-    height: 450x;
+    height: 45px;
     width: 100%;
 }
 
@@ -63,14 +59,19 @@
     pointer-events: none;
 }
 
+/* Graphs */
+
 .admin-dashboard-charts-section {
-    margin-bottom: 40px;
+    width: 90%;
+    margin: 0 auto 40px;
 }
 
-.admin-contacts-details-group .admin-current-contact-label,
-.admin-edit-contacts-details-group .admin-edit-contact-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 17.5px;
+.reservations-label-h2,
+.userd-label-h2,
+.equipment-label-h2,
+.yearlyrd-label-h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
 }
 
 .admin-dashboard-charts-container {
@@ -109,6 +110,8 @@
         margin: 0 0 10px 40px;
     }
 
+    /* Year Selection */
+
     .year-selection-container {
         height: 40px;
     }
@@ -123,6 +126,8 @@
         font-size: 15px;
         margin-left: 10px;
     }
+
+    /* Graphs */
 
     .reservations-label-h2,
     .userd-label-h2,
@@ -162,6 +167,8 @@
         margin: 0 0 10px 40px;
     }
 
+    /* Year Selection */
+
     .year-selection-container {
         height: 35px;
     }
@@ -176,6 +183,8 @@
         font-size: 12.5px;
         margin-left: 7.5px;
     }
+
+    /* Graphs */
 
     .reservations-label-h2,
     .userd-label-h2,
@@ -220,6 +229,8 @@
         margin: 0px 0 20px 25px;
     }
 
+    /* Year Selection */
+
     .year-selection-container {
         height: 35px;
     }
@@ -234,6 +245,8 @@
         font-size: 12.5px;
         margin-left: 5px;
     }
+
+    /* Graphs */
 
     .reservations-label-h2,
     .userd-label-h2,
@@ -278,12 +291,14 @@
         margin: 0 0 20px 20px;
     }
 
+    /* Year Selection */
+
     .year-selection-container {
-        height: 35px;
+        height: 25px;
     }
     
     .year-selection-label {
-        font-size: 12.5px;
+        font-size: 10px;
     }
     
     .year-select {
@@ -292,6 +307,8 @@
         font-size: 10px;
         margin-left: 2.5px;
     }
+
+    /* Graphs */
 
     .reservations-label-h2,
     .userd-label-h2,

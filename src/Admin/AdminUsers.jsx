@@ -340,8 +340,8 @@ const Users = () => {
       {DeleteModalVisible && (
         <div
           className="admin-users-delete-confirmation-modal ModalOverlayStyles"
-          // backdrop="static"
-          // keyboard={false}
+        // backdrop="static"
+        // keyboard={false}
         >
           {/* <div className='ModalOverlayStyles'> */}
           {/* <div className='admin-users-delete-confirmation-modal'> */}
@@ -366,432 +366,430 @@ const Users = () => {
 
       {showViewModal && viewUser && (
         <div
-          className="modal show"
+          className="admin-user-view-details-modal modal"
           style={{ display: "block" }}
           tabIndex="-1"
           role="dialog"
         >
-          <div className="modal-dialog" role="document">
+          <div
+            className="modal-dialog modal-centered"
+            role="document">
             <div className="modal-content">
-              <div className="modal-header">
+              <div className="admin-user-view-details-modal-header modal-header">
                 <h5 className="modal-title">View User Details</h5>
                 <button
                   type="button"
-                  className="close"
+                  className="btn-close"
                   onClick={() => setShowViewModal(false)}
                 >
-                  <span>&times;</span>
+                  {/* <span>&times;</span> */}
                 </button>
               </div>
-              <div className="modal-body">
+
+              <div className="admin-user-view-details-modal-body modal-body">
                 <div>
-                  <strong>Username:</strong> {viewUser.username}
+                  <p><strong>Username:</strong> {viewUser.username}</p>
                 </div>
                 <div>
-                  <strong>Firstname:</strong> {viewUser.firstname}
+                  <p><strong>Firstname:</strong> {viewUser.firstname}</p>
                 </div>
                 <div>
-                  <strong>Lastname:</strong> {viewUser.lastname}
+                  <p><strong>Lastname:</strong> {viewUser.lastname}</p>
                 </div>
                 <div>
-                  <strong>Youth Classification:</strong>{" "}
-                  {viewUser.youth_age_group}
+                  <p><strong>Youth Classification:</strong>{" "} {viewUser.youth_age_group}</p>
                 </div>
                 <div>
-                  <strong>Email Address:</strong> {viewUser.email_address}
+                  <p><strong>Email Address:</strong> {viewUser.email_address}</p>
                 </div>
                 <div>
-                  <strong>Contact Number:</strong> {viewUser.contact_number}
+                  <p><strong>Contact Number:</strong> {viewUser.contact_number}</p>
                 </div>
                 <div>
-                  <strong>Age:</strong> {viewUser.age}
+                  <p><strong>Age:</strong> {viewUser.age}</p>
                 </div>
                 <div>
-                  <strong>Sex:</strong> {viewUser.sex}
+                  <p><strong>Sex:</strong> {viewUser.sex}</p>
                 </div>
                 <div>
-                  <strong>Work Status:</strong> {viewUser.work_status}
+                  <p><strong>Work Status:</strong> {viewUser.work_status}</p>
                 </div>
                 <div>
-                  <strong>Educational Background:</strong>{" "}
-                  {viewUser.educational_background}
+                  <p><strong>Educational Background:</strong>{" "} {viewUser.educational_background}</p>
                 </div>
                 <div>
-                  <strong>Birthday:</strong> {viewUser.birthday}
+                  <p><strong>Birthday:</strong> {viewUser.birthday}</p>
                 </div>
               </div>
-              <div className="modal-footer">
+
+              <div className="admin-user-view-details-modal-footer modal-footer">
                 <div>
-                  <strong>Generate Code:</strong> {EncryptionCode(viewUser.id)}
+                  <p><strong>Generate Code:</strong> {EncryptionCode(viewUser.id)}</p>
                 </div>
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setShowViewModal(false)}
-                >
-                  Close
-                </button>
               </div>
             </div>
           </div>
         </div>
-      )}
+      )
+      }
 
       {/* Modal for Adding/Editing User */}
-      {showModal && (
-        <div
-          className="admin-users-add-edit-modal modal open"
-          style={{ display: "block" }}
-          tabIndex="-1"
-          role="dialog"
-        >
-          {/* <div className="admin-users-add-edit-modal"> */}
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">
-                  {isEditing ? "Edit User" : "Add User"}
-                </h5>
-                <button
-                  type="button"
-                  className="close"
-                  onClick={() => setShowModal(false)}
-                >
-                  <span>&times;</span>
-                </button>
-              </div>
+      {
+        showModal && (
+          <div
+            className="admin-users-add-edit-modal modal open"
+            style={{ display: "block" }}
+            tabIndex="-1"
+            role="dialog"
+          >
+            {/* <div className="admin-users-add-edit-modal"> */}
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">
+                    {isEditing ? "Edit User" : "Add User"}
+                  </h5>
+                  <button
+                    type="button"
+                    className="close"
+                    onClick={() => setShowModal(false)}
+                  >
+                    <span>&times;</span>
+                  </button>
+                </div>
 
-              <div className="admin-users-add-edit-modal-body modal-body">
-                <form className="admin-users-add-edit-details-group d-flex flex-column align-items-center m-0 p-0">
-                  <div className="admin-users-form d-flex flex-column">
-                    <label className="admin-users-modal-label">Username</label>
-                    <input
-                      type="text"
-                      name="username"
-                      value={newUser.username}
-                      onChange={handleChange}
-                      readOnly
-                    />
-                  </div>
-
-                  <div className="admin-users-form d-flex flex-column">
-                    <label className="admin-users-modal-label">Password</label>
-                    <input
-                      type="text"
-                      name="password"
-                      value={newUser.password}
-                      onChange={handleChange}
-                      readOnly
-                    />
-                  </div>
-
-                  <div className="admin-users-group1-form-container d-flex align-items-center">
+                <div className="admin-users-add-edit-modal-body modal-body">
+                  <form className="admin-users-add-edit-details-group d-flex flex-column align-items-center m-0 p-0">
                     <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">
-                        Firstname
-                      </label>
+                      <label className="admin-users-modal-label">Username</label>
                       <input
                         type="text"
-                        name="firstname"
-                        value={newUser.firstname}
-                        onChange={handleChange}
-                        placeholder="Firstname"
-                        required
-                      />
-                    </div>
-
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">
-                        Lastname
-                      </label>
-                      <input
-                        type="text"
-                        name="lastname"
-                        value={newUser.lastname}
-                        onChange={handleChange}
-                        placeholder="Lastname"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="admin-users-group2-form-container d-flex align-items-center">
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">Region</label>
-                      <input
-                        type="text"
-                        name="region"
-                        value={newUser.region}
-                        onChange={handleChange}
-                        placeholder="Region"
-                        required
-                      />
-                    </div>
-
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">
-                        Province
-                      </label>
-                      <input
-                        type="text"
-                        name="province"
-                        value={newUser.province}
-                        onChange={handleChange}
-                        placeholder="Province"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="admin-users-group3-form-container d-flex align-items-center">
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">
-                        City/Municipality
-                      </label>
-                      <input
-                        type="text"
-                        name="city"
-                        value={newUser.city}
-                        onChange={handleChange}
-                        placeholder="City"
-                        required
-                      />
-                    </div>
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">Status</label>
-                      <input
-                        type="text"
-                        name="status"
-                        value={newUser.status}
-                        readOnly
-                      />
-                    </div>
-                  </div>
-
-                  <div className="admin-users-group3-form-container d-flex align-items-center">
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">
-                        Barangay
-                      </label>
-                      <input
-                        type="text"
-                        name="barangay"
-                        value={newUser.barangay}
-                        onChange={handleChange}
-                        placeholder="Barangay"
-                        required
-                      />
-                    </div>
-
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">
-                        Purok/Zone
-                      </label>
-                      <input
-                        type="text"
-                        name="zone"
-                        value={newUser.zone}
-                        onChange={handleChange}
-                        placeholder="Zone"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="admin-users-group4-form-container d-flex align-items-center">
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">
-                        Sex Assigned at Birth
-                      </label>
-                      <select
-                        name="sex"
-                        value={newUser.sex}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Select Option</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                      </select>
-                    </div>
-
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">Age</label>
-                      <input
-                        type="number"
-                        name="age"
-                        value={newUser.age}
+                        name="username"
+                        value={newUser.username}
                         onChange={handleChange}
                         readOnly
                       />
                     </div>
-                  </div>
 
-                  <div className="admin-users-form d-flex flex-column">
-                    <label className="admin-users-modal-label">Birthday</label>
-                    <input
-                      type="date"
-                      name="birthday"
-                      value={newUser.birthday}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-
-                  <div className="admin-users-form d-flex flex-column">
-                    <label className="admin-users-modal-label">
-                      E-mail Address
-                    </label>
-                    <input
-                      type="email"
-                      name="email_address"
-                      value={newUser.email_address}
-                      onChange={handleChange}
-                      placeholder="E-mail Address"
-                      required
-                    />
-                  </div>
-
-                  <div className="admin-users-form d-flex flex-column">
-                    <label className="admin-users-modal-label">
-                      Contact Number
-                    </label>
-                    <input
-                      type="text"
-                      name="contact_number"
-                      value={newUser.contact_number}
-                      onChange={handleChange}
-                      placeholder="Contact Number"
-                      required
-                    />
-                  </div>
-
-                  <div className="admin-users-group5-form-container d-flex align-items-center">
                     <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">
-                        Civil Status
-                      </label>
-                      <select
-                        name="civil_status"
-                        value={newUser.civil_status}
+                      <label className="admin-users-modal-label">Password</label>
+                      <input
+                        type="text"
+                        name="password"
+                        value={newUser.password}
+                        onChange={handleChange}
+                        readOnly
+                      />
+                    </div>
+
+                    <div className="admin-users-group1-form-container d-flex align-items-center">
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          Firstname
+                        </label>
+                        <input
+                          type="text"
+                          name="firstname"
+                          value={newUser.firstname}
+                          onChange={handleChange}
+                          placeholder="Firstname"
+                          required
+                        />
+                      </div>
+
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          Lastname
+                        </label>
+                        <input
+                          type="text"
+                          name="lastname"
+                          value={newUser.lastname}
+                          onChange={handleChange}
+                          placeholder="Lastname"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-users-group2-form-container d-flex align-items-center">
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">Region</label>
+                        <input
+                          type="text"
+                          name="region"
+                          value={newUser.region}
+                          onChange={handleChange}
+                          placeholder="Region"
+                          required
+                        />
+                      </div>
+
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          Province
+                        </label>
+                        <input
+                          type="text"
+                          name="province"
+                          value={newUser.province}
+                          onChange={handleChange}
+                          placeholder="Province"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-users-group3-form-container d-flex align-items-center">
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          City/Municipality
+                        </label>
+                        <input
+                          type="text"
+                          name="city"
+                          value={newUser.city}
+                          onChange={handleChange}
+                          placeholder="City"
+                          required
+                        />
+                      </div>
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">Status</label>
+                        <input
+                          type="text"
+                          name="status"
+                          value={newUser.status}
+                          readOnly
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-users-group3-form-container d-flex align-items-center">
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          Barangay
+                        </label>
+                        <input
+                          type="text"
+                          name="barangay"
+                          value={newUser.barangay}
+                          onChange={handleChange}
+                          placeholder="Barangay"
+                          required
+                        />
+                      </div>
+
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          Purok/Zone
+                        </label>
+                        <input
+                          type="text"
+                          name="zone"
+                          value={newUser.zone}
+                          onChange={handleChange}
+                          placeholder="Zone"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-users-group4-form-container d-flex align-items-center">
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          Sex Assigned at Birth
+                        </label>
+                        <select
+                          name="sex"
+                          value={newUser.sex}
+                          onChange={handleChange}
+                          required
+                        >
+                          <option value="">Select Option</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                      </div>
+
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">Age</label>
+                        <input
+                          type="number"
+                          name="age"
+                          value={newUser.age}
+                          onChange={handleChange}
+                          readOnly
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-users-form d-flex flex-column">
+                      <label className="admin-users-modal-label">Birthday</label>
+                      <input
+                        type="date"
+                        name="birthday"
+                        value={newUser.birthday}
                         onChange={handleChange}
                         required
-                      >
-                        <option value="">Select Option</option>
-                        <option value="Single">Single</option>
-                        <option value="Married">Married</option>
-                        <option value="Widowed">Widowed</option>
-                      </select>
+                      />
                     </div>
+
                     <div className="admin-users-form d-flex flex-column">
                       <label className="admin-users-modal-label">
-                        Youth Age Group
+                        E-mail Address
+                      </label>
+                      <input
+                        type="email"
+                        name="email_address"
+                        value={newUser.email_address}
+                        onChange={handleChange}
+                        placeholder="E-mail Address"
+                        required
+                      />
+                    </div>
+
+                    <div className="admin-users-form d-flex flex-column">
+                      <label className="admin-users-modal-label">
+                        Contact Number
                       </label>
                       <input
                         type="text"
-                        name="youth_age_group"
-                        value={newUser.youth_age_group || ""}
-                        readOnly
-                        disabled
+                        name="contact_number"
+                        value={newUser.contact_number}
+                        onChange={handleChange}
+                        placeholder="Contact Number"
+                        required
                       />
                     </div>
-                  </div>
 
-                  <div className="admin-users-group6-form-container d-flex align-items-center">
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">
-                        Work Status
-                      </label>
-                      <select
-                        name="work_status"
-                        value={newUser.work_status}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Select Option</option>
-                        <option value="Employed">Employed</option>
-                        <option value="Unemployed">Unemployed</option>
-                      </select>
+                    <div className="admin-users-group5-form-container d-flex align-items-center">
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          Civil Status
+                        </label>
+                        <select
+                          name="civil_status"
+                          value={newUser.civil_status}
+                          onChange={handleChange}
+                          required
+                        >
+                          <option value="">Select Option</option>
+                          <option value="Single">Single</option>
+                          <option value="Married">Married</option>
+                          <option value="Widowed">Widowed</option>
+                        </select>
+                      </div>
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          Youth Age Group
+                        </label>
+                        <input
+                          type="text"
+                          name="youth_age_group"
+                          value={newUser.youth_age_group || ""}
+                          readOnly
+                          disabled
+                        />
+                      </div>
                     </div>
 
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">
-                        Educational Background
-                      </label>
-                      <select
-                        name="educational_background"
-                        value={newUser.educational_background}
-                        onChange={handleChange}
-                        placeholder="Educational Background"
-                        required
-                      >
-                        <option value="">Select Option</option>
-                        <option value="High School">High School</option>
-                        <option value="College">College</option>
-                        <option value="College Graduate">
-                          College Graduate
-                        </option>
-                      </select>
-                    </div>
-                  </div>
+                    <div className="admin-users-group6-form-container d-flex align-items-center">
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          Work Status
+                        </label>
+                        <select
+                          name="work_status"
+                          value={newUser.work_status}
+                          onChange={handleChange}
+                          required
+                        >
+                          <option value="">Select Option</option>
+                          <option value="Employed">Employed</option>
+                          <option value="Unemployed">Unemployed</option>
+                        </select>
+                      </div>
 
-                  <div className="admin-users-group7-form-container d-flex align-items-center">
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">
-                        Registered SK Voter?
-                      </label>
-                      <select
-                        name="registered_sk_voter"
-                        value={newUser.registered_sk_voter}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Select Option</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                      </select>
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          Educational Background
+                        </label>
+                        <select
+                          name="educational_background"
+                          value={newUser.educational_background}
+                          onChange={handleChange}
+                          placeholder="Educational Background"
+                          required
+                        >
+                          <option value="">Select Option</option>
+                          <option value="High School">High School</option>
+                          <option value="College">College</option>
+                          <option value="College Graduate">
+                            College Graduate
+                          </option>
+                        </select>
+                      </div>
                     </div>
 
-                    <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">
-                        Registered National Voter?
-                      </label>
-                      <select
-                        name="registered_national_voter"
-                        value={newUser.registered_national_voter}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Select Option</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                      </select>
-                    </div>
-                  </div>
-                </form>
-              </div>
+                    <div className="admin-users-group7-form-container d-flex align-items-center">
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          Registered SK Voter?
+                        </label>
+                        <select
+                          name="registered_sk_voter"
+                          value={newUser.registered_sk_voter}
+                          onChange={handleChange}
+                          required
+                        >
+                          <option value="">Select Option</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
 
-              <div className="admin-users-add-edit-modal-footer modal-footer">
-                <button
-                  type="button"
-                  className="admin-users-close-button btn-secondary"
-                  onClick={() => setShowModal(false)}
-                >
-                  Close
-                </button>
-                <button
-                  type="button"
-                  className="admin-users-update-add-button btn-primary"
-                  onClick={isEditing ? handleUpdateUser : handleAddUser}
-                >
-                  {isEditing ? "Update User" : "Add User"}
-                </button>
+                      <div className="admin-users-form d-flex flex-column">
+                        <label className="admin-users-modal-label">
+                          Registered National Voter?
+                        </label>
+                        <select
+                          name="registered_national_voter"
+                          value={newUser.registered_national_voter}
+                          onChange={handleChange}
+                          required
+                        >
+                          <option value="">Select Option</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div className="admin-users-add-edit-modal-footer modal-footer">
+                  <button
+                    type="button"
+                    className="admin-users-close-button btn-secondary"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    className="admin-users-update-add-button btn-primary"
+                    onClick={isEditing ? handleUpdateUser : handleAddUser}
+                  >
+                    {isEditing ? "Update User" : "Add User"}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 };
 

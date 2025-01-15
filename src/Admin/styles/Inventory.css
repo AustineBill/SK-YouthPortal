@@ -61,6 +61,11 @@
     font-size: 15px;
 }
 
+.equipment-image {
+    height: 150px;
+    width: 125px;
+}
+
 .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
     margin-right: 10px;
 }
@@ -143,6 +148,11 @@
         font-size: 12.5px;
     }
 
+    .equipment-image {
+        height: 125px;
+        width: 100px;
+    }
+
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
         margin-right: 10px;
     }
@@ -210,6 +220,11 @@
 
     .admin-inventory-table-container td {
         font-size: 10px;
+    }
+
+    .equipment-image {
+        height: 100px;
+        width: 75px;
     }
 
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
@@ -285,6 +300,11 @@
 
     .admin-inventory-table-container td {
         font-size: 10px;
+    }
+
+    .equipment-image {
+        height: 75px;
+        width: 50px;
     }
 
     .admin-inventory-actions-buttons-container {
@@ -366,6 +386,11 @@
 
     .admin-inventory-table-container td {
         font-size: 7.5px;
+    }
+
+    .equipment-image {
+        height: 75px;
+        width: 50px;
     }
 
     .admin-inventory-actions-buttons-container {

@@ -212,7 +212,7 @@ const Reports = () => {
     <div className="admin-reports-container">
       <div className="admin-reports-label">
         <h2 className="admin-reports-label-h2 fst-italic">
-          Reservation Reports
+          Reports
         </h2>
       </div>
 

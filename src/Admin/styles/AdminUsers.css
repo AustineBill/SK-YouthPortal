@@ -4,6 +4,7 @@
 .admin-users-container {
     position: relative;
     padding-top: 75px;
+    padding-bottom: 40px;
     left: 22.5%;
     width: 77.5%;
     background-color: #FFFFFF;
@@ -18,7 +19,6 @@
 
 .admin-users-contents-container {
     width: 100%;
-    margin-bottom: 40px;
 }
 
 /* Users Classification */
@@ -82,16 +82,16 @@
     width: 90%;
 }
 
-.admin-users-table-container .admin-users-head tr {
+.users-list-container tr {
     height: 40px;
 }
 
-.admin-users-head th {
+.users-list-container th {
     font-size: 17.5px;
     font-weight: bold;
 }
 
-.admin-users-head td {
+.users-list-container td {
     font-size: 15px;
 }
 
@@ -107,6 +107,32 @@
     width: 70px;
     height: 40px;
     transition: all 0.35s;
+}
+
+/* Modal - View Details */
+
+.admin-user-view-details-modal {
+    padding-top: 75px;
+}
+
+.admin-user-view-details-modal-header h5 {
+    font-size: 17.5px;
+}
+
+.admin-user-view-details-modal-body {
+    font-size: 15px;
+}
+
+.admin-user-view-details-modal-body p {
+    margin-bottom: 5px;
+}
+
+.admin-user-view-details-modal-footer {
+    font-size: 17.5px;
+}
+
+.admin-user-view-details-modal-footer p {
+    margin-bottom: 0;
 }
 
 /* Modal */
@@ -186,17 +212,18 @@
 
     /* Users Table */
 
-    .admin-users-table-container .admin-users-head tr {
+    .users-list-container tr {
         height: 35px;
     }
-
-    .admin-users-head th {
+    
+    .users-list-container th {
         font-size: 15px;
     }
-
-    .admin-users-head td {
+    
+    .users-list-container td {
         font-size: 12.5px;
     }
+    
 
     .admin-users-actions-buttons-container .admin-users-view-button,
     .admin-users-actions-buttons-container .admin-users-edit-button {
@@ -209,6 +236,24 @@
         font-size: 10px;
         width: 60px;
         height: 35px;
+    }
+
+    /* Modal - View Details */
+
+    .admin-user-view-details-modal-header h5 {
+        font-size: 15px;
+    }
+
+    .admin-user-view-details-modal-body {
+        font-size: 12.5px;
+    }
+
+    .admin-user-view-details-modal-body p {
+        margin-bottom: 4px;
+    }
+
+    .admin-user-view-details-modal-footer {
+        font-size: 15px;
     }
 
     /* Modal */
@@ -246,15 +291,15 @@
 
     /* Users Table */
 
-    .admin-users-table-container .admin-users-head tr {
+    .users-list-container tr {
         height: 30px;
     }
-
-    .admin-users-head th {
+    
+    .users-list-container th {
         font-size: 12.5px;
     }
-
-    .admin-users-head td {
+    
+    .users-list-container td {
         font-size: 10px;
     }
 
@@ -269,6 +314,24 @@
         font-size: 7.5px;
         width: 50px;
         height: 30px;
+    }
+
+    /* Modal - View Details */
+
+    .admin-user-view-details-modal-header h5 {
+        font-size: 12.5px;
+    }
+
+    .admin-user-view-details-modal-body {
+        font-size: 10px;
+    }
+
+    .admin-user-view-details-modal-body p {
+        margin-bottom: 3px;
+    }
+
+    .admin-user-view-details-modal-footer {
+        font-size: 12.5px;
     }
 
     /* Modal */
@@ -312,15 +375,15 @@
 
     /* Users Table */
 
-    .admin-users-table-container .admin-users-head tr {
+    .users-list-container tr {
         height: 30px;
     }
-
-    .admin-users-head th {
+    
+    .users-list-container th {
         font-size: 12.5px;
     }
-
-    .admin-users-head td {
+    
+    .users-list-container td {
         font-size: 10px;
     }
 
@@ -341,6 +404,24 @@
         font-size: 7.5px;
         width: 50px;
         height: 30px;
+    }
+
+    /* Modal - View Details */
+
+    .admin-user-view-details-modal-header h5 {
+        font-size: 12.5px;
+    }
+
+    .admin-user-view-details-modal-body {
+        font-size: 10px;
+    }
+
+    .admin-user-view-details-modal-body p {
+        margin-bottom: 3px;
+    }
+
+    .admin-user-view-details-modal-footer {
+        font-size: 12.5px;
     }
 
     /* Modal */
@@ -384,15 +465,15 @@
 
     /* Users Table */
 
-    .admin-users-table-container .admin-users-head tr {
+    .users-list-container tr {
         height: 20px;
     }
-
-    .admin-users-head th {
+    
+    .users-list-container th {
         font-size: 10px;
     }
-
-    .admin-users-head td {
+    
+    .users-list-container td {
         font-size: 7.5px;
     }
 
@@ -413,6 +494,24 @@
         font-size: 5px;
         width: 40px;
         height: 25px;
+    }
+
+    /* Modal - View Details */
+
+    .admin-user-view-details-modal-header h5 {
+        font-size: 10px;
+    }
+
+    .admin-user-view-details-modal-body {
+        font-size: 7.5px;
+    }
+
+    .admin-user-view-details-modal-body p {
+        margin-bottom: 2px;
+    }
+
+    .admin-user-view-details-modal-footer {
+        font-size: 10px;
     }
 
     /* Modal */

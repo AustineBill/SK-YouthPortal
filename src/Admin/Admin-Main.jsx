@@ -11,8 +11,8 @@ import {
     Legend,
     ArcElement,
 } from 'chart.js';
-// import './styles/Admin-Main.css';
-import '../WebStyles/Admin-CSS.css';
+import './styles/Admin-Main.css';
+// import '../WebStyles/Admin-CSS.css';
 
 // Register necessary chart components
 ChartJS.register(
@@ -188,7 +188,7 @@ const AdminMain = () => {
             </div>
 
             <section className="admin-dashboard-charts-section">
-                <div className='admin-dashboard-charts-container d-flex align-items-center text-center'>
+                <div className='admin-dashboard-charts-container d-flex align-items-center justify-content-center text-center'>
                     {/* Donut Chart */}
                     <div className="admin-chart-container">
                         <h2 className='userd-label-h2'>User Distribution</h2>
