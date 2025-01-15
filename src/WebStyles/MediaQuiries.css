@@ -444,19 +444,7 @@
   .navbar-buttons {
     display: none;
   }
-
-  *
-    User
-    profile
-    and
-    logout
-    inside
-    the
-    hamburger
-    */
-    .navbar
-    .nav-links
-    .profile-logout {
+  .navbar .nav-links .profile-logout {
     display: flex;
     flex-direction: column;
     align-items: center;
