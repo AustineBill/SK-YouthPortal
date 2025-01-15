@@ -158,118 +158,51 @@ const Intro = () => {
                 alt={programs.program_name}
                 className="program-card-img"
               />
-
-              <Card.Title>{programs.program_name}</Card.Title>
-              <Card.Text>{programs.heading}</Card.Text>
-              <button
-                onClick={() => handleNavigate(programs.program_type)}
-                className="spotlight-button btn-db m-2"
-              >
-                Learn More
-              </button>
+              <Card.Body className="d-flex flex-column align-items-center">
+                <Card.Title>{programs.program_name}</Card.Title>
+                <Card.Text>{programs.heading}</Card.Text>
+                <button
+                  onClick={() => handleNavigate(programs.program_type)}
+                  className="spotlight-button btn-db m-2"
+                >
+                  Learn More
+                </button>
+              </Card.Body>
             </Card>
           ))
         )}
       </div>
 
-      <div className="card-container-news">
-        <h1 className="NewEveHead">NEWS & EVENTS</h1>
-
-        {events.length === 0 ? (
-          <p>No events available</p>
+      <h1 className="NewEveHead">NEWS & EVENTS</h1>
+      <div className="card-container">
+        {events.length > 0 ? (
+          events.map((event, index) => (
+            <Card className="ProgramCard" key={index}>
+              {event.images && event.images.length > 0 ? (
+                <Card.Img
+                  variant="top"
+                  src={event.images[0]} // Use the first image
+                  alt={`Event ${index + 1}`}
+                  style={{ height: "250px", objectFit: "cover" }}
+                />
+              ) : (
+                <Card.Img
+                  variant="top"
+                  src={event.event_image}
+                  alt={event.event_name}
+                  className="program-card-img"
+                />
+              )}
+              <Card.Body className="d-flex flex-column align-items-center">
+                <Card.Title>{event.event_name || "Untitled Event"}</Card.Title>
+                <Card.Text>
+                  {event.event_description || "No description available."}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          ))
         ) : (
-          <div
-            id="newsCarousel"
-            className="carousel slide"
-            data-bs-ride="carousel"
-          >
-            {/* Carousel Indicators */}
-            <div className="carousel-indicators">
-              {Array.from(
-                { length: Math.ceil(events.length / 4) },
-                (_, index) => (
-                  <button
-                    type="button"
-                    data-bs-target="#newsCarousel"
-                    data-bs-slide-to={index}
-                    className={index === 0 ? "active" : ""}
-                    aria-current={index === 0 ? "true" : undefined}
-                    aria-label={`Slide ${index + 1}`}
-                    key={index}
-                  ></button>
-                )
-              )}
-            </div>
-
-            {/* Carousel Items */}
-            <div className="carousel-inner">
-              {Array.from(
-                { length: Math.ceil(events.length / 4) }, // Group events in chunks of 4
-                (_, groupIndex) => (
-                  <div
-                    key={groupIndex}
-                    className={`carousel-item ${
-                      groupIndex === 0 ? "active" : ""
-                    }`}
-                  >
-                    <div className="row g-3">
-                      {events
-                        .slice(groupIndex * 4, groupIndex * 4 + 4)
-                        .map((event) => (
-                          <div
-                            className="col-12 col-sm-6 col-md-4 col-lg-3"
-                            key={event.id}
-                          >
-                            <Card className="EventCard">
-                              <Card.Img
-                                variant="top"
-                                src={event.event_image}
-                                alt={event.event_name}
-                                className="program-card-img"
-                              />
-                              <Card.Body>
-                                <Card.Title>{event.event_name}</Card.Title>
-                                <Card.Text>{event.event_description}</Card.Text>
-                              </Card.Body>
-                            </Card>
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                )
-              )}
-            </div>
-
-            {/* Carousel Controls */}
-            {Math.ceil(events.length / 4) > 1 && (
-              <>
-                <button
-                  className="carousel-control-prev"
-                  type="button"
-                  data-bs-target="#newsCarousel"
-                  data-bs-slide="prev"
-                >
-                  <span
-                    className="carousel-control-prev-icon custom-carousel-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="visually-hidden">Previous</span>
-                </button>
-                <button
-                  className="carousel-control-next"
-                  type="button"
-                  data-bs-target="#newsCarousel"
-                  data-bs-slide="next"
-                >
-                  <span
-                    className="carousel-control-next-icon custom-carousel-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="visually-hidden">Next</span>
-                </button>
-              </>
-            )}
-          </div>
+          <p className="text-center text-muted py-5">No Spotlight available</p>
         )}
       </div>
 

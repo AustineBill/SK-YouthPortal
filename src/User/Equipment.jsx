@@ -110,7 +110,8 @@ function Equipment() {
         <h1 className="Maintext animated slideInRight">EQUIPMENTS</h1>
         <p className="Subtext">Choose Your Equipment/s</p>
       </div>
-      <Row className="justify-content-center g-4">
+
+      <Row className="equipment-container">
         {inventory.length === 0 ? (
           <p>No equipment available</p>
         ) : (

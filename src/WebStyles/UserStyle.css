@@ -187,35 +187,25 @@ span {
 }
 
 /****** Right Side *****/
-
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
-  align-items: center; /* Vertically center all elements */
-  margin: 50px 0px 50px 0px;
-  gap: 20px;
-}
-
+/*
 .legend {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px; /* Space between legend items */
+  gap: 10px; 
 }
 
-/* Styling for each legend item */
 .legend-item {
   display: flex;
   align-items: center;
 }
 
-/* Styling for the colored circle */
 .circle {
   height: 15px;
   width: 15px;
   border-radius: 50%;
   margin-right: 10px;
-}
+} */
 
 /*****Time Dropdown*****/
 

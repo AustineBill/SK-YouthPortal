@@ -35,14 +35,14 @@ const Navbar = () => {
 
   return (
     <Nav className={`navbar ${fade ? "fade-effect" : ""}`}>
+      <h1 className="Website-Name">
+        <img src={Logo} alt="Logo" /> iSKed
+      </h1>
+
       <div
         className="navbar-links"
         style={{ display: "flex", alignItems: "center" }}
       >
-        <h1 className="Website-Name">
-          <img src={Logo} alt="Logo" /> iSKed
-        </h1>
-
         {/* Hamburger Icon */}
         <div className="hamburger-icon" onClick={toggleHamburgerMenu}>
           <div className="bar"></div>
@@ -100,7 +100,7 @@ const Navbar = () => {
             Programs
           </Link>
           <Link
-            className={`nav-item ${
+            className={`nav-item  ${
               activeLink === "Contact Us" ? "active" : ""
             }`}
             to="/ContactUs"
@@ -108,7 +108,7 @@ const Navbar = () => {
             onMouseEnter={() => handleHover(true)}
             onMouseLeave={() => handleHover(false)}
           >
-            Contact Us
+            Contacts
           </Link>
 
           {hamburgerVisible && (

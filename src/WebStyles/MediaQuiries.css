@@ -8,9 +8,15 @@
     display: none; /* Hide hamburger icon on large screens */
   }
 
-  .nav-links {
-    display: flex; /* Display nav links normally on large screens */
+  /*.nav-links {
+    display: flex;
     flex-direction: row;
+    align-items: center;
+    gap: 20px; 
+  }*/
+
+  .nav-item {
+    margin: 0.5rem 0; /* Reduce margin for smaller screens */
   }
 
   .navbar-buttons {
@@ -30,6 +36,7 @@
     background-color: #f8f9fa;
     width: 100%;
     padding: 20px;
+    align-items: center;
   }
 
   .nav-links.active {
@@ -40,6 +47,16 @@
     padding: 10px 0;
     text-align: center;
     width: 100%;
+  }
+
+  .nav-links {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+    gap: 5px; /* Reduce gap for smaller screens */
+  }
+
+  .nav-item {
+    margin: 0.5rem 0; /* Reduce margin for smaller screens */
   }
 
   .navbar-buttons {
@@ -87,6 +104,56 @@
 
   .custom-font {
     font-size: 1.2rem; /* Reduce text size */
+  }
+
+  /* About*/
+  .youth-container {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+    padding: 3rem 1rem; /* Adjust padding for tablets */
+  }
+
+  .youth-head {
+    font-size: 3.5rem; /* Smaller font size for the title on tablets */
+    text-align: center;
+    margin-right: 0;
+  }
+
+  .youth-text-content {
+    font-size: 1rem; /* Adjust text size for tablets */
+    max-width: 90%; /* Limit width for text */
+    margin-top: 20px;
+  }
+
+  .btn-toggle {
+    font-size: 14px; /* Adjust button size for tablets */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ContactCard {
+    width: 45%; /* Adjust width for 768px */
+  }
+
+  .western-header {
+    padding: 12rem 1rem; /* Adjust padding for tablets */
+    background-size: 130%; /* Scale the background image */
+  }
+
+  table {
+    width: 100%;
+    min-width: 600px; /* Prevent the table from shrinking too much */
+  }
+
+  th,
+  td {
+    font-size: 14px; /* Slightly increase font size for better readability */
+    padding: 10px;
+  }
+
+  .btn {
+    padding: 8px 15px;
+    font-size: 14px;
   }
 }
 
@@ -213,5 +280,112 @@
 
   .Text-3 {
     font-size: 1rem; /* Even smaller font for Text-3 */
+  }
+
+  /* About*/
+  .youth-container {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+    padding: 2rem 1rem; /* Adjust padding for mobile */
+  }
+
+  .youth-head {
+    font-size: 2.5rem; /* Smaller font size for the title on mobile */
+    text-align: center;
+    margin-right: 0;
+  }
+
+  .youth-text-content {
+    font-size: 0.9rem; /* Smaller text for mobile */
+    max-width: 90%; /* Limit width for text */
+    margin-top: 20px;
+  }
+
+  .btn-toggle {
+    font-size: 13px; /* Smaller button for mobile */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Contacts */
+  .ContactCard {
+    width: 100%; /* Adjust width for 500px */
+  }
+
+  .custom-card {
+    max-width: 300px; /* Even smaller cards for mobile screens */
+  }
+
+  .western-header {
+    padding: 6rem 1.5rem;
+    background-size: 110%; /* Scale the background image further for mobile */
+  }
+
+  /* Reservation Log*/
+
+  table {
+    width: 100%;
+    min-width: 480px;
+  }
+
+  th,
+  td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .btn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  /* Modal */
+
+  .ModalStyles {
+    width: 80%; /* Further reduce modal width for mobile screens */
+    padding: 10px;
+  }
+
+  .ModalButtonStyles {
+    font-size: 12px; /* Further reduce button font size */
+    padding: 8px 12px; /* Further reduce padding */
+  }
+
+  .ModalButtonStyles.SmallButton {
+    font-size: 12px;
+  }
+
+  /* Reservation Button */
+}
+
+@media (max-width: 768px) {
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .equipment-container {
+    flex: 1 1 calc(33.333% - 1.5rem); /* 2 cards per row */
+  }
+}
+
+/* For even smaller screens (max width: 500px), display 2 cards per row */
+@media (max-width: 500px) {
+  .equipment-container .ProgramCard {
+    flex: 1 1 calc(50% - 1.5rem); /* 2 cards per row */
   }
 }

@@ -13,7 +13,6 @@ import Contact from "./Mainpages/Contacts";
 import About from "./Mainpages/About";
 import Spotlight from "./Mainpages/Spotlights";
 import NewsEvents from "./Mainpages/NewsEvents";
-import ViewDetailed from "./Mainpages/NewsDetails";
 
 /* Sub Pages */
 import Mandate from "./Mainpages/Mandates";
@@ -139,7 +138,6 @@ const App = () => {
                 <Route path="/userauth" element={<UserAuthentication />} />
                 <Route path="/Spotlight" element={<Spotlight />} />
                 <Route path="/News" element={<NewsEvents />} />
-                <Route path="/news-details/:id" element={<ViewDetailed />} />
                 <Route path="/UserProgram" element={<Programs />} />
                 {/* User Side Routes */}
                 <Route
