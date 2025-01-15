@@ -180,19 +180,23 @@ const Reservation = () => {
       return;
     }
 
-    // Ensure start and end dates are at local midnight
-    const startDate = new Date(selectedDates[0]);
-    startDate.setHours(0, 0, 0, 0); // Ensure time is set to 12:00 AM
+    // Format start and end dates to 'YYYY-MM-DD'
+    const formatDateToYYYYMMDD = (date) => {
+      const d = new Date(date);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
 
-    const endDate = new Date(selectedDates[1]);
-    endDate.setDate(startDate.getDate() + 1); // Add 1 day
-    endDate.setHours(0, 0, 0, 0); // Ensure time is set to 12:00 AM
+    const startDate = formatDateToYYYYMMDD(selectedDates[0]);
+    const endDate = formatDateToYYYYMMDD(selectedDates[1]);
 
     const reservationData = {
       user_id: userId,
       reservation_type: reservationType,
-      start_date: startDate.toString(),
-      end_date: endDate.toString(),
+      start_date: startDate, // Save in 'YYYY-MM-DD' format
+      end_date: endDate, // Save in 'YYYY-MM-DD' format
       time_slot: selectedTime,
     };
 
