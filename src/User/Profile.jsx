@@ -255,8 +255,8 @@ const ProfilePage = () => {
                     <Col sm="9">
                       <Card.Text className="text-muted">
                         {" "}
-                        {profileInfo?.barangay} {profileInfo?.city}{" "}
-                        {profileInfo?.zone}
+                        {profileInfo?.street} {profileInfo?.barangay}{" "}
+                        {profileInfo?.city} {profileInfo?.zone}
                       </Card.Text>
                     </Col>
                   </Row>
@@ -271,11 +271,11 @@ const ProfilePage = () => {
                       </Card.Text>
                     </Col>
                     <Col sm="3">
-                      <Card.Text>Region</Card.Text>
+                      <Card.Text>Work Status</Card.Text>
                     </Col>
                     <Col sm="3">
                       <Card.Text className="text-muted">
-                        {profileInfo?.region}
+                        {profileInfo?.work_status}
                       </Card.Text>
                     </Col>
                   </Row>

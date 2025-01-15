@@ -50,7 +50,7 @@ const Navbar = () => {
         </div>
 
         {/* Navbar Links */}
-        <div className={`nav-links ${hamburgerVisible ? "active" : ""}`}>
+        <div className={`nav-links-main ${hamburgerVisible ? "active" : ""}`}>
           <Link
             className={`nav-item ${activeLink === "Home" ? "active" : ""}`}
             to="/Home"
@@ -111,7 +111,7 @@ const Navbar = () => {
           </Link>
 
           {hamburgerVisible && (
-            <div className="hamburger-dropdown">
+            <>
               <Link
                 className="nav-item"
                 to="/userauth?view=signIn"
@@ -126,7 +126,7 @@ const Navbar = () => {
               >
                 Sign Up
               </Link>
-            </div>
+            </>
           )}
         </div>
       </div>

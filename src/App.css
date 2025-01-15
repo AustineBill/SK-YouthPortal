@@ -330,6 +330,28 @@ h2,
   transition: right 0.3s ease;
 }
 
+.nav-links-main {
+  display: flex;
+  flex-direction: row; /* Default to row layout */
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 50%;
+  gap: 100px;
+  transition: right 0.3s ease;
+}
+
+.nav-links-main.active {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center;
+  transform: translate(90%, 15%); /* Center the menu */
+  background-color: #25327a;
+  padding: 3rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  gap: 5px;
+}
+
 .nav-item {
   font-family: "Poppins", sans-serif;
   font-size: 0.9rem;
@@ -359,21 +381,9 @@ h2,
   display: flex;
   flex-direction: column; /* Stack items vertically */
   align-items: center;
-  transform: translate(0%, 15%); /* Center the menu */
+  transform: translate(75%, 15%); /* Center the menu */
   background-color: #25327a;
-  padding: 5rem; /* Add padding for better spacing */
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  z-index: 999;
-  gap: 5px;
-}
-
-.nav-links-user.active {
-  display: flex;
-  flex-direction: column; /* Stack items vertically */
-  align-items: center;
-  transform: translate(-10%, 20%); /* Center the menu */
-  background-color: #25327a;
-  padding: 5rem; /* Add padding for better spacing */
+  padding: 5rem;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   z-index: 999;
   gap: 5px;
@@ -434,6 +444,25 @@ h2,
   height: 3px;
   background-color: #f8f1f1;
 }
+
+/*.hamburger-dropdown {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  position: absolute;
+  top: 60px; 
+  right: 10px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1000;
+}
+
+.hamburger-dropdown .nav-item {
+  margin: 5px 0;
+  color: #333;
+  text-decoration: none;
+} */
+
 /* Media query for mobile/tablet (screen width less than or equal to 768px) */
 
 .sangguniang-text {
@@ -793,6 +822,13 @@ h2,
   .image-content img {
     max-width: 300px;
   }
+
+  .nav-links-main {
+    align-items: center;
+    margin-left: 45%;
+    gap: 5px;
+    transition: right 0.3s ease;
+  }
 }
 
 /* About */
@@ -1041,6 +1077,10 @@ h2,
 
   .footer-text {
     font-size: 12px; /* Smaller footer text */
+  }
+  .nav-links-main {
+    margin-left: 45%;
+    gap: auto;
   }
 }
 
