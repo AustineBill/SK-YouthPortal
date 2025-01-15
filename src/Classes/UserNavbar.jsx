@@ -49,7 +49,7 @@ const UserNavbar = () => {
   return (
     <Nav className="navbar">
       <div
-        className="navbar-links"
+        className="navbar-links-user"
         style={{ display: "flex", alignItems: "center" }}
       >
         <h2 className="Website-Name">
@@ -75,6 +75,21 @@ const UserNavbar = () => {
             Reservation
           </Link>
         </div>
+
+        {hamburgerVisible && (
+          <div className="hamburger-dropdown">
+            <Link className="nav-item" to="/Profile/:username">
+              Log In
+            </Link>
+            <Link
+              className="nav-item"
+              to="/userauth?view=signUp"
+              onClick={handleLogout}
+            >
+              Sign Up
+            </Link>
+          </div>
+        )}
       </div>
 
       {/* Logout Confirmation Modal */}
@@ -120,7 +135,7 @@ const UserNavbar = () => {
               <div
                 className="dropdownAvatar"
                 style={{ cursor: "pointer" }}
-                onClick={openLogoutModal}
+                onClick={handleLogout}
               >
                 Logout
               </div>

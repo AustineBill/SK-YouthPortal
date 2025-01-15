@@ -21,7 +21,9 @@ const UserAuthentication = () => {
   const [signupPassword, setSignupPassword] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [isVerificationCodeCorrect, setIsVerificationCodeCorrect] =
-    useState(false); // Add state to track verification code validity
+    useState(false);
+  const [showModal, setShowModal] = useState(false); // Modal visibility
+  const [modalMessage, setModalMessage] = useState(""); // Modal message
 
   const { login, adminlogin } = useContext(AuthContext);
 
@@ -33,12 +35,17 @@ const UserAuthentication = () => {
     }
   }, [location.search]);
 
+  const handleModalClose = () => {
+    setShowModal(false);
+    navigate("/userauth"); // Example redirection
+  };
+
   const handleSendChangePasswordEmail = async () => {
     if (email.trim() === "") {
-      alert("Email cannot be blank!");
+      setModalMessage("Email cannot be blank!");
+      setShowModal(true);
       return;
     }
-
     try {
       // Check if email exists in the database
       const response = await axios.post("http://localhost:5000/check-email", {
@@ -46,21 +53,26 @@ const UserAuthentication = () => {
       });
 
       if (response.data.success) {
-        alert("Email found. A verification code has been sent to your email.");
+        setModalMessage(
+          "Email found. A verification code has been sent to your email."
+        );
+        setShowModal(true);
         setShowChangePasswordField(true); // Hide the change password form
       } else {
         alert(response.data.message); // Email not found, show the error message
       }
     } catch (error) {
       console.error("Error checking email:", error);
-      alert("An error occurred while checking the email.");
+      setModalMessage("An error occurred while checking the email.");
+      setShowModal(true);
     }
   };
 
   // Validate the verification code entered by the user
   const handleVerifyCode = async () => {
     if (verificationCode.trim() === "") {
-      alert("Please enter the verification code.");
+      setModalMessage("Please enter the verification code.");
+      setShowModal(true);
       return;
     }
 
@@ -72,25 +84,28 @@ const UserAuthentication = () => {
       });
 
       if (response.data.success) {
-        alert(
+        setModalMessage(
           "Verification code is correct. You can now change your password."
         );
-        setIsVerificationCodeCorrect(true); // Mark the code as valid
+        setShowModal(true);
+        setIsVerificationCodeCorrect(true);
         setShowChangePasswordField(true); // Show the password change form
       } else {
-        alert("Incorrect verification code.");
+        setModalMessage("Incorrect verification code.");
+        setShowModal(true);
         setIsVerificationCodeCorrect(false); // Mark the code as invalid
       }
     } catch (error) {
       console.error("Error verifying code:", error);
-      alert("An error occurred while verifying the code.");
+      setModalMessage("An error occurred while verifying the code.");
     }
   };
 
   // Handle the change password request
   const handleChangePassword = async () => {
     if (newPassword.trim() === "") {
-      alert("Please enter a new password.");
+      setModalMessage("Please enter a new password.");
+      setShowModal(true);
       return;
     }
 
@@ -105,25 +120,29 @@ const UserAuthentication = () => {
       );
 
       if (response.data.success) {
-        alert("Your password has been changed successfully.");
-        setShowChangePasswordField(false); // Reset the form
-        setIsVerificationCodeCorrect(false); // Reset the verification code state
-        setEmail(""); // Clear the email input
-        setNewPassword(""); // Clear the new password input
-        setVerificationCode(""); // Clear the verification code
-        setView("signIn"); // Redirect to the sign-in form
+        setModalMessage("Your password has been changed successfully.");
+        setShowModal(true);
+        setShowChangePasswordField(false);
+        setIsVerificationCodeCorrect(false);
+        setEmail("");
+        setNewPassword("");
+        setVerificationCode("");
+        setView("signIn");
       } else {
-        alert(response.data.message); // Show error if any issue occurs
+        setModalMessage(response.data.message);
+        setShowModal(true);
       }
     } catch (error) {
       console.error("Error changing password:", error);
-      alert("An error occurred while changing the password.");
+      setModalMessage("An error occurred while changing the password.");
+      setShowModal(true);
     }
   };
 
   const handleShowAccountActivationFields = () => {
     if (activationCode.trim() === "") {
-      alert("Activation code cannot be blank!");
+      setModalMessage("Activation code cannot be blank!");
+      setShowModal(true);
       return;
     }
 
@@ -131,7 +150,8 @@ const UserAuthentication = () => {
     console.log("Decrypted Activation Code:", decryptedCode);
 
     if (decryptedCode.length !== 11) {
-      alert("Invalid Activation Code");
+      setModalMessage("Activation code is Invalid!");
+      setShowModal(true);
       return;
     }
 
@@ -152,10 +172,15 @@ const UserAuthentication = () => {
           // Set the username and password returned from the server
           setSignupUsername(data.username);
           setSignupPassword(data.password);
+          setModalMessage(
+            "Activation code validated. Please change your username and password."
+          );
+          setShowModal(true);
 
           setShowAccountActivationFields(true);
         } else {
-          alert(data.message || "Invalid Activation Code");
+          setModalMessage(data.message || "Invalid Activation Code");
+          setShowModal(true);
         }
       })
       .catch((error) => {
@@ -170,7 +195,16 @@ const UserAuthentication = () => {
     const decryptedCode = sessionStorage.getItem("decryptedCode"); // Retrieve the decrypted code from sessionStorage
 
     if (!decryptedCode) {
-      alert("Session expired. Please validate the activation code again.");
+      setModalMessage(
+        "Session expired. Please validate the activation code again."
+      );
+      setShowModal(true);
+      return;
+    }
+
+    if (signupUsername === "User") {
+      setModalMessage("Username must be changed before proceeding.");
+      setShowModal(true);
       return;
     }
 
@@ -182,7 +216,8 @@ const UserAuthentication = () => {
         decryptedCode, // Send the decryptedCode to the backend
       });
 
-      alert(response.data.message);
+      setModalMessage(response.data.message);
+      setShowModal(true);
       sessionStorage.removeItem("decryptedCode"); // Remove decryptedCode from sessionStorage after successful update
       setView("signIn"); // Redirect to sign in after account update
     } catch (error) {
@@ -190,10 +225,11 @@ const UserAuthentication = () => {
         "Update Error:",
         error.response?.data?.message || "An error occurred"
       );
-      alert(
+      setModalMessage(
         error.response?.data?.message ||
           "An error occurred while updating your account"
       );
+      setShowModal(true);
     }
   };
 
@@ -224,11 +260,13 @@ const UserAuthentication = () => {
           navigate("/Dashboard");
         }
       } else {
-        alert(data.message || "Invalid user credentials");
+        setModalMessage(data.message || "Invalid user credentials");
+        setShowModal(true);
       }
     } catch (error) {
       console.error("Error during login:", error);
-      alert("An error occurred. Please try again.");
+      setModalMessage("An error occurred. Please try again.");
+      setShowModal(true);
     }
   };
 
@@ -472,6 +510,28 @@ const UserAuthentication = () => {
                 </>
               )}
             </form>
+          </div>
+        )}
+
+        {showModal && (
+          <div className="ModalOverlayStyles">
+            <div className="ModalStyles large">
+              <button
+                className="closeButton"
+                onClick={handleModalClose}
+                aria-label="Close"
+              >
+                <i className="bi bi-x-circle"></i>
+              </button>
+              <div className="text-center">
+                <h2 className="mt-3 mb-3">{modalMessage}</h2>
+              </div>
+              <div className="d-flex justify-content-center mt-3">
+                <button className="small btn-db" onClick={handleModalClose}>
+                  OK
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>

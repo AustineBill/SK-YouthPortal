@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { FaPen } from "react-icons/fa";
 import axios from "axios";
@@ -8,7 +8,6 @@ const Dashboard = () => {
   const [programs, setPrograms] = useState([]);
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
-  const [feedback, setFeedback] = useState("");
   const [userFeedback, setUserFeedback] = useState(null);
   const [isEditing, setIsEditing] = useState(false); // State for editing mode
   const [showModal, setShowModal] = useState(false); // Modal visibility state
@@ -72,7 +71,6 @@ const Dashboard = () => {
       const feedbackData = {
         user_id: userId,
         rating,
-        comment: feedback,
       };
 
       let response;
@@ -94,7 +92,6 @@ const Dashboard = () => {
       setUserFeedback(response.data);
       setIsEditing(false); // Exit editing mode immediately
       setRating(response.data.rating); // Make sure the updated rating is shown
-      setFeedback(response.data.comment);
 
       // Show the modal after feedback submission
       setShowModal(true);
@@ -114,14 +111,14 @@ const Dashboard = () => {
       </div>
 
       {/* Card Container for Programs */}
-      <div className="card-container d-flex flex-wrap justify-content-center">
+      <div className="card-container">
         {programs.length === 0 ? (
           <p>No program available</p>
         ) : (
           programs.map((program) => (
             <Card
               key={program.id}
-              className="ProgramCard mx-2 mb-4"
+              className="ProgramCard"
               style={{ width: "18rem" }}
             >
               <Card.Img
@@ -134,10 +131,9 @@ const Dashboard = () => {
                 <Card.Title
                   style={{
                     fontFamily: "Poppins, sans-serif",
-                    fontSize: "22px",
+                    fontSize: "20px",
                     fontWeight: "bold",
                     color: "#1d0053",
-                    marginTop: "-25px",
                   }}
                 >
                   {program.program_name}
@@ -188,7 +184,6 @@ const Dashboard = () => {
               onClick={() => {
                 setIsEditing(true); // Enable editing mode
                 setRating(userFeedback.rating);
-                setFeedback(userFeedback.comment);
               }}
             />
             <div className="stars">
@@ -206,7 +201,6 @@ const Dashboard = () => {
                 </span>
               ))}
             </div>
-            <p className="mt-3">{userFeedback.comment}</p>
           </div>
         ) : (
           <>
@@ -234,22 +228,12 @@ const Dashboard = () => {
                 );
               })}
             </div>
-            <Form.Group className="mt-3">
-              <Form.Label className="fw-bold">Your Feedback</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                value={feedback}
-                onChange={(e) => setFeedback(e.target.value)}
-                placeholder="Write your feedback here..."
-              />
-            </Form.Group>
             <div className="text-center">
               <Button
                 variant="dark"
                 className="mt-3"
                 onClick={handleFeedbackSubmit}
-                disabled={!rating || !feedback.trim()}
+                disabled={!rating}
               >
                 {isEditing ? "Update Feedback" : "Submit Feedback"}
               </Button>

@@ -90,27 +90,27 @@ const AdminEquipmentReservation = () => {
     );
   };
 
-  const handleApprove = async () => {
+  const handleReturned = async () => {
     try {
-      await axios.post("http://localhost:5000/approveEquipment", {
+      await axios.post("http://localhost:5000/markReturned", {
         ids: selectedReservations,
       });
       fetchTableReservations(); // Refresh the reservations list
       setSelectedReservations([]); // Clear selected reservations
     } catch (error) {
-      console.error("Error updating reservation status:", error);
+      console.error("Error marking reservations as returned:", error);
     }
   };
 
-  const handleDisapprove = async () => {
+  const handleNotReturned = async () => {
     try {
-      await axios.post("http://localhost:5000/disapproveEquipment", {
+      await axios.post("http://localhost:5000/markNotReturned", {
         ids: selectedReservations,
       });
       fetchTableReservations(); // Refresh the reservations list
       setSelectedReservations([]); // Clear selected reservations
     } catch (error) {
-      console.error("Error updating reservation status:", error);
+      console.error("Error marking reservations as not returned:", error);
     }
   };
 
@@ -222,17 +222,17 @@ const AdminEquipmentReservation = () => {
 
           <button
             disabled={selectedReservations.length === 0}
-            onClick={handleApprove}
-            className="admin-er-disapprove-button bg-success text-white rounded"
+            onClick={handleReturned}
+            className="admin-er-return-button bg-success text-white rounded"
           >
-            Approve
+            Mark as Returned
           </button>
           <button
             disabled={selectedReservations.length === 0}
-            onClick={handleDisapprove}
-            className="admin-er-disapprove-button bg-danger text-white rounded"
+            onClick={handleNotReturned}
+            className="admin-er-not-returned-button bg-danger text-white rounded"
           >
-            Disapprove
+            Mark as Not Returned
           </button>
         </div>
 
@@ -287,7 +287,7 @@ const AdminEquipmentReservation = () => {
                   <td>{reservation.id}</td>
                   <td>
                     {Array.isArray(reservation.reserved_equipment) &&
-                      reservation.reserved_equipment.length > 0 ? (
+                    reservation.reserved_equipment.length > 0 ? (
                       reservation.reserved_equipment.map((item) => (
                         <div key={item.id}>
                           {item.name} (Quantity: {item.quantity})
@@ -309,7 +309,7 @@ const AdminEquipmentReservation = () => {
                         navigate("/Cancellation");
                       }}
                       disabled={
-                        reservation.status === "Approved" ||
+                        reservation.status === "Not Returned" ||
                         reservation.status === "Pending"
                       }
                     >

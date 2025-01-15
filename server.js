@@ -536,9 +536,9 @@ app.get("/schedule/equipment", async (req, res) => {
   try {
     // Query to fetch reservation data
     const result = await pool.query(
-      `SELECT reservation_id, reserved_equipment, start_date, end_date
-       FROM Equipment
-       WHERE user_id = $1`,
+      `SELECT reservation_id, reserved_equipment, start_date, end_date, status
+   FROM Equipment
+   WHERE user_id = $1`,
       [userId]
     );
 
@@ -586,6 +586,7 @@ app.get("/schedule/equipment", async (req, res) => {
         reserved_equipment: equipmentInfo,
         start_date: new Date(row.start_date).toLocaleString(), // Ensure date formatting
         end_date: new Date(row.end_date).toLocaleString(), // Ensure date formatting
+        status: row.status || "Pending",
       };
     });
 
@@ -844,9 +845,9 @@ app.patch("/equipment/:reservationId", async (req, res) => {
 });*/
 
 app.post("/Feedback", async (req, res) => {
-  const { user_id, rating, comment } = req.body;
+  const { user_id, rating } = req.body; // Removed comment field
 
-  if (!user_id || !rating || !comment) {
+  if (!user_id || !rating) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
@@ -863,8 +864,8 @@ app.post("/Feedback", async (req, res) => {
     }
 
     await pool.query(
-      "INSERT INTO feedback (user_id, rating, comment) VALUES ($1, $2, $3)",
-      [user_id, rating, comment]
+      "INSERT INTO feedback (user_id, rating) VALUES ($1, $2)",
+      [user_id, rating] // Removed comment
     );
 
     res.status(201).json({ message: "Feedback submitted successfully!" });
@@ -898,10 +899,10 @@ app.get("/Feedback/:user_id", async (req, res) => {
 
 app.put("/Feedback/:user_id", async (req, res) => {
   const { user_id } = req.params; // Extract user_id from the URL parameters
-  const { rating, comment } = req.body; // Extract rating and comment from the request body
+  const { rating } = req.body; // Removed comment field
 
-  if (!rating || !comment) {
-    return res.status(400).json({ error: "All fields are required." });
+  if (!rating) {
+    return res.status(400).json({ error: "Rating is required." });
   }
 
   try {
@@ -917,8 +918,8 @@ app.put("/Feedback/:user_id", async (req, res) => {
 
     // Update the feedback record
     await pool.query(
-      "UPDATE feedback SET rating = $1, comment = $2 WHERE user_id = $3",
-      [rating, comment, user_id]
+      "UPDATE feedback SET rating = $1 WHERE user_id = $2", // Removed comment update
+      [rating, user_id]
     );
 
     res.status(200).json({ message: "Feedback updated successfully!" });
@@ -1454,25 +1455,28 @@ app.post(
   }
 );
 
-app.delete('/spotlight/:id', async (req, res) => {
+app.delete("/spotlight/:id", async (req, res) => {
   const spotlightId = req.params.id;
 
   try {
     // Delete the spotlight image from the database based on the ID
-    const result = await pool.query('DELETE FROM spotlight WHERE id = $1 RETURNING *', [spotlightId]);
+    const result = await pool.query(
+      "DELETE FROM spotlight WHERE id = $1 RETURNING *",
+      [spotlightId]
+    );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Spotlight not found' });
+      return res.status(404).json({ message: "Spotlight not found" });
     }
 
     // Respond with a success message
     res.json({
-      message: 'Spotlight removed successfully',
+      message: "Spotlight removed successfully",
       spotlightId: result.rows[0].id,
     });
   } catch (error) {
-    console.error('Error deleting spotlight:', error);
-    res.status(500).json({ message: 'Failed to delete spotlight' });
+    console.error("Error deleting spotlight:", error);
+    res.status(500).json({ message: "Failed to delete spotlight" });
   }
 });
 
@@ -1956,32 +1960,37 @@ app.get("/AllSchedules", async (req, res) => {
 });
 
 // Route to approve equipment reservations
-app.post("/approveEquipment", async (req, res) => {
-  const { ids } = req.body; // Array of reservation IDs to approve
+// Endpoint to mark reservations as "Returned"
+app.post("/markReturned", async (req, res) => {
+  const { ids } = req.body; // Array of reservation IDs to mark as returned
   try {
     await pool.query(
       "UPDATE Equipment SET status = $1 WHERE id = ANY($2::int[])",
-      ["Approved", ids]
+      ["Returned", ids]
     );
-    res.status(200).send("Equipment reservations approved");
+    res.status(200).send("Equipment reservations marked as returned");
   } catch (error) {
-    console.error("Error approving equipment reservations:", error);
+    console.error("Error marking equipment reservations as returned:", error);
     res.status(500).send("Server error");
   }
+});
 
-  app.post("/disapproveEquipment", async (req, res) => {
-    const { ids } = req.body; // Array of reservation IDs to approve
-    try {
-      await pool.query(
-        "UPDATE Equipment SET status = $1 WHERE id = ANY($2::int[])",
-        ["Disapproved", ids]
-      );
-      res.status(200).send("Equipment reservations approved");
-    } catch (error) {
-      console.error("Error approving equipment reservations:", error);
-      res.status(500).send("Server error");
-    }
-  });
+// Endpoint to mark reservations as "Not Returned"
+app.post("/markNotReturned", async (req, res) => {
+  const { ids } = req.body; // Array of reservation IDs to mark as not returned
+  try {
+    await pool.query(
+      "UPDATE Equipment SET status = $1 WHERE id = ANY($2::int[])",
+      ["Not Returned", ids]
+    );
+    res.status(200).send("Equipment reservations marked as not returned");
+  } catch (error) {
+    console.error(
+      "Error marking equipment reservations as not returned:",
+      error
+    );
+    res.status(500).send("Server error");
+  }
 });
 
 //Manage Website
@@ -2068,8 +2077,14 @@ app.post("/programs", Programupload.single("image"), async (req, res) => {
       INSERT INTO Programs (program_name, description, heading, program_type, image_url)
       VALUES ($1, $2, $3, $4, $5) RETURNING *;
     `;
-    
-    const values = [program_name, description, heading, program_type, image_url];
+
+    const values = [
+      program_name,
+      description,
+      heading,
+      program_type,
+      image_url,
+    ];
     const result = await pool.query(query, values);
 
     const newProgram = result.rows[0]; // Get the newly created program from the database response
@@ -2083,14 +2098,13 @@ app.post("/programs", Programupload.single("image"), async (req, res) => {
   }
 });
 
-
 // Update a program by ID
-app.put('/programs/:id', Programupload.single('image'), async (req, res) => {
+app.put("/programs/:id", Programupload.single("image"), async (req, res) => {
   const { id } = req.params;
   const { program_name, description, heading, program_type } = req.body;
 
   if (!program_name || !description || !heading || !program_type) {
-    return res.status(400).json({ error: 'All fields are required' });
+    return res.status(400).json({ error: "All fields are required" });
   }
 
   let image_url = null;
@@ -2100,9 +2114,12 @@ app.put('/programs/:id', Programupload.single('image'), async (req, res) => {
     image_url = `/Asset/Programs/${req.file.filename}`;
   } else {
     // Retain the existing image URL if no new file is uploaded
-    const existingProgram = await pool.query('SELECT image_url FROM programs WHERE id = $1', [id]);
+    const existingProgram = await pool.query(
+      "SELECT image_url FROM programs WHERE id = $1",
+      [id]
+    );
     if (existingProgram.rows.length === 0) {
-      return res.status(404).json({ error: 'Program not found' });
+      return res.status(404).json({ error: "Program not found" });
     }
     image_url = existingProgram.rows[0].image_url;
   }
@@ -2116,16 +2133,15 @@ app.put('/programs/:id', Programupload.single('image'), async (req, res) => {
     );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Program not found' });
+      return res.status(404).json({ error: "Program not found" });
     }
 
     res.json(result.rows[0]);
   } catch (err) {
-    console.error('Error updating program:', err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error updating program:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 app.delete("/programs/:id", async (req, res) => {
   const { id } = req.params;

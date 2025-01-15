@@ -326,7 +326,7 @@ h2,
   align-items: center;
   margin-left: 50%;
   justify-content: space-between; /* Distribute space evenly */
-  gap: 100px; /* Reduce gap for better responsiveness */
+  gap: 100px;
   transition: right 0.3s ease;
 }
 
@@ -359,9 +359,21 @@ h2,
   display: flex;
   flex-direction: column; /* Stack items vertically */
   align-items: center;
-  transform: translate(120%, 10%); /* Center the menu */
+  transform: translate(0%, 15%); /* Center the menu */
   background-color: #25327a;
-  padding: 3rem; /* Add padding for better spacing */
+  padding: 5rem; /* Add padding for better spacing */
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  gap: 5px;
+}
+
+.nav-links-user.active {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center;
+  transform: translate(-10%, 20%); /* Center the menu */
+  background-color: #25327a;
+  padding: 5rem; /* Add padding for better spacing */
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   z-index: 999;
   gap: 5px;
@@ -413,8 +425,8 @@ h2,
   gap: 5px;
   cursor: pointer;
   position: absolute;
-  right: 20px; /* Positioned in the right corner */
-  top: 30px; /* Adjust if needed */
+  right: 20px;
+  top: 30px;
 }
 
 .hamburger-icon .bar {

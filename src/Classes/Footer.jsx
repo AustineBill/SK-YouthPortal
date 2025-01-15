@@ -5,7 +5,6 @@ import "../App.css";
 const Footer = () => (
   <div className="container-fluid bg-db footer">
     <div className="row d-flex justify-content-between py-5 footer-content">
-      {/* iSKed Section */}
       <div className="col-md-3 d-flex flex-column align-items-start">
         <h4 className="footer-name" style={{ fontStyle: "italic" }}>
           iSKed
@@ -48,7 +47,7 @@ const Footer = () => (
         <Link className="btn btn-link p-0" to="/UserProgram">
           Programs
         </Link>
-        <Link className="btn btn-link p-0" to="/services">
+        <Link className="btn btn-link p-0" to="/News">
           News & Events
         </Link>
         <Link className="btn btn-link p-0" to="/Spotlight">
