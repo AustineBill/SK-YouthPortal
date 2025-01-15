@@ -357,7 +357,7 @@ app.get("/Profile/:username", async (req, res) => {
   try {
     const query = `
         SELECT 
-            id, username, firstname, lastname, region, province, city, barangay, zone,
+            id, username, firstname, lastname, street, province, city, barangay, zone,
             sex, age, birthday, email_address, contact_number, civil_status,
             youth_age_group, work_status, educational_background, 
             registered_sk_voter, registered_national_voter
@@ -1523,7 +1523,7 @@ app.post("/users", async (req, res) => {
     password,
     firstname,
     lastname,
-    region,
+    street,
     province,
     city,
     barangay,
@@ -1566,7 +1566,7 @@ app.post("/users", async (req, res) => {
     // Insert the new user into the database with a default "inactive" status
     const result = await pool.query(
       `INSERT INTO Users (
-        id, username, password, firstname, lastname, region, province, city, barangay, zone, sex, age, 
+        id, username, password, firstname, lastname, street, province, city, barangay, zone, sex, age, 
         birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
         educational_background, registered_sk_voter, registered_national_voter, status
       ) 
@@ -1578,7 +1578,7 @@ app.post("/users", async (req, res) => {
         hashedPassword,
         firstname,
         lastname,
-        region,
+        street,
         province,
         city,
         barangay,
@@ -1612,7 +1612,7 @@ app.put("/users/:id", async (req, res) => {
     password,
     firstname,
     lastname,
-    region,
+    street,
     province,
     city,
     barangay,
@@ -1639,7 +1639,7 @@ app.put("/users/:id", async (req, res) => {
       UPDATE users SET
         username = $1, 
         ${password ? "password = $2," : ""}
-        firstname = $3, lastname = $4, region = $5, province = $6, 
+        firstname = $3, lastname = $4, street = $5, province = $6, 
         city = $7, barangay = $8, zone = $9, sex = $10, age = $11, 
         birthday = $12, email_address = $13, contact_number = $14, civil_status = $15, 
         youth_age_group = $16, work_status = $17, educational_background = $18, 
@@ -1650,7 +1650,7 @@ app.put("/users/:id", async (req, res) => {
       ...(password ? [hashedPassword] : []),
       firstname,
       lastname,
-      region,
+      street,
       province,
       city,
       barangay,

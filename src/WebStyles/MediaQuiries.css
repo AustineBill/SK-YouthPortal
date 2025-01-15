@@ -150,6 +150,10 @@
     font-size: 14px;
   }
 
+  .nav-links-main {
+    display: none;
+  }
+
   .hero-header {
     padding: 1em 0;
     background-size: cover;

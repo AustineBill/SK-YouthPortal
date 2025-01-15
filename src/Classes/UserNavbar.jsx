@@ -8,33 +8,21 @@ import "../App.css";
 
 const UserNavbar = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState("");
   const [hamburgerVisible, setHamburgerVisible] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
     const username = sessionStorage.getItem("username");
-
     if (username) {
       setLoggedInUser(username);
     }
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownVisible(false);
-      }
-    };
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
   }, []);
 
   const openLogoutModal = () => {
     setLogoutModalVisible(true);
-    setDropdownVisible(false);
   };
 
   const handleLogout = () => {
@@ -46,17 +34,27 @@ const UserNavbar = () => {
     setHamburgerVisible(!hamburgerVisible);
   };
 
+  const dropdownStyles = {
+    position: "absolute",
+    top: "60px",
+    right: "10px",
+    backgroundColor: "#fff",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    borderRadius: "8px",
+    zIndex: 1000,
+  };
+
   return (
     <Nav className="navbar">
       <div
-        className="navbar-links-user"
+        className="navbar-links"
         style={{ display: "flex", alignItems: "center" }}
       >
         <h2 className="Website-Name">
           <img src={Logo} alt="Logo" /> iSKed
         </h2>
 
-        {/* Hamburger Icon - Visible only on mobile/tablet */}
+        {/* Hamburger Icon */}
         <div className="hamburger-icon" onClick={toggleHamburgerMenu}>
           <div className="bar"></div>
           <div className="bar"></div>
@@ -74,47 +72,52 @@ const UserNavbar = () => {
           <Link className="nav-item nav-link" to="/ReservationLog">
             Reservation
           </Link>
+
+          {/* Profile and Logout Links */}
+          {hamburgerVisible && isAuthenticated && (
+            <>
+              <Link
+                className="nav-item nav-link"
+                to={`/Profile/${loggedInUser}`}
+              >
+                Profile
+              </Link>
+              <div
+                className="nav-item nav-link"
+                onClick={openLogoutModal}
+                style={{ cursor: "pointer" }}
+              >
+                Logout
+              </div>
+            </>
+          )}
         </div>
 
-        {hamburgerVisible && (
-          <div className="hamburger-dropdown">
-            <Link className="nav-item" to="/Profile/:username">
-              Log In
-            </Link>
-            <Link
-              className="nav-item"
-              to="/userauth?view=signUp"
-              onClick={handleLogout}
-            >
-              Sign Up
-            </Link>
+        {/* Avatar and Dropdown */}
+
+        {/* Logout Confirmation Modal */}
+        {logoutModalVisible && (
+          <div className="ModalOverlayStyles">
+            <div className="ModalStyles semi-large">
+              <h3>Confirm Logout</h3>
+              <p>Are you sure you want to log out?</p>
+              <button
+                className="ModalButtonStyles SmallButton btn-dark super-small"
+                onClick={handleLogout}
+              >
+                Yes
+              </button>
+              <button
+                className="ModalButtonStyles SmallButton btn-db super-small"
+                onClick={() => setLogoutModalVisible(false)}
+              >
+                No
+              </button>
+            </div>
           </div>
         )}
       </div>
 
-      {/* Logout Confirmation Modal */}
-      {logoutModalVisible && (
-        <div className="ModalOverlayStyles">
-          <div className="ModalStyles semi-large">
-            <h3>Confirm Logout</h3>
-            <p>Are you sure you want to log out?</p>
-            <button
-              className="ModalButtonStyles SmallButton btn-dark super-small"
-              onClick={handleLogout}
-            >
-              Yes
-            </button>
-            <button
-              className="ModalButtonStyles SmallButton btn-db super-small"
-              onClick={() => setLogoutModalVisible(false)}
-            >
-              No
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* User Avatar and Dropdown */}
       {isAuthenticated && (
         <div className="navbar-buttons" ref={dropdownRef}>
           <div
@@ -145,19 +148,6 @@ const UserNavbar = () => {
       )}
     </Nav>
   );
-};
-
-const dropdownStyles = {
-  position: "absolute",
-  right: "10px",
-  top: "70px",
-  backgroundColor: "#fff",
-  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  borderRadius: "5px",
-  width: "100px",
-  zIndex: 1000,
-  display: "flex",
-  flexDirection: "column",
 };
 
 export default UserNavbar;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Table, Button, Form, Modal } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import "./styles/Inventory.css";
 // import './styles/Admin-CSS.css';
 
@@ -190,9 +190,7 @@ const InventoryTable = () => {
           tabIndex="-1"
           role="dialog"
         >
-          <div
-            className="modal-dialog modal-centered"
-            role="document">
+          <div className="modal-dialog modal-centered" role="document">
             <div className="modal-content">
               <div className="admin-inventory-item-add-edit-modal-header modal-header">
                 <h5 className="modal-title">
@@ -206,11 +204,11 @@ const InventoryTable = () => {
               </div>
 
               <div className="admin-inventory-item-add-edit-modal-body modal-body">
-                <form
-                  onSubmit={handleSubmit}
-                  className="m-0">
+                <form onSubmit={handleSubmit} className="m-0">
                   <div className="admin-inventory-group-form d-flex flex-column">
-                    <label className="admin-inventory-form-label">Item Name</label>
+                    <label className="admin-inventory-form-label">
+                      Item Name
+                    </label>
                     <input
                       type="text"
                       name="name"
@@ -222,7 +220,9 @@ const InventoryTable = () => {
                   </div>
 
                   <div className="admin-inventory-group-form d-flex flex-column">
-                    <label className="admin-inventory-form-label">Quantity</label>
+                    <label className="admin-inventory-form-label">
+                      Quantity
+                    </label>
                     <input
                       type="number"
                       name="quantity"
@@ -234,7 +234,9 @@ const InventoryTable = () => {
                   </div>
 
                   <div className="admin-inventory-group-form d-flex flex-column">
-                    <label className="admin-inventory-form-label">Specification</label>
+                    <label className="admin-inventory-form-label">
+                      Specification
+                    </label>
                     <input
                       type="text"
                       name="specification"
@@ -260,7 +262,9 @@ const InventoryTable = () => {
                   </div>
 
                   <div className="admin-inventory-group-form d-flex flex-column">
-                    <label className="admin-inventory-form-label">Upload Image</label>
+                    <label className="admin-inventory-form-label">
+                      Upload Image
+                    </label>
                     <input
                       type="file"
                       name="image"
