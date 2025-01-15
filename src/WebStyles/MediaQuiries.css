@@ -353,24 +353,23 @@
 
 @media (max-width: 768px) {
   .equipment-container {
-    flex: 1 1 calc(33.333% - 1.5rem); /* 2 cards per row */
+    flex: 1 1 48%; /* Two cards per row with some space */
   }
 }
 
 /* For even smaller screens (max width: 500px), display 2 cards per row */
 @media (max-width: 500px) {
   .equipment-container .ProgramCard {
-    flex: 1 1 calc(50% - 1.5rem); /* 2 cards per row */
+    flex: 1 1 48%; /* Two cards per row with some space */
   }
 }
-
 @media (max-width: 768px) {
   .card-container {
     gap: 40px; /* Less gap for smaller screens */
   }
 
   .ProgramCard {
-    flex: 0 0 calc(33.33% - 40px); /* 3 cards in a row */
+    flex: 0 0 32%; /* 3 cards in a row with a small margin */
     margin-bottom: 20px;
   }
 }
@@ -380,9 +379,11 @@
     gap: 20px; /* Even less gap */
   }
 
-  .ProgramCard {
-    flex: 0 0 calc(50% - 20px); /* 2 cards in a row */
-    margin-bottom: 20px;
+  @media (max-width: 768px) {
+    .ProgramCard {
+      flex: 0 0 48%; /* 2 cards per row */
+      margin-bottom: 20px;
+    }
   }
 
   .ProgramCard .card-body {
