@@ -96,82 +96,84 @@ const ReservationLog = () => {
           </Col>
         </Row>
 
-        <Table striped bordered hover className="mt-4 mb-5">
-          <thead>
-            <tr>
-              {selectedCategory === "Facility" ? (
-                <>
-                  <th>ID</th>
-                  <th>Program</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Time Slot</th>
-                  <th>Status</th>
-                  <th style={{ width: "120px" }}>Action</th>
-                </>
-              ) : (
-                <>
-                  <th>Reservation ID</th>
-                  <th>Reserved Equipment</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Status</th>
-                  <th style={{ width: "120px" }}>Action</th>
-                </>
-              )}
-            </tr>
-          </thead>
-          <tbody>
-            {reservations.length === 0 ? (
+        <div className="table-wrapper">
+          <Table striped bordered hover className="mt-4 mb-5">
+            <thead>
               <tr>
-                <td colSpan="6" className="text-center">
-                  No Reservation found.
-                </td>
+                {selectedCategory === "Facility" ? (
+                  <>
+                    <th>ID</th>
+                    <th>Program</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Time Slot</th>
+                    <th>Status</th>
+                    <th style={{ width: "120px" }}>Action</th>
+                  </>
+                ) : (
+                  <>
+                    <th>Reservation ID</th>
+                    <th>Reserved Equipment</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th style={{ width: "120px" }}>Action</th>
+                  </>
+                )}
               </tr>
-            ) : (
-              reservations.map((reservation) => (
-                <tr key={reservation.id || reservation.reservation_id}>
-                  {selectedCategory === "Facility" ? (
-                    <>
-                      <td>{reservation.id}</td>
-                      <td>{reservation.program}</td>
-                      <td>{formatDate(reservation.date)}</td>
-                      <td>{formatDate(reservation.end_date)}</td>
-                      <td>{reservation.time_slot || "N/A"}</td>
-                      <td>{reservation.status || "Pending"}</td>
-                    </>
-                  ) : (
-                    <>
-                      <td>{reservation.reservation_id}</td>
-                      <td>{reservation.reserved_equipment}</td>
-                      <td>{formatDate(reservation.start_date)}</td>
-                      <td>{formatDate(reservation.end_date)}</td>
-                      <td>{reservation.status || "Pending"}</td>
-                    </>
-                  )}
-                  <td className="d-flex justify-content-center">
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => {
-                        sessionStorage.setItem(
-                          "reservationId",
-                          reservation.id || reservation.reservation_id
-                        );
-                        sessionStorage.setItem(
-                          "reservationType",
-                          selectedCategory
-                        );
-                        navigate("/Cancellation");
-                      }}
-                    >
-                      Delete
-                    </button>
+            </thead>
+            <tbody>
+              {reservations.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="text-center">
+                    No Reservation found.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </Table>
+              ) : (
+                reservations.map((reservation) => (
+                  <tr key={reservation.id || reservation.reservation_id}>
+                    {selectedCategory === "Facility" ? (
+                      <>
+                        <td>{reservation.id}</td>
+                        <td>{reservation.program}</td>
+                        <td>{formatDate(reservation.date)}</td>
+                        <td>{formatDate(reservation.end_date)}</td>
+                        <td>{reservation.time_slot || "N/A"}</td>
+                        <td>{reservation.status || "Pending"}</td>
+                      </>
+                    ) : (
+                      <>
+                        <td>{reservation.reservation_id}</td>
+                        <td>{reservation.reserved_equipment}</td>
+                        <td>{formatDate(reservation.start_date)}</td>
+                        <td>{formatDate(reservation.end_date)}</td>
+                        <td>{reservation.status || "Pending"}</td>
+                      </>
+                    )}
+                    <td className="d-flex justify-content-center">
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => {
+                          sessionStorage.setItem(
+                            "reservationId",
+                            reservation.id || reservation.reservation_id
+                          );
+                          sessionStorage.setItem(
+                            "reservationType",
+                            selectedCategory
+                          );
+                          navigate("/Cancellation");
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </Table>
+        </div>
       </Container>
     </div>
   );

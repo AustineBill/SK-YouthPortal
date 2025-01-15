@@ -39,7 +39,7 @@ const Contact = () => {
           <h1 className="Maintext animated slideInRight">Get in Touch</h1>
           <p className="Subtext">Reserve yours now!</p>
 
-          <div className="d-flex justify-content-center mb-3">
+          <div className="contact-container mb-3">
             <Card className="ContactCard mx-3">
               <i className="bi bi-phone fa-4x" style={{ color: "#FFD700" }}></i>
               <Card.Body>

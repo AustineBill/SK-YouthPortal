@@ -108,121 +108,125 @@ function ScheduleDone() {
             <Row>
               <Col md={6}>
                 <h5 className="text-primary">Reservation Details</h5>
-                {programType === "Facilities" ? (
-                  <Table bordered hover size="sm" className="mt-3">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <strong>Type:</strong>
-                        </td>
-                        <td>{allData.reservation_type || "N/A"}</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <strong>Start Date:</strong>
-                        </td>
-                        <td>{formatDate(allData.start_date) || "N/A"}</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <strong>End Date:</strong>
-                        </td>
-                        <td>{formatDate(allData.end_date) || "N/A"}</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <strong>Time Slot:</strong>
-                        </td>
-                        <td>{allData.time_slot || "N/A"}</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                ) : programType === "Equipment" ? (
-                  <Table bordered hover size="sm" className="mt-3">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <strong>Program Type:</strong>
-                        </td>
-                        <td>{programType || "N/A"}</td>
-                      </tr>
-                      {allData.reservedEquipment &&
-                      allData.reservedEquipment.length > 0 ? (
-                        allData.reservedEquipment.map((item, index) => (
-                          <tr key={index}>
-                            <td>
-                              <strong>Equipment Name:</strong>
-                            </td>
-                            <td>{item.name || "N/A"} </td>
-                          </tr>
-                        ))
-                      ) : (
+                <div className="table-responsive">
+                  {programType === "Facilities" ? (
+                    <Table bordered hover size="sm" className="mt-3">
+                      <tbody>
                         <tr>
                           <td>
-                            <strong>No equipment reserved</strong>
+                            <strong>Type:</strong>
                           </td>
-                          <td>N/A</td>
+                          <td>{allData.reservation_type || "N/A"}</td>
                         </tr>
-                      )}
-                      {allData.reservedEquipment.map((item, index) => (
-                        <tr key={index}>
+                        <tr>
                           <td>
-                            <strong>Quantity:</strong>
+                            <strong>Start Date:</strong>
                           </td>
-                          <td>{item.quantity || "N/A"}</td>
+                          <td>{formatDate(allData.start_date) || "N/A"}</td>
                         </tr>
-                      ))}
-                      <tr>
-                        <td>
-                          <strong>Start Date:</strong>
-                        </td>
-                        <td>
-                          {allData.startDate
-                            ? new Date(allData.startDate).toLocaleDateString()
-                            : "N/A"}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <strong>End Date:</strong>
-                        </td>
-                        <td>
-                          {allData.endDate
-                            ? new Date(allData.endDate).toLocaleDateString()
-                            : "N/A"}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                ) : (
-                  <p>Program type not recognized.</p>
-                )}
+                        <tr>
+                          <td>
+                            <strong>End Date:</strong>
+                          </td>
+                          <td>{formatDate(allData.end_date) || "N/A"}</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <strong>Time Slot:</strong>
+                          </td>
+                          <td>{allData.time_slot || "N/A"}</td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  ) : programType === "Equipment" ? (
+                    <Table bordered hover size="sm" className="mt-3">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <strong>Program Type:</strong>
+                          </td>
+                          <td>{programType || "N/A"}</td>
+                        </tr>
+                        {allData.reservedEquipment &&
+                        allData.reservedEquipment.length > 0 ? (
+                          allData.reservedEquipment.map((item, index) => (
+                            <tr key={index}>
+                              <td>
+                                <strong>Equipment Name:</strong>
+                              </td>
+                              <td>{item.name || "N/A"} </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td>
+                              <strong>No equipment reserved</strong>
+                            </td>
+                            <td>N/A</td>
+                          </tr>
+                        )}
+                        {allData.reservedEquipment.map((item, index) => (
+                          <tr key={index}>
+                            <td>
+                              <strong>Quantity:</strong>
+                            </td>
+                            <td>{item.quantity || "N/A"}</td>
+                          </tr>
+                        ))}
+                        <tr>
+                          <td>
+                            <strong>Start Date:</strong>
+                          </td>
+                          <td>
+                            {allData.startDate
+                              ? new Date(allData.startDate).toLocaleDateString()
+                              : "N/A"}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <strong>End Date:</strong>
+                          </td>
+                          <td>
+                            {allData.endDate
+                              ? new Date(allData.endDate).toLocaleDateString()
+                              : "N/A"}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  ) : (
+                    <p>Program type not recognized.</p>
+                  )}
+                </div>
               </Col>
 
               <Col md={6}>
                 <h5 className="text-primary">Participant Details</h5>
-                <Table bordered hover size="sm" className="mt-3">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <strong>Full Name:</strong>
-                      </td>
-                      <td>{allData.participants?.[0]?.username || "N/A"}</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Age:</strong>
-                      </td>
-                      <td>{allData.participants?.[0]?.age || "N/A"}</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Email:</strong>
-                      </td>
-                      <td>{allData.participants?.[0]?.email || "N/A"}</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                <div className="table-responsive">
+                  <Table bordered hover size="sm" className="mt-3">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <strong>Full Name:</strong>
+                        </td>
+                        <td>{allData.participants?.[0]?.username || "N/A"}</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Age:</strong>
+                        </td>
+                        <td>{allData.participants?.[0]?.age || "N/A"}</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Email:</strong>
+                        </td>
+                        <td>{allData.participants?.[0]?.email || "N/A"}</td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </div>
               </Col>
             </Row>
           </Card.Body>

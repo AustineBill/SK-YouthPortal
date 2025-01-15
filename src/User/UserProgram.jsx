@@ -27,7 +27,7 @@ const Programs = () => {
       </div>
 
       {/* Programs List */}
-      <div className="d-flex flex-column align-items-center">
+      <div className="PageContainer">
         {programs.map((program) => (
           <div
             className="w-100 d-flex justify-content-center mb-4"

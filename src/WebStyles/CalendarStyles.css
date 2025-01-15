@@ -223,6 +223,23 @@
   background-color: #c9302c;
 }
 
+/* Responsive adjustments for 768px screens */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* Switch to single column layout */
+    padding: 10px; /* Reduce padding on smaller screens */
+  }
+
+  .apply-dates {
+    width: 100%; /* Make button take up full width */
+    margin-right: 0; /* Remove extra margin */
+  }
+
+  .legend {
+    align-items: flex-start; /* Ensure the legend items align well */
+  }
+}
+
 /* Reservations Popover Styling */
 /*.overlay-content .reservation-count {
   background-color: #ffc107;

@@ -120,11 +120,6 @@ const Spotlight = () => {
                   alt={`Spotlight ${imgIndex + 1}`}
                   style={{ height: "250px", objectFit: "cover" }}
                 />
-                <Card.Body className="d-flex flex-column align-items-center">
-                  <Card.Title className="fs-5 fw-bold text-dark">
-                    Spotlight {imgIndex + 1}
-                  </Card.Title>
-                </Card.Body>
               </Card>
             ))
           )

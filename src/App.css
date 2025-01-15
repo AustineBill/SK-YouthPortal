@@ -315,20 +315,25 @@ h2,
   align-items: center;
   color: white;
   font-size: 1.8rem;
+  position: absolute;
+  left: 10px; /* Adjust as needed */
+  top: 15px;
 }
 
 /* Navbar links */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 85px;
+  margin-left: 50%;
+  justify-content: space-between; /* Distribute space evenly */
+  gap: 100px; /* Reduce gap for better responsiveness */
   transition: right 0.3s ease;
 }
 
 .nav-item {
   font-family: "Poppins", sans-serif;
   font-size: 0.9rem;
-  margin: 1rem 1rem;
+  margin: 1rem;
   color: #ffffff !important;
   text-decoration: none; /* Remove underline */
   transition: color 0.3s, opacity 0.3s; /* Smooth transition for color and fade */
@@ -344,48 +349,22 @@ h2,
   color: #ffffff;
 }
 
-.navbar-butt .Website-Name {
-  display: flex;
-  align-items: center;
-  color: white;
-  font-size: 1.8rem;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 70px;
+.nav-item-buttons.active {
+  display: inline-block;
+  opacity: 0.5; /* Fade effect on clicked link */
+  color: #ffffff;
 }
 
 .nav-links.active {
   display: flex;
-  transform: translateX(0%);
+  flex-direction: column; /* Stack items vertically */
+  align-items: center;
+  transform: translate(120%, 10%); /* Center the menu */
   background-color: #25327a;
-  padding: 0 0 0 0;
+  padding: 3rem; /* Add padding for better spacing */
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   z-index: 999;
-  gap: 10px;
-}
-
-.nav-item {
-  font-family: "Poppins", sans-serif;
-  font-size: 0.9rem;
-  margin: 1rem 1rem;
-  color: #ffffff !important;
-  text-decoration: none; /* Remove underline */
-  transition: color 0.3s, opacity 0.3s; /* Smooth transition for color and fade */
-  cursor: pointer;
-}
-
-/* Hover effect (Fade effect on hover) */
-.nav-item:hover {
-  opacity: 0.7; /* Slight fade on hover */
-}
-
-/* Active state for the clicked links */
-.nav-item.active {
-  opacity: 0.5; /* Fade effect on clicked link */
-  color: #ffffff;
+  gap: 5px;
 }
 
 /* Buttons */
@@ -443,22 +422,6 @@ h2,
   height: 3px;
   background-color: #f8f1f1;
 }
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .hamburger-icon {
-    display: flex;
-  }
-
-  .nav-links {
-    display: none;
-  }
-
-  .nav-links.active {
-    display: flex;
-  }
-}
-
 /* Media query for mobile/tablet (screen width less than or equal to 768px) */
 
 .sangguniang-text {
@@ -1205,26 +1168,6 @@ h2,
 
 /*SK Youth*/
 
-.youth-maintext {
-  font-weight: bolder;
-  color: #141313;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: slideInLeft;
-  font-size: 60px;
-  margin-left: 30px;
-}
-
-.youth-subtext {
-  font-weight: 200;
-  color: #141313;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: slideInLeft;
-  font-size: 30px;
-  margin-left: 30px;
-}
-
 .youth-container {
   display: flex;
   grid-template-columns: 1fr auto 1fr; /* 3 columns: text, button, image */
@@ -1233,6 +1176,7 @@ h2,
   gap: 1rem;
   padding: 5rem 2rem;
   color: #1d0053;
+  flex-wrap: wrap;
 }
 
 .youth-text-content {
@@ -1364,45 +1308,28 @@ h2,
   max-width: 1500px; /* Set a maximum width */
 }
 
-/*History*/
-
-.History-container {
-  display: flex; /* Use Flexbox for layout */
-  align-items: flex-start; /* Align items at the top */
-  justify-content: space-between; /* Space between text and image */
-  padding: 1rem; /* Optional padding */
-  margin: 4rem 0rem 4rem 0rem; /* Space above the container */
-  background-color: #f5f5f5; /* Optional: Light background color to match the screenshot */
-}
-
-.history-image-content {
-  width: 40%; /* Set the width of the image */
-  max-width: 100%; /* Ensures the image does not overflow the container */
-  margin-left: auto; /* Align the image to the right */
-}
-
-.history-text-content {
-  color: #060707; /* Text color */
-  font-weight: 700; /* Bold text */
-  text-align: left; /* Align the text to the left */
-  font-size: 1.5rem; /* Font size */
-  width: 55%; /* Set the width of the text */
-  margin-right: 1rem; /* Space between the text and image */
-}
-
 /*Contact Us*/
 
+/* Contact container */
+.contact-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Allow wrapping for responsiveness */
+}
+
+/* Divider */
 .DividerType2 {
   margin-top: auto;
   display: inline-block;
   padding: 3rem;
   animation: fadeIn 1s ease-in-out;
-  width: 90%;
+  width: 100%;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
 
+/* Divider text */
 .DividerText {
   font-weight: 900;
   font-size: 2rem;
@@ -1410,6 +1337,7 @@ h2,
   margin-left: 8rem;
 }
 
+/* Contact card */
 .ContactCard {
   font-weight: 400;
   text-align: center;
@@ -1419,7 +1347,35 @@ h2,
   animation-name: slideInLeft;
   width: 25%;
   margin: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+/* Ensure text is horizontal */
+.ContactCard p {
+  writing-mode: horizontal-tb;
+}
+
+.PageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.PageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*.PageContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  justify-items: center; 
+  align-items: center; )
+}/
 
 /****** Form *******/
 
@@ -1493,4 +1449,38 @@ form {
 #sign-in-forgot-password:hover,
 #sign-up-button:hover {
   text-decoration: underline;
+}
+
+/* General table styling */
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+/* Table header and cell styling */
+th,
+td {
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+td {
+  font-size: 12px;
+}
+
+.btn {
+  padding: 5px 10px;
+  font-size: 12px; /* Adjust button size for mobile */
+}
+
+.equipment-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem; /* Equivalent to g-4 in Bootstrap (1.5rem or 24px) */
 }

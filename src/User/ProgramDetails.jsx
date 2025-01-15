@@ -182,19 +182,6 @@ const Program_details = () => {
           <div className="col-md-7">
             <h5 className="mb-2">Description</h5>
             <p className="lh-lg">{program.description}</p>
-            <h5>{programType === "Equipment" ? "Highlights" : "Amenities"}</h5>
-            <div className="d-flex flex-wrap gap-2">
-              {program.amenities &&
-                program.amenities.map((amenity, index) => (
-                  <img
-                    key={index}
-                    src={amenity}
-                    className="rounded"
-                    style={{ width: "100px", height: "100px" }}
-                    alt={`Amenity ${index + 1}`}
-                  />
-                ))}
-            </div>
           </div>
         </div>
       </div>
