@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Table,
@@ -13,7 +12,6 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 const AdminEquipmentReservation = () => {
-  const navigate = useNavigate();
   const [reservations, setReservations] = useState([]);
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
@@ -122,9 +120,18 @@ const AdminEquipmentReservation = () => {
     try {
       // Send the PATCH request with the reservation ID in the URL
       await axios.patch(
-        `https://isked-backend.onrender.com/equipment/${reservationId}/archive`
+        `https://isked-backend.onrender.com/equipment/${reservationId}`
       );
+
+      // After archiving, fetch the updated reservations list
       fetchTableReservations(); // Refresh the reservations list
+
+      // Optionally, you could filter the reservations locally by checking the is_archived flag
+      const updatedReservations = filteredReservations.filter(
+        (reservation) => reservation.id !== reservationId
+      );
+
+      setFilteredReservations(updatedReservations); // Update the state to reflect the change
       setSelectedReservations([]); // Clear selected reservations
     } catch (error) {
       console.error("Error archiving reservation:", error);
