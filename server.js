@@ -60,6 +60,42 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const cloudinary = require('cloudinary').v2;
+
+// Configuration
+cloudinary.config({ 
+    cloud_name: 'diewc7vew', 
+    api_key: '438357342246287', 
+    api_secret: 'pHmXJT1fLBepc4PYcbemcqgE1mc' // Replace with your actual secret key
+});
+
+/**
+ * Function to upload an image to Cloudinary
+ * @param {string} path - The file path of the image to upload
+ * @returns {Promise<string>} - The secure URL of the uploaded image
+ */
+async function uploadImage(path) {
+    try {
+        const uniquePublicId = `image_${Date.now()}`; // Generate unique public_id
+        const uploadResult = await cloudinary.uploader.upload(path, {
+            public_id: uniquePublicId,
+        });
+        return uploadResult.secure_url; // Return only the secure URL
+    } catch (error) {
+        console.error("Error uploading image:", error);
+        throw error; // Propagate error for the caller to handle
+    }
+}
+
+// Example usage:
+// Call the function when needed (replace '/path/to/image.jpg' with the actual image path)
+// uploadImage('/home/a4meta/Pictures/tropic_island_morning.jpg')
+//     .then((url) => console.log("Uploaded image URL:", url))
+//     .catch((error) => console.error("Upload failed:", error));
+
+module.exports = { uploadImage }; 
+
+
 /********* Website ******** */
 
 const verificationCodes = {};
