@@ -273,7 +273,7 @@ const ManageAboutUs = () => {
               {/* Editable fields */}
               {Object.keys(newAboutDetails).map(
                 (field, idx) =>
-                  field !== "id" && (
+                  field !== "id" && field !== "image_url" && (
                     <div className={`admin-edit-${field}-form d-flex flex-column`} key={idx}>
                       <label className={`admin-edit-${field}-label`}>
                         {field.replace(/([A-Z])/g, " $1")
@@ -289,6 +289,15 @@ const ManageAboutUs = () => {
                     </div>
                   )
               )}
+               <div className="admin-current-about-form d-flex flex-column">
+                {/* <label className="admin-current-about-label">Objectives</label> */}
+                <label>Upload Image</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  onChange={(e) => handleImageChange(e)}
+                />
+              </div>
               
               <button
                 type="submit"

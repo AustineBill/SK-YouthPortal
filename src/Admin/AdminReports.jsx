@@ -92,7 +92,7 @@ const Reports = () => {
     }
 
     const input = document.getElementById("admin-reports-tables-container");
-    const backgroundImage = `${process.env.PUBLIC_URL}/Asset/WebImages/bgreportskadmin.jpg`;
+    const backgroundImage = `https://res.cloudinary.com/diewc7vew/image/upload/v1737004522/WebImages/fl5p9aafi9r6nvgrmlnf.png`;
 
     html2canvas(input, {
       useCORS: true,
