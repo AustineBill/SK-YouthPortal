@@ -36,7 +36,7 @@ const ManageAboutUs = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const aboutResponse = await axios.get("http://localhost:5000/Website");
+        const aboutResponse = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/Website");
 
         // Log the response to check the fetched data
         console.log("Fetched data:", aboutResponse.data);
@@ -53,7 +53,7 @@ const ManageAboutUs = () => {
 
         // Fetch SK Council members
         const skCouncilResponse = await axios.get(
-          "http://localhost:5000/Skcouncil"
+          "https://sk-youthportal-1-mkyu.onrender.com/Skcouncil"
         );
         setSkCouncilInputs(skCouncilResponse.data);
       } catch (error) {
@@ -83,7 +83,7 @@ const ManageAboutUs = () => {
 
   const saveAboutDetails = async () => {
     try {
-      await axios.put("http://localhost:5000/Website", newAboutDetails);
+      await axios.put("https://sk-youthportal-1-mkyu.onrender.com/Website", newAboutDetails);
       setAboutDetails(newAboutDetails);
       setActiveContent("manageAboutDetails");
     } catch (error) {
@@ -121,7 +121,7 @@ const ManageAboutUs = () => {
     try {
       if (!currentMember.id) {
         const response = await axios.post(
-          "http://localhost:5000/Skcouncil",
+          "https://sk-youthportal-1-mkyu.onrender.com/Skcouncil",
           formData,
           {
             headers: {
@@ -136,7 +136,7 @@ const ManageAboutUs = () => {
         ]);
       } else {
         const response = await axios.put(
-          `http://localhost:5000/Skcouncil/${currentMember.id}`,
+          `https://sk-youthportal-1-mkyu.onrender.com/Skcouncil/${currentMember.id}`,
           formData,
           {
             headers: {

@@ -16,7 +16,7 @@ const Contact = () => {
     // Fetch the contact details using Axios
     const fetchContactDetails = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/contact");
+        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/contact");
         setContactDetails(response.data);
         setLoading(false);
       } catch (err) {

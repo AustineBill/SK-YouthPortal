@@ -26,7 +26,7 @@ const ManageProgram = () => {
   // Fetch all programs
   const fetchPrograms = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/programs");
+      const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/api/programs");
       setPrograms(response.data);
     } catch (error) {
       console.error("Error fetching programs:", error);
@@ -57,7 +57,7 @@ const ManageProgram = () => {
       }
 
       await axios.put(
-        `http://localhost:5000/programs/${selectedProgram.id}`,
+        `https://sk-youthportal-1-mkyu.onrender.com/programs/${selectedProgram.id}`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -89,7 +89,7 @@ const ManageProgram = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/programs",
+        "https://sk-youthportal-1-mkyu.onrender.com/programs",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -138,7 +138,7 @@ const ManageProgram = () => {
 
   const handleDeleteProgram = async (programId) => {
     try {
-      await axios.delete(`http://localhost:5000/programs/${programId}`);
+      await axios.delete(`https://sk-youthportal-1-mkyu.onrender.com/programs/${programId}`);
       setPrograms(programs.filter((program) => program.id !== programId));
 
       setModalMessage("Program deleted successfully!");

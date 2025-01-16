@@ -24,7 +24,7 @@ const ManageHomePage = () => {
   useEffect(() => {
     const fetchSpotlight = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/spotlight");
+        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/spotlight");
         setSpotlight(response.data);
       } catch (error) {
         console.error("Error fetching spotlight data:", error);
@@ -38,7 +38,7 @@ const ManageHomePage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/events");
+        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/events");
         setEvents(response.data);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -95,7 +95,7 @@ const ManageHomePage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/events",
+        "https://sk-youthportal-1-mkyu.onrender.com/events",
         formData,
         {
           headers: {
@@ -117,7 +117,7 @@ const ManageHomePage = () => {
   // Handle deleting an event
   const handleDeleteEvent = async (eventId) => {
     try {
-      await axios.delete(`http://localhost:5000/events/${eventId}`);
+      await axios.delete(`https://sk-youthportal-1-mkyu.onrender.com/events/${eventId}`);
       setEvents((prevEvents) =>
         prevEvents.filter((event) => event.id !== eventId)
       );
@@ -150,7 +150,7 @@ const ManageHomePage = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/events/${selectedEvent.id}`,
+        `https://sk-youthportal-1-mkyu.onrender.com/events/${selectedEvent.id}`,
         eventData
       );
       setEvents((prevEvents) =>
@@ -188,7 +188,7 @@ const ManageHomePage = () => {
     });
 
     try {
-      await axios.post("http://localhost:5000/spotlight", formData, {
+      await axios.post("https://sk-youthportal-1-mkyu.onrender.com/spotlight", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -206,7 +206,7 @@ const ManageHomePage = () => {
   const removeSpotlightImage = async (spotlightId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/spotlight/${spotlightId}`
+        `https://sk-youthportal-1-mkyu.onrender.com/spotlight/${spotlightId}`
       );
       alert(response.data.message); // Display success message to the user
 

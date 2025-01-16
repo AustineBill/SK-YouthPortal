@@ -33,7 +33,7 @@ function Equipment() {
   useEffect(() => {
     const fetchInventory = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/inventory");
+        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/inventory");
         setInventory(response.data);
         setQuantities(Array(response.data.length).fill(0));
       } catch (error) {

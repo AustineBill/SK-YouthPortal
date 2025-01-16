@@ -23,7 +23,7 @@ const AdminEquipmentReservation = () => {
   // Fetch reservations for the calendar from /ViewEquipment endpoint
   const fetchCalendarReservations = async () => {
     try {
-      const response = await fetch("http://localhost:5000/ViewEquipment");
+      const response = await fetch("https://sk-youthportal-1-mkyu.onrender.com/ViewEquipment");
       if (!response.ok) {
         throw new Error("Error fetching calendar reservations");
       }
@@ -37,7 +37,7 @@ const AdminEquipmentReservation = () => {
   // Fetch reservations for the table from /Allequipments endpoint
   const fetchTableReservations = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/Allequipments");
+      const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/Allequipments");
       setReservations(response.data);
       setFilteredReservations(response.data);
     } catch (error) {
@@ -92,7 +92,7 @@ const AdminEquipmentReservation = () => {
 
   const handleReturned = async () => {
     try {
-      await axios.post("http://localhost:5000/markReturned", {
+      await axios.post("https://sk-youthportal-1-mkyu.onrender.com/markReturned", {
         ids: selectedReservations,
       });
       fetchTableReservations(); // Refresh the reservations list
@@ -104,7 +104,7 @@ const AdminEquipmentReservation = () => {
 
   const handleNotReturned = async () => {
     try {
-      await axios.post("http://localhost:5000/markNotReturned", {
+      await axios.post("https://sk-youthportal-1-mkyu.onrender.com/markNotReturned", {
         ids: selectedReservations,
       });
       fetchTableReservations(); // Refresh the reservations list

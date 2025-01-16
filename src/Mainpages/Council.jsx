@@ -14,7 +14,7 @@ const Council = () => {
   useEffect(() => {
     const fetchCarouselPhotos = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/sk");
+        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/api/sk");
         setCarouselPhotos(response.data || []); // Ensure response is an array or fallback to an empty array
       } catch (error) {
         setCarouselPhotos([]); // Fallback to empty array
@@ -27,7 +27,7 @@ const Council = () => {
   useEffect(() => {
     const fetchCouncilMembers = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/Skcouncil");
+        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/Skcouncil");
         setCouncilMembers(response.data);
       } catch (error) {
         console.error("Error fetching SK Council members:", error);

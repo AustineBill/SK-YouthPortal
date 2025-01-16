@@ -8,7 +8,7 @@ const Programs = () => {
 
   useEffect(() => {
     // Fetch programs data from the backend
-    fetch("http://localhost:5000/api/programs")
+    fetch("https://sk-youthportal-1-mkyu.onrender.com/api/programs")
       .then((response) => response.json())
       .then((data) => setPrograms(data))
       .catch((error) => console.error("Error fetching programs:", error));

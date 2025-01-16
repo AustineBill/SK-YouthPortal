@@ -22,11 +22,14 @@ app.use(express.json({ limit: "20mb" })); // Allow up to 20MB for JSON payloads
 app.use(express.urlencoded({ limit: "20mb", extended: true })); // Allow up to 20MB for URL-encoded payloads
 
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "iSKed",
-  password: "iSKedWB2024",
+  user: "u8fb8jkrteh3jl",
+  host: "cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com",
+  database: "dalvnvq3lud30l",
+  password: "pc9c5ce7254f1ebd744a2d9c74677555fffab0e0533ca3e2c5341c2ac18d4c5da",
   port: 5432,
+  ssl: {
+    rejectUnauthorized: false, // This allows connections even without a certificate. Set to true for stricter security.
+  },
 });
 
 app.use("/public", express.static(path.join(__dirname, "public")));
@@ -1267,7 +1270,7 @@ app.get("/api/sk", async (req, res) => {
           ...item,
           image_url: url.startsWith("http")
             ? url
-            : `http://localhost:5000${url.replace("/Asset", "/public/Asset")}`,
+            : `https://sk-youthportal-1-mkyu.onrender.com${url.replace("/Asset", "/public/Asset")}`,
         }));
       })
       .flat(); // Flatten the array of image URLs into a single array
@@ -1294,7 +1297,7 @@ app.get("/Skcouncil", async (req, res) => {
             ...item,
             image_url: url.startsWith("http")
               ? url
-              : `http://localhost:5000${url.replace(
+              : `https://sk-youthportal-1-mkyu.onrender.com${url.replace(
                   "/Asset",
                   "/public/Asset"
                 )}`,
@@ -1403,7 +1406,7 @@ app.get("/spotlight", async (req, res) => {
         return {
           ...item,
           frontImage: item.frontimage
-            ? `http://localhost:5000${item.frontimage.replace(
+            ? `https://sk-youthportal-1-mkyu.onrender.com${item.frontimage.replace(
                 "/Asset",
                 "/public/Asset"
               )}`
@@ -1411,7 +1414,7 @@ app.get("/spotlight", async (req, res) => {
           images: imageUrls.map((url) =>
             url.startsWith("http")
               ? url
-              : `http://localhost:5000${url.replace("/Asset", "/public/Asset")}`
+              : `https://sk-youthportal-1-mkyu.onrender.com${url.replace("/Asset", "/public/Asset")}`
           ),
         };
       })
@@ -2003,7 +2006,7 @@ app.get("/api/programs", async (req, res) => {
       const imageUrl = program.image_url
         ? program.image_url.startsWith("http")
           ? program.image_url
-          : `http://localhost:5000${program.image_url.replace(
+          : `https://sk-youthportal-1-mkyu.onrender.com${program.image_url.replace(
               "/Asset",
               "/public/Asset"
             )}`
@@ -2339,7 +2342,7 @@ app.post("/forgot-password", async (req, res) => {
       html: `
               <h1>Password Reset</h1>
               <p>You requested a password reset. Please click the link below to reset your password:</p>
-              <a href="http://localhost:5000/reset-password?token=${resetToken}">Reset Password</a>
+              <a href="https://sk-youthportal-1-mkyu.onrender.com/reset-password?token=${resetToken}">Reset Password</a>
           `,
     };
 

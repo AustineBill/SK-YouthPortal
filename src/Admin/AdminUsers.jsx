@@ -50,7 +50,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("http://localhost:5000/users"); // Adjust endpoint as needed
+      const response = await fetch("https://sk-youthportal-1-mkyu.onrender.com/users"); // Adjust endpoint as needed
       const data = await response.json();
       setUsers(data);
     } catch (error) {
@@ -100,7 +100,7 @@ const Users = () => {
   const handleAddUser = async () => {
     // Log the user data before sending
     try {
-      const response = await fetch("http://localhost:5000/users", {
+      const response = await fetch("https://sk-youthportal-1-mkyu.onrender.com/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -146,7 +146,7 @@ const Users = () => {
     //console.log("Form Data for Update User:", newUser);  // Print all the inputs when updating a user
     try {
       const response = await fetch(
-        `http://localhost:5000/users/${editUserId}`,
+        `https://sk-youthportal-1-mkyu.onrender.com/users/${editUserId}`,
         {
           method: "PUT",
           headers: {
@@ -173,7 +173,7 @@ const Users = () => {
   // Delete a user
   const handleDelete = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/users/${userId}`, {
+      const response = await fetch(`https://sk-youthportal-1-mkyu.onrender.com/users/${userId}`, {
         method: "DELETE",
       });
 

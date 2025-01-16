@@ -22,7 +22,7 @@ const InventoryTable = () => {
 
   const fetchInventory = () => {
     axios
-      .get("http://localhost:5000/inventory")
+      .get("https://sk-youthportal-1-mkyu.onrender.com/inventory")
       .then((response) => {
         setInventory(response.data);
       })
@@ -82,7 +82,7 @@ const InventoryTable = () => {
       if (currentItem) {
         // Edit
         await axios.put(
-          `http://localhost:5000/inventory/${currentItem.id}`,
+          `https://sk-youthportal-1-mkyu.onrender.com/inventory/${currentItem.id}`,
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -90,7 +90,7 @@ const InventoryTable = () => {
         );
       } else {
         // Add
-        await axios.post("http://localhost:5000/inventory", formData, {
+        await axios.post("https://sk-youthportal-1-mkyu.onrender.com/inventory", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
       }
@@ -104,7 +104,7 @@ const InventoryTable = () => {
   const handleDelete = async (id) => {
     console.log("Deleting item with ID:", id);
     try {
-      await axios.delete(`http://localhost:5000/inventory/${id}`);
+      await axios.delete(`https://sk-youthportal-1-mkyu.onrender.com/inventory/${id}`);
       fetchInventory();
     } catch (error) {
       console.error("Error in handleDelete:", error);

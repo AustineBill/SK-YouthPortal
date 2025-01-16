@@ -18,7 +18,7 @@ const ViewFacilities = () => {
   // Fetch reservations from the backend
   const fetchReservations = async () => {
     try {
-      const response = await fetch("http://localhost:5000/ViewSched");
+      const response = await fetch("https://sk-youthportal-1-mkyu.onrender.com/ViewSched");
       if (!response.ok) {
         throw new Error("Error fetching reservations");
       }
