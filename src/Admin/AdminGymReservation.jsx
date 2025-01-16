@@ -423,7 +423,7 @@ const AdminGymReservation = () => {
                 <td>{reservation.status || "Pending"}</td>
                 <td className="admin-greservation-action-button-container d-flex justify-content-center">
                   <Button
-                    variant="primary"
+                    variant="danger"
                     className="admin-greservation-edit-button rounded-pill"
                     onClick={() => handleCancellation(reservation.id, true)} // Pass reservation ID and confirmation
                   >

@@ -27,8 +27,7 @@ const AdminEquipmentReservation = () => {
       if (!response.ok) {
         throw new Error("Error fetching calendar reservations");
       }
-      const data = await response.json();
-      setCalendarReservations(data);
+      setCalendarReservations(await response.json());
     } catch (error) {
       console.error("Error fetching calendar reservations:", error);
     }
@@ -42,8 +41,21 @@ const AdminEquipmentReservation = () => {
       );
       setReservations(response.data);
       setFilteredReservations(response.data);
+
+      // Fetch reservations after fetching the equipment data
+      const reservationsResponse = await axios.get(
+        "https://isked-backend.onrender.com/Allreservations"
+      );
+
+      // Filter out archived reservations (is_archived: true) and only show active ones (is_archived: false)
+      const activeReservations = reservationsResponse.data.filter(
+        (reservation) => !reservation.is_archived
+      );
+
+      setReservations(activeReservations); // Set the filtered list of active reservations
+      setFilteredReservations(activeReservations); // Also update filtered reservations if needed
     } catch (error) {
-      console.error("Error fetching table reservation data:", error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -118,21 +130,11 @@ const AdminEquipmentReservation = () => {
 
   const handleArchive = async (reservationId) => {
     try {
-      // Send the PATCH request with the reservation ID in the URL
       await axios.patch(
-        `https://isked-backend.onrender.com/equipment/${reservationId}`
+        `https://isked-backend.onrender.com/reservations/${reservationId}`,
+        { is_archived: true }
       );
-
-      // After archiving, fetch the updated reservations list
       fetchTableReservations(); // Refresh the reservations list
-
-      // Optionally, you could filter the reservations locally by checking the is_archived flag
-      const updatedReservations = filteredReservations.filter(
-        (reservation) => reservation.id !== reservationId
-      );
-
-      setFilteredReservations(updatedReservations); // Update the state to reflect the change
-      setSelectedReservations([]); // Clear selected reservations
     } catch (error) {
       console.error("Error archiving reservation:", error);
     }
