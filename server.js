@@ -2115,7 +2115,12 @@ app.get("/programs/:id", async (req, res) => {
 
 app.post("/programs", Programupload.single("image"), async (req, res) => {
   const { program_name, description, heading, program_type } = req.body;
-  const image_url = req.file ? await uploadImage(req.file.path) : null;
+
+  if (!req.file) {
+    return res.status(400).json({ error: "No file uploaded" });
+  }
+
+  const image_url =  await uploadImage(req.file.path);
 
   try {
     // Insert the new program into the database
