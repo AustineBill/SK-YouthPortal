@@ -76,28 +76,32 @@ const ManageProgram = () => {
     }
   };
 
-  const handleAddProgram = async () => {
-    console.log('appending formData');
+  const handleAddProgram = async (e) => {
+    e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("program_name", newProgram.name);
-    formData.append("description", newProgram.description);
-    formData.append("heading", newProgram.heading);
-    formData.append("program_type", newProgram.program_type);
 
-    if (newProgram.image) {
-      formData.append("image", newProgram.image);
-    }
 
     try {
-      console.log('calling programs api')
+      console.log('appending formData');
+
+      const formData = new FormData();
+      formData.append("program_name", newProgram.name);
+      formData.append("description", newProgram.description);
+      formData.append("heading", newProgram.heading);
+      formData.append("program_type", newProgram.program_type);
+  
+      if (newProgram.image) {
+        formData.append("image", newProgram.image);
+      }
+  
+      console.log('FormData contents:', formData);  // Add this line
+      console.log('calling programs api');
 
       const response = await axios.post(
         "https://sk-youthportal-1-mkyu.onrender.com/programs",
         formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
+        { headers: { "Content-Type": "multipart/form-data" } }
+
       );
 
       console.log('api call success')
@@ -161,7 +165,12 @@ const ManageProgram = () => {
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
+
+    
     if (file) {
+      setSelectedProgram((prev) => ({ ...prev, image: file }));
+      setNewProgram((prev) => ({ ...prev, image: file }));
+
       if (selectedProgram) {
         setSelectedProgram((prev) => ({ ...prev, image: file }));
       } else {
