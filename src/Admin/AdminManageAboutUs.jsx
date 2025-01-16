@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 // import "./styles/AdminManageAboutUs.css";
-import '../WebStyles/Admin-CSS.css';
+import "../WebStyles/Admin-CSS.css";
 
 const pageLabels = {
   manageAboutDetails: "Manage About Us Details",
@@ -36,7 +36,9 @@ const ManageAboutUs = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const aboutResponse = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/Website");
+        const aboutResponse = await axios.get(
+          "https://sk-youthportal-1-mkyu.onrender.com/Website"
+        );
 
         // Log the response to check the fetched data
         console.log("Fetched data:", aboutResponse.data);
@@ -83,7 +85,30 @@ const ManageAboutUs = () => {
 
   const saveAboutDetails = async () => {
     try {
-      await axios.put("https://sk-youthportal-1-mkyu.onrender.com/Website", newAboutDetails);
+      console.log("saveAboutDetails Triggered");
+
+      /* const body = {
+        description: newAboutDetails.description,
+        mandate: newAboutDetails.mandate,
+        objectives: newAboutDetails.objectives,
+        mission: newAboutDetails.mission,
+        vision: newAboutDetails.vision,
+      };
+
+      console.log("json body", body); */
+
+      const formData = new FormData();
+      formData.append("description", newAboutDetails.description);
+      formData.append("mandate", newAboutDetails.mandate);
+      formData.append("objectives", newAboutDetails.objectives);
+      formData.append("mission", newAboutDetails.mission);
+      formData.append("vision", newAboutDetails.vision);
+
+      await axios.put(
+        "https://sk-youthportal-1-mkyu.onrender.com/Website",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
       setAboutDetails(newAboutDetails);
       setActiveContent("manageAboutDetails");
     } catch (error) {
@@ -161,8 +186,9 @@ const ManageAboutUs = () => {
   };
 
   const handleSave = async (e) => {
+    e.preventDefault();
     await saveAboutDetails();
-    await saveSkCouncilMembers();
+    //await saveSkCouncilMembers();
     setActiveContent("manageAboutDetails");
   };
 
@@ -257,7 +283,8 @@ const ManageAboutUs = () => {
 
               <button
                 onClick={() => setActiveContent("editAboutDetails")}
-                className="admin-edit-about-details-button rounded">
+                className="admin-edit-about-details-button rounded"
+              >
                 Edit Details
               </button>
             </div>
@@ -273,10 +300,15 @@ const ManageAboutUs = () => {
               {/* Editable fields */}
               {Object.keys(newAboutDetails).map(
                 (field, idx) =>
-                  field !== "id" && field !== "image_url" && (
-                    <div className={`admin-edit-${field}-form d-flex flex-column`} key={idx}>
+                  field !== "id" &&
+                  field !== "image_url" && (
+                    <div
+                      className={`admin-edit-${field}-form d-flex flex-column`}
+                      key={idx}
+                    >
                       <label className={`admin-edit-${field}-label`}>
-                        {field.replace(/([A-Z])/g, " $1")
+                        {field
+                          .replace(/([A-Z])/g, " $1")
                           .toLowerCase()
                           .replace(/^\w|\s\w/g, (match) => match.toUpperCase())}
                       </label>
@@ -289,7 +321,7 @@ const ManageAboutUs = () => {
                     </div>
                   )
               )}
-               <div className="admin-current-about-form d-flex flex-column">
+              <div className="admin-current-about-form d-flex flex-column">
                 {/* <label className="admin-current-about-label">Objectives</label> */}
                 <label>Upload Image</label>
                 <input
@@ -298,7 +330,7 @@ const ManageAboutUs = () => {
                   onChange={(e) => handleImageChange(e)}
                 />
               </div>
-              
+
               <button
                 type="submit"
                 className="admin-save-about-details-button rounded text-white"
@@ -364,37 +396,37 @@ const ManageAboutUs = () => {
                   ></button>
                 </div>
                 <div className="modal-body">
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (imageFile) {
-                      saveSkCouncilMembers();
-                    } else {
-                      alert("Please upload an image");
-                    }
-                  }}
-                >
-                  <div className="">
-                    <label>Upload Image</label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      onChange={(e) => handleImageChange(e)}
-                    />
-                  </div>
-                  <button type="submit" className="btn btn-primary">
-                    Save Member
-                  </button>
-                  {/* Close button outside onSubmit */}
-                  <button
-                    type="button"
-                    className="btn btn-secondary ms-2"
-                    onClick={() => setModalVisible(false)}
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (imageFile) {
+                        saveSkCouncilMembers();
+                      } else {
+                        alert("Please upload an image");
+                      }
+                    }}
                   >
-                    Close
-                  </button>
-                </form>
-               </div>
+                    <div className="">
+                      <label>Upload Image</label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        onChange={(e) => handleImageChange(e)}
+                      />
+                    </div>
+                    <button type="submit" className="btn btn-primary">
+                      Save Member
+                    </button>
+                    {/* Close button outside onSubmit */}
+                    <button
+                      type="button"
+                      className="btn btn-secondary ms-2"
+                      onClick={() => setModalVisible(false)}
+                    >
+                      Close
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

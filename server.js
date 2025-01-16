@@ -1275,7 +1275,10 @@ app.get("/Website", async (req, res) => {
     res.status(500).json({ error: "Error fetching website details" });
   }
 });
-app.put("/Website", async (req, res) => {
+
+const webUpload = multer({ storage: skOfficialsStorage });
+
+app.put("/Website", webUpload.single("image"), async (req, res) => {
   const { description, mandate, objectives, mission, vision } = req.body;
 
   // Validate the input data
@@ -1283,11 +1286,18 @@ app.put("/Website", async (req, res) => {
     return res.status(400).json({ error: "All fields are required" });
   }
 
+  if(!req.file){
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  const uploadedImageUrl = await uploadImage(req.file.path);  // Wait for the upload to finish
+
+
   try {
     // Update website data in the Website table
     await pool.query(
-      "UPDATE Website SET description = $1, mandate = $2, objectives = $3, mission = $4, vision = $5 WHERE id = $6",
-      [description, mandate, objectives, mission, vision, 1]
+      "UPDATE Website SET description = $1, mandate = $2, objectives = $3, mission = $4, vision = $5, image_url = $7 WHERE id = $6",
+      [description, mandate, objectives, mission, vision, 1, uploadedImageUrl]
     );
     res.json({ message: "Website details updated successfully" });
   } catch (error) {
