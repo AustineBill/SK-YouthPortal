@@ -347,7 +347,7 @@ const AdminEquipmentReservation = () => {
                         reservation.is_archived // Disable if archived
                       }
                     >
-                      Archive
+                      Button
                     </Button>
                   </td>
                 </tr>
