@@ -2245,7 +2245,7 @@ app.post("/events", Eventupload.single("event_image"), async (req, res) => {
 
   try {
     
-    const event_image = uploadImage(req.file.path);  //`/Asset/Events/${req.file.filename}`; // Construct the file path
+    const event_image = await uploadImage(req.file.path);  //`/Asset/Events/${req.file.filename}`; // Construct the file path
     const result = await pool.query(
       "INSERT INTO home (event_name, event_description, event_image) VALUES ($1, $2, $3) RETURNING *",
       [event_name, event_description, event_image]
