@@ -154,11 +154,10 @@ const AdminGymReservation = () => {
       const response = await axios.patch(endpoint, { is_archived: true });
 
       if (response.status === 200) {
-        setShowModal(true);
         console.log("Reservation successfully archived");
 
         // Re-fetch reservation details to ensure UI updates
-        fetchReservationDetails();
+        fetchReservations();
       }
     } catch (error) {
       console.error("Error cancelling reservation:", error);
