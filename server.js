@@ -750,55 +750,28 @@ app.get("/equipment/:reservationId", async (req, res) => {
   }
 });
 
-app.patch("/equipment/:reservationId", async (req, res) => {
+app.patch("/equipment/:reservationId/archive", async (req, res) => {
   const { reservationId } = req.params;
+  console.log("Reservation ID received:", reservationId);
 
   try {
-    // Step 1: Get the reservation details to identify the reserved equipment
+    // Step 1: Get the reservation details
     const reservationResult = await pool.query(
       "SELECT * FROM Equipment WHERE reservation_id = $1",
       [reservationId]
     );
+    console.log("Reservation result:", reservationResult.rows);
 
     if (reservationResult.rows.length === 0) {
       return res.status(404).json({ message: "Reservation not found" });
     }
 
-    // Step 2: Get the reserved equipment
-    const reservedEquipment = reservationResult.rows[0].reserved_equipment;
-
-    // Step 3: Check if reserved_equipment is a string and parse it if necessary
-    let equipmentList;
-    if (typeof reservedEquipment === "string") {
-      // Parse the JSON string if it's in string format
-      equipmentList = JSON.parse(reservedEquipment);
-    } else {
-      // If it's already an object/array, use it directly
-      equipmentList = reservedEquipment;
-    }
-
-    // Step 4: Update the inventory for each equipment in the reservation
-    for (const equipment of equipmentList) {
-      const { id, quantity } = equipment;
-
-      // Update the inventory by increasing the quantity of the equipment
-      const updateInventoryResult = await pool.query(
-        "UPDATE Inventory SET quantity = quantity + $1 WHERE id = $2 RETURNING *",
-        [quantity, id]
-      );
-
-      if (updateInventoryResult.rowCount === 0) {
-        return res
-          .status(404)
-          .json({ message: `Equipment with id ${id} not found in inventory` });
-      }
-    }
-
-    // Step 5: Archive the reservation (Set is_archived = true)
+    // Archive reservation
     const archiveReservationResult = await pool.query(
       "UPDATE Equipment SET is_archived = true WHERE reservation_id = $1 RETURNING *",
       [reservationId]
     );
+    console.log("Archive Reservation Result:", archiveReservationResult.rows);
 
     if (archiveReservationResult.rowCount === 0) {
       return res
@@ -806,10 +779,8 @@ app.patch("/equipment/:reservationId", async (req, res) => {
         .json({ message: "Reservation not found or already archived" });
     }
 
-    // Step 6: Return success response
     res.status(200).json({
-      message:
-        "Reservation archived and equipment quantity updated successfully",
+      message: "Reservation archived successfully",
     });
   } catch (error) {
     console.error("Error archiving reservation:", error);

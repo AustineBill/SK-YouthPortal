@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Table,
@@ -12,6 +13,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 const AdminEquipmentReservation = () => {
+  const navigate = useNavigate();
   const [reservations, setReservations] = useState([]);
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
@@ -116,36 +118,16 @@ const AdminEquipmentReservation = () => {
     }
   };
 
-  const handleCancellation = async (reservationId, isConfirmed) => {
-    if (!isConfirmed) {
-      console.log("Cancellation not confirmed");
-      return;
-    }
-
+  const handleArchive = async (reservationId) => {
     try {
-      const endpoint = `https://isked-backend.onrender.com/equipment/${reservationId}`;
-
-      // Send PATCH request to archive the reservation
-      const response = await axios.patch(endpoint, { is_archived: true });
-
-      if (response.status === 200) {
-        console.log("Reservation successfully archived");
-
-        // Update the local state to remove the archived reservation
-        setReservations((prevReservations) =>
-          prevReservations.filter(
-            (reservation) => reservation.id !== reservationId
-          )
-        );
-        setFilteredReservations((prevFilteredReservations) =>
-          prevFilteredReservations.filter(
-            (reservation) => reservation.id !== reservationId
-          )
-        );
-      }
+      // Send the PATCH request with the reservation ID in the URL
+      await axios.patch(
+        `https://isked-backend.onrender.com/equipment/${reservationId}/archive`
+      );
+      fetchTableReservations(); // Refresh the reservations list
+      setSelectedReservations([]); // Clear selected reservations
     } catch (error) {
-      console.error("Error cancelling reservation:", error);
-      alert("There was an error cancelling your reservation.");
+      console.error("Error archiving reservation:", error);
     }
   };
 
@@ -339,10 +321,11 @@ const AdminEquipmentReservation = () => {
                     <Button
                       variant="danger"
                       className="admin-ereservation-delete-button rounded-pill"
-                      onClick={() => handleCancellation(reservation.id, true)}
+                      onClick={() => handleArchive(reservation.id)} // Pass the reservation ID
                       disabled={
                         reservation.status === "Not Returned" ||
-                        reservation.status === "Pending"
+                        reservation.status === "Pending" ||
+                        reservation.is_archived // Disable if archived
                       }
                     >
                       Archive
