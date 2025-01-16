@@ -575,7 +575,7 @@ app.get("/schedule/equipment", async (req, res) => {
     // Query to fetch reservation data excluding archived (deleted) ones
     const result = await pool.query(
       `SELECT reservation_id, reserved_equipment, start_date, end_date, status
-    FROM Equipment
+       FROM Equipment
        WHERE user_id = $1 AND (is_archived IS NULL OR is_archived = FALSE OR is_archived != 't')`,
       [userId]
     );
@@ -1022,7 +1022,7 @@ app.get("/ViewEquipment", async (req, res) => {
   try {
     // Query to fetch equipment details, using JSON functions to extract data
     const result = await pool.query(`
-           SELECT 
+      SELECT 
           e.start_date, 
           u.username, 
           jsonb_array_elements(e.reserved_equipment) AS equipment
