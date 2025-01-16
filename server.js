@@ -60,13 +60,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require("cloudinary").v2;
 
 // Configuration
-cloudinary.config({ 
-    cloud_name: 'diewc7vew', 
-    api_key: '438357342246287', 
-    api_secret: 'pHmXJT1fLBepc4PYcbemcqgE1mc' // Replace with your actual secret key
+cloudinary.config({
+  cloud_name: "diewc7vew",
+  api_key: "438357342246287",
+  api_secret: "pHmXJT1fLBepc4PYcbemcqgE1mc", // Replace with your actual secret key
 });
 
 /**
@@ -75,16 +75,16 @@ cloudinary.config({
  * @returns {Promise<string>} - The secure URL of the uploaded image
  */
 async function uploadImage(path) {
-    try {
-        const uniquePublicId = `image_${Date.now()}`; // Generate unique public_id
-        const uploadResult = await cloudinary.uploader.upload(path, {
-            public_id: uniquePublicId,
-        });
-        return uploadResult.secure_url; // Return only the secure URL
-    } catch (error) {
-        console.error("Error uploading image:", error);
-        throw error; // Propagate error for the caller to handle
-    }
+  try {
+    const uniquePublicId = `image_${Date.now()}`; // Generate unique public_id
+    const uploadResult = await cloudinary.uploader.upload(path, {
+      public_id: uniquePublicId,
+    });
+    return uploadResult.secure_url; // Return only the secure URL
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw error; // Propagate error for the caller to handle
+  }
 }
 
 // Example usage:
@@ -93,8 +93,7 @@ async function uploadImage(path) {
 //     .then((url) => console.log("Uploaded image URL:", url))
 //     .catch((error) => console.error("Upload failed:", error));
 
-module.exports = { uploadImage }; 
-
+module.exports = { uploadImage };
 
 /********* Website ******** */
 
@@ -573,11 +572,11 @@ app.post("/schedule/equipment", async (req, res) => {
 app.get("/schedule/equipment", async (req, res) => {
   const { userId } = req.query;
   try {
-    // Query to fetch reservation data
+    // Query to fetch reservation data excluding archived (deleted) ones
     const result = await pool.query(
       `SELECT reservation_id, reserved_equipment, start_date, end_date, status
-   FROM Equipment
-   WHERE user_id = $1`,
+    FROM Equipment
+       WHERE user_id = $1 AND (is_archived IS NULL OR is_archived = FALSE OR is_archived != 't')`,
       [userId]
     );
 
@@ -995,17 +994,18 @@ app.get("/Details/:id", async (req, res) => {
 app.get("/ViewSched", async (req, res) => {
   try {
     const result = await pool.query(`
-          SELECT 
-              s.start_date, 
-              s.end_date, 
-              s.time_slot, 
-              u.username, 
-              s.reservation_type -- Include reservation_type in the response
-          FROM Schedules s
-          JOIN Users u ON s.user_id = u.id
-          WHERE s.start_date >= CURRENT_DATE::date
-          ORDER BY s.start_date ASC
-      `);
+      SELECT 
+          s.start_date, 
+          s.end_date, 
+          s.time_slot, 
+          u.username, 
+          s.reservation_type -- Include reservation_type in the response
+      FROM Schedules s
+      JOIN Users u ON s.user_id = u.id
+      WHERE s.start_date >= CURRENT_DATE::date
+        AND (s.is_archived IS NULL OR s.is_archived = FALSE OR s.is_archived != 't') -- Exclude archived records
+      ORDER BY s.start_date ASC
+    `);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "No schedules found" });
@@ -1022,15 +1022,16 @@ app.get("/ViewEquipment", async (req, res) => {
   try {
     // Query to fetch equipment details, using JSON functions to extract data
     const result = await pool.query(`
-          SELECT 
-              e.start_date, 
-              u.username, 
-              jsonb_array_elements(e.reserved_equipment) AS equipment
-          FROM Equipment e
-          JOIN Users u ON e.user_id = u.id
-          WHERE e.start_date >= CURRENT_DATE
-          ORDER BY e.start_date ASC
-      `);
+           SELECT 
+          e.start_date, 
+          u.username, 
+          jsonb_array_elements(e.reserved_equipment) AS equipment
+      FROM Equipment e
+      JOIN Users u ON e.user_id = u.id
+      WHERE e.start_date >= CURRENT_DATE
+        AND (e.is_archived IS NULL OR e.is_archived = FALSE OR e.is_archived != 't') -- Exclude archived records
+      ORDER BY e.start_date ASC
+    `);
 
     // Map the result to extract equipment name and quantity
     const formattedResult = result.rows.map((row) => ({
@@ -1103,7 +1104,7 @@ app.post("/inventory", upload.single("image"), async (req, res) => {
 
     const { name, quantity, specification } = req.body; // Exclude 'status' from the request
     const imageFileName = "/Equipment/" + req.file.filename; // Save only the relative path
-    const uploadedImageUrl = await uploadImage(req.file.path);  // Wait for the upload to finish
+    const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
 
     // Automatically set status based on quantity
     const status = quantity > 0 ? "Available" : "Out of Stock";
@@ -1139,7 +1140,7 @@ app.put("/inventory/:id", upload.single("image"), async (req, res) => {
     if (req.file) {
       const imageFileName = "/Equipment/" + req.file.filename;
       query += ", image = $5 WHERE id = $6";
-      const uploadedImageUrl = await uploadImage(req.file.path);  // Wait for the upload to finish
+      const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
 
       values.push(uploadedImageUrl, id);
     } else {
@@ -1186,10 +1187,11 @@ app.post("/ValidateReservation", async (req, res) => {
     const startDate = new Date(start_date);
     const endDate = new Date(end_date);
 
-    // Query to check for overlapping reservations
+    // Query to check for overlapping reservations, excluding archived ones
     const overlapQuery = `
       SELECT * FROM Schedules 
       WHERE user_id = $1 
+      AND (is_archived IS NULL OR is_archived = FALSE OR is_archived != 't') -- Exclude archived reservations
       AND (
         (start_date <= $2 AND end_date >= $2) OR -- Overlap with new start date
         (start_date <= $3 AND end_date >= $3) OR -- Overlap with new end date
@@ -1222,8 +1224,9 @@ app.post("/CheckEquipment", async (req, res) => {
       SELECT * FROM Equipment 
       WHERE user_id = $1 
       AND DATE(start_date AT TIME ZONE 'UTC') = $2
+      AND (is_archived IS NULL OR is_archived = FALSE OR is_archived != 't') -- Exclude archived equipment
     `;
-    const values = [user_id, date]; // Ensure date is ISO format
+    const values = [user_id, date]; // Ensure date is in ISO format
     const result = await pool.query(query, values);
     res.json({ exists: result.rowCount > 0 });
   } catch (error) {
@@ -1286,12 +1289,11 @@ app.put("/Website", webUpload.single("image"), async (req, res) => {
     return res.status(400).json({ error: "All fields are required" });
   }
 
-  if(!req.file){
+  if (!req.file) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
-  const uploadedImageUrl = await uploadImage(req.file.path);  // Wait for the upload to finish
-
+  const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
 
   try {
     // Update website data in the Website table
@@ -1319,7 +1321,10 @@ app.get("/api/sk", async (req, res) => {
           ...item,
           image_url: url.startsWith("http")
             ? url
-            : `https://sk-youthportal-1-mkyu.onrender.com${url.replace("/Asset", "/public/Asset")}`,
+            : `https://sk-youthportal-1-mkyu.onrender.com${url.replace(
+                "/Asset",
+                "/public/Asset"
+              )}`,
         }));
       })
       .flat(); // Flatten the array of image URLs into a single array
@@ -1373,8 +1378,7 @@ app.post("/Skcouncil", skOfficialsupload.single("image"), async (req, res) => {
   }
 
   const imagePath = "/Asset/SK_Officials/" + req.file.filename; // Use the new unique filename path
-  const uploadedImageUrl = await uploadImage(req.file.path);  // Wait for the upload to finish
-
+  const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
 
   try {
     // Check if the image already exists in the database
@@ -1416,7 +1420,7 @@ app.put(
       return res.status(400).json({ error: "No file uploaded" });
     }
     const imagePath = "/Asset/SK_Officials/" + req.file.filename; // Generate the image path
-    const uploadedImageUrl = await uploadImage(req.file.path);  // Wait for the upload to finish
+    const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
 
     try {
       const result = await pool.query(
@@ -1467,7 +1471,10 @@ app.get("/spotlight", async (req, res) => {
           images: imageUrls.map((url) =>
             url.startsWith("http")
               ? url
-              : `https://sk-youthportal-1-mkyu.onrender.com${url.replace("/Asset", "/public/Asset")}`
+              : `https://sk-youthportal-1-mkyu.onrender.com${url.replace(
+                  "/Asset",
+                  "/public/Asset"
+                )}`
           ),
         };
       })
@@ -1488,9 +1495,10 @@ app.post(
     try {
       // Process additional images
       const additionalImages = req.files
-      ? await Promise.all(req.files.map(async (file) => await uploadImage(file.path)))
-      : [];
-    
+        ? await Promise.all(
+            req.files.map(async (file) => await uploadImage(file.path))
+          )
+        : [];
 
       if (additionalImages.length === 0) {
         return res
@@ -2127,8 +2135,6 @@ app.get("/programs/:id", async (req, res) => {
 app.post("/programs", Programupload.single("image"), async (req, res) => {
   const { program_name, description, heading, program_type } = req.body;
 
-  
-
   const image_url = req.file ? await uploadImage(req.file.path) : null;
 
   try {
@@ -2171,9 +2177,7 @@ app.put("/programs/:id", Programupload.single("image"), async (req, res) => {
 
   if (req.file) {
     // Use the new uploaded image if provided
-    image_url = await uploadImage(req.file.path);  //`/Asset/Programs/${req.file.filename}`;
-
-
+    image_url = await uploadImage(req.file.path); //`/Asset/Programs/${req.file.filename}`;
   } else {
     // Retain the existing image URL if no new file is uploaded
     const existingProgram = await pool.query(
@@ -2267,8 +2271,7 @@ app.post("/events", Eventupload.single("event_image"), async (req, res) => {
   const { event_name, event_description } = req.body;
 
   try {
-    
-    const event_image = await uploadImage(req.file.path);  //`/Asset/Events/${req.file.filename}`; // Construct the file path
+    const event_image = await uploadImage(req.file.path); //`/Asset/Events/${req.file.filename}`; // Construct the file path
     const result = await pool.query(
       "INSERT INTO home (event_name, event_description, event_image) VALUES ($1, $2, $3) RETURNING *",
       [event_name, event_description, event_image]

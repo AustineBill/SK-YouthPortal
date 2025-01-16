@@ -21,7 +21,9 @@ const Reservation = () => {
 
   const fetchReservations = async () => {
     try {
-      const response = await fetch("https://sk-youthportal-1-mkyu.onrender.com/ViewSched");
+      const response = await fetch(
+        "https://sk-youthportal-1-mkyu.onrender.com/ViewSched"
+      );
       if (!response.ok) {
         throw new Error("Error fetching reservations");
       }
@@ -283,7 +285,7 @@ const Reservation = () => {
               {selectedDates[0].toDateString() ===
               selectedDates[1].toDateString()
                 ? selectedDates[0].toLocaleDateString()
-                : `${selectedDates[0].toLocaleDateString()} and ${selectedDates[1].toLocaleDateString()}`}
+                : `${selectedDates[0].toLocaleDateString()} to ${selectedDates[1].toLocaleDateString()}`}
             </p>
             <p>
               <strong>Selected Time:</strong>{" "}

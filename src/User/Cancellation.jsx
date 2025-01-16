@@ -23,10 +23,10 @@ const CancelReservation = () => {
           : `https://sk-youthportal-1-mkyu.onrender.com/equipment/${reservationId}`;
 
       const response = await axios.get(endpoint);
-      if (response.status === 200) {
+      if (response.status === 200 && !response.data.is_archived) {
         setReservationDetails(response.data);
       } else {
-        setError("No reservation found");
+        setError("No active reservation found");
       }
     } catch (error) {
       console.error("Error fetching reservation details:", error);
@@ -50,13 +50,14 @@ const CancelReservation = () => {
           ? `https://sk-youthportal-1-mkyu.onrender.com/reservations/${reservationId}`
           : `https://sk-youthportal-1-mkyu.onrender.com/equipment/${reservationId}`;
 
-      // Send PATCH request to update is_archived and reason
-      const response = await axios.patch(endpoint, {
-        is_archived: true, // Set to true to archive
-      });
+      // Send PATCH request to archive the reservation
+      const response = await axios.patch(endpoint, { is_archived: true });
 
       if (response.status === 200) {
         setShowModal(true);
+
+        // Re-fetch reservation details to ensure UI updates
+        fetchReservationDetails();
       }
     } catch (error) {
       console.error("Error cancelling reservation:", error);
