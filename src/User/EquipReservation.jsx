@@ -16,7 +16,7 @@ const EquipReservation = () => {
     // Fetch reservations from an API
     const fetchReservations = async () => {
       try {
-        const response = await fetch("http://localhost:5000/GetReservations");
+        const response = await fetch("http://localhost:5000/ViewEquipment");
         if (!response.ok) {
           throw new Error("Failed to fetch reservations");
         }

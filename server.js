@@ -534,11 +534,11 @@ app.post("/schedule/equipment", async (req, res) => {
 app.get("/schedule/equipment", async (req, res) => {
   const { userId } = req.query;
   try {
-    // Query to fetch reservation data
+    // Query to fetch reservation data excluding archived (deleted) ones
     const result = await pool.query(
       `SELECT reservation_id, reserved_equipment, start_date, end_date, status
-   FROM Equipment
-   WHERE user_id = $1`,
+       FROM Equipment
+       WHERE user_id = $1 AND (is_archived IS NULL OR is_archived = FALSE OR is_archived != 't')`,
       [userId]
     );
 
@@ -956,17 +956,18 @@ app.get("/Details/:id", async (req, res) => {
 app.get("/ViewSched", async (req, res) => {
   try {
     const result = await pool.query(`
-          SELECT 
-              s.start_date, 
-              s.end_date, 
-              s.time_slot, 
-              u.username, 
-              s.reservation_type -- Include reservation_type in the response
-          FROM Schedules s
-          JOIN Users u ON s.user_id = u.id
-          WHERE s.start_date >= CURRENT_DATE::date
-          ORDER BY s.start_date ASC
-      `);
+      SELECT 
+          s.start_date, 
+          s.end_date, 
+          s.time_slot, 
+          u.username, 
+          s.reservation_type -- Include reservation_type in the response
+      FROM Schedules s
+      JOIN Users u ON s.user_id = u.id
+      WHERE s.start_date >= CURRENT_DATE::date
+        AND (s.is_archived IS NULL OR s.is_archived = FALSE OR s.is_archived != 't') -- Exclude archived records
+      ORDER BY s.start_date ASC
+    `);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "No schedules found" });
@@ -983,15 +984,16 @@ app.get("/ViewEquipment", async (req, res) => {
   try {
     // Query to fetch equipment details, using JSON functions to extract data
     const result = await pool.query(`
-          SELECT 
-              e.start_date, 
-              u.username, 
-              jsonb_array_elements(e.reserved_equipment) AS equipment
-          FROM Equipment e
-          JOIN Users u ON e.user_id = u.id
-          WHERE e.start_date >= CURRENT_DATE
-          ORDER BY e.start_date ASC
-      `);
+      SELECT 
+          e.start_date, 
+          u.username, 
+          jsonb_array_elements(e.reserved_equipment) AS equipment
+      FROM Equipment e
+      JOIN Users u ON e.user_id = u.id
+      WHERE e.start_date >= CURRENT_DATE
+        AND (e.is_archived IS NULL OR e.is_archived = FALSE OR e.is_archived != 't') -- Exclude archived records
+      ORDER BY e.start_date ASC
+    `);
 
     // Map the result to extract equipment name and quantity
     const formattedResult = result.rows.map((row) => ({
@@ -1144,10 +1146,11 @@ app.post("/ValidateReservation", async (req, res) => {
     const startDate = new Date(start_date);
     const endDate = new Date(end_date);
 
-    // Query to check for overlapping reservations
+    // Query to check for overlapping reservations, excluding archived ones
     const overlapQuery = `
       SELECT * FROM Schedules 
       WHERE user_id = $1 
+      AND (is_archived IS NULL OR is_archived = FALSE OR is_archived != 't') -- Exclude archived reservations
       AND (
         (start_date <= $2 AND end_date >= $2) OR -- Overlap with new start date
         (start_date <= $3 AND end_date >= $3) OR -- Overlap with new end date
@@ -1180,8 +1183,9 @@ app.post("/CheckEquipment", async (req, res) => {
       SELECT * FROM Equipment 
       WHERE user_id = $1 
       AND DATE(start_date AT TIME ZONE 'UTC') = $2
+      AND (is_archived IS NULL OR is_archived = FALSE OR is_archived != 't') -- Exclude archived equipment
     `;
-    const values = [user_id, date]; // Ensure date is ISO format
+    const values = [user_id, date]; // Ensure date is in ISO format
     const result = await pool.query(query, values);
     res.json({ exists: result.rowCount > 0 });
   } catch (error) {

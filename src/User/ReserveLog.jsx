@@ -34,6 +34,7 @@ const ReservationLog = () => {
           params: { userId },
         });
 
+        // Filter out reservations where is_archived is true or "t"
         const activeReservations = response.data.filter(
           (reservation) =>
             reservation.is_archived !== true && reservation.is_archived !== "t"
