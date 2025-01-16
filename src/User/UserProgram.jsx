@@ -8,7 +8,7 @@ const Programs = () => {
 
   useEffect(() => {
     // Fetch programs data from the backend
-    fetch("https://isked-backend.onrender.com/api/programs")
+    fetch("https://isked-backend-ssmj.onrender.com/api/programs")
       .then((response) => response.json())
       .then((data) => setPrograms(data))
       .catch((error) => console.error("Error fetching programs:", error));

@@ -22,7 +22,7 @@ const ManageContactUs = () => {
     const fetchContactDetails = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/contact"
+          "https://isked-backend-ssmj.onrender.com/contact"
         );
         setContactDetails(response.data);
         setNewContactDetails(response.data); // Pre-fill newContactDetails
@@ -39,7 +39,7 @@ const ManageContactUs = () => {
     console.log("Saving contact details:", newContactDetails); // Check what data is being sent
     try {
       const response = await axios.put(
-        "https://isked-backend.onrender.com/contact",
+        "https://isked-backend-ssmj.onrender.com/contact",
         newContactDetails
       );
       console.log("Response:", response); // Log the response from the backend

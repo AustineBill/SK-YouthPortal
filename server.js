@@ -1402,7 +1402,7 @@ app.get("/api/sk", async (req, res) => {
           ...item,
           image_url: url.startsWith("http")
             ? url
-            : `https://isked-backend.onrender.com/${url.replace(
+            : `https://isked-backend-ssmj.onrender.com/${url.replace(
                 "/Asset",
                 "/public/Asset"
               )}`,
@@ -1432,7 +1432,7 @@ app.get("/Skcouncil", async (req, res) => {
             ...item,
             image_url: url.startsWith("http")
               ? url
-              : `https://isked-backend.onrender.com/${url.replace(
+              : `https://isked-backend-ssmj.onrender.com/${url.replace(
                   "/Asset",
                   "/public/Asset"
                 )}`,
@@ -1544,7 +1544,7 @@ app.get("/spotlight", async (req, res) => {
         return {
           ...item,
           frontImage: item.frontimage
-            ? `https://isked-backend.onrender.com/${item.frontimage.replace(
+            ? `https://isked-backend-ssmj.onrender.com/${item.frontimage.replace(
                 "/Asset",
                 "/public/Asset"
               )}`
@@ -1552,7 +1552,7 @@ app.get("/spotlight", async (req, res) => {
           images: imageUrls.map((url) =>
             url.startsWith("http")
               ? url
-              : `https://isked-backend.onrender.com/${url.replace(
+              : `https://isked-backend-ssmj.onrender.com/${url.replace(
                   "/Asset",
                   "/public/Asset"
                 )}`
@@ -2180,7 +2180,7 @@ app.get("/api/programs", async (req, res) => {
       const imageUrl = program.image_url
         ? program.image_url.startsWith("http")
           ? program.image_url
-          : `https://isked-backend.onrender.com/${program.image_url.replace(
+          : `https://isked-backend-ssmj.onrender.com/${program.image_url.replace(
               "/Asset",
               "/public/Asset"
             )}`
@@ -2517,7 +2517,7 @@ app.post("/forgot-password", async (req, res) => {
       html: `
               <h1>Password Reset</h1>
               <p>You requested a password reset. Please click the link below to reset your password:</p>
-              <a href="https://isked-backend.onrender.com//reset-password?token=${resetToken}">Reset Password</a>
+              <a href="https://isked-backend-ssmj.onrender.com//reset-password?token=${resetToken}">Reset Password</a>
           `,
     };
 

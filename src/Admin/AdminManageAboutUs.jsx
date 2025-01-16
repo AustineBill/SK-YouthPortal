@@ -36,7 +36,7 @@ const ManageAboutUs = () => {
       setLoading(true);
       try {
         const aboutResponse = await axios.get(
-          "https://isked-backend.onrender.com/Website"
+          "https://isked-backend-ssmj.onrender.com/Website"
         );
 
         // Log the response to check the fetched data
@@ -54,7 +54,7 @@ const ManageAboutUs = () => {
 
         // Fetch SK Council members
         const skCouncilResponse = await axios.get(
-          "https://isked-backend.onrender.com/Skcouncil"
+          "https://isked-backend-ssmj.onrender.com/Skcouncil"
         );
         setSkCouncilInputs(skCouncilResponse.data);
       } catch (error) {
@@ -93,9 +93,13 @@ const ManageAboutUs = () => {
       formData.append("vision", newAboutDetails.vision);
       formData.append("image", imageFile);
 
-      await axios.put("https://isked-backend.onrender.com/Website", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      await axios.put(
+        "https://isked-backend-ssmj.onrender.com/Website",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
       setAboutDetails(newAboutDetails);
       setActiveContent("manageAboutDetails");
     } catch (error) {
@@ -133,7 +137,7 @@ const ManageAboutUs = () => {
     try {
       if (!currentMember.id) {
         const response = await axios.post(
-          "https://isked-backend.onrender.com/Skcouncil",
+          "https://isked-backend-ssmj.onrender.com/Skcouncil",
           formData,
           {
             headers: {
@@ -148,7 +152,7 @@ const ManageAboutUs = () => {
         ]);
       } else {
         const response = await axios.put(
-          `https://isked-backend.onrender.com/Skcouncil/${currentMember.id}`,
+          `https://isked-backend-ssmj.onrender.com/Skcouncil/${currentMember.id}`,
           formData,
           {
             headers: {

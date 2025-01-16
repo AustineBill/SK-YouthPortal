@@ -15,7 +15,7 @@ const Intro = () => {
     const fetchProgramData = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/api/programs"
+          "https://isked-backend-ssmj.onrender.com/api/programs"
         );
         console.log(response.data); // Log the response
         setPrograms(response.data);
@@ -33,7 +33,7 @@ const Intro = () => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/events"
+          "https://isked-backend-ssmj.onrender.com/events"
         ); // API endpoint for events
         console.log("Fetched events:", response.data); // Log the response data for debugging
         setEvents(response.data); // Set the events in state
@@ -53,7 +53,7 @@ const Intro = () => {
     const fetchSpotlightData = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/spotlight"
+          "https://isked-backend-ssmj.onrender.com/spotlight"
         );
         console.log(response.data); // Log the response
         setSpotlightData(response.data);

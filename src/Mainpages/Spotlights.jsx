@@ -12,7 +12,7 @@ const Spotlight = () => {
     const fetchCarouselPhotos = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/api/sk"
+          "https://isked-backend-ssmj.onrender.com/api/sk"
         );
         setCarouselPhotos(response.data || []); // Ensure response is an array or fallback to an empty array
       } catch (error) {
@@ -28,7 +28,7 @@ const Spotlight = () => {
     const fetchSpotlightData = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/spotlight"
+          "https://isked-backend-ssmj.onrender.com/spotlight"
         );
         console.log(response.data); // Log the response
         setSpotlightData(response.data);

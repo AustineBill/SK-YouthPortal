@@ -23,7 +23,7 @@ const Reservation = () => {
   const fetchReservations = async () => {
     try {
       const response = await fetch(
-        "https://isked-backend.onrender.com/ViewSched"
+        "https://isked-backend-ssmj.onrender.com/ViewSched"
       );
       if (!response.ok) {
         throw new Error("Error fetching reservations");
@@ -206,7 +206,7 @@ const Reservation = () => {
     try {
       // Validate the reservation
       const response = await fetch(
-        "https://isked-backend.onrender.com/ValidateReservation",
+        "https://isked-backend-ssmj.onrender.com/ValidateReservation",
         {
           method: "POST",
           headers: {

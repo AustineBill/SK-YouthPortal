@@ -13,7 +13,7 @@ const UserDetails = () => {
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          `https://isked-backend.onrender.com/Users/${id}`
+          `https://isked-backend-ssmj.onrender.com/Users/${id}`
         );
         if (!response.ok) {
           throw new Error("User not found");

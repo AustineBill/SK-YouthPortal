@@ -18,7 +18,7 @@ const Mandate = () => {
     const fetchMandateInfo = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/Website"
+          "https://isked-backend-ssmj.onrender.com/Website"
         );
         setMandateInfo(response.data);
       } catch (error) {

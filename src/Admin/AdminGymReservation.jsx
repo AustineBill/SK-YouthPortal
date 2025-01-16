@@ -26,7 +26,7 @@ const AdminGymReservation = () => {
     const fetchReservations = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/Allreservations"
+          "https://isked-backend-ssmj.onrender.com/Allreservations"
         );
 
         // Filter out archived reservations (is_archived: true) and only show active ones (is_archived: false)
@@ -47,7 +47,7 @@ const AdminGymReservation = () => {
   const fetchCalendarReservations = async () => {
     try {
       const response = await fetch(
-        "https://isked-backend.onrender.com/ViewSched"
+        "https://isked-backend-ssmj.onrender.com/ViewSched"
       );
       if (!response.ok) {
         throw new Error("Error fetching calendar reservations");
@@ -104,13 +104,13 @@ const AdminGymReservation = () => {
   const handleApprove = async () => {
     try {
       await axios.post(
-        "https://isked-backend.onrender.com/approveReservations",
+        "https://isked-backend-ssmj.onrender.com/approveReservations",
         {
           ids: selectedReservations,
         }
       );
       const response = await axios.get(
-        "https://isked-backend.onrender.com/Allreservations"
+        "https://isked-backend-ssmj.onrender.com/Allreservations"
       );
       setReservations(response.data);
       setFilteredReservations(response.data);
@@ -123,13 +123,13 @@ const AdminGymReservation = () => {
   const handleDisapprove = async () => {
     try {
       await axios.post(
-        "https://isked-backend.onrender.com/disapproveReservations",
+        "https://isked-backend-ssmj.onrender.com/disapproveReservations",
         {
           ids: selectedReservations,
         }
       );
       const response = await axios.get(
-        "https://isked-backend.onrender.com/Allreservations"
+        "https://isked-backend-ssmj.onrender.com/Allreservations"
       );
       setReservations(response.data);
       setFilteredReservations(response.data);
@@ -151,7 +151,7 @@ const AdminGymReservation = () => {
 
     // Proceed with cancellation if confirmed
     try {
-      const endpoint = `https://isked-backend.onrender.com/reservations/${reservationId}`;
+      const endpoint = `https://isked-backend-ssmj.onrender.com/reservations/${reservationId}`;
       const response = await axios.delete(endpoint);
 
       if (response.status === 200) {

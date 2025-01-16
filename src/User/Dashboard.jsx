@@ -17,7 +17,7 @@ const Dashboard = () => {
     const fetchProgramData = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/api/programs"
+          "https://isked-backend-ssmj.onrender.com/api/programs"
         );
         setPrograms(response.data);
       } catch (error) {
@@ -40,7 +40,7 @@ const Dashboard = () => {
 
       try {
         const response = await axios.get(
-          `https://isked-backend.onrender.com/Feedback/${userId}`
+          `https://isked-backend-ssmj.onrender.com/Feedback/${userId}`
         );
 
         if (response.data) {
@@ -79,13 +79,13 @@ const Dashboard = () => {
       if (isEditing) {
         // Update existing feedback
         response = await axios.put(
-          `https://isked-backend.onrender.com/Feedback/${userId}`,
+          `https://isked-backend-ssmj.onrender.com/Feedback/${userId}`,
           feedbackData
         );
       } else {
         // Submit new feedback
         response = await axios.post(
-          "https://isked-backend.onrender.com/Feedback",
+          "https://isked-backend-ssmj.onrender.com/Feedback",
           feedbackData
         );
       }

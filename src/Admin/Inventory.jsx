@@ -22,7 +22,7 @@ const InventoryTable = () => {
 
   const fetchInventory = () => {
     axios
-      .get("https://isked-backend.onrender.com/inventory")
+      .get("https://isked-backend-ssmj.onrender.com/inventory")
       .then((response) => {
         setInventory(response.data);
       })
@@ -82,7 +82,7 @@ const InventoryTable = () => {
       if (currentItem) {
         // Edit
         await axios.put(
-          `https://isked-backend.onrender.com/inventory/${currentItem.id}`,
+          `https://isked-backend-ssmj.onrender.com/inventory/${currentItem.id}`,
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -91,7 +91,7 @@ const InventoryTable = () => {
       } else {
         // Add
         await axios.post(
-          "https://isked-backend.onrender.com/inventory",
+          "https://isked-backend-ssmj.onrender.com/inventory",
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -108,7 +108,9 @@ const InventoryTable = () => {
   const handleDelete = async (id) => {
     console.log("Deleting item with ID:", id);
     try {
-      await axios.delete(`https://isked-backend.onrender.com/inventory/${id}`);
+      await axios.delete(
+        `https://isked-backend-ssmj.onrender.com/inventory/${id}`
+      );
       fetchInventory();
     } catch (error) {
       console.error("Error in handleDelete:", error);

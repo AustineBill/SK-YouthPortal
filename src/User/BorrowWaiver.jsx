@@ -12,7 +12,7 @@ const BorrowWaiver = () => {
   const saveReservation = async () => {
     try {
       await axios.post(
-        "https://isked-backend.onrender.com/schedule/equipment",
+        "https://isked-backend-ssmj.onrender.com/schedule/equipment",
         allData
       );
       console.log("Facilities reservation saved successfully.");
