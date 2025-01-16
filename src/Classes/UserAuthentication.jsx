@@ -48,9 +48,12 @@ const UserAuthentication = () => {
     }
     try {
       // Check if email exists in the database
-      const response = await axios.post("https://sk-youthportal-1-mkyu.onrender.com/check-email", {
-        email,
-      });
+      const response = await axios.post(
+        "https://isked-backend.onrender.com/check-email",
+        {
+          email,
+        }
+      );
 
       if (response.data.success) {
         setModalMessage(
@@ -78,10 +81,13 @@ const UserAuthentication = () => {
 
     try {
       // Send the verification code to the server for validation
-      const response = await axios.post("https://sk-youthportal-1-mkyu.onrender.com/verify-code", {
-        email,
-        verificationCode,
-      });
+      const response = await axios.post(
+        "https://isked-backend.onrender.com/verify-code",
+        {
+          email,
+          verificationCode,
+        }
+      );
 
       if (response.data.success) {
         setModalMessage(
@@ -112,7 +118,7 @@ const UserAuthentication = () => {
     try {
       // Send the new password to the server for update
       const response = await axios.post(
-        "https://sk-youthportal-1-mkyu.onrender.com/change-password",
+        "https://isked-backend.onrender.com/change-password",
         {
           email,
           newPassword,
@@ -158,7 +164,7 @@ const UserAuthentication = () => {
     sessionStorage.setItem("decryptedCode", decryptedCode);
 
     // Send decrypted code to backend for validation
-    fetch("https://sk-youthportal-1-mkyu.onrender.com/ValidateCode", {
+    fetch("https://isked-backend.onrender.com/ValidateCode", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ activationCode: decryptedCode }),
@@ -210,11 +216,14 @@ const UserAuthentication = () => {
 
     try {
       // Send updated account details along with the decryptedCode to the server
-      const response = await axios.post("https://sk-youthportal-1-mkyu.onrender.com/UpdateAccount", {
-        username: signupUsername,
-        password: signupPassword,
-        decryptedCode, // Send the decryptedCode to the backend
-      });
+      const response = await axios.post(
+        "https://isked-backend.onrender.com/UpdateAccount",
+        {
+          username: signupUsername,
+          password: signupPassword,
+          decryptedCode, // Send the decryptedCode to the backend
+        }
+      );
 
       setModalMessage(response.data.message);
       setShowModal(true);
@@ -240,7 +249,7 @@ const UserAuthentication = () => {
 
     try {
       // Make a request to the backend to verify the credentials
-      const response = await fetch("https://sk-youthportal-1-mkyu.onrender.com/login", {
+      const response = await fetch("https://isked-backend.onrender.com/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
