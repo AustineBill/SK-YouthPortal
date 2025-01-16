@@ -1478,7 +1478,7 @@ app.post(
     try {
       // Process additional images
       const additionalImages = req.files
-        ? req.files.map((file) => `/Asset/Milestone/${file.filename}`)
+        ? req.files.map(async (file) =>  await uploadImage(req.file.path))
         : [];
 
       if (additionalImages.length === 0) {
@@ -2116,11 +2116,9 @@ app.get("/programs/:id", async (req, res) => {
 app.post("/programs", Programupload.single("image"), async (req, res) => {
   const { program_name, description, heading, program_type } = req.body;
 
-  if (!req.file) {
-    return res.status(400).json({ error: "No file uploaded" });
-  }
+  
 
-  const image_url =  await uploadImage(req.file.path);
+  const image_url = req.file ? await uploadImage(req.file.path) : null;
 
   try {
     // Insert the new program into the database

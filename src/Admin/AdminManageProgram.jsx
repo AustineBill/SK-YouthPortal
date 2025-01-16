@@ -77,6 +77,8 @@ const ManageProgram = () => {
   };
 
   const handleAddProgram = async () => {
+    console.log('appending formData');
+
     const formData = new FormData();
     formData.append("program_name", newProgram.name);
     formData.append("description", newProgram.description);
@@ -88,6 +90,8 @@ const ManageProgram = () => {
     }
 
     try {
+      console.log('calling programs api')
+
       const response = await axios.post(
         "https://sk-youthportal-1-mkyu.onrender.com/programs",
         formData,
@@ -95,6 +99,9 @@ const ManageProgram = () => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
+
+      console.log('api call success')
+
 
       setPrograms((prev) => [...prev, response.data]);
       setNewProgram({
