@@ -154,6 +154,12 @@ const ReservationLog = () => {
                     <td className="d-flex justify-content-center">
                       <button
                         className="btn btn-danger btn-sm"
+                        disabled={
+                          (selectedCategory === "Facility" &&
+                            reservation.status === "Disapproved") ||
+                          (selectedCategory === "Equipment" &&
+                            reservation.status === "Not Returned")
+                        }
                         onClick={() => {
                           sessionStorage.setItem(
                             "reservationId",

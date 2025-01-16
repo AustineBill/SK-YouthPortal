@@ -655,29 +655,32 @@ app.get("/reservations/:reservationId", async (req, res) => {
   }
 });
 
-app.patch("/reservations/:reservationId", async (req, res) => {
-  const { reservationId } = req.params;
+
+app.patch("/reservations/:id", async (req, res) => {
+  const { id } = req.params;
   const { is_archived } = req.body;
 
   try {
+    // Update the is_archived status in the database for the reservation
     const result = await pool.query(
-      "UPDATE Schedules SET is_archived = $1 WHERE id = $2 RETURNING *",
-      [is_archived, reservationId]
+      "UPDATE reservations SET is_archived = $1 WHERE id = $2 RETURNING *",
+      [is_archived, id]
     );
 
-    if (result.rows.length === 0) {
+    if (result.rowCount === 0) {
       return res.status(404).json({ message: "Reservation not found" });
     }
 
     res.status(200).json({
-      message: "Reservation archived successfully",
-      updatedReservation: result.rows[0],
+      message: "Reservation status updated successfully",
+      reservation: result.rows[0],
     });
   } catch (error) {
-    console.error("Error archiving reservation:", error);
+    console.error("Error updating reservation status:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
 
 /*app.delete("/reservations/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
@@ -1134,7 +1137,7 @@ app.post("/inventory", upload.single("image"), async (req, res) => {
     const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
 
     // Automatically set status based on quantity
-    const status = quantity > 0 ? "Available" : "Out of Stock";
+    const status = quantity >= 1 ? "Available" : "Out of Stock";
 
     // Insert the item data into your database
     const query =
@@ -1181,6 +1184,7 @@ app.put("/inventory/:id", upload.single("image"), async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
 app.delete("/inventory/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -2020,20 +2024,6 @@ app.get("/admindashboard", async (req, res) => {
   }
 });
 
-app.get("/Allreservations", async (req, res) => {
-  try {
-    const result = await pool.query(
-      `SELECT id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
-       FROM Schedules 
-       ORDER BY start_date ASC`
-    );
-    res.json(result.rows);
-  } catch (error) {
-    console.error("Error fetching reservations:", error);
-    res.status(500).send("Server error");
-  }
-});
-
 app.post("/approveReservations", async (req, res) => {
   const { ids } = req.body; // Array of reservation IDs to approve
 
@@ -2070,6 +2060,7 @@ app.get("/Allequipments", async (req, res) => {
     const result = await pool.query(
       `SELECT id, user_id, reservation_id, start_date, end_date, reserved_equipment, status
        FROM Equipment 
+       WHERE is_archived IS DISTINCT FROM true
        ORDER BY start_date ASC`
     );
 
@@ -2084,6 +2075,21 @@ app.get("/Allequipments", async (req, res) => {
     res.json(formattedResult);
   } catch (error) {
     console.error("Error fetching equipment reservations:", error);
+    res.status(500).send("Server error");
+  }
+});
+
+app.get("/Allreservations", async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
+       FROM Schedules 
+       WHERE is_archived IS DISTINCT FROM true
+       ORDER BY start_date ASC`
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching reservations:", error);
     res.status(500).send("Server error");
   }
 });
@@ -2093,6 +2099,7 @@ app.get("/Allschedules", async (req, res) => {
     const result = await pool.query(
       `SELECT id, user_id, reservation_id, start_date, end_date, reserved_equipment, status
        FROM E 
+       WHERE is_archived IS DISTINCT FROM true
        ORDER BY start_date ASC`
     );
 
@@ -2110,7 +2117,6 @@ app.get("/Allschedules", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
 app.get("/AllSchedules", async (req, res) => {
   try {
     const result = await pool.query(
