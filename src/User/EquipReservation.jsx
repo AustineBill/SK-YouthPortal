@@ -17,7 +17,7 @@ const EquipReservation = () => {
     const fetchReservations = async () => {
       try {
         const response = await fetch(
-          "https://sk-youthportal-1-mkyu.onrender.com/ViewEquipment"
+          "https://isked-backend.onrender.com/ViewEquipment"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch reservations");
@@ -78,7 +78,7 @@ const EquipReservation = () => {
 
     try {
       const response = await fetch(
-        "https://sk-youthportal-1-mkyu.onrender.com/CheckEquipment",
+        "https://isked-backend.onrender.com/CheckEquipment",
         {
           method: "POST",
           headers: {

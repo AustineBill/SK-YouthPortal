@@ -11,7 +11,9 @@ const About = () => {
   useEffect(() => {
     const fetchDescription = async () => {
       try {
-        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/Website");
+        const response = await axios.get(
+          "https://isked-backend.onrender.com/Website"
+        );
         setDescription(response.data.description || ""); // Handle case where description might be undefined
       } catch (error) {
         console.error("Error fetching description:", error);
@@ -26,7 +28,9 @@ const About = () => {
   useEffect(() => {
     const fetchCarouselPhotos = async () => {
       try {
-        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/api/sk");
+        const response = await axios.get(
+          "https://isked-backend.onrender.com/api/sk"
+        );
         setCarouselPhotos(response.data || []); // Ensure response is an array or fallback to an empty array
       } catch (error) {
         console.error("Error fetching carousel photos:", error);

@@ -22,7 +22,7 @@ const InventoryTable = () => {
 
   const fetchInventory = () => {
     axios
-      .get("https://sk-youthportal-1-mkyu.onrender.com/inventory")
+      .get("https://isked-backend.onrender.com/inventory")
       .then((response) => {
         setInventory(response.data);
       })
@@ -82,7 +82,7 @@ const InventoryTable = () => {
       if (currentItem) {
         // Edit
         await axios.put(
-          `https://sk-youthportal-1-mkyu.onrender.com/inventory/${currentItem.id}`,
+          `https://isked-backend.onrender.com/inventory/${currentItem.id}`,
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -90,9 +90,13 @@ const InventoryTable = () => {
         );
       } else {
         // Add
-        await axios.post("https://sk-youthportal-1-mkyu.onrender.com/inventory", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+        await axios.post(
+          "https://isked-backend.onrender.com/inventory",
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
       }
       fetchInventory();
       handleHideModal();
@@ -104,7 +108,7 @@ const InventoryTable = () => {
   const handleDelete = async (id) => {
     console.log("Deleting item with ID:", id);
     try {
-      await axios.delete(`https://sk-youthportal-1-mkyu.onrender.com/inventory/${id}`);
+      await axios.delete(`https://isked-backend.onrender.com/inventory/${id}`);
       fetchInventory();
     } catch (error) {
       console.error("Error in handleDelete:", error);

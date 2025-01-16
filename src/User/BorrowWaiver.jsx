@@ -11,7 +11,10 @@ const BorrowWaiver = () => {
 
   const saveReservation = async () => {
     try {
-      await axios.post("https://sk-youthportal-1-mkyu.onrender.com/schedule/equipment", allData);
+      await axios.post(
+        "https://isked-backend.onrender.com/schedule/equipment",
+        allData
+      );
       console.log("Facilities reservation saved successfully.");
       setShowModal(true); // Show success modal
     } catch (error) {

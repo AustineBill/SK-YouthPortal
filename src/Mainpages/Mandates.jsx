@@ -17,7 +17,9 @@ const Mandate = () => {
   useEffect(() => {
     const fetchMandateInfo = async () => {
       try {
-        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/Website");
+        const response = await axios.get(
+          "https://isked-backend.onrender.com/Website"
+        );
         setMandateInfo(response.data);
       } catch (error) {
         console.error("Error fetching mandate info:", error);
@@ -30,23 +32,29 @@ const Mandate = () => {
   return (
     <div className="container-fluid">
       <Breadcrumb className="ms-5 mt-3">
-        <Breadcrumb.Item onClick={() => navigate("/About")}>About</Breadcrumb.Item>
+        <Breadcrumb.Item onClick={() => navigate("/About")}>
+          About
+        </Breadcrumb.Item>
         <Breadcrumb.Item active>Mandate</Breadcrumb.Item>
       </Breadcrumb>
 
       <div className="text-center text-lg-start m-4 mv-8">
         <h1 className="Maintext animated slideInRight">Mandate</h1>
-        <p className="Subtext">Trailblazing Leaders Who Transformed Our Barangay.</p>
+        <p className="Subtext">
+          Trailblazing Leaders Who Transformed Our Barangay.
+        </p>
       </div>
 
       {/* Timeline Container */}
       <div className="main-timeline">
-
         {/* Mission */}
         <div className="timeline-left">
-          <div className="icon-container-outside" style={{ marginBottom: "-.01px" }}>
+          <div
+            className="icon-container-outside"
+            style={{ marginBottom: "-.01px" }}
+          >
             <img
-              src="Asset/WebImages/pngegg.png" 
+              src="Asset/WebImages/pngegg.png"
               alt="Mission Icon"
               className="icon-img-outside"
               style={{
@@ -56,8 +64,6 @@ const Mandate = () => {
                 marginTop: "-150px",
               }}
             />
-
-
           </div>
           <Card className="gradient-custom-4">
             <Card.Body className="p-4">
@@ -69,13 +75,14 @@ const Mandate = () => {
           </Card>
         </div>
 
-
         {/* Vision */}
         <div className="timeline-right">
-          <div className="icon-container-outside"
-          style={{ marginBottom: "-10px" }}>
+          <div
+            className="icon-container-outside"
+            style={{ marginBottom: "-10px" }}
+          >
             <img
-              src="Asset/WebImages/vision.png" 
+              src="Asset/WebImages/vision.png"
               alt="Vision Icon"
               className="icon-img-outside"
               style={{
@@ -85,8 +92,6 @@ const Mandate = () => {
                 marginTop: "-300px",
               }}
             />
-
-
           </div>
           <Card className="gradient-custom">
             <Card.Body className="p-4">
@@ -98,16 +103,14 @@ const Mandate = () => {
           </Card>
         </div>
 
-        
-
         {/* Objectives */}
         <div className="timeline-left">
-          <div className="icon-container-outside"
+          <div
+            className="icon-container-outside"
             style={{ marginBottom: "-135px" }}
           >
-            
             <img
-              src="Asset/WebImages/objective.png" 
+              src="Asset/WebImages/objective.png"
               alt="Objectives Icon"
               className="icon-img-outside"
               style={{

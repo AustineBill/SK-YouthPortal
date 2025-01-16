@@ -31,7 +31,7 @@ const ProfilePage = () => {
       //console.log('Fetching profile for:', username);
       try {
         const response = await fetch(
-          `https://sk-youthportal-1-mkyu.onrender.com/Profile/${username}`
+          `https://isked-backend.onrender.com/Profile/${username}`
         );
 
         if (!response.ok) {
@@ -57,7 +57,7 @@ const ProfilePage = () => {
     try {
       const id = sessionStorage.getItem("userId"); // Ensure user ID is stored in sessionStorage during login
       const response = await fetch(
-        "https://sk-youthportal-1-mkyu.onrender.com/change-password-only",
+        "https://isked-backend.onrender.com/change-password-only",
         {
           method: "POST",
           headers: {

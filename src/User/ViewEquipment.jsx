@@ -15,7 +15,9 @@ const ViewEquipment = () => {
   // Fetch reservations from the backend
   const fetchReservations = async () => {
     try {
-      const response = await fetch("https://sk-youthportal-1-mkyu.onrender.com/ViewEquipment");
+      const response = await fetch(
+        "https://isked-backend.onrender.com/ViewEquipment"
+      );
       if (!response.ok) {
         throw new Error("Error fetching reservations");
       }

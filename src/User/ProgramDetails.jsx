@@ -19,7 +19,7 @@ const Program_details = () => {
   // Fetch program details based on programType when component mounts or programType changes
   useEffect(() => {
     if (programType && isValidProgramType) {
-      fetch(`https://sk-youthportal-1-mkyu.onrender.com/api/programs/${programType}`)
+      fetch(`https://isked-backend.onrender.com/api/programs/${programType}`)
         .then((response) => response.json())
         .then((data) => {
           setProgram(data);

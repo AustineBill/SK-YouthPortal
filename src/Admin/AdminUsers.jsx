@@ -50,7 +50,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("https://sk-youthportal-1-mkyu.onrender.com/users"); // Adjust endpoint as needed
+      const response = await fetch("https://isked-backend.onrender.com/users"); // Adjust endpoint as needed
       const data = await response.json();
       setUsers(data);
     } catch (error) {
@@ -100,7 +100,7 @@ const Users = () => {
   const handleAddUser = async () => {
     // Log the user data before sending
     try {
-      const response = await fetch("https://sk-youthportal-1-mkyu.onrender.com/users", {
+      const response = await fetch("https://isked-backend.onrender.com/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -146,7 +146,7 @@ const Users = () => {
     //console.log("Form Data for Update User:", newUser);  // Print all the inputs when updating a user
     try {
       const response = await fetch(
-        `https://sk-youthportal-1-mkyu.onrender.com/users/${editUserId}`,
+        `https://isked-backend.onrender.com/users/${editUserId}`,
         {
           method: "PUT",
           headers: {
@@ -173,9 +173,12 @@ const Users = () => {
   // Delete a user
   const handleDelete = async (userId) => {
     try {
-      const response = await fetch(`https://sk-youthportal-1-mkyu.onrender.com/users/${userId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://isked-backend.onrender.com/users/${userId}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
         setUsers(users.filter((user) => user.id !== userId));
