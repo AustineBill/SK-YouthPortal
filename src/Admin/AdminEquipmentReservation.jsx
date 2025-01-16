@@ -118,6 +118,19 @@ const AdminEquipmentReservation = () => {
     }
   };
 
+  const handleArchive = async (reservationId) => {
+    try {
+      // Send the PATCH request with the reservation ID in the URL
+      await axios.patch(
+        `https://isked-backend.onrender.com/equipment/${reservationId}/archive`
+      );
+      fetchTableReservations(); // Refresh the reservations list
+      setSelectedReservations([]); // Clear selected reservations
+    } catch (error) {
+      console.error("Error archiving reservation:", error);
+    }
+  };
+
   const filterReservations = (date) => {
     return calendarReservations.filter((res) => {
       const startDate = new Date(res.start_date).toDateString();
@@ -308,13 +321,11 @@ const AdminEquipmentReservation = () => {
                     <Button
                       variant="danger"
                       className="admin-ereservation-delete-button rounded-pill"
-                      onClick={() => {
-                        sessionStorage.setItem("reservationId", reservation.id);
-                        navigate("/Cancellation");
-                      }}
+                      onClick={() => handleArchive(reservation.id)} // Pass the reservation ID
                       disabled={
                         reservation.status === "Not Returned" ||
-                        reservation.status === "Pending"
+                        reservation.status === "Pending" ||
+                        reservation.is_archived // Disable if archived
                       }
                     >
                       Archive
