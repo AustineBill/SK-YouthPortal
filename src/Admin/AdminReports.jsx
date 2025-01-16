@@ -20,19 +20,19 @@ const Reports = () => {
       try {
         let url = "";
         if (activeTable === "users") {
-          url = "https://sk-youthportal-1-mkyu.onrender.com/user-reports";
+          url = "https://isked-backend.onrender.com/user-reports";
           const response = await axios.get(url);
           setUsersData(response.data);
         } else if (activeTable === "equipment") {
-          url = "https://sk-youthportal-1-mkyu.onrender.com/equipment-reports";
+          url = "https://isked-backend.onrender.com/equipment-reports";
           const response = await axios.get(url);
           setEquipmentReservations(response.data);
         } else if (activeTable === "schedules") {
-          url = "https://sk-youthportal-1-mkyu.onrender.com/schedule-reports";
+          url = "https://isked-backend.onrender.com/schedule-reports";
           const response = await axios.get(url);
           setSchedules(response.data);
         } else if (activeTable === "inventory") {
-          url = "https://sk-youthportal-1-mkyu.onrender.com/inventory-reports";
+          url = "https://isked-backend.onrender.com/inventory-reports";
           const response = await axios.get(url);
           setInventory(response.data);
         }
@@ -211,9 +211,7 @@ const Reports = () => {
   return (
     <div className="admin-reports-container">
       <div className="admin-reports-label">
-        <h2 className="admin-reports-label-h2 fst-italic">
-          Reports
-        </h2>
+        <h2 className="admin-reports-label-h2 fst-italic">Reports</h2>
       </div>
 
       <div className="admin-reports-generate-classification-date-container d-flex align-items-center">

@@ -28,7 +28,7 @@ const AdminGymReservation = () => {
     const fetchReservations = async () => {
       try {
         const response = await axios.get(
-          "https://sk-youthportal-1-mkyu.onrender.com/Allreservations"
+          "https://isked-backend.onrender.com/Allreservations"
         );
         setReservations(response.data);
         setFilteredReservations(response.data); // For filtering
@@ -42,7 +42,9 @@ const AdminGymReservation = () => {
   // Fetch scheduled reservations for the calendar (ViewSched)
   const fetchCalendarReservations = async () => {
     try {
-      const response = await fetch("https://sk-youthportal-1-mkyu.onrender.com/ViewSched");
+      const response = await fetch(
+        "https://isked-backend.onrender.com/ViewSched"
+      );
       if (!response.ok) {
         throw new Error("Error fetching calendar reservations");
       }
@@ -97,10 +99,15 @@ const AdminGymReservation = () => {
 
   const handleApprove = async () => {
     try {
-      await axios.post("https://sk-youthportal-1-mkyu.onrender.com/approveReservations", {
-        ids: selectedReservations,
-      });
-      const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/Allreservations");
+      await axios.post(
+        "https://isked-backend.onrender.com/approveReservations",
+        {
+          ids: selectedReservations,
+        }
+      );
+      const response = await axios.get(
+        "https://isked-backend.onrender.com/Allreservations"
+      );
       setReservations(response.data);
       setFilteredReservations(response.data);
       setSelectedReservations([]); // Clear selected reservations
@@ -111,10 +118,15 @@ const AdminGymReservation = () => {
 
   const handleDisapprove = async () => {
     try {
-      await axios.post("https://sk-youthportal-1-mkyu.onrender.com/disapproveReservations", {
-        ids: selectedReservations,
-      });
-      const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/Allreservations");
+      await axios.post(
+        "https://isked-backend.onrender.com/disapproveReservations",
+        {
+          ids: selectedReservations,
+        }
+      );
+      const response = await axios.get(
+        "https://isked-backend.onrender.com/Allreservations"
+      );
       setReservations(response.data);
       setFilteredReservations(response.data);
       setSelectedReservations([]); // Clear selected reservations

@@ -21,7 +21,9 @@ const ScheduleDetails = () => {
         return;
       }
       try {
-        const response = await fetch(`https://sk-youthportal-1-mkyu.onrender.com/Details/${userId}`);
+        const response = await fetch(
+          `https://isked-backend.onrender.com/Details/${userId}`
+        );
         if (!response.ok) {
           throw new Error(
             `Server responded with ${response.status}: ${response.statusText}`

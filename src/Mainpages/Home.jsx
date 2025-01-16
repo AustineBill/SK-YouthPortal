@@ -14,7 +14,9 @@ const Intro = () => {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/api/programs");
+        const response = await axios.get(
+          "https://isked-backend.onrender.com/api/programs"
+        );
         console.log(response.data); // Log the response
         setPrograms(response.data);
       } catch (error) {
@@ -30,7 +32,9 @@ const Intro = () => {
     // Fetch events from the backend API
     const fetchEvents = async () => {
       try {
-        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/events"); // API endpoint for events
+        const response = await axios.get(
+          "https://isked-backend.onrender.com/events"
+        ); // API endpoint for events
         console.log("Fetched events:", response.data); // Log the response data for debugging
         setEvents(response.data); // Set the events in state
 
@@ -48,7 +52,9 @@ const Intro = () => {
   useEffect(() => {
     const fetchSpotlightData = async () => {
       try {
-        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/spotlight");
+        const response = await axios.get(
+          "https://isked-backend.onrender.com/spotlight"
+        );
         console.log(response.data); // Log the response
         setSpotlightData(response.data);
       } catch (error) {

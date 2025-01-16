@@ -33,7 +33,9 @@ function Equipment() {
   useEffect(() => {
     const fetchInventory = async () => {
       try {
-        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/inventory");
+        const response = await axios.get(
+          "https://isked-backend.onrender.com/inventory"
+        );
         setInventory(response.data);
         setQuantities(Array(response.data.length).fill(0));
       } catch (error) {

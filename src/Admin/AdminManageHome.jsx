@@ -24,7 +24,9 @@ const ManageHomePage = () => {
   useEffect(() => {
     const fetchSpotlight = async () => {
       try {
-        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/spotlight");
+        const response = await axios.get(
+          "https://isked-backend.onrender.com/spotlight"
+        );
         setSpotlight(response.data);
       } catch (error) {
         console.error("Error fetching spotlight data:", error);
@@ -38,7 +40,9 @@ const ManageHomePage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/events");
+        const response = await axios.get(
+          "https://isked-backend.onrender.com/events"
+        );
         setEvents(response.data);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -95,7 +99,7 @@ const ManageHomePage = () => {
 
     try {
       const response = await axios.post(
-        "https://sk-youthportal-1-mkyu.onrender.com/events",
+        "https://isked-backend.onrender.com/events",
         formData,
         {
           headers: {
@@ -117,7 +121,9 @@ const ManageHomePage = () => {
   // Handle deleting an event
   const handleDeleteEvent = async (eventId) => {
     try {
-      await axios.delete(`https://sk-youthportal-1-mkyu.onrender.com/events/${eventId}`);
+      await axios.delete(
+        `https://isked-backend.onrender.com/events/${eventId}`
+      );
       setEvents((prevEvents) =>
         prevEvents.filter((event) => event.id !== eventId)
       );
@@ -150,7 +156,7 @@ const ManageHomePage = () => {
 
     try {
       await axios.put(
-        `https://sk-youthportal-1-mkyu.onrender.com/events/${selectedEvent.id}`,
+        `https://isked-backend.onrender.com/events/${selectedEvent.id}`,
         eventData
       );
       setEvents((prevEvents) =>
@@ -188,11 +194,15 @@ const ManageHomePage = () => {
     });
 
     try {
-      await axios.post("https://sk-youthportal-1-mkyu.onrender.com/spotlight", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.post(
+        "https://isked-backend.onrender.com/spotlight",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       alert("Spotlight added successfully!");
       setSpotlightData({ additionalImages: [] }); // Reset form
     } catch (error) {
@@ -206,7 +216,7 @@ const ManageHomePage = () => {
   const removeSpotlightImage = async (spotlightId) => {
     try {
       const response = await axios.delete(
-        `https://sk-youthportal-1-mkyu.onrender.com/spotlight/${spotlightId}`
+        `https://isked-backend.onrender.com/spotlight/${spotlightId}`
       );
       alert(response.data.message); // Display success message to the user
 
