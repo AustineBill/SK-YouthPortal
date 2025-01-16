@@ -17,7 +17,6 @@ const ManageAboutUs = () => {
   // State for About Us details
   const [aboutDetails, setAboutDetails] = useState({
     description: "",
-    mandate: "",
     mission: "",
     vision: "",
     objectives: "", // Changed objective to objectives to match DB
@@ -89,7 +88,6 @@ const ManageAboutUs = () => {
 
       const formData = new FormData();
       formData.append("description", newAboutDetails.description);
-      formData.append("mandate", newAboutDetails.mandate);
       formData.append("objectives", newAboutDetails.objectives);
       formData.append("mission", newAboutDetails.mission);
       formData.append("vision", newAboutDetails.vision);
@@ -220,15 +218,6 @@ const ManageAboutUs = () => {
                 <textarea
                   className="admin-description-textarea"
                   value={aboutDetails.description}
-                  readOnly
-                />
-              </div>
-
-              <div className="admin-current-about-form d-flex flex-column">
-                <label className="admin-current-about-label">Mandate</label>
-                <textarea
-                  className="admin-mandate-textarea"
-                  value={aboutDetails.mandate}
                   readOnly
                 />
               </div>

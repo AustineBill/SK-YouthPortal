@@ -1250,18 +1250,18 @@ app.get("/contact", async (req, res) => {
   }
 });
 app.post("/Website", async (req, res) => {
-  const { description, mandate, objectives, mission, vision } = req.body;
+  const { description, objectives, mission, vision } = req.body;
 
   // Validate the input data
-  if (!description || !mandate || !objectives || !mission || !vision) {
+  if (!description || !objectives || !mission || !vision) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
   try {
     // Insert a new entry into the Website table
     await pool.query(
-      "INSERT INTO Website (description, mandate, objectives, mission, vision) VALUES ($1, $2, $3, $4, $5)",
-      [description, mandate, objectives, mission, vision]
+      "INSERT INTO Website (description, objectives, mission, vision) VALUES ($1, $2, $3, $4)",
+      [description, objectives, mission, vision]
     );
     res.status(201).json({ message: "Website details added successfully" });
   } catch (error) {
@@ -1282,10 +1282,10 @@ app.get("/Website", async (req, res) => {
 const webUpload = multer({ storage: skOfficialsStorage });
 
 app.put("/Website", webUpload.single("image"), async (req, res) => {
-  const { description, mandate, objectives, mission, vision } = req.body;
+  const { description, objectives, mission, vision } = req.body;
 
   // Validate the input data
-  if (!description || !mandate || !objectives || !mission || !vision) {
+  if (!description || !objectives || !mission || !vision) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
@@ -1298,8 +1298,8 @@ app.put("/Website", webUpload.single("image"), async (req, res) => {
   try {
     // Update website data in the Website table
     await pool.query(
-      "UPDATE Website SET description = $1, mandate = $2, objectives = $3, mission = $4, vision = $5, image_url = $7 WHERE id = $6",
-      [description, mandate, objectives, mission, vision, 1, uploadedImageUrl]
+      "UPDATE Website SET description = $1, objectives = $2, mission = $3, vision = $4, image_url = $6 WHERE id = $5",
+      [description, objectives, mission, vision, 1, uploadedImageUrl]
     );
     res.json({ message: "Website details updated successfully" });
   } catch (error) {
@@ -1739,6 +1739,30 @@ app.put("/users/:id", async (req, res) => {
   } catch (err) {
     console.error("Error updating user:", err);
     res.status(500).send("Server error");
+  }
+});
+app.patch("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  const { is_archived } = req.body;
+
+  try {
+    // Update the is_archived status in the database
+    const result = await pool.query(
+      "UPDATE reservations SET is_archived = $1 WHERE id = $2 RETURNING *",
+      [is_archived, id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Reservation not found" });
+    }
+
+    res.status(200).json({
+      message: "Reservation status updated successfully",
+      reservation: result.rows[0],
+    });
+  } catch (error) {
+    console.error("Error updating reservation status:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
