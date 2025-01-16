@@ -100,13 +100,16 @@ const Users = () => {
   const handleAddUser = async () => {
     // Log the user data before sending
     try {
-      const response = await fetch("https://isked-backend.onrender.com/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newUser), // Send the data as JSON
-      });
+      const response = await fetch(
+        "https://isked-backend.onrender.com//users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newUser), // Send the data as JSON
+        }
+      );
 
       if (response.ok) {
         const createdUser = await response.json(); // Receive the created user response from backend
@@ -146,7 +149,7 @@ const Users = () => {
     //console.log("Form Data for Update User:", newUser);  // Print all the inputs when updating a user
     try {
       const response = await fetch(
-        `https://isked-backend.onrender.com/users/${editUserId}`,
+        `https://isked-backend.onrender.com//users/${editUserId}`,
         {
           method: "PUT",
           headers: {
@@ -172,7 +175,7 @@ const Users = () => {
 
   // Delete a user
   const handleDelete = async (userId) => {
-    console.log("Deleting user with ID:", userId); // Debugging step
+    console.log("Attempting to delete user with ID:", userId);
     try {
       const response = await fetch(
         `https://isked-backend.onrender.com/users/${userId}`,
@@ -182,12 +185,11 @@ const Users = () => {
       );
 
       if (response.ok) {
+        console.log("User deleted successfully");
         setUsers(users.filter((user) => user.id !== userId));
         setDeleteModalVisible(false);
       } else {
-        console.error("Failed to delete user, status:", response.status);
-        const errorMessage = await response.text();
-        console.error("Error message:", errorMessage); // Log backend response
+        console.error("Failed to delete user. Status:", response.status);
       }
     } catch (error) {
       console.error("Error deleting user:", error);

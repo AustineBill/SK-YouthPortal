@@ -9,11 +9,9 @@ import {
   Popover,
 } from "react-bootstrap";
 import "./styles/AdminGymReservation.css";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AdminGymReservation = () => {
-  const navigate = useNavigate();
   const [reservations, setReservations] = useState([]); // Used for table data
   const [calendarReservations, setCalendarReservations] = useState([]); // Used for calendar data
   const [filteredReservations, setFilteredReservations] = useState([]);
@@ -148,7 +146,7 @@ const AdminGymReservation = () => {
     }
 
     try {
-      const endpoint = `https://isked-backend.onrender.com/users/${reservationId}`;
+      const endpoint = `https://isked-backend.onrender.com/reservations/${reservationId}`;
 
       // Send PATCH request to archive the reservation
       const response = await axios.patch(endpoint, { is_archived: true });
@@ -156,8 +154,17 @@ const AdminGymReservation = () => {
       if (response.status === 200) {
         console.log("Reservation successfully archived");
 
-        // Re-fetch reservation details to ensure UI updates
-        fetchReservations();
+        // Update the local state to remove the archived reservation
+        setReservations((prevReservations) =>
+          prevReservations.filter(
+            (reservation) => reservation.id !== reservationId
+          )
+        );
+        setFilteredReservations((prevFilteredReservations) =>
+          prevFilteredReservations.filter(
+            (reservation) => reservation.id !== reservationId
+          )
+        );
       }
     } catch (error) {
       console.error("Error cancelling reservation:", error);

@@ -212,7 +212,6 @@ const ManageAboutUs = () => {
         {activeContent === "manageAboutDetails" && !loading && (
           <div className="admin-current-about-details-container d-flex justify-content-center">
             <div className="admin-about-details-group d-flex flex-column align-items-center">
-              {/* Custom section for each field */}
               <div className="admin-current-about-form d-flex flex-column">
                 <label className="admin-current-about-label">Description</label>
                 <textarea
@@ -250,9 +249,9 @@ const ManageAboutUs = () => {
               </div>
 
               <div className="admin-current-about-form d-flex flex-column">
-                {/* <label className="admin-current-about-label">Objectives</label> */}
                 <label>Image</label>
                 <img
+                  alt="image_council"
                   src={aboutDetails.image_url}
                   style={{ width: "150px", height: "auto" }}
                 />

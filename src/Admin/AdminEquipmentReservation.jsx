@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Table,
@@ -13,7 +12,6 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 const AdminEquipmentReservation = () => {
-  const navigate = useNavigate();
   const [reservations, setReservations] = useState([]);
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
@@ -115,6 +113,39 @@ const AdminEquipmentReservation = () => {
       setSelectedReservations([]); // Clear selected reservations
     } catch (error) {
       console.error("Error marking reservations as not returned:", error);
+    }
+  };
+
+  const handleCancellation = async (reservationId, isConfirmed) => {
+    if (!isConfirmed) {
+      console.log("Cancellation not confirmed");
+      return;
+    }
+
+    try {
+      const endpoint = `https://isked-backend.onrender.com/equipment/${reservationId}`;
+
+      // Send PATCH request to archive the reservation
+      const response = await axios.patch(endpoint, { is_archived: true });
+
+      if (response.status === 200) {
+        console.log("Reservation successfully archived");
+
+        // Update the local state to remove the archived reservation
+        setReservations((prevReservations) =>
+          prevReservations.filter(
+            (reservation) => reservation.id !== reservationId
+          )
+        );
+        setFilteredReservations((prevFilteredReservations) =>
+          prevFilteredReservations.filter(
+            (reservation) => reservation.id !== reservationId
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Error cancelling reservation:", error);
+      alert("There was an error cancelling your reservation.");
     }
   };
 
@@ -308,10 +339,7 @@ const AdminEquipmentReservation = () => {
                     <Button
                       variant="danger"
                       className="admin-ereservation-delete-button rounded-pill"
-                      onClick={() => {
-                        sessionStorage.setItem("reservationId", reservation.id);
-                        navigate("/Cancellation");
-                      }}
+                      onClick={() => handleCancellation(reservation.id, true)}
                       disabled={
                         reservation.status === "Not Returned" ||
                         reservation.status === "Pending"

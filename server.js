@@ -1741,7 +1741,8 @@ app.put("/users/:id", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-app.patch("/users/:id", async (req, res) => {
+
+/*app.patch("/users/:id", async (req, res) => {
   const { id } = req.params;
   const { is_archived } = req.body;
 
@@ -1764,10 +1765,12 @@ app.patch("/users/:id", async (req, res) => {
     console.error("Error updating reservation status:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
-});
+});*/
 
 app.delete("/users/:id", async (req, res) => {
   const { id } = req.params;
+
+  console.log("Received ID for deletion:", id); // Log the received ID
 
   try {
     const result = await pool.query(
@@ -1776,12 +1779,14 @@ app.delete("/users/:id", async (req, res) => {
     );
 
     if (result.rows.length === 0) {
+      console.log("User not found with ID:", id); // Log user not found case
       return res.status(404).send("User not found");
     }
 
+    console.log("User deleted successfully:", result.rows[0]); // Log success
     res.json(result.rows[0]);
   } catch (err) {
-    console.error("Error deleting user:", err);
+    console.error("Error executing DELETE query:", err); // Log full error
     res.status(500).send("Server error");
   }
 });
