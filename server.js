@@ -750,28 +750,55 @@ app.get("/equipment/:reservationId", async (req, res) => {
   }
 });
 
-app.patch("/equipment/:reservationId/archive", async (req, res) => {
+app.patch("/equipment/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
-  console.log("Reservation ID received:", reservationId);
 
   try {
-    // Step 1: Get the reservation details
+    // Step 1: Get the reservation details to identify the reserved equipment
     const reservationResult = await pool.query(
       "SELECT * FROM Equipment WHERE reservation_id = $1",
       [reservationId]
     );
-    console.log("Reservation result:", reservationResult.rows);
 
     if (reservationResult.rows.length === 0) {
       return res.status(404).json({ message: "Reservation not found" });
     }
 
-    // Archive reservation
+    // Step 2: Get the reserved equipment
+    const reservedEquipment = reservationResult.rows[0].reserved_equipment;
+
+    // Step 3: Check if reserved_equipment is a string and parse it if necessary
+    let equipmentList;
+    if (typeof reservedEquipment === "string") {
+      // Parse the JSON string if it's in string format
+      equipmentList = JSON.parse(reservedEquipment);
+    } else {
+      // If it's already an object/array, use it directly
+      equipmentList = reservedEquipment;
+    }
+
+    // Step 4: Update the inventory for each equipment in the reservation
+    for (const equipment of equipmentList) {
+      const { id, quantity } = equipment;
+
+      // Update the inventory by increasing the quantity of the equipment
+      const updateInventoryResult = await pool.query(
+        "UPDATE Inventory SET quantity = quantity + $1 WHERE id = $2 RETURNING *",
+        [quantity, id]
+      );
+
+      if (updateInventoryResult.rowCount === 0) {
+        return res
+          .status(404)
+          .json({ message: `Equipment with id ${id} not found in inventory` });
+      }
+    }
+
+    // Step 5: Archive the reservation (Set is_archived = true)
     const archiveReservationResult = await pool.query(
       "UPDATE Equipment SET is_archived = true WHERE reservation_id = $1 RETURNING *",
       [reservationId]
     );
-    console.log("Archive Reservation Result:", archiveReservationResult.rows);
 
     if (archiveReservationResult.rowCount === 0) {
       return res
@@ -779,8 +806,10 @@ app.patch("/equipment/:reservationId/archive", async (req, res) => {
         .json({ message: "Reservation not found or already archived" });
     }
 
+    // Step 6: Return success response
     res.status(200).json({
-      message: "Reservation archived successfully",
+      message:
+        "Reservation archived and equipment quantity updated successfully",
     });
   } catch (error) {
     console.error("Error archiving reservation:", error);
@@ -962,7 +991,7 @@ app.get("/Details/:id", async (req, res) => {
 });
 
 /******** View Schedules ********/
-app.get("/ViewSched", async (req, res) => {
+/*app.get("/ViewSched", async (req, res) => {
   try {
     const result = await pool.query(`
       SELECT 
@@ -976,6 +1005,33 @@ app.get("/ViewSched", async (req, res) => {
       WHERE s.start_date >= CURRENT_DATE::date
         AND (s.is_archived IS NULL OR s.is_archived = FALSE OR s.is_archived != 't') -- Exclude archived records
       ORDER BY s.start_date ASC
+    `);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "No schedules found" });
+    }
+
+    res.json(result.rows); // Send the result as a JSON response
+  } catch (err) {
+    console.error("Error during query execution:", err);
+    res.status(500).json({ error: err.message }); // Send error message if there's an issue
+  }
+});*/
+
+app.get("/ViewSched", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        s.start_date, 
+        s.end_date, 
+        s.time_slot, 
+        u.username, 
+        s.reservation_type
+    FROM Schedules s
+    JOIN Users u ON s.user_id = u.id
+    WHERE (s.is_archived IS NULL OR s.is_archived = FALSE)
+      AND s.start_date >= CURRENT_DATE::date
+    ORDER BY s.start_date ASC
     `);
 
     if (result.rows.length === 0) {
@@ -1252,7 +1308,7 @@ app.get("/Website", async (req, res) => {
 
 const webUpload = multer({ storage: skOfficialsStorage });
 
-app.put("/Website", webUpload.single("image"), async (req, res) => {
+/*app.put("/Website", webUpload.single("image"), async (req, res) => {
   const { description, objectives, mission, vision } = req.body;
 
   // Validate the input data
@@ -1277,7 +1333,60 @@ app.put("/Website", webUpload.single("image"), async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Error updating website details" });
   }
+});*/
+
+app.put("/Website", webUpload.single("image"), async (req, res) => {
+  const { description, objectives, mission, vision } = req.body;
+
+  // Only update the fields that are provided
+  let updateFields = [];
+  let values = [];
+
+  if (description) {
+    updateFields.push("description = $1");
+    values.push(description);
+  }
+
+  if (objectives) {
+    updateFields.push("objectives = $2");
+    values.push(objectives);
+  }
+
+  if (mission) {
+    updateFields.push("mission = $3");
+    values.push(mission);
+  }
+
+  if (vision) {
+    updateFields.push("vision = $4");
+    values.push(vision);
+  }
+
+  // Handle image upload if provided
+  let uploadedImageUrl = req.body.image_url || null; // Default to null if no image URL provided
+  if (req.file) {
+    uploadedImageUrl = await uploadImage(req.file.path); // Assume this uploads the file and returns the URL
+    updateFields.push("image_url = $5");
+    values.push(uploadedImageUrl);
+  }
+
+  if (updateFields.length === 0) {
+    return res.status(400).json({ error: "No fields to update" });
+  }
+
+  try {
+    // Build the update query dynamically based on the fields
+    const query = `UPDATE Website SET ${updateFields.join(", ")} WHERE id = 1`;
+
+    // Execute the query with the dynamically created values
+    await pool.query(query, values);
+    res.json({ message: "Website details updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error updating website details" });
+  }
 });
+
 app.get("/api/sk", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM Website");
