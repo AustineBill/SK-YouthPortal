@@ -263,7 +263,8 @@ const Dashboard = () => {
                 variant="dark"
                 className="btn-dark"
                 onClick={() => {
-                  window.location.reload(); // This will reload the page
+                  setShowModal(false); // Close the modal
+                  setIsEditing(false); // Ensure editing mode is reset
                 }}
               >
                 <i className="bi bi-house m-.5"></i>

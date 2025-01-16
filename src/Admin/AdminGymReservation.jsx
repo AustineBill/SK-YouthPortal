@@ -30,8 +30,14 @@ const AdminGymReservation = () => {
         const response = await axios.get(
           "https://isked-backend.onrender.com/Allreservations"
         );
-        setReservations(response.data);
-        setFilteredReservations(response.data); // For filtering
+
+        // Filter out archived reservations (is_archived: true) and only show active ones (is_archived: false)
+        const activeReservations = response.data.filter(
+          (reservation) => !reservation.is_archived
+        );
+
+        setReservations(activeReservations); // Set the filtered list of active reservations
+        setFilteredReservations(activeReservations); // Also update filtered reservations if needed
       } catch (error) {
         console.error("Error fetching reservation data for table:", error);
       }
@@ -132,6 +138,31 @@ const AdminGymReservation = () => {
       setSelectedReservations([]); // Clear selected reservations
     } catch (error) {
       console.error("Error updating reservation status:", error);
+    }
+  };
+
+  const handleCancellation = async (reservationId, isConfirmed) => {
+    if (!isConfirmed) {
+      console.log("Cancellation not confirmed");
+      return;
+    }
+
+    try {
+      const endpoint = `https://isked-backend.onrender.com/users/${reservationId}`;
+
+      // Send PATCH request to archive the reservation
+      const response = await axios.patch(endpoint, { is_archived: true });
+
+      if (response.status === 200) {
+        setShowModal(true);
+        console.log("Reservation successfully archived");
+
+        // Re-fetch reservation details to ensure UI updates
+        fetchReservationDetails();
+      }
+    } catch (error) {
+      console.error("Error cancelling reservation:", error);
+      alert("There was an error cancelling your reservation.");
     }
   };
 
@@ -388,9 +419,7 @@ const AdminGymReservation = () => {
                   <Button
                     variant="primary"
                     className="admin-greservation-edit-button rounded-pill"
-                    onClick={() =>
-                      navigate(`/editReservation/${reservation.id}`)
-                    }
+                    onClick={() => handleCancellation(reservation.id, true)} // Pass reservation ID and confirmation
                   >
                     Archive
                   </Button>

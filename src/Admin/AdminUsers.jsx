@@ -172,6 +172,7 @@ const Users = () => {
 
   // Delete a user
   const handleDelete = async (userId) => {
+    console.log("Deleting user with ID:", userId); // Debugging step
     try {
       const response = await fetch(
         `https://isked-backend.onrender.com/users/${userId}`,
@@ -182,9 +183,11 @@ const Users = () => {
 
       if (response.ok) {
         setUsers(users.filter((user) => user.id !== userId));
-        setDeleteModalVisible(false); // Close the modal after successful deletion
+        setDeleteModalVisible(false);
       } else {
-        console.error("Failed to delete user");
+        console.error("Failed to delete user, status:", response.status);
+        const errorMessage = await response.text();
+        console.error("Error message:", errorMessage); // Log backend response
       }
     } catch (error) {
       console.error("Error deleting user:", error);
