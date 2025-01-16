@@ -139,22 +139,24 @@ const AdminGymReservation = () => {
     }
   };
 
-  const handleCancellation = async (reservationId, isConfirmed) => {
+  const handleCancellation = async (reservationId) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to cancel this reservation?"
+    );
+
     if (!isConfirmed) {
       console.log("Cancellation not confirmed");
       return;
     }
 
+    // Proceed with cancellation if confirmed
     try {
       const endpoint = `https://isked-backend.onrender.com/reservations/${reservationId}`;
-
-      // Send PATCH request to archive the reservation
-      const response = await axios.patch(endpoint, { is_archived: true });
+      const response = await axios.delete(endpoint);
 
       if (response.status === 200) {
-        console.log("Reservation successfully archived");
-
-        // Update the local state to remove the archived reservation
+        console.log("Reservation successfully cancelled");
+        // Update the local state to remove the cancelled reservation
         setReservations((prevReservations) =>
           prevReservations.filter(
             (reservation) => reservation.id !== reservationId
@@ -427,7 +429,7 @@ const AdminGymReservation = () => {
                     className="admin-greservation-edit-button rounded-pill"
                     onClick={() => handleCancellation(reservation.id, true)} // Pass reservation ID and confirmation
                   >
-                    Archive
+                    Delete
                   </Button>
                 </td>
               </tr>

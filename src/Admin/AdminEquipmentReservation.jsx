@@ -130,11 +130,21 @@ const AdminEquipmentReservation = () => {
 
   const handleArchive = async (reservationId) => {
     try {
-      await axios.patch(
-        `https://isked-backend.onrender.com/reservations/${reservationId}`,
-        { is_archived: true }
+      // Send the DELETE request with the reservation ID in the URL
+      await axios.delete(
+        `https://isked-backend.onrender.com/equipment/${reservationId}`
       );
+
+      // After archiving, fetch the updated reservations list
       fetchTableReservations(); // Refresh the reservations list
+
+      // Optionally, you could filter the reservations locally by checking the is_archived flag
+      const updatedReservations = filteredReservations.filter(
+        (reservation) => reservation.id !== reservationId
+      );
+
+      setFilteredReservations(updatedReservations); // Update the state to reflect the change
+      setSelectedReservations([]); // Clear selected reservations
     } catch (error) {
       console.error("Error archiving reservation:", error);
     }
@@ -337,7 +347,7 @@ const AdminEquipmentReservation = () => {
                         reservation.is_archived // Disable if archived
                       }
                     >
-                      Archive
+                      Button
                     </Button>
                   </td>
                 </tr>

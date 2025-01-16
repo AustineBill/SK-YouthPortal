@@ -655,7 +655,6 @@ app.get("/reservations/:reservationId", async (req, res) => {
   }
 });
 
-
 app.patch("/reservations/:id", async (req, res) => {
   const { id } = req.params;
   const { is_archived } = req.body;
@@ -681,8 +680,7 @@ app.patch("/reservations/:id", async (req, res) => {
   }
 });
 
-
-/*app.delete("/reservations/:reservationId", async (req, res) => {
+app.delete("/reservations/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
 
   try {
@@ -700,7 +698,7 @@ app.patch("/reservations/:id", async (req, res) => {
     console.error("Error cancelling reservation:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
-});*/
+});
 
 app.get("/equipment/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
@@ -820,7 +818,7 @@ app.patch("/equipment/:reservationId", async (req, res) => {
   }
 });
 
-/*app.delete("/equipment/:reservation_id", async (req, res) => {
+app.delete("/equipment/:reservation_id", async (req, res) => {
   const { reservation_id } = req.params;
 
   try {
@@ -883,7 +881,7 @@ app.patch("/equipment/:reservationId", async (req, res) => {
     console.error("Error cancelling reservation:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
-});*/
+});
 
 app.post("/Feedback", async (req, res) => {
   const { user_id, rating } = req.body; // Removed comment field
