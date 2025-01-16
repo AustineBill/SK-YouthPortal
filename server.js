@@ -1478,7 +1478,7 @@ app.post(
     try {
       // Process additional images
       const additionalImages = req.files
-        ? req.files.map(async (file) =>  await uploadImage(req.file.path))
+        ? req.files.map(async (file) =>  await uploadImage(file.path))
         : [];
 
       if (additionalImages.length === 0) {
