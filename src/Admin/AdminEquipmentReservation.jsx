@@ -27,7 +27,8 @@ const AdminEquipmentReservation = () => {
       if (!response.ok) {
         throw new Error("Error fetching calendar reservations");
       }
-      setCalendarReservations(await response.json());
+      const data = await response.json();
+      setCalendarReservations(data);
     } catch (error) {
       console.error("Error fetching calendar reservations:", error);
     }
@@ -41,21 +42,8 @@ const AdminEquipmentReservation = () => {
       );
       setReservations(response.data);
       setFilteredReservations(response.data);
-
-      // Fetch reservations after fetching the equipment data
-      const reservationsResponse = await axios.get(
-        "https://isked-backend.onrender.com/Allreservations"
-      );
-
-      // Filter out archived reservations (is_archived: true) and only show active ones (is_archived: false)
-      const activeReservations = reservationsResponse.data.filter(
-        (reservation) => !reservation.is_archived
-      );
-
-      setReservations(activeReservations); // Set the filtered list of active reservations
-      setFilteredReservations(activeReservations); // Also update filtered reservations if needed
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching table reservation data:", error);
     }
   };
 
@@ -347,7 +335,7 @@ const AdminEquipmentReservation = () => {
                         reservation.is_archived // Disable if archived
                       }
                     >
-                      Button
+                      Delete
                     </Button>
                   </td>
                 </tr>

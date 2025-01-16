@@ -992,7 +992,7 @@ app.get("/Details/:id", async (req, res) => {
 });
 
 /******** View Schedules ********/
-/*app.get("/ViewSched", async (req, res) => {
+app.get("/ViewSched", async (req, res) => {
   try {
     const result = await pool.query(`
       SELECT 
@@ -1017,9 +1017,9 @@ app.get("/Details/:id", async (req, res) => {
     console.error("Error during query execution:", err);
     res.status(500).json({ error: err.message }); // Send error message if there's an issue
   }
-});*/
+});
 
-app.get("/ViewSched", async (req, res) => {
+/*app.get("/ViewSched", async (req, res) => {
   try {
     const result = await pool.query(`
       SELECT 
@@ -1044,7 +1044,7 @@ app.get("/ViewSched", async (req, res) => {
     console.error("Error during query execution:", err);
     res.status(500).json({ error: err.message }); // Send error message if there's an issue
   }
-});
+});*/
 
 app.get("/ViewEquipment", async (req, res) => {
   try {
@@ -1212,15 +1212,14 @@ app.post("/ValidateReservation", async (req, res) => {
   const { user_id, start_date, end_date } = req.body;
 
   try {
-    // Convert start_date and end_date to Date objects
     const startDate = new Date(start_date);
     const endDate = new Date(end_date);
 
-    // Query to check for overlapping reservations, excluding archived ones
+    // Query to check for overlapping reservations only for this user
     const overlapQuery = `
       SELECT * FROM Schedules 
-      WHERE user_id = $1 
-      AND (is_archived IS NULL OR is_archived = FALSE OR is_archived != 't') -- Exclude archived reservations
+      WHERE user_id = $1 -- Only check this user's reservations
+      AND (is_archived IS NULL OR is_archived = FALSE) -- Exclude archived reservations
       AND (
         (start_date <= $2 AND end_date >= $2) OR -- Overlap with new start date
         (start_date <= $3 AND end_date >= $3) OR -- Overlap with new end date
@@ -1234,7 +1233,7 @@ app.post("/ValidateReservation", async (req, res) => {
     if (overlapResult.rowCount > 0) {
       return res.json({
         success: false,
-        message: "Your selected dates overlap with an existing reservation.",
+        message: "You already have a reservation overlapping these dates.",
       });
     }
 
