@@ -22,7 +22,7 @@ const ManageAboutUs = () => {
     vision: "",
     objectives: "", // Changed objective to objectives to match DB
     skCouncil: "",
-    image_ur: { imageCount },
+    image_url: "",
   });
 
   const [newAboutDetails, setNewAboutDetails] = useState({ ...aboutDetails });
@@ -87,22 +87,13 @@ const ManageAboutUs = () => {
     try {
       console.log("saveAboutDetails Triggered");
 
-      /* const body = {
-        description: newAboutDetails.description,
-        mandate: newAboutDetails.mandate,
-        objectives: newAboutDetails.objectives,
-        mission: newAboutDetails.mission,
-        vision: newAboutDetails.vision,
-      };
-
-      console.log("json body", body); */
-
       const formData = new FormData();
       formData.append("description", newAboutDetails.description);
       formData.append("mandate", newAboutDetails.mandate);
       formData.append("objectives", newAboutDetails.objectives);
       formData.append("mission", newAboutDetails.mission);
       formData.append("vision", newAboutDetails.vision);
+      formData.append("image", imageFile);
 
       await axios.put(
         "https://sk-youthportal-1-mkyu.onrender.com/Website",
@@ -273,11 +264,10 @@ const ManageAboutUs = () => {
 
               <div className="admin-current-about-form d-flex flex-column">
                 {/* <label className="admin-current-about-label">Objectives</label> */}
-                <label>Upload Image</label>
-                <input
-                  type="file"
-                  className="form-control"
-                  onChange={(e) => handleImageChange(e)}
+                <label>Image</label>
+                <img
+                  src={aboutDetails.image_url}
+                  style={{ width: "150px", height: "auto" }}
                 />
               </div>
 
