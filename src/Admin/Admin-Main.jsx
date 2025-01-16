@@ -44,7 +44,7 @@ const AdminMain = () => {
   const fetchDashboardData = useCallback(() => {
     setLoading(true);
     fetch(
-      `https://isked-backend.onrender.com/admindashboard?year=${selectedYear}`
+      `https://isked-backend-ssmj.onrender.com/admindashboard?year=${selectedYear}`
     )
       .then((response) => {
         if (!response.ok) {

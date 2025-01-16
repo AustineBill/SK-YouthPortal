@@ -13,7 +13,7 @@ const NewsEvents = () => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/events"
+          "https://isked-backend-ssmj.onrender.com/events"
         ); // API endpoint for events
         console.log("Fetched events:", response.data); // Log the response data for debugging
         setEventData(response.data); // Set the events in state

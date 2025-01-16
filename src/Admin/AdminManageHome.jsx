@@ -25,7 +25,7 @@ const ManageHomePage = () => {
     const fetchSpotlight = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/spotlight"
+          "https://isked-backend-ssmj.onrender.com/spotlight"
         );
         setSpotlight(response.data);
       } catch (error) {
@@ -41,7 +41,7 @@ const ManageHomePage = () => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/events"
+          "https://isked-backend-ssmj.onrender.com/events"
         );
         setEvents(response.data);
       } catch (error) {
@@ -99,7 +99,7 @@ const ManageHomePage = () => {
 
     try {
       const response = await axios.post(
-        "https://isked-backend.onrender.com/events",
+        "https://isked-backend-ssmj.onrender.com/events",
         formData,
         {
           headers: {
@@ -122,7 +122,7 @@ const ManageHomePage = () => {
   const handleDeleteEvent = async (eventId) => {
     try {
       await axios.delete(
-        `https://isked-backend.onrender.com/events/${eventId}`
+        `https://isked-backend-ssmj.onrender.com/events/${eventId}`
       );
       setEvents((prevEvents) =>
         prevEvents.filter((event) => event.id !== eventId)
@@ -156,7 +156,7 @@ const ManageHomePage = () => {
 
     try {
       await axios.put(
-        `https://isked-backend.onrender.com/events/${selectedEvent.id}`,
+        `https://isked-backend-ssmj.onrender.com/events/${selectedEvent.id}`,
         eventData
       );
       setEvents((prevEvents) =>
@@ -195,7 +195,7 @@ const ManageHomePage = () => {
 
     try {
       await axios.post(
-        "https://isked-backend.onrender.com/spotlight",
+        "https://isked-backend-ssmj.onrender.com/spotlight",
         formData,
         {
           headers: {
@@ -216,7 +216,7 @@ const ManageHomePage = () => {
   const removeSpotlightImage = async (spotlightId) => {
     try {
       const response = await axios.delete(
-        `https://isked-backend.onrender.com/spotlight/${spotlightId}`
+        `https://isked-backend-ssmj.onrender.com/spotlight/${spotlightId}`
       );
       alert(response.data.message); // Display success message to the user
 

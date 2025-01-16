@@ -50,7 +50,9 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("https://isked-backend.onrender.com/users"); // Adjust endpoint as needed
+      const response = await fetch(
+        "https://isked-backend-ssmj.onrender.com/users"
+      ); // Adjust endpoint as needed
       const data = await response.json();
       setUsers(data);
     } catch (error) {
@@ -101,7 +103,7 @@ const Users = () => {
     // Log the user data before sending
     try {
       const response = await fetch(
-        "https://isked-backend.onrender.com//users",
+        "https://isked-backend-ssmj.onrender.com//users",
         {
           method: "POST",
           headers: {
@@ -149,7 +151,7 @@ const Users = () => {
     //console.log("Form Data for Update User:", newUser);  // Print all the inputs when updating a user
     try {
       const response = await fetch(
-        `https://isked-backend.onrender.com//users/${editUserId}`,
+        `https://isked-backend-ssmj.onrender.com//users/${editUserId}`,
         {
           method: "PUT",
           headers: {
@@ -178,7 +180,7 @@ const Users = () => {
     console.log("Attempting to delete user with ID:", userId);
     try {
       const response = await fetch(
-        `https://isked-backend.onrender.com/users/${userId}`,
+        `https://isked-backend-ssmj.onrender.com/users/${userId}`,
         {
           method: "DELETE",
         }

@@ -12,7 +12,7 @@ const About = () => {
     const fetchDescription = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/Website"
+          "https://isked-backend-ssmj.onrender.com/Website"
         );
         setDescription(response.data.description || ""); // Handle case where description might be undefined
       } catch (error) {
@@ -29,7 +29,7 @@ const About = () => {
     const fetchCarouselPhotos = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/api/sk"
+          "https://isked-backend-ssmj.onrender.com/api/sk"
         );
         setCarouselPhotos(response.data || []); // Ensure response is an array or fallback to an empty array
       } catch (error) {

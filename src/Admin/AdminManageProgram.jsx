@@ -27,7 +27,7 @@ const ManageProgram = () => {
   const fetchPrograms = async () => {
     try {
       const response = await axios.get(
-        "https://isked-backend.onrender.com/api/programs"
+        "https://isked-backend-ssmj.onrender.com/api/programs"
       );
       setPrograms(response.data);
     } catch (error) {
@@ -59,7 +59,7 @@ const ManageProgram = () => {
       }
 
       await axios.put(
-        `https://isked-backend.onrender.com/programs/${selectedProgram.id}`,
+        `https://isked-backend-ssmj.onrender.com/programs/${selectedProgram.id}`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -98,7 +98,7 @@ const ManageProgram = () => {
       console.log("calling programs api");
 
       const response = await axios.post(
-        "https://isked-backend.onrender.com/programs",
+        "https://isked-backend-ssmj.onrender.com/programs",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -148,7 +148,7 @@ const ManageProgram = () => {
   const handleDeleteProgram = async (programId) => {
     try {
       await axios.delete(
-        `https://isked-backend.onrender.com/programs/${programId}`
+        `https://isked-backend-ssmj.onrender.com/programs/${programId}`
       );
       setPrograms(programs.filter((program) => program.id !== programId));
 

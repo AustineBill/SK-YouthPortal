@@ -34,7 +34,7 @@ function Equipment() {
     const fetchInventory = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/inventory"
+          "https://isked-backend-ssmj.onrender.com/inventory"
         );
         setInventory(response.data);
         setQuantities(Array(response.data.length).fill(0));

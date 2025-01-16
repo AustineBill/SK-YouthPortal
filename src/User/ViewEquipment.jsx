@@ -16,7 +16,7 @@ const ViewEquipment = () => {
   const fetchReservations = async () => {
     try {
       const response = await fetch(
-        "https://isked-backend.onrender.com/ViewEquipment"
+        "https://isked-backend-ssmj.onrender.com/ViewEquipment"
       );
       if (!response.ok) {
         throw new Error("Error fetching reservations");

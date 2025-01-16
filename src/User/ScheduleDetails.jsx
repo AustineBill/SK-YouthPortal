@@ -22,7 +22,7 @@ const ScheduleDetails = () => {
       }
       try {
         const response = await fetch(
-          `https://isked-backend.onrender.com/Details/${userId}`
+          `https://isked-backend-ssmj.onrender.com/Details/${userId}`
         );
         if (!response.ok) {
           throw new Error(
