@@ -11,7 +11,7 @@ const Spotlight = () => {
   useEffect(() => {
     const fetchCarouselPhotos = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/sk");
+        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/api/sk");
         setCarouselPhotos(response.data || []); // Ensure response is an array or fallback to an empty array
       } catch (error) {
         console.error("Error fetching carousel photos:", error);
@@ -25,7 +25,7 @@ const Spotlight = () => {
   useEffect(() => {
     const fetchSpotlightData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/spotlight");
+        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/spotlight");
         console.log(response.data); // Log the response
         setSpotlightData(response.data);
       } catch (error) {

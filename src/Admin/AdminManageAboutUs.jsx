@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 // import "./styles/AdminManageAboutUs.css";
-import '../WebStyles/Admin-CSS.css';
+import "../WebStyles/Admin-CSS.css";
 
 const pageLabels = {
   manageAboutDetails: "Manage About Us Details",
@@ -22,7 +22,7 @@ const ManageAboutUs = () => {
     vision: "",
     objectives: "", // Changed objective to objectives to match DB
     skCouncil: "",
-    image_ur: { imageCount },
+    image_url: "",
   });
 
   const [newAboutDetails, setNewAboutDetails] = useState({ ...aboutDetails });
@@ -36,7 +36,9 @@ const ManageAboutUs = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const aboutResponse = await axios.get("http://localhost:5000/Website");
+        const aboutResponse = await axios.get(
+          "https://sk-youthportal-1-mkyu.onrender.com/Website"
+        );
 
         // Log the response to check the fetched data
         console.log("Fetched data:", aboutResponse.data);
@@ -53,7 +55,7 @@ const ManageAboutUs = () => {
 
         // Fetch SK Council members
         const skCouncilResponse = await axios.get(
-          "http://localhost:5000/Skcouncil"
+          "https://sk-youthportal-1-mkyu.onrender.com/Skcouncil"
         );
         setSkCouncilInputs(skCouncilResponse.data);
       } catch (error) {
@@ -83,7 +85,21 @@ const ManageAboutUs = () => {
 
   const saveAboutDetails = async () => {
     try {
-      await axios.put("http://localhost:5000/Website", newAboutDetails);
+      console.log("saveAboutDetails Triggered");
+
+      const formData = new FormData();
+      formData.append("description", newAboutDetails.description);
+      formData.append("mandate", newAboutDetails.mandate);
+      formData.append("objectives", newAboutDetails.objectives);
+      formData.append("mission", newAboutDetails.mission);
+      formData.append("vision", newAboutDetails.vision);
+      formData.append("image", imageFile);
+
+      await axios.put(
+        "https://sk-youthportal-1-mkyu.onrender.com/Website",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
       setAboutDetails(newAboutDetails);
       setActiveContent("manageAboutDetails");
     } catch (error) {
@@ -121,7 +137,7 @@ const ManageAboutUs = () => {
     try {
       if (!currentMember.id) {
         const response = await axios.post(
-          "http://localhost:5000/Skcouncil",
+          "https://sk-youthportal-1-mkyu.onrender.com/Skcouncil",
           formData,
           {
             headers: {
@@ -136,7 +152,7 @@ const ManageAboutUs = () => {
         ]);
       } else {
         const response = await axios.put(
-          `http://localhost:5000/Skcouncil/${currentMember.id}`,
+          `https://sk-youthportal-1-mkyu.onrender.com/Skcouncil/${currentMember.id}`,
           formData,
           {
             headers: {
@@ -161,8 +177,9 @@ const ManageAboutUs = () => {
   };
 
   const handleSave = async (e) => {
+    e.preventDefault();
     await saveAboutDetails();
-    await saveSkCouncilMembers();
+    //await saveSkCouncilMembers();
     setActiveContent("manageAboutDetails");
   };
 
@@ -247,17 +264,17 @@ const ManageAboutUs = () => {
 
               <div className="admin-current-about-form d-flex flex-column">
                 {/* <label className="admin-current-about-label">Objectives</label> */}
-                <label>Upload Image</label>
-                <input
-                  type="file"
-                  className="form-control"
-                  onChange={(e) => handleImageChange(e)}
+                <label>Image</label>
+                <img
+                  src={aboutDetails.image_url}
+                  style={{ width: "150px", height: "auto" }}
                 />
               </div>
 
               <button
                 onClick={() => setActiveContent("editAboutDetails")}
-                className="admin-edit-about-details-button rounded">
+                className="admin-edit-about-details-button rounded"
+              >
                 Edit Details
               </button>
             </div>
@@ -273,10 +290,15 @@ const ManageAboutUs = () => {
               {/* Editable fields */}
               {Object.keys(newAboutDetails).map(
                 (field, idx) =>
-                  field !== "id" && (
-                    <div className={`admin-edit-${field}-form d-flex flex-column`} key={idx}>
+                  field !== "id" &&
+                  field !== "image_url" && (
+                    <div
+                      className={`admin-edit-${field}-form d-flex flex-column`}
+                      key={idx}
+                    >
                       <label className={`admin-edit-${field}-label`}>
-                        {field.replace(/([A-Z])/g, " $1")
+                        {field
+                          .replace(/([A-Z])/g, " $1")
                           .toLowerCase()
                           .replace(/^\w|\s\w/g, (match) => match.toUpperCase())}
                       </label>
@@ -289,7 +311,16 @@ const ManageAboutUs = () => {
                     </div>
                   )
               )}
-              
+              <div className="admin-current-about-form d-flex flex-column">
+                {/* <label className="admin-current-about-label">Objectives</label> */}
+                <label>Upload Image</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  onChange={(e) => handleImageChange(e)}
+                />
+              </div>
+
               <button
                 type="submit"
                 className="admin-save-about-details-button rounded text-white"
@@ -355,37 +386,37 @@ const ManageAboutUs = () => {
                   ></button>
                 </div>
                 <div className="modal-body">
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (imageFile) {
-                      saveSkCouncilMembers();
-                    } else {
-                      alert("Please upload an image");
-                    }
-                  }}
-                >
-                  <div className="">
-                    <label>Upload Image</label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      onChange={(e) => handleImageChange(e)}
-                    />
-                  </div>
-                  <button type="submit" className="btn btn-primary">
-                    Save Member
-                  </button>
-                  {/* Close button outside onSubmit */}
-                  <button
-                    type="button"
-                    className="btn btn-secondary ms-2"
-                    onClick={() => setModalVisible(false)}
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (imageFile) {
+                        saveSkCouncilMembers();
+                      } else {
+                        alert("Please upload an image");
+                      }
+                    }}
                   >
-                    Close
-                  </button>
-                </form>
-               </div>
+                    <div className="">
+                      <label>Upload Image</label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        onChange={(e) => handleImageChange(e)}
+                      />
+                    </div>
+                    <button type="submit" className="btn btn-primary">
+                      Save Member
+                    </button>
+                    {/* Close button outside onSubmit */}
+                    <button
+                      type="button"
+                      className="btn btn-secondary ms-2"
+                      onClick={() => setModalVisible(false)}
+                    >
+                      Close
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

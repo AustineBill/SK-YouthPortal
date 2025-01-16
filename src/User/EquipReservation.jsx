@@ -16,7 +16,9 @@ const EquipReservation = () => {
     // Fetch reservations from an API
     const fetchReservations = async () => {
       try {
-        const response = await fetch("http://localhost:5000/ViewEquipment");
+        const response = await fetch(
+          "https://sk-youthportal-1-mkyu.onrender.com/ViewEquipment"
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch reservations");
         }
@@ -75,16 +77,19 @@ const EquipReservation = () => {
     endDate.setHours(0, 0, 0, 0); // Ensure time is set to 12:00 AM
 
     try {
-      const response = await fetch("http://localhost:5000/CheckEquipment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: userId,
-          date: startDate.toISOString().split("T")[0],
-        }),
-      });
+      const response = await fetch(
+        "https://sk-youthportal-1-mkyu.onrender.com/CheckEquipment",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: userId,
+            date: startDate.toISOString().split("T")[0],
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to check reservation");

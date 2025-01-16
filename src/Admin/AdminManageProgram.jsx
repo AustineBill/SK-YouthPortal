@@ -26,7 +26,7 @@ const ManageProgram = () => {
   // Fetch all programs
   const fetchPrograms = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/programs");
+      const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/api/programs");
       setPrograms(response.data);
     } catch (error) {
       console.error("Error fetching programs:", error);
@@ -57,7 +57,7 @@ const ManageProgram = () => {
       }
 
       await axios.put(
-        `http://localhost:5000/programs/${selectedProgram.id}`,
+        `https://sk-youthportal-1-mkyu.onrender.com/programs/${selectedProgram.id}`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -76,25 +76,36 @@ const ManageProgram = () => {
     }
   };
 
-  const handleAddProgram = async () => {
-    const formData = new FormData();
-    formData.append("program_name", newProgram.name);
-    formData.append("description", newProgram.description);
-    formData.append("heading", newProgram.heading);
-    formData.append("program_type", newProgram.program_type);
+  const handleAddProgram = async (e) => {
+    e.preventDefault();
 
-    if (newProgram.image) {
-      formData.append("image", newProgram.image);
-    }
+
 
     try {
+      console.log('appending formData');
+
+      const formData = new FormData();
+      formData.append("program_name", newProgram.name);
+      formData.append("description", newProgram.description);
+      formData.append("heading", newProgram.heading);
+      formData.append("program_type", newProgram.program_type);
+  
+      if (newProgram.image) {
+        formData.append("image", newProgram.image);
+      }
+  
+      console.log('FormData contents:', formData);  // Add this line
+      console.log('calling programs api');
+
       const response = await axios.post(
-        "http://localhost:5000/programs",
+        "https://sk-youthportal-1-mkyu.onrender.com/programs",
         formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
+        { headers: { "Content-Type": "multipart/form-data" } }
+
       );
+
+      console.log('api call success')
+
 
       setPrograms((prev) => [...prev, response.data]);
       setNewProgram({
@@ -138,7 +149,7 @@ const ManageProgram = () => {
 
   const handleDeleteProgram = async (programId) => {
     try {
-      await axios.delete(`http://localhost:5000/programs/${programId}`);
+      await axios.delete(`https://sk-youthportal-1-mkyu.onrender.com/programs/${programId}`);
       setPrograms(programs.filter((program) => program.id !== programId));
 
       setModalMessage("Program deleted successfully!");
@@ -154,7 +165,12 @@ const ManageProgram = () => {
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
+
+    
     if (file) {
+      setSelectedProgram((prev) => ({ ...prev, image: file }));
+      setNewProgram((prev) => ({ ...prev, image: file }));
+
       if (selectedProgram) {
         setSelectedProgram((prev) => ({ ...prev, image: file }));
       } else {

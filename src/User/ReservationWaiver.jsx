@@ -18,7 +18,7 @@ const ReservationWaiver = () => {
         end_date: new Date(allData.end_date).toISOString().split("T")[0], // Save in 'YYYY-MM-DD' format
       };
 
-      await axios.post("http://localhost:5000/reservations", formattedData);
+      await axios.post("https://sk-youthportal-1-mkyu.onrender.com/reservations", formattedData);
       console.log("Facilities reservation saved successfully.");
     } catch (error) {
       console.error("Error during reservation process:", error);

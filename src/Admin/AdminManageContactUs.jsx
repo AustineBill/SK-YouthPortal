@@ -21,7 +21,7 @@ const ManageContactUs = () => {
   useEffect(() => {
     const fetchContactDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/contact');
+        const response = await axios.get('https://sk-youthportal-1-mkyu.onrender.com/contact');
         setContactDetails(response.data);
         setNewContactDetails(response.data); // Pre-fill newContactDetails
       } catch (error) {
@@ -36,7 +36,7 @@ const ManageContactUs = () => {
   const saveContactDetails = async () => {
     console.log("Saving contact details:", newContactDetails);  // Check what data is being sent
     try {
-      const response = await axios.put('http://localhost:5000/contact', newContactDetails);
+      const response = await axios.put('https://sk-youthportal-1-mkyu.onrender.com/contact', newContactDetails);
       console.log("Response:", response); // Log the response from the backend
       setContactDetails(newContactDetails); // Update the state with new contact details
       setActiveContent('manageContactDetails');

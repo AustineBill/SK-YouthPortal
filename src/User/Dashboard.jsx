@@ -16,7 +16,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchProgramData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/programs");
+        const response = await axios.get("https://sk-youthportal-1-mkyu.onrender.com/api/programs");
         setPrograms(response.data);
       } catch (error) {
         console.error("Error fetching programs:", error);
@@ -38,7 +38,7 @@ const Dashboard = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/Feedback/${userId}`
+          `https://sk-youthportal-1-mkyu.onrender.com/Feedback/${userId}`
         );
 
         if (response.data) {
@@ -77,13 +77,13 @@ const Dashboard = () => {
       if (isEditing) {
         // Update existing feedback
         response = await axios.put(
-          `http://localhost:5000/Feedback/${userId}`,
+          `https://sk-youthportal-1-mkyu.onrender.com/Feedback/${userId}`,
           feedbackData
         );
       } else {
         // Submit new feedback
         response = await axios.post(
-          "http://localhost:5000/Feedback",
+          "https://sk-youthportal-1-mkyu.onrender.com/Feedback",
           feedbackData
         );
       }

@@ -12,7 +12,7 @@ const UserDetails = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/Users/${id}`);
+                const response = await fetch(`https://sk-youthportal-1-mkyu.onrender.com/Users/${id}`);
                 if (!response.ok) {
                     throw new Error('User not found');
                 }

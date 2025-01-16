@@ -22,11 +22,14 @@ app.use(express.json({ limit: "20mb" })); // Allow up to 20MB for JSON payloads
 app.use(express.urlencoded({ limit: "20mb", extended: true })); // Allow up to 20MB for URL-encoded payloads
 
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "iSKed",
-  password: "iSKedWB2024",
+  user: "u8fb8jkrteh3jl",
+  host: "cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com",
+  database: "dalvnvq3lud30l",
+  password: "pc9c5ce7254f1ebd744a2d9c74677555fffab0e0533ca3e2c5341c2ac18d4c5da",
   port: 5432,
+  ssl: {
+    rejectUnauthorized: false, // This allows connections even without a certificate. Set to true for stricter security.
+  },
 });
 
 app.use("/public", express.static(path.join(__dirname, "public")));
@@ -56,6 +59,41 @@ const transporter = nodemailer.createTransport({
     pass: "htsyzbfwazgqmxzo", // Your app password for Gmail (don't use your regular Gmail password)
   },
 });
+
+const cloudinary = require("cloudinary").v2;
+
+// Configuration
+cloudinary.config({
+  cloud_name: "diewc7vew",
+  api_key: "438357342246287",
+  api_secret: "pHmXJT1fLBepc4PYcbemcqgE1mc", // Replace with your actual secret key
+});
+
+/**
+ * Function to upload an image to Cloudinary
+ * @param {string} path - The file path of the image to upload
+ * @returns {Promise<string>} - The secure URL of the uploaded image
+ */
+async function uploadImage(path) {
+  try {
+    const uniquePublicId = `image_${Date.now()}`; // Generate unique public_id
+    const uploadResult = await cloudinary.uploader.upload(path, {
+      public_id: uniquePublicId,
+    });
+    return uploadResult.secure_url; // Return only the secure URL
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw error; // Propagate error for the caller to handle
+  }
+}
+
+// Example usage:
+// Call the function when needed (replace '/path/to/image.jpg' with the actual image path)
+// uploadImage('/home/a4meta/Pictures/tropic_island_morning.jpg')
+//     .then((url) => console.log("Uploaded image URL:", url))
+//     .catch((error) => console.error("Upload failed:", error));
+
+module.exports = { uploadImage };
 
 /********* Website ******** */
 
@@ -1066,6 +1104,7 @@ app.post("/inventory", upload.single("image"), async (req, res) => {
 
     const { name, quantity, specification } = req.body; // Exclude 'status' from the request
     const imageFileName = "/Equipment/" + req.file.filename; // Save only the relative path
+    const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
 
     // Automatically set status based on quantity
     const status = quantity > 0 ? "Available" : "Out of Stock";
@@ -1073,7 +1112,7 @@ app.post("/inventory", upload.single("image"), async (req, res) => {
     // Insert the item data into your database
     const query =
       "INSERT INTO inventory (name, quantity, specification, status, image) VALUES ($1, $2, $3, $4, $5)";
-    const values = [name, quantity, specification, status, imageFileName];
+    const values = [name, quantity, specification, status, uploadedImageUrl];
 
     await pool.query(query, values);
 
@@ -1101,7 +1140,9 @@ app.put("/inventory/:id", upload.single("image"), async (req, res) => {
     if (req.file) {
       const imageFileName = "/Equipment/" + req.file.filename;
       query += ", image = $5 WHERE id = $6";
-      values.push(imageFileName, id);
+      const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
+
+      values.push(uploadedImageUrl, id);
     } else {
       query += " WHERE id = $5";
       values.push(id);
@@ -1237,7 +1278,10 @@ app.get("/Website", async (req, res) => {
     res.status(500).json({ error: "Error fetching website details" });
   }
 });
-app.put("/Website", async (req, res) => {
+
+const webUpload = multer({ storage: skOfficialsStorage });
+
+app.put("/Website", webUpload.single("image"), async (req, res) => {
   const { description, mandate, objectives, mission, vision } = req.body;
 
   // Validate the input data
@@ -1245,11 +1289,17 @@ app.put("/Website", async (req, res) => {
     return res.status(400).json({ error: "All fields are required" });
   }
 
+  if (!req.file) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
+
   try {
     // Update website data in the Website table
     await pool.query(
-      "UPDATE Website SET description = $1, mandate = $2, objectives = $3, mission = $4, vision = $5 WHERE id = $6",
-      [description, mandate, objectives, mission, vision, 1]
+      "UPDATE Website SET description = $1, mandate = $2, objectives = $3, mission = $4, vision = $5, image_url = $7 WHERE id = $6",
+      [description, mandate, objectives, mission, vision, 1, uploadedImageUrl]
     );
     res.json({ message: "Website details updated successfully" });
   } catch (error) {
@@ -1271,7 +1321,10 @@ app.get("/api/sk", async (req, res) => {
           ...item,
           image_url: url.startsWith("http")
             ? url
-            : `http://localhost:5000${url.replace("/Asset", "/public/Asset")}`,
+            : `https://sk-youthportal-1-mkyu.onrender.com${url.replace(
+                "/Asset",
+                "/public/Asset"
+              )}`,
         }));
       })
       .flat(); // Flatten the array of image URLs into a single array
@@ -1298,7 +1351,7 @@ app.get("/Skcouncil", async (req, res) => {
             ...item,
             image_url: url.startsWith("http")
               ? url
-              : `http://localhost:5000${url.replace(
+              : `https://sk-youthportal-1-mkyu.onrender.com${url.replace(
                   "/Asset",
                   "/public/Asset"
                 )}`,
@@ -1325,12 +1378,13 @@ app.post("/Skcouncil", skOfficialsupload.single("image"), async (req, res) => {
   }
 
   const imagePath = "/Asset/SK_Officials/" + req.file.filename; // Use the new unique filename path
+  const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
 
   try {
     // Check if the image already exists in the database
     const existingRecord = await pool.query(
       "SELECT * FROM SkCouncil WHERE image = $1",
-      [imagePath]
+      [uploadedImageUrl]
     );
 
     if (existingRecord.rows.length > 0) {
@@ -1342,7 +1396,7 @@ app.post("/Skcouncil", skOfficialsupload.single("image"), async (req, res) => {
     // If no duplicate is found, insert the new record
     const result = await pool.query(
       "INSERT INTO SkCouncil (image) VALUES ($1) RETURNING *",
-      [imagePath]
+      [uploadedImageUrl]
     );
 
     res.status(201).json({
@@ -1366,10 +1420,12 @@ app.put(
       return res.status(400).json({ error: "No file uploaded" });
     }
     const imagePath = "/Asset/SK_Officials/" + req.file.filename; // Generate the image path
+    const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
+
     try {
       const result = await pool.query(
         "UPDATE SkCouncil SET image = $1 WHERE id = $2 RETURNING *",
-        [imagePath, id] // Update the image column with the new file path
+        [uploadedImageUrl, id] // Update the image column with the new file path
       );
 
       if (result.rows.length === 0) {
@@ -1407,7 +1463,7 @@ app.get("/spotlight", async (req, res) => {
         return {
           ...item,
           frontImage: item.frontimage
-            ? `http://localhost:5000${item.frontimage.replace(
+            ? `https://sk-youthportal-1-mkyu.onrender.com${item.frontimage.replace(
                 "/Asset",
                 "/public/Asset"
               )}`
@@ -1415,7 +1471,10 @@ app.get("/spotlight", async (req, res) => {
           images: imageUrls.map((url) =>
             url.startsWith("http")
               ? url
-              : `http://localhost:5000${url.replace("/Asset", "/public/Asset")}`
+              : `https://sk-youthportal-1-mkyu.onrender.com${url.replace(
+                  "/Asset",
+                  "/public/Asset"
+                )}`
           ),
         };
       })
@@ -1436,7 +1495,9 @@ app.post(
     try {
       // Process additional images
       const additionalImages = req.files
-        ? req.files.map((file) => `/Asset/Milestone/${file.filename}`)
+        ? await Promise.all(
+            req.files.map(async (file) => await uploadImage(file.path))
+          )
         : [];
 
       if (additionalImages.length === 0) {
@@ -2007,7 +2068,7 @@ app.get("/api/programs", async (req, res) => {
       const imageUrl = program.image_url
         ? program.image_url.startsWith("http")
           ? program.image_url
-          : `http://localhost:5000${program.image_url.replace(
+          : `https://sk-youthportal-1-mkyu.onrender.com${program.image_url.replace(
               "/Asset",
               "/public/Asset"
             )}`
@@ -2073,7 +2134,8 @@ app.get("/programs/:id", async (req, res) => {
 
 app.post("/programs", Programupload.single("image"), async (req, res) => {
   const { program_name, description, heading, program_type } = req.body;
-  const image_url = req.file ? `/Asset/Programs/${req.file.filename}` : null;
+
+  const image_url = req.file ? await uploadImage(req.file.path) : null;
 
   try {
     // Insert the new program into the database
@@ -2115,7 +2177,7 @@ app.put("/programs/:id", Programupload.single("image"), async (req, res) => {
 
   if (req.file) {
     // Use the new uploaded image if provided
-    image_url = `/Asset/Programs/${req.file.filename}`;
+    image_url = await uploadImage(req.file.path); //`/Asset/Programs/${req.file.filename}`;
   } else {
     // Retain the existing image URL if no new file is uploaded
     const existingProgram = await pool.query(
@@ -2209,7 +2271,7 @@ app.post("/events", Eventupload.single("event_image"), async (req, res) => {
   const { event_name, event_description } = req.body;
 
   try {
-    const event_image = `/Asset/Events/${req.file.filename}`; // Construct the file path
+    const event_image = await uploadImage(req.file.path); //`/Asset/Events/${req.file.filename}`; // Construct the file path
     const result = await pool.query(
       "INSERT INTO home (event_name, event_description, event_image) VALUES ($1, $2, $3) RETURNING *",
       [event_name, event_description, event_image]
@@ -2343,7 +2405,7 @@ app.post("/forgot-password", async (req, res) => {
       html: `
               <h1>Password Reset</h1>
               <p>You requested a password reset. Please click the link below to reset your password:</p>
-              <a href="http://localhost:5000/reset-password?token=${resetToken}">Reset Password</a>
+              <a href="https://sk-youthportal-1-mkyu.onrender.com/reset-password?token=${resetToken}">Reset Password</a>
           `,
     };
 

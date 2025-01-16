@@ -19,8 +19,8 @@ const CancelReservation = () => {
     try {
       const endpoint =
         reservationType === "Facility"
-          ? `http://localhost:5000/reservations/${reservationId}`
-          : `http://localhost:5000/equipment/${reservationId}`;
+          ? `https://sk-youthportal-1-mkyu.onrender.com/reservations/${reservationId}`
+          : `https://sk-youthportal-1-mkyu.onrender.com/equipment/${reservationId}`;
 
       const response = await axios.get(endpoint);
       if (response.status === 200 && !response.data.is_archived) {
@@ -47,8 +47,8 @@ const CancelReservation = () => {
     try {
       const endpoint =
         reservationType === "Facility"
-          ? `http://localhost:5000/reservations/${reservationId}`
-          : `http://localhost:5000/equipment/${reservationId}`;
+          ? `https://sk-youthportal-1-mkyu.onrender.com/reservations/${reservationId}`
+          : `https://sk-youthportal-1-mkyu.onrender.com/equipment/${reservationId}`;
 
       // Send PATCH request to archive the reservation
       const response = await axios.patch(endpoint, { is_archived: true });

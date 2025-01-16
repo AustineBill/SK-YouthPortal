@@ -20,19 +20,19 @@ const Reports = () => {
       try {
         let url = "";
         if (activeTable === "users") {
-          url = "http://localhost:5000/user-reports";
+          url = "https://sk-youthportal-1-mkyu.onrender.com/user-reports";
           const response = await axios.get(url);
           setUsersData(response.data);
         } else if (activeTable === "equipment") {
-          url = "http://localhost:5000/equipment-reports";
+          url = "https://sk-youthportal-1-mkyu.onrender.com/equipment-reports";
           const response = await axios.get(url);
           setEquipmentReservations(response.data);
         } else if (activeTable === "schedules") {
-          url = "http://localhost:5000/schedule-reports";
+          url = "https://sk-youthportal-1-mkyu.onrender.com/schedule-reports";
           const response = await axios.get(url);
           setSchedules(response.data);
         } else if (activeTable === "inventory") {
-          url = "http://localhost:5000/inventory-reports";
+          url = "https://sk-youthportal-1-mkyu.onrender.com/inventory-reports";
           const response = await axios.get(url);
           setInventory(response.data);
         }
@@ -92,7 +92,7 @@ const Reports = () => {
     }
 
     const input = document.getElementById("admin-reports-tables-container");
-    const backgroundImage = `${process.env.PUBLIC_URL}/Asset/WebImages/bgreportskadmin.jpg`;
+    const backgroundImage = `https://res.cloudinary.com/diewc7vew/image/upload/v1737004522/WebImages/fl5p9aafi9r6nvgrmlnf.png`;
 
     html2canvas(input, {
       useCORS: true,

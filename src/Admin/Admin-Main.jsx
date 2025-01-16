@@ -43,7 +43,7 @@ const AdminMain = () => {
 
     const fetchDashboardData = useCallback(() => {
         setLoading(true);
-        fetch(`http://localhost:5000/admindashboard?year=${selectedYear}`)
+        fetch(`https://sk-youthportal-1-mkyu.onrender.com/admindashboard?year=${selectedYear}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch data: ${response.statusText}`);
