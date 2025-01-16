@@ -1103,6 +1103,7 @@ app.post("/inventory", upload.single("image"), async (req, res) => {
 
     const { name, quantity, specification } = req.body; // Exclude 'status' from the request
     const imageFileName = "/Equipment/" + req.file.filename; // Save only the relative path
+    const uploadedImageUrl = await uploadImage(req.file.path);  // Wait for the upload to finish
 
     // Automatically set status based on quantity
     const status = quantity > 0 ? "Available" : "Out of Stock";
@@ -1110,7 +1111,7 @@ app.post("/inventory", upload.single("image"), async (req, res) => {
     // Insert the item data into your database
     const query =
       "INSERT INTO inventory (name, quantity, specification, status, image) VALUES ($1, $2, $3, $4, $5)";
-    const values = [name, quantity, specification, status, imageFileName];
+    const values = [name, quantity, specification, status, uploadedImageUrl];
 
     await pool.query(query, values);
 
@@ -1138,7 +1139,9 @@ app.put("/inventory/:id", upload.single("image"), async (req, res) => {
     if (req.file) {
       const imageFileName = "/Equipment/" + req.file.filename;
       query += ", image = $5 WHERE id = $6";
-      values.push(imageFileName, id);
+      const uploadedImageUrl = await uploadImage(req.file.path);  // Wait for the upload to finish
+
+      values.push(uploadedImageUrl, id);
     } else {
       query += " WHERE id = $5";
       values.push(id);
@@ -1360,12 +1363,14 @@ app.post("/Skcouncil", skOfficialsupload.single("image"), async (req, res) => {
   }
 
   const imagePath = "/Asset/SK_Officials/" + req.file.filename; // Use the new unique filename path
+  const uploadedImageUrl = await uploadImage(req.file.path);  // Wait for the upload to finish
+
 
   try {
     // Check if the image already exists in the database
     const existingRecord = await pool.query(
       "SELECT * FROM SkCouncil WHERE image = $1",
-      [imagePath]
+      [uploadedImageUrl]
     );
 
     if (existingRecord.rows.length > 0) {
@@ -1377,7 +1382,7 @@ app.post("/Skcouncil", skOfficialsupload.single("image"), async (req, res) => {
     // If no duplicate is found, insert the new record
     const result = await pool.query(
       "INSERT INTO SkCouncil (image) VALUES ($1) RETURNING *",
-      [imagePath]
+      [uploadedImageUrl]
     );
 
     res.status(201).json({
@@ -1401,10 +1406,12 @@ app.put(
       return res.status(400).json({ error: "No file uploaded" });
     }
     const imagePath = "/Asset/SK_Officials/" + req.file.filename; // Generate the image path
+    const uploadedImageUrl = await uploadImage(req.file.path);  // Wait for the upload to finish
+
     try {
       const result = await pool.query(
         "UPDATE SkCouncil SET image = $1 WHERE id = $2 RETURNING *",
-        [imagePath, id] // Update the image column with the new file path
+        [uploadedImageUrl, id] // Update the image column with the new file path
       );
 
       if (result.rows.length === 0) {
@@ -2108,7 +2115,7 @@ app.get("/programs/:id", async (req, res) => {
 
 app.post("/programs", Programupload.single("image"), async (req, res) => {
   const { program_name, description, heading, program_type } = req.body;
-  const image_url = req.file ? `/Asset/Programs/${req.file.filename}` : null;
+  const image_url = req.file ? await uploadImage(req.file.path) : null;
 
   try {
     // Insert the new program into the database
@@ -2150,7 +2157,9 @@ app.put("/programs/:id", Programupload.single("image"), async (req, res) => {
 
   if (req.file) {
     // Use the new uploaded image if provided
-    image_url = `/Asset/Programs/${req.file.filename}`;
+    image_url = await uploadImage(req.file.path);  //`/Asset/Programs/${req.file.filename}`;
+
+
   } else {
     // Retain the existing image URL if no new file is uploaded
     const existingProgram = await pool.query(
