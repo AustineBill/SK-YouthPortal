@@ -25,13 +25,14 @@ Components:
 
 
 **DEPLOYMENT:**
-  Render FrontEnd: //isked-wdj9.onrender.com
-  
-  Render Backend: https://isked-backend-ssmj.onrender.com
+
+  - Render FrontEnd: //isked-wdj9.onrender.com
     
-  Heroku Database: https://data.heroku.com/datastores/e52785ce-2527-48b4-be2c-3ef8b2f4dd4b
-  
-  Cloudinary (for uploading/storing images): 
+  - Render Backend: https://isked-backend-ssmj.onrender.com
+    
+  - Heroku Database: https://data.heroku.com/datastores/e52785ce-2527-48b4-be2c-3ef8b2f4dd4b
+    
+  - Cloudinary (for uploading/storing images): 
         Dashboard: https://console.cloudinary.com/pm/c-db7586056373afe4356fcae2288baf/developer-dashboard
         Media Explorer: https://console.cloudinary.com/pm/c-db7586056373afe4356fcae2288baf/media-explorer
        
