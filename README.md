@@ -6,11 +6,11 @@
 **PROJECT DOCUMENTATION SUMMARY**
 
 Components:
-MainPages Folder: Landing Page 
-Admin Folder: Admin Modules
-User Folder: User Modules
-WebStyles Folder: Global Styles CSS
-WebStructure Folder: structure javascript (auth context, codex)
+  1. MainPages Folder: Landing Page 
+  2. Admin Folder: Admin Modules
+  3. User Folder: User Modules
+  4. WebStyles Folder: Global Styles CSS
+  5. WebStructure Folder: structure javascript (auth context, codex)
 
 Backend File:
 - server.js
@@ -21,8 +21,8 @@ Build command
 
 
 DATABASE MANAGEMENT SYSTEM:
-  pgAdmin - local machine
-  DBeaver - Global - With Heroku Database
+  1. pgAdmin - local machine
+  2. DBeaver - Global - With Heroku Database
 
 
 DEPLOYMENT:
@@ -38,11 +38,11 @@ DEPLOYMENT:
        
 
 **PROPONENTS:**
-              JADE S. CORPIN - Project Manager, Lead Data Researcher, Front-end Developer
-              MARK JHAY CORPUZ - Lead Front-end Developer, UI/UX Designer
-              AUSTINE BILL RYAN N. MALIC - Lead Programmer, Back-end Developer
-              JEREMY PAUL RICERRA - Back-end, UI/UX Designer
-              MARIVIC TUAZON - Data Researcher, Lead Data Analyst
+              1. JADE S. CORPIN - Project Manager, Lead Data Researcher, Front-end Developer
+              2. MARK JHAY CORPUZ - Lead Front-end Developer, UI/UX Designer
+              3.AUSTINE BILL RYAN N. MALIC - Lead Programmer, Back-end Developer
+              4. JEREMY PAUL RICERRA - Back-end, UI/UX Designer
+              5. MARIVIC TUAZON - Data Researcher, Lead Data Analyst
   
   
   
