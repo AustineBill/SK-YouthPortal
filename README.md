@@ -38,6 +38,7 @@ DEPLOYMENT:
        
 
 **PROPONENTS:**
+
               1. JADE S. CORPIN - Project Manager, Lead Data Researcher, Front-end Developer
               
               2. MARK JHAY CORPUZ - Lead Front-end Developer, UI/UX Designer
