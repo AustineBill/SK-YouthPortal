@@ -39,9 +39,13 @@ DEPLOYMENT:
 
 **PROPONENTS:**
               1. JADE S. CORPIN - Project Manager, Lead Data Researcher, Front-end Developer
+              
               2. MARK JHAY CORPUZ - Lead Front-end Developer, UI/UX Designer
+              
               3.AUSTINE BILL RYAN N. MALIC - Lead Programmer, Back-end Developer
+              
               4. JEREMY PAUL RICERRA - Back-end, UI/UX Designer
+              
               5. MARIVIC TUAZON - Data Researcher, Lead Data Analyst
   
   
