@@ -12,20 +12,19 @@ Components:
   4. WebStyles Folder: Global Styles CSS
   5. WebStructure Folder: structure javascript (auth context, codex)
 
-Backend File:
+**Backend File:**
 - server.js
   
-Build command
+**Build command**
   1. npm start - launches the ront-end development server for this web application
   2. npm run server - starts the backend server 
 
-
-DATABASE MANAGEMENT SYSTEM:
+**DATABASE MANAGEMENT SYSTEM:**
   1. pgAdmin - local machine
   2. DBeaver - Global - With Heroku Database
 
 
-DEPLOYMENT:
+**DEPLOYMENT:**
   Render FrontEnd: //isked-wdj9.onrender.com
   
   Render Backend: https://isked-backend-ssmj.onrender.com
