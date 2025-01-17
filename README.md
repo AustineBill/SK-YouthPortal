@@ -7,10 +7,10 @@
 
 Components:
 MainPages Folder: Landing Page 
-Admin Folder: 
-User Folder:
-WebStyles Folder:
-WebStructure Folder:
+Admin Folder: Admin Modules
+User Folder: User Modules
+WebStyles Folder: Global Styles CSS
+WebStructure Folder: structure javascript (auth context, codex)
 
 Backend File:
 - server.js
