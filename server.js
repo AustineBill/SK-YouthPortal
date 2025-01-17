@@ -2517,7 +2517,7 @@ app.post("/forgot-password", async (req, res) => {
       html: `
               <h1>Password Reset</h1>
               <p>You requested a password reset. Please click the link below to reset your password:</p>
-              <a href="https://isked-backend-ssmj.onrender.com//reset-password?token=${resetToken}">Reset Password</a>
+              <a href="https://isked-backend-ssmj.onrender.com/reset-password?token=${resetToken}">Reset Password</a>
           `,
     };
 
