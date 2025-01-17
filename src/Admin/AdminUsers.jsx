@@ -103,7 +103,7 @@ const Users = () => {
     // Log the user data before sending
     try {
       const response = await fetch(
-        "https://isked-backend-ssmj.onrender.com//users",
+        "https://isked-backend-ssmj.onrender.com/users",
         {
           method: "POST",
           headers: {
@@ -151,7 +151,7 @@ const Users = () => {
     //console.log("Form Data for Update User:", newUser);  // Print all the inputs when updating a user
     try {
       const response = await fetch(
-        `https://isked-backend-ssmj.onrender.com//users/${editUserId}`,
+        `https://isked-backend-ssmj.onrender.com/users/${editUserId}`,
         {
           method: "PUT",
           headers: {
