@@ -26,7 +26,20 @@ Components:
 
 **DEPLOYMENT:**
 
-  - Render FrontEnd: //isked-wdj9.onrender.com
+ https://isked-wdj9.onrender.com
+
+ if the link doesn't work try this.
+* Make sure Frontend and Backend Both in Current Browser are Open
+* Link Below to Access
+
+* Admin:
+    - username: admin123
+    - password: 123
+* Users:
+    - username: Billy
+    - password: 12345
+
+  - Render FrontEnd: https://isked-wdj9.onrender.com
     
   - Render Backend: https://isked-backend-ssmj.onrender.com
     
