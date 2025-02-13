@@ -22,14 +22,14 @@ app.use(express.json({ limit: "20mb" })); // Allow up to 20MB for JSON payloads
 app.use(express.urlencoded({ limit: "20mb", extended: true })); // Allow up to 20MB for URL-encoded payloads
 
 const pool = new Pool({
-  user: "postgres", //u8fb8jkrteh3jl
-  host: "localhost", //cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com
-  database: "iSKed", //dalvnvq3lud30l
-  password: "iSKedWB2024", //pc9c5ce7254f1ebd744a2d9c74677555fffab0e0533ca3e2c5341c2ac18d4c5da
+  user: "u8fb8jkrteh3jl",
+  host: "dpg-cun11jdsvqrc73fmkubg-a", //cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com
+  database: "dalvnvq3lud30l",
+  password: "3I7JvNk0AqF1jlYe2xHOpzrEukzhwusd",
   port: 5432,
-  /*  rejectUnauthorized: false, // This allows connections even without a certificate. Set to true for stricter security.
-  }ssl: {
-  ,*/
+  ssl: {
+    rejectUnauthorized: false, // This allows connections even without a certificate. Set to true for stricter security.
+  },
 });
 
 app.use("/public", express.static(path.join(__dirname, "public")));
