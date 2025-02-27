@@ -22,10 +22,10 @@ app.use(express.json({ limit: "20mb" })); // Allow up to 20MB for JSON payloads
 app.use(express.urlencoded({ limit: "20mb", extended: true })); // Allow up to 20MB for URL-encoded payloads
 
 const pool = new Pool({
-  user: "u8fb8jkrteh3jl",
-  host: "dpg-cun11jdsvqrc73fmkubg-a", //cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com
-  database: "dalvnvq3lud30l",
-  password: "3I7JvNk0AqF1jlYe2xHOpzrEukzhwusd",
+  user: "ufjaqr5qssmbmr",
+  host: "c3gtj1dt5vh48j.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com", //cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com
+  database: "dbmosddvg6eh1i", //dalvnvq3lud30l
+  password: "p219a0f2b7045fe1430be3a5fac15f713e36fc4223fa01877810dad5a57385233",
   port: 5432,
   ssl: {
     rejectUnauthorized: false, // This allows connections even without a certificate. Set to true for stricter security.
