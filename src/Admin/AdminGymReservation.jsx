@@ -1,69 +1,33 @@
-import React, { useState, useEffect, useRef } from "react";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import {
-  Table,
-  Dropdown,
-  Button,
-  OverlayTrigger,
-  Popover,
-} from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Table, Dropdown, Button } from "react-bootstrap";
+import AdminGymCalendar from "./Calendars/AdminGymCalendar";
 import "./styles/AdminGymReservation.css";
 import axios from "axios";
 
 const AdminGymReservation = () => {
-  const [reservations, setReservations] = useState([]); // Used for table data
-  const [calendarReservations, setCalendarReservations] = useState([]); // Used for calendar data
+  const [reservations, setReservations] = useState([]);
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
   const [selectedReservations, setSelectedReservations] = useState([]);
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const dropdownRef = useRef(null);
 
-  // Fetch all reservations for the table (Allreservations)
   useEffect(() => {
     const fetchReservations = async () => {
       try {
         const response = await axios.get(
           "https://isked-backend-ssmj.onrender.com/Allreservations"
         );
-
-        // Filter out archived reservations (is_archived: true) and only show active ones (is_archived: false)
         const activeReservations = response.data.filter(
           (reservation) => !reservation.is_archived
         );
-
-        setReservations(activeReservations); // Set the filtered list of active reservations
-        setFilteredReservations(activeReservations); // Also update filtered reservations if needed
+        setReservations(activeReservations);
+        setFilteredReservations(activeReservations);
       } catch (error) {
-        console.error("Error fetching reservation data for table:", error);
+        console.error("Error fetching reservation data:", error);
       }
     };
     fetchReservations();
   }, []);
 
-  // Fetch scheduled reservations for the calendar (ViewSched)
-  const fetchCalendarReservations = async () => {
-    try {
-      const response = await fetch(
-        "https://isked-backend-ssmj.onrender.com/ViewSched"
-      );
-      if (!response.ok) {
-        throw new Error("Error fetching calendar reservations");
-      }
-      const data = await response.json();
-      setCalendarReservations(data); // For calendar view
-    } catch (error) {
-      console.error("Error fetching calendar data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchCalendarReservations();
-  }, []);
-
-  // Filter reservations for the table based on selected filter option
   useEffect(() => {
     let filteredData = reservations;
     const now = new Date();
@@ -105,16 +69,9 @@ const AdminGymReservation = () => {
     try {
       await axios.post(
         "https://isked-backend-ssmj.onrender.com/approveReservations",
-        {
-          ids: selectedReservations,
-        }
+        { ids: selectedReservations }
       );
-      const response = await axios.get(
-        "https://isked-backend-ssmj.onrender.com/Allreservations"
-      );
-      setReservations(response.data);
-      setFilteredReservations(response.data);
-      setSelectedReservations([]); // Clear selected reservations
+      setSelectedReservations([]);
     } catch (error) {
       console.error("Error updating reservation status:", error);
     }
@@ -124,16 +81,9 @@ const AdminGymReservation = () => {
     try {
       await axios.post(
         "https://isked-backend-ssmj.onrender.com/disapproveReservations",
-        {
-          ids: selectedReservations,
-        }
+        { ids: selectedReservations }
       );
-      const response = await axios.get(
-        "https://isked-backend-ssmj.onrender.com/Allreservations"
-      );
-      setReservations(response.data);
-      setFilteredReservations(response.data);
-      setSelectedReservations([]); // Clear selected reservations
+      setSelectedReservations([]);
     } catch (error) {
       console.error("Error updating reservation status:", error);
     }
@@ -143,119 +93,20 @@ const AdminGymReservation = () => {
     const isConfirmed = window.confirm(
       "Are you sure you want to cancel this reservation?"
     );
-
-    if (!isConfirmed) {
-      console.log("Cancellation not confirmed");
-      return;
-    }
-
-    // Proceed with cancellation if confirmed
+    if (!isConfirmed) return;
     try {
-      const endpoint = `https://isked-backend-ssmj.onrender.com/reservations/${reservationId}`;
-      const response = await axios.delete(endpoint);
-
-      if (response.status === 200) {
-        console.log("Reservation successfully cancelled");
-        // Update the local state to remove the cancelled reservation
-        setReservations((prevReservations) =>
-          prevReservations.filter(
-            (reservation) => reservation.id !== reservationId
-          )
-        );
-        setFilteredReservations((prevFilteredReservations) =>
-          prevFilteredReservations.filter(
-            (reservation) => reservation.id !== reservationId
-          )
-        );
-      }
+      await axios.delete(
+        `https://isked-backend-ssmj.onrender.com/reservations/${reservationId}`
+      );
+      setReservations((prev) =>
+        prev.filter((reservation) => reservation.id !== reservationId)
+      );
+      setFilteredReservations((prev) =>
+        prev.filter((reservation) => reservation.id !== reservationId)
+      );
     } catch (error) {
       console.error("Error cancelling reservation:", error);
-      alert("There was an error cancelling your reservation.");
     }
-  };
-
-  const toggleDropdown = () => {
-    setIsDropdownVisible((prev) => !prev);
-  };
-
-  const selectTime = (time) => {
-    setSelectedTimeSlot(time);
-    setIsDropdownVisible(false);
-  };
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsDropdownVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
-  // Filter reservations for the calendar based on the selected time slot
-  const filterCalendarReservations = (date) => {
-    return calendarReservations.filter((res) => {
-      const startDate = new Date(res.start_date);
-      const endDate = new Date(res.end_date);
-      const selectedDate = new Date(date);
-      const selectedTime = selectedTimeSlot
-        ? res.time_slot === selectedTimeSlot
-        : true;
-      return (
-        selectedDate >= startDate && selectedDate <= endDate && selectedTime
-      );
-    });
-  };
-
-  const tileClassName = ({ date, view }) => {
-    if (view !== "month") return ""; // Apply styles only in month view
-
-    const dailyReservations = filterCalendarReservations(date);
-
-    if (dailyReservations.length === 0) {
-      return "vacant"; // No reservations: Vacant
-    }
-
-    const soloReservationsCount = dailyReservations.filter(
-      (res) => res.reservation_type === "Solo"
-    ).length;
-
-    const hasGroupReservation = dailyReservations.some(
-      (res) => res.reservation_type === "Group"
-    );
-    const isFullyBooked = soloReservationsCount >= 5;
-
-    if (hasGroupReservation || isFullyBooked) {
-      return "unavailable"; // Fully booked: Unavailable
-    }
-
-    return "available"; // Partially booked
-  };
-
-  const renderPopover = (dailyReservations) => (
-    <Popover id="popover-basic">
-      <Popover.Body>
-        {dailyReservations.map((res, index) => (
-          <div key={index}>
-            {res.username} {res.reservation_type === "Group" ? "(Group)" : ""}
-          </div>
-        ))}
-      </Popover.Body>
-    </Popover>
-  );
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
   };
 
   return (
@@ -264,78 +115,7 @@ const AdminGymReservation = () => {
         Gym Reservation
       </h2>
 
-      <div className="time-dropdown-container" ref={dropdownRef}>
-        <div className="time-dropdown">
-          <button
-            className="time-dropdown-button dropdown-toggle bg-primary"
-            type="button"
-            id="dropdownMenuButton"
-            onClick={toggleDropdown}
-          >
-            {selectedTimeSlot || "Select Time"}
-          </button>
-          {isDropdownVisible && (
-            <div
-              className="time-dropdown-menu"
-              aria-labelledby="dropdownMenuButton"
-            >
-              {[
-                "9:00 am - 10:00 am",
-                "10:00 am - 11:00 am",
-                "11:00 am - 12:00 nn",
-                "12:00 nn - 1:00 pm",
-                "1:00 pm - 2:00 pm",
-                "2:00 pm - 3:00 pm",
-              ].map((time) => (
-                <h6
-                  key={time}
-                  className="dropdown-item"
-                  onClick={() => selectTime(time)}
-                >
-                  {time}
-                </h6>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div className="calendar-container">
-        <Calendar
-          className={"gr-calendar rounded"}
-          minDate={new Date()}
-          selectRange={true}
-          tileClassName={tileClassName}
-          tileContent={({ date, view }) => {
-            if (view !== "month") return null;
-
-            const dailyReservations = filterCalendarReservations(date);
-
-            if (dailyReservations.length > 0) {
-              const displayCount = dailyReservations.some(
-                (res) => res.reservation_type === "Group"
-              )
-                ? 5
-                : dailyReservations.length;
-
-              return (
-                <OverlayTrigger
-                  trigger="click"
-                  placement="top"
-                  overlay={renderPopover(dailyReservations)}
-                >
-                  <div className="overlay-content">
-                    {displayCount > 0 && (
-                      <div className="reservation-count">{displayCount}</div>
-                    )}
-                  </div>
-                </OverlayTrigger>
-              );
-            }
-            return null;
-          }}
-        />
-      </div>
+      <AdminGymCalendar />
 
       <div className="admin-greservation-buttons-table-container">
         <div className="admin-gr-toggle-buttons-container d-flex align-items-center">
@@ -381,17 +161,13 @@ const AdminGymReservation = () => {
               <th>
                 <input
                   type="checkbox"
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setSelectedReservations(
-                        filteredReservations.map(
-                          (reservation) => reservation.id
-                        )
-                      );
-                    } else {
-                      setSelectedReservations([]);
-                    }
-                  }}
+                  onChange={(e) =>
+                    setSelectedReservations(
+                      e.target.checked
+                        ? filteredReservations.map((res) => res.id)
+                        : []
+                    )
+                  }
                   checked={
                     selectedReservations.length === filteredReservations.length
                   }
@@ -403,7 +179,7 @@ const AdminGymReservation = () => {
               <th>End Date</th>
               <th>Time Slot</th>
               <th>Status</th>
-              <th style={{ width: "120px" }}>Action</th>
+              <th>Action</th>
             </tr>
           </thead>
 
@@ -419,15 +195,14 @@ const AdminGymReservation = () => {
                 </td>
                 <td>{reservation.id}</td>
                 <td>{reservation.program}</td>
-                <td>{formatDate(reservation.date)}</td>
-                <td>{formatDate(reservation.end_date)}</td>
+                <td>{reservation.start_date}</td>
+                <td>{reservation.end_date}</td>
                 <td>{reservation.time_slot}</td>
                 <td>{reservation.status || "Pending"}</td>
-                <td className="admin-greservation-action-button-container d-flex justify-content-center">
+                <td>
                   <Button
                     variant="danger"
-                    className="admin-greservation-edit-button rounded-pill"
-                    onClick={() => handleCancellation(reservation.id, true)} // Pass reservation ID and confirmation
+                    onClick={() => handleCancellation(reservation.id)}
                   >
                     Delete
                   </Button>

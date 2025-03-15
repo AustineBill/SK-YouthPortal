@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
+import Feedback from "./Feedback";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 
 const ReservationWaiver = () => {
   const navigate = useNavigate();
-  const [allData, setAllData] = useState({}); // State for reservation data
-  const [showModal, setShowModal] = useState(false); // Modal visibility state
+  const [allData, setAllData] = useState({});
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  // Function to save the reservation
   const saveReservation = async () => {
     try {
-      // Format the dates before sending to the server
       const formattedData = {
         ...allData,
-        start_date: new Date(allData.start_date).toISOString().split("T")[0], // Save in 'YYYY-MM-DD' format
-        end_date: new Date(allData.end_date).toISOString().split("T")[0], // Save in 'YYYY-MM-DD' format
+        start_date: new Date(allData.start_date).toISOString().split("T")[0],
+        end_date: new Date(allData.end_date).toISOString().split("T")[0],
       };
 
       await axios.post(
@@ -28,27 +28,32 @@ const ReservationWaiver = () => {
     }
   };
 
-  // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
     const isChecked = event.target.agreementCheckbox.checked;
     if (isChecked) {
-      saveReservation(); // Save reservation after agreement
-      sessionStorage.removeItem("reservationData");
-      sessionStorage.removeItem("scheduleDetails");
-      sessionStorage.removeItem("reservedEquipment");
-      sessionStorage.removeItem("programType");
-      setShowModal(true); // Show the success modal
+      setShowFeedbackModal(true);
     }
   };
 
-  // Load data from session storage when the component mounts
+  const handleFeedbackSubmit = () => {
+    setShowFeedbackModal(false);
+    saveReservation();
+    sessionStorage.removeItem("reservationData");
+    sessionStorage.removeItem("scheduleDetails");
+    sessionStorage.removeItem("reservedEquipment");
+    sessionStorage.removeItem("programType");
+    setTimeout(() => {
+      setShowSuccessModal(true); // Show success modal
+    }, 500);
+  };
+
   useEffect(() => {
     let reservationData =
       JSON.parse(sessionStorage.getItem("reservationData")) || {};
     const scheduleDetails =
       JSON.parse(sessionStorage.getItem("scheduleDetails")) || {};
-    setAllData({ ...reservationData, ...scheduleDetails }); // Combine session data
+    setAllData({ ...reservationData, ...scheduleDetails });
   }, []);
 
   return (
@@ -141,18 +146,6 @@ const ReservationWaiver = () => {
           marketing materials and social media.
         </p>
 
-        <h3>Release and Waiver:</h3>
-        <p>
-          In consideration of being allowed to participate in the activities and
-          programs at TEENBAYAN: A safe space for youth, I hereby release,
-          discharge, and hold harmless TEENBAYAN: A safe space for youth, its
-          owners, employees, instructors, trainers, agents, and representatives
-          from any and all claims, actions, suits, procedures, costs, expenses,
-          damages, and liabilities, including attorney's fees, brought as a
-          result of my involvement at TEENBAYAN: A safe space for youth and to
-          reimburse them for any such expenses incurred.
-        </p>
-
         <h6>5. Severability:</h6>
         <p>
           If any provision of this Contract is found to be unenforceable, the
@@ -174,14 +167,24 @@ const ReservationWaiver = () => {
         </Form>
       </div>
 
+      <>
+        {showFeedbackModal && (
+          <Feedback
+            onSubmit={handleFeedbackSubmit} // Pass this to Feedback
+            onClose={() => setShowFeedbackModal(false)}
+          />
+        )}
+      </>
+
       {/* Success Modal */}
-      {showModal && (
+      {showSuccessModal && (
         <div className="ModalOverlayStyles">
           <div className="ModalStyles large">
             <button
               className="closeButton"
               onClick={() => {
-                setShowModal(false);
+                setShowSuccessModal(false);
+                navigate("/ReservationLog");
               }}
               aria-label="Close"
             >
@@ -193,7 +196,7 @@ const ReservationWaiver = () => {
                 style={{ fontSize: "4rem" }}
               ></i>
               <h2 className="mt-3 mb-3">
-                Your reservation has been reserve successfully!
+                Your reservation has been reserved successfully!
               </h2>
               <p>We hope to see you again soon.</p>
             </div>
