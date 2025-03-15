@@ -390,28 +390,32 @@ app.post("/login", async (req, res) => {
 
 app.get("/Profile/:username", async (req, res) => {
   const username = req.params.username;
-  //const userId = req.userId; // Assume userId is extracted from a secure session or token
-  //WHERE id = $1 AND username = $1
+  console.log("Fetching profile for:", username);
+
   try {
     const query = `
-        SELECT 
-            id, username, firstname, lastname, street, province, city, barangay, zone,
-            sex, age, birthday, email_address, contact_number, civil_status,
-            youth_age_group, work_status, educational_background, 
-            registered_sk_voter, registered_national_voter
-        FROM Users
-        WHERE username = $1
+      SELECT id, username, firstname, lastname, street, province, city, barangay, zone,
+             sex, birthdate, birthday, email_address, contact_number, civil_status,
+             youth_age_group, work_status, educational_background, 
+             registered_sk_voter, registered_national_voter
+      FROM Users
+      WHERE username = $1
     `;
+
     const result = await pool.query(query, [username]);
+    console.log("Query Result:", result.rows);
 
     if (result.rows.length === 0) {
+      console.log("User not found:", username);
       return res.status(404).json({ message: "User not found" });
     }
-    //console.log(result.rows[0]); // Log the result to see if fields are included
+
     res.json(result.rows[0]);
   } catch (err) {
-    console.error("Error fetching profile:", err.message);
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Database error:", err); // Log full error
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
   }
 });
 
@@ -884,27 +888,18 @@ app.delete("/equipment/:reservation_id", async (req, res) => {
 });
 
 app.post("/Feedback", async (req, res) => {
-  const { user_id, rating } = req.body; // Removed comment field
+  console.log("Received feedback:", req.body); // ✅ Debugging
 
-  if (!user_id || !rating) {
+  const { user_id, rating, comment } = req.body;
+
+  if (!user_id || !rating || !comment) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
   try {
-    const existingFeedback = await pool.query(
-      "SELECT * FROM feedback WHERE user_id = $1",
-      [user_id]
-    );
-
-    if (existingFeedback.rows.length > 0) {
-      return res
-        .status(400)
-        .json({ error: "You have already submitted feedback." });
-    }
-
     await pool.query(
-      "INSERT INTO feedback (user_id, rating) VALUES ($1, $2)",
-      [user_id, rating] // Removed comment
+      "INSERT INTO feedback (user_id, rating, comment) VALUES ($1, $2, $3)",
+      [user_id, rating, comment]
     );
 
     res.status(201).json({ message: "Feedback submitted successfully!" });
@@ -914,69 +909,13 @@ app.post("/Feedback", async (req, res) => {
   }
 });
 
-app.get("/Feedback/:user_id", async (req, res) => {
-  const { user_id } = req.params;
-
-  try {
-    const feedback = await pool.query(
-      "SELECT * FROM feedback WHERE user_id = $1",
-      [user_id]
-    );
-
-    if (feedback.rows.length === 0) {
-      return res.status(200).json({ message: "No feedback submitted yet." });
-    }
-
-    res.status(200).json(feedback.rows[0]); // Return the user's feedback
-  } catch (error) {
-    console.error("Error retrieving feedback:", error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while retrieving feedback." });
-  }
-});
-
-app.put("/Feedback/:user_id", async (req, res) => {
-  const { user_id } = req.params; // Extract user_id from the URL parameters
-  const { rating } = req.body; // Removed comment field
-
-  if (!rating) {
-    return res.status(400).json({ error: "Rating is required." });
-  }
-
-  try {
-    // Check if feedback exists for the given user ID
-    const existingFeedback = await pool.query(
-      "SELECT * FROM feedback WHERE user_id = $1",
-      [user_id]
-    );
-
-    if (existingFeedback.rows.length === 0) {
-      return res.status(404).json({ error: "Feedback not found." });
-    }
-
-    // Update the feedback record
-    await pool.query(
-      "UPDATE feedback SET rating = $1 WHERE user_id = $2", // Removed comment update
-      [rating, user_id]
-    );
-
-    res.status(200).json({ message: "Feedback updated successfully!" });
-  } catch (error) {
-    console.error("Error updating feedback:", error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while updating feedback." });
-  }
-});
-
 /********* Auto Fill Details  *********/
 app.get("/Details/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
     const result = await pool.query(
-      "SELECT username, age, email_address AS email FROM Users WHERE id = $1",
+      "SELECT username, birthdate, email_address AS email FROM Users WHERE id = $1",
       [id]
     );
 
@@ -1662,7 +1601,7 @@ app.get("/users", async (req, res) => {
 
 // Insert into the database with random ID generation
 app.post("/users", async (req, res) => {
-  console.log("Request Body:", req.body); // Log the incoming data
+  console.log("Request Body:", req.body); 
 
   const {
     username,
@@ -1675,7 +1614,7 @@ app.post("/users", async (req, res) => {
     barangay,
     zone,
     sex,
-    age,
+    birthdate,
     birthday,
     email_address,
     contact_number,
@@ -1712,7 +1651,7 @@ app.post("/users", async (req, res) => {
     // Insert the new user into the database with a default "inactive" status
     const result = await pool.query(
       `INSERT INTO Users (
-        id, username, password, firstname, lastname, street, province, city, barangay, zone, sex, age, 
+        id, username, password, firstname, lastname, street, province, city, barangay, zone, sex, birthdate, 
         birthday, email_address, contact_number, civil_status, youth_age_group, work_status, 
         educational_background, registered_sk_voter, registered_national_voter, status
       ) 
@@ -1730,7 +1669,7 @@ app.post("/users", async (req, res) => {
         barangay,
         zone,
         sex,
-        age,
+        birthdate,
         birthday,
         email_address,
         contact_number,
@@ -1764,7 +1703,7 @@ app.put("/users/:id", async (req, res) => {
     barangay,
     zone,
     sex,
-    age,
+    birthdate,
     birthday,
     email_address,
     contact_number,
@@ -1786,7 +1725,7 @@ app.put("/users/:id", async (req, res) => {
         username = $1, 
         ${password ? "password = $2," : ""}
         firstname = $3, lastname = $4, street = $5, province = $6, 
-        city = $7, barangay = $8, zone = $9, sex = $10, age = $11, 
+        city = $7, barangay = $8, zone = $9, sex = $10, birthdate = $11, 
         birthday = $12, email_address = $13, contact_number = $14, civil_status = $15, 
         youth_age_group = $16, work_status = $17, educational_background = $18, 
         registered_sk_voter = $19, registered_national_voter = $20
@@ -1802,7 +1741,7 @@ app.put("/users/:id", async (req, res) => {
       barangay,
       zone,
       sex,
-      age,
+      birthdate,
       birthday,
       email_address,
       contact_number,
@@ -2583,13 +2522,13 @@ app.post("/reset-password", async (req, res) => {
   }
 });
 
-// Function to increment age and update status
+// Function to increment birthdate and update status
 async function updateAgeAndStatus() {
   try {
-    // Update the age for users with birthdays today
+    // Update the birthdate for users with birthdays today
     const updateAgeQuery = `
       UPDATE Users
-      SET age = age + 1
+      SET birthdate = birthdate + 1
       WHERE EXTRACT(MONTH FROM CURRENT_DATE) = EXTRACT(MONTH FROM birthday)
         AND EXTRACT(DAY FROM CURRENT_DATE) = EXTRACT(DAY FROM birthday);
     `;
@@ -2599,19 +2538,19 @@ async function updateAgeAndStatus() {
     const updateStatusQuery = `
       UPDATE Users
       SET status = 'inactive'
-      WHERE age >= 31;
+      WHERE birthdate >= 31;
     `;
     await pool.query(updateStatusQuery);
 
     console.log("Age and status updated successfully.");
   } catch (err) {
-    console.error("Error updating age and status:", err);
+    console.error("Error updating birthdate and status:", err);
   }
 }
 
 // Schedule the task to run once a day at midnight
 cron.schedule("0 0 * * *", () => {
-  console.log("Running the age and status update task...");
+  console.log("Running the birthdate and status update task...");
   updateAgeAndStatus();
 });
 

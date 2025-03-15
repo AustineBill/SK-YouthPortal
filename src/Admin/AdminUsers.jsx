@@ -21,7 +21,7 @@ const Users = () => {
     barangay: "Western Bicutan",
     zone: "1630",
     sex: "",
-    age: "",
+    birthdate: "",
     birthday: "",
     email_address: "",
     contact_number: "",
@@ -64,28 +64,28 @@ const Users = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // If the input is for 'birthday', calculate the age
+    // If the input is for 'birthday', calculate the birthdate
     if (name === "birthday") {
-      const age = calculateAge(value); // Calculate age based on the birthday
+      const birthdate = calculateAge(value); // Calculate birthdate based on the birthday
       setNewUser((prev) => {
-        // Automatically assign the youth age group based on the calculated age
+        // Automatically assign the youth birthdate group based on the calculated birthdate
         let youthClassification = "";
-        if (age >= 15 && age <= 17) {
+        if (birthdate >= 15 && birthdate <= 17) {
           youthClassification = "Child Youth";
-        } else if (age >= 18 && age <= 24) {
+        } else if (birthdate >= 18 && birthdate <= 24) {
           youthClassification = "Core Youth";
-        } else if (age >= 25 && age <= 30) {
+        } else if (birthdate >= 25 && birthdate <= 30) {
           youthClassification = "Adult Youth";
-        } else if (age > 30) {
-          alert("Cannot add user. Age is over the limit.");
-          return prev; // Prevent setting the user if age exceeds 30
+        } else if (birthdate > 30) {
+          alert("Cannot add user. Birthdate is over the limit.");
+          return prev; // Prevent setting the user if birthdate exceeds 30
         }
 
-        // Set the new user state with calculated age and youth classification
+        // Set the new user state with calculated birthdate and youth classification
         return {
           ...prev,
           birthday: value,
-          age: age, // Set the calculated age
+          birthdate: birthdate, // Set the calculated birthdate
           youth_age_group: youthClassification, // Automatically set youth classification
         };
       });
@@ -212,15 +212,15 @@ const Users = () => {
   const calculateAge = (birthday) => {
     const birthDate = new Date(birthday);
     const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
+    let birthdate = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
     if (
       monthDiff < 0 ||
       (monthDiff === 0 && today.getDate() < birthDate.getDate())
     ) {
-      age--;
+      birthdate--;
     }
-    return age;
+    return birthdate;
   };
 
   // Reset form and state
@@ -236,7 +236,7 @@ const Users = () => {
       barangay: "Western Bicutan",
       zone: "1630",
       sex: "",
-      age: "",
+      birthdate: "",
       birthday: "",
       email_address: "",
       contact_number: "",
@@ -432,7 +432,7 @@ const Users = () => {
                 </div>
                 <div>
                   <p>
-                    <strong>Age:</strong> {viewUser.age}
+                    <strong>Birthdate:</strong> {viewUser.birthdate}
                   </p>
                 </div>
                 <div>
@@ -650,11 +650,13 @@ const Users = () => {
                     </div>
 
                     <div className="admin-users-form d-flex flex-column">
-                      <label className="admin-users-modal-label">Age</label>
+                      <label className="admin-users-modal-label">
+                        Birthdate
+                      </label>
                       <input
                         type="number"
-                        name="age"
-                        value={newUser.age}
+                        name="birthdate"
+                        value={newUser.birthdate}
                         onChange={handleChange}
                         readOnly
                       />
@@ -719,7 +721,7 @@ const Users = () => {
                     </div>
                     <div className="admin-users-form d-flex flex-column">
                       <label className="admin-users-modal-label">
-                        Youth Age Group
+                        Youth Birthdate Group
                       </label>
                       <input
                         type="text"

@@ -209,7 +209,7 @@ const InventoryTable = () => {
                 ></button>
               </div>
 
-              <div className="admin-inventory-item-add-edit-modal-body modal-body">
+              <div className="admin-inventory-item-add-edit-modal modal-body">
                 <form onSubmit={handleSubmit} className="m-0">
                   <div className="admin-inventory-group-form d-flex flex-column">
                     <label className="admin-inventory-form-label">
@@ -264,6 +264,7 @@ const InventoryTable = () => {
                     >
                       <option>Available</option>
                       <option>Out of Stock</option>
+                      <option>Repair/Maintenance</option>
                     </select>
                   </div>
 

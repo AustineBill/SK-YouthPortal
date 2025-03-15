@@ -98,14 +98,12 @@ const FooterSwitcher = () => {
 
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const { ProtectedRoute, isAdmin, isAuthenticated } = useContext(AuthContext);
+  const { ProtectedRoute, isAdmin } = useContext(AuthContext);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
-
-  console.log({ isAuthenticated, isAdmin });
 
   return (
     <AuthProvider>

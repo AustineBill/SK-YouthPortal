@@ -28,7 +28,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const username = sessionStorage.getItem("username");
-      //console.log('Fetching profile for:', username);
+      console.log('Fetching profile for:', username);
       try {
         const response = await fetch(
           `https://isked-backend-ssmj.onrender.com/Profile/${username}`
@@ -167,7 +167,7 @@ const ProfilePage = () => {
                     </Col>
                     <Col sm="3">
                       <Card.Text className="text-muted">
-                        {profileInfo?.age}
+                        {profileInfo?.birthdate}
                       </Card.Text>
                     </Col>
                     <Col sm="3">

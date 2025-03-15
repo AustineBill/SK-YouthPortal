@@ -32,13 +32,21 @@ const ScheduleDetails = () => {
         const data = await response.json();
 
         const initialParticipants = [
-          { username: data.username, age: data.age, email: data.email },
+          {
+            username: data.username,
+            birthdate: data.birthdate,
+            email: data.email,
+          },
         ];
 
         if (reservationType === "Group") {
           // Add placeholders for 4 more participants
           for (let i = 0; i < 4; i++) {
-            initialParticipants.push({ username: "", age: "", email: "" });
+            initialParticipants.push({
+              username: "",
+              birthdate: "",
+              email: "",
+            });
           }
         }
 
@@ -78,8 +86,8 @@ const ScheduleDetails = () => {
         return;
       }
     } else {
-      const { username, age, email } = participants[0];
-      if (!username || !age || !email) {
+      const { username, birthdate, email } = participants[0];
+      if (!username || !birthdate || !email) {
         setErrorMessage("Please fill out your information.");
         return;
       }
@@ -149,10 +157,10 @@ const ScheduleDetails = () => {
                     <Form.Label>Your Age</Form.Label>
                     <Form.Control
                       type="number"
-                      placeholder="Enter age"
-                      value={participant.age}
+                      placeholder="Enter birthdate"
+                      value={participant.birthdate}
                       onChange={(e) =>
-                        handleInputChange(index, "age", e.target.value)
+                        handleInputChange(index, "birthdate", e.target.value)
                       }
                       disabled
                     />

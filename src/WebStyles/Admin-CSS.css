@@ -1086,7 +1086,7 @@
 }
 
 .admin-add-event-details-container {
-  background-color: #c5c1c1;
+  background-color: #d0e7ff;
   width: 90%;
 }
 
@@ -1096,7 +1096,7 @@
 }
 
 .admin-event-item {
-  background-color: #c5c1c1;
+  background-color: #d0e7ff;
   width: 100%;
   margin-bottom: 20px;
 }
@@ -1388,7 +1388,7 @@
 .admin-current-about-details-container,
 .admin-edit-about-details-container,
 .admin-current-SK-details-container {
-  background-color: #c5c1c1;
+  background-color: #d0e7ff;
   width: 90%;
 }
 
@@ -1927,7 +1927,7 @@
 /* Admin Add Program */
 
 .admin-add-program-details-container {
-  background-color: #c5c1c1;
+  background-color: #d0e7ff;
   width: 90%;
 }
 
@@ -2478,7 +2478,7 @@
 
 .admin-current-contacts-details-container,
 .admin-edit-contacts-details-container {
-  background-color: #c5c1c1;
+  background-color: #d0e7ff;
   width: 90%;
 }
 
@@ -2529,7 +2529,7 @@
 
 .admin-edit-contact-details-back-button {
   background-color: #25327a;
-  color: #ffffff;
+  color: #274ef8;
   width: 100px;
   height: 40px;
   font-size: 15px;
@@ -2799,7 +2799,7 @@
 
 .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
   margin: 10px 0 10px 0;
-  color: #ffffff;
+  color: #000000;
   width: 150px;
   height: 50px;
   font-size: 15px;
@@ -2822,10 +2822,6 @@
   width: 500px;
 }
 
-.admin-inventory-modal-body {
-  background-color: #c5c1c1;
-}
-
 .admin-inventory-form-group {
   width: 90%;
 }
@@ -2838,6 +2834,12 @@
 .admin-inventory-form-group .admin-inventory-form {
   height: 50px;
   font-size: 17.5px;
+}
+
+.admin-inventory-item-add-edit-modal .modal-content {
+  background-color: #d0e7ff; /* Light blue */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Media */

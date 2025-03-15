@@ -158,7 +158,8 @@ function Equipment() {
                     Status:{" "}
                     <span
                       className={
-                        item.status === "Out of Stock"
+                        item.status === "Out of Stock" ||
+                        item.status === "Repair/Maintenance"
                           ? "text-danger"
                           : "text-success"
                       }
@@ -172,7 +173,10 @@ function Equipment() {
                       variant="outline-secondary"
                       size="sm"
                       onClick={() => decreaseQuantity(index)}
-                      disabled={item.status === "Out of Stock"}
+                      disabled={
+                        item.status === "Out of Stock" ||
+                        item.status === "Repair/Maintenance"
+                      }
                     >
                       -
                     </Button>
@@ -181,7 +185,10 @@ function Equipment() {
                       variant="outline-secondary"
                       size="sm"
                       onClick={() => increaseQuantity(index)}
-                      disabled={item.status === "Out of Stock"}
+                      disabled={
+                        item.status === "Out of Stock" ||
+                        item.status === "Repair/Maintenance"
+                      }
                     >
                       +
                     </Button>
