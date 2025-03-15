@@ -499,7 +499,6 @@ app.post("/schedule/equipment", async (req, res) => {
   const { user_id, reservation_id, reservedEquipment, startDate, endDate } =
     req.body;
 
-  // Convert the JavaScript Date object to an ISO string if it's not already
   const startDateISO = new Date(startDate).toISOString();
   const endDateISO = new Date(endDate).toISOString();
 
@@ -659,32 +658,27 @@ app.get("/reservations/:reservationId", async (req, res) => {
   }
 });
 
-app.patch("/reservations/:id", async (req, res) => {
-  const { id } = req.params;
-  const { is_archived } = req.body;
+app.patch("/reservations/:reservationId", async (req, res) => {
+  const { reservationId } = req.params;
 
   try {
-    // Update the is_archived status in the database for the reservation
     const result = await pool.query(
-      "UPDATE reservations SET is_archived = $1 WHERE id = $2 RETURNING *",
-      [is_archived, id]
+      "UPDATE Schedules SET is_archived = true WHERE id = $1 RETURNING *",
+      [reservationId]
     );
 
-    if (result.rowCount === 0) {
+    if (result.rows.length === 0) {
       return res.status(404).json({ message: "Reservation not found" });
     }
 
-    res.status(200).json({
-      message: "Reservation status updated successfully",
-      reservation: result.rows[0],
-    });
+    res.status(200).json({ message: "Reservation archived successfully" });
   } catch (error) {
-    console.error("Error updating reservation status:", error);
+    console.error("Error archiving reservation:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
-app.delete("/reservations/:reservationId", async (req, res) => {
+/*app.delete("/reservations/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
 
   try {
@@ -702,7 +696,7 @@ app.delete("/reservations/:reservationId", async (req, res) => {
     console.error("Error cancelling reservation:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
-});
+});*/
 
 app.get("/equipment/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
@@ -1601,7 +1595,7 @@ app.get("/users", async (req, res) => {
 
 // Insert into the database with random ID generation
 app.post("/users", async (req, res) => {
-  console.log("Request Body:", req.body); 
+  console.log("Request Body:", req.body);
 
   const {
     username,
@@ -2018,7 +2012,10 @@ app.get("/Allequipments", async (req, res) => {
 app.get("/Allreservations", async (req, res) => {
   try {
     const result = await pool.query(
-      `SELECT id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
+      `SELECT user_id, reservation_type AS program, 
+              TO_CHAR(start_date, 'FMDay, FMDD, YYYY') AS start_date, 
+              TO_CHAR(end_date, 'FMDay, FMDD, YYYY') AS end_date, 
+              status, time_slot 
        FROM Schedules 
        WHERE is_archived IS DISTINCT FROM true
        ORDER BY start_date ASC`
@@ -2026,51 +2023,6 @@ app.get("/Allreservations", async (req, res) => {
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching reservations:", error);
-    res.status(500).send("Server error");
-  }
-});
-
-app.get("/Allschedules", async (req, res) => {
-  try {
-    const result = await pool.query(
-      `SELECT id, user_id, reservation_id, start_date, end_date, reserved_equipment, status
-       FROM E 
-       WHERE is_archived IS DISTINCT FROM true
-       ORDER BY start_date ASC`
-    );
-
-    const formattedResult = result.rows.map((row) => ({
-      ...row,
-      reserved_equipment:
-        typeof row.reserved_equipment === "string"
-          ? JSON.parse(row.reserved_equipment)
-          : row.reserved_equipment, // Use as-is if it's already an object
-    }));
-
-    res.json(formattedResult);
-  } catch (error) {
-    console.error("Error fetching equipment reservations:", error);
-    res.status(500).send("Server error");
-  }
-});
-app.get("/AllSchedules", async (req, res) => {
-  try {
-    const result = await pool.query(
-      `SELECT id, user_id, reservation_type, start_date, end_date, time_slot, created_at, status
-       FROM Schedules
-       ORDER BY start_date ASC`
-    );
-
-    // Format the results (if any fields need parsing or transformation)
-    const formattedResult = result.rows.map((row) => ({
-      ...row,
-      start_date: new Date(row.start_date).toISOString().split("T")[0], // Optional: Format date
-      end_date: new Date(row.end_date).toISOString().split("T")[0], // Optional: Format date
-    }));
-
-    res.json(formattedResult);
-  } catch (error) {
-    console.error("Error fetching schedules:", error);
     res.status(500).send("Server error");
   }
 });

@@ -1,38 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  Table,
-  Dropdown,
-  Button,
-  Popover,
-  OverlayTrigger,
-} from "react-bootstrap";
+import { Table, Dropdown, Button, Modal } from "react-bootstrap";
+import EquipmentCalendar from "./Calendars/EquipmentCalendar";
 import "./styles/AdminEquipmentReservation.css";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
 
 const AdminEquipmentReservation = () => {
   const [reservations, setReservations] = useState([]);
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
   const [selectedReservations, setSelectedReservations] = useState([]);
-  const [calendarReservations, setCalendarReservations] = useState([]);
 
-  // Fetch reservations for the calendar from /ViewEquipment endpoint
-  const fetchCalendarReservations = async () => {
-    try {
-      const response = await fetch(
-        "https://isked-backend-ssmj.onrender.com/ViewEquipment"
-      );
-      if (!response.ok) {
-        throw new Error("Error fetching calendar reservations");
-      }
-      const data = await response.json();
-      setCalendarReservations(data);
-    } catch (error) {
-      console.error("Error fetching calendar reservations:", error);
-    }
-  };
+  const [blockedDates, setBlockedDates] = useState([]);
+  const [showBlockModal, setShowBlockModal] = useState(false);
+  const [startBlockDate, setStartBlockDate] = useState("");
+  const [endBlockDate, setEndBlockDate] = useState("");
 
   // Fetch reservations for the table from /Allequipments endpoint
   const fetchTableReservations = async () => {
@@ -48,7 +29,6 @@ const AdminEquipmentReservation = () => {
   };
 
   useEffect(() => {
-    fetchCalendarReservations(); // Fetch data for the calendar
     fetchTableReservations(); // Fetch data for the table
   }, []);
 
@@ -141,64 +121,6 @@ const AdminEquipmentReservation = () => {
     }
   };
 
-  const filterReservations = (date) => {
-    return calendarReservations.filter((res) => {
-      const startDate = new Date(res.start_date).toDateString();
-      const currentDate = date.toDateString();
-      return startDate === currentDate;
-    });
-  };
-
-  const tileClassName = ({ date, view }) => {
-    if (view !== "month") return "";
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const isSunday = date.getDay() === 0;
-    if (date < today || isSunday) {
-      return "unavailable"; // Past dates and Sundays should always be unavailable
-    }
-    const dailyReservations = filterReservations(date);
-    if (dailyReservations.length === 0) return "available";
-    if (dailyReservations.length >= 5) return "unavailable";
-    return "available";
-  };
-
-  const renderPopover = (dailyReservations) => (
-    <Popover id="popover-basic">
-      <Popover.Header as="h3">Reservation Details</Popover.Header>
-      <Popover.Body>
-        {dailyReservations.map((res, index) => (
-          <h5 key={index}>
-            <strong>User:</strong> {res.username} <br />
-            <strong>Item:</strong> {res.equipment_name} <br />
-            <strong>Quantity:</strong> {res.quantity}
-          </h5>
-        ))}
-      </Popover.Body>
-    </Popover>
-  );
-
-  const tileContent = ({ date, view }) => {
-    if (view !== "month") return null;
-    const dailyReservations = filterReservations(date);
-    if (dailyReservations.length > 0) {
-      return (
-        <OverlayTrigger
-          trigger="click"
-          placement="top"
-          overlay={renderPopover(dailyReservations)} // Ensure the popover renders correctly
-        >
-          <div className="overlay-content">
-            <span className="reservation-count">
-              {dailyReservations.length}
-            </span>
-          </div>
-        </OverlayTrigger>
-      );
-    }
-    return null;
-  };
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -215,15 +137,16 @@ const AdminEquipmentReservation = () => {
         Equipment Reservation
       </h2>
 
-      <div className="calendar-container">
-        <Calendar
-          className={"er-calendar rounded"}
-          minDate={new Date()}
-          selectRange={true}
-          tileClassName={tileClassName}
-          tileContent={tileContent}
-        />
+      <div className="justify-content-end d-flex me-5">
+        <button
+          className="btn btn-info me-2"
+          onClick={() => setShowBlockModal(true)}
+        >
+          <i className="bi bi-calendar-x-fill"></i>
+        </button>
       </div>
+
+      <EquipmentCalendar blockedDates={blockedDates} />
 
       <div className="admin-ereservation-buttons-table-container">
         <div className="admin-er-toggle-buttons-container d-flex align-items-center">
@@ -311,7 +234,7 @@ const AdminEquipmentReservation = () => {
                       onChange={() => handleCheckboxChange(reservation.id)}
                     />
                   </td>
-                  <td>{reservation.id}</td>
+                  <td>{reservation.reservation_id}</td>
                   <td>
                     {Array.isArray(reservation.reserved_equipment) &&
                     reservation.reserved_equipment.length > 0 ? (
@@ -346,6 +269,49 @@ const AdminEquipmentReservation = () => {
             )}
           </tbody>
         </Table>
+
+        <Modal show={showBlockModal} onHide={() => setShowBlockModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Block Dates</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <label>Start Date:</label>
+            <input
+              type="date"
+              className="form-control"
+              onChange={(e) => setStartBlockDate(e.target.value)}
+            />
+            <label>End Date:</label>
+            <input
+              type="date"
+              className="form-control"
+              onChange={(e) => setEndBlockDate(e.target.value)}
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setShowBlockModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => {
+                if (!startBlockDate || !endBlockDate) return;
+
+                const start = new Date(startBlockDate);
+                const end = new Date(endBlockDate);
+                end.setHours(23, 59, 59, 999);
+
+                setBlockedDates([...blockedDates, { start, end }]);
+                setShowBlockModal(false);
+              }}
+            >
+              Block Date Range
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );

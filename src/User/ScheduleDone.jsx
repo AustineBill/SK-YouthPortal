@@ -216,7 +216,7 @@ function ScheduleDone() {
                         <td>
                           <strong>Age:</strong>
                         </td>
-                        <td>{allData.participants?.[0]?.age || "N/A"}</td>
+                        <td>{allData.participants?.[0]?.birthdate || "N/A"}</td>
                       </tr>
                       <tr>
                         <td>

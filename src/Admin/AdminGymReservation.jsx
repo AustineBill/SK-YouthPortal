@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Dropdown, Button } from "react-bootstrap";
+import { Table, Dropdown, Button, Modal } from "react-bootstrap";
 import AdminGymCalendar from "./Calendars/AdminGymCalendar";
 import "./styles/AdminGymReservation.css";
 import axios from "axios";
@@ -9,6 +9,13 @@ const AdminGymReservation = () => {
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
   const [selectedReservations, setSelectedReservations] = useState([]);
+
+  const [timeGap, setTimeGap] = useState(1);
+  const [showTimeGapModal, setShowTimeGapModal] = useState(false);
+  const [blockedDates, setBlockedDates] = useState([]);
+  const [showBlockModal, setShowBlockModal] = useState(false);
+  const [startBlockDate, setStartBlockDate] = useState("");
+  const [endBlockDate, setEndBlockDate] = useState("");
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -109,13 +116,54 @@ const AdminGymReservation = () => {
     }
   };
 
+  const generateTimeSlots = () => {
+    const slots = [];
+    for (let hour = 10; hour <= 17; hour += timeGap) {
+      let startHour = hour;
+      let endHour = hour + timeGap;
+
+      let startPeriod = startHour < 12 ? "AM" : startHour === 12 ? "NN" : "PM";
+      let endPeriod = endHour < 12 ? "AM" : endHour === 12 ? "NN" : "PM";
+
+      // Format hours for 12-hour clock (avoid 0:00)
+      if (startHour > 12) startHour -= 12;
+      if (endHour > 12) endHour -= 12;
+
+      let start = `${startHour}:00 ${startPeriod}`;
+      let end = `${endHour}:00 ${endPeriod}`;
+
+      if (endHour <= 17) {
+        slots.push(`${start} - ${end}`);
+      }
+    }
+    return slots;
+  };
+
   return (
     <div className="admin-gym-reservation-container">
       <h2 className="admin-greservation-label-h2 fst-italic">
         Gym Reservation
       </h2>
 
-      <AdminGymCalendar />
+      <div className="justify-content-end d-flex me-5">
+        <button
+          className="btn btn-warning me-2"
+          onClick={() => setShowTimeGapModal(true)}
+        >
+          <i class="bi bi-clock-fill"></i>
+        </button>
+        <button
+          className="btn btn-info me-2"
+          onClick={() => setShowBlockModal(true)}
+        >
+          <i className="bi bi-calendar-x-fill"></i>
+        </button>
+      </div>
+
+      <AdminGymCalendar
+        blockedDates={blockedDates}
+        generateTimeSlots={generateTimeSlots}
+      />
 
       <div className="admin-greservation-buttons-table-container">
         <div className="admin-gr-toggle-buttons-container d-flex align-items-center">
@@ -193,7 +241,7 @@ const AdminGymReservation = () => {
                     onChange={() => handleCheckboxChange(reservation.id)}
                   />
                 </td>
-                <td>{reservation.id}</td>
+                <td>{reservation.user_id}</td>
                 <td>{reservation.program}</td>
                 <td>{reservation.start_date}</td>
                 <td>{reservation.end_date}</td>
@@ -211,6 +259,84 @@ const AdminGymReservation = () => {
             ))}
           </tbody>
         </Table>
+
+        <Modal
+          show={showTimeGapModal}
+          onHide={() => setShowTimeGapModal(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Customize Time Gap</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <label>Select Time Gap:</label>
+            <select
+              className="form-select"
+              value={timeGap}
+              onChange={(e) => setTimeGap(Number(e.target.value))}
+            >
+              <option value={1}>1 Hour</option>
+              <option value={2}>2 Hours</option>
+              <option value={3}>3 Hours</option>
+            </select>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setShowTimeGapModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => setShowTimeGapModal(false)}
+            >
+              Save
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={showBlockModal} onHide={() => setShowBlockModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Block Dates</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <label>Start Date:</label>
+            <input
+              type="date"
+              className="form-control"
+              onChange={(e) => setStartBlockDate(e.target.value)}
+            />
+            <label>End Date:</label>
+            <input
+              type="date"
+              className="form-control"
+              onChange={(e) => setEndBlockDate(e.target.value)}
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setShowBlockModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => {
+                if (!startBlockDate || !endBlockDate) return;
+
+                const start = new Date(startBlockDate);
+                const end = new Date(endBlockDate);
+                end.setHours(23, 59, 59, 999);
+
+                setBlockedDates([...blockedDates, { start, end }]);
+                setShowBlockModal(false);
+              }}
+            >
+              Block Date Range
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );
