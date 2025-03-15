@@ -721,7 +721,7 @@ const Users = () => {
                     </div>
                     <div className="admin-users-form d-flex flex-column">
                       <label className="admin-users-modal-label">
-                        Youth Birthdate Group
+                        Youth Age Group
                       </label>
                       <input
                         type="text"

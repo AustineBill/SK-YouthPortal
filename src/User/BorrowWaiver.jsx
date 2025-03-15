@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
+import Feedback from "./Feedback";
 import axios from "axios";
 
 const BorrowWaiver = () => {
   const navigate = useNavigate();
   const [allData, setAllData] = useState({});
   const [isChecked, setIsChecked] = useState(false);
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [showFeedback, setShowFeedback] = useState(false); // Show feedback form
+  const [showSuccessModal, setShowSuccessModal] = useState(false); // Show success message
 
   const saveReservation = async () => {
     try {
@@ -16,7 +18,7 @@ const BorrowWaiver = () => {
         allData
       );
       console.log("Facilities reservation saved successfully.");
-      setShowModal(true); // Show success modal
+      setShowFeedback(true); // Show feedback form instead of success modal
     } catch (error) {
       console.error("Error during reservation process:", error);
     }
@@ -39,6 +41,11 @@ const BorrowWaiver = () => {
     setIsChecked(!isChecked);
   };
 
+  const handleFeedbackSubmit = () => {
+    setShowFeedback(false); // Hide feedback
+    setShowSuccessModal(true); // Show success message
+  };
+
   useEffect(() => {
     const reservationData =
       JSON.parse(sessionStorage.getItem("reservationData")) || {};
@@ -58,7 +65,6 @@ const BorrowWaiver = () => {
 
       <div className="calendar-container">
         <h1>Pledge of Responsibility for Borrowed Items</h1>
-
         <p>
           I hereby acknowledge the receipt of the items listed above, borrowed
           from the office of the Sangguniang Kabataan of Western Bicutan. I
@@ -114,14 +120,17 @@ const BorrowWaiver = () => {
         </Form>
       </div>
 
-      {/* Success Modal */}
-      {showModal && (
+      {/* Show Feedback first */}
+      {showFeedback && <Feedback onSubmit={handleFeedbackSubmit} />}
+
+      {/* Show success modal only after feedback is handled */}
+      {showSuccessModal && (
         <div className="ModalOverlayStyles">
           <div className="ModalStyles large">
             <button
               className="closeButton"
               onClick={() => {
-                setShowModal(false);
+                setShowSuccessModal(false);
               }}
               aria-label="Close"
             >

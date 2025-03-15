@@ -263,7 +263,6 @@ const InventoryTable = () => {
                       className="admin-inventory-form"
                     >
                       <option>Available</option>
-                      <option>Out of Stock</option>
                       <option>Repair/Maintenance</option>
                     </select>
                   </div>
