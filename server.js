@@ -461,29 +461,43 @@ app.post("/change-password-only", async (req, res) => {
 });
 
 app.post("/reservations", async (req, res) => {
-  const { user_id, reservation_type, start_date, end_date, status, time_slot } =
-    req.body;
+  const {
+    user_id,
+    reservation_id,
+    reservation_type,
+    start_date,
+    end_date,
+    status,
+    time_slot,
+  } = req.body;
 
   try {
     const result = await pool.query(
-      `INSERT INTO Schedules (user_id, reservation_type, start_date, end_date, status, time_slot)
-         VALUES ($1, $2, $3, $4, $5, $6) RETURNING id AS reservation_id, *`,
-      [user_id, reservation_type, start_date, end_date, status, time_slot]
+      `INSERT INTO Schedules (user_id, reservation_id, reservation_type, start_date, end_date, status, time_slot)
+         VALUES ($1, $2, $3, $4, $5, $6 , $7) RETURNING *`,
+      [
+        user_id,
+        reservation_id,
+        reservation_type,
+        start_date,
+        end_date,
+        status,
+        time_slot,
+      ]
     );
-    res.status(201).json(result.rows[0]); // Ensure reservation_id is returned
+    res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error("Error saving reservation:", error);
     res.status(500).send("Server error");
   }
 });
 
-// Fetch reservations (GET)
 app.get("/reservations", async (req, res) => {
   const { userId } = req.query; // Get userId from query parameters
 
   try {
     const result = await pool.query(
-      `SELECT id AS reservation_id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
+      `SELECT id, reservation_id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
          FROM Schedules 
          WHERE user_id = $1 AND is_archived = false
          ORDER BY start_date ASC`,
