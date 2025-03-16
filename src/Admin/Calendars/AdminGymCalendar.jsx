@@ -4,9 +4,11 @@ import "react-calendar/dist/Calendar.css";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import axios from "axios";
 
-const AdminGymCalendar = ({ blockedDates, generateTimeSlots }) => {
+const AdminGymCalendar = () => {
   const [calendarReservations, setCalendarReservations] = useState([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
+  const [timeGap, setTimeGap] = useState(1); // Default 1 hour
+  const [blockedDates, setBlockedDates] = useState([]);
 
   useEffect(() => {
     const fetchCalendarReservations = async () => {
@@ -23,13 +25,51 @@ const AdminGymCalendar = ({ blockedDates, generateTimeSlots }) => {
     fetchCalendarReservations();
   }, []);
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await axios.get(
+          "https://isked-backend.onrender.com/settings"
+        );
+        if (response.data) {
+          setTimeGap(response.data.time_gap || 1); // Default to 1 hour if not set
+          setBlockedDates([
+            { start: response.data.start_date, end: response.data.end_date },
+          ]);
+        }
+      } catch (error) {
+        console.error("Error fetching settings:", error);
+      }
+    };
+    fetchSettings();
+  }, []);
+
+  // Generate time slots dynamically based on time gap
+  const generateTimeSlots = () => {
+    const slots = [];
+    let startTime = 6; // 6:00 AM start
+    let endTime = 22; // 10:00 PM end
+
+    for (let hour = startTime; hour < endTime; hour += timeGap) {
+      let startHour = hour;
+      let endHour = hour + timeGap;
+
+      let startLabel =
+        startHour < 12 ? `${startHour}:00 AM` : `${startHour - 12}:00 PM`;
+      let endLabel =
+        endHour < 12 ? `${endHour}:00 AM` : `${endHour - 12}:00 PM`;
+
+      slots.push(`${startLabel} - ${endLabel}`);
+    }
+    return slots;
+  };
+
   const filterCalendarReservations = (date) => {
     const normalizedDate = new Date(date).setHours(0, 0, 0, 0);
     return calendarReservations.filter((res) => {
       const startDate = new Date(res.start_date).setHours(0, 0, 0, 0);
       const endDate = new Date(res.end_date).setHours(23, 59, 59, 999);
 
-      // Ensure the reservation time slot matches exactly (e.g., "1:00 PM - 2:00 PM")
       const matchesTimeSlot = selectedTimeSlot
         ? res.time_slot.trim() === selectedTimeSlot.trim()
         : true;
@@ -37,7 +77,7 @@ const AdminGymCalendar = ({ blockedDates, generateTimeSlots }) => {
       return (
         normalizedDate >= startDate &&
         normalizedDate <= endDate &&
-        matchesTimeSlot // Ensure exact match of time slot
+        matchesTimeSlot
       );
     });
   };

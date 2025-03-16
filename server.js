@@ -1181,8 +1181,7 @@ app.get("/settings", async (req, res) => {
   }
 });
 
-// Update time gap
-app.post("/settings/time-gap", async (req, res) => {
+app.put("/settings/time-gap", async (req, res) => {
   const { time_gap } = req.body;
 
   if (![1, 2, 3].includes(time_gap)) {
@@ -1191,7 +1190,7 @@ app.post("/settings/time-gap", async (req, res) => {
 
   try {
     await pool.query(
-      `INSERT INTO Settings (time_gap) VALUES ($1)
+      `INSERT INTO Settings (id, time_gap) VALUES (1, $1)
        ON CONFLICT (id) DO UPDATE SET time_gap = EXCLUDED.time_gap;`,
       [time_gap]
     );

@@ -116,29 +116,6 @@ const AdminGymReservation = () => {
     }
   };
 
-  const generateTimeSlots = () => {
-    const slots = [];
-    for (let hour = 10; hour <= 17; hour += timeGap) {
-      let startHour = hour;
-      let endHour = hour + timeGap;
-
-      let startPeriod = startHour < 12 ? "AM" : startHour === 12 ? "NN" : "PM";
-      let endPeriod = endHour < 12 ? "AM" : endHour === 12 ? "NN" : "PM";
-
-      // Format hours for 12-hour clock (avoid 0:00)
-      if (startHour > 12) startHour -= 12;
-      if (endHour > 12) endHour -= 12;
-
-      let start = `${startHour}:00 ${startPeriod}`;
-      let end = `${endHour}:00 ${endPeriod}`;
-
-      if (endHour <= 17) {
-        slots.push(`${start} - ${end}`);
-      }
-    }
-    return slots;
-  };
-
   return (
     <div className="admin-gym-reservation-container">
       <h2 className="admin-greservation-label-h2 fst-italic">
@@ -150,7 +127,7 @@ const AdminGymReservation = () => {
           className="btn btn-warning me-2"
           onClick={() => setShowTimeGapModal(true)}
         >
-          <i class="bi bi-clock-fill"></i>
+          <i className="bi bi-clock-fill"></i>
         </button>
         <button
           className="btn btn-info me-2"
@@ -160,10 +137,7 @@ const AdminGymReservation = () => {
         </button>
       </div>
 
-      <AdminGymCalendar
-        blockedDates={blockedDates}
-        generateTimeSlots={generateTimeSlots}
-      />
+      <AdminGymCalendar />
 
       <div className="admin-greservation-buttons-table-container">
         <div className="admin-gr-toggle-buttons-container d-flex align-items-center">
@@ -290,8 +264,8 @@ const AdminGymReservation = () => {
               variant="primary"
               onClick={async () => {
                 try {
-                  await axios.post(
-                    "https://malic-backend.onrender.com/settings/time-gap",
+                  await axios.put(
+                    "https://isked-backend.onrender.com/settings/time-gap",
                     {
                       time_gap: timeGap,
                     }
@@ -340,7 +314,7 @@ const AdminGymReservation = () => {
                   return alert("Please select a start date.");
                 try {
                   await axios.post(
-                    "https://malic-backend.onrender.com/settings/block-dates",
+                    "https://isked-backend.onrender.com/settings/block-dates",
                     {
                       start_date: startBlockDate,
                       end_date: endBlockDate || null,
