@@ -467,22 +467,23 @@ app.post("/reservations", async (req, res) => {
   try {
     const result = await pool.query(
       `INSERT INTO Schedules (user_id, reservation_type, start_date, end_date, status, time_slot)
-         VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+         VALUES ($1, $2, $3, $4, $5, $6) RETURNING id AS reservation_id, *`,
       [user_id, reservation_type, start_date, end_date, status, time_slot]
     );
-    res.status(201).json(result.rows[0]);
+    res.status(201).json(result.rows[0]); // Ensure reservation_id is returned
   } catch (error) {
     console.error("Error saving reservation:", error);
     res.status(500).send("Server error");
   }
 });
 
+// Fetch reservations (GET)
 app.get("/reservations", async (req, res) => {
   const { userId } = req.query; // Get userId from query parameters
 
   try {
     const result = await pool.query(
-      `SELECT id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
+      `SELECT id AS reservation_id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
          FROM Schedules 
          WHERE user_id = $1 AND is_archived = false
          ORDER BY start_date ASC`,
@@ -1173,31 +1174,44 @@ app.post("/CheckEquipment", async (req, res) => {
 
 app.get("/settings", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM Settings LIMIT 1");
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error("Error fetching settings:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    const result = await pool.query(
+      "SELECT * FROM settings ORDER BY created_at DESC"
+    );
+
+    const timeGapRow = result.rows.find((row) => row.time_gap !== null);
+    const timeGap = timeGapRow ? timeGapRow.time_gap : 1; // Default time gap if none found
+    const blockedDates = result.rows.filter((row) => row.start_date !== null);
+
+    res.json({ blocked_dates: blockedDates, time_gap: timeGap });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
   }
 });
 
 app.put("/settings/time-gap", async (req, res) => {
-  const { time_gap } = req.body;
-
-  if (![1, 2, 3].includes(time_gap)) {
-    return res.status(400).json({ error: "Invalid time gap value" });
-  }
-
   try {
-    await pool.query(
-      `INSERT INTO Settings (id, time_gap) VALUES (1, $1)
-       ON CONFLICT (id) DO UPDATE SET time_gap = EXCLUDED.time_gap;`,
-      [time_gap]
+    const { time_gap } = req.body;
+
+    const existingTimeGap = await pool.query(
+      "SELECT * FROM settings WHERE time_gap IS NOT NULL LIMIT 1"
     );
-    res.json({ message: "Time gap updated successfully" });
-  } catch (error) {
-    console.error("Error updating time gap:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+
+    if (existingTimeGap.rowCount > 0) {
+      await pool.query(
+        "UPDATE settings SET time_gap = $1 WHERE time_gap IS NOT NULL",
+        [time_gap]
+      );
+    } else {
+      await pool.query("INSERT INTO settings (time_gap) VALUES ($1)", [
+        time_gap,
+      ]);
+    }
+
+    res.send("Time gap updated.");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
   }
 });
 
@@ -1218,6 +1232,17 @@ app.post("/settings/block-dates", async (req, res) => {
   } catch (error) {
     console.error("Error inserting blocked dates:", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.delete("/settings/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query("DELETE FROM settings WHERE id = $1", [id]);
+    res.send("Block date removed");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
   }
 });
 
