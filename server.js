@@ -952,33 +952,6 @@ app.get("/ViewSched", async (req, res) => {
   }
 });
 
-/*app.get("/ViewSched", async (req, res) => {
-  try {
-    const result = await pool.query(`
-      SELECT 
-        s.start_date, 
-        s.end_date, 
-        s.time_slot, 
-        u.username, 
-        s.reservation_type
-    FROM Schedules s
-    JOIN Users u ON s.user_id = u.id
-    WHERE (s.is_archived IS NULL OR s.is_archived = FALSE)
-      AND s.start_date >= CURRENT_DATE::date
-    ORDER BY s.start_date ASC
-    `);
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "No schedules found" });
-    }
-
-    res.json(result.rows); // Send the result as a JSON response
-  } catch (err) {
-    console.error("Error during query execution:", err);
-    res.status(500).json({ error: err.message }); // Send error message if there's an issue
-  }
-});*/
-
 app.get("/ViewEquipment", async (req, res) => {
   try {
     // Query to fetch equipment details, using JSON functions to extract data
@@ -1197,6 +1170,58 @@ app.post("/CheckEquipment", async (req, res) => {
 });
 
 //Admin Side
+
+app.get("/settings", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM Settings LIMIT 1");
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error("Error fetching settings:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Update time gap
+app.post("/settings/time-gap", async (req, res) => {
+  const { time_gap } = req.body;
+
+  if (![1, 2, 3].includes(time_gap)) {
+    return res.status(400).json({ error: "Invalid time gap value" });
+  }
+
+  try {
+    await pool.query(
+      `INSERT INTO Settings (time_gap) VALUES ($1)
+       ON CONFLICT (id) DO UPDATE SET time_gap = EXCLUDED.time_gap;`,
+      [time_gap]
+    );
+    res.json({ message: "Time gap updated successfully" });
+  } catch (error) {
+    console.error("Error updating time gap:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Insert blocked date range
+app.post("/settings/block-dates", async (req, res) => {
+  const { start_date, end_date } = req.body;
+
+  if (!start_date) {
+    return res.status(400).json({ error: "Start date is required" });
+  }
+
+  try {
+    await pool.query(
+      "INSERT INTO Settings (start_date, end_date) VALUES ($1, $2);",
+      [start_date, end_date || null]
+    );
+    res.json({ message: "Blocked date range added successfully" });
+  } catch (error) {
+    console.error("Error inserting blocked dates:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 /********* Contact Us na ito ******** */
 app.get("/contact", async (req, res) => {
   try {
@@ -1241,33 +1266,6 @@ app.get("/Website", async (req, res) => {
 });
 
 const webUpload = multer({ storage: skOfficialsStorage });
-
-/*app.put("/Website", webUpload.single("image"), async (req, res) => {
-  const { description, objectives, mission, vision } = req.body;
-
-  // Validate the input data
-  if (!description || !objectives || !mission || !vision) {
-    return res.status(400).json({ error: "All fields are required" });
-  }
-
-  if (!req.file) {
-    return res.status(400).json({ error: "All fields are required" });
-  }
-
-  const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
-
-  try {
-    // Update website data in the Website table
-    await pool.query(
-      "UPDATE Website SET description = $1, objectives = $2, mission = $3, vision = $4, image_url = $6 WHERE id = $5",
-      [description, objectives, mission, vision, 1, uploadedImageUrl]
-    );
-    res.json({ message: "Website details updated successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error updating website details" });
-  }
-});*/
 
 app.put("/Website", webUpload.single("image"), async (req, res) => {
   const { description, objectives, mission, vision } = req.body;

@@ -288,7 +288,20 @@ const AdminGymReservation = () => {
             </Button>
             <Button
               variant="primary"
-              onClick={() => setShowTimeGapModal(false)}
+              onClick={async () => {
+                try {
+                  await axios.post(
+                    "https://malic-backend.onrender.com/settings/time-gap",
+                    {
+                      time_gap: timeGap,
+                    }
+                  );
+                  alert("Time gap updated!");
+                  setShowTimeGapModal(false);
+                } catch (error) {
+                  console.error("Error updating time gap:", error);
+                }
+              }}
             >
               Save
             </Button>
@@ -322,15 +335,29 @@ const AdminGymReservation = () => {
             </Button>
             <Button
               variant="danger"
-              onClick={() => {
-                if (!startBlockDate || !endBlockDate) return;
-
-                const start = new Date(startBlockDate);
-                const end = new Date(endBlockDate);
-                end.setHours(23, 59, 59, 999);
-
-                setBlockedDates([...blockedDates, { start, end }]);
-                setShowBlockModal(false);
+              onClick={async () => {
+                if (!startBlockDate)
+                  return alert("Please select a start date.");
+                try {
+                  await axios.post(
+                    "https://malic-backend.onrender.com/settings/block-dates",
+                    {
+                      start_date: startBlockDate,
+                      end_date: endBlockDate || null,
+                    }
+                  );
+                  alert("Blocked dates added!");
+                  setBlockedDates([
+                    ...blockedDates,
+                    {
+                      start: startBlockDate,
+                      end: endBlockDate || startBlockDate,
+                    },
+                  ]);
+                  setShowBlockModal(false);
+                } catch (error) {
+                  console.error("Error blocking dates:", error);
+                }
               }}
             >
               Block Date Range
