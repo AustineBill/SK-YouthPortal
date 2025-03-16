@@ -46,7 +46,6 @@ function ScheduleDone() {
       JSON.parse(sessionStorage.getItem("reservedEquipment")) || [];
     const programType = sessionStorage.getItem("programType"); // Get program type from sessionStorage
 
-    // Generate reservation ID if it doesn't already exist
     if (!reservationData.reservation_id) {
       reservationData.reservation_id = generateReservationId();
       sessionStorage.setItem(

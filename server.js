@@ -2048,7 +2048,7 @@ app.get("/Allequipments", async (req, res) => {
 app.get("/Allreservations", async (req, res) => {
   try {
     const result = await pool.query(
-      `SELECT user_id, reservation_type AS program, 
+      `SELECT user_id, reservation_id, reservation_type AS program, 
               TO_CHAR(start_date, 'FMDay, FMDD, YYYY') AS start_date, 
               TO_CHAR(end_date, 'FMDay, FMDD, YYYY') AS end_date, 
               status, time_slot 

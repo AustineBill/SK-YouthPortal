@@ -206,8 +206,8 @@ const AdminGymReservation = () => {
           </thead>
 
           <tbody className="admin-greservation-body text-center">
-            {filteredReservations.map((reservation) => (
-              <tr key={reservation.id}>
+            {filteredReservations.map((reservation, index) => (
+              <tr key={reservation.reservation_id || reservation.id || index}>
                 <td>
                   <input
                     type="checkbox"
@@ -215,7 +215,7 @@ const AdminGymReservation = () => {
                     onChange={() => handleCheckboxChange(reservation.id)}
                   />
                 </td>
-                <td>{reservation.user_id}</td>
+                <td>{reservation.reservation_id}</td>
                 <td>{reservation.program}</td>
                 <td>{reservation.start_date}</td>
                 <td>{reservation.end_date}</td>
