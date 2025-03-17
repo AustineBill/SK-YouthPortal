@@ -1203,7 +1203,7 @@ app.get("/settings", async (req, res) => {
   }
 });
 
-app.put("/settings/time-gap", async (req, res) => {
+app.post("/settings/time-gap", async (req, res) => {
   try {
     const { time_gap } = req.body;
 

@@ -264,11 +264,9 @@ const AdminGymReservation = () => {
               variant="primary"
               onClick={async () => {
                 try {
-                  await axios.put(
+                  await axios.post(
                     "https://isked-backend.onrender.com/settings/time-gap",
-                    {
-                      time_gap: timeGap,
-                    }
+                    { time_gap: timeGap }
                   );
                   alert("Time gap updated!");
                   setShowTimeGapModal(false);

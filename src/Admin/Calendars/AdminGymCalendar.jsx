@@ -7,7 +7,7 @@ import axios from "axios";
 const AdminGymCalendar = () => {
   const [calendarReservations, setCalendarReservations] = useState([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
-  const [timeGap, setTimeGap] = useState(1); // Default 1 hour
+  const [timeGap, setTimeGap] = useState(1);
   const [blockedDates, setBlockedDates] = useState([]);
 
   useEffect(() => {
@@ -34,10 +34,16 @@ const AdminGymCalendar = () => {
         if (response.data) {
           setTimeGap(response.data.time_gap || 1);
 
-          if (response.data.start_date && response.data.end_date) {
-            setBlockedDates([
-              { start: response.data.start_date, end: response.data.end_date },
-            ]);
+          if (
+            response.data.blocked_dates &&
+            response.data.blocked_dates.length > 0
+          ) {
+            setBlockedDates(
+              response.data.blocked_dates.map((date) => ({
+                start: date.start_date,
+                end: date.end_date,
+              }))
+            );
           }
         }
       } catch (error) {
@@ -50,20 +56,31 @@ const AdminGymCalendar = () => {
   // Generate time slots dynamically based on time gap
   const generateTimeSlots = () => {
     const slots = [];
-    let startTime = 9;
-    let endTime = 7;
+    let startTime = 9; // Start at 9 AM
+    let endTime = 19; // End at 7 PM (24-hour format)
 
     for (let hour = startTime; hour < endTime; hour += timeGap) {
       let startHour = hour;
       let endHour = hour + timeGap;
 
+      if (endHour > endTime) break; // Stop if the end exceeds the available hours
+
       let startLabel =
-        startHour < 12 ? `${startHour}:00 AM` : `${startHour - 12}:00 PM`;
+        startHour < 12
+          ? `${startHour}:00 AM`
+          : startHour === 12
+          ? `12:00 PM`
+          : `${startHour - 12}:00 PM`;
       let endLabel =
-        endHour < 12 ? `${endHour}:00 AM` : `${endHour - 12}:00 PM`;
+        endHour < 12
+          ? `${endHour}:00 AM`
+          : endHour === 12
+          ? `12:00 PM`
+          : `${endHour - 12}:00 PM`;
 
       slots.push(`${startLabel} - ${endLabel}`);
     }
+
     return slots;
   };
 
@@ -92,6 +109,8 @@ const AdminGymCalendar = () => {
     const normalizedDate = new Date(date).setHours(0, 0, 0, 0);
     if (normalizedDate < today) return "disabled";
     if (date.getDay() === 0) return "disabled";
+
+    // Check for blocked dates
     if (
       blockedDates.some((blocked) => {
         const start = new Date(blocked.start).setHours(0, 0, 0, 0);
@@ -99,20 +118,9 @@ const AdminGymCalendar = () => {
         return normalizedDate >= start && normalizedDate <= end;
       })
     ) {
-      return "blocked";
+      return "blocked"; // Make sure your CSS has a class for this
     }
 
-    const dailyReservations = filterCalendarReservations(date);
-    let totalReservations = 0;
-    dailyReservations.forEach((res) => {
-      if (res.reservation_type === "Group") {
-        totalReservations += 5;
-      } else {
-        totalReservations += 1;
-      }
-    });
-
-    if (totalReservations >= 5) return "unavailable";
     return "available";
   };
 
@@ -165,6 +173,7 @@ const AdminGymCalendar = () => {
 
               const start = new Date(blocked.start).setHours(0, 0, 0, 0);
               const end = new Date(blocked.end).setHours(23, 59, 59, 999);
+
               return normalizedDate >= start && normalizedDate <= end;
             });
           }}
