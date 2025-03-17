@@ -1211,15 +1211,15 @@ app.post("/settings/time-gap", async (req, res) => {
       return res.status(400).json({ error: "Invalid time gap value" });
     }
 
-    // Update only the most recent settings row
+    // Use an upsert (INSERT ON CONFLICT) to ensure only one time_gap row exists
     const result = await pool.query(
-      "UPDATE settings SET time_gap = $1 WHERE id = (SELECT id FROM settings ORDER BY created_at DESC LIMIT 1) RETURNING *",
+      `INSERT INTO settings (time_gap) 
+       VALUES ($1)
+       ON CONFLICT (time_gap) DO UPDATE 
+       SET time_gap = EXCLUDED.time_gap
+       RETURNING *;`,
       [time_gap]
     );
-
-    if (result.rowCount === 0) {
-      return res.status(400).json({ error: "No settings row found" });
-    }
 
     res.json({
       message: "Time gap updated successfully",
@@ -1230,6 +1230,7 @@ app.post("/settings/time-gap", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 
 // Insert blocked date range
 app.post("/settings/block-dates", async (req, res) => {
