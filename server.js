@@ -1186,7 +1186,7 @@ app.post("/CheckEquipment", async (req, res) => {
 
 //Admin Side
 
-app.get("/settings", async (req, res) => {
+/*app.get("/settings", async (req, res) => {
   try {
     const result = await pool.query(
       "SELECT * FROM settings ORDER BY created_at DESC"
@@ -1194,9 +1194,39 @@ app.get("/settings", async (req, res) => {
 
     const timeGapRow = result.rows.find((row) => row.time_gap !== null);
     const timeGap = timeGapRow ? timeGapRow.time_gap : 1; // Default time gap if none found
+
     const blockedDates = result.rows.filter((row) => row.start_date !== null);
 
     res.json({ blocked_dates: blockedDates, time_gap: timeGap });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});*/
+
+app.get("/settings", async (req, res) => {
+  try {
+    // Get latest non-null time_gap
+    const timeGapResult = await pool.query(`
+      SELECT time_gap FROM settings 
+      WHERE time_gap IS NOT NULL 
+      ORDER BY created_at DESC 
+      LIMIT 1
+    `);
+
+    const timeGap =
+      timeGapResult.rows.length > 0 ? timeGapResult.rows[0].time_gap : 1;
+
+    // Get blocked dates
+    const blockedDatesResult = await pool.query(`
+      SELECT start_date, end_date FROM settings 
+      WHERE start_date IS NOT NULL
+    `);
+
+    res.json({
+      blocked_dates: blockedDatesResult.rows,
+      time_gap: timeGap,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
@@ -1230,7 +1260,6 @@ app.post("/settings/time-gap", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
 
 // Insert blocked date range
 app.post("/settings/block-dates", async (req, res) => {
@@ -2059,6 +2088,9 @@ app.get("/Allreservations", async (req, res) => {
        WHERE is_archived IS DISTINCT FROM true
        ORDER BY start_date ASC`
     );
+
+    console.log("Fetched Reservations:", result.rows); // Log response to check if reservation_id is included
+
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching reservations:", error);

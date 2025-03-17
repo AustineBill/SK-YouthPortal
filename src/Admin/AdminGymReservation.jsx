@@ -26,6 +26,7 @@ const AdminGymReservation = () => {
         const activeReservations = response.data.filter(
           (reservation) => !reservation.is_archived
         );
+        console.log("Fetched reservations:", response.data);
         setReservations(activeReservations);
         setFilteredReservations(activeReservations);
       } catch (error) {
@@ -207,7 +208,7 @@ const AdminGymReservation = () => {
 
           <tbody className="admin-greservation-body text-center">
             {filteredReservations.map((reservation, index) => (
-              <tr key={reservation.reservation_id || reservation.id || index}>
+              <tr key={reservation.id || reservation.reservation_id || index}>
                 <td>
                   <input
                     type="checkbox"
@@ -264,10 +265,18 @@ const AdminGymReservation = () => {
               variant="primary"
               onClick={async () => {
                 try {
+                  if (!timeGap || isNaN(timeGap)) {
+                    alert("Invalid time gap value! Please enter a number.");
+                    return;
+                  }
+
                   await axios.post(
                     "https://isked-backend.onrender.com/settings/time-gap",
-                    { time_gap: timeGap }
+                    {
+                      time_gap: Number(timeGap), // Ensure it's a number
+                    }
                   );
+
                   alert("Time gap updated!");
                   setShowTimeGapModal(false);
                 } catch (error) {

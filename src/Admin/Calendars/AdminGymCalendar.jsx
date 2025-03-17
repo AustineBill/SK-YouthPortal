@@ -86,18 +86,27 @@ const AdminGymCalendar = () => {
 
   const filterCalendarReservations = (date) => {
     const normalizedDate = new Date(date).setHours(0, 0, 0, 0);
+
     return calendarReservations.filter((res) => {
       const startDate = new Date(res.start_date).setHours(0, 0, 0, 0);
       const endDate = new Date(res.end_date).setHours(23, 59, 59, 999);
 
-      const matchesTimeSlot = selectedTimeSlot
-        ? res.time_slot.trim() === selectedTimeSlot.trim()
-        : true;
+      if (!(normalizedDate >= startDate && normalizedDate <= endDate)) {
+        return false;
+      }
+
+      if (!selectedTimeSlot) {
+        return true; // No time filter applied
+      }
+
+      // Normalize time slot format before comparison
+      const normalizeTimeSlot = (slot) =>
+        slot
+          .replace(/\s+/g, "") // Remove spaces
+          .toLowerCase(); // Convert to lowercase
 
       return (
-        normalizedDate >= startDate &&
-        normalizedDate <= endDate &&
-        matchesTimeSlot
+        normalizeTimeSlot(res.time_slot) === normalizeTimeSlot(selectedTimeSlot)
       );
     });
   };
@@ -118,7 +127,7 @@ const AdminGymCalendar = () => {
         return normalizedDate >= start && normalizedDate <= end;
       })
     ) {
-      return "blocked"; // Make sure your CSS has a class for this
+      return "blocked";
     }
 
     return "available";
