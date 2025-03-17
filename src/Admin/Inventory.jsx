@@ -37,10 +37,12 @@ const InventoryTable = () => {
   };
 
   const handleFileChange = (e) => {
-    setNewItem({
-      ...newItem,
-      image: e.target.files[0],
-    });
+    if (e.target.files.length > 0) {
+      setNewItem({
+        ...newItem,
+        image: e.target.files[0], // Assign only if a file is selected
+      });
+    }
   };
 
   const handleShowModal = (item = null) => {
@@ -51,7 +53,7 @@ const InventoryTable = () => {
         quantity: item.quantity,
         specification: item.specification,
         status: item.status,
-        image: null, // New image will be uploaded if edited
+        image: null, // New image will be uploaded if needed
       });
     } else {
       setNewItem({
@@ -74,13 +76,13 @@ const InventoryTable = () => {
     formData.append("quantity", newItem.quantity);
     formData.append("specification", newItem.specification);
     formData.append("status", newItem.status);
+
     if (newItem.image) {
-      formData.append("image", newItem.image);
+      formData.append("image", newItem.image); // Append only if an image is selected
     }
 
     try {
       if (currentItem) {
-        // Edit
         await axios.put(
           `https://isked-backend-ssmj.onrender.com/inventory/${currentItem.id}`,
           formData,
@@ -89,7 +91,6 @@ const InventoryTable = () => {
           }
         );
       } else {
-        // Add
         await axios.post(
           "https://isked-backend-ssmj.onrender.com/inventory",
           formData,
@@ -106,7 +107,6 @@ const InventoryTable = () => {
   };
 
   const handleDelete = async (id) => {
-    console.log("Deleting item with ID:", id);
     try {
       await axios.delete(
         `https://isked-backend-ssmj.onrender.com/inventory/${id}`
@@ -132,7 +132,6 @@ const InventoryTable = () => {
         </button>
       </div>
 
-      {/* <Table striped bordered hover> */}
       <div className="admin-inventory-contents-container">
         <Table className="admin-inventory-table-container table-bordered">
           <thead className="admin-inventory-head text-center">
@@ -157,7 +156,6 @@ const InventoryTable = () => {
                     <img
                       src={item.image}
                       alt={item.name}
-                      // style={{ width: "100px", height: "125px" }}
                       className="equipment-image"
                     />
                   ) : (
@@ -188,7 +186,6 @@ const InventoryTable = () => {
         </Table>
       </div>
 
-      {/* Add/Edit Modal */}
       {showModal && (
         <div
           className="admin-inventory-item-add-edit-modal modal"
@@ -212,9 +209,7 @@ const InventoryTable = () => {
               <div className="admin-inventory-item-add-edit-modal modal-body">
                 <form onSubmit={handleSubmit} className="m-0">
                   <div className="admin-inventory-group-form d-flex flex-column">
-                    <label className="admin-inventory-form-label">
-                      Item Name
-                    </label>
+                    <label className="admin-inventory-form-label">Item Name</label>
                     <input
                       type="text"
                       name="name"
@@ -226,9 +221,7 @@ const InventoryTable = () => {
                   </div>
 
                   <div className="admin-inventory-group-form d-flex flex-column">
-                    <label className="admin-inventory-form-label">
-                      Quantity
-                    </label>
+                    <label className="admin-inventory-form-label">Quantity</label>
                     <input
                       type="number"
                       name="quantity"
@@ -240,9 +233,7 @@ const InventoryTable = () => {
                   </div>
 
                   <div className="admin-inventory-group-form d-flex flex-column">
-                    <label className="admin-inventory-form-label">
-                      Specification
-                    </label>
+                    <label className="admin-inventory-form-label">Specification</label>
                     <input
                       type="text"
                       name="specification"
@@ -268,23 +259,17 @@ const InventoryTable = () => {
                   </div>
 
                   <div className="admin-inventory-group-form d-flex flex-column">
-                    <label className="admin-inventory-form-label">
-                      Upload Image
-                    </label>
+                    <label className="admin-inventory-form-label">Upload Image (Optional)</label>
                     <input
                       type="file"
                       name="image"
                       onChange={handleFileChange}
-                      required
                       className="admin-inventory-form"
                     />
                   </div>
 
                   <div className="admin-inventory-save-add-button-container">
-                    <button
-                      type="submit"
-                      className="admin-inventory-item-button text-white rounded bg-primary"
-                    >
+                    <button type="submit" className="admin-inventory-item-button text-white rounded bg-primary">
                       {currentItem ? "Save Changes" : "Add Item"}
                     </button>
                   </div>
