@@ -1207,22 +1207,24 @@ app.post("/settings/time-gap", async (req, res) => {
   try {
     const { time_gap } = req.body;
 
-    const existingTimeGap = await pool.query(
-      "SELECT * FROM settings WHERE time_gap IS NOT NULL LIMIT 1"
-    );
-
-    if (existingTimeGap.rowCount > 0) {
-      await pool.query(
-        "UPDATE settings SET time_gap = $1 WHERE time_gap IS NOT NULL",
-        [time_gap]
-      );
-    } else {
-      await pool.query("INSERT INTO settings (time_gap) VALUES ($1)", [
-        time_gap,
-      ]);
+    if (!time_gap || isNaN(time_gap)) {
+      return res.status(400).json({ error: "Invalid time gap value" });
     }
 
-    res.send("Time gap updated.");
+    // Update only the most recent settings row
+    const result = await pool.query(
+      "UPDATE settings SET time_gap = $1 WHERE id = (SELECT id FROM settings ORDER BY created_at DESC LIMIT 1) RETURNING *",
+      [time_gap]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(400).json({ error: "No settings row found" });
+    }
+
+    res.json({
+      message: "Time gap updated successfully",
+      data: result.rows[0],
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
