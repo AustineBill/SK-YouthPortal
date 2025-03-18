@@ -21,12 +21,12 @@ const AdminGymReservation = () => {
     const fetchReservations = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend-ssmj.onrender.com/Allreservations"
+          "https://isked-backend.onrender.com/Allreservations"
         );
         const activeReservations = response.data.filter(
           (reservation) => !reservation.is_archived
         );
-        console.log("Fetched reservations:", response.data);
+        console.log("Fetcheds reservations:", response.data);
         setReservations(activeReservations);
         setFilteredReservations(activeReservations);
       } catch (error) {

@@ -29,7 +29,7 @@ const AdminEquipmentReservation = () => {
   };
 
   useEffect(() => {
-    fetchTableReservations(); // Fetch data for the table
+    fetchTableReservations();
   }, []);
 
   // Filter reservations based on selected option
@@ -77,8 +77,8 @@ const AdminEquipmentReservation = () => {
       await axios.post("https://isked-backend-ssmj.onrender.com/markReturned", {
         ids: selectedReservations,
       });
-      fetchTableReservations(); // Refresh the reservations list
-      setSelectedReservations([]); // Clear selected reservations
+      fetchTableReservations();
+      setSelectedReservations([]);
     } catch (error) {
       console.error("Error marking reservations as returned:", error);
     }
@@ -92,8 +92,8 @@ const AdminEquipmentReservation = () => {
           ids: selectedReservations,
         }
       );
-      fetchTableReservations(); // Refresh the reservations list
-      setSelectedReservations([]); // Clear selected reservations
+      fetchTableReservations();
+      setSelectedReservations([]);
     } catch (error) {
       console.error("Error marking reservations as not returned:", error);
     }
@@ -101,21 +101,17 @@ const AdminEquipmentReservation = () => {
 
   const handleArchive = async (reservationId) => {
     try {
-      // Send the DELETE request with the reservation ID in the URL
       await axios.delete(
         `https://isked-backend-ssmj.onrender.com/equipment/${reservationId}`
       );
 
-      // After archiving, fetch the updated reservations list
-      fetchTableReservations(); // Refresh the reservations list
-
-      // Optionally, you could filter the reservations locally by checking the is_archived flag
+      fetchTableReservations();
       const updatedReservations = filteredReservations.filter(
         (reservation) => reservation.id !== reservationId
       );
 
-      setFilteredReservations(updatedReservations); // Update the state to reflect the change
-      setSelectedReservations([]); // Clear selected reservations
+      setFilteredReservations(updatedReservations);
+      setSelectedReservations([]);
     } catch (error) {
       console.error("Error archiving reservation:", error);
     }

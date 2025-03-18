@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { Pool } = require("pg");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
@@ -10,6 +9,8 @@ const moment = require("moment-timezone");
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 const crypto = require("crypto");
+const cloudinary = require("cloudinary").v2;
+const { Pool } = require("pg");
 
 const { generateRandomId } = require("./src/WebStructure/Codex");
 
@@ -18,17 +19,17 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.json({ limit: "20mb" })); // Allow up to 20MB for JSON payloads
-app.use(express.urlencoded({ limit: "20mb", extended: true })); // Allow up to 20MB for URL-encoded payloads
+app.use(express.json({ limit: "20mb" }));
+app.use(express.urlencoded({ limit: "20mb", extended: true }));
 
 const pool = new Pool({
-  user: "ufjaqr5qssmbmr",
-  host: "c3gtj1dt5vh48j.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com", //cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com
-  database: "dbmosddvg6eh1i", //dalvnvq3lud30l
-  password: "p219a0f2b7045fe1430be3a5fac15f713e36fc4223fa01877810dad5a57385233",
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.PASSWORD,
+  port: process.env.PORT,
   ssl: {
-    rejectUnauthorized: false, // This allows connections even without a certificate. Set to true for stricter security.
+    rejectUnauthorized: false,
   },
 });
 
@@ -51,22 +52,20 @@ app.get("/", (req, res) => {
 
 // Nodemailer transporter
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true, // Ensures SSL is used
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
+  secure: true,
   auth: {
-    user: "austinebillryannmalic@gmail.com", // Your Gmail address
-    pass: "htsyzbfwazgqmxzo", // Your app password for Gmail (don't use your regular Gmail password)
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
 
-const cloudinary = require("cloudinary").v2;
-
 // Configuration
 cloudinary.config({
-  cloud_name: "diewc7vew",
-  api_key: "438357342246287",
-  api_secret: "pHmXJT1fLBepc4PYcbemcqgE1mc", // Replace with your actual secret key
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET, // Replace with your actual secret key
 });
 
 /**
@@ -87,12 +86,6 @@ async function uploadImage(path) {
   }
 }
 
-// Example usage:
-// Call the function when needed (replace '/path/to/image.jpg' with the actual image path)
-// uploadImage('/home/a4meta/Pictures/tropic_island_morning.jpg')
-//     .then((url) => console.log("Uploaded image URL:", url))
-//     .catch((error) => console.error("Upload failed:", error));
-
 module.exports = { uploadImage };
 
 /********* Website ******** */
@@ -106,7 +99,6 @@ app.post("/check-email", async (req, res) => {
   const currentTime = Date.now();
 
   try {
-    // Check if the email has been sent a code recently
     if (
       emailTimestamps[email] &&
       currentTime - emailTimestamps[email] < 3 * 60 * 1000
@@ -166,16 +158,12 @@ app.post("/change-password", async (req, res) => {
   const { email, newPassword } = req.body;
 
   try {
-    // Hash the new password
     const hashedPassword = await bcrypt.hash(newPassword, 10); // 10 salt rounds
 
-    // Update the password in the database
     await pool.query(
       "UPDATE users SET password = $1 WHERE email_address = $2",
       [hashedPassword, email]
     );
-
-    // Remove the verification code (assuming a `verificationCodes` object is being used for email verification)
     if (verificationCodes[email]) {
       delete verificationCodes[email];
     }
@@ -200,7 +188,6 @@ app.post("/ValidateCode", async (req, res) => {
       return res.status(400).json({ message: "Invalid Activation Code" });
     }
 
-    // If the user exists, send the username and password back in the response for updating
     res.status(200).json({
       message:
         "Activation code validated. Please change your username and password.",
@@ -216,7 +203,6 @@ app.post("/UpdateAccount", async (req, res) => {
   const { decryptedCode, username, password } = req.body;
 
   try {
-    // Ensure required fields are provided
     if (!decryptedCode || !username || !password) {
       return res.status(400).json({ message: "All fields are required." });
     }
@@ -390,8 +376,6 @@ app.post("/login", async (req, res) => {
 
 app.get("/Profile/:username", async (req, res) => {
   const username = req.params.username;
-  console.log("Fetching profile for:", username);
-
   try {
     const query = `
       SELECT id, username, firstname, lastname, street, province, city, barangay, zone,
@@ -401,12 +385,8 @@ app.get("/Profile/:username", async (req, res) => {
       FROM Users
       WHERE username = $1
     `;
-
     const result = await pool.query(query, [username]);
-    console.log("Query Result:", result.rows);
-
     if (result.rows.length === 0) {
-      console.log("User not found:", username);
       return res.status(404).json({ message: "User not found" });
     }
 
@@ -897,10 +877,7 @@ app.delete("/equipment/:reservation_id", async (req, res) => {
 });
 
 app.post("/Feedback", async (req, res) => {
-  console.log("Received feedback:", req.body); // ✅ Debugging
-
   const { user_id, rating, comment } = req.body;
-
   if (!user_id || !rating || !comment) {
     return res.status(400).json({ error: "All fields are required." });
   }
@@ -1663,8 +1640,6 @@ app.get("/users", async (req, res) => {
 
 // Insert into the database with random ID generation
 app.post("/users", async (req, res) => {
-  console.log("Request Body:", req.body);
-
   const {
     username,
     password,
@@ -1688,11 +1663,9 @@ app.post("/users", async (req, res) => {
     registered_national_voter,
   } = req.body;
 
-  // Generate a random 6-character ID
   const userId = generateRandomId();
 
   try {
-    // Check for duplicate user data
     const checkDuplicateQuery = `
       SELECT * FROM Users 
       WHERE email_address = $1 OR (firstname = $2 AND lastname = $3)
@@ -1851,9 +1824,6 @@ app.put("/users/:id", async (req, res) => {
 
 app.delete("/users/:id", async (req, res) => {
   const { id } = req.params;
-
-  console.log("Received ID for deletion:", id); // Log the received ID
-
   try {
     const result = await pool.query(
       "DELETE FROM users WHERE id = $1 RETURNING *",
@@ -1861,14 +1831,11 @@ app.delete("/users/:id", async (req, res) => {
     );
 
     if (result.rows.length === 0) {
-      console.log("User not found with ID:", id); // Log user not found case
       return res.status(404).send("User not found");
     }
-
-    console.log("User deleted successfully:", result.rows[0]); // Log success
     res.json(result.rows[0]);
   } catch (err) {
-    console.error("Error executing DELETE query:", err); // Log full error
+    console.error("Error executing DELETE query:", err);
     res.status(500).send("Server error");
   }
 });
@@ -1962,12 +1929,7 @@ app.get("/admindashboard", async (req, res) => {
       GROUP BY rating
       ORDER BY rating;
     `;
-
     const values = [selectedYear];
-
-    //console.log("Running queries with values:", values);
-
-    // Execute all queries
     const [mainResult, schedulesResult, equipmentResult, ratingsResult] =
       await Promise.all([
         pool.query(mainQuery, values),
@@ -1976,7 +1938,6 @@ app.get("/admindashboard", async (req, res) => {
         pool.query(yearlyRatingsQuery, values),
       ]);
 
-    // If no data is found for the given year, respond with a message
     if (!mainResult.rows.length) {
       return res
         .status(404)
@@ -2067,7 +2028,7 @@ app.get("/Allequipments", async (req, res) => {
       reserved_equipment:
         typeof row.reserved_equipment === "string"
           ? JSON.parse(row.reserved_equipment)
-          : row.reserved_equipment, // Use as-is if it's already an object
+          : row.reserved_equipment,
     }));
 
     res.json(formattedResult);
@@ -2080,16 +2041,15 @@ app.get("/Allequipments", async (req, res) => {
 app.get("/Allreservations", async (req, res) => {
   try {
     const result = await pool.query(
-      `SELECT user_id, reservation_id, reservation_type AS program, 
-              TO_CHAR(start_date, 'FMDay, FMDD, YYYY') AS start_date, 
-              TO_CHAR(end_date, 'FMDay, FMDD, YYYY') AS end_date, 
-              status, time_slot 
-       FROM Schedules 
-       WHERE is_archived IS DISTINCT FROM true
-       ORDER BY start_date ASC`
+      `SELECT id, reservation_id, user_id, reservation_type AS program, 
+       TO_CHAR(start_date, 'FMDay, FMDD, YYYY') AS start_date, 
+       TO_CHAR(end_date, 'FMDay, FMDD, YYYY') AS end_date, 
+       status, time_slot 
+      FROM Schedules 
+      WHERE is_archived IS DISTINCT FROM true
+      ORDER BY start_date ASC;
+`
     );
-
-    console.log("Fetched Reservations:", result.rows); // Log response to check if reservation_id is included
 
     res.json(result.rows);
   } catch (error) {
@@ -2098,7 +2058,6 @@ app.get("/Allreservations", async (req, res) => {
   }
 });
 
-// Route to approve equipment reservations
 // Endpoint to mark reservations as "Returned"
 app.post("/markReturned", async (req, res) => {
   const { ids } = req.body; // Array of reservation IDs to mark as returned
@@ -2226,12 +2185,8 @@ app.post("/programs", Programupload.single("image"), async (req, res) => {
       image_url,
     ];
     const result = await pool.query(query, values);
-
-    const newProgram = result.rows[0]; // Get the newly created program from the database response
-
-    console.log("New Program:", newProgram); // This will have the ID auto-generated by the database
-
-    res.status(201).json(newProgram); // Return the new program with image path
+    const newProgram = result.rows[0];
+    res.status(201).json(newProgram);
   } catch (error) {
     console.error("Error inserting program:", error);
     res.status(500).json({ error: "Failed to create program" });

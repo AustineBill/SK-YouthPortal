@@ -118,21 +118,18 @@ const Reservation = () => {
 
   // Calendar Tile Class Logic
   const tileClassName = ({ date, view }) => {
-    if (view !== "month") return ""; // Apply styles only in month view
-
+    if (view !== "month") return "";
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Remove time component for comparison
-
-    const isSunday = date.getDay() === 0; // Check if the day is Sunday (0 represents Sunday)
+    today.setHours(0, 0, 0, 0);
+    const isSunday = date.getDay() === 0;
 
     if (date < today || isSunday) {
-      return "unavailable"; // Past dates and Sundays should always be unavailable
+      return "unavailable";
     }
 
     const dailyReservations = filterReservations(date, selectedTime);
-
     if (dailyReservations.length === 0) {
-      return "available"; // No reservations: Vacant
+      return "available";
     }
 
     const soloReservationsCount = dailyReservations.filter(
@@ -143,22 +140,17 @@ const Reservation = () => {
       (res) => res.reservation_type === "Group"
     );
     const isFullyBooked = soloReservationsCount >= 5;
-
     if (hasGroupReservation || isFullyBooked) {
-      return "unavailable"; // Fully booked: Unavailable
+      return "unavailable";
     }
 
-    return "available"; // Partially booked
+    return "available";
   };
 
   const tileDisabled = ({ date }) => {
-    // Check if the date is a Sunday
     if (date.getDay() === 0) return true;
 
-    // Check for reservations on this date
     const dailyReservations = filterReservations(date);
-
-    // Group reservation or fully booked?
     const hasGroupReservation = dailyReservations.some(
       (res) => res.reservation_type === "Group"
     );
@@ -167,7 +159,7 @@ const Reservation = () => {
     ).length;
     const isFullyBooked = soloReservationsCount >= 5;
 
-    return hasGroupReservation || isFullyBooked; // Disable unavailable dates
+    return hasGroupReservation || isFullyBooked;
   };
 
   const saveReservation = async () => {
@@ -183,11 +175,10 @@ const Reservation = () => {
       return;
     }
 
-    // Format start and end dates to 'YYYY-MM-DD'
     const formatDateToYYYYMMDD = (date) => {
       const d = new Date(date);
       const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+      const month = String(d.getMonth() + 1).padStart(2, "0");
       const day = String(d.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     };
@@ -198,8 +189,8 @@ const Reservation = () => {
     const reservationData = {
       user_id: userId,
       reservation_type: reservationType,
-      start_date: startDate, // Save in 'YYYY-MM-DD' format
-      end_date: endDate, // Save in 'YYYY-MM-DD' format
+      start_date: startDate,
+      end_date: endDate,
       time_slot: selectedTime,
     };
 
@@ -225,12 +216,11 @@ const Reservation = () => {
       const result = await response.json();
 
       if (!result.success) {
-        setModalMessage(result.message); // Show the error message in the modal
+        setModalMessage(result.message);
         setShowModal(true);
         return;
       }
 
-      // If validation passes, save the reservation to sessionStorage and navigate
       sessionStorage.setItem(
         "reservationData",
         JSON.stringify(reservationData)
@@ -327,15 +317,14 @@ const Reservation = () => {
         </div>
 
         <Calendar
-          minDate={new Date()} // Disable past dates
-          onChange={handleDateChange} // Handle date change (if needed)
-          selectRange={true} // Allow date range selection
-          value={selectedDates} // Set the selected dates
-          tileClassName={tileClassName} // Apply custom styles to each tile
+          minDate={new Date()}
+          onChange={handleDateChange}
+          selectRange={true}
+          value={selectedDates}
+          tileClassName={tileClassName}
           tileDisabled={tileDisabled}
         />
 
-        {/* Modal for Reservation Conflict */}
         <Modal show={showModal} onHide={() => setShowModal(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Reservation Conflict</Modal.Title>

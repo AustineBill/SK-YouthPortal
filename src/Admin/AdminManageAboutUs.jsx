@@ -12,7 +12,6 @@ const ManageAboutUs = () => {
   const [activeContent, setActiveContent] = useState("manageAboutDetails");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [imageCount, setImageCount] = useState(0);
 
   // State for About Us details
   const [aboutDetails, setAboutDetails] = useState({
@@ -39,18 +38,8 @@ const ManageAboutUs = () => {
           "https://isked-backend-ssmj.onrender.com/Website"
         );
 
-        // Log the response to check the fetched data
-        console.log("Fetched data:", aboutResponse.data);
-
-        // Ensure the objectives field is in the response
         setAboutDetails(aboutResponse.data);
         setNewAboutDetails(aboutResponse.data);
-
-        // Check if image URLs exist and count them
-        const imageUrls = aboutResponse.data.image_url.match(
-          /\/Asset\/SK_Photos\/[^,]+/g
-        );
-        setImageCount(imageUrls ? imageUrls.length : 0);
 
         // Fetch SK Council members
         const skCouncilResponse = await axios.get(
@@ -72,11 +61,6 @@ const ManageAboutUs = () => {
     setNewAboutDetails((prev) => ({ ...prev, [field]: value }));
   };
 
-  const addSkCouncilInput = () => {
-    setCurrentMember({ id: "", image: "" });
-    setModalVisible(true);
-  };
-
   const editSkCouncilInput = (member) => {
     setCurrentMember({ ...member });
     setModalVisible(true);
@@ -84,8 +68,6 @@ const ManageAboutUs = () => {
 
   const saveAboutDetails = async () => {
     try {
-      console.log("saveAboutDetails Triggered");
-
       const formData = new FormData();
       formData.append("description", newAboutDetails.description);
       formData.append("objectives", newAboutDetails.objectives);
@@ -302,7 +284,6 @@ const ManageAboutUs = () => {
                   )
               )}
               <div className="admin-current-about-form d-flex flex-column">
-                {/* <label className="admin-current-about-label">Objectives</label> */}
                 <label>Upload Image</label>
                 <input
                   type="file"
