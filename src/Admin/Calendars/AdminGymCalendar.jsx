@@ -33,6 +33,7 @@ const AdminGymCalendar = () => {
 
         if (response.data) {
           setTimeGap(response.data.time_gap || 1);
+          console.log(response.data.time_gap);
 
           if (
             response.data.blocked_dates &&

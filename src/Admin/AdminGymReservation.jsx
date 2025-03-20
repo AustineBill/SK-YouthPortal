@@ -26,7 +26,6 @@ const AdminGymReservation = () => {
         const activeReservations = response.data.filter(
           (reservation) => !reservation.is_archived
         );
-        console.log("Fetcheds reservations:", response.data);
         setReservations(activeReservations);
         setFilteredReservations(activeReservations);
       } catch (error) {
@@ -273,7 +272,7 @@ const AdminGymReservation = () => {
                   await axios.post(
                     "https://isked-backend.onrender.com/settings/time-gap",
                     {
-                      time_gap: Number(timeGap), // Ensure it's a number
+                      time_gap: Number(timeGap),
                     }
                   );
 

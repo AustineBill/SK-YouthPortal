@@ -14,7 +14,7 @@ const { Pool } = require("pg");
 
 const { generateRandomId } = require("./src/WebStructure/Codex");
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(cors());
@@ -27,8 +27,10 @@ const pool = new Pool({
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT || 5432, // Fix here
-  ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : false,
+  port: process.env.DB_PORT,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 app.use("/public", express.static(path.join(__dirname, "public")));
