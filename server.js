@@ -1181,9 +1181,8 @@ app.post("/CheckEquipment", async (req, res) => {
   }
 });*/
 
-app.get("/settings", async (req, res) => {
+/*app.get("/settings", async (req, res) => {
   try {
-    // Get latest non-null time_gap
     const timeGapResult = await pool.query(`
       SELECT time_gap FROM settings 
       WHERE time_gap IS NOT NULL 
@@ -1208,33 +1207,42 @@ app.get("/settings", async (req, res) => {
     console.error(err);
     res.status(500).send("Server error");
   }
+});*/
+
+app.get("/settings", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM settings LIMIT 1");
+    res.json(result.rows[0] || null);
+  } catch (error) {
+    console.error("Error fetching settings:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 app.post("/settings/time-gap", async (req, res) => {
-  try {
-    const { time_gap } = req.body;
+  const { time_gap } = req.body;
+  if (!time_gap || isNaN(time_gap)) {
+    return res.status(400).json({ error: "Invalid time gap value" });
+  }
 
-    if (!time_gap || isNaN(time_gap)) {
-      return res.status(400).json({ error: "Invalid time gap value" });
+  try {
+    const checkResult = await pool.query("SELECT id FROM settings LIMIT 1");
+
+    if (checkResult.rowCount === 0) {
+      await pool.query("INSERT INTO settings (time_gap) VALUES ($1)", [
+        time_gap,
+      ]);
+    } else {
+      await pool.query("UPDATE settings SET time_gap = $1 WHERE id = $2", [
+        time_gap,
+        checkResult.rows[0].id,
+      ]);
     }
 
-    // Use an upsert (INSERT ON CONFLICT) to ensure only one time_gap row exists
-    const result = await pool.query(
-      `INSERT INTO settings (time_gap) 
-       VALUES ($1)
-       ON CONFLICT (time_gap) DO UPDATE 
-       SET time_gap = EXCLUDED.time_gap
-       RETURNING *;`,
-      [time_gap]
-    );
-
-    res.json({
-      message: "Time gap updated successfully",
-      data: result.rows[0],
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
+    res.json({ message: "Time gap updated successfully" });
+  } catch (error) {
+    console.error("Error updating time gap:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
