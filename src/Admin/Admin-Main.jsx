@@ -11,8 +11,8 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
-import "./styles/Admin-Main.css";
-// import '../WebStyles/Admin-CSS.css';
+import '../WebStyles/Admin-CSS.css';
+// import './styles/Admin-Main.css';
 
 // Register necessary chart components
 ChartJS.register(

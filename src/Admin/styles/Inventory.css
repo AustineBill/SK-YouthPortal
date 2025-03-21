@@ -48,10 +48,6 @@
     margin-bottom: 40px;
 }
 
-/* .admin-inventory-table-container tr {
-    height: 45px;
-} */
-
 .admin-inventory-table-container th {
     font-size: 17.5px;
     font-weight: bold;
@@ -67,14 +63,13 @@
 }
 
 .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
 .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
     font-size: 12.5px;
-    width: 70px;
-    height: 40px;
+    height: 35px;
     transition: all 0.35s;
 }
 
@@ -136,10 +131,6 @@
 
     /* Equipment Table */
 
-    /* .admin-inventory-table-container tr {
-    height: 40px;
-    } */
-
     .admin-inventory-table-container th {
         font-size: 15px;
     }
@@ -154,14 +145,13 @@
     }
 
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
-        margin-right: 10px;
+        margin-right: 5px;
     }
 
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
     .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
         font-size: 10px;
-        width: 60px;
-        height: 35px;
+        height: 30px;
     }
 
     /* Modal */
@@ -210,10 +200,6 @@
 
     /* Equipment Table */
 
-    /* .admin-inventory-table-container tr {
-        height: 35px;
-    } */
-
     .admin-inventory-table-container th {
         font-size: 12.5px;
     }
@@ -227,15 +213,20 @@
         width: 75px;
     }
 
+    .admin-inventory-actions-buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
-        margin-right: 10px;
+        margin-right: 0;
+        margin-bottom: 5px;
     }
 
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
     .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
         font-size: 7.5px;
-        width: 50px;
-        height: 30px;
+        height: 25px;
     }
 
     /* Modal */
@@ -290,10 +281,6 @@
 
     /* Equipment Table */
 
-    /* .admin-inventory-table-container tr {
-        height: 35px;
-    } */
-
     .admin-inventory-table-container th {
         font-size: 12.5px;
     }
@@ -314,14 +301,13 @@
 
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
         margin-right: 0;
-        margin-bottom: 2.5px;
+        margin-bottom: 5px;
     }
 
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
     .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
         font-size: 7.5px;
-        width: 50px;
-        height: 30px;
+        height: 25px;
     }
 
     /* Modal */
@@ -376,10 +362,6 @@
 
     /* Equipment Table */
 
-    /* .admin-inventory-table-container tr {
-        height: 25px;
-    } */
-
     .admin-inventory-table-container th {
         font-size: 10px;
     }
@@ -406,7 +388,6 @@
     .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
     .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
         font-size: 5px;
-        width: 40px;
         height: 25px;
     }
 

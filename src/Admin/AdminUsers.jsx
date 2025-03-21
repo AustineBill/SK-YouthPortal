@@ -320,21 +320,21 @@ const Users = () => {
                           onClick={() => handleViewDetails(user.id)}
                           className="admin-users-view-button rounded-pill"
                         >
-                          View
+                          <i class="bi bi-eye"></i>
                         </Button>
                         <Button
                           variant="warning"
                           onClick={() => handleEdit(user.id)}
-                          className="admin-users-edit-button rounded-pill"
+                          className="admin-users-edit-button rounded-pill text-dark"
                         >
-                          Edit
+                          <i class="bi bi-pencil-square"></i>
                         </Button>
                         <Button
                           variant="danger"
                           onClick={() => openDeleteModal(user.id)}
                           className="admin-users-delete-button rounded-pill"
                         >
-                          Delete
+                          <i class="bi bi-trash"></i>
                         </Button>
                       </div>
                     </td>

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import "./styles/AdminManageAboutUs.css";
-import "../WebStyles/Admin-CSS.css";
+import { Button } from "react-bootstrap";
+
+import "./styles/AdminManageAboutUs.css";
+// import "../WebStyles/Admin-CSS.css";
 
 const pageLabels = {
   manageAboutDetails: "Manage About Us Details",
@@ -335,23 +337,29 @@ const ManageAboutUs = () => {
                 </tr>
               </thead>
 
-              <tbody className="admin-SK-table-body text-center">
+              <tbody className="admin-SK-table-body">
                 {skCouncilInputs.map((member, index) => (
                   <tr key={index}>
-                    <td>
-                      <img
-                        src={member.image}
-                        alt={`SK Member ${index + 1}`}
-                        style={{ width: "150px", height: "auto" }}
-                      />
+                    <td className="text-center">
+                      <div className="d-flex justify-content-center">
+                        <img
+                          src={member.image}
+                          alt={`SK Member ${index + 1}`}
+                          style={{ width: "150px", height: "auto" }}
+                          className="p-0 m-0"
+                        />
+                      </div>
                     </td>
-                    <td>
-                      <button
-                        className="admin-SK-edit-button bg-primary text-white rounded-pill"
-                        onClick={() => editSkCouncilInput(member)}
-                      >
-                        Edit
-                      </button>
+                    <td className="text-center">
+                      <div className="admin-about-details-buttons-container d-flex justify-content-center">
+                        <Button
+                          variant="warning"
+                          onClick={() => editSkCouncilInput(member)}
+                          className="admin-SK-edit-button rounded-pill"
+                        >
+                          <i class="bi bi-pencil-square"></i>
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))}
