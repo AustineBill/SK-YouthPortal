@@ -1115,7 +1115,7 @@ app.post("/ValidateReservation", async (req, res) => {
     // Query to check for overlapping reservations only for this user
     const overlapQuery = `
       SELECT * FROM Schedules 
-      WHERE user_id = $1 -- Only check this user's reservations
+      WHERE user_id = $1
       AND (is_archived IS NULL OR is_archived = FALSE) -- Exclude archived reservations
       AND (
         (start_date <= $2 AND end_date >= $2) OR -- Overlap with new start date
@@ -1275,7 +1275,7 @@ app.post("/settings/block-dates", async (req, res) => {
 
   try {
     await pool.query(
-      "INSERT INTO Settings (start_date, end_date) VALUES ($1, $2);",
+      "INSERT INTO date_settings (start_date, end_date) VALUES ($1, $2);",
       [start_date, end_date || null]
     );
     res.json({ message: "Blocked date range added successfully" });
@@ -1867,47 +1867,12 @@ app.delete("/users/:id", async (req, res) => {
   }
 });
 
-//admin dashboard
-//admin dashboard start
-// Add this new route to fetch the required user stats for the dashboard
-/*app.get('/admindashboard', async (req, res) => {
-  try {
-    // Query to get the total number of users
-    const usersResult = await pool.query('SELECT COUNT(*) AS total_users FROM users');
-    
-    // Query to get the total number of schedules
-    const schedulesResult = await pool.query('SELECT COUNT(*) AS total_schedules FROM schedules');
-    
-    // Query to get the total number of equipment
-    const equipmentResult = await pool.query('SELECT COUNT(*) AS total_equipment FROM equipment');
-    
-    if (
-      usersResult.rows.length > 0 &&
-      schedulesResult.rows.length > 0 &&
-      equipmentResult.rows.length > 0
-    ) {
-      res.json({
-        total_users: usersResult.rows[0].total_users,
-        total_schedules: schedulesResult.rows[0].total_schedules,
-        total_equipment: equipmentResult.rows[0].total_equipment
-      });
-    } else {
-      res.status(404).json({ message: 'No data found' });
-    }
-  } catch (err) {
-    console.error('Error fetching dashboard data:', err);
-    res.status(500).json({ message: 'Server error' });
-  }
-});*/
 
-// Assuming you have the 'pool' object for your database connection (pg module).
 app.get("/admindashboard", async (req, res) => {
-  const { year } = req.query; // Get the year from the query parameter
+  const { year } = req.query; 
 
   try {
-    const selectedYear = year ? parseInt(year, 10) : new Date().getFullYear(); // Default to current year if no year provided
-
-    // Query for total counts including active and inactive users per year
+    const selectedYear = year ? parseInt(year, 10) : new Date().getFullYear(); 
     const mainQuery = `
       SELECT 
         EXTRACT(YEAR FROM created_at) AS year,
@@ -1924,7 +1889,6 @@ app.get("/admindashboard", async (req, res) => {
       GROUP BY EXTRACT(YEAR FROM created_at);
     `;
 
-    // Query for monthly reservations from the "schedules" table
     const monthlySchedulesQuery = `
       SELECT
         EXTRACT(MONTH FROM created_at) AS month,
@@ -1935,7 +1899,6 @@ app.get("/admindashboard", async (req, res) => {
       ORDER BY EXTRACT(MONTH FROM created_at);
     `;
 
-    // Query for monthly reservations from the "equipment" table
     const monthlyEquipmentQuery = `
       SELECT
         EXTRACT(MONTH FROM created_at) AS month,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, Dropdown, Button, Modal } from "react-bootstrap";
+import { Table, Dropdown, Button } from "react-bootstrap";
 import EquipmentCalendar from "./Calendars/EquipmentCalendar";
 import "./styles/AdminEquipmentReservation.css";
 
@@ -9,11 +9,6 @@ const AdminEquipmentReservation = () => {
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
   const [selectedReservations, setSelectedReservations] = useState([]);
-
-  const [blockedDates, setBlockedDates] = useState([]);
-  const [showBlockModal, setShowBlockModal] = useState(false);
-  const [startBlockDate, setStartBlockDate] = useState("");
-  const [endBlockDate, setEndBlockDate] = useState("");
 
   // Fetch reservations for the table from /Allequipments endpoint
   const fetchTableReservations = async () => {
@@ -133,16 +128,7 @@ const AdminEquipmentReservation = () => {
         Equipment Reservation
       </h2>
 
-      <div className="justify-content-end d-flex me-5">
-        <button
-          className="btn btn-info me-2"
-          onClick={() => setShowBlockModal(true)}
-        >
-          <i className="bi bi-calendar-x-fill"></i>
-        </button>
-      </div>
-
-      <EquipmentCalendar blockedDates={blockedDates} />
+      <EquipmentCalendar />
 
       <div className="admin-ereservation-buttons-table-container">
         <div className="admin-er-toggle-buttons-container d-flex align-items-center">
@@ -265,49 +251,6 @@ const AdminEquipmentReservation = () => {
             )}
           </tbody>
         </Table>
-
-        <Modal show={showBlockModal} onHide={() => setShowBlockModal(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Block Dates</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <label>Start Date:</label>
-            <input
-              type="date"
-              className="form-control"
-              onChange={(e) => setStartBlockDate(e.target.value)}
-            />
-            <label>End Date:</label>
-            <input
-              type="date"
-              className="form-control"
-              onChange={(e) => setEndBlockDate(e.target.value)}
-            />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="secondary"
-              onClick={() => setShowBlockModal(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="danger"
-              onClick={() => {
-                if (!startBlockDate || !endBlockDate) return;
-
-                const start = new Date(startBlockDate);
-                const end = new Date(endBlockDate);
-                end.setHours(23, 59, 59, 999);
-
-                setBlockedDates([...blockedDates, { start, end }]);
-                setShowBlockModal(false);
-              }}
-            >
-              Block Date Range
-            </Button>
-          </Modal.Footer>
-        </Modal>
       </div>
     </div>
   );

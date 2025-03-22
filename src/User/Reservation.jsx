@@ -5,48 +5,89 @@ import "react-calendar/dist/Calendar.css";
 import "../WebStyles/CalendarStyles.css";
 import StepIndicator from "../Classes/StepIndicator";
 import { Breadcrumb, Modal, Button } from "react-bootstrap";
+import axios from "axios";
 
 const Reservation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { state } = location; // Access the passed state
-  const { programType } = state || {}; // Destructure programType from state
+  const { state } = location;
+  const { programType } = state || {};
   const { reservationType } = location.state || { reservationType: "Solo" };
   const [reservations, setReservations] = useState([]);
   const [selectedDates, setSelectedDates] = useState([new Date(), new Date()]);
-  const [selectedTime, setSelectedTime] = useState("");
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
+  const [timeGap, setTimeGap] = useState(1);
+  const [blockedDates, setBlockedDates] = useState([]);
+
   const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    fetchReservations();
+    fetchSettings();
+  }, []);
 
   const fetchReservations = async () => {
     try {
-      const response = await fetch(
+      const response = await axios.get(
         "https://isked-backend-ssmj.onrender.com/ViewSched"
       );
-      if (!response.ok) {
-        throw new Error("Error fetching reservations");
-      }
-      const data = await response.json();
-      setReservations(data);
+      setReservations(response.data);
     } catch (error) {
       console.error("Error fetching reservations:", error);
     }
   };
 
-  useEffect(() => {
-    fetchReservations();
-  }, []);
+  const fetchSettings = async () => {
+    try {
+      const [dateRes, timeRes] = await Promise.all([
+        axios.get("https://isked-backend.onrender.com/settings"),
+        axios.get("https://isked-backend.onrender.com/time-settings"),
+      ]);
 
-  const timeSlots = [
-    "9:00 am - 10:00 am",
-    "10:00 am - 11:00 am",
-    "11:00 am - 12:00 nn",
-    "12:00 nn - 1:00 pm",
-    "1:00 pm - 2:00 pm",
-    "2:00 pm - 3:00 pm",
-  ];
+      setBlockedDates(
+        dateRes.data.blocked_dates.map((date) => ({
+          start: new Date(date.start_date), // Convert to Date object
+          end: new Date(date.end_date),
+        }))
+      );
+
+      setTimeGap(timeRes.data?.time_gap || 1); // Defaults to 1 if empty
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const generateTimeSlots = () => {
+    const slots = [];
+    let startTime = 9; // Start at 9 AM
+    let endTime = 19; // End at 7 PM (24-hour format)
+
+    for (let hour = startTime; hour < endTime; hour += timeGap) {
+      let startHour = hour;
+      let endHour = hour + timeGap;
+
+      if (endHour > endTime) break; // Stop if the end exceeds the available hours
+
+      let startLabel =
+        startHour < 12
+          ? `${startHour}:00 AM`
+          : startHour === 12
+          ? `12:00 PM`
+          : `${startHour - 12}:00 PM`;
+      let endLabel =
+        endHour < 12
+          ? `${endHour}:00 AM`
+          : endHour === 12
+          ? `12:00 PM`
+          : `${endHour - 12}:00 PM`;
+
+      slots.push(`${startLabel} - ${endLabel}`);
+    }
+
+    return slots;
+  };
 
   const handleDateChange = (range) => {
     if (Array.isArray(range)) {
@@ -84,28 +125,6 @@ const Reservation = () => {
     }
   };
 
-  const toggleDropdown = () => {
-    setIsDropdownVisible((prev) => !prev);
-  };
-
-  const selectTime = (time) => {
-    setSelectedTime(time);
-    setIsDropdownVisible(false);
-  };
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsDropdownVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
   const filterReservations = (date) => {
     return reservations.filter((res) => {
       const startDate = new Date(res.start_date);
@@ -116,31 +135,44 @@ const Reservation = () => {
     });
   };
 
-  // Calendar Tile Class Logic
   const tileClassName = ({ date, view }) => {
     if (view !== "month") return "";
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const isSunday = date.getDay() === 0;
-
-    if (date < today || isSunday) {
+    if (date < today || date.getDay() === 0) {
       return "unavailable";
     }
 
-    const dailyReservations = filterReservations(date, selectedTime);
-    if (dailyReservations.length === 0) {
-      return "available";
+    // Check if date is within any group reservation period
+    const isWithinGroupReservation = reservations.some((res) => {
+      if (res.reservation_type === "Group") {
+        const startDate = new Date(res.start_date).setHours(0, 0, 0, 0);
+        const endDate = new Date(res.end_date).setHours(23, 59, 59, 999);
+        return date >= startDate && date <= endDate;
+      }
+      return false;
+    });
+
+    if (isWithinGroupReservation) {
+      return "unavailable";
     }
 
+    const dailyReservations = filterReservations(date);
     const soloReservationsCount = dailyReservations.filter(
       (res) => res.reservation_type === "Solo"
     ).length;
 
-    const hasGroupReservation = dailyReservations.some(
-      (res) => res.reservation_type === "Group"
-    );
     const isFullyBooked = soloReservationsCount >= 5;
-    if (hasGroupReservation || isFullyBooked) {
+
+    // Check if the date is blocked
+    const isBlocked = blockedDates.some(({ start, end }) => {
+      const startDate = new Date(start).setHours(0, 0, 0, 0);
+      const endDate = new Date(end).setHours(23, 59, 59, 999);
+      return date >= startDate && date <= endDate;
+    });
+
+    if (isBlocked || isFullyBooked) {
       return "unavailable";
     }
 
@@ -150,20 +182,37 @@ const Reservation = () => {
   const tileDisabled = ({ date }) => {
     if (date.getDay() === 0) return true;
 
+    // Block all dates that fall within any group reservation period
+    const isWithinGroupReservation = reservations.some((res) => {
+      if (res.reservation_type === "Group") {
+        const startDate = new Date(res.start_date).setHours(0, 0, 0, 0);
+        const endDate = new Date(res.end_date).setHours(23, 59, 59, 999);
+        return date >= startDate && date <= endDate;
+      }
+      return false;
+    });
+
+    if (isWithinGroupReservation) {
+      return true;
+    }
+
     const dailyReservations = filterReservations(date);
-    const hasGroupReservation = dailyReservations.some(
-      (res) => res.reservation_type === "Group"
-    );
     const soloReservationsCount = dailyReservations.filter(
       (res) => res.reservation_type === "Solo"
     ).length;
     const isFullyBooked = soloReservationsCount >= 5;
 
-    return hasGroupReservation || isFullyBooked;
+    const isBlocked = blockedDates.some(({ start, end }) => {
+      const startDate = new Date(start).setHours(0, 0, 0, 0);
+      const endDate = new Date(end).setHours(23, 59, 59, 999);
+      return date >= startDate && date <= endDate;
+    });
+
+    return isBlocked || isFullyBooked;
   };
 
   const saveReservation = async () => {
-    if (!selectedDates || !selectedTime) {
+    if (!selectedDates || !selectedTimeSlot) {
       alert("Please select both a date and a time slot before proceeding.");
       return;
     }
@@ -191,7 +240,7 @@ const Reservation = () => {
       reservation_type: reservationType,
       start_date: startDate,
       end_date: endDate,
-      time_slot: selectedTime,
+      time_slot: selectedTimeSlot,
     };
 
     try {
@@ -280,7 +329,7 @@ const Reservation = () => {
             </p>
             <p>
               <strong>Selected Time:</strong>{" "}
-              {selectedTime || "No time selected"}
+              {selectedTimeSlot || "No time selected"}
             </p>
           </div>
 
@@ -293,26 +342,17 @@ const Reservation = () => {
 
         <div className="dropdown-container mb-3" ref={dropdownRef}>
           <div className="time-dropdown">
-            <button
-              className="btn btn-secondary dropdown-toggle"
-              type="button"
-              onClick={toggleDropdown}
+            <select
+              className="btn-db dropdown-toggle"
+              onChange={(e) => setSelectedTimeSlot(e.target.value)}
             >
-              Select Time
-            </button>
-            {isDropdownVisible && (
-              <div className="time-dropdown-menu">
-                {timeSlots.map((time) => (
-                  <h6
-                    key={time}
-                    className="dropdown-item"
-                    onClick={() => selectTime(time)}
-                  >
-                    {time}
-                  </h6>
-                ))}
-              </div>
-            )}
+              <option value="">Select Time</option>
+              {generateTimeSlots().map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 

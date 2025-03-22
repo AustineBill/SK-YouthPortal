@@ -27,34 +27,26 @@ const AdminGymCalendar = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await axios.get(
-          "https://isked-backend.onrender.com/settings"
+        const [dateRes, timeRes] = await Promise.all([
+          axios.get("https://isked-backend.onrender.com/settings"),
+          axios.get("https://isked-backend.onrender.com/time-settings"),
+        ]);
+
+        setBlockedDates(
+          dateRes.data.blocked_dates.map((date) => ({
+            start: date.start_date,
+            end: date.end_date,
+          }))
         );
-
-        if (response.data) {
-          setTimeGap(response.data.time_gap || 1);
-          console.log(response.data.time_gap);
-
-          if (
-            response.data.blocked_dates &&
-            response.data.blocked_dates.length > 0
-          ) {
-            setBlockedDates(
-              response.data.blocked_dates.map((date) => ({
-                start: date.start_date,
-                end: date.end_date,
-              }))
-            );
-          }
-        }
+        setTimeGap(timeRes.data?.time_gap || 1); // Defaults to 1 if empty
       } catch (error) {
-        console.error("Error fetching settings:", error);
+        console.error("Error fetching data:", error);
       }
     };
+
     fetchSettings();
   }, []);
 
-  // Generate time slots dynamically based on time gap
   const generateTimeSlots = () => {
     const slots = [];
     let startTime = 9; // Start at 9 AM
@@ -117,10 +109,24 @@ const AdminGymCalendar = () => {
 
     const today = new Date().setHours(0, 0, 0, 0);
     const normalizedDate = new Date(date).setHours(0, 0, 0, 0);
+
     if (normalizedDate < today) return "disabled";
     if (date.getDay() === 0) return "disabled";
 
-    // Check for blocked dates
+    // Check if date is within any group reservation period
+    const isWithinGroupReservation = calendarReservations.some((res) => {
+      if (res.reservation_type === "Group") {
+        const startDate = new Date(res.start_date).setHours(0, 0, 0, 0);
+        const endDate = new Date(res.end_date).setHours(23, 59, 59, 999);
+        return normalizedDate >= startDate && normalizedDate <= endDate;
+      }
+      return false;
+    });
+
+    if (isWithinGroupReservation) {
+      return "unavailable"; // Red means unavailable due to Group reservation
+    }
+
     if (
       blockedDates.some((blocked) => {
         const start = new Date(blocked.start).setHours(0, 0, 0, 0);
@@ -128,7 +134,7 @@ const AdminGymCalendar = () => {
         return normalizedDate >= start && normalizedDate <= end;
       })
     ) {
-      return "blocked";
+      return "blocked"; // Another unavailable status
     }
 
     return "available";
