@@ -1162,6 +1162,29 @@ app.post("/CheckEquipment", async (req, res) => {
 
 //Admin Side
 
+app.get("/date-settings", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM date_settings ORDER BY id ASC"
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// Get the single time setting (only one row exists)
+app.get("/time-settings", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM time_settings LIMIT 1");
+    res.json(result.rows[0] || {}); // Return empty object if no data exists
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 /*app.get("/settings", async (req, res) => {
   try {
     const result = await pool.query(
@@ -1219,29 +1242,36 @@ app.get("/settings", async (req, res) => {
 });*/
 
 app.post("/settings/time-gap", async (req, res) => {
-  const { time_gap } = req.body;
-  if (!time_gap || isNaN(time_gap)) {
-    return res.status(400).json({ error: "Invalid time gap value" });
-  }
-
   try {
-    const checkResult = await pool.query("SELECT id FROM settings LIMIT 1");
+    const { time_gap } = req.body;
 
-    if (checkResult.rowCount === 0) {
-      await pool.query("INSERT INTO settings (time_gap) VALUES ($1)", [
-        time_gap,
-      ]);
-    } else {
-      await pool.query("UPDATE settings SET time_gap = $1 WHERE id = $2", [
-        time_gap,
-        checkResult.rows[0].id,
-      ]);
+    if (!time_gap || isNaN(time_gap)) {
+      return res.status(400).json({ error: "Invalid time gap value!" });
     }
 
-    res.json({ message: "Time gap updated successfully" });
-  } catch (error) {
-    console.error("Error updating time gap:", error);
-    res.status(500).json({ error: "Internal server error" });
+    // Check if time_settings already has a row
+    const checkExisting = await pool.query(
+      "SELECT * FROM time_settings LIMIT 1"
+    );
+
+    if (checkExisting.rowCount === 0) {
+      // Insert if no row exists
+      await pool.query(
+        "INSERT INTO time_settings (id, time_gap) VALUES (TRUE, $1)",
+        [time_gap]
+      );
+    } else {
+      // Update if a row exists
+      await pool.query(
+        "UPDATE time_settings SET time_gap = $1, created_at = NOW()",
+        [time_gap]
+      );
+    }
+
+    res.json({ message: "Time gap updated successfully!" });
+  } catch (err) {
+    console.error("Error updating time gap:", err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
