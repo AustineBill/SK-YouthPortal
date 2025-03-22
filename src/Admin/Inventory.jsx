@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Table, Button } from "react-bootstrap";
-import "./styles/Inventory.css";
-// import './styles/Admin-CSS.css';
+import { Button } from "react-bootstrap";
+import '../WebStyles/Admin-CSS.css';
 
 const InventoryTable = () => {
   const [inventory, setInventory] = useState([]);
@@ -133,7 +132,7 @@ const InventoryTable = () => {
       </div>
 
       <div className="admin-inventory-contents-container">
-        <Table className="admin-inventory-table-container table-bordered">
+        <table className="admin-inventory-table-container table-bordered">
           <thead className="admin-inventory-head text-center">
             <tr>
               <th>Name</th>
@@ -169,21 +168,21 @@ const InventoryTable = () => {
                       onClick={() => handleShowModal(item)}
                       className="admin-inventory-edit-button rounded-pill"
                     >
-                      Edit
+                      <i class="bi bi-pencil-square"></i>
                     </Button>
                     <Button
                       variant="danger"
                       onClick={() => handleDelete(item.id)}
                       className="admin-inventory-delete-button rounded-pill"
                     >
-                      Delete
+                      <i class="bi bi-trash"></i>
                     </Button>
                   </div>
                 </td>
               </tr>
             ))}
           </tbody>
-        </Table>
+        </table>
       </div>
 
       {showModal && (

@@ -85,14 +85,18 @@ button:disabled {
   font-weight: bold;
 }
 
+.admin-greservation-body th,
+.admin-greservation-body td {
+  word-wrap: break-word;
+}
+
 .admin-greservation-table-container td {
   font-size: 15px;
 }
 
-.admin-greservation-action-button-container .admin-greservation-edit-button {
+.admin-greservation-action-button-container .admin-greservation-delete-button {
   font-size: 12.5px;
-  width: 70px;
-  height: 40px;
+  height: 35px;
   transition: all 0.35s;
 }
 
@@ -112,7 +116,7 @@ button:disabled {
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
-  
+
   .admin-greservation-label-h2 {
     font-size: 37.5px;
   }
@@ -173,10 +177,9 @@ button:disabled {
     font-size: 12.5px;
   }
 
-  .admin-greservation-action-button-container .admin-greservation-edit-button {
+  .admin-greservation-action-button-container .admin-greservation-delete-button {
     font-size: 10px;
-    width: 60px;
-    height: 35px;
+    height: 30px;
   }
 }
 
@@ -241,10 +244,9 @@ button:disabled {
     font-size: 10px;
   }
 
-  .admin-greservation-action-button-container .admin-greservation-edit-button {
+  .admin-greservation-action-button-container .admin-greservation-delete-button {
     font-size: 7.5px;
-    width: 50px;
-    height: 30px;
+    height: 25px;
   }
 }
 
@@ -315,10 +317,9 @@ button:disabled {
     font-size: 10px;
   }
 
-  .admin-greservation-action-button-container .admin-greservation-edit-button {
+  .admin-greservation-action-button-container .admin-greservation-delete-button {
     font-size: 7.5px;
-    width: 50px;
-    height: 30px;
+    height: 25px;
   }
 }
 
@@ -358,16 +359,16 @@ button:disabled {
     height: 25px;
     gap: 0.10in;
   }
-  
+
   .gr-toggle-container .gr-toggle {
     font-size: 7.5px;
     height: 25px;
   }
-  
+
   .gr-toggle-container .gr-toggle-text .dropdown-item {
     font-size: 7.5px;
   }
-  
+
   .admin-gr-approve-button,
   .admin-gr-disapprove-button {
     font-size: 7.5px;
@@ -389,9 +390,8 @@ button:disabled {
     font-size: 7.5px;
   }
 
-  .admin-greservation-action-button-container .admin-greservation-edit-button {
+  .admin-greservation-action-button-container .admin-greservation-delete-button {
     font-size: 5px;
-    width: 40px;
     height: 25px;
   }
 }

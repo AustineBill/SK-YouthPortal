@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Dropdown, Button, Modal } from "react-bootstrap";
+import { Dropdown, Button, Modal } from "react-bootstrap";
 import AdminGymCalendar from "./Calendars/AdminGymCalendar";
 import "./styles/AdminGymReservation.css";
 import axios from "axios";
@@ -178,7 +178,7 @@ const AdminGymReservation = () => {
           </Dropdown>
         </div>
 
-        <Table className="admin-greservation-table-container table-bordered">
+        <table className="admin-greservation-table-container table-bordered">
           <thead className="admin-greservation-head text-center">
             <tr>
               <th>ID</th>
@@ -201,12 +201,19 @@ const AdminGymReservation = () => {
                 <td>{reservation.time_slot}</td>
                 <td>{reservation.status || "Pending"}</td>
                 <td>
-                  <Button variant="danger">Delete</Button>
+                  <div className="admin-greservation-action-button-container d-flex justify-content-center">
+                    <Button
+                      variant="danger"
+                      className="admin-greservation-delete-button rounded-pill"
+                    >
+                      <i class="bi bi-trash"></i>
+                    </Button>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
-        </Table>
+        </table>
       </div>
     </div>
   );

@@ -80,19 +80,19 @@
   width: 100%;
 }
 
-.event-edit-button {
+.admin-event-details-buttons-container .event-edit-button {
   margin-right: 10px;
 }
 
-.event-edit-button,
-.event-delete-button {
-  border-style: none;
+.admin-event-details-buttons-container .event-edit-button,
+.admin-event-details-buttons-container .event-delete-button {
+  font-size: 15px;
   width: 150px;
-  height: 45px;
-  font-size: 17.5px;
+  height: 40px;
+  transition: all 0.35s;
 }
 
-/* Admin Spotlights */
+/* Admin All Spotlights */
 
 .admin-spotlight-container {
   margin-top: 20px;
@@ -102,6 +102,13 @@
 
 .spotlight-image {
   height: 175px;
+}
+
+.admin-event-details-buttons-container .spotlight-delete-button {
+  font-size: 15px;
+  width: 100px;
+  height: 40px;
+  transition: all 0.35s;
 }
 
 /* Admin Add Event and Spotlight */
@@ -271,15 +278,16 @@
     font-size: 17.5px;
   }
 
-  .event-edit-button {
+  .admin-event-details-buttons-container .event-edit-button {
     margin-right: 10px;
   }
 
-  .event-edit-button,
-  .event-delete-button {
+  .admin-event-details-buttons-container .event-edit-button,
+  .admin-event-details-buttons-container .event-delete-button {
     width: 125px;
-    height: 40px;
-    font-size: 15px;
+    height: 35px;
+    font-size: 12.5px;
+    transition: all 0.35s;
   }
 
   /* Admin All Spotlights */
@@ -289,7 +297,14 @@
   }
 
   .spotlight-image {
-    height: 125px;
+    height: 150px;
+  }
+
+  .admin-event-details-buttons-container .spotlight-delete-button {
+    font-size: 12.5px;
+    width: 75px;
+    height: 35px;
+    transition: all 0.35s;
   }
 
   /* Edit Program Modal */
@@ -393,15 +408,16 @@
     font-size: 15px;
   }
 
-  .event-edit-button {
+  .admin-event-details-buttons-container .event-edit-button {
     margin-right: 5px;
   }
 
-  .event-edit-button,
-  .event-delete-button {
+  .admin-event-details-buttons-container .event-edit-button,
+  .admin-event-details-buttons-container .event-delete-button {
     width: 100px;
-    height: 35px;
-    font-size: 12.5px;
+    height: 30px;
+    font-size: 10px;
+    transition: all 0.35s;
   }
 
   /* Admin All Spotlights */
@@ -412,6 +428,13 @@
 
   .spotlight-image {
     height: 125px;
+  }
+
+  .admin-event-details-buttons-container .spotlight-delete-button {
+    font-size: 10px;
+    width: 75px;
+    height: 30px;
+    transition: all 0.35s;
   }
 
   /* Edit Program Modal */
@@ -526,16 +549,17 @@
     align-items: center;
   }
 
-  .event-edit-button {
+  .admin-event-details-buttons-container .event-edit-button {
     margin-right: 0;
     margin-bottom: 5px;
   }
 
-  .event-edit-button,
-  .event-delete-button {
+  .admin-event-details-buttons-container .event-edit-button,
+  .admin-event-details-buttons-container .event-delete-button {
     width: 100px;
-    height: 35px;
+    height: 30px;
     font-size: 10px;
+    transition: all 0.35s;
   }
 
   /* Admin All Spotlights */
@@ -546,6 +570,13 @@
 
   .spotlight-image {
     height: 100px;
+  }
+
+  .admin-event-details-buttons-container .spotlight-delete-button {
+    font-size: 10px;
+    width: 75px;
+    height: 30px;
+    transition: all 0.35s;
   }
 
   .admin-add-event-details-group .admin-add-event-label,
@@ -678,15 +709,16 @@
     font-size: 12.5px;
   }
 
-  .event-edit-button {
+  .admin-event-details-buttons-container .event-edit-button {
     margin-right: 5px;
   }
 
-  .event-edit-button,
-  .event-delete-button {
+  .admin-event-details-buttons-container .event-edit-button,
+  .admin-event-details-buttons-container .event-delete-button {
     width: 75px;
     height: 25px;
     font-size: 7.5px;
+    transition: all 0.35s;
   }
 
   /* Admin All Spotlights */
@@ -697,6 +729,13 @@
 
   .spotlight-image {
     height: 75px;
+  }
+
+  .admin-event-details-buttons-container .spotlight-delete-button {
+    font-size: 7.5px;
+    width: 50px;
+    height: 25px;
+    transition: all 0.35s;
   }
 
   /* Edit Event Modal */

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../WebStructure/AuthContext";
 import axios from "axios";
-import "../WebStyles/Admin-CSS.css";
+// import "../WebStyles/Admin-CSS.css";
+import "./UserAuthentication.css";
 
 const { DecryptionCode } = require("../WebStructure/Codex");
 
@@ -236,7 +237,7 @@ const UserAuthentication = () => {
       );
       setModalMessage(
         error.response?.data?.message ||
-          "An error occurred while updating your account"
+        "An error occurred while updating your account"
       );
       setShowModal(true);
     }
@@ -284,19 +285,21 @@ const UserAuthentication = () => {
 
   return (
     <div className="user-authentication-contents d-flex justify-content-center">
-      <div className="left-side-responsive text-left-container">
-        <div className=" d-flex flex-column justify-content-center text-center text-lg-center">
-          <h1 className="middle-part">
-            Lagi't lagi para sa Kabataan, Barangay at sa Bayan{" "}
-          </h1>
-          <h2 className="bottom-part fst-italic">Sangguniang Kabataan</h2>
-          <p className="SK-location">WESTERN BICUTAN</p>
+      <div className='left-side-responsive d-none d-md-flex align-items-center justify-content-center'>
+        <div className="left-side-contents-container d-flex flex-column justify-content-center text-center text-lg-center">
+          <div className="d-flex flex-column justify-content-center text-center">
+            <h1 className="top-part">
+              Lagi't lagi para sa Kabataan, Barangay at sa Bayan{" "}
+            </h1>
+            <h2 className="middle-part fst-italic">Sangguniang Kabataan</h2>
+            <p className="SK-location">Western Bicutan</p>
+          </div>
         </div>
       </div>
 
-      <div className="right-side-contents-container d-flex justify-content-center">
+      <div className="right-side-contents-container d-flex flex-column justify-content-center align-items-center">
         {view === "signIn" && (
-          <div className="sign-in-details-container d-flex justify-content-center rounded">
+          <div className="sign-in-details-container d-flex flex-column align-items-center justify-content-center rounded">
             <form className="sign-in-details-group" onSubmit={handleLogin}>
               <h1 className="sign-in-welcome fw-bold fst-italic">
                 Welcome back!
@@ -332,8 +335,8 @@ const UserAuthentication = () => {
                 Sign In
               </button>
 
-              <div className="sign-in-form-bottom">
-                <p className="no-account-p text-black">
+              <div className="sign-in-form-bottom p-0 m-0">
+                <p className="no-account-p">
                   Don't have an account?
                 </p>
                 <Link
@@ -351,7 +354,7 @@ const UserAuthentication = () => {
         )}
 
         {view === "forgotPassword" && (
-          <div className="forgot-password-details-container d-flex justify-content-center rounded">
+          <div className="forgot-password-details-container d-flex flex-column align-items-center justify-content-center rounded">
             <form className="forgot-password-details-group d-flex text-center">
               {!showChangePasswordField && !isVerificationCodeCorrect && (
                 <>
@@ -448,7 +451,7 @@ const UserAuthentication = () => {
         )}
 
         {view === "signUp" && (
-          <div className="sign-up-details-container d-flex justify-content-center rounded">
+          <div className="sign-up-details-container d-flex flex-column align-items-center justify-content-center rounded">
             <form className="sign-up-details-group d-flex text-center">
               {!showAccountActivationFields && (
                 <>

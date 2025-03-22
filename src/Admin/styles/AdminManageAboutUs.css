@@ -25,14 +25,15 @@
     margin: 20px 40px 20px 0;
 }
 
-.admin-about-us-contents-container {
+.admin-edit-about-details-container,
+.admin-current-SK-details-container {
     margin-bottom: 40px;
 }
 
 .admin-current-about-details-container,
 .admin-edit-about-details-container,
 .admin-current-SK-details-container {
-    background-color: #c5c1c1;
+    background-color: #d0e7ff;
     width: 90%;
 }
 
@@ -55,22 +56,22 @@
 
 .admin-current-about-form textarea,
 .admin-current-about-form [type='file'] {
-    height: 50px;
+    height: 45px;
     border-style: none;
     border-radius: 10px;
     outline: none;
     margin-bottom: 10px;
-    font-size: 17.5px;
+    font-size: 15px;
     transition: all 0.35s;
 }
 
 [class^="admin-edit-"][class*="-form"] textarea {
-    height: 50px;
+    height: 45px;
     border-style: none;
     border-radius: 10px;
     outline: none;
     margin-bottom: 0;
-    font-size: 17.5px;
+    font-size: 15px;
     transition: all 0.35s;
 }
 
@@ -94,7 +95,7 @@
     color: #FFFFFF;
     margin-top: 10px;
     width: 150px;
-    height: 55px;
+    height: 45px;
     font-size: 15px;
     border-style: none;
     transition: all 0.35s;
@@ -105,7 +106,7 @@
     color: #FFFFFF;
     margin-top: 10px;
     width: 150px;
-    height: 55px;
+    height: 45px;
     font-size: 15px;
     border-style: none;
     transition: all 0.35s;
@@ -113,8 +114,7 @@
 
 .admin-edit-about-details-back-button:hover,
 .admin-edit-about-details-button:hover,
-.admin-save-about-details-button:hover,
-.admin-add-SK-button:hover {
+.admin-save-about-details-button:hover {
     color: rgb(2, 107, 107);
 }
 
@@ -128,7 +128,7 @@
 
 .admin-SK-table {
     width: 90%;
-    margin: 0 auto 10px;
+    margin: 0 auto 25px;
     background-color: #FFFFFF;
 }
 
@@ -136,21 +136,10 @@
     height: 35px;
 }
 
-.admin-SK-edit-button {
+.admin-about-details-buttons-container .admin-SK-edit-button {
     font-size: 15px;
     width: 100px;
     height: 40px;
-    border-style: none;
-}
-
-.admin-add-SK-button {
-    background-color: #42BB4E;
-    color: #FFFFFF;
-    margin: 10px 0 25px 0;
-    width: 150px;
-    height: 55px;
-    font-size: 15px;
-    border-style: none;
     transition: all 0.35s;
 }
 
@@ -170,23 +159,42 @@
 
     .admin-current-about-form textarea,
     .admin-current-about-form [type='file'] {
-        height: 45px;
-        font-size: 15px;
+        height: 40px;
+        font-size: 12.5px;
     }
 
     [class^="admin-edit-"][class*="-form"] textarea {
-        height: 45px;
-        font-size: 15px;
+        height: 40px;
+        font-size: 12.5px;
     }
 
     .admin-SK-table tr {
         height: 32.5px;
     }
-    
-    .admin-SK-edit-button {
+
+    .admin-about-details-buttons-container .admin-SK-edit-button {
+        width: 90px;
+        height: 35px;
         font-size: 12.5px;
-        width: 95px;
+        transition: all 0.35s;
+    }
+
+    .admin-edit-about-details-back-button {
+        width: 90px;
+        height: 37.5px;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-about-details-button {
+        width: 125px;
         height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-save-about-details-button {
+        width: 125px;
+        height: 40px;
+        font-size: 12.5px;
     }
 }
 
@@ -203,46 +211,41 @@
 
     .admin-current-about-form textarea,
     .admin-current-about-form [type='file'] {
-        height: 40px;
-        font-size: 15px;
+        height: 35px;
+        font-size: 10px;
     }
 
     [class^="admin-edit-"][class*="-form"] textarea {
-        height: 40px;
-        font-size: 15px;
+        height: 35px;
+        font-size: 10px;
     }
 
     .admin-SK-table tr {
         height: 30px;
     }
-    
-    .admin-SK-edit-button {
+
+    .admin-about-details-buttons-container .admin-SK-edit-button {
+        width: 80px;
+        height: 30px;
         font-size: 10px;
-        width: 85px;
-        height: 37.5px;
+        transition: all 0.35s;
     }
 
     .admin-edit-about-details-back-button {
-        width: 90px;
-        height: 37.5px;
-        font-size: 12.5px;
+        width: 80px;
+        height: 35px;
+        font-size: 10px;
     }
 
     .admin-edit-about-details-button {
-        width: 125px;
-        height: 50px;
+        width: 100px;
+        height: 35px;
         font-size: 12.5px;
     }
 
     .admin-save-about-details-button {
-        width: 125px;
-        height: 50px;
-        font-size: 12.5px;
-    }
-
-    .admin-add-SK-button {
-        width: 125px;
-        height: 50px;
+        width: 100px;
+        height: 35px;
         font-size: 12.5px;
     }
 }
@@ -270,46 +273,41 @@
 
     .admin-current-about-form textarea,
     .admin-current-about-form [type='file'] {
-        height: 40px;
-        font-size: 12.5px;
+        height: 35px;
+        font-size: 10px;
     }
 
     [class^="admin-edit-"][class*="-form"] textarea {
-        height: 40px;
-        font-size: 12.5px;
+        height: 35px;
+        font-size: 10px;
     }
 
     .admin-SK-table tr {
         height: 30px;
     }
-    
-    .admin-SK-edit-button {
+
+    .admin-about-details-buttons-container .admin-SK-edit-button {
+        width: 80px;
+        height: 30px;
         font-size: 10px;
-        width: 75px;
-        height: 37.5px;
+        transition: all 0.35s;
     }
 
     .admin-edit-about-details-back-button {
-        width: 75px;
+        width: 80px;
         height: 35px;
         font-size: 10px;
     }
 
     .admin-edit-about-details-button {
-        width: 125px;
-        height: 50px;
+        width: 100px;
+        height: 35px;
         font-size: 12.5px;
     }
 
     .admin-save-about-details-button {
-        width: 125px;
-        height: 50px;
-        font-size: 12.5px;
-    }
-
-    .admin-add-SK-button {
-        width: 125px;
-        height: 50px;
+        width: 100px;
+        height: 35px;
         font-size: 12.5px;
     }
 }
@@ -337,46 +335,41 @@
 
     .admin-current-about-form textarea,
     .admin-current-about-form [type='file'] {
-        height: 40px;
-        font-size: 12.5px;
+        height: 25px;
+        font-size: 7.5px;
     }
 
     [class^="admin-edit-"][class*="-form"] textarea {
-        height: 40px;
-        font-size: 12.5px;
+        height: 25px;
+        font-size: 7.5px;
     }
 
     .admin-SK-table tr {
         height: 22.5px;
     }
-    
-    .admin-SK-edit-button {
-        font-size: 7.5px;
-        width: 65px;
-        height: 35px;
+
+    .admin-about-details-buttons-container .admin-SK-edit-button {
+        width: 70px;
+        height: 30px;
+        font-size: 10px;
+        transition: all 0.35s;
     }
 
     .admin-edit-about-details-back-button {
-        width: 75px;
-        height: 35px;
+        width: 70px;
+        height: 32.5px;
         font-size: 10px;
     }
 
     .admin-edit-about-details-button {
         width: 100px;
-        height: 45px;
+        height: 25px;
         font-size: 10px;
     }
 
     .admin-save-about-details-button {
         width: 100px;
-        height: 45px;
-        font-size: 10px;
-    }
-
-    .admin-add-SK-button {
-        width: 100px;
-        height: 45px;
+        height: 25px;
         font-size: 10px;
     }
 }

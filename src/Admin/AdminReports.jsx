@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import axios from "axios";
-import "./styles/AdminReports.css";
+import '../WebStyles/Admin-CSS.css';
 
 const Reports = () => {
   const [activeTable, setActiveTable] = useState("users");
@@ -140,7 +140,9 @@ const Reports = () => {
         </div>
 
         <div className="admin-reports-generate-pdf-container d-flex justify-content-end">
-          <button className="admin-reports-generate-pdf-button rounded" onClick={generatePDF}>
+          <button
+            className="admin-reports-generate-pdf-button rounded"
+            onClick={generatePDF}>
             Generate PDF
           </button>
         </div>
@@ -157,11 +159,12 @@ const Reports = () => {
                   <th>Date</th>
                   <th>User ID</th>
                   <th>Name</th>
+                  <th>Youth Classification</th> {/* Added Youth Classification column */}
                   <th>Username</th>
                   <th>Email Address</th>
-                  <th>Youth Classification</th> {/* Added Youth Classification column */}
                 </tr>
               </thead>
+
               <tbody className="admin-reports-users-body text-center">
                 {Object.entries(groupedUsers).length === 0 ? (
                   <tr>
@@ -185,6 +188,11 @@ const Reports = () => {
                           </div>
                         ))}
                       </td>
+                      <td> {/* Youth Classification */}
+                        {users.map((user) => (
+                          <div key={user.id}>{user.youth_age_group || "N/A"}</div>
+                        ))}
+                      </td>
                       <td>
                         {users.map((user) => (
                           <div key={user.id}>{user.username}</div>
@@ -193,11 +201,6 @@ const Reports = () => {
                       <td>
                         {users.map((user) => (
                           <div key={user.id}>{user.email_address}</div>
-                        ))}
-                      </td>
-                      <td> {/* Youth Classification */}
-                        {users.map((user) => (
-                          <div key={user.id}>{user.youth_age_group || "N/A"}</div>
                         ))}
                       </td>
                     </tr>

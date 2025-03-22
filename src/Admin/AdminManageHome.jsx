@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card } from "react-bootstrap";
-import "./styles/AdminManageHome.css";
-// import '../WebStyles/Admin-CSS.css';
+import { Card, Button } from "react-bootstrap";
+import '../WebStyles/Admin-CSS.css';
 
 const ManageHomePage = () => {
   const [activeContent, setActiveContent] = useState("allEvents");
@@ -273,7 +272,7 @@ const ManageHomePage = () => {
                         variant="top"
                         src={events.event_image}
                         alt={events.event_name}
-                        className="admin-event-image"
+                        className="admin-event-image p-0 m-0"
                       />
                     </div>
 
@@ -287,19 +286,21 @@ const ManageHomePage = () => {
                         </p>
 
                         <div className="admin-event-details-buttons-container d-flex justify-content-center">
-                          <button
+                          <Button
+                            variant="warning"
                             onClick={() => handleEditEvent(events)}
-                            className="event-edit-button bg-warning rounded-pill text-white"
+                            className="event-edit-button bg-warning rounded-pill"
                           >
-                            Edit Details
-                          </button>
+                            <i class="bi bi-pencil-square"></i>
+                          </Button>
 
-                          <button
+                          <Button
+                            variant="danger"
                             onClick={() => handleDeleteEvent(events.id)}
-                            className="event-delete-button bg-danger rounded-pill text-white"
+                            className="event-delete-button bg-danger rounded-pill"
                           >
-                            Delete Event
-                          </button>
+                            <i class="bi bi-trash"></i>
+                          </Button>
                         </div>
                       </Card.Body>
                     </div>
@@ -321,15 +322,18 @@ const ManageHomePage = () => {
                         variant="top"
                         src={image}
                         alt={`Spotlight ${imgIndex + 1}`}
-                        className="spotlight-image"
+                        className="spotlight-image p-0 m-0"
                       />
                       <Card.Body className="d-flex flex-column align-items-center">
-                        <button
-                          variant="danger"
-                          onClick={() => removeSpotlightImage(spotlight.id)} // Pass the spotlight ID
-                        >
-                          Remove Spotlight Image
-                        </button>
+                        <div className="admin-event-details-buttons-container d-flex justify-content-center">
+                          <Button
+                            variant="danger"
+                            onClick={() => removeSpotlightImage(spotlight.id)}
+                            className="spotlight-delete-button bg-danger rounded-pill"
+                          >
+                            <i class="bi bi-trash"></i>
+                          </Button>
+                        </div>
                       </Card.Body>
                     </Card>
                   ))
