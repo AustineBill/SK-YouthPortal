@@ -12,7 +12,7 @@ const Reports = () => {
   const [equipmentReservations, setEquipmentReservations] = useState([]);
   const [schedules, setSchedules] = useState([]);
   const [inventory, setInventory] = useState([]);
-  const [adminName, setAdminName] = useState(""); // State for admin's name
+  const adminUsername = sessionStorage.getItem("username"); // here 
 
   // Fetch data based on active table
   useEffect(() => {
@@ -79,18 +79,6 @@ const Reports = () => {
 
   // Generate PDF
   const generatePDF = () => {
-    if (!adminName.trim()) {
-      alert("Admin name is required to generate the report.");
-      return;
-    }
-
-    // Check if admin name contains special characters or numbers
-    const nameRegex = /^[A-Za-z\s]+$/; // Only allows letters and spaces
-    if (!nameRegex.test(adminName)) {
-      alert("Admin name cannot contain special characters or numbers.");
-      return;
-    }
-
     const input = document.getElementById("admin-reports-tables-container");
     const backgroundImage = `https://res.cloudinary.com/diewc7vew/image/upload/v1737004522/WebImages/fl5p9aafi9r6nvgrmlnf.png`;
 
@@ -175,7 +163,7 @@ const Reports = () => {
       pdf.setFont("times", "Bold");
       pdf.setFontSize(adminFontSize);
       const adminNameYPosition = pageHeight - 50;
-      pdf.text(`Printed by: ${adminName}`, margin, adminNameYPosition);
+      pdf.text(`Printed by: ${adminUsername || "N/A"}`, 15, pdf.internal.pageSize.height - 50); // Display admin username in PDF
 
       pdf.setFontSize(dateFontSize);
       const currentDate = new Date().toLocaleDateString();
@@ -242,17 +230,17 @@ const Reports = () => {
           </select>
         </div>
 
-        {/* Admin Name and Date Input Fields */}
-        <div className="admin-reports-info-container">
-          <input
-            type="text"
-            placeholder="Enter Admin Name"
-            value={adminName}
-            onChange={(e) => setAdminName(e.target.value)}
-            className="admin-reports-info rounded"
-          />
-        </div>
 
+
+        {/* Admin Name and Date Input Fields */}
+        <div className="admin-reports-info-container d-flex align-items-center">
+          {/* Show admin username */}
+          {adminUsername && (
+            <span className="text-white me-3">
+              {adminUsername} {/* Display admin's username */}
+            </span>
+          )}
+        </div>
         {/* Generate PDF Button */}
         <div className="admin-reports-generate-pdf-container d-flex justify-content-end">
           <button
