@@ -61,7 +61,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Configuration
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -1181,7 +1180,7 @@ app.post("/CheckEquipment", async (req, res) => {
   }
 });*/
 
-/*app.get("/settings", async (req, res) => {
+app.get("/settings", async (req, res) => {
   try {
     const timeGapResult = await pool.query(`
       SELECT time_gap FROM settings 
@@ -1207,9 +1206,9 @@ app.post("/CheckEquipment", async (req, res) => {
     console.error(err);
     res.status(500).send("Server error");
   }
-});*/
+});
 
-app.get("/settings", async (req, res) => {
+/*app.get("/settings", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM settings LIMIT 1");
     res.json(result.rows[0] || null);
@@ -1217,7 +1216,7 @@ app.get("/settings", async (req, res) => {
     console.error("Error fetching settings:", error);
     res.status(500).json({ error: "Internal server error" });
   }
-});
+});*/
 
 app.post("/settings/time-gap", async (req, res) => {
   const { time_gap } = req.body;
