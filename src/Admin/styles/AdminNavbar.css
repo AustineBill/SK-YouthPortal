@@ -6,6 +6,33 @@
     background-color: #25327A;
     z-index: 3;
 }
+.admin-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #ffcc00; /* Yellow background */
+    color: #25327A; /* Text color */
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    text-transform: uppercase;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.admin-username {
+    font-size: 1rem;
+    color: white;
+    margin-right: 12px;
+    transition: color 0.3s ease-in-out;
+}
+
+.admin-username:hover {
+    color: #ffcc00; /* Change color on hover */
+    cursor: pointer;
+}
 
 .admin-navbar-details {
     width: 100%;
@@ -75,6 +102,16 @@
         font-size: 12.5px;
         height: 42.5px;
         width: 90px;
+    }
+
+    .admin-username {
+        display: none;
+    }
+
+    .admin-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 16px; /* Make avatar slightly bigger for better visibility */
     }
 }
 
