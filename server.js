@@ -1231,16 +1231,6 @@ app.get("/settings", async (req, res) => {
   }
 });
 
-/*app.get("/settings", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM settings LIMIT 1");
-    res.json(result.rows[0] || null);
-  } catch (error) {
-    console.error("Error fetching settings:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});*/
-
 app.post("/settings/time-gap", async (req, res) => {
   try {
     const { time_gap } = req.body;
