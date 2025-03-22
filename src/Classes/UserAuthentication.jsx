@@ -285,13 +285,15 @@ const UserAuthentication = () => {
 
   return (
     <div className="user-authentication-contents d-flex justify-content-center">
-      <div className="left-side-responsive d-flex justify-content-center align-items-center d-none d-md-block">
-        <div className=" d-flex flex-column justify-content-center text-center text-lg-center">
-          <h1 className="top-part">
-            Lagi't lagi para sa Kabataan, Barangay at sa Bayan{" "}
-          </h1>
-          <h2 className="middle-part fst-italic">Sangguniang Kabataan</h2>
-          <p className="SK-location">Western Bicutan</p>
+      <div className='left-side-responsive d-none d-md-flex align-items-center justify-content-center'>
+        <div className="left-side-contents-container d-flex flex-column justify-content-center text-center text-lg-center">
+          <div className="d-flex flex-column justify-content-center text-center">
+            <h1 className="top-part">
+              Lagi't lagi para sa Kabataan, Barangay at sa Bayan{" "}
+            </h1>
+            <h2 className="middle-part fst-italic">Sangguniang Kabataan</h2>
+            <p className="SK-location">Western Bicutan</p>
+          </div>
         </div>
       </div>
 
