@@ -4,7 +4,7 @@ import "../App.css";
 
 const Footer = () => (
   <div className="container-fluid bg-db footer">
-    <div className="row d-flex justify-content-between py-5 footer-content">
+    <div className="row d-flex justify-content-between py-4 footer-content">
       <div className="col-md-3 d-flex flex-column align-items-start">
         <h1 className="footer-name">iSKed</h1>
       </div>
@@ -57,12 +57,6 @@ const Footer = () => (
     <div className="row">
       <div className="col-12 text-center">
         <hr className="footer-line" />
-      </div>
-    </div>
-
-    <div className="row">
-      <div className="col-12 text-center">
-        <p className="footer-text">All Rights Reserved 2024</p>
       </div>
     </div>
   </div>
