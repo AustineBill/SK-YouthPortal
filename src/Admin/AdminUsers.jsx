@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button } from "react-bootstrap";
-import "./styles/AdminUsers.css";
-// import '../WebStyles/Admin-CSS.css';
+import { Button } from "react-bootstrap";
+import '../WebStyles/Admin-CSS.css';
 
 const { EncryptionCode } = require("../WebStructure/Codex");
 const Users = () => {
@@ -290,7 +289,7 @@ const Users = () => {
         </div>
 
         <div className="users-list-container">
-          <Table className="admin-users-table-container table-bordered">
+          <table className="admin-users-table-container table-bordered">
             <thead className="admin-users-head text-center">
               <tr>
                 <th>User ID</th>
@@ -304,7 +303,9 @@ const Users = () => {
             <tbody className="admin-users-body text-center">
               {filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan="5">No users found for this classification</td>
+                  <td colSpan="5" className="text-center">
+                    No users found for this classification
+                  </td>
                 </tr>
               ) : (
                 filteredUsers.map((user) => (
@@ -320,21 +321,21 @@ const Users = () => {
                           onClick={() => handleViewDetails(user.id)}
                           className="admin-users-view-button rounded-pill"
                         >
-                          View
+                          <i class="bi bi-eye"></i>
                         </Button>
                         <Button
                           variant="warning"
                           onClick={() => handleEdit(user.id)}
                           className="admin-users-edit-button rounded-pill"
                         >
-                          Edit
+                          <i class="bi bi-pencil-square"></i>
                         </Button>
                         <Button
                           variant="danger"
                           onClick={() => openDeleteModal(user.id)}
                           className="admin-users-delete-button rounded-pill"
                         >
-                          Delete
+                          <i class="bi bi-trash"></i>
                         </Button>
                       </div>
                     </td>
@@ -342,7 +343,7 @@ const Users = () => {
                 ))
               )}
             </tbody>
-          </Table>
+          </table>
         </div>
       </div>
 
@@ -350,8 +351,8 @@ const Users = () => {
       {DeleteModalVisible && (
         <div
           className="admin-users-delete-confirmation-modal ModalOverlayStyles"
-          // backdrop="static"
-          // keyboard={false}
+        // backdrop="static"
+        // keyboard={false}
         >
           {/* <div className='ModalOverlayStyles'> */}
           {/* <div className='admin-users-delete-confirmation-modal'> */}

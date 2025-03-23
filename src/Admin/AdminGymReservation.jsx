@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Dropdown, Button, Modal } from "react-bootstrap";
+import { Dropdown, Button, Modal } from "react-bootstrap";
 import AdminGymCalendar from "./Calendars/AdminGymCalendar";
 import "./styles/AdminGymReservation.css";
 import axios from "axios";
@@ -8,6 +8,7 @@ const AdminGymReservation = () => {
   const [reservations, setReservations] = useState([]);
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
+  const [statusFilter, setStatusFilter] = useState("All");
   const [selectedReservations, setSelectedReservations] = useState([]);
 
   const [timeGap, setTimeGap] = useState(1);
@@ -61,59 +62,39 @@ const AdminGymReservation = () => {
       });
     }
 
+    if (statusFilter !== "All") {
+      filteredData = filteredData.filter((reservation) => {
+        if (statusFilter === "Pending") {
+          return !reservation.status || reservation.status === "Pending"; // Include undefined/null status as Pending
+        }
+        return reservation.status === statusFilter;
+      });
+    }
+
     setFilteredReservations(filteredData);
-  }, [filterOption, reservations]);
+  }, [filterOption, statusFilter, reservations]);
 
-  const handleCheckboxChange = (id) => {
-    setSelectedReservations((prevSelected) =>
-      prevSelected.includes(id)
-        ? prevSelected.filter((reservationId) => reservationId !== id)
-        : [...prevSelected, id]
-    );
-  };
 
-  const handleApprove = async () => {
-    try {
-      await axios.post(
-        "https://isked-backend-ssmj.onrender.com/approveReservations",
-        { ids: selectedReservations }
-      );
-      setSelectedReservations([]);
-    } catch (error) {
-      console.error("Error updating reservation status:", error);
+  const generateTimeSlots = () => {
+    const slots = [];
+    for (let hour = 10; hour <= 17; hour += timeGap) {
+      let startHour = hour;
+      let endHour = hour + timeGap;
+
+      let startPeriod = startHour < 12 ? "AM" : startHour === 12 ? "NN" : "PM";
+      let endPeriod = endHour < 12 ? "AM" : endHour === 12 ? "NN" : "PM";
+
+      if (startHour > 12) startHour -= 12;
+      if (endHour > 12) endHour -= 12;
+
+      let start = `${startHour}:00 ${startPeriod}`;
+      let end = `${endHour}:00 ${endPeriod}`;
+
+      if (endHour <= 17) {
+        slots.push(`${start} - ${end}`);
+      }
     }
-  };
-
-  const handleDisapprove = async () => {
-    try {
-      await axios.post(
-        "https://isked-backend-ssmj.onrender.com/disapproveReservations",
-        { ids: selectedReservations }
-      );
-      setSelectedReservations([]);
-    } catch (error) {
-      console.error("Error updating reservation status:", error);
-    }
-  };
-
-  const handleCancellation = async (reservationId) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to cancel this reservation?"
-    );
-    if (!isConfirmed) return;
-    try {
-      await axios.delete(
-        `https://isked-backend-ssmj.onrender.com/reservations/${reservationId}`
-      );
-      setReservations((prev) =>
-        prev.filter((reservation) => reservation.id !== reservationId)
-      );
-      setFilteredReservations((prev) =>
-        prev.filter((reservation) => reservation.id !== reservationId)
-      );
-    } catch (error) {
-      console.error("Error cancelling reservation:", error);
-    }
+    return slots;
   };
 
   return (
@@ -163,38 +144,41 @@ const AdminGymReservation = () => {
 
           <button
             disabled={selectedReservations.length === 0}
-            onClick={handleApprove}
-            className="admin-gr-disapprove-button bg-success text-white rounded"
+            className="admin-gr-disapprove-button bg-success text-white rounded ms-3"
           >
             Approve
           </button>
           <button
             disabled={selectedReservations.length === 0}
-            onClick={handleDisapprove}
-            className="admin-gr-disapprove-button bg-danger text-white rounded"
+            className="admin-gr-disapprove-button bg-danger text-white rounded ms-2"
           >
             Disapprove
           </button>
+
+          <Dropdown className="gr-toggle-container ms-3">
+            <Dropdown.Toggle className="gr-toggle">
+              {statusFilter}
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="gr-toggle-text">
+              <Dropdown.Item onClick={() => setStatusFilter("All")}>
+                All
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setStatusFilter("Approved")}>
+                Approved
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setStatusFilter("Disapproved")}>
+                Disapproved
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setStatusFilter("Pending")}>
+                Pending
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
 
-        <Table className="admin-greservation-table-container table-bordered">
+        <table className="admin-greservation-table-container table-bordered">
           <thead className="admin-greservation-head text-center">
             <tr>
-              <th>
-                <input
-                  type="checkbox"
-                  onChange={(e) =>
-                    setSelectedReservations(
-                      e.target.checked
-                        ? filteredReservations.map((res) => res.id)
-                        : []
-                    )
-                  }
-                  checked={
-                    selectedReservations.length === filteredReservations.length
-                  }
-                />
-              </th>
               <th>ID</th>
               <th>Type</th>
               <th>Start Date</th>
@@ -222,12 +206,14 @@ const AdminGymReservation = () => {
                 <td>{reservation.time_slot}</td>
                 <td>{reservation.status || "Pending"}</td>
                 <td>
-                  <Button
-                    variant="danger"
-                    onClick={() => handleCancellation(reservation.id)}
-                  >
-                    Delete
-                  </Button>
+                  <div className="admin-greservation-action-button-container d-flex justify-content-center">
+                    <Button
+                      variant="danger"
+                      className="admin-greservation-delete-button rounded-pill"
+                    >
+                      <i class="bi bi-trash"></i>
+                    </Button>
+                  </div>
                 </td>
               </tr>
             ))}
