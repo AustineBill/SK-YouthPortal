@@ -239,12 +239,12 @@ const Intro = () => {
                 alt={`Milestone ${index + 1}`}
               />
             ) : (
-              <p className="text-center text-muted py-5" key={index}></p>
+              <p key={index}></p>
             )
           )}
         </div>
 
-        <Link className="spotlight-button btn-db" to="/Spotlight">
+        <Link className="spotlight-buttons btn-db" to="/Spotlight">
           View Gallery
         </Link>
       </div>
