@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import './styles/AdminManageContactUs.css';
 import "../WebStyles/Admin-CSS.css";
 
 const pageLabels = {
