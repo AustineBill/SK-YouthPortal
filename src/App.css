@@ -207,6 +207,9 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
+/* */
+
+
 
 .sign-up-modal-overlay {
   position: fixed;
@@ -599,7 +602,7 @@ h2,
   position: relative;
   text-align: center;
   padding: 1rem;
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -745,38 +748,38 @@ h2,
 .spotlight-container {
   background: linear-gradient(to bottom, #edebf9);
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns: headline and image */
-  grid-template-rows: auto auto; /* Rows for button below */
+  grid-template-columns: 1fr 1fr; 
+  grid-template-rows: auto auto; 
   align-items: center;
   justify-items: center;
-  gap: 2rem; /* Space between columns */
   padding: 2rem;
 }
 
 .spotlight-head {
   color: #1d0053;
   font-weight: 700;
-  font-size: 5rem;
+  font-size: 6rem;
   text-align: left; /* Align text to the left */
   justify-self: start; /* Align within the grid cell */
-  margin: 0;
 }
 
 .image-content {
-  max-width: 100%;
+  max-width:100%;
   text-align: right; /* Align image to the right */
+  position: relative;
+  top: 20px;
 }
 
 .image-content img {
   width: 100%;
-  max-width: 3500px;
+  max-width: 1000px;
   object-fit: cover;
   border-radius: 8px;
 }
 
 .spotlight-button {
-  grid-column: span 2; /* Make the button span both columns */
-  justify-self: center; /* Center the button horizontally */
+  grid-column: span 2;
+  justify-self: center;
   font-weight: 400;
   display: inline-block;
   padding: 0.5rem 1rem;
@@ -785,10 +788,33 @@ h2,
   border-radius: 0.25rem;
   color: #fff;
   text-decoration: none;
+  position: relative;
+
 }
 
 .spotlight-button:hover {
   background-color: #4a148c;
+  text-decoration: none;
+  color: #fff;
+}
+
+.spotlight-buttons {
+  justify-self: center;
+  font-weight: 500;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  right: -400px;
+  top: 20px;
+}
+
+.spotlight-buttons:hover {
+  background-color: #17052d;
   text-decoration: none;
   color: #fff;
 }
@@ -851,24 +877,22 @@ h2,
   padding: 2rem;
   border-radius: 10px;
   width: 100%;
-}
+  position:relative;
 
-.BodyContainer blockquote p {
-  color: #ffffff !important;
 }
 
 .blockquote p {
   text-align: justify;
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 2;
+  color: #ffffff;
 }
 
 .BlockQuote {
   color: #060707; /* Equivalent to text-primary */
-  margin-top: 5rem; /* Equivalent to mb-4 */
   font-weight: 700; /* Adjust the font-weight as needed */
   text-align: center; /* Center the text */
-  font-size: 2.5rem;
+  font-size: 3rem;
 }
 
 /*SK Council*/
@@ -1116,9 +1140,9 @@ h2,
 
 .dropdownAvatar {
   color: #000000;
-  padding: 5px 5px;
-  text-decoration: none;
-  text-align: center;
+  padding: 10px 30px;
+  text-decoration: none !important; 
+  cursor:pointer;
 }
 
 .dropdown-about {
@@ -1206,7 +1230,18 @@ h2,
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   z-index: 1000;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
 }
+
+/* Show dropdown */
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 .dropdown-item {
   display: block;
   padding: 0.5rem 1rem;

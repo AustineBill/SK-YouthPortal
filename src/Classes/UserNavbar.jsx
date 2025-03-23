@@ -92,9 +92,7 @@ const UserNavbar = () => {
             </>
           )}
         </div>
-
-        {/* Avatar and Dropdown */}
-
+        
         {/* Logout Confirmation Modal */}
         {logoutModalVisible && (
           <div className="ModalOverlayStyles">
@@ -122,7 +120,6 @@ const UserNavbar = () => {
         <div className="navbar-buttons" ref={dropdownRef}>
           <div
             onClick={() => setDropdownVisible(!dropdownVisible)}
-            style={{ cursor: "pointer" }}
           >
             <Avatar name={loggedInUser} round={true} size="50" />
           </div>
@@ -130,14 +127,13 @@ const UserNavbar = () => {
             <div style={dropdownStyles}>
               <Link
                 to={`/Profile/${loggedInUser}`}
-                className="dropdownAvatar text-decoration-none"
+                className="dropdownAvatar"
                 onClick={() => setDropdownVisible(false)}
               >
                 Profile
               </Link>
               <div
                 className="dropdownAvatar"
-                style={{ cursor: "pointer" }}
                 onClick={handleLogout}
               >
                 Logout
