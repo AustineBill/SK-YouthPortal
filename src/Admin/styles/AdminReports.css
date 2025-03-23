@@ -20,6 +20,7 @@
 /* Generate Report */
 
 .admin-reports-generate-classification-date-container {
+    height: 45px;
     width: 90%;
     gap: 0.25in;
     margin: 0 auto 20px;
@@ -117,11 +118,6 @@
 .reports-list-container th {
     font-size: 17.5px;
     font-weight: bold;
-}
-
-.admin-reports-users-body th,
-.admin-reports-users-body td {
-    word-wrap: break-word;
 }
 
 .reports-list-container td {
