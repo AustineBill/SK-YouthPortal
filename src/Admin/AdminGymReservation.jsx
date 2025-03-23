@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, Button, Modal } from "react-bootstrap";
+import { Table, Dropdown, Button, Modal } from "react-bootstrap";
 import AdminGymCalendar from "./Calendars/AdminGymCalendar";
 import "./styles/AdminGymReservation.css";
 import axios from "axios";
+//import { TabPanel } from "@restart/ui";
 
 const AdminGymReservation = () => {
   const [reservations, setReservations] = useState([]);
@@ -74,27 +75,56 @@ const AdminGymReservation = () => {
     setFilteredReservations(filteredData);
   }, [filterOption, statusFilter, reservations]);
 
+  const handleCheckboxChange = (id) => {
+    setSelectedReservations((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((reservationId) => reservationId !== id)
+        : [...prevSelected, id]
+    );
+  };
 
-  const generateTimeSlots = () => {
-    const slots = [];
-    for (let hour = 10; hour <= 17; hour += timeGap) {
-      let startHour = hour;
-      let endHour = hour + timeGap;
-
-      let startPeriod = startHour < 12 ? "AM" : startHour === 12 ? "NN" : "PM";
-      let endPeriod = endHour < 12 ? "AM" : endHour === 12 ? "NN" : "PM";
-
-      if (startHour > 12) startHour -= 12;
-      if (endHour > 12) endHour -= 12;
-
-      let start = `${startHour}:00 ${startPeriod}`;
-      let end = `${endHour}:00 ${endPeriod}`;
-
-      if (endHour <= 17) {
-        slots.push(`${start} - ${end}`);
-      }
+  const handleApprove = async () => {
+    try {
+      await axios.post(
+        "https://isked-backend-ssmj.onrender.com/approveReservations",
+        { ids: selectedReservations }
+      );
+      setSelectedReservations([]);
+    } catch (error) {
+      console.error("Error updating reservation status:", error);
     }
-    return slots;
+  };
+
+  const handleDisapprove = async () => {
+    try {
+      await axios.post(
+        "https://isked-backend-ssmj.onrender.com/disapproveReservations",
+        { ids: selectedReservations }
+      );
+      setSelectedReservations([]);
+    } catch (error) {
+      console.error("Error updating reservation status:", error);
+    }
+  };
+
+  const handleCancellation = async (reservationId) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to cancel this reservation?"
+    );
+    if (!isConfirmed) return;
+    try {
+      await axios.delete(
+        `https://isked-backend-ssmj.onrender.com/reservations/${reservationId}`
+      );
+      setReservations((prev) =>
+        prev.filter((reservation) => reservation.id !== reservationId)
+      );
+      setFilteredReservations((prev) =>
+        prev.filter((reservation) => reservation.id !== reservationId)
+      );
+    } catch (error) {
+      console.error("Error cancelling reservation:", error);
+    }
   };
 
   return (
@@ -144,13 +174,15 @@ const AdminGymReservation = () => {
 
           <button
             disabled={selectedReservations.length === 0}
-            className="admin-gr-disapprove-button bg-success text-white rounded ms-3"
+            onClick={handleApprove}
+            className="admin-gr-disapprove-button bg-success text-white rounded"
           >
             Approve
           </button>
           <button
             disabled={selectedReservations.length === 0}
-            className="admin-gr-disapprove-button bg-danger text-white rounded ms-2"
+            onClick={handleDisapprove}
+            className="admin-gr-disapprove-button bg-danger text-white rounded"
           >
             Disapprove
           </button>
@@ -176,9 +208,24 @@ const AdminGymReservation = () => {
           </Dropdown>
         </div>
 
-        <table className="admin-greservation-table-container table-bordered">
+        <Table className="admin-greservation-table-container table-bordered">
           <thead className="admin-greservation-head text-center">
             <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  onChange={(e) =>
+                    setSelectedReservations(
+                      e.target.checked
+                        ? filteredReservations.map((res) => res.id)
+                        : []
+                    )
+                  }
+                  checked={
+                    selectedReservations.length === filteredReservations.length
+                  }
+                />
+              </th>
               <th>ID</th>
               <th>Type</th>
               <th>Start Date</th>

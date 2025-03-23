@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import axios from "axios";
-import '../WebStyles/Admin-CSS.css';
+import "../WebStyles/Admin-CSS.css";
 
 const Reports = () => {
   const [activeTable, setActiveTable] = useState("users");
@@ -11,8 +11,7 @@ const Reports = () => {
   const [equipmentReservations, setEquipmentReservations] = useState([]);
   const [schedules, setSchedules] = useState([]);
   const [inventory, setInventory] = useState([]);
-  const adminUsername = sessionStorage.getItem("username"); // here 
-
+  const adminUsername = sessionStorage.getItem("username"); // here
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,10 +83,18 @@ const Reports = () => {
 
       pdf.addImage(imgData, "PNG", 10, 10, 280, 180);
 
+      // Define missing variables
+      const adminFontSize = 12;
+      const dateFontSize = 10;
+      const signatureFontSize = 12;
+      const margin = 15;
+      const pageWidth = pdf.internal.pageSize.width;
+      const pageHeight = pdf.internal.pageSize.height;
+
       pdf.setFont("times", "Bold");
       pdf.setFontSize(adminFontSize);
       const adminNameYPosition = pageHeight - 50;
-      pdf.text(`Printed by: ${adminUsername || "N/A"}`, 15, pdf.internal.pageSize.height - 50); // Display admin username in PDF
+      pdf.text(`Printed by: ${adminUsername || "N/A"}`, 15, adminNameYPosition);
 
       pdf.setFontSize(dateFontSize);
       const currentDate = new Date().toLocaleDateString();
@@ -103,6 +110,7 @@ const Reports = () => {
         signatureXPosition + 85,
         signatureYPosition
       );
+
       const centeredXPosition =
         signatureXPosition +
         (85 -
@@ -110,11 +118,13 @@ const Reports = () => {
             pdf.getFontSize()) /
             pdf.internal.scaleFactor) /
           2;
+
       pdf.text(
         "Signature over Printed Name",
         centeredXPosition,
         signatureYPosition + 10
       );
+
       pdf.save(`${activeTable}-report.pdf`);
     });
   };
@@ -165,14 +175,18 @@ const Reports = () => {
         <div className="admin-reports-generate-pdf-container d-flex justify-content-end">
           <button
             className="admin-reports-generate-pdf-button rounded"
-            onClick={generatePDF}>
+            onClick={generatePDF}
+          >
             Generate PDF
           </button>
         </div>
       </div>
 
       {/* Show selected table */}
-      <div id="admin-reports-tables-container" className="reports-list-container">
+      <div
+        id="admin-reports-tables-container"
+        className="reports-list-container"
+      >
         {activeTable === "users" && (
           <div className="admin-reports-users-table">
             <h2 className="reports-users-label-h2">Users</h2>
@@ -182,7 +196,8 @@ const Reports = () => {
                   <th>Date</th>
                   <th>User ID</th>
                   <th>Name</th>
-                  <th>Youth Classification</th> {/* Added Youth Classification column */}
+                  <th>Youth Classification</th>{" "}
+                  {/* Added Youth Classification column */}
                   <th>Username</th>
                   <th>Email Address</th>
                 </tr>
@@ -211,9 +226,13 @@ const Reports = () => {
                           </div>
                         ))}
                       </td>
-                      <td> {/* Youth Classification */}
+                      <td>
+                        {" "}
+                        {/* Youth Classification */}
                         {users.map((user) => (
-                          <div key={user.id}>{user.youth_age_group || "N/A"}</div>
+                          <div key={user.id}>
+                            {user.youth_age_group || "N/A"}
+                          </div>
                         ))}
                       </td>
                       <td>
@@ -229,6 +248,30 @@ const Reports = () => {
                     </tr>
                   ))
                 )}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activeTable === "equipment" && (
+          <div>
+            <h2>Equipment Reservations</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Equipment Name</th>
+                  <th>Reserved By</th>
+                </tr>
+              </thead>
+              <tbody>
+                {equipmentReservations.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.date}</td>
+                    <td>{item.equipment_name}</td>
+                    <td>{item.reserved_by}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

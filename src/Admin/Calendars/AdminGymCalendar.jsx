@@ -14,7 +14,7 @@ const AdminGymCalendar = () => {
     const fetchCalendarReservations = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend-ssmj.onrender.com/ViewSched"
+          "https://isked-backend.onrender.com/ViewSched"
         );
         setCalendarReservations(response.data);
       } catch (error) {
