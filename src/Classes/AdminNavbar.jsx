@@ -8,6 +8,9 @@ const AdminNavbar = () => {
   const { adminlogout } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
+  // Retrieve the admin username from sessionStorage
+  const adminUsername = sessionStorage.getItem("username"); // Assuming the username is saved during login
 
   const handleSignout = () => {
     adminlogout();
@@ -77,13 +80,30 @@ const AdminNavbar = () => {
             </div>
           </div>
 
-          {/* Sign-out Button */}
-          <button
-            className="admin-sign-out-button bg-danger rounded-pill"
-            onClick={handleSignout}
-          >
-            Sign out
-          </button>
+          {/* Admin Username and Sign-out Button */}
+            <div className="d-flex align-items-center">
+              {/* Admin Username Circle Avatar */}
+              {adminUsername && (
+                <div className="admin-avatar">
+                  {adminUsername.match(/\d+$/) ? adminUsername.match(/\d+$/)[0] : ""}
+                </div>
+              )}
+
+              {/* Show admin username */}
+              {adminUsername && (
+                <span className="admin-username">
+                  {adminUsername} {/* Display admin's username */}
+                </span>
+              )}
+
+              {/* Sign-out Button */}
+              <button
+                className="admin-sign-out-button bg-danger rounded-pill"
+                onClick={handleSignout}
+              >
+                Sign out
+              </button>
+            </div>
         </div>
       </nav>
 

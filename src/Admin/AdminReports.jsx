@@ -11,7 +11,8 @@ const Reports = () => {
   const [equipmentReservations, setEquipmentReservations] = useState([]);
   const [schedules, setSchedules] = useState([]);
   const [inventory, setInventory] = useState([]);
-  const [adminName, setAdminName] = useState("");
+  const adminUsername = sessionStorage.getItem("username"); // here 
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,11 +71,6 @@ const Reports = () => {
   const groupedUsers = groupDataByDate(usersData);
 
   const generatePDF = () => {
-    if (!adminName.trim()) {
-      alert("Admin name is required to generate the report.");
-      return;
-    }
-
     const input = document.getElementById("admin-reports-tables-container");
 
     html2canvas(input, { scale: 2 }).then((canvas) => {
@@ -89,10 +85,36 @@ const Reports = () => {
       pdf.addImage(imgData, "PNG", 10, 10, 280, 180);
 
       pdf.setFont("times", "Bold");
-      pdf.setFontSize(13);
-      pdf.text(`Printed by: ${adminName}`, 15, 190);
-      pdf.text(`Printed date: ${new Date().toLocaleDateString()}`, 15, 200);
+      pdf.setFontSize(adminFontSize);
+      const adminNameYPosition = pageHeight - 50;
+      pdf.text(`Printed by: ${adminUsername || "N/A"}`, 15, pdf.internal.pageSize.height - 50); // Display admin username in PDF
 
+      pdf.setFontSize(dateFontSize);
+      const currentDate = new Date().toLocaleDateString();
+      const dateYPosition = adminNameYPosition + 5;
+      pdf.text(`Printed date: ${currentDate}`, margin, dateYPosition);
+
+      pdf.setFontSize(signatureFontSize);
+      const signatureXPosition = pageWidth - margin - 90;
+      const signatureYPosition = pageHeight - 45;
+      pdf.line(
+        signatureXPosition,
+        signatureYPosition,
+        signatureXPosition + 85,
+        signatureYPosition
+      );
+      const centeredXPosition =
+        signatureXPosition +
+        (85 -
+          (pdf.getStringUnitWidth("Signature over Printed Name") *
+            pdf.getFontSize()) /
+            pdf.internal.scaleFactor) /
+          2;
+      pdf.text(
+        "Signature over Printed Name",
+        centeredXPosition,
+        signatureYPosition + 10
+      );
       pdf.save(`${activeTable}-report.pdf`);
     });
   };
@@ -129,15 +151,16 @@ const Reports = () => {
           </select>
         </div>
 
-        <div className="admin-reports-info-container">
-          <input
-            type="text"
-            placeholder="Enter Admin Name"
-            value={adminName}
-            onChange={(e) => setAdminName(e.target.value)}
-            className="admin-reports-info rounded"
-          />
+        {/* Admin Name and Date Input Fields */}
+        <div className="admin-reports-info-container d-flex align-items-center">
+          {/* Show admin username */}
+          {adminUsername && (
+            <span className="text-white me-3">
+              {adminUsername} {/* Display admin's username */}
+            </span>
+          )}
         </div>
+        {/* Generate PDF Button */}
 
         <div className="admin-reports-generate-pdf-container d-flex justify-content-end">
           <button

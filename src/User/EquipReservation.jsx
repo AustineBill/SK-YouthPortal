@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import StepIndicator from "../Classes/StepIndicator";
@@ -8,12 +9,12 @@ import { Breadcrumb, Modal, Button } from "react-bootstrap";
 const EquipReservation = () => {
   const navigate = useNavigate();
   const [reservations, setReservations] = useState([]);
+  const [blockedDates, setBlockedDates] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-    // Fetch reservations from an API
     const fetchReservations = async () => {
       try {
         const response = await fetch(
@@ -23,7 +24,7 @@ const EquipReservation = () => {
           throw new Error("Failed to fetch reservations");
         }
         const data = await response.json();
-        setReservations(data); // Update state with fetched reservations
+        setReservations(data);
       } catch (error) {
         console.error("Error fetching reservations:", error);
       }
@@ -32,8 +33,33 @@ const EquipReservation = () => {
     fetchReservations();
   }, []);
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await axios.get(
+          "https://isked-backend.onrender.com/settings"
+        );
+
+        if (
+          response.data.blocked_dates &&
+          response.data.blocked_dates.length > 0
+        ) {
+          setBlockedDates(
+            response.data.blocked_dates.map((date) => ({
+              start: date.start_date,
+              end: date.end_date,
+            }))
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching settings:", error);
+      }
+    };
+    fetchSettings();
+  }, []);
+
   const handleDateChange = (date) => {
-    setSelectedDate(date); // Set the selected date (only one date allowed)
+    setSelectedDate(date);
   };
 
   const saveReservation = async () => {
@@ -41,7 +67,6 @@ const EquipReservation = () => {
       alert("Please select a date before proceeding.");
       return;
     }
-
     const today = new Date();
     const maxDate = new Date(today.setDate(today.getDate() + 7));
 
@@ -64,17 +89,14 @@ const EquipReservation = () => {
     const userId = sessionStorage.getItem("userId");
     if (!userId) {
       console.error("No userId found in sessionStorage");
-      return false; // Indicate failure to save
+      return false;
     }
 
-    // Set startDate to the clicked date at 12:00 AM (local time)
     const startDate = new Date(selectedDate);
-    startDate.setHours(0, 0, 0, 0); // Ensure time is set to 12:00 AM
-
-    // Set endDate to the next day at 12:00 AM (local time)
+    startDate.setHours(0, 0, 0, 0);
     const endDate = new Date(selectedDate);
-    endDate.setDate(startDate.getDate() + 1); // Add 1 day
-    endDate.setHours(0, 0, 0, 0); // Ensure time is set to 12:00 AM
+    endDate.setDate(startDate.getDate() + 1);
+    endDate.setHours(0, 0, 0, 0);
 
     try {
       const response = await fetch(
@@ -103,11 +125,9 @@ const EquipReservation = () => {
         setShowModal(true);
         return;
       }
-
-      // Prepare reservation data
       const reservationData = {
         user_id: userId,
-        startDate: startDate.toString(), // Save the local date and time as a string
+        startDate: startDate.toString(),
         endDate: endDate.toString(),
         equipment: reservedEquipment,
       };
@@ -117,15 +137,14 @@ const EquipReservation = () => {
         JSON.stringify(reservationData)
       );
       navigate("/ScheduleDetails", { state: { reservationData } });
-      return reservationData; // Return data for the next step
+      return reservationData;
     } catch (error) {
       console.error("Error checking or saving reservation:", error);
       alert("Error checking or saving reservation, please try again later.");
-      return false; // Handle failure
+      return false;
     }
   };
 
-  // Filter reservations by start_date
   const filterReservations = (date) => {
     return reservations.filter((res) => {
       const startDate = new Date(res.start_date).toDateString();
@@ -134,27 +153,47 @@ const EquipReservation = () => {
     });
   };
 
+  const tileDisabled = ({ date }) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const isSunday = date.getDay() === 0;
+    const normalizedDate = new Date(date).setHours(0, 0, 0, 0);
+
+    if (date < today || isSunday) return true;
+
+    return blockedDates.some((blocked) => {
+      const start = new Date(blocked.start).setHours(0, 0, 0, 0);
+      const end = new Date(blocked.end).setHours(23, 59, 59, 999);
+      return normalizedDate >= start && normalizedDate <= end;
+    });
+  };
+
   const tileClassName = ({ date, view }) => {
-    if (view !== "month") return ""; // Apply styles only in the month view
+    if (view !== "month") return "";
 
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Remove time for comparison
+    today.setHours(0, 0, 0, 0);
+    const isSunday = date.getDay() === 0;
+    const normalizedDate = new Date(date).setHours(0, 0, 0, 0);
 
-    // Sundays and past dates are unavailable
-    if (date < today || date.getDay() === 0) {
+    if (date < today || isSunday) {
       return "unavailable";
     }
 
-    // Filter reservations for the specific date
+    if (
+      blockedDates.some((blocked) => {
+        const start = new Date(blocked.start).setHours(0, 0, 0, 0);
+        const end = new Date(blocked.end).setHours(23, 59, 59, 999);
+        return normalizedDate >= start && normalizedDate <= end;
+      })
+    ) {
+      return "blocked"; // Blocked dates should be disabled
+    }
+
     const dailyReservations = filterReservations(date);
-
-    // If no reservations, it's available; otherwise, handle based on limit
-    if (dailyReservations.length === 0) {
-      return "available";
-    } else if (dailyReservations.length >= 5) {
-      return "unavailable";
-    }
-    return "available"; // Default to available if reservations are below the limit
+    if (dailyReservations.length === 0) return "available";
+    if (dailyReservations.length >= 5) return "unavailable";
+    return "available";
   };
 
   return (
@@ -199,12 +238,12 @@ const EquipReservation = () => {
         </div>
 
         <Calendar
-          minDate={new Date()} // Current date as the minimum selectable date
-          maxDate={new Date(new Date().setDate(new Date().getDate() + 7))} // 7 days from today
+          minDate={new Date()}
+          maxDate={new Date(new Date().setDate(new Date().getDate() + 7))}
           onChange={handleDateChange}
           value={selectedDate}
           tileClassName={tileClassName}
-          tileDisabled={({ date }) => date.getDay() === 0}
+          tileDisabled={tileDisabled}
         />
       </div>
 

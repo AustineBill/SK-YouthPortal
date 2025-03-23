@@ -17,7 +17,6 @@ const Intro = () => {
         const response = await axios.get(
           "https://isked-backend-ssmj.onrender.com/api/programs"
         );
-        console.log(response.data); // Log the response
         setPrograms(response.data);
       } catch (error) {
         console.error("Error fetching Programs data:", error);
@@ -29,13 +28,11 @@ const Intro = () => {
   }, []);
 
   useEffect(() => {
-    // Fetch events from the backend API
     const fetchEvents = async () => {
       try {
         const response = await axios.get(
           "https://isked-backend-ssmj.onrender.com/events"
-        ); // API endpoint for events
-        console.log("Fetched events:", response.data); // Log the response data for debugging
+        );
         setEvents(response.data); // Set the events in state
 
         setLoading(false); // Set loading to false after data is fetched
@@ -46,8 +43,8 @@ const Intro = () => {
       }
     };
 
-    fetchEvents(); // Call the function to fetch events
-  }, []); // Empty array ensures this effect runs only once when the component mounts
+    fetchEvents();
+  }, []);
 
   useEffect(() => {
     const fetchSpotlightData = async () => {
@@ -55,7 +52,6 @@ const Intro = () => {
         const response = await axios.get(
           "https://isked-backend-ssmj.onrender.com/spotlight"
         );
-        console.log(response.data); // Log the response
         setSpotlightData(response.data);
       } catch (error) {
         console.error("Error fetching spotlight data:", error);

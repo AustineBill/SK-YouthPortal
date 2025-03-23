@@ -22,7 +22,7 @@ const AdminGymReservation = () => {
     const fetchReservations = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend-ssmj.onrender.com/Allreservations"
+          "https://isked-backend.onrender.com/Allreservations"
         );
         const activeReservations = response.data.filter(
           (reservation) => !reservation.is_archived
@@ -74,6 +74,7 @@ const AdminGymReservation = () => {
     setFilteredReservations(filteredData);
   }, [filterOption, statusFilter, reservations]);
 
+
   const generateTimeSlots = () => {
     const slots = [];
     for (let hour = 10; hour <= 17; hour += timeGap) {
@@ -117,10 +118,7 @@ const AdminGymReservation = () => {
         </button>
       </div>
 
-      <AdminGymCalendar
-        blockedDates={blockedDates}
-        generateTimeSlots={generateTimeSlots}
-      />
+      <AdminGymCalendar />
 
       <div className="admin-greservation-buttons-table-container">
         <div className="admin-gr-toggle-buttons-container d-flex align-items-center">
@@ -192,9 +190,16 @@ const AdminGymReservation = () => {
           </thead>
 
           <tbody className="admin-greservation-body text-center">
-            {filteredReservations.map((reservation) => (
-              <tr key={reservation.id}>
-                <td>{reservation.user_id}</td>
+            {filteredReservations.map((reservation, index) => (
+              <tr key={reservation.id || reservation.reservation_id || index}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectedReservations.includes(reservation.id)}
+                    onChange={() => handleCheckboxChange(reservation.id)}
+                  />
+                </td>
+                <td>{reservation.reservation_id}</td>
                 <td>{reservation.program}</td>
                 <td>{reservation.start_date}</td>
                 <td>{reservation.end_date}</td>
@@ -213,7 +218,118 @@ const AdminGymReservation = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
+
+        <Modal
+          show={showTimeGapModal}
+          onHide={() => setShowTimeGapModal(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Customize Time Gap</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <label>Select Time Gap:</label>
+            <select
+              className="form-select"
+              value={timeGap}
+              onChange={(e) => setTimeGap(Number(e.target.value))}
+            >
+              <option value={1}>1 Hour</option>
+              <option value={2}>2 Hours</option>
+              <option value={3}>3 Hours</option>
+            </select>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setShowTimeGapModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={async () => {
+                try {
+                  if (!timeGap || isNaN(timeGap)) {
+                    alert("Invalid time gap value! Please enter a number.");
+                    return;
+                  }
+
+                  await axios.post(
+                    "https://isked-backend.onrender.com/settings/time-gap",
+                    {
+                      time_gap: Number(timeGap),
+                    }
+                  );
+
+                  alert("Time gap updated!");
+                  setShowTimeGapModal(false);
+                } catch (error) {
+                  console.error("Error updating time gap:", error);
+                }
+              }}
+            >
+              Save
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={showBlockModal} onHide={() => setShowBlockModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Block Dates</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <label>Start Date:</label>
+            <input
+              type="date"
+              className="form-control"
+              onChange={(e) => setStartBlockDate(e.target.value)}
+            />
+            <label>End Date:</label>
+            <input
+              type="date"
+              className="form-control"
+              onChange={(e) => setEndBlockDate(e.target.value)}
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setShowBlockModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              onClick={async () => {
+                if (!startBlockDate)
+                  return alert("Please select a start date.");
+                try {
+                  await axios.post(
+                    "https://isked-backend.onrender.com/settings/block-dates",
+                    {
+                      start_date: startBlockDate,
+                      end_date: endBlockDate || null,
+                    }
+                  );
+                  alert("Blocked dates added!");
+                  setBlockedDates([
+                    ...blockedDates,
+                    {
+                      start: startBlockDate,
+                      end: endBlockDate || startBlockDate,
+                    },
+                  ]);
+                  setShowBlockModal(false);
+                } catch (error) {
+                  console.error("Error blocking dates:", error);
+                }
+              }}
+            >
+              Block Date Range
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );
