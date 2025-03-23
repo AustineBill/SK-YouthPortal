@@ -253,7 +253,7 @@ const ManageAboutUs = () => {
               </div>
 
               <div className="admin-current-about-form d-flex flex-column">
-                <label>Image</label>
+                <label className="admin-current-about-label">Image</label>
                 <img
                   alt="image_council"
                   src={aboutDetails.image_url}
@@ -301,9 +301,9 @@ const ManageAboutUs = () => {
                     </div>
                   )
               )}
-              <div className="admin-current-about-form d-flex flex-column">
+              <div className="admin-edit-about-form d-flex flex-column">
                 {/* <label className="admin-current-about-label">Objectives</label> */}
-                <label>Upload Image</label>
+                <label className="admin-edit-about-label">Upload Image</label>
                 <input
                   type="file"
                   className="form-control"
