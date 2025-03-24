@@ -243,7 +243,7 @@ const AdminEquipmentReservation = () => {
                         reservation.is_archived // Disable if archived
                       }
                     >
-                      Delete
+                      <i className="bi bi-trash"></i>
                     </Button>
                   </td>
                 </tr>

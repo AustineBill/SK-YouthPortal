@@ -257,8 +257,9 @@ const AdminGymReservation = () => {
                     <Button
                       variant="danger"
                       className="admin-greservation-delete-button rounded-pill"
+                      onClick={handleCancellation}
                     >
-                      <i class="bi bi-trash"></i>
+                      <i className="bi bi-trash"></i>
                     </Button>
                   </div>
                 </td>

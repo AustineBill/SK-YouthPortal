@@ -1,306 +1,313 @@
 /* Admin Equipment Reservation */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap");
 
 .admin-equipment-reservation-container {
-    position: relative;
-    padding-top: 75px;
-    padding-bottom: 40px;
-    left: 22.5%;
-    width: 77.5%;
-    background-color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
-    z-index: 1;
+  position: relative;
+  padding-top: 75px;
+  padding-bottom: 40px;
+  left: 22.5%;
+  width: 77.5%;
+  background-color: #ffffff;
+  font-family: "Inter", sans-serif;
+  z-index: 1;
 }
 
 .admin-ereservation-label-h2 {
-    font-size: 40px;
-    margin: 20px 0 20px 40px;
+  font-size: 40px;
+  margin: 20px 0 20px 40px;
 }
 
 /* Table Decision Buttons */
 
 .admin-ereservation-buttons-table-container {
-    width: 90%;
-    margin: 0 auto 40px;
+  width: 90%;
+  margin: 0 auto 40px;
 }
 
 .admin-er-toggle-buttons-container {
-    height: 45px;
-    width: 100%;
-    margin-bottom: 20px;
-    gap: 0.25in;
+  height: 45px;
+  width: 100%;
+  margin-bottom: 20px;
+  gap: 0.25in;
 }
 
 .er-toggle-container .er-toggle {
-    font-size: 15px;
-    height: 45px;
+  font-size: 15px;
+  height: 45px;
 }
 
 .er-toggle-container .er-toggle-text .dropdown-item {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .admin-er-approve-button,
 .admin-er-disapprove-button {
-    font-size: 15px;
-    width: 175px;
-    height: 45px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #000000;
+  font-size: 15px;
+  width: 175px;
+  height: 45px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
 }
 
 button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.er-toggle-container {
+  position: relative;
+}
+
+.er-toggle-text {
+  display: block !important;
+  position: absolute !important;
+  z-index: 1050 !important;
+  background-color: white;
+  min-width: 100px;
 }
 
 /* Equipment Reservation Table */
 
 .admin-ereservation-table-container tr {
-    height: 40px;
+  height: 40px;
 }
 
 .admin-ereservation-table-container th {
-    font-size: 17.5px;
-    font-weight: bold;
+  font-size: 17.5px;
+  font-weight: bold;
 }
 
 .admin-ereservation-table-container td {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .admin-ereservation-action-button-container .admin-ereservation-delete-button {
-    font-size: 12.5px;
-    width: 70px;
-    height: 40px;
-    transition: all 0.35s;
+  font-size: 12.5px;
+  width: 70px;
+  height: 40px;
+  transition: all 0.35s;
 }
 
 /* Calendar */
 
 .admin-ereservation-calendar-container {
-    width: 90%;
-    margin: 0 auto;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .er-calendar {
-    border-style: solid;
-    border-width: 1px;
-    border-color: #25327A;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #25327a;
 }
-
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+  .admin-ereservation-label-h2 {
+    font-size: 37.5px;
+  }
 
-    .admin-ereservation-label-h2 {
-        font-size: 37.5px;
-    }
+  /* Table Decision Buttons */
 
-    /* Table Decision Buttons */
+  .admin-er-toggle-buttons-container {
+    height: 40px;
+    gap: 0.2in;
+  }
 
-    .admin-er-toggle-buttons-container {
-        height: 40px;
-        gap: 0.20in;
-    }
+  .er-toggle-container .er-toggle {
+    font-size: 12.5px;
+    height: 40px;
+  }
 
-    .er-toggle-container .er-toggle {
-        font-size: 12.5px;
-        height: 40px;
-    }
+  .admin-er-approve-button,
+  .admin-er-disapprove-button {
+    font-size: 12.5px;
+    width: 150px;
+    height: 40px;
+  }
 
-    .er-toggle-container .er-toggle-text .dropdown-item {
-        font-size: 12.5px;
-    }
+  /* Equipment Reservation Table */
 
-    .admin-er-approve-button,
-    .admin-er-disapprove-button {
-        font-size: 12.5px;
-        width: 150px;
-        height: 40px;
-    }
+  .admin-ereservation-table-container tr {
+    height: 35px;
+  }
 
-    /* Equipment Reservation Table */
+  .admin-ereservation-table-container th {
+    font-size: 15px;
+  }
 
-    .admin-ereservation-table-container tr {
-        height: 35px;
-    }
+  .admin-ereservation-table-container td {
+    font-size: 12.5px;
+  }
 
-    .admin-ereservation-table-container th {
-        font-size: 15px;
-    }
-
-    .admin-ereservation-table-container td {
-        font-size: 12.5px;
-    }
-
-    .admin-ereservation-action-button-container .admin-ereservation-delete-button {
-        font-size: 10px;
-        width: 60px;
-        height: 35px;
-    }
+  .admin-ereservation-action-button-container
+    .admin-ereservation-delete-button {
+    font-size: 10px;
+    width: 60px;
+    height: 35px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .admin-ereservation-label-h2 {
+    font-size: 35px;
+  }
 
-    .admin-ereservation-label-h2 {
-        font-size: 35px;
-    }
+  /* Table Decision Buttons */
 
-    /* Table Decision Buttons */
+  .admin-er-toggle-buttons-container {
+    height: 35px;
+    gap: 0.15in;
+  }
 
-    .admin-er-toggle-buttons-container {
-        height: 35px;
-        gap: 0.15in;
-    }
+  .er-toggle-container .er-toggle {
+    font-size: 10px;
+    height: 35px;
+  }
 
-    .er-toggle-container .er-toggle {
-        font-size: 10px;
-        height: 35px;
-    }
+  .er-toggle-container .er-toggle-text .dropdown-item {
+    font-size: 10px;
+  }
 
-    .er-toggle-container .er-toggle-text .dropdown-item {
-        font-size: 10px;
-    }
+  .admin-er-approve-button,
+  .admin-er-disapprove-button {
+    font-size: 10px;
+    width: 125px;
+    height: 35px;
+  }
 
-    .admin-er-approve-button,
-    .admin-er-disapprove-button {
-        font-size: 10px;
-        width: 125px;
-        height: 35px;
-    }
+  /* Equipment Reservation Table */
 
-    /* Equipment Reservation Table */
+  .admin-ereservation-table-container tr {
+    height: 30px;
+  }
 
-    .admin-ereservation-table-container tr {
-        height: 30px;
-    }
+  .admin-ereservation-table-container th {
+    font-size: 12.5px;
+  }
 
-    .admin-ereservation-table-container th {
-        font-size: 12.5px;
-    }
+  .admin-ereservation-table-container td {
+    font-size: 10px;
+  }
 
-    .admin-ereservation-table-container td {
-        font-size: 10px;
-    }
-
-    .admin-ereservation-action-button-container .admin-ereservation-delete-button {
-        font-size: 7.5px;
-        width: 50px;
-        height: 30px;
-    }
+  .admin-ereservation-action-button-container
+    .admin-ereservation-delete-button {
+    font-size: 7.5px;
+    width: 50px;
+    height: 30px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+  .admin-equipment-reservation-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-equipment-reservation-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-ereservation-label-h2 {
+    font-size: 35px;
+    margin: 20px 0 20px 25px;
+  }
 
-    .admin-ereservation-label-h2 {
-        font-size: 35px;
-        margin: 20px 0 20px 25px;
-    }
+  /* Table Decision Buttons */
 
-    /* Table Decision Buttons */
+  .admin-er-toggle-buttons-container {
+    height: 35px;
+    gap: 0.15in;
+  }
 
-    .admin-er-toggle-buttons-container {
-        height: 35px;
-        gap: 0.15in;
-    }
+  .er-toggle-container .er-toggle {
+    font-size: 10px;
+    height: 35px;
+  }
 
-    .er-toggle-container .er-toggle {
-        font-size: 10px;
-        height: 35px;
-    }
+  .er-toggle-container .er-toggle-text .dropdown-item {
+    font-size: 10px;
+  }
 
-    .er-toggle-container .er-toggle-text .dropdown-item {
-        font-size: 10px;
-    }
+  .admin-er-approve-button,
+  .admin-er-disapprove-button {
+    font-size: 10px;
+    width: 125px;
+    height: 35px;
+  }
 
-    .admin-er-approve-button,
-    .admin-er-disapprove-button {
-        font-size: 10px;
-        width: 125px;
-        height: 35px;
-    }
+  /* Equipment Reservation Table */
 
-    /* Equipment Reservation Table */
+  .admin-ereservation-table-container tr {
+    height: 30px;
+  }
 
-    .admin-ereservation-table-container tr {
-        height: 30px;
-    }
+  .admin-ereservation-table-container th {
+    font-size: 12.5px;
+  }
 
-    .admin-ereservation-table-container th {
-        font-size: 12.5px;
-    }
+  .admin-ereservation-table-container td {
+    font-size: 10px;
+  }
 
-    .admin-ereservation-table-container td {
-        font-size: 10px;
-    }
-
-    .admin-ereservation-action-button-container .admin-ereservation-delete-button {
-        font-size: 7.5px;
-        width: 50px;
-        height: 30px;
-    }
+  .admin-ereservation-action-button-container
+    .admin-ereservation-delete-button {
+    font-size: 7.5px;
+    width: 50px;
+    height: 30px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+  .admin-equipment-reservation-container {
+    left: 0%;
+    width: 100%;
+  }
 
-    .admin-equipment-reservation-container {
-        left: 0%;
-        width: 100%;
-    }
+  .admin-ereservation-label-h2 {
+    font-size: 30px;
+    margin: 20px 0 20px 20px;
+  }
 
-    .admin-ereservation-label-h2 {
-        font-size: 30px;
-        margin: 20px 0 20px 20px;
-    }
+  /* Table Decision Buttons */
 
-    /* Table Decision Buttons */
+  .admin-er-toggle-buttons-container {
+    height: 25px;
+    gap: 0.1in;
+  }
 
-    .admin-er-toggle-buttons-container {
-        height: 25px;
-        gap: 0.10in;
-    }
+  .er-toggle-container .er-toggle {
+    font-size: 7.5px;
+    height: 25px;
+  }
 
-    .er-toggle-container .er-toggle {
-        font-size: 7.5px;
-        height: 25px;
-    }
+  .er-toggle-container .er-toggle-text .dropdown-item {
+    font-size: 7.5px;
+  }
 
-    .er-toggle-container .er-toggle-text .dropdown-item {
-        font-size: 7.5px;
-    }
+  .admin-er-approve-button,
+  .admin-er-disapprove-button {
+    font-size: 7.5px;
+    width: 100px;
+    height: 25px;
+  }
 
-    .admin-er-approve-button,
-    .admin-er-disapprove-button {
-        font-size: 7.5px;
-        width: 100px;
-        height: 25px;
-    }
+  /* Equipment Reservation Table */
 
-    /* Equipment Reservation Table */
+  .admin-ereservation-table-container tr {
+    height: 20px;
+  }
 
-    .admin-ereservation-table-container tr {
-        height: 20px;
-    }
+  .admin-ereservation-table-container th {
+    font-size: 10px;
+  }
 
-    .admin-ereservation-table-container th {
-        font-size: 10px;
-    }
+  .admin-ereservation-table-container td {
+    font-size: 7.5px;
+  }
 
-    .admin-ereservation-table-container td {
-        font-size: 7.5px;
-    }
-
-    .admin-ereservation-action-button-container .admin-ereservation-delete-button {
-        font-size: 5px;
-        width: 40px;
-        height: 25px;
-    }
+  .admin-ereservation-action-button-container
+    .admin-ereservation-delete-button {
+    font-size: 5px;
+    width: 40px;
+    height: 25px;
+  }
 }
