@@ -17,10 +17,6 @@
     margin: 20px 0 20px 40px;
 }
 
-.admin-users-contents-container {
-    width: 100%;
-}
-
 /* Users Classification */
 
 .admin-users-add-classification-container {
@@ -80,6 +76,7 @@
 
 .users-list-container {
     width: 90%;
+    margin: 0 auto;
 }
 
 .users-list-container tr {
@@ -91,21 +88,25 @@
     font-weight: bold;
 }
 
+.admin-users-body th, 
+.admin-users-body td {
+    word-wrap: break-word;
+}
+
 .users-list-container td {
     font-size: 15px;
 }
 
 .admin-users-actions-buttons-container .admin-users-view-button,
 .admin-users-actions-buttons-container .admin-users-edit-button {
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .admin-users-actions-buttons-container .admin-users-view-button,
 .admin-users-actions-buttons-container .admin-users-edit-button,
 .admin-users-actions-buttons-container .admin-users-delete-button {
     font-size: 12.5px;
-    width: 70px;
-    height: 40px;
+    height: 35px;
     transition: all 0.35s;
 }
 
@@ -188,10 +189,6 @@
 
     /* Users Classification */
 
-    /* .admin-users-add-classification-container {
-        gap: 0.25in;
-    } */
-
     .admin-users-classification-container {
         width: 87.5%;
     }
@@ -224,18 +221,16 @@
         font-size: 12.5px;
     }
     
-
     .admin-users-actions-buttons-container .admin-users-view-button,
     .admin-users-actions-buttons-container .admin-users-edit-button {
-        margin-right: 10px;
+        margin-right: 5px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
     .admin-users-actions-buttons-container .admin-users-edit-button,
     .admin-users-actions-buttons-container .admin-users-delete-button {
         font-size: 10px;
-        width: 60px;
-        height: 35px;
+        height: 30px;
     }
 
     /* Modal - View Details */
@@ -266,10 +261,6 @@
     }
 
     /* Users Classification */
-
-    /* .admin-users-add-classification-container {
-        gap: 0.25in;
-    } */
 
     .admin-users-classification-container {
         width: 85%;
@@ -303,17 +294,22 @@
         font-size: 10px;
     }
 
+    .admin-users-actions-buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .admin-users-actions-buttons-container .admin-users-view-button,
     .admin-users-actions-buttons-container .admin-users-edit-button {
         margin-right: 0;
+        margin-bottom: 5px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
     .admin-users-actions-buttons-container .admin-users-edit-button,
     .admin-users-actions-buttons-container .admin-users-delete-button {
         font-size: 7.5px;
-        width: 50px;
-        height: 30px;
+        height: 25px;
     }
 
     /* Modal - View Details */
@@ -350,10 +346,6 @@
     }
 
     /* Users Classification */
-
-    /* .admin-users-add-classification-container {
-        gap: 0.25in;
-    } */
 
     .admin-users-classification-container {
         width: 82.5%;
@@ -395,15 +387,14 @@
     .admin-users-actions-buttons-container .admin-users-view-button,
     .admin-users-actions-buttons-container .admin-users-edit-button {
         margin-right: 0;
-        margin-bottom: 2.5px;
+        margin-bottom: 5px;
     }
 
     .admin-users-actions-buttons-container .admin-users-view-button,
     .admin-users-actions-buttons-container .admin-users-edit-button,
     .admin-users-actions-buttons-container .admin-users-delete-button {
         font-size: 7.5px;
-        width: 50px;
-        height: 30px;
+        height: 25px;
     }
 
     /* Modal - View Details */
@@ -440,10 +431,6 @@
     }
 
     /* Users Classification */
-
-    /* .admin-users-add-classification-container {
-        gap: 0.25in;
-    } */
 
     .admin-users-classification-container {
         width: 80%;
@@ -492,7 +479,6 @@
     .admin-users-actions-buttons-container .admin-users-edit-button,
     .admin-users-actions-buttons-container .admin-users-delete-button {
         font-size: 5px;
-        width: 40px;
         height: 25px;
     }
 

@@ -6,168 +6,163 @@
 /* ____________________________________________________________________________________________________ */
 
 .user-authentication-contents {
-  position: relative;
-  padding: 9em 0;
-  background: url(/public/Asset/WebImages/login_bg.png) no-repeat center center;
-  background-size: 100% 100%;
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    min-height: 85vh;
+    background: url(/public/Asset/WebImages/Bg_noLOGO.png) no-repeat center center;
+    background-size: cover;
 }
 
 /* Left side */
 
+.left-side-responsive>div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .left-side-responsive {
-  width: 60%;
+    width: 65%;
 }
 
 .top-part {
-  font-weight: normal;
-  font-size: 20px;
-  font-family: "Roboto", sans-serif;
+    font-weight: normal;
+    font-size: 30px;
 }
 
 .middle-part {
-  font-weight: normal;
-  font-family: "Roboto", sans-serif;
-  font-size: 20px;
-  text-align: left;
-  margin-left: 80px;
-  margin-top: 150px;
-}
-
-.text-left-container {
-  text-align: left;
-}
-
-.bottom-part {
-  font-family: "Sansita", sans-serif;
-  margin-left: 30%;
-  color: #25327a;
-  font-weight: bold;
-  font-size: 61px;
-  margin-top: -20px;
+    font-family: 'Sansita', sans-serif;
+    font-weight: bold;
+    font-size: 32.5px;
+    color: #25327A;
 }
 
 .SK-location {
-  font-weight: bolder;
-  font-size: 35px;
-  margin-left: 60%;
-  margin-top: -10px;
-  color: rgb(230, 209, 28);
+    font-weight: bolder;
+    font-size: 27.5px;
+    margin-left: 60%;
 }
 
 /* Right side */
 
 .right-side-contents-container {
-  width: 40%;
+    width: 35%;
 }
 
 .sign-in-welcome,
 .forgot-password-fp,
 .sign-up-su {
-  font-family: "Sansita", sans-serif;
-  font-size: 50px;
-  color: #ced5ff;
-  margin: 25px 0 25px 0;
+    font-family: 'Sansita', sans-serif;
+    font-size: 32.5px;
+    color: #ced5ff;
+    margin: 10px 0 10px 0;
+}
+
+.forgot-password-fp {
+    margin-bottom: 10px;
 }
 
 .sign-in-details-container,
 .forgot-password-details-container,
 .sign-up-details-container {
-  width: 73%;
-  background-color: #124f82;
+    width: 80%;
+    background-color: #124f82;
 }
 
 .sign-in-details-group,
 .forgot-password-details-group,
 .sign-up-details-group {
-  width: 92%;
-  margin: 0;
-  padding: 0;
+    width: 90%;
+    margin: 0;
+    padding: 0;
 }
 
 .sign-in-details-group .sign-in-label,
 .forgot-password-details-group .forgot-password-label,
 .sign-up-details-group .sign-up-label {
-  font-size: 14px;
-  color: #ffffff;
-  margin-top: 5px;
-  height: 22%;
+    font-size: 12.5px;
+    color: #FFFFFF;
 }
 
 .user-auth-sign-in-form,
 .user-auth-forgot-password-form,
 .user-auth-sign-up-form {
-  width: 75%;
-  height: 40%;
+    width: 75%;
 }
 
-.user-auth-sign-in-form input[type="text"],
-.user-auth-sign-in-form input[type="password"],
-.user-auth-forgot-password-form input[type="email"],
-.user-auth-forgot-password-form input[type="text"],
-.user-auth-forgot-password-form input[type="password"],
-.user-auth-sign-up-form input[type="text"],
-.user-auth-sign-up-form input[type="password"] {
-  height: 40px;
-  border-style: none;
-  border-radius: 18px;
-  outline: none;
-  margin-bottom: 0;
-  font-size: 15px;
-  transition: all 0.35s;
+.user-auth-sign-in-form input[type='text'],
+.user-auth-sign-in-form input[type='password'],
+.user-auth-forgot-password-form input[type='email'],
+.user-auth-forgot-password-form input[type='text'],
+.user-auth-forgot-password-form input[type='password'],
+.user-auth-sign-up-form input[type='text'],
+.user-auth-sign-up-form input[type='password'] {
+    height: 35px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 0;
+    font-size: 12.5px;
+    transition: all 0.35s;
 }
 
-.user-auth-sign-in-form input[type="text"]:focus,
-.user-auth-sign-in-form input[type="password"]:focus,
-.user-auth-forgot-password-form input[type="email"]:focus,
-.user-auth-forgot-password-form input[type="text"]:focus,
-.user-auth-forgot-password-form input[type="password"]:focus,
-.user-auth-sign-up-form input[type="text"]:focus,
-.user-auth-sign-up-form input[type="password"]:focus {
-  outline: 1px solid #007bff;
+.user-auth-sign-in-form input[type='text']:focus,
+.user-auth-sign-in-form input[type='password']:focus,
+.user-auth-forgot-password-form input[type='email']:focus,
+.user-auth-forgot-password-form input[type='text']:focus,
+.user-auth-forgot-password-form input[type='password']:focus,
+.user-auth-sign-up-form input[type='text']:focus,
+.user-auth-sign-up-form input[type='password']:focus {
+    outline: 1px solid #007bff;
 }
 
 .forgot-password-link {
-  color: #b7bac7;
-  font-size: 13px;
+    color: #b7bac7;
+    font-size: 10px;
+}
+
+.no-account-p {
+    color: #b7bac7;
 }
 
 .sign-up-link {
-  color: #cad2ff;
-  margin-bottom: 25px;
+    color: #cad2ff;
 }
 
 .forgot-password-email-description,
 .sign-up-description {
-  color: #838383;
-  font-size: 14px;
+    color: #FFFFFF;
+    font-size: 12.5px;
 }
 
 .no-account-p,
 .sign-up-link {
-  font-size: 15px;
+    margin: 0 0 20px 0;
+    font-size: 10px;
 }
+
+/* Buttons */
 
 .sign-in-button,
 .fp-proceed-button,
 .fp-submit-button,
 .su-proceed-button,
 .su-submit-button {
-  background-color: #ffffff;
-  color: #00056b;
-  width: 200px;
-  height: 50px;
-  border: none;
-  font-size: 20px;
-  transition: all 0.35s;
+    background-color: #FFFFFF;
+    color: #25327A;
+    width: 125px;
+    height: 35px;
+    border: none;
+    font-size: 12.5px;
+    transition: all 0.35s;
+    margin-bottom: 10px;
 }
 
 .fp-proceed-button,
 .fp-submit-button,
 .su-proceed-button,
 .su-submit-button {
-  margin: 25px 0 25px 0;
+    margin: 10px 0 20px 0;
 }
 
 .sign-in-button:hover,
@@ -175,357 +170,363 @@
 .fp-submit-button:hover,
 .su-proceed-button:hover,
 .su-submit-button:hover {
-  background-color: #948a8a;
-  color: #ffffff;
+    background-color: #948a8a;
+    color: #FFFFFF;
 }
+
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
-  /* Left side */
 
-  .left-side-responsive {
-    width: 60%;
-  }
+    /* Left side */
 
-  .top-part {
-    font-size: 30px;
-  }
+    .left-side-responsive {
+        width: 65%;
+    }
 
-  .middle-part {
-    font-size: 25px;
-  }
+    .top-part {
+        font-size: 27.5px;
+    }
 
-  .bottom-part {
-    font-size: 35px;
-  }
+    .middle-part {
+        font-size: 30px;
+    }
 
-  .SK-location {
-    font-size: 25px;
-    margin-left: 60%;
-  }
+    .SK-location {
+        font-size: 25px;
+        margin-left: 55%;
+    }
 
-  /* Right side */
+    /* Right side */
 
-  .right-side-contents-container {
-    width: 40%;
-  }
+    .right-side-contents-container {
+        width: 35%;
+    }
 
-  .sign-in-welcome,
-  .forgot-password-fp,
-  .sign-up-su {
-    font-size: 40px;
-    margin: 25px 0 20px 0;
-  }
+    .sign-in-welcome,
+    .forgot-password-fp,
+    .sign-up-su {
+        font-size: 30px;
+        margin: 10px 0 10px 0;
+    }
 
-  .sign-in-details-container,
-  .forgot-password-details-container,
-  .sign-up-details-container {
-    width: 85%;
-  }
+    .forgot-password-fp {
+        margin-bottom: 10px;
+    }
 
-  .sign-in-details-group .sign-in-label,
-  .forgot-password-details-group .forgot-password-label,
-  .sign-up-details-group .sign-up-label {
-    font-size: 15px;
-  }
+    .sign-in-details-container,
+    .forgot-password-details-container,
+    .sign-up-details-container {
+        width: 80%;
+    }
 
-  .user-auth-sign-in-form,
-  .user-auth-forgot-password-form,
-  .user-auth-sign-up-form {
-    width: 75%;
-  }
+    .sign-in-details-group .sign-in-label,
+    .forgot-password-details-group .forgot-password-label,
+    .sign-up-details-group .sign-up-label {
+        font-size: 10px;
+    }
 
-  .user-auth-sign-in-form input[type="text"],
-  .user-auth-sign-in-form input[type="password"],
-  .user-auth-forgot-password-form input[type="email"],
-  .user-auth-forgot-password-form input[type="text"],
-  .user-auth-forgot-password-form input[type="password"],
-  .user-auth-sign-up-form input[type="text"],
-  .user-auth-sign-up-form input[type="password"] {
-    height: 40px;
-    font-size: 12.5px;
-  }
+    .user-auth-sign-in-form,
+    .user-auth-forgot-password-form,
+    .user-auth-sign-up-form {
+        width: 75%;
+    }
 
-  .forgot-password-link {
-    font-size: 12.5px;
-  }
+    .user-auth-sign-in-form input[type='text'],
+    .user-auth-sign-in-form input[type='password'],
+    .user-auth-forgot-password-form input[type='email'],
+    .user-auth-forgot-password-form input[type='text'],
+    .user-auth-forgot-password-form input[type='password'],
+    .user-auth-sign-up-form input[type='text'],
+    .user-auth-sign-up-form input[type='password'] {
+        height: 30px;
+        font-size: 10px;
+        margin-bottom: 0;
+    }
 
-  .sign-up-link {
-    margin-bottom: 25px;
-  }
+    .forgot-password-link {
+        font-size: 7.5px;
+    }
 
-  .forgot-password-email-description,
-  .sign-up-description {
-    font-size: 12.5px;
-  }
+    .forgot-password-email-description,
+    .sign-up-description {
+        font-size: 10px;
+    }
 
-  .no-account-p,
-  .sign-up-link {
-    font-size: 12.5px;
-  }
+    .no-account-p,
+    .sign-up-link {
+        margin: 0 0 20px 0;
+        font-size: 7.5px;
+    }
 
-  .sign-in-button,
-  .fp-proceed-button,
-  .fp-submit-button,
-  .su-proceed-button,
-  .su-submit-button {
-    width: 125px;
-    height: 45px;
-    font-size: 15px;
-  }
+    /* Buttons */
+
+    .sign-in-button,
+    .fp-proceed-button,
+    .fp-submit-button,
+    .su-proceed-button,
+    .su-submit-button {
+        width: 115px;
+        height: 30px;
+        font-size: 10px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  /* Left side */
 
-  .left-side-responsive {
-    width: 55%;
-  }
+    /* Left side */
 
-  .top-part {
-    font-size: 25px;
-  }
+    .left-side-responsive {
+        width: 60%;
+    }
 
-  .middle-part {
-    font-size: 20px;
-  }
+    .top-part {
+        font-size: 22.5px;
+    }
 
-  .bottom-part {
-    font-size: 30px;
-  }
+    .middle-part {
+        font-size: 25px;
+    }
 
-  .SK-location {
-    font-size: 20px;
-    margin-left: 50%;
-  }
+    .SK-location {
+        font-size: 20px;
+        margin-left: 60%;
+    }
 
-  /* Right side */
+    /* Right side */
 
-  .right-side-contents-container {
-    width: 45%;
-  }
+    .right-side-contents-container {
+        width: 40%;
+    }
 
-  .sign-in-welcome,
-  .forgot-password-fp,
-  .sign-up-su {
-    font-size: 30px;
-    margin: 25px 0 15px 0;
-  }
+    .sign-in-welcome,
+    .forgot-password-fp,
+    .sign-up-su {
+        font-size: 25px;
+        margin: 10px 0 10px 0;
+    }
 
-  .sign-in-details-container,
-  .forgot-password-details-container,
-  .sign-up-details-container {
-    width: 90%;
-  }
+    .forgot-password-fp {
+        margin-bottom: 10px;
+    }
 
-  .sign-in-details-group .sign-in-label,
-  .forgot-password-details-group .forgot-password-label,
-  .sign-up-details-group .sign-up-label {
-    font-size: 12.5px;
-  }
+    .sign-in-details-container,
+    .forgot-password-details-container,
+    .sign-up-details-container {
+        width: 80%;
+    }
 
-  .user-auth-sign-in-form,
-  .user-auth-forgot-password-form,
-  .user-auth-sign-up-form {
-    width: 75%;
-  }
+    .sign-in-details-group .sign-in-label,
+    .forgot-password-details-group .forgot-password-label,
+    .sign-up-details-group .sign-up-label {
+        font-size: 7.5px;
+    }
 
-  .user-auth-sign-in-form input[type="text"],
-  .user-auth-sign-in-form input[type="password"],
-  .user-auth-forgot-password-form input[type="email"],
-  .user-auth-forgot-password-form input[type="text"],
-  .user-auth-forgot-password-form input[type="password"],
-  .user-auth-sign-up-form input[type="text"],
-  .user-auth-sign-up-form input[type="password"] {
-    height: 35px;
-    font-size: 10px;
-  }
+    .user-auth-sign-in-form,
+    .user-auth-forgot-password-form,
+    .user-auth-sign-up-form {
+        width: 75%;
+    }
 
-  .forgot-password-link {
-    font-size: 10px;
-  }
+    .user-auth-sign-in-form input[type='text'],
+    .user-auth-sign-in-form input[type='password'],
+    .user-auth-forgot-password-form input[type='email'],
+    .user-auth-forgot-password-form input[type='text'],
+    .user-auth-forgot-password-form input[type='password'],
+    .user-auth-sign-up-form input[type='text'],
+    .user-auth-sign-up-form input[type='password'] {
+        height: 25px;
+        font-size: 7.5px;
+    }
 
-  .sign-up-link {
-    margin-bottom: 25px;
-  }
+    .forgot-password-link {
+        font-size: 5px;
+    }
 
-  .forgot-password-email-description,
-  .sign-up-description {
-    font-size: 10px;
-  }
+    .forgot-password-email-description,
+    .sign-up-description {
+        font-size: 7.5px;
+    }
 
-  .no-account-p,
-  .sign-up-link {
-    font-size: 10px;
-  }
+    .no-account-p,
+    .sign-up-link {
+        font-size: 5px;
+    }
 
-  .sign-in-button,
-  .fp-proceed-button,
-  .fp-submit-button,
-  .su-proceed-button,
-  .su-submit-button {
-    width: 100px;
-    height: 40px;
-    font-size: 12.5px;
-  }
+    /* Buttons */
+
+    .sign-in-button,
+    .fp-proceed-button,
+    .fp-submit-button,
+    .su-proceed-button,
+    .su-submit-button {
+        width: 105px;
+        height: 25px;
+        font-size: 7.5px;
+    }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-  /* Left side */
 
-  .left-side-responsive {
-    width: 0%;
-  }
+    /* Left side */
 
-  /* Right side */
+    .left-side-responsive {
+        width: 0%;
+    }
 
-  .right-side-contents-container {
-    width: 100%;
-  }
+    /* Right side */
 
-  .sign-in-welcome,
-  .forgot-password-fp,
-  .sign-up-su {
-    font-size: 30px;
-    margin: 25px 0 10px 0;
-  }
+    .right-side-contents-container {
+        width: 100%;
+    }
 
-  .sign-in-details-container,
-  .forgot-password-details-container,
-  .sign-up-details-container {
-    width: 90%;
-  }
+    .sign-in-welcome,
+    .forgot-password-fp,
+    .sign-up-su {
+        font-size: 25px;
+        margin: 10px 0 10px 0;
+    }
 
-  .sign-in-details-group .sign-in-label,
-  .forgot-password-details-group .forgot-password-label,
-  .sign-up-details-group .sign-up-label {
-    font-size: 12.5px;
-  }
+    .forgot-password-fp {
+        margin-bottom: 10px;
+    }
 
-  .user-auth-sign-in-form,
-  .user-auth-forgot-password-form,
-  .user-auth-sign-up-form {
-    width: 75%;
-  }
+    .sign-in-details-container,
+    .forgot-password-details-container,
+    .sign-up-details-container {
+        width: 80%;
+    }
 
-  .user-auth-sign-in-form input[type="text"],
-  .user-auth-sign-in-form input[type="password"],
-  .user-auth-forgot-password-form input[type="email"],
-  .user-auth-forgot-password-form input[type="text"],
-  .user-auth-forgot-password-form input[type="password"],
-  .user-auth-sign-up-form input[type="text"],
-  .user-auth-sign-up-form input[type="password"] {
-    height: 35px;
-    font-size: 10px;
-  }
+    .sign-in-details-group .sign-in-label,
+    .forgot-password-details-group .forgot-password-label,
+    .sign-up-details-group .sign-up-label {
+        font-size: 7.5px;
+    }
 
-  .forgot-password-link {
-    font-size: 10px;
-  }
+    .user-auth-sign-in-form,
+    .user-auth-forgot-password-form,
+    .user-auth-sign-up-form {
+        width: 75%;
+    }
 
-  .sign-up-link {
-    margin-bottom: 25px;
-  }
+    .user-auth-sign-in-form input[type='text'],
+    .user-auth-sign-in-form input[type='password'],
+    .user-auth-forgot-password-form input[type='email'],
+    .user-auth-forgot-password-form input[type='text'],
+    .user-auth-forgot-password-form input[type='password'],
+    .user-auth-sign-up-form input[type='text'],
+    .user-auth-sign-up-form input[type='password'] {
+        height: 25px;
+        font-size: 7.5px;
+    }
 
-  .forgot-password-email-description,
-  .sign-up-description {
-    font-size: 10px;
-  }
+    .forgot-password-link {
+        font-size: 5px;
+    }
 
-  .no-account-p,
-  .sign-up-link {
-    font-size: 10px;
-  }
+    .forgot-password-email-description,
+    .sign-up-description {
+        font-size: 7.5px;
+    }
 
-  .sign-in-button,
-  .fp-proceed-button,
-  .fp-submit-button,
-  .su-proceed-button,
-  .su-submit-button {
-    width: 100px;
-    height: 40px;
-    font-size: 12.5px;
-  }
+    .no-account-p,
+    .sign-up-link {
+        font-size: 5px;
+    }
+
+    /* Buttons */
+
+    .sign-in-button,
+    .fp-proceed-button,
+    .fp-submit-button,
+    .su-proceed-button,
+    .su-submit-button {
+        width: 105px;
+        height: 25px;
+        font-size: 7.5px;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  /* Left side */
 
-  .left-side-responsive {
-    width: 0%;
-  }
+    /* Left side */
 
-  /* Right side */
+    .left-side-responsive {
+        width: 0%;
+    }
 
-  .right-side-contents-container {
-    width: 100%;
-  }
+    /* Right side */
 
-  .sign-in-welcome,
-  .forgot-password-fp,
-  .sign-up-su {
-    font-size: 20px;
-    margin: 25px 0 5px 0;
-  }
+    .right-side-contents-container {
+        width: 100%;
+    }
 
-  .sign-in-details-container,
-  .forgot-password-details-container,
-  .sign-up-details-container {
-    width: 90%;
-    background-color: #e4e4e4;
-  }
+    .sign-in-welcome,
+    .forgot-password-fp,
+    .sign-up-su {
+        font-size: 22.5px;
+        margin: 10px 0 10px 0;
+    }
 
-  .sign-in-details-group .sign-in-label,
-  .forgot-password-details-group .forgot-password-label,
-  .sign-up-details-group .sign-up-label {
-    font-size: 10px;
-  }
+    .forgot-password-fp {
+        margin-bottom: 7.5px;
+    }
 
-  .user-auth-sign-in-form,
-  .user-auth-forgot-password-form,
-  .user-auth-sign-up-form {
-    width: 75%;
-  }
+    .sign-in-details-container,
+    .forgot-password-details-container,
+    .sign-up-details-container {
+        width: 80%;
+    }
 
-  .user-auth-sign-in-form input[type="text"],
-  .user-auth-sign-in-form input[type="password"],
-  .user-auth-forgot-password-form input[type="email"],
-  .user-auth-forgot-password-form input[type="text"],
-  .user-auth-forgot-password-form input[type="password"],
-  .user-auth-sign-up-form input[type="text"],
-  .user-auth-sign-up-form input[type="password"] {
-    height: 30px;
-    font-size: 7.5px;
-  }
+    .sign-in-details-group .sign-in-label,
+    .forgot-password-details-group .forgot-password-label,
+    .sign-up-details-group .sign-up-label {
+        font-size: 7.5px;
+    }
 
-  .forgot-password-link {
-    font-size: 7.5px;
-  }
+    .user-auth-sign-in-form,
+    .user-auth-forgot-password-form,
+    .user-auth-sign-up-form {
+        width: 75%;
+    }
 
-  .sign-up-link {
-    margin-bottom: 25px;
-  }
+    .user-auth-sign-in-form input[type='text'],
+    .user-auth-sign-in-form input[type='password'],
+    .user-auth-forgot-password-form input[type='email'],
+    .user-auth-forgot-password-form input[type='text'],
+    .user-auth-forgot-password-form input[type='password'],
+    .user-auth-sign-up-form input[type='text'],
+    .user-auth-sign-up-form input[type='password'] {
+        height: 20px;
+        font-size: 7.5px;
+    }
 
-  .forgot-password-email-description,
-  .sign-up-description {
-    font-size: 7.5px;
-  }
+    .forgot-password-link {
+        font-size: 5px;
+    }
 
-  .no-account-p,
-  .sign-up-link {
-    font-size: 7.5px;
-  }
+    .forgot-password-email-description,
+    .sign-up-description {
+        font-size: 7.5px;
+    }
 
-  .sign-in-button,
-  .fp-proceed-button,
-  .fp-submit-button,
-  .su-proceed-button,
-  .su-submit-button {
-    width: 75px;
-    height: auto;
-    font-size: 10px;
-  }
+    .no-account-p,
+    .sign-up-link {
+        font-size: 5px;
+    }
+
+    /* Buttons */
+
+    .sign-in-button,
+    .fp-proceed-button,
+    .fp-submit-button,
+    .su-proceed-button,
+    .su-submit-button {
+        width: 95px;
+        height: 20px;
+        font-size: 7.5px;
+    }
 }
 
 /* ____________________________________________________________________________________________________ */
@@ -533,109 +534,112 @@
 /* ____________________________________________________________________________________________________ */
 
 .admin-navbar {
-  height: 75px;
-  background-color: #25327a;
-  z-index: 3;
+    height: 75px;
+    background-color: #25327A;
+    z-index: 3;
 }
 
 .admin-navbar-details {
-  width: 100%;
+    width: 100%;
 }
 
 .admin-iSKed-logo {
-  height: 50px;
-  width: 50px;
+    height: 50px;
+    width: 50px;
 }
 
 .admin-iSKed-name,
 .admin-iSKed-name-h4 {
-  font-family: "Sansita", sans-serif;
+    font-family: 'Sansita', sans-serif;
 }
 
 .admin-hamburger-nav {
-  color: white;
+    color: white;
 }
 
 .admin-sign-out-button {
-  font-size: 15px;
-  color: #ffffff;
-  height: 45px;
-  width: 100px;
-  cursor: pointer;
-  border-style: none;
-  transition: all 0.35s;
+    font-size: 15px;
+    color: #FFFFFF;
+    height: 45px;
+    width: 100px;
+    cursor: pointer;
+    border-style: none;
+    transition: all 0.35s;
 }
 
 .admin-sign-out-button:hover {
-  color: rgb(2, 107, 107);
+    color: rgb(2, 107, 107);
 }
 
 /* Sidebar */
 
 .admin-sidebar {
-  background-color: #000b49;
-  position: fixed;
-  padding-top: 75px;
-  left: -250px;
-  width: 250px;
-  height: 100%;
-  transition: left 0.35s ease-in-out;
-  z-index: 2;
+    background-color: #000b49;
+    position: fixed;
+    padding-top: 75px;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    transition: left 0.35s ease-in-out;
+    z-index: 2;
 }
 
 .admin-sidebar-open {
-  left: 0;
+    left: 0;
 }
 
 .admin-sidebar-closed {
-  left: -250px;
+    left: -250px;
 }
 
 .admin-sidebar .admin-sidebar-links {
-  text-decoration: none;
-  font-family: "Poppins", sans-serif;
-  font-size: 15px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
 }
+
 
 /* Media */
 
 @media (min-width: 481px) and (max-width: 767px) {
-  .admin-sign-out-button {
-    font-size: 12.5px;
-    height: 42.5px;
-    width: 90px;
-  }
+
+    .admin-sign-out-button {
+        font-size: 12.5px;
+        height: 42.5px;
+        width: 90px;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  .admin-iSKed-name-h4 {
-    font-size: 17.5px;
-  }
 
-  .admin-sign-out-button {
-    font-size: 10px;
-    height: 40px;
-    width: 80px;
-  }
+    .admin-iSKed-name-h4 {
+        font-size: 17.5px;
+    }
 
-  /* Sidebar */
+    .admin-sign-out-button {
+        font-size: 10px;
+        height: 40px;
+        width: 80px;
+    }
 
-  .admin-sidebar {
-    left: -225px;
-    width: 225px;
-  }
+    /* Sidebar */
 
-  .admin-sidebar-open {
-    left: 0;
-  }
+    .admin-sidebar {
+        left: -225px;
+        width: 225px;
+    }
 
-  .admin-sidebar-closed {
-    left: -225px;
-  }
+    .admin-sidebar-open {
+        left: 0;
+    }
 
-  .admin-sidebar .admin-sidebar-links {
-    font-size: 12.5px;
-  }
+    .admin-sidebar-closed {
+        left: -225px;
+    }
+
+    .admin-sidebar .admin-sidebar-links {
+        font-size: 12.5px;
+    }
 }
 
 /* ____________________________________________________________________________________________________ */
@@ -662,18 +666,18 @@
 .admin-bs-list,
 .admin-bs-list a {
   color: black;
-  font-family: "Inter", "sans-serif";
+  font-family: 'Inter', 'sans-serif';
   transition: all 0.35s ease;
 }
 
 .admin-bs-list:hover,
 .admin-bs-list a:hover {
-  color: #ffffff;
+  color: #FFFFFF;
   background-color: #3f3d3d;
 }
 
 .admin-bs-list.active {
-  background-color: #e1d142;
+  background-color: #E1D142;
   transition: all 0.35s ease;
 }
 
@@ -694,27 +698,30 @@
   margin: 0 0 0 10px;
 }
 
+
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+  
   .admin-sidebar-icon {
-    margin: 0 10px 0 25px;
-    font-size: 27.5px;
+      margin: 0 10px 0 25px;
+      font-size: 27.5px;
   }
-
+  
   .admin-sidebar-title {
-    font-size: 12.5px;
+      font-size: 12.5px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  
   .admin-sidebar-icon {
-    margin: 0 10px 0 20px;
-    font-size: 25px;
+      margin: 0 10px 0 20px;
+      font-size: 25px;
   }
-
+  
   .admin-sidebar-title {
-    font-size: 10px;
+      font-size: 10px;
   }
 }
 
@@ -725,10 +732,11 @@
 .admin-dashboard-container {
   position: relative;
   padding-top: 75px;
+  padding-bottom: 40px;
   left: 22.5%;
   width: 77.5%;
-  background-color: #ffffff;
-  font-family: "Inter", sans-serif;
+  background-color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
   z-index: 1;
 }
 
@@ -742,12 +750,7 @@
   margin: 0 0 10px 40px;
 }
 
-.reservations-label-h2,
-.userd-label-h2,
-.equipment-label-h2,
-.yearlyrd-label-h2 {
-  font-size: 30px;
-}
+/* Year Selection */
 
 .year-dropdown-container {
   width: 90%;
@@ -755,23 +758,23 @@
 }
 
 .year-selection-container {
-  height: 450x;
+  height: 45px;
   width: 100%;
 }
 
 .year-selection-label {
-  font-size: 17.5px;
+  font-size: 15px;
 }
 
 .year-select {
   width: 30%;
   height: 45px;
-  font-size: 17.5px;
+  font-size: 15px;
   margin-left: 10px;
 }
 
 .year-select:hover {
-  color: #ffffff;
+  color: #FFFFFF;
   background-color: #858585;
 }
 
@@ -780,19 +783,24 @@
 }
 
 .year-select option {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   color: #000000;
   pointer-events: none;
 }
 
+/* Graphs */
+
 .admin-dashboard-charts-section {
-  margin-bottom: 40px;
+  width: 90%;
+  margin: 0 auto 40px;
 }
 
-.admin-contacts-details-group .admin-current-contact-label,
-.admin-edit-contacts-details-group .admin-edit-contact-label {
-  font-family: "Roboto", sans-serif;
-  font-size: 17.5px;
+.reservations-label-h2,
+.userd-label-h2,
+.equipment-label-h2,
+.yearlyrd-label-h2 {
+  font-size: 30px;
+  margin-bottom: 10px;
 }
 
 .admin-dashboard-charts-container {
@@ -816,228 +824,248 @@
   height: 100%;
 }
 
+
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+
   .admin-dashboard-label-h2 {
-    font-size: 37.5px;
-    margin: 20px 0 7.5px 40px;
+      font-size: 37.5px;
+      margin: 20px 0 7.5px 40px;
   }
 
   .admin-dashboard-label-p {
-    font-size: 17.5px;
-    margin: 0 0 10px 40px;
+      font-size: 17.5px;
+      margin: 0 0 10px 40px;
   }
+
+  /* Year Selection */
 
   .year-selection-container {
-    height: 40px;
+      height: 40px;
   }
-
+  
   .year-selection-label {
-    font-size: 15px;
+      font-size: 12.5px;
+  }
+  
+  .year-select {
+      width: 30%;
+      height: 40px;
+      font-size: 12.5px;
+      margin-left: 10px;
   }
 
-  .year-select {
-    width: 30%;
-    height: 40px;
-    font-size: 15px;
-    margin-left: 10px;
-  }
+  /* Graphs */
 
   .reservations-label-h2,
   .userd-label-h2,
   .equipment-label-h2,
   .yearlyrd-label-h2 {
-    font-size: 25px;
+      font-size: 25px;
   }
 
   .admin-dashboard-charts-container {
-    gap: 7.5%;
+      gap: 7.5%;
   }
 
   .admin-chart-container {
-    width: 45%;
+      width: 45%;
   }
 
   .piechart {
-    max-height: 200px;
-    height: 100%;
+      max-height: 200px;
+      height: 100%;
   }
 
   .chart {
-    max-height: 200px;
-    height: 100%;
+      max-height: 200px;
+      height: 100%;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+
   .admin-dashboard-label-h2 {
-    font-size: 35px;
-    margin: 20px 0 5px 40px;
+      font-size: 35px;
+      margin: 20px 0 5px 40px;
   }
 
   .admin-dashboard-label-p {
-    font-size: 15px;
-    margin: 0 0 10px 40px;
+      font-size: 15px;
+      margin: 0 0 10px 40px;
   }
+
+  /* Year Selection */
 
   .year-selection-container {
-    height: 35px;
+      height: 35px;
   }
-
+  
   .year-selection-label {
-    font-size: 12.5px;
+      font-size: 10px;
+  }
+  
+  .year-select {
+      width: 30%;
+      height: 35px;
+      font-size: 10px;
+      margin-left: 7.5px;
   }
 
-  .year-select {
-    width: 30%;
-    height: 35px;
-    font-size: 12.5px;
-    margin-left: 7.5px;
-  }
+  /* Graphs */
 
   .reservations-label-h2,
   .userd-label-h2,
   .equipment-label-h2,
   .yearlyrd-label-h2 {
-    font-size: 20px;
+      font-size: 20px;
   }
 
   .admin-dashboard-charts-container {
-    gap: 2.5%;
+      gap: 2.5%;
   }
 
   .admin-chart-container {
-    width: 47.5%;
+      width: 47.5%;
   }
 
   .piechart {
-    max-height: 150px;
-    height: 100%;
+      max-height: 150px;
+      height: 100%;
   }
 
   .chart {
-    max-height: 150px;
-    height: 100%;
+      max-height: 150px;
+      height: 100%;
   }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+
   .admin-dashboard-container {
-    left: 0%;
-    width: 100%;
+      left: 0%;
+      width: 100%;
   }
 
   .admin-dashboard-label-h2 {
-    font-size: 35px;
-    margin: 20px 0 5px 25px;
+      font-size: 35px;
+      margin: 20px 0 5px 25px;
   }
 
   .admin-dashboard-label-p {
-    font-size: 15px;
-    margin: 0px 0 20px 25px;
+      font-size: 15px;
+      margin: 0px 0 20px 25px;
   }
+
+  /* Year Selection */
 
   .year-selection-container {
-    height: 35px;
+      height: 35px;
   }
-
+  
   .year-selection-label {
-    font-size: 12.5px;
+      font-size: 10px;
+  }
+  
+  .year-select {
+      width: 30%;
+      height: 35px;
+      font-size: 10px;
+      margin-left: 5px;
   }
 
-  .year-select {
-    width: 30%;
-    height: 35px;
-    font-size: 12.5px;
-    margin-left: 5px;
-  }
+  /* Graphs */
 
   .reservations-label-h2,
   .userd-label-h2,
   .equipment-label-h2,
   .yearlyrd-label-h2 {
-    font-size: 20px;
+      font-size: 20px;
   }
 
   .admin-dashboard-charts-container {
-    gap: 2.5%;
+      gap: 2.5%;
   }
 
   .admin-chart-container {
-    width: 47.5%;
+      width: 47.5%;
   }
 
   .piechart {
-    max-height: 150px;
-    height: 100%;
+      max-height: 150px;
+      height: 100%;
   }
 
   .chart {
-    max-height: 150px;
-    height: 100%;
+      max-height: 150px;
+      height: 100%;
   }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+
   .admin-dashboard-container {
-    left: 0%;
-    width: 100%;
+      left: 0%;
+      width: 100%;
   }
 
   .admin-dashboard-label-h2 {
-    font-size: 30px;
-    margin: 20px 0 2.5px 20px;
+      font-size: 30px;
+      margin: 20px 0 2.5px 20px;
   }
 
   .admin-dashboard-label-p {
-    font-size: 12.5px;
-    margin: 0 0 20px 20px;
+      font-size: 12.5px;
+      margin: 0 0 20px 20px;
   }
+
+  /* Year Selection */
 
   .year-selection-container {
-    height: 35px;
+      height: 25px;
   }
-
+  
   .year-selection-label {
-    font-size: 12.5px;
+      font-size: 7.5px;
+  }
+  
+  .year-select {
+      width: 30%;
+      height: 25px;
+      font-size: 7.5px;
+      margin-left: 2.5px;
   }
 
-  .year-select {
-    width: 30%;
-    height: 25px;
-    font-size: 10px;
-    margin-left: 2.5px;
-  }
+  /* Graphs */
 
   .reservations-label-h2,
   .userd-label-h2,
   .equipment-label-h2,
   .yearlyrd-label-h2 {
-    font-size: 15px;
+      font-size: 15px;
   }
 
   .admin-dashboard-charts-container {
-    flex-direction: column;
-    gap: 0;
+      flex-direction: column;
+      gap: 0;
   }
 
   .admin-chart-container {
-    width: 75%;
+      width: 75%;
   }
 
   .piechart {
-    max-height: 100px;
-    height: 100%;
+      max-height: 100px;
+      height: 100%;
   }
 
   .chart {
-    max-height: 100px;
-    height: 100%;
+      max-height: 100px;
+      height: 100%;
   }
 }
 
-/* RAWR! */
 /* ____________________________________________________________________________________________________ */
 /* Admin Manage Home */
 /* ____________________________________________________________________________________________________ */
@@ -1054,12 +1082,12 @@
 
 .admin-home-label-h2 {
   font-size: 40px;
-  margin: 20px 40px 20px 40px;
+  margin: 20px 0 20px 40px;
 }
 
 .admin-home-nav-tabs {
   cursor: pointer;
-  font-size: 25px;
+  font-size: 20px;
   margin: 0 0 20px 60px;
   gap: 1in;
   color: #766f6f;
@@ -1081,66 +1109,107 @@
   margin-bottom: 40px;
 }
 
-.admin-all-event-details-container {
-  width: 100%;
-}
+/* Admin All Events */
 
-.admin-add-event-details-container {
-  background-color: #d0e7ff;
+.admin-events-details-container {
   width: 90%;
+  /* margin: 0 auto; */
 }
 
-.admin-add-event-details-group {
-  width: 90%;
-  margin: 25px 0 25px 0;
-}
-
-.admin-event-item {
-  background-color: #d0e7ff;
+.admin-event-card {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-.home-event-image {
-  width: 40%;
-  margin-top: 20px;
-  margin-bottom: 20px;
+.admin-event-image-container {
+  width: 30%;
+  height: auto;
 }
 
-.home-event-details {
-  margin-top: 20px;
-  width: 60%;
+.admin-event-details-container {
+  width: 70%;
 }
 
-.event-name {
-  font-size: 35px;
+.admin-event-image {
+  height: 200px;
 }
 
-.event-description {
+.admin-event-name-title {
   font-size: 25px;
 }
 
-.admin-add-event-form {
+.admin-event-text {
+  font-size: 20px;
+}
+
+.admin-event-details-buttons-container {
   width: 100%;
 }
 
-.admin-all-event-details-group {
+.admin-event-details-buttons-container .event-edit-button {
+  margin-right: 10px;
+}
+
+.admin-event-details-buttons-container .event-edit-button,
+.admin-event-details-buttons-container .event-delete-button {
+  font-size: 15px;
+  width: 150px;
+  height: 40px;
+  transition: all 0.35s;
+}
+
+/* Admin All Spotlights */
+
+.admin-spotlight-container {
+  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 0.5in;
+}
+
+.spotlight-image {
+  height: 175px;
+}
+
+.admin-event-details-buttons-container .spotlight-delete-button {
+  font-size: 15px;
+  width: 100px;
+  height: 40px;
+  transition: all 0.35s;
+}
+
+/* Admin Add Event and Spotlight */
+
+.admin-add-event-details-container,
+.admin-add-spotlight-details-container {
+  background-color: #d0e7ff;
   width: 90%;
 }
 
-.admin-add-event-details-group .admin-add-event-label {
+.admin-add-event-details-group,
+.admin-add-spotlight-details-group {
+  margin: 25px 0 25px 0;
+  width: 90%;
+}
+
+.admin-add-event-form,
+.admin-add-spotlight-form {
+  width: 100%;
+}
+
+.admin-add-event-details-group .admin-add-event-label,
+.admin-add-spotlight-details-group .admin-add-spotlight-label {
   font-family: "Roboto", sans-serif;
   font-size: 17.5px;
 }
 
 .admin-add-event-form input[type="text"],
 .admin-add-event-form textarea {
-  height: 50px;
+  height: 45px;
   border-style: none;
   border-radius: 10px;
   outline: none;
-  margin-bottom: 10px;
-  font-size: 17.5px;
+  margin-bottom: 0px;
+  font-size: 15px;
   transition: all 0.35s;
 }
 
@@ -1149,31 +1218,90 @@
   outline: 1px solid #007bff;
 }
 
-.admin-add-event-button {
+.admin-add-event-button,
+.admin-add-spotlight-button {
   background-color: #42bb4e;
   color: #ffffff;
   margin-top: 10px;
   width: 150px;
-  height: 55px;
-  font-size: 15px;
+  height: 45px;
+  font-size: 17.5px;
   border-style: none;
   transition: all 0.35s;
 }
 
-.admin-delete-event-button {
-  background-color: #e1d142;
-  color: #000000;
-  margin-bottom: 20px;
-  width: 125px;
-  height: 55px;
-  font-size: 15px;
-  border-style: none;
-  transition: all 0.35s;
-}
-
-.admin-delete-event-button:hover,
-.admin-add-event-button:hover {
+.admin-add-event-button:hover,
+.admin-add-spotlight-button:hover {
   color: rgb(2, 107, 107);
+}
+
+/* Edit Event Modal */
+
+.edit-event-modal {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+  background-color: #ffffff;
+  width: 100%;
+  height: 100%;
+  max-width: 450px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.edit-event-content {
+  margin: 20px 0 20px 0;
+}
+
+.edit-event-content h3 {
+  font-size: 25px;
+}
+
+.admin-edit-event-details-group {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.admin-edit-event-label {
+  font-family: "Roboto", sans-serif;
+  font-size: 17.5px;
+}
+
+.admin-edit-event-form input[type="text"],
+.admin-edit-event-form textarea {
+  height: 45px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  margin-bottom: 0px;
+  font-size: 15px;
+  overflow-y: auto;
+  transition: all 0.35s;
+}
+
+.admin-edit-event-form input[type="text"]:focus,
+.admin-edit-event-form textarea:focus {
+  outline: 1px solid #007bff;
+}
+
+.edit-modal-buttons-container {
+  margin-top: 10px;
+}
+
+.edit-cancel-button {
+  margin-right: 20px;
+}
+
+.edit-cancel-button,
+.edit-save-button {
+  width: 150px;
+  height: 45px;
+  border-style: none;
+  font-size: 15px;
 }
 
 /* Media */
@@ -1183,27 +1311,127 @@
     font-size: 37.5px;
   }
 
-  .admin-add-event-details-group .admin-add-event-label {
+  .admin-home-nav-tabs {
+    font-size: 17.5px;
+    margin: 0 0 20px 60px;
+    gap: 1in;
+  }
+
+  /* Admin All Events */
+
+  .admin-event-card {
+    margin-bottom: 10px;
+  }
+
+  .admin-event-image-container {
+    width: 30%;
+    height: auto;
+  }
+
+  .admin-event-details-container {
+    width: 70%;
+  }
+
+  .admin-event-image {
+    height: 175px;
+  }
+
+  .admin-event-title {
+    font-size: 22.5px;
+  }
+
+  .admin-event-text {
+    font-size: 17.5px;
+  }
+
+  .admin-event-details-buttons-container .event-edit-button {
+    margin-right: 10px;
+  }
+
+  .admin-event-details-buttons-container .event-edit-button,
+  .admin-event-details-buttons-container .event-delete-button {
+    width: 125px;
+    height: 35px;
+    font-size: 12.5px;
+    transition: all 0.35s;
+  }
+
+  /* Admin All Spotlights */
+
+  .admin-spotlight-container {
+    gap: 0.4in;
+  }
+
+  .spotlight-image {
+    height: 150px;
+  }
+
+  .admin-event-details-buttons-container .spotlight-delete-button {
+    font-size: 12.5px;
+    width: 75px;
+    height: 35px;
+    transition: all 0.35s;
+  }
+
+  /* Edit Program Modal */
+
+  .edit-event-modal {
+    width: 100%;
+    height: 90%;
+  }
+
+  .edit-event-content {
+    margin: 20px 0 20px 0;
+  }
+
+  .edit-event-content h3 {
+    font-size: 22.5px;
+  }
+
+  .admin-edit-event-label {
+    font-family: "Roboto", sans-serif;
     font-size: 15px;
   }
 
-  .admin-home-nav-tabs {
-    font-size: 22.5px;
-    margin: 0 0 20px 45px;
-    gap: 0.75in;
+  .admin-edit-event-form input[type="text"],
+  .admin-edit-event-form textarea {
+    height: 40px;
+    font-size: 12.5px;
   }
 
-  .event-name {
-    font-size: 30px;
+  .edit-modal-buttons-container {
+    margin-top: 10px;
   }
 
-  .event-description {
-    font-size: 20px;
+  .edit-cancel-button {
+    margin-right: 20px;
+  }
+
+  .edit-cancel-button,
+  .edit-save-button {
+    width: 125px;
+    height: 40px;
+    border-style: none;
+    font-size: 12.5px;
+  }
+
+  /* Add Event and Spotlight */
+
+  .admin-add-event-details-group .admin-add-event-label,
+  .admin-add-spotlight-details-group .admin-add-spotlight-label {
+    font-size: 15px;
   }
 
   .admin-add-event-form input[type="text"],
   .admin-add-event-form textarea {
-    height: 50px;
+    height: 40px;
+    font-size: 12.5px;
+  }
+
+  .admin-add-event-button,
+  .admin-add-spotlight-button {
+    width: 125px;
+    height: 40px;
     font-size: 15px;
   }
 }
@@ -1213,40 +1441,134 @@
     font-size: 35px;
   }
 
-  .admin-add-event-details-group .admin-add-event-label {
-    font-size: 17.5px;
-  }
-
   .admin-home-nav-tabs {
-    font-size: 20px;
-    margin: 0 0 20px 45px;
+    font-size: 15px;
+    margin: 0 0 20px 60px;
     gap: 1in;
   }
 
-  .event-name {
-    font-size: 25px;
+  /* Admin All Events */
+
+  .admin-event-card {
+    margin-bottom: 10px;
   }
 
-  .event-description {
+  .admin-event-image-container {
+    width: 35%;
+    height: auto;
+  }
+
+  .admin-event-details-container {
+    width: 65%;
+  }
+
+  .admin-event-image {
+    height: 150px;
+  }
+
+  .admin-event-title {
+    font-size: 20px;
+  }
+
+  .admin-event-text {
     font-size: 15px;
   }
 
-  .admin-delete-event-button {
-    width: 125px;
-    height: 47.5px;
-    font-size: 13px;
+  .admin-event-details-buttons-container .event-edit-button {
+    margin-right: 5px;
+  }
+
+  .admin-event-details-buttons-container .event-edit-button,
+  .admin-event-details-buttons-container .event-delete-button {
+    width: 100px;
+    height: 30px;
+    font-size: 10px;
+    transition: all 0.35s;
+  }
+
+  /* Admin All Spotlights */
+
+  .admin-spotlight-container {
+    gap: 0.3in;
+  }
+
+  .spotlight-image {
+    height: 125px;
+  }
+
+  .admin-event-details-buttons-container .spotlight-delete-button {
+    font-size: 10px;
+    width: 75px;
+    height: 30px;
+    transition: all 0.35s;
+  }
+
+  /* Edit Program Modal */
+
+  .edit-event-modal {
+    width: 100%;
+    height: 80%;
+  }
+
+  .edit-event-content {
+    margin: 20px 0 20px 0;
+  }
+
+  .edit-event-content h3 {
+    font-size: 20px;
+  }
+
+  .admin-edit-event-label {
+    font-family: "Roboto", sans-serif;
+    font-size: 12.5px;
+  }
+
+  .admin-edit-event-form input[type="text"],
+  .admin-edit-event-form textarea {
+    height: 35px;
+    font-size: 10px;
+  }
+
+  .edit-modal-buttons-container {
+    margin-top: 10px;
+  }
+
+  .edit-cancel-button {
+    margin-right: 20px;
+  }
+
+  .edit-cancel-button,
+  .edit-save-button {
+    width: 100px;
+    height: 35px;
+    border-style: none;
+    font-size: 10px;
+  }
+
+  /* Add Event and Spotlight */
+
+  .admin-add-event-details-group .admin-add-event-label,
+  .admin-add-spotlight-details-group .admin-add-spotlight-label {
+    font-size: 12.5px;
   }
 
   .admin-add-event-form input[type="text"],
   .admin-add-event-form textarea {
-    height: 45px;
-    font-size: 17.5px;
+    height: 35px;
+    font-size: 10px;
+  }
+
+  .admin-add-event-button,
+  .admin-add-spotlight-button {
+    width: 100px;
+    height: 35px;
+    font-size: 12.5px;
   }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
   .admin-home-container {
-    left: 0;
+    left: 0%;
     width: 100%;
   }
 
@@ -1256,45 +1578,157 @@
   }
 
   .admin-home-nav-tabs {
-    font-size: 17.5px;
-    margin: 0 0 20px 45px;
+    font-size: 15px;
+    margin: 0 0 20px 30px;
     gap: 0.5in;
   }
 
-  .event-name {
-    font-size: 25px;
+  /* Admin All Programs */
+
+  .admin-event-card {
+    margin-bottom: 10px;
   }
 
-  .event-description {
-    font-size: 15px;
+  .admin-event-image-container {
+    width: 40%;
+    height: auto;
   }
 
-  .admin-delete-event-button {
-    width: 125px;
-    height: 45px;
+  .admin-event-details-container {
+    width: 60%;
+  }
+
+  .admin-event-image {
+    height: 150px;
+  }
+
+  .admin-event-title {
+    font-size: 17.5px;
+  }
+
+  .admin-event-text {
     font-size: 12.5px;
   }
 
-  .admin-add-event-details-group .admin-add-event-label {
-    font-size: 15px;
+  .admin-event-details-buttons-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .admin-event-details-buttons-container .event-edit-button {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+
+  .admin-event-details-buttons-container .event-edit-button,
+  .admin-event-details-buttons-container .event-delete-button {
+    width: 100px;
+    height: 30px;
+    font-size: 10px;
+    transition: all 0.35s;
+  }
+
+  /* Admin All Spotlights */
+
+  .admin-spotlight-container {
+    gap: 0.2in;
+  }
+
+  .spotlight-image {
+    height: 100px;
+  }
+
+  .admin-event-details-buttons-container .spotlight-delete-button {
+    font-size: 10px;
+    width: 75px;
+    height: 30px;
+    transition: all 0.35s;
+  }
+
+  .admin-add-event-details-group .admin-add-event-label,
+  .admin-add-spotlight-details-group .admin-add-spotlight-label {
+    font-size: 12.5px;
   }
 
   .admin-add-event-form input[type="text"],
   .admin-add-event-form textarea {
-    height: 45px;
+    height: 40px;
     font-size: 12.5px;
   }
 
-  .admin-add-event-button {
-    width: 150px;
-    height: 50px;
+  .event-edit-button,
+  .event-delete-button {
+    width: 75px;
+    height: 40px;
+    font-size: 10px;
+  }
+
+  /* Edit Program Modal */
+
+  .edit-event-modal {
+    width: 100%;
+    height: 80%;
+  }
+
+  .edit-event-content {
+    margin: 20px 0 20px 0;
+  }
+
+  .edit-event-content h3 {
+    font-size: 20px;
+  }
+
+  .admin-edit-event-label {
+    font-family: "Roboto", sans-serif;
+    font-size: 12.5px;
+  }
+
+  .admin-edit-event-form input[type="text"],
+  .admin-edit-event-form textarea {
+    height: 35px;
+    font-size: 10px;
+  }
+
+  .edit-modal-buttons-container {
+    margin-top: 10px;
+  }
+
+  .edit-cancel-button {
+    margin-right: 20px;
+  }
+
+  .edit-cancel-button,
+  .edit-save-button {
+    width: 100px;
+    height: 35px;
+    border-style: none;
+    font-size: 10px;
+  }
+
+  /* Add Event and Spotlight */
+
+  .admin-add-event-details-group .admin-add-event-label,
+  .admin-add-spotlight-details-group .admin-add-spotlight-label {
+    font-size: 12.5px;
+  }
+
+  .admin-add-event-form input[type="text"],
+  .admin-add-event-form textarea {
+    height: 35px;
+    font-size: 10px;
+  }
+
+  .admin-add-event-button,
+  .admin-add-spotlight-button {
+    width: 100px;
+    height: 35px;
     font-size: 12.5px;
   }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
   .admin-home-container {
-    left: 0;
+    left: 0%;
     width: 100%;
   }
 
@@ -1305,51 +1739,130 @@
 
   .admin-home-nav-tabs {
     font-size: 15px;
-    margin: 0 0 20px 40px;
-    gap: 0.5in;
+    margin: 0 0 20px 25px;
+    gap: 0.25in;
   }
 
-  .admin-event-item {
+  /* Admin All Events */
+
+  .admin-event-card-details {
     flex-direction: column;
     align-items: center;
   }
 
-  .home-event-image {
-    width: 90%;
+  .admin-event-card {
+    margin-bottom: 10px;
   }
 
-  .home-event-details {
-    width: 90%;
-    align-items: center;
+  .admin-event-image-container {
+    width: 60%;
+    height: auto;
   }
 
-  .event-name {
-    font-size: 20px;
+  .admin-event-details-container {
+    width: 100%;
   }
 
-  .event-description {
+  .admin-event-image {
+    height: 125px;
+  }
+
+  .admin-event-title {
+    font-size: 15px;
+  }
+
+  .admin-event-text {
     font-size: 12.5px;
   }
 
-  .admin-delete-event-button {
-    width: 100px;
-    height: 40px;
+  .admin-event-details-buttons-container .event-edit-button {
+    margin-right: 5px;
+  }
+
+  .admin-event-details-buttons-container .event-edit-button,
+  .admin-event-details-buttons-container .event-delete-button {
+    width: 75px;
+    height: 25px;
+    font-size: 7.5px;
+    transition: all 0.35s;
+  }
+
+  /* Admin All Spotlights */
+
+  .admin-spotlight-container {
+    gap: 0.1in;
+  }
+
+  .spotlight-image {
+    height: 75px;
+  }
+
+  .admin-event-details-buttons-container .spotlight-delete-button {
+    font-size: 7.5px;
+    width: 50px;
+    height: 25px;
+    transition: all 0.35s;
+  }
+
+  /* Edit Event Modal */
+
+  .edit-event-modal {
+    width: 80%;
+    height: 70%;
+  }
+
+  .edit-event-content {
+    margin: 20px 0 20px 0;
+  }
+
+  .edit-event-content h3 {
+    font-size: 17.5px;
+  }
+
+  .admin-edit-event-label {
+    font-family: "Roboto", sans-serif;
     font-size: 10px;
   }
 
-  .admin-add-event-details-group .admin-add-event-label {
-    font-size: 12.5px;
+  .admin-edit-event-form input[type="text"],
+  .admin-edit-event-form textarea {
+    height: 25px;
+    font-size: 7.5px;
+  }
+
+  .edit-modal-buttons-container {
+    margin-top: 10px;
+  }
+
+  .edit-cancel-button {
+    margin-right: 10px;
+  }
+
+  .edit-cancel-button,
+  .edit-save-button {
+    width: 75px;
+    height: 25px;
+    border-style: none;
+    font-size: 7.5px;
+  }
+
+  /* Add Event and Spotlight */
+
+  .admin-add-event-details-group .admin-add-event-label,
+  .admin-add-spotlight-details-group .admin-add-spotlight-label {
+    font-size: 10px;
   }
 
   .admin-add-event-form input[type="text"],
   .admin-add-event-form textarea {
-    height: 45px;
-    font-size: 10px;
+    height: 30px;
+    font-size: 7.5px;
   }
 
-  .admin-add-event-button {
-    width: 125px;
-    height: 50px;
+  .admin-add-event-button,
+  .admin-add-spotlight-button {
+    width: 100px;
+    height: 25px;
     font-size: 10px;
   }
 }
@@ -1363,8 +1876,8 @@
   padding-top: 75px;
   left: 22.5%;
   width: 77.5%;
-  background-color: #ffffff;
-  font-family: "Inter", sans-serif;
+  background-color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
   z-index: 1;
 }
 
@@ -1381,7 +1894,8 @@
   margin: 20px 40px 20px 0;
 }
 
-.admin-about-us-contents-container {
+.admin-edit-about-details-container,
+.admin-current-SK-details-container {
   margin-bottom: 40px;
 }
 
@@ -1403,30 +1917,30 @@
   width: 100%;
 }
 
-.admin-current-about-details-group .admin-current-about-label,
-.admin-edit-about-details-group .admin-edit-about-label {
-  font-family: "Roboto", sans-serif;
+.admin-about-details-group .admin-current-about-label,
+[class^="admin-edit-"][class$="-label"] {
+  font-family: 'Roboto', sans-serif;
   font-size: 17.5px;
 }
 
 .admin-current-about-form textarea,
-.admin-current-about-form [type="file"] {
-  height: 50px;
+.admin-current-about-form [type='file'] {
+  height: 45px;
   border-style: none;
   border-radius: 10px;
   outline: none;
   margin-bottom: 10px;
-  font-size: 17.5px;
+  font-size: 15px;
   transition: all 0.35s;
 }
 
 [class^="admin-edit-"][class*="-form"] textarea {
-  height: 50px;
+  height: 45px;
   border-style: none;
   border-radius: 10px;
   outline: none;
   margin-bottom: 0;
-  font-size: 17.5px;
+  font-size: 15px;
   transition: all 0.35s;
 }
 
@@ -1436,8 +1950,8 @@
 }
 
 .admin-edit-about-details-back-button {
-  background-color: #25327a;
-  color: #ffffff;
+  background-color: #25327A;
+  color: #FFFFFF;
   width: 100px;
   height: 40px;
   font-size: 15px;
@@ -1446,22 +1960,22 @@
 }
 
 .admin-edit-about-details-button {
-  background-color: #25327a;
-  color: #ffffff;
+  background-color: #25327A;
+  color: #FFFFFF;
   margin-top: 10px;
   width: 150px;
-  height: 55px;
+  height: 45px;
   font-size: 15px;
   border-style: none;
   transition: all 0.35s;
 }
 
 .admin-save-about-details-button {
-  background-color: #42bb4e;
-  color: #ffffff;
+  background-color: #42BB4E;
+  color: #FFFFFF;
   margin-top: 10px;
   width: 150px;
-  height: 55px;
+  height: 45px;
   font-size: 15px;
   border-style: none;
   transition: all 0.35s;
@@ -1469,8 +1983,7 @@
 
 .admin-edit-about-details-back-button:hover,
 .admin-edit-about-details-button:hover,
-.admin-save-about-details-button:hover,
-.admin-add-SK-button:hover {
+.admin-save-about-details-button:hover {
   color: rgb(2, 107, 107);
 }
 
@@ -1484,251 +1997,285 @@
 
 .admin-SK-table {
   width: 90%;
-  margin: 0 auto 10px;
-  background-color: #ffffff;
+  margin: 0 auto 25px;
+  background-color: #FFFFFF;
+}
+
+.admin-SK-table-head th {
+  font-size: 15px;
 }
 
 .admin-SK-table tr {
   height: 35px;
 }
 
-.admin-SK-edit-button {
+.admin-about-details-buttons-container .admin-SK-edit-button {
   font-size: 15px;
   width: 100px;
   height: 40px;
-  border-style: none;
-}
-
-.admin-add-SK-button {
-  background-color: #42bb4e;
-  color: #ffffff;
-  margin: 10px 0 25px 0;
-  width: 150px;
-  height: 55px;
-  font-size: 15px;
-  border-style: none;
   transition: all 0.35s;
 }
+
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+
   .admin-about-us-label-h2 {
-    font-size: 37.5px;
+      font-size: 37.5px;
   }
 
-  .admin-current-about-details-group .admin-current-about-label,
-  .admin-edit-about-details-group .admin-edit-about-label {
-    font-size: 15px;
+  .SK-label-h2 {
+      font-size: 25px;
+  }
+
+  .admin-about-details-group .admin-current-about-label,
+  [class^="admin-edit-"][class$="-label"] {
+      font-size: 15px;
   }
 
   .admin-current-about-form textarea,
-  .admin-current-about-form [type="file"] {
-    height: 45px;
-    font-size: 15px;
+  .admin-current-about-form [type='file'] {
+      height: 40px;
+      font-size: 12.5px;
   }
 
   [class^="admin-edit-"][class*="-form"] textarea {
-    height: 45px;
-    font-size: 15px;
+      height: 40px;
+      font-size: 12.5px;
+  }
+
+  .admin-SK-table-head th {
+      font-size: 12.5px;
   }
 
   .admin-SK-table tr {
-    height: 32.5px;
+      height: 32.5px;
   }
 
-  .admin-SK-edit-button {
-    font-size: 12.5px;
-    width: 95px;
-    height: 40px;
+  .admin-about-details-buttons-container .admin-SK-edit-button {
+      width: 90px;
+      height: 35px;
+      font-size: 12.5px;
+      transition: all 0.35s;
+  }
+
+  .admin-edit-about-details-back-button {
+      width: 90px;
+      height: 37.5px;
+      font-size: 12.5px;
+  }
+
+  .admin-edit-about-details-button {
+      width: 125px;
+      height: 40px;
+      font-size: 12.5px;
+  }
+
+  .admin-save-about-details-button {
+      width: 125px;
+      height: 40px;
+      font-size: 12.5px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+
   .admin-about-us-label-h2 {
-    font-size: 35px;
+      font-size: 35px;
   }
 
-  .admin-current-about-details-group .admin-current-about-label,
-  .admin-edit-about-details-group .admin-edit-about-label {
-    font-size: 12.5px;
+  .SK-label-h2 {
+      font-size: 20px;
+  }
+
+  .admin-about-details-group .admin-current-about-label,
+  [class^="admin-edit-"][class$="-label"] {
+      font-size: 12.5px;
   }
 
   .admin-current-about-form textarea,
-  .admin-current-about-form [type="file"] {
-    height: 40px;
-    font-size: 15px;
+  .admin-current-about-form [type='file'] {
+      height: 35px;
+      font-size: 10px;
   }
 
   [class^="admin-edit-"][class*="-form"] textarea {
-    height: 40px;
-    font-size: 15px;
+      height: 35px;
+      font-size: 10px;
+  }
+
+  .admin-SK-table-head th {
+      font-size: 10px;
   }
 
   .admin-SK-table tr {
-    height: 30px;
+      height: 30px;
   }
 
-  .admin-SK-edit-button {
-    font-size: 10px;
-    width: 85px;
-    height: 37.5px;
+  .admin-about-details-buttons-container .admin-SK-edit-button {
+      width: 80px;
+      height: 30px;
+      font-size: 10px;
+      transition: all 0.35s;
   }
 
   .admin-edit-about-details-back-button {
-    width: 90px;
-    height: 37.5px;
-    font-size: 12.5px;
+      width: 80px;
+      height: 35px;
+      font-size: 10px;
   }
 
   .admin-edit-about-details-button {
-    width: 125px;
-    height: 50px;
-    font-size: 12.5px;
+      width: 100px;
+      height: 35px;
+      font-size: 12.5px;
   }
 
   .admin-save-about-details-button {
-    width: 125px;
-    height: 50px;
-    font-size: 12.5px;
-  }
-
-  .admin-add-SK-button {
-    width: 125px;
-    height: 50px;
-    font-size: 12.5px;
+      width: 100px;
+      height: 35px;
+      font-size: 12.5px;
   }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+
   .admin-about-us-container {
-    left: 0%;
-    width: 100%;
+      left: 0%;
+      width: 100%;
   }
 
   .admin-about-us-label-h2 {
-    font-size: 35px;
-    margin: 20px 0 20px 25px;
+      font-size: 35px;
+      margin: 20px 0 20px 25px;
+  }
+
+  .SK-label-h2 {
+      font-size: 20px;
   }
 
   .admin-edit-about-details-back-button {
-    margin: 20px 25px 20px 0;
+      margin: 20px 25px 20px 0;
   }
 
-  .admin-current-about-details-group .admin-current-about-label,
-  .admin-edit-about-details-group .admin-edit-about-label {
-    font-size: 12.5px;
+  .admin-about-details-group .admin-current-about-label,
+  [class^="admin-edit-"][class$="-label"] {
+      font-size: 12.5px;
   }
 
   .admin-current-about-form textarea,
-  .admin-current-about-form [type="file"] {
-    height: 40px;
-    font-size: 12.5px;
+  .admin-current-about-form [type='file'] {
+      height: 35px;
+      font-size: 10px;
   }
 
   [class^="admin-edit-"][class*="-form"] textarea {
-    height: 40px;
-    font-size: 12.5px;
+      height: 35px;
+      font-size: 10px;
+  }
+
+  .admin-SK-table-head th {
+      font-size: 10px;
   }
 
   .admin-SK-table tr {
-    height: 30px;
+      height: 30px;
   }
 
-  .admin-SK-edit-button {
-    font-size: 10px;
-    width: 75px;
-    height: 37.5px;
+  .admin-about-details-buttons-container .admin-SK-edit-button {
+      width: 80px;
+      height: 30px;
+      font-size: 10px;
+      transition: all 0.35s;
   }
 
   .admin-edit-about-details-back-button {
-    width: 75px;
-    height: 35px;
-    font-size: 10px;
+      width: 80px;
+      height: 35px;
+      font-size: 10px;
   }
 
   .admin-edit-about-details-button {
-    width: 125px;
-    height: 50px;
-    font-size: 12.5px;
+      width: 100px;
+      height: 35px;
+      font-size: 12.5px;
   }
 
   .admin-save-about-details-button {
-    width: 125px;
-    height: 50px;
-    font-size: 12.5px;
-  }
-
-  .admin-add-SK-button {
-    width: 125px;
-    height: 50px;
-    font-size: 12.5px;
+      width: 100px;
+      height: 35px;
+      font-size: 12.5px;
   }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+
   .admin-about-us-container {
-    left: 0%;
-    width: 100%;
+      left: 0%;
+      width: 100%;
   }
 
   .admin-about-us-label-h2 {
-    font-size: 30px;
-    margin: 20px 0 20px 20px;
+      font-size: 30px;
+      margin: 20px 0 20px 20px;
+  }
+
+  .SK-label-h2 {
+      font-size: 15px;
   }
 
   .admin-edit-about-details-back-button {
-    margin: 20px 20px 20px 0;
+      margin: 20px 20px 20px 0;
   }
 
-  .admin-current-about-details-group .admin-current-about-label,
-  .admin-edit-about-details-group .admin-edit-about-label {
-    font-size: 10px;
+  .admin-about-details-group .admin-current-about-label,
+  [class^="admin-edit-"][class$="-label"] {
+      font-size: 10px;
   }
 
   .admin-current-about-form textarea,
-  .admin-current-about-form [type="file"] {
-    height: 40px;
-    font-size: 12.5px;
+  .admin-current-about-form [type='file'] {
+      height: 25px;
+      font-size: 7.5px;
   }
 
   [class^="admin-edit-"][class*="-form"] textarea {
-    height: 40px;
-    font-size: 12.5px;
+      height: 25px;
+      font-size: 7.5px;
+  }
+
+  .admin-SK-table-head th {
+      font-size: 7.5px;
   }
 
   .admin-SK-table tr {
-    height: 22.5px;
+      height: 22.5px;
   }
 
-  .admin-SK-edit-button {
-    font-size: 7.5px;
-    width: 65px;
-    height: 35px;
+  .admin-about-details-buttons-container .admin-SK-edit-button {
+      width: 70px;
+      height: 30px;
+      font-size: 10px;
+      transition: all 0.35s;
   }
 
   .admin-edit-about-details-back-button {
-    width: 75px;
-    height: 35px;
-    font-size: 10px;
+      width: 70px;
+      height: 32.5px;
+      font-size: 10px;
   }
 
   .admin-edit-about-details-button {
-    width: 100px;
-    height: 45px;
-    font-size: 10px;
+      width: 100px;
+      height: 25px;
+      font-size: 10px;
   }
 
   .admin-save-about-details-button {
-    width: 100px;
-    height: 45px;
-    font-size: 10px;
-  }
-
-  .admin-add-SK-button {
-    width: 100px;
-    height: 45px;
-    font-size: 10px;
+      width: 100px;
+      height: 25px;
+      font-size: 10px;
   }
 }
 
@@ -1741,8 +2288,8 @@
   padding-top: 75px;
   left: 22.5%;
   width: 77.5%;
-  background-color: #ffffff;
-  font-family: "Inter", sans-serif;
+  background-color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
   z-index: 1;
 }
 
@@ -1811,18 +2358,18 @@
   width: 100%;
 }
 
-.program-details-button,
-.program-edit-button {
+.admin-program-details-buttons-container .program-view-button,
+.admin-program-details-buttons-container .program-edit-button {
   margin-right: 10px;
 }
 
-.program-details-button,
-.program-edit-button,
-.program-delete-button {
-  border-style: none;
+.admin-program-details-buttons-container .program-view-button,
+.admin-program-details-buttons-container .program-edit-button,
+.admin-program-details-buttons-container .program-delete-button {
+  font-size: 15px;
   width: 150px;
-  height: 45px;
-  font-size: 17.5px;
+  height: 40px;
+  transition: all 0.35s;
 }
 
 /* Admin Program Extended Details */
@@ -1863,7 +2410,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1050;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   width: 100%;
   height: 100%;
   max-width: 450px;
@@ -1887,7 +2434,7 @@
 }
 
 .admin-edit-program-label {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 17.5px;
 }
 
@@ -1941,7 +2488,7 @@
 }
 
 .admin-add-program-label {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 17.5px;
 }
 
@@ -1962,8 +2509,8 @@
 }
 
 .admin-add-program-button {
-  background-color: #42bb4e;
-  color: #ffffff;
+  background-color: #42BB4E;
+  color: #FFFFFF;
   margin-top: 10px;
   width: 150px;
   height: 45px;
@@ -1976,9 +2523,11 @@
   color: rgb(2, 107, 107);
 }
 
+
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
+
   .admin-program-label-h2 {
     font-size: 37.5px;
   }
@@ -2016,17 +2565,18 @@
     font-size: 17.5px;
   }
 
-  .program-details-button,
-  .program-edit-button {
+  .admin-program-details-buttons-container .program-view-button,
+  .admin-program-details-buttons-container .program-edit-button {
     margin-right: 10px;
   }
 
-  .program-details-button,
-  .program-edit-button,
-  .program-delete-button {
+  .admin-program-details-buttons-container .program-view-button,
+  .admin-program-details-buttons-container .program-edit-button,
+  .admin-program-details-buttons-container .program-delete-button {
     width: 125px;
-    height: 40px;
-    font-size: 15px;
+    height: 35px;
+    font-size: 12.5px;
+    transition: all 0.35s;
   }
 
   /* Edit Program Modal */
@@ -2045,7 +2595,7 @@
   }
 
   .admin-edit-program-label {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 15px;
   }
 
@@ -2091,6 +2641,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+
   .admin-program-label-h2 {
     font-size: 35px;
   }
@@ -2128,17 +2679,18 @@
     font-size: 15px;
   }
 
-  .program-details-button,
-  .program-edit-button {
+  .admin-program-details-buttons-container .program-view-button,
+  .admin-program-details-buttons-container .program-edit-button {
     margin-right: 5px;
   }
 
-  .program-details-button,
-  .program-edit-button,
-  .program-delete-button {
+  .admin-program-details-buttons-container .program-view-button,
+  .admin-program-details-buttons-container .program-edit-button,
+  .admin-program-details-buttons-container .program-delete-button {
     width: 100px;
-    height: 35px;
-    font-size: 12.5px;
+    height: 30px;
+    font-size: 10px;
+    transition: all 0.35s;
   }
 
   /* Edit Program Modal */
@@ -2157,7 +2709,7 @@
   }
 
   .admin-edit-program-label {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 12.5px;
   }
 
@@ -2203,6 +2755,7 @@
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
+
   .admin-program-container {
     left: 0%;
     width: 100%;
@@ -2216,7 +2769,7 @@
   .admin-program-nav-tabs {
     font-size: 15px;
     margin: 0 0 20px 30px;
-    gap: 0.5in;
+    gap: 0.50in;
   }
 
   /* Admin All Programs */
@@ -2251,18 +2804,19 @@
     align-items: center;
   }
 
-  .program-details-button,
-  .program-edit-button {
+  .admin-program-details-buttons-container .program-view-button,
+  .admin-program-details-buttons-container .program-edit-button {
     margin-right: 0;
     margin-bottom: 5px;
   }
 
-  .program-details-button,
-  .program-edit-button,
-  .program-delete-button {
+  .admin-program-details-buttons-container .program-view-button,
+  .admin-program-details-buttons-container .program-edit-button,
+  .admin-program-details-buttons-container .program-delete-button {
     width: 100px;
-    height: 35px;
+    height: 30px;
     font-size: 10px;
+    transition: all 0.35s;
   }
 
   /* Edit Program Modal */
@@ -2281,7 +2835,7 @@
   }
 
   .admin-edit-program-label {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 12.5px;
   }
 
@@ -2327,6 +2881,7 @@
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
+
   .admin-program-container {
     left: 0%;
     width: 100%;
@@ -2375,17 +2930,18 @@
     font-size: 12.5px;
   }
 
-  .program-details-button,
-  .program-edit-button {
+  .admin-program-details-buttons-container .program-view-button,
+  .admin-program-details-buttons-container .program-edit-button {
     margin-right: 5px;
   }
 
-  .program-details-button,
-  .program-edit-button,
-  .program-delete-button {
+  .admin-program-details-buttons-container .program-view-button,
+  .admin-program-details-buttons-container .program-edit-button,
+  .admin-program-details-buttons-container .program-delete-button {
     width: 75px;
     height: 25px;
     font-size: 7.5px;
+    transition: all 0.35s;
   }
 
   /* Edit Program Modal */
@@ -2404,7 +2960,7 @@
   }
 
   .admin-edit-program-label {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 10px;
   }
 
@@ -2454,283 +3010,305 @@
 /* ____________________________________________________________________________________________________ */
 
 .admin-contact-us-container {
-  position: relative;
-  padding-top: 75px;
-  left: 22.5%;
-  width: 77.5%;
-  background-color: #ffffff;
-  font-family: "Inter", sans-serif;
-  z-index: 1;
+    position: relative;
+    padding-top: 75px;
+    left: 22.5%;
+    width: 77.5%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
 }
 
 .admin-contact-us-label-h2 {
-  font-size: 40px;
-  margin: 20px 0 20px 40px;
+    font-size: 40px;
+    margin: 20px 0 20px 40px;
 }
 
 .admin-edit-contact-details-back-button {
-  margin: 20px 40px 20px 0;
+    margin: 20px 40px 20px 0;
 }
 
 .admin-contact-us-contents-container {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 .admin-current-contacts-details-container,
 .admin-edit-contacts-details-container {
-  background-color: #d0e7ff;
-  width: 90%;
+    background-color: #d0e7ff;
+    width: 90%;
 }
 
 .admin-contacts-details-group,
 .admin-edit-contacts-details-group {
-  width: 90%;
-  margin: 25px 0 25px 0;
+    width: 90%;
+    margin: 25px 0 25px 0;
 }
 
 .admin-current-contact-form,
 .admin-edit-contact-form {
-  width: 100%;
+    width: 100%;
 }
 
 .admin-contacts-details-group .admin-current-contact-label,
 .admin-edit-contacts-details-group .admin-edit-contact-label {
-  font-family: "Roboto", sans-serif;
-  font-size: 17.5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 17.5px;
 }
 
 .admin-current-contact-form input[type="text"],
 .admin-current-contact-form input[type="email"] {
-  height: 50px;
-  border-style: none;
-  border-radius: 10px;
-  outline: none;
-  margin-bottom: 10px;
-  font-size: 17.5px;
-  transition: all 0.35s;
+    height: 45px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 10px;
+    font-size: 15px;
+    transition: all 0.35s;
 }
 
 .admin-edit-contact-form input[type="text"],
 .admin-edit-contact-form input[type="email"] {
-  height: 50px;
-  border-style: none;
-  border-radius: 10px;
-  outline: none;
-  margin-bottom: 0;
-  font-size: 17.5px;
-  transition: all 0.35s;
+    height: 45px;
+    border-style: none;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 0;
+    font-size: 17.5px;
+    transition: all 0.35s;
 }
 
 .admin-current-contact-form input[type="text"]:focus,
 .admin-edit-contact-form input[type="text"]:focus,
 .admin-edit-contact-form input[type="email"]:focus {
-  outline: 1px solid #007bff;
+    outline: 1px solid #007bff;
 }
 
 .admin-edit-contact-details-back-button {
-  background-color: #25327a;
-  color: #274ef8;
-  width: 100px;
-  height: 40px;
-  font-size: 15px;
-  border-style: none;
-  transition: all 0.35s;
+    background-color: #25327A;
+    color: #FFFFFF;
+    width: 100px;
+    height: 40px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
 }
 
 .admin-edit-contact-details-button {
-  background-color: #25327a;
-  color: #ffffff;
-  margin-top: 10px;
-  width: 150px;
-  height: 55px;
-  font-size: 15px;
-  border-style: none;
-  transition: all 0.35s;
+    background-color: #25327A;
+    color: #FFFFFF;
+    margin-top: 10px;
+    width: 150px;
+    height: 45px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
 }
 
 .admin-save-contact-details-button {
-  background-color: #42bb4e;
-  color: #ffffff;
-  margin-top: 10px;
-  width: 150px;
-  height: 55px;
-  font-size: 15px;
-  border-style: none;
-  transition: all 0.35s;
+    background-color: #42BB4E;
+    color: #FFFFFF;
+    margin-top: 10px;
+    width: 150px;
+    height: 45px;
+    font-size: 15px;
+    border-style: none;
+    transition: all 0.35s;
 }
 
 .admin-edit-contact-details-back-button:hover,
 .admin-edit-contact-details-button:hover,
 .admin-save-contact-details-button:hover {
-  color: rgb(2, 107, 107);
+    color: rgb(2, 107, 107);
 }
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
-  .admin-contact-us-label-h2 {
-    font-size: 37.5px;
-  }
 
-  .admin-contacts-details-group .admin-current-contact-label,
-  .admin-edit-contacts-details-group .admin-edit-contact-label {
-    font-size: 15px;
-  }
+    .admin-contact-us-label-h2 {
+        font-size: 37.5px;
+    }
 
-  .admin-current-contact-form input[type="text"],
-  .admin-current-contact-form input[type="email"] {
-    height: 45px;
-    font-size: 15px;
-  }
+    .admin-contacts-details-group .admin-current-contact-label,
+    .admin-edit-contacts-details-group .admin-edit-contact-label {
+        font-size: 15px;
+    }
 
-  .admin-edit-contact-form input[type="text"],
-  .admin-edit-contact-form input[type="email"] {
-    height: 45px;
-    font-size: 15px;
-  }
+    .admin-current-contact-form input[type="text"],
+    .admin-current-contact-form input[type="email"] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-contact-form input[type="text"],
+    .admin-edit-contact-form input[type="email"] {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-contact-details-back-button {
+        width: 90px;
+        height: 37.5px;
+        font-size: 12.5px;
+    }
+
+    .admin-edit-contact-details-button {
+        width: 125px;
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    .admin-save-contact-details-button {
+        width: 125px;
+        height: 40px;
+        font-size: 12.5px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .admin-contact-us-label-h2 {
-    font-size: 35px;
-  }
 
-  .admin-contacts-details-group .admin-current-contact-label,
-  .admin-edit-contacts-details-group .admin-edit-contact-label {
-    font-size: 12.5px;
-  }
+    .admin-contact-us-label-h2 {
+        font-size: 35px;
+    }
 
-  .admin-current-contact-form input[type="text"],
-  .admin-current-contact-form input[type="email"] {
-    height: 40px;
-    font-size: 12.5px;
-  }
+    .admin-contacts-details-group .admin-current-contact-label,
+    .admin-edit-contacts-details-group .admin-edit-contact-label {
+        font-size: 12.5px;
+    }
 
-  .admin-edit-contact-form input[type="text"],
-  .admin-edit-contact-form input[type="email"] {
-    height: 40px;
-    font-size: 12.5px;
-  }
+    .admin-current-contact-form input[type="text"],
+    .admin-current-contact-form input[type="email"] {
+        height: 35px;
+        font-size: 10px;
+    }
 
-  .admin-edit-contact-details-back-button {
-    width: 90px;
-    height: 37.5px;
-    font-size: 12.5px;
-  }
+    .admin-edit-contact-form input[type="text"],
+    .admin-edit-contact-form input[type="email"] {
+        height: 35px;
+        font-size: 10px;
+    }
 
-  .admin-edit-contact-details-button {
-    width: 125px;
-    height: 50px;
-    font-size: 12.5px;
-  }
+    .admin-edit-contact-details-back-button {
+        width: 80px;
+        height: 35px;
+        font-size: 10px;
+    }
 
-  .admin-save-contact-details-button {
-    width: 125px;
-    height: 50px;
-    font-size: 12.5px;
-  }
+    .admin-edit-contact-details-button {
+        width: 100px;
+        height: 35px;
+        font-size: 12.5px;
+    }
+
+    .admin-save-contact-details-button {
+        width: 100px;
+        height: 35px;
+        font-size: 12.5px;
+    }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-  .admin-contact-us-container {
-    left: 0;
-    width: 100%;
-  }
 
-  .admin-contact-us-label-h2 {
-    font-size: 35px;
-    margin: 20px 0 20px 25px;
-  }
+    .admin-contact-us-container {
+        left: 0;
+        width: 100%;
+    }
 
-  .admin-edit-contact-details-back-button {
-    margin: 20px 25px 20px 0;
-  }
+    .admin-contact-us-label-h2 {
+        font-size: 35px;
+        margin: 20px 0 20px 25px;
+    }
 
-  .admin-contacts-details-group .admin-current-contact-label,
-  .admin-edit-contacts-details-group .admin-edit-contact-label {
-    font-size: 12.5px;
-  }
+    .admin-edit-contact-details-back-button {
+        margin: 20px 25px 20px 0;
+    }
 
-  .admin-current-contact-form input[type="text"],
-  .admin-current-contact-form input[type="email"] {
-    height: 40px;
-    font-size: 12.5px;
-  }
+    .admin-contacts-details-group .admin-current-contact-label,
+    .admin-edit-contacts-details-group .admin-edit-contact-label {
+        font-size: 12.5px;
+    }
 
-  .admin-edit-contact-form input[type="text"],
-  .admin-edit-contact-form input[type="email"] {
-    height: 40px;
-    font-size: 12.5px;
-  }
+    .admin-current-contact-form input[type="text"],
+    .admin-current-contact-form input[type="email"] {
+        height: 35px;
+        font-size: 10px;
+    }
 
-  .admin-edit-contact-details-back-button {
-    width: 75px;
-    height: 35px;
-    font-size: 10px;
-  }
+    .admin-edit-contact-form input[type="text"],
+    .admin-edit-contact-form input[type="email"] {
+        height: 35px;
+        font-size: 10px;
+    }
 
-  .admin-edit-contact-details-button {
-    width: 100px;
-    height: 45px;
-    font-size: 10px;
-  }
+    .admin-edit-contact-details-back-button {
+        width: 80px;
+        height: 35px;
+        font-size: 10px;
+    }
 
-  .admin-save-contact-details-button {
-    width: 100px;
-    height: 45px;
-    font-size: 10px;
-  }
+    .admin-edit-contact-details-button {
+        width: 100px;
+        height: 35px;
+        font-size: 12.5px;
+    }
+
+    .admin-save-contact-details-button {
+        width: 100px;
+        height: 35px;
+        font-size: 12.5px;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  .admin-contact-us-container {
-    left: 0;
-    width: 100%;
-  }
 
-  .admin-contact-us-label-h2 {
-    font-size: 30px;
-    margin: 20px 0 20px 20px;
-  }
+    .admin-contact-us-container {
+        left: 0;
+        width: 100%;
+    }
 
-  .admin-edit-contact-details-back-button {
-    margin: 20px 20px 20px 0;
-  }
+    .admin-contact-us-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 20px 20px;
+    }
 
-  .admin-contacts-details-group .admin-current-contact-label,
-  .admin-edit-contacts-details-group .admin-edit-contact-label {
-    font-size: 10px;
-  }
+    .admin-edit-contact-details-back-button {
+        margin: 20px 20px 20px 0;
+    }
 
-  .admin-current-contact-form input[type="text"],
-  .admin-current-contact-form input[type="email"] {
-    height: 35px;
-    font-size: 10px;
-  }
+    .admin-contacts-details-group .admin-current-contact-label,
+    .admin-edit-contacts-details-group .admin-edit-contact-label {
+        font-size: 10px;
+    }
 
-  .admin-edit-contact-form input[type="text"],
-  .admin-edit-contact-form input[type="email"] {
-    height: 35px;
-    font-size: 10px;
-  }
+    .admin-current-contact-form input[type="text"],
+    .admin-current-contact-form input[type="email"] {
+        height: 25px;
+        font-size: 7.5px;
+    }
 
-  .admin-edit-contact-details-back-button {
-    width: 75px;
-    height: 35px;
-    font-size: 10px;
-  }
+    .admin-edit-contact-form input[type="text"],
+    .admin-edit-contact-form input[type="email"] {
+        height: 25px;
+        font-size: 7.5px;
+    }
 
-  .admin-edit-contact-details-button {
-    width: 100px;
-    height: 45px;
-    font-size: 10px;
-  }
+    .admin-edit-contact-details-back-button {
+        width: 70px;
+        height: 32.5px;
+        font-size: 10px;
+    }
 
-  .admin-save-contact-details-button {
-    width: 100px;
-    height: 45px;
-    font-size: 10px;
-  }
+    .admin-edit-contact-details-button {
+        width: 100px;
+        height: 25px;
+        font-size: 10px;
+    }
+
+    .admin-save-contact-details-button {
+        width: 100px;
+        height: 25px;
+        font-size: 10px;
+    }
 }
 
 /* RAWR! */
@@ -2748,294 +3326,437 @@
 /* ____________________________________________________________________________________________________ */
 
 .admin-inventory-container {
-  position: relative;
-  padding-top: 75px;
-  left: 22.5%;
-  width: 77.5%;
-  background-color: #ffffff;
-  font-family: "Inter", sans-serif;
-  z-index: 1;
+    position: relative;
+    padding-top: 75px;
+    padding-bottom: 40px;
+    left: 22.5%;
+    width: 77.5%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
 }
 
 .admin-inventory-label-h2 {
-  font-size: 40px;
-  margin: 20px 0 20px 40px;
+    font-size: 40px;
+    margin: 20px 0 20px 40px;
 }
 
-.admin-inventory-contents-container {
-  margin: 0 auto;
-  width: 90%;
-  margin-bottom: 40px;
-}
-
-.admin-inventory-head th {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.admin-inventory-body td {
-  font-size: 17.5px;
-}
+/* Add Equipment */
 
 .admin-inventory-add-equipment-container {
-  width: 90%;
-  margin: 0 auto 20px;
+    width: 90%;
+    margin: 0 auto 20px;
 }
 
 .admin-inventory-add-equipment-button {
-  background-color: #42bb4e;
-  color: #ffffff;
-  width: 15%;
-  height: 50px;
-  font-size: 15px;
-  border-style: solid;
-  border-width: 1px;
-  transition: all 0.35s;
+    background-color: #42BB4E;
+    color: #FFFFFF;
+    width: 15%;
+    height: 45px;
+    font-size: 15px;
+    border-style: solid;
+    border-width: 1px;
+    transition: all 0.35s;
 }
 
 .admin-inventory-add-equipment-button:hover {
-  color: rgb(2, 107, 107);
+    color: rgb(2, 107, 107);
 }
 
-.admin-inventory-save-add-button-container .admin-inventory-save-add-button {
-  margin: 10px 0 10px 0;
-  color: #000000;
-  width: 150px;
-  height: 50px;
-  font-size: 15px;
-  border-style: none;
+/* Equipment Table */
+
+.admin-inventory-contents-container {
+    margin: 0 auto;
+    width: 90%;
+    margin-bottom: 40px;
+}
+
+.admin-inventory-table-container tr {
+    height: 40px;
+}
+
+.admin-inventory-table-container th {
+    font-size: 17.5px;
+    font-weight: bold;
+}
+
+.admin-inventory-table-container th,
+.admin-inventory-table-container td {
+    word-wrap: break-word;
+}
+
+.admin-inventory-table-container td {
+    font-size: 15px;
+}
+
+.equipment-image {
+    height: 150px;
+    width: 125px;
 }
 
 .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
-  margin-right: 10px;
+    margin-right: 5px;
 }
 
 .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
 .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-  font-size: 15px;
-  width: 80px;
-  height: 40px;
-  transition: all 0.35s;
+    font-size: 12.5px;
+    height: 35px;
+    transition: all 0.35s;
 }
 
-.admin-inventory-modal-container .modal-dialog {
-  width: 500px;
+/* Modal */
+
+.admin-inventory-item-add-edit-modal {
+    padding-top: 75px;
 }
 
-.admin-inventory-form-group {
-  width: 90%;
+.admin-inventory-item-add-edit-modal-header h5 {
+    font-size: 17.5px;
 }
 
-.admin-inventory-form-label {
-  font-family: "Roboto", sans-serif;
-  font-size: 17.5px;
+.admin-inventory-item-add-edit-modal-body {
+    background-color: #c5c1c1;
+    font-size: 15px;
 }
 
-.admin-inventory-form-group .admin-inventory-form {
-  height: 50px;
-  font-size: 17.5px;
+.admin-inventory-group-form {
+    width: 90%;
 }
 
-.admin-inventory-item-add-edit-modal .modal-content {
-  background-color: #d0e7ff; /* Light blue */
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+.admin-inventory-group-form input[type="text"],
+.admin-inventory-group-form input[type="number"],
+.admin-inventory-group-form select,
+.admin-inventory-group-form select option,
+.admin-inventory-group-form input[type="file"] {
+    height: 40px;
+    font-size: 15px;
 }
+
+.admin-inventory-item-button {
+    width: 150px;
+    height: 40px;
+    border-style: none;
+    font-size: 12.5px;
+}
+
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
-  .admin-inventory-label-h2 {
-    font-size: 37.5px;
-  }
 
-  .admin-inventory-head th {
-    font-size: 17.5px;
-  }
+    .admin-inventory-label-h2 {
+        font-size: 37.5px;
+    }
 
-  .admin-inventory-body td {
-    font-size: 15px;
-  }
+    /* Add Equipment */
 
-  .admin-inventory-add-equipment-button {
-    width: 17.5%;
-  }
+    .admin-inventory-add-equipment-container {
+        height: 40px;
+    }
 
-  .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
-  .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-    font-size: 12.5px;
-  }
+    .admin-inventory-add-equipment-button {
+        width: 15%;
+        height: 40px;
+        font-size: 12.5px;
+    }
 
-  .admin-inventory-form-label {
-    font-size: 15px;
-  }
+    /* Equipment Table */
 
-  .admin-inventory-form-group .admin-inventory-form {
-    height: 45px;
-    font-size: 15px;
-  }
+    .admin-inventory-table-container tr {
+        height: 35px;
+    }
+
+    .admin-inventory-table-container th {
+        font-size: 15px;
+    }
+
+    .admin-inventory-table-container td {
+        font-size: 12.5px;
+    }
+
+    .equipment-image {
+        height: 125px;
+        width: 100px;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
+        margin-right: 5px;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+    .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+        font-size: 10px;
+        height: 30px;
+    }
+
+    /* Modal */
+
+    .admin-inventory-item-add-edit-modal-header h5 {
+        font-size: 15px;
+    }
+
+    .admin-inventory-item-add-edit-modal-body {
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-group-form input[type="text"],
+    .admin-inventory-group-form input[type="number"],
+    .admin-inventory-group-form select,
+    .admin-inventory-group-form select option,
+    .admin-inventory-group-form input[type="file"] {
+        height: 35px;
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-item-button {
+        width: 125px;
+        height: 35px;
+        font-size: 10px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .admin-inventory-label-h2 {
-    font-size: 35px;
-  }
 
-  .admin-inventory-head th {
-    font-size: 15px;
-  }
+    .admin-inventory-label-h2 {
+        font-size: 35px;
+    }
 
-  .admin-inventory-body td {
-    font-size: 12.5px;
-  }
+    /* Add Equipment */
 
-  .admin-inventory-add-equipment-button {
-    width: 20%;
-    height: 45px;
-    font-size: 12.5px;
-  }
+    .admin-inventory-add-equipment-container {
+        height: 35px;
+    }
 
-  .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
-    width: 150px;
-    height: 50px;
-    font-size: 12.5px;
-  }
+    .admin-inventory-add-equipment-button {
+        width: 20%;
+        height: 35px;
+        font-size: 10px;
+    }
 
-  .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
-    margin-right: 5px;
-  }
+    /* Equipment Table */
 
-  .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
-  .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-    font-size: 10px;
-    width: 60px;
-    height: 37.5px;
-  }
+    .admin-inventory-table-container tr {
+        height: 30px;
+    }
 
-  .admin-inventory-form-label {
-    font-size: 12.5px;
-  }
+    .admin-inventory-table-container th {
+        font-size: 12.5px;
+    }
 
-  .admin-inventory-form-group .admin-inventory-form {
-    height: 40px;
-    font-size: 12.5px;
-  }
+    .admin-inventory-table-container td {
+        font-size: 10px;
+    }
+
+    .equipment-image {
+        height: 100px;
+        width: 75px;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
+        margin-right: 10px;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+    .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+        font-size: 7.5px;
+        height: 25px;
+    }
+
+    /* Modal */
+
+    .admin-inventory-item-add-edit-modal-header h5 {
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-item-add-edit-modal-body {
+        font-size: 10px;
+    }
+
+    .admin-inventory-group-form input[type="text"],
+    .admin-inventory-group-form input[type="number"],
+    .admin-inventory-group-form select,
+    .admin-inventory-group-form select option,
+    .admin-inventory-group-form input[type="file"] {
+        height: 30px;
+        font-size: 10px;
+    }
+
+    .admin-inventory-item-button {
+        width: 100px;
+        height: 30px;
+        font-size: 7.5px;
+    }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-  .admin-inventory-container {
-    left: 0%;
-    width: 100%;
-  }
 
-  .admin-inventory-label-h2 {
-    font-size: 35px;
-    margin: 20px 0 20px 25px;
-  }
+    .admin-inventory-container {
+        left: 0%;
+        width: 100%;
+    }
 
-  .admin-inventory-head th {
-    font-size: 15px;
-  }
+    .admin-inventory-label-h2 {
+        font-size: 35px;
+        margin: 20px 0 20px 25px;
+    }
 
-  .admin-inventory-body td {
-    font-size: 12.5px;
-  }
+    /* Add Equipment */
 
-  .admin-inventory-add-equipment-button {
-    width: 22.5%;
-    height: 45px;
-    font-size: 12.5px;
-  }
+    .admin-inventory-add-equipment-container {
+        height: 35px;
+    }
 
-  .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
-    width: 125px;
-    height: 45px;
-    font-size: 12.5px;
-  }
+    .admin-inventory-add-equipment-button {
+        width: 20%;
+        height: 35px;
+        font-size: 10px;
+    }
 
-  .admin-inventory-actions-buttons-container {
-    flex-direction: column;
-    align-items: center;
-  }
+    /* Equipment Table */
 
-  .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
-    margin-right: 0;
-    margin-bottom: 2.5px;
-  }
+    .admin-inventory-table-container tr {
+        height: 30px;
+    }
 
-  .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
-  .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-    font-size: 10px;
-    width: 60px;
-    height: 35px;
-  }
+    .admin-inventory-table-container th {
+        font-size: 12.5px;
+    }
 
-  .admin-inventory-form-label {
-    font-size: 12.5px;
-  }
+    .admin-inventory-table-container td {
+        font-size: 10px;
+    }
 
-  .admin-inventory-form-group .admin-inventory-form {
-    height: 40px;
-    font-size: 12.5px;
-  }
+    .equipment-image {
+        height: 75px;
+        width: 50px;
+    }
+
+    .admin-inventory-actions-buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+    .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+        font-size: 7.5px;
+        height: 25px;
+    }
+
+    /* Modal */
+
+    .admin-inventory-item-add-edit-modal-header h5 {
+        font-size: 12.5px;
+    }
+
+    .admin-inventory-item-add-edit-modal-body {
+        font-size: 10px;
+    }
+
+    .admin-inventory-group-form input[type="text"],
+    .admin-inventory-group-form input[type="number"],
+    .admin-inventory-group-form select,
+    .admin-inventory-group-form select option,
+    .admin-inventory-group-form input[type="file"] {
+        height: 30px;
+        font-size: 10px;
+    }
+
+    .admin-inventory-item-button {
+        width: 100px;
+        height: 30px;
+        font-size: 7.5px;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  .admin-inventory-container {
-    left: 0%;
-    width: 100%;
-  }
 
-  .admin-inventory-label-h2 {
-    font-size: 30px;
-    margin: 20px 0 20px 20px;
-  }
+    .admin-inventory-container {
+        left: 0%;
+        width: 100%;
+    }
 
-  .admin-inventory-head th {
-    font-size: 12.5px;
-  }
+    .admin-inventory-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 20px 20px;
+    }
 
-  .admin-inventory-body td {
-    font-size: 10px;
-  }
+    /* Add Equipment */
 
-  .admin-inventory-add-equipment-button {
-    width: 25%;
-    height: 35px;
-    font-size: 10px;
-  }
+    .admin-inventory-add-equipment-container {
+        height: 25px;
+    }
 
-  .admin-inventory-save-add-button-container .admin-inventory-save-add-button {
-    width: 125px;
-    height: 40px;
-    font-size: 12.5px;
-  }
+    .admin-inventory-add-equipment-button {
+        width: 25%;
+        height: 25px;
+        font-size: 7.5px;
+    }
 
-  .admin-inventory-actions-buttons-container {
-    flex-direction: column;
-    align-items: center;
-  }
+    /* Equipment Table */
 
-  .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
-    margin-right: 0;
-    margin-bottom: 2.5px;
-  }
+    .admin-inventory-table-container tr {
+        height: 20px;
+    }
 
-  .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
-  .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
-    font-size: 7.5px;
-    width: 45px;
-    height: 30px;
-  }
+    .admin-inventory-table-container th {
+        font-size: 10px;
+    }
 
-  .admin-inventory-form-label {
-    font-size: 10px;
-  }
+    .admin-inventory-table-container td {
+        font-size: 7.5px;
+    }
 
-  .admin-inventory-form-group .admin-inventory-form {
-    height: 35px;
-    font-size: 10px;
-  }
+    .equipment-image {
+        height: 75px;
+        width: 50px;
+    }
+
+    .admin-inventory-actions-buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button {
+        margin-right: 0;
+        margin-bottom: 2.5px;
+    }
+
+    .admin-inventory-actions-buttons-container .admin-inventory-edit-button,
+    .admin-inventory-actions-buttons-container .admin-inventory-delete-button {
+        font-size: 5px;
+        height: 25px;
+    }
+
+    /* Modal */
+
+    .admin-inventory-item-add-edit-modal-header h5 {
+        font-size: 10px;
+    }
+
+    .admin-inventory-item-add-edit-modal-body {
+        font-size: 7.5px;
+    }
+
+    .admin-inventory-group-form input[type="text"],
+    .admin-inventory-group-form input[type="number"],
+    .admin-inventory-group-form select,
+    .admin-inventory-group-form select option,
+    .admin-inventory-group-form input[type="file"] {
+        height: 20px;
+        font-size: 7.5px;
+    }
+
+    .admin-inventory-item-button {
+        width: 75px;
+        height: 25px;
+        font-size: 5px;
+    }
 }
 
 /* ____________________________________________________________________________________________________ */
@@ -3043,314 +3764,369 @@
 /* ____________________________________________________________________________________________________ */
 
 .admin-reports-container {
-  position: relative;
-  padding-top: 75px;
-  left: 22.5%;
-  width: 77.5%;
-  background-color: #ffffff;
-  font-family: "Inter", sans-serif;
-  z-index: 1;
+    position: relative;
+    padding-top: 75px;
+    padding-bottom: 40px;
+    left: 22.5%;
+    width: 77.5%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
 }
 
 .admin-reports-label-h2 {
-  font-size: 40px;
-  margin: 20px 40px 20px 40px;
+    font-size: 40px;
+    margin: 20px 40px 20px 40px;
 }
 
+/* Generate Report */
+
 .admin-reports-generate-classification-date-container {
-  width: 90%;
-  gap: 0.25in;
-  margin: 0 auto 20px;
+    width: 90%;
+    gap: 0.25in;
+    margin: 0 auto 20px;
 }
 
 .admin-reports-classification-container,
 .admin-reports-date-container,
 .admin-reports-info-container {
-  width: 28.33%;
+    width: 28.33%;
 }
 
 .admin-reports-classification,
 .admin-reports-date,
 .admin-reports-info {
-  width: 100%;
-  height: 50px;
-  font-size: 17.5px;
-  border-style: solid;
-  border-width: 1px;
-  transition: all 0.35s;
+    width: 100%;
+    height: 45px;
+    font-size: 17.5px;
+    border-style: solid;
+    border-width: 1px;
+    transition: all 0.35s;
 }
 
 .admin-reports-classification:hover,
 .admin-reports-date:hover,
 .admin-reports-info:hover {
-  color: #ffffff;
-  background-color: #858585;
+    color: #FFFFFF;
+    background-color: #858585;
 }
 
 .admin-reports-classification:focus,
 .admin-reports-date:focus,
 .admin-reports-info:focus {
-  outline: 1px solid #007bff;
+    outline: 1px solid #007bff;
 }
 
 .admin-reports-classification option,
 .admin-reports-date option {
-  background-color: #ffffff;
-  color: #000000;
-  pointer-events: none;
+    background-color: #FFFFFF;
+    color: #000000;
+    pointer-events: none;
 }
 
 .admin-reports-generate-pdf-container {
-  width: 15%;
+    width: 15%;
 }
 
 .admin-reports-generate-pdf-button {
-  background-color: #25327a;
-  color: #ffffff;
-  width: 100%;
-  height: 50px;
-  font-size: 15px;
-  border-style: solid;
-  border-width: 1px;
-  transition: all 0.35s;
+    background-color: #25327A;
+    color: #FFFFFF;
+    width: 100%;
+    height: 45px;
+    font-size: 15px;
+    border-style: solid;
+    border-width: 1px;
+    transition: all 0.35s;
 }
 
 .admin-reports-generate-pdf-button:hover {
-  color: rgb(2, 107, 107);
+    color: rgb(2, 107, 107);
 }
 
+/* Reports Table */
+
 .reports-list-container {
-  width: 90%;
-  margin: 0 auto 40px;
+    width: 90%;
+    margin: 0 auto;
 }
 
 .admin-reports-users-table,
 .admin-reports-equipment-table,
 .admin-reports-reservation-table,
 .admin-reports-inventory-table {
-  width: 100%;
+    width: 100%;
 }
 
 .reports-users-label-h2,
 .reports-equipment-label-h2,
 .reports-reservation-label-h2,
 .reports-inventory-label-h2 {
-  font-size: 30px;
-  margin-bottom: 10px;
+    font-size: 30px;
+    margin-bottom: 10px;
 }
 
 .admin-reports-users-table-container,
 .admin-reports-equipment-table-container,
 .admin-reports-reservation-table-container,
 .admin-reports-inventory-table-container {
-  width: 100%;
+    width: 100%;
 }
 
 .reports-list-container tr {
-  height: 35px;
+    height: 40px;
 }
 
 .reports-list-container th {
-  font-size: 17.5px;
-  font-weight: bold;
+    font-size: 17.5px;
+    font-weight: bold;
+}
+
+.admin-reports-users-body th,
+.admin-reports-users-body td {
+    word-wrap: break-word;
 }
 
 .reports-list-container td {
-  font-size: 17.5px;
+    font-size: 15px;
 }
+
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
-  .admin-reports-label-h2 {
-    font-size: 37.5px;
-  }
 
-  .admin-reports-classification-container,
-  .admin-reports-date-container,
-  .admin-reports-info-container {
-    width: 26.66%;
-  }
+    .admin-reports-label-h2 {
+        font-size: 37.5px;
+    }
 
-  .admin-reports-generate-pdf-container {
-    width: 20%;
-  }
+    /* Generate Report */
 
-  .admin-reports-generate-pdf-button {
-    font-size: 15px;
-  }
+    .admin-reports-generate-classification-date-container {
+        height: 40px;
+    }
 
-  .reports-users-label-h2,
-  .reports-equipment-label-h2,
-  .reports-reservation-label-h2,
-  .reports-inventory-label-h2 {
-    font-size: 27.5px;
-  }
+    .admin-reports-classification-container,
+    .admin-reports-date-container,
+    .admin-reports-info-container {
+        width: 26.66%;
+    }
 
-  .reports-list-container tr {
-    height: 32.5px;
-  }
+    .admin-reports-classification,
+    .admin-reports-date,
+    .admin-reports-info {
+        height: 40px;
+        font-size: 15px;
+    }
 
-  .reports-list-container th {
-    font-size: 15px;
-  }
+    .admin-reports-generate-pdf-container {
+        width: 20%;
+    }
 
-  .reports-list-container td {
-    font-size: 15px;
-  }
+    .admin-reports-generate-pdf-button {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    /* Reports Table */
+
+    .reports-users-label-h2,
+    .reports-equipment-label-h2,
+    .reports-reservation-label-h2,
+    .reports-inventory-label-h2 {
+        font-size: 25px;
+    }
+
+    .reports-list-container tr {
+        height: 35px;
+    }
+
+    .reports-list-container th {
+        font-size: 15px;
+    }
+
+    .reports-list-container td {
+        font-size: 12.5px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .admin-reports-label-h2 {
-    font-size: 35px;
-  }
 
-  .admin-reports-classification-container,
-  .admin-reports-date-container,
-  .admin-reports-info-container {
-    width: 25%;
-  }
+    .admin-reports-label-h2 {
+        font-size: 35px;
+    }
 
-  .admin-reports-generate-pdf-container {
-    width: 25%;
-  }
+    /* Generate Report */
 
-  .admin-reports-classification,
-  .admin-reports-date,
-  .admin-reports-info {
-    height: 45px;
-    font-size: 12.5px;
-  }
+    .admin-reports-generate-classification-date-container {
+        height: 35px;
+    }
 
-  .admin-reports-generate-pdf-button {
-    height: 45px;
-    font-size: 12.5px;
-  }
+    .admin-reports-classification-container,
+    .admin-reports-date-container,
+    .admin-reports-info-container {
+        width: 25%;
+    }
 
-  .reports-users-label-h2,
-  .reports-equipment-label-h2,
-  .reports-reservation-label-h2,
-  .reports-inventory-label-h2 {
-    font-size: 25px;
-  }
+    .admin-reports-generate-pdf-container {
+        width: 25%;
+    }
 
-  .reports-list-container tr {
-    height: 30px;
-  }
+    .admin-reports-classification,
+    .admin-reports-date,
+    .admin-reports-info {
+        height: 35px;
+        font-size: 12.5px;
+    }
 
-  .reports-list-container th {
-    font-size: 12.5px;
-  }
+    .admin-reports-generate-pdf-button {
+        height: 35px;
+        font-size: 10px;
+    }
 
-  .reports-list-container td {
-    font-size: 12.5px;
-  }
+    /* Reports Table */
+
+    .reports-users-label-h2,
+    .reports-equipment-label-h2,
+    .reports-reservation-label-h2,
+    .reports-inventory-label-h2 {
+        font-size: 20px;
+    }
+
+    .reports-list-container tr {
+        height: 30px;
+    }
+
+    .reports-list-container th {
+        font-size: 12.5px;
+    }
+
+    .reports-list-container td {
+        font-size: 10px;
+    }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-  .admin-reports-container {
-    left: 0%;
-    width: 100%;
-  }
 
-  .admin-reports-label-h2 {
-    font-size: 35px;
-    margin: 20px 0 20px 25px;
-  }
+    .admin-reports-container {
+        left: 0%;
+        width: 100%;
+    }
 
-  .admin-reports-classification-container,
-  .admin-reports-date-container,
-  .admin-reports-info-container {
-    width: 23.33%;
-  }
+    .admin-reports-label-h2 {
+        font-size: 35px;
+        margin: 20px 0 20px 25px;
+    }
 
-  .admin-reports-generate-pdf-container {
-    width: 30%;
-  }
+    /* Generate Report */
 
-  .admin-reports-classification,
-  .admin-reports-date,
-  .admin-reports-info {
-    height: 45px;
-    font-size: 12.5px;
-  }
+    .admin-reports-generate-classification-date-container {
+        height: 35px;
+    }
 
-  .admin-reports-generate-pdf-button {
-    height: 45px;
-    font-size: 12.5px;
-  }
+    .admin-reports-classification-container,
+    .admin-reports-date-container,
+    .admin-reports-info-container {
+        width: 23.33%;
+    }
 
-  .reports-users-label-h2,
-  .reports-equipment-label-h2,
-  .reports-reservation-label-h2,
-  .reports-inventory-label-h2 {
-    font-size: 22.5px;
-  }
+    .admin-reports-generate-pdf-container {
+        width: 30%;
+    }
 
-  .reports-list-container tr {
-    height: 30px;
-  }
+    .admin-reports-classification,
+    .admin-reports-date,
+    .admin-reports-info {
+        height: 35px;
+        font-size: 12.5px;
+    }
 
-  .reports-list-container th {
-    font-size: 10px;
-  }
+    .admin-reports-generate-pdf-button {
+        height: 35px;
+        font-size: 10px;
+    }
 
-  .reports-list-container td {
-    font-size: 10px;
-  }
+    /* Reports Table */
+
+    .reports-users-label-h2,
+    .reports-equipment-label-h2,
+    .reports-reservation-label-h2,
+    .reports-inventory-label-h2 {
+        font-size: 20px;
+    }
+
+    .reports-list-container tr {
+        height: 30px;
+    }
+
+    .reports-list-container th {
+        font-size: 12.5px;
+    }
+
+    .reports-list-container td {
+        font-size: 10px;
+    }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  .admin-reports-container {
-    left: 0%;
-    width: 100%;
-  }
 
-  .admin-reports-label-h2 {
-    font-size: 30px;
-    margin: 20px 0 20px 20px;
-  }
+    .admin-reports-container {
+        left: 0%;
+        width: 100%;
+    }
 
-  .admin-reports-classification-container,
-  .admin-reports-date-container,
-  .admin-reports-info-container {
-    width: 21.66%;
-  }
+    .admin-reports-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 20px 20px;
+    }
 
-  .admin-reports-generate-pdf-container {
-    width: 35%;
-  }
+    /* Generate Report */
 
-  .admin-reports-classification,
-  .admin-reports-date,
-  .admin-reports-info {
-    height: 35px;
-    font-size: 10px;
-  }
+    .admin-reports-generate-classification-date-container {
+        height: 25px;
+    }
 
-  .admin-reports-generate-pdf-button {
-    height: 35px;
-    font-size: 10px;
-  }
+    .admin-reports-classification-container,
+    .admin-reports-date-container,
+    .admin-reports-info-container {
+        width: 21.66%;
+    }
 
-  .reports-users-label-h2,
-  .reports-equipment-label-h2,
-  .reports-gym-label-h2,
-  .reports-inventory-label-h2 {
-    font-size: 20px;
-  }
+    .admin-reports-generate-pdf-container {
+        width: 35%;
+    }
 
-  .reports-list-container tr {
-    height: 22.5px;
-  }
+    .admin-reports-classification,
+    .admin-reports-date,
+    .admin-reports-info {
+        height: 25px;
+        font-size: 10px;
+    }
 
-  .reports-list-container th {
-    font-size: 10px;
-  }
+    .admin-reports-generate-pdf-button {
+        height: 25px;
+        font-size: 7.5px;
+    }
 
-  .reports-list-container td {
-    font-size: 10px;
-  }
+    /* Reports Table */
+
+    .reports-users-label-h2,
+    .reports-equipment-label-h2,
+    .reports-gym-label-h2,
+    .reports-inventory-label-h2 {
+        font-size: 15px;
+    }
+
+    .reports-list-container tr {
+        height: 20px;
+    }
+
+    .reports-list-container th {
+        font-size: 10px;
+    }
+
+    .reports-list-container td {
+        font-size: 7.5px;
+    }
 }
 
 /* ____________________________________________________________________________________________________ */
@@ -3358,115 +4134,153 @@
 /* ____________________________________________________________________________________________________ */
 
 .admin-users-container {
-  position: relative;
-  padding-top: 75px;
-  left: 22.5%;
-  width: 77.5%;
-  background-color: #ffffff;
-  font-family: "Inter", sans-serif;
-  z-index: 1;
+    position: relative;
+    padding-top: 75px;
+    padding-bottom: 40px;
+    left: 22.5%;
+    width: 77.5%;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    z-index: 1;
 }
 
 .admin-users-label-h2 {
-  font-size: 40px;
-  margin: 20px 0 20px 40px;
+    font-size: 40px;
+    margin: 20px 0 20px 40px;
 }
 
-.admin-users-contents-container {
-  width: 100%;
-  margin-bottom: 40px;
-}
+/* Users Classification */
 
 .admin-users-add-classification-container {
-  width: 90%;
-  gap: 0.25in;
-  margin-bottom: 20px;
+    width: 90%;
+    gap: 0.25in;
+    margin-bottom: 20px;
 }
 
 .admin-users-classification-container {
-  width: 90%;
+    width: 90%;
 }
 
 .admin-users-classification {
-  width: 100%;
-  height: 50px;
-  font-size: 17.5px;
-  border-style: solid;
-  transition: all 0.35s;
+    width: 100%;
+    height: 45px;
+    font-size: 17.5px;
+    border-style: solid;
+    border-width: 1px;
+    transition: all 0.35s;
 }
 
 .admin-users-classification:hover {
-  color: #ffffff;
-  background-color: #858585;
+    color: #FFFFFF;
+    background-color: #858585;
 }
 
 .admin-users-classification:focus {
-  outline: 1px solid #007bff;
+    outline: 1px solid #007bff;
 }
 
 .admin-users-classification option {
-  background-color: #ffffff;
-  color: #000000;
-  pointer-events: none;
+    background-color: #FFFFFF;
+    color: #000000;
+    pointer-events: none;
 }
 
 .admin-users-add-user-container {
-  width: 10%;
+    width: 10%;
 }
 
 .admin-users-add-user-button {
-  background-color: #42bb4e;
-  color: #ffffff;
-  width: 100%;
-  height: 50px;
-  font-size: 15px;
-  border-style: solid;
-  border-width: 1px;
-  transition: all 0.35s;
+    background-color: #42BB4E;
+    color: #FFFFFF;
+    width: 100%;
+    height: 45px;
+    font-size: 15px;
+    border-style: solid;
+    border-width: 1px;
+    transition: all 0.35s;
 }
 
 .admin-users-add-user-button:hover {
-  color: rgb(2, 107, 107);
+    color: rgb(2, 107, 107);
 }
+
+/* Users Table */
 
 .users-list-container {
-  width: 90%;
+    width: 90%;
+    margin: 0 auto;
 }
 
-.admin-users-head th {
-  font-size: 17.5px;
-  font-weight: bold;
+.users-list-container tr {
+    height: 40px;
 }
 
+.users-list-container th {
+    font-size: 17.5px;
+    font-weight: bold;
+}
+
+.admin-users-body th, 
 .admin-users-body td {
-  font-size: 17.5px;
+    word-wrap: break-word;
+}
+
+.users-list-container td {
+    font-size: 15px;
 }
 
 .admin-users-actions-buttons-container .admin-users-view-button,
 .admin-users-actions-buttons-container .admin-users-edit-button {
-  margin-right: 10px;
+    margin-right: 5px;
 }
 
 .admin-users-actions-buttons-container .admin-users-view-button,
 .admin-users-actions-buttons-container .admin-users-edit-button,
 .admin-users-actions-buttons-container .admin-users-delete-button {
-  font-size: 15px;
-  width: 75px;
-  height: 35px;
-  transition: all 0.35s;
+    font-size: 12.5px;
+    height: 35px;
+    transition: all 0.35s;
 }
 
+/* Modal - View Details */
+
+.admin-user-view-details-modal {
+    padding-top: 75px;
+}
+
+.admin-user-view-details-modal-header h5 {
+    font-size: 17.5px;
+}
+
+.admin-user-view-details-modal-body {
+    font-size: 15px;
+}
+
+.admin-user-view-details-modal-body p {
+    margin-bottom: 5px;
+}
+
+.admin-user-view-details-modal-footer {
+    font-size: 17.5px;
+}
+
+.admin-user-view-details-modal-footer p {
+    margin-bottom: 0;
+}
+
+/* Modal */
+
 .admin-users-add-edit-modal {
-  padding-top: 75px;
+    padding-top: 75px;
 }
 
 .admin-users-form {
-  width: 90%;
+    width: 90%;
 }
 
 .admin-users-add-edit-details-group .admin-users-modal-label {
-  font-family: "Roboto", sans-serif;
-  font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
 }
 
 .admin-users-form input[type="text"],
@@ -3475,14 +4289,14 @@
 .admin-users-form input[type="date"],
 .admin-users-form input[type="email"],
 .admin-users-form select {
-  height: 50px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #000000;
-  border-radius: 10px;
-  outline: none;
-  font-size: 15px;
-  transition: all 0.35s;
+    height: 50px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+    transition: all 0.35s;
 }
 
 .admin-users-group1-form-container,
@@ -3492,200 +4306,331 @@
 .admin-users-group5-form-container,
 .admin-users-group6-form-container,
 .admin-users-group7-form-container {
-  width: 90%;
-  gap: 10px;
+    width: 90%;
+    gap: 10px;
 }
+
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
-  .admin-users-label-h2 {
-    font-size: 37.5px;
-  }
 
-  .admin-users-classification-container {
-    width: 87.5%;
-  }
+    .admin-users-label-h2 {
+        font-size: 37.5px;
+    }
 
-  .admin-users-add-user-container {
-    width: 12.5%;
-  }
+    /* Users Classification */
 
-  .admin-users-add-user-button {
-    height: 50px;
-    font-size: 15px;
-  }
+    .admin-users-classification-container {
+        width: 87.5%;
+    }
 
-  .admin-users-head th {
-    font-size: 15px;
-  }
+    .admin-users-classification {
+        height: 40px;
+        font-size: 15px;
+    }
 
-  .admin-users-body td {
-    font-size: 15px;
-  }
+    .admin-users-add-user-container {
+        width: 12.5%;
+    }
 
-  .admin-users-actions-buttons-container .admin-users-view-button,
-  .admin-users-actions-buttons-container .admin-users-edit-button,
-  .admin-users-actions-buttons-container .admin-users-delete-button {
-    font-size: 12.5px;
-  }
+    .admin-users-add-user-button {
+        height: 40px;
+        font-size: 12.5px;
+    }
+
+    /* Users Table */
+
+    .users-list-container tr {
+        height: 35px;
+    }
+    
+    .users-list-container th {
+        font-size: 15px;
+    }
+    
+    .users-list-container td {
+        font-size: 12.5px;
+    }
+    
+    .admin-users-actions-buttons-container .admin-users-view-button,
+    .admin-users-actions-buttons-container .admin-users-edit-button {
+        margin-right: 5px;
+    }
+
+    .admin-users-actions-buttons-container .admin-users-view-button,
+    .admin-users-actions-buttons-container .admin-users-edit-button,
+    .admin-users-actions-buttons-container .admin-users-delete-button {
+        font-size: 10px;
+        height: 30px;
+    }
+
+    /* Modal - View Details */
+
+    .admin-user-view-details-modal-header h5 {
+        font-size: 15px;
+    }
+
+    .admin-user-view-details-modal-body {
+        font-size: 12.5px;
+    }
+
+    .admin-user-view-details-modal-body p {
+        margin-bottom: 4px;
+    }
+
+    .admin-user-view-details-modal-footer {
+        font-size: 15px;
+    }
+
+    /* Modal */
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .admin-users-label-h2 {
-    font-size: 35px;
-  }
 
-  .admin-users-classification-container {
-    width: 85%;
-  }
+    .admin-users-label-h2 {
+        font-size: 35px;
+    }
 
-  .admin-users-classification {
-    height: 45px;
-    font-size: 12.5px;
-  }
+    /* Users Classification */
 
-  .admin-users-add-user-container {
-    width: 15%;
-  }
+    .admin-users-classification-container {
+        width: 85%;
+    }
 
-  .admin-users-add-user-button {
-    height: 45px;
-    font-size: 12.5px;
-  }
+    .admin-users-classification {
+        height: 35px;
+        font-size: 12.5px;
+    }
 
-  .admin-users-head th {
-    font-size: 12.5px;
-  }
+    .admin-users-add-user-container {
+        width: 15%;
+    }
 
-  .admin-users-body td {
-    font-size: 12.5px;
-  }
+    .admin-users-add-user-button {
+        height: 35px;
+        font-size: 10px;
+    }
 
-  .admin-users-actions-buttons-container .admin-users-view-button,
-  .admin-users-actions-buttons-container .admin-users-edit-button {
-    margin-right: 5px;
-  }
+    /* Users Table */
 
-  .admin-users-actions-buttons-container .admin-users-view-button,
-  .admin-users-actions-buttons-container .admin-users-edit-button,
-  .admin-users-actions-buttons-container .admin-users-delete-button {
-    font-size: 10px;
-    width: 55px;
-    height: 32.5px;
-  }
+    .users-list-container tr {
+        height: 30px;
+    }
+    
+    .users-list-container th {
+        font-size: 12.5px;
+    }
+    
+    .users-list-container td {
+        font-size: 10px;
+    }
+
+    .admin-users-actions-buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-users-actions-buttons-container .admin-users-view-button,
+    .admin-users-actions-buttons-container .admin-users-edit-button {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    .admin-users-actions-buttons-container .admin-users-view-button,
+    .admin-users-actions-buttons-container .admin-users-edit-button,
+    .admin-users-actions-buttons-container .admin-users-delete-button {
+        font-size: 7.5px;
+        height: 25px;
+    }
+
+    /* Modal - View Details */
+
+    .admin-user-view-details-modal-header h5 {
+        font-size: 12.5px;
+    }
+
+    .admin-user-view-details-modal-body {
+        font-size: 10px;
+    }
+
+    .admin-user-view-details-modal-body p {
+        margin-bottom: 3px;
+    }
+
+    .admin-user-view-details-modal-footer {
+        font-size: 12.5px;
+    }
+
+    /* Modal */
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-  .admin-users-container {
-    left: 0%;
-    width: 100%;
-  }
 
-  .admin-users-label-h2 {
-    font-size: 35px;
-    margin: 20px 0 20px 25px;
-  }
+    .admin-users-container {
+        left: 0%;
+        width: 100%;
+    }
 
-  .admin-users-classification-container {
-    width: 82.5%;
-  }
+    .admin-users-label-h2 {
+        font-size: 35px;
+        margin: 20px 0 20px 25px;
+    }
 
-  .admin-users-classification {
-    height: 45px;
-    font-size: 12.5px;
-  }
+    /* Users Classification */
 
-  .admin-users-add-user-container {
-    width: 17.5%;
-  }
+    .admin-users-classification-container {
+        width: 82.5%;
+    }
 
-  .admin-users-add-user-button {
-    height: 45px;
-    font-size: 12.5px;
-  }
+    .admin-users-classification {
+        height: 35px;
+        font-size: 12.5px;
+    }
 
-  .admin-users-head th {
-    font-size: 10px;
-  }
+    .admin-users-add-user-container {
+        width: 17.5%;
+    }
 
-  .admin-users-body td {
-    font-size: 10px;
-  }
+    .admin-users-add-user-button {
+        height: 35px;
+        font-size: 10px;
+    }
 
-  .admin-users-actions-buttons-container {
-    flex-direction: column;
-    align-items: center;
-  }
+    /* Users Table */
 
-  .admin-users-actions-buttons-container .admin-users-view-button,
-  .admin-users-actions-buttons-container .admin-users-edit-button {
-    margin-right: 0;
-    margin-bottom: 2.5px;
-  }
+    .users-list-container tr {
+        height: 30px;
+    }
+    
+    .users-list-container th {
+        font-size: 12.5px;
+    }
+    
+    .users-list-container td {
+        font-size: 10px;
+    }
 
-  .admin-users-actions-buttons-container .admin-users-view-button,
-  .admin-users-actions-buttons-container .admin-users-edit-button,
-  .admin-users-actions-buttons-container .admin-users-delete-button {
-    font-size: 10px;
-    width: 55px;
-    height: 30px;
-  }
+    .admin-users-actions-buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-users-actions-buttons-container .admin-users-view-button,
+    .admin-users-actions-buttons-container .admin-users-edit-button {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    .admin-users-actions-buttons-container .admin-users-view-button,
+    .admin-users-actions-buttons-container .admin-users-edit-button,
+    .admin-users-actions-buttons-container .admin-users-delete-button {
+        font-size: 7.5px;
+        height: 25px;
+    }
+
+    /* Modal - View Details */
+
+    .admin-user-view-details-modal-header h5 {
+        font-size: 12.5px;
+    }
+
+    .admin-user-view-details-modal-body {
+        font-size: 10px;
+    }
+
+    .admin-user-view-details-modal-body p {
+        margin-bottom: 3px;
+    }
+
+    .admin-user-view-details-modal-footer {
+        font-size: 12.5px;
+    }
+
+    /* Modal */
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
-  .admin-users-container {
-    left: 0%;
-    width: 100%;
-  }
 
-  .admin-users-label-h2 {
-    font-size: 30px;
-    margin: 20px 0 20px 20px;
-  }
+    .admin-users-container {
+        left: 0%;
+        width: 100%;
+    }
 
-  .admin-users-classification-container {
-    width: 80%;
-  }
+    .admin-users-label-h2 {
+        font-size: 30px;
+        margin: 20px 0 20px 20px;
+    }
 
-  .admin-users-classification {
-    height: 35px;
-    font-size: 10px;
-  }
+    /* Users Classification */
 
-  .admin-users-add-user-container {
-    width: 20%;
-  }
+    .admin-users-classification-container {
+        width: 80%;
+    }
 
-  .admin-users-add-user-button {
-    height: 35px;
-    font-size: 10px;
-  }
+    .admin-users-classification {
+        height: 25px;
+        font-size: 10px;
+    }
 
-  .admin-users-head th {
-    font-size: 7.5px;
-  }
+    .admin-users-add-user-container {
+        width: 20%;
+    }
 
-  .admin-users-body td {
-    font-size: 7.5px;
-  }
+    .admin-users-add-user-button {
+        height: 25px;
+        font-size: 7.5px;
+    }
 
-  .admin-users-actions-buttons-container {
-    flex-direction: column;
-    align-items: center;
-  }
+    /* Users Table */
 
-  .admin-users-actions-buttons-container .admin-users-view-button,
-  .admin-users-actions-buttons-container .admin-users-edit-button {
-    margin-right: 0;
-    margin-bottom: 2.5px;
-  }
+    .users-list-container tr {
+        height: 20px;
+    }
+    
+    .users-list-container th {
+        font-size: 10px;
+    }
+    
+    .users-list-container td {
+        font-size: 7.5px;
+    }
 
-  .admin-users-actions-buttons-container .admin-users-view-button,
-  .admin-users-actions-buttons-container .admin-users-edit-button,
-  .admin-users-actions-buttons-container .admin-users-delete-button {
-    font-size: 7.5px;
-    width: 40px;
-    height: 25px;
-  }
+    .admin-users-actions-buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-users-actions-buttons-container .admin-users-view-button,
+    .admin-users-actions-buttons-container .admin-users-edit-button {
+        margin-right: 0;
+        margin-bottom: 2.5px;
+    }
+
+    .admin-users-actions-buttons-container .admin-users-view-button,
+    .admin-users-actions-buttons-container .admin-users-edit-button,
+    .admin-users-actions-buttons-container .admin-users-delete-button {
+        font-size: 5px;
+        height: 25px;
+    }
+
+    /* Modal - View Details */
+
+    .admin-user-view-details-modal-header h5 {
+        font-size: 10px;
+    }
+
+    .admin-user-view-details-modal-body {
+        font-size: 7.5px;
+    }
+
+    .admin-user-view-details-modal-body p {
+        margin-bottom: 2px;
+    }
+
+    .admin-user-view-details-modal-footer {
+        font-size: 10px;
+    }
+
+    /* Modal */
 }

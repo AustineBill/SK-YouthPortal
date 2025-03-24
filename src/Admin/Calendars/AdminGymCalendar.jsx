@@ -4,17 +4,18 @@ import "react-calendar/dist/Calendar.css";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import axios from "axios";
 
-const AdminGymCalendar = ({ blockedDates, generateTimeSlots }) => {
+const AdminGymCalendar = () => {
   const [calendarReservations, setCalendarReservations] = useState([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("");
+  const [timeGap, setTimeGap] = useState(1);
+  const [blockedDates, setBlockedDates] = useState([]);
 
   useEffect(() => {
     const fetchCalendarReservations = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend-ssmj.onrender.com/ViewSched"
+          "https://isked-backend.onrender.com/ViewSched"
         );
-        console.log("Fetched Reservations:", response.data);
         setCalendarReservations(response.data);
       } catch (error) {
         console.error("Error fetching calendar data:", error);
@@ -23,21 +24,82 @@ const AdminGymCalendar = ({ blockedDates, generateTimeSlots }) => {
     fetchCalendarReservations();
   }, []);
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const [dateRes, timeRes] = await Promise.all([
+          axios.get("https://isked-backend.onrender.com/settings"),
+          axios.get("https://isked-backend.onrender.com/time-settings"),
+        ]);
+
+        setBlockedDates(
+          dateRes.data.blocked_dates.map((date) => ({
+            start: date.start_date,
+            end: date.end_date,
+          }))
+        );
+        setTimeGap(timeRes.data?.time_gap || 1); // Defaults to 1 if empty
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchSettings();
+  }, []);
+
+  const generateTimeSlots = () => {
+    const slots = [];
+    let startTime = 9; // Start at 9 AM
+    let endTime = 19; // End at 7 PM (24-hour format)
+
+    for (let hour = startTime; hour < endTime; hour += timeGap) {
+      let startHour = hour;
+      let endHour = hour + timeGap;
+
+      if (endHour > endTime) break; // Stop if the end exceeds the available hours
+
+      let startLabel =
+        startHour < 12
+          ? `${startHour}:00 AM`
+          : startHour === 12
+          ? `12:00 PM`
+          : `${startHour - 12}:00 PM`;
+      let endLabel =
+        endHour < 12
+          ? `${endHour}:00 AM`
+          : endHour === 12
+          ? `12:00 PM`
+          : `${endHour - 12}:00 PM`;
+
+      slots.push(`${startLabel} - ${endLabel}`);
+    }
+
+    return slots;
+  };
+
   const filterCalendarReservations = (date) => {
     const normalizedDate = new Date(date).setHours(0, 0, 0, 0);
+
     return calendarReservations.filter((res) => {
       const startDate = new Date(res.start_date).setHours(0, 0, 0, 0);
       const endDate = new Date(res.end_date).setHours(23, 59, 59, 999);
 
-      // Ensure the reservation time slot matches exactly (e.g., "1:00 PM - 2:00 PM")
-      const matchesTimeSlot = selectedTimeSlot
-        ? res.time_slot.trim() === selectedTimeSlot.trim()
-        : true;
+      if (!(normalizedDate >= startDate && normalizedDate <= endDate)) {
+        return false;
+      }
+
+      if (!selectedTimeSlot) {
+        return true; // No time filter applied
+      }
+
+      // Normalize time slot format before comparison
+      const normalizeTimeSlot = (slot) =>
+        slot
+          .replace(/\s+/g, "") // Remove spaces
+          .toLowerCase(); // Convert to lowercase
 
       return (
-        normalizedDate >= startDate &&
-        normalizedDate <= endDate &&
-        matchesTimeSlot // Ensure exact match of time slot
+        normalizeTimeSlot(res.time_slot) === normalizeTimeSlot(selectedTimeSlot)
       );
     });
   };
@@ -47,8 +109,24 @@ const AdminGymCalendar = ({ blockedDates, generateTimeSlots }) => {
 
     const today = new Date().setHours(0, 0, 0, 0);
     const normalizedDate = new Date(date).setHours(0, 0, 0, 0);
+
     if (normalizedDate < today) return "disabled";
     if (date.getDay() === 0) return "disabled";
+
+    // Check if date is within any group reservation period
+    const isWithinGroupReservation = calendarReservations.some((res) => {
+      if (res.reservation_type === "Group") {
+        const startDate = new Date(res.start_date).setHours(0, 0, 0, 0);
+        const endDate = new Date(res.end_date).setHours(23, 59, 59, 999);
+        return normalizedDate >= startDate && normalizedDate <= endDate;
+      }
+      return false;
+    });
+
+    if (isWithinGroupReservation) {
+      return "unavailable"; // Red means unavailable due to Group reservation
+    }
+
     if (
       blockedDates.some((blocked) => {
         const start = new Date(blocked.start).setHours(0, 0, 0, 0);
@@ -56,20 +134,9 @@ const AdminGymCalendar = ({ blockedDates, generateTimeSlots }) => {
         return normalizedDate >= start && normalizedDate <= end;
       })
     ) {
-      return "blocked";
+      return "blocked"; // Another unavailable status
     }
 
-    const dailyReservations = filterCalendarReservations(date);
-    let totalReservations = 0;
-    dailyReservations.forEach((res) => {
-      if (res.reservation_type === "Group") {
-        totalReservations += 5;
-      } else {
-        totalReservations += 1;
-      }
-    });
-
-    if (totalReservations >= 5) return "unavailable";
     return "available";
   };
 
@@ -108,9 +175,24 @@ const AdminGymCalendar = ({ blockedDates, generateTimeSlots }) => {
           className={"gr-calendar rounded"}
           minDate={new Date()}
           tileClassName={tileClassName}
-          tileDisabled={({ date, view }) =>
-            view === "month" && date.getDay() === 0
-          }
+          tileDisabled={({ date, view }) => {
+            if (view !== "month") return false;
+
+            const normalizedDate = new Date(date).setHours(0, 0, 0, 0);
+
+            // Disable Sundays
+            if (date.getDay() === 0) return true;
+
+            // Disable all blocked dates
+            return blockedDates.some((blocked) => {
+              if (!blocked.start || !blocked.end) return false;
+
+              const start = new Date(blocked.start).setHours(0, 0, 0, 0);
+              const end = new Date(blocked.end).setHours(23, 59, 59, 999);
+
+              return normalizedDate >= start && normalizedDate <= end;
+            });
+          }}
           tileContent={({ date, view }) => {
             if (view !== "month") return null;
             const dailyReservations = filterCalendarReservations(date);

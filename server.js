@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { Pool } = require("pg");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
@@ -10,6 +9,8 @@ const moment = require("moment-timezone");
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 const crypto = require("crypto");
+const cloudinary = require("cloudinary").v2;
+const { Pool } = require("pg");
 
 const { generateRandomId } = require("./src/WebStructure/Codex");
 
@@ -18,17 +19,17 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.json({ limit: "20mb" })); // Allow up to 20MB for JSON payloads
-app.use(express.urlencoded({ limit: "20mb", extended: true })); // Allow up to 20MB for URL-encoded payloads
+app.use(express.json({ limit: "20mb" }));
+app.use(express.urlencoded({ limit: "20mb", extended: true }));
 
 const pool = new Pool({
-  user: "ufjaqr5qssmbmr",
-  host: "c3gtj1dt5vh48j.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com", //cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com
-  database: "dbmosddvg6eh1i", //dalvnvq3lud30l
-  password: "p219a0f2b7045fe1430be3a5fac15f713e36fc4223fa01877810dad5a57385233",
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
   ssl: {
-    rejectUnauthorized: false, // This allows connections even without a certificate. Set to true for stricter security.
+    rejectUnauthorized: false,
   },
 });
 
@@ -51,22 +52,19 @@ app.get("/", (req, res) => {
 
 // Nodemailer transporter
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true, // Ensures SSL is used
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
+  secure: true,
   auth: {
-    user: "austinebillryannmalic@gmail.com", // Your Gmail address
-    pass: "htsyzbfwazgqmxzo", // Your app password for Gmail (don't use your regular Gmail password)
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
 
-const cloudinary = require("cloudinary").v2;
-
-// Configuration
 cloudinary.config({
-  cloud_name: "diewc7vew",
-  api_key: "438357342246287",
-  api_secret: "pHmXJT1fLBepc4PYcbemcqgE1mc", // Replace with your actual secret key
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET, // Replace with your actual secret key
 });
 
 /**
@@ -87,12 +85,6 @@ async function uploadImage(path) {
   }
 }
 
-// Example usage:
-// Call the function when needed (replace '/path/to/image.jpg' with the actual image path)
-// uploadImage('/home/a4meta/Pictures/tropic_island_morning.jpg')
-//     .then((url) => console.log("Uploaded image URL:", url))
-//     .catch((error) => console.error("Upload failed:", error));
-
 module.exports = { uploadImage };
 
 /********* Website ******** */
@@ -106,7 +98,6 @@ app.post("/check-email", async (req, res) => {
   const currentTime = Date.now();
 
   try {
-    // Check if the email has been sent a code recently
     if (
       emailTimestamps[email] &&
       currentTime - emailTimestamps[email] < 3 * 60 * 1000
@@ -166,16 +157,12 @@ app.post("/change-password", async (req, res) => {
   const { email, newPassword } = req.body;
 
   try {
-    // Hash the new password
     const hashedPassword = await bcrypt.hash(newPassword, 10); // 10 salt rounds
 
-    // Update the password in the database
     await pool.query(
       "UPDATE users SET password = $1 WHERE email_address = $2",
       [hashedPassword, email]
     );
-
-    // Remove the verification code (assuming a `verificationCodes` object is being used for email verification)
     if (verificationCodes[email]) {
       delete verificationCodes[email];
     }
@@ -200,7 +187,6 @@ app.post("/ValidateCode", async (req, res) => {
       return res.status(400).json({ message: "Invalid Activation Code" });
     }
 
-    // If the user exists, send the username and password back in the response for updating
     res.status(200).json({
       message:
         "Activation code validated. Please change your username and password.",
@@ -216,7 +202,6 @@ app.post("/UpdateAccount", async (req, res) => {
   const { decryptedCode, username, password } = req.body;
 
   try {
-    // Ensure required fields are provided
     if (!decryptedCode || !username || !password) {
       return res.status(400).json({ message: "All fields are required." });
     }
@@ -390,8 +375,6 @@ app.post("/login", async (req, res) => {
 
 app.get("/Profile/:username", async (req, res) => {
   const username = req.params.username;
-  console.log("Fetching profile for:", username);
-
   try {
     const query = `
       SELECT id, username, firstname, lastname, street, province, city, barangay, zone,
@@ -401,12 +384,8 @@ app.get("/Profile/:username", async (req, res) => {
       FROM Users
       WHERE username = $1
     `;
-
     const result = await pool.query(query, [username]);
-    console.log("Query Result:", result.rows);
-
     if (result.rows.length === 0) {
-      console.log("User not found:", username);
       return res.status(404).json({ message: "User not found" });
     }
 
@@ -461,14 +440,29 @@ app.post("/change-password-only", async (req, res) => {
 });
 
 app.post("/reservations", async (req, res) => {
-  const { user_id, reservation_type, start_date, end_date, status, time_slot } =
-    req.body;
+  const {
+    user_id,
+    reservation_id,
+    reservation_type,
+    start_date,
+    end_date,
+    status,
+    time_slot,
+  } = req.body;
 
   try {
     const result = await pool.query(
-      `INSERT INTO Schedules (user_id, reservation_type, start_date, end_date, status, time_slot)
-         VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [user_id, reservation_type, start_date, end_date, status, time_slot]
+      `INSERT INTO Schedules (user_id, reservation_id, reservation_type, start_date, end_date, status, time_slot)
+         VALUES ($1, $2, $3, $4, $5, $6 , $7) RETURNING *`,
+      [
+        user_id,
+        reservation_id,
+        reservation_type,
+        start_date,
+        end_date,
+        status,
+        time_slot,
+      ]
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -482,7 +476,7 @@ app.get("/reservations", async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
+      `SELECT id, reservation_id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
          FROM Schedules 
          WHERE user_id = $1 AND is_archived = false
          ORDER BY start_date ASC`,
@@ -882,10 +876,7 @@ app.delete("/equipment/:reservation_id", async (req, res) => {
 });
 
 app.post("/Feedback", async (req, res) => {
-  console.log("Received feedback:", req.body); // ✅ Debugging
-
   const { user_id, rating, comment } = req.body;
-
   if (!user_id || !rating || !comment) {
     return res.status(400).json({ error: "All fields are required." });
   }
@@ -951,33 +942,6 @@ app.get("/ViewSched", async (req, res) => {
     res.status(500).json({ error: err.message }); // Send error message if there's an issue
   }
 });
-
-/*app.get("/ViewSched", async (req, res) => {
-  try {
-    const result = await pool.query(`
-      SELECT 
-        s.start_date, 
-        s.end_date, 
-        s.time_slot, 
-        u.username, 
-        s.reservation_type
-    FROM Schedules s
-    JOIN Users u ON s.user_id = u.id
-    WHERE (s.is_archived IS NULL OR s.is_archived = FALSE)
-      AND s.start_date >= CURRENT_DATE::date
-    ORDER BY s.start_date ASC
-    `);
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "No schedules found" });
-    }
-
-    res.json(result.rows); // Send the result as a JSON response
-  } catch (err) {
-    console.error("Error during query execution:", err);
-    res.status(500).json({ error: err.message }); // Send error message if there's an issue
-  }
-});*/
 
 app.get("/ViewEquipment", async (req, res) => {
   try {
@@ -1151,7 +1115,7 @@ app.post("/ValidateReservation", async (req, res) => {
     // Query to check for overlapping reservations only for this user
     const overlapQuery = `
       SELECT * FROM Schedules 
-      WHERE user_id = $1 -- Only check this user's reservations
+      WHERE user_id = $1
       AND (is_archived IS NULL OR is_archived = FALSE) -- Exclude archived reservations
       AND (
         (start_date <= $2 AND end_date >= $2) OR -- Overlap with new start date
@@ -1197,6 +1161,141 @@ app.post("/CheckEquipment", async (req, res) => {
 });
 
 //Admin Side
+
+app.get("/date-settings", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM date_settings ORDER BY id ASC"
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// Get the single time setting (only one row exists)
+app.get("/time-settings", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM time_settings LIMIT 1");
+    res.json(result.rows[0] || {}); // Return empty object if no data exists
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+/*app.get("/settings", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM settings ORDER BY created_at DESC"
+    );
+
+    const timeGapRow = result.rows.find((row) => row.time_gap !== null);
+    const timeGap = timeGapRow ? timeGapRow.time_gap : 1; // Default time gap if none found
+
+    const blockedDates = result.rows.filter((row) => row.start_date !== null);
+
+    res.json({ blocked_dates: blockedDates, time_gap: timeGap });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});*/
+
+app.get("/settings", async (req, res) => {
+  try {
+    const timeGapResult = await pool.query(`
+      SELECT time_gap FROM settings 
+      WHERE time_gap IS NOT NULL 
+      ORDER BY created_at DESC 
+      LIMIT 1
+    `);
+
+    const timeGap =
+      timeGapResult.rows.length > 0 ? timeGapResult.rows[0].time_gap : 1;
+
+    // Get blocked dates
+    const blockedDatesResult = await pool.query(`
+      SELECT start_date, end_date FROM settings 
+      WHERE start_date IS NOT NULL
+    `);
+
+    res.json({
+      blocked_dates: blockedDatesResult.rows,
+      time_gap: timeGap,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+app.post("/settings/time-gap", async (req, res) => {
+  try {
+    const { time_gap } = req.body;
+
+    if (!time_gap || isNaN(time_gap)) {
+      return res.status(400).json({ error: "Invalid time gap value!" });
+    }
+
+    // Check if time_settings already has a row
+    const checkExisting = await pool.query(
+      "SELECT * FROM time_settings LIMIT 1"
+    );
+
+    if (checkExisting.rowCount === 0) {
+      // Insert if no row exists
+      await pool.query(
+        "INSERT INTO time_settings (id, time_gap) VALUES (TRUE, $1)",
+        [time_gap]
+      );
+    } else {
+      // Update if a row exists
+      await pool.query(
+        "UPDATE time_settings SET time_gap = $1, created_at = NOW()",
+        [time_gap]
+      );
+    }
+
+    res.json({ message: "Time gap updated successfully!" });
+  } catch (err) {
+    console.error("Error updating time gap:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// Insert blocked date range
+app.post("/settings/block-dates", async (req, res) => {
+  const { start_date, end_date } = req.body;
+
+  if (!start_date) {
+    return res.status(400).json({ error: "Start date is required" });
+  }
+
+  try {
+    await pool.query(
+      "INSERT INTO date_settings (start_date, end_date) VALUES ($1, $2);",
+      [start_date, end_date || null]
+    );
+    res.json({ message: "Blocked date range added successfully" });
+  } catch (error) {
+    console.error("Error inserting blocked dates:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.delete("/settings/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query("DELETE FROM settings WHERE id = $1", [id]);
+    res.send("Block date removed");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
 /********* Contact Us na ito ******** */
 app.get("/contact", async (req, res) => {
   try {
@@ -1241,33 +1340,6 @@ app.get("/Website", async (req, res) => {
 });
 
 const webUpload = multer({ storage: skOfficialsStorage });
-
-/*app.put("/Website", webUpload.single("image"), async (req, res) => {
-  const { description, objectives, mission, vision } = req.body;
-
-  // Validate the input data
-  if (!description || !objectives || !mission || !vision) {
-    return res.status(400).json({ error: "All fields are required" });
-  }
-
-  if (!req.file) {
-    return res.status(400).json({ error: "All fields are required" });
-  }
-
-  const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
-
-  try {
-    // Update website data in the Website table
-    await pool.query(
-      "UPDATE Website SET description = $1, objectives = $2, mission = $3, vision = $4, image_url = $6 WHERE id = $5",
-      [description, objectives, mission, vision, 1, uploadedImageUrl]
-    );
-    res.json({ message: "Website details updated successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error updating website details" });
-  }
-});*/
 
 app.put("/Website", webUpload.single("image"), async (req, res) => {
   const { description, objectives, mission, vision } = req.body;
@@ -1595,8 +1667,6 @@ app.get("/users", async (req, res) => {
 
 // Insert into the database with random ID generation
 app.post("/users", async (req, res) => {
-  console.log("Request Body:", req.body);
-
   const {
     username,
     password,
@@ -1620,11 +1690,9 @@ app.post("/users", async (req, res) => {
     registered_national_voter,
   } = req.body;
 
-  // Generate a random 6-character ID
   const userId = generateRandomId();
 
   try {
-    // Check for duplicate user data
     const checkDuplicateQuery = `
       SELECT * FROM Users 
       WHERE email_address = $1 OR (firstname = $2 AND lastname = $3)
@@ -1783,9 +1851,6 @@ app.put("/users/:id", async (req, res) => {
 
 app.delete("/users/:id", async (req, res) => {
   const { id } = req.params;
-
-  console.log("Received ID for deletion:", id); // Log the received ID
-
   try {
     const result = await pool.query(
       "DELETE FROM users WHERE id = $1 RETURNING *",
@@ -1793,59 +1858,21 @@ app.delete("/users/:id", async (req, res) => {
     );
 
     if (result.rows.length === 0) {
-      console.log("User not found with ID:", id); // Log user not found case
       return res.status(404).send("User not found");
     }
-
-    console.log("User deleted successfully:", result.rows[0]); // Log success
     res.json(result.rows[0]);
   } catch (err) {
-    console.error("Error executing DELETE query:", err); // Log full error
+    console.error("Error executing DELETE query:", err);
     res.status(500).send("Server error");
   }
 });
 
-//admin dashboard
-//admin dashboard start
-// Add this new route to fetch the required user stats for the dashboard
-/*app.get('/admindashboard', async (req, res) => {
-  try {
-    // Query to get the total number of users
-    const usersResult = await pool.query('SELECT COUNT(*) AS total_users FROM users');
-    
-    // Query to get the total number of schedules
-    const schedulesResult = await pool.query('SELECT COUNT(*) AS total_schedules FROM schedules');
-    
-    // Query to get the total number of equipment
-    const equipmentResult = await pool.query('SELECT COUNT(*) AS total_equipment FROM equipment');
-    
-    if (
-      usersResult.rows.length > 0 &&
-      schedulesResult.rows.length > 0 &&
-      equipmentResult.rows.length > 0
-    ) {
-      res.json({
-        total_users: usersResult.rows[0].total_users,
-        total_schedules: schedulesResult.rows[0].total_schedules,
-        total_equipment: equipmentResult.rows[0].total_equipment
-      });
-    } else {
-      res.status(404).json({ message: 'No data found' });
-    }
-  } catch (err) {
-    console.error('Error fetching dashboard data:', err);
-    res.status(500).json({ message: 'Server error' });
-  }
-});*/
 
-// Assuming you have the 'pool' object for your database connection (pg module).
 app.get("/admindashboard", async (req, res) => {
-  const { year } = req.query; // Get the year from the query parameter
+  const { year } = req.query; 
 
   try {
-    const selectedYear = year ? parseInt(year, 10) : new Date().getFullYear(); // Default to current year if no year provided
-
-    // Query for total counts including active and inactive users per year
+    const selectedYear = year ? parseInt(year, 10) : new Date().getFullYear(); 
     const mainQuery = `
       SELECT 
         EXTRACT(YEAR FROM created_at) AS year,
@@ -1862,7 +1889,6 @@ app.get("/admindashboard", async (req, res) => {
       GROUP BY EXTRACT(YEAR FROM created_at);
     `;
 
-    // Query for monthly reservations from the "schedules" table
     const monthlySchedulesQuery = `
       SELECT
         EXTRACT(MONTH FROM created_at) AS month,
@@ -1873,7 +1899,6 @@ app.get("/admindashboard", async (req, res) => {
       ORDER BY EXTRACT(MONTH FROM created_at);
     `;
 
-    // Query for monthly reservations from the "equipment" table
     const monthlyEquipmentQuery = `
       SELECT
         EXTRACT(MONTH FROM created_at) AS month,
@@ -1894,12 +1919,7 @@ app.get("/admindashboard", async (req, res) => {
       GROUP BY rating
       ORDER BY rating;
     `;
-
     const values = [selectedYear];
-
-    //console.log("Running queries with values:", values);
-
-    // Execute all queries
     const [mainResult, schedulesResult, equipmentResult, ratingsResult] =
       await Promise.all([
         pool.query(mainQuery, values),
@@ -1908,7 +1928,6 @@ app.get("/admindashboard", async (req, res) => {
         pool.query(yearlyRatingsQuery, values),
       ]);
 
-    // If no data is found for the given year, respond with a message
     if (!mainResult.rows.length) {
       return res
         .status(404)
@@ -1999,7 +2018,7 @@ app.get("/Allequipments", async (req, res) => {
       reserved_equipment:
         typeof row.reserved_equipment === "string"
           ? JSON.parse(row.reserved_equipment)
-          : row.reserved_equipment, // Use as-is if it's already an object
+          : row.reserved_equipment,
     }));
 
     res.json(formattedResult);
@@ -2012,14 +2031,16 @@ app.get("/Allequipments", async (req, res) => {
 app.get("/Allreservations", async (req, res) => {
   try {
     const result = await pool.query(
-      `SELECT user_id, reservation_type AS program, 
-              TO_CHAR(start_date, 'FMDay, FMDD, YYYY') AS start_date, 
-              TO_CHAR(end_date, 'FMDay, FMDD, YYYY') AS end_date, 
-              status, time_slot 
-       FROM Schedules 
-       WHERE is_archived IS DISTINCT FROM true
-       ORDER BY start_date ASC`
+      `SELECT id, reservation_id, user_id, reservation_type AS program, 
+       TO_CHAR(start_date, 'FMDay, FMDD, YYYY') AS start_date, 
+       TO_CHAR(end_date, 'FMDay, FMDD, YYYY') AS end_date, 
+       status, time_slot 
+      FROM Schedules 
+      WHERE is_archived IS DISTINCT FROM true
+      ORDER BY start_date ASC;
+`
     );
+
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching reservations:", error);
@@ -2027,7 +2048,6 @@ app.get("/Allreservations", async (req, res) => {
   }
 });
 
-// Route to approve equipment reservations
 // Endpoint to mark reservations as "Returned"
 app.post("/markReturned", async (req, res) => {
   const { ids } = req.body; // Array of reservation IDs to mark as returned
@@ -2155,12 +2175,8 @@ app.post("/programs", Programupload.single("image"), async (req, res) => {
       image_url,
     ];
     const result = await pool.query(query, values);
-
-    const newProgram = result.rows[0]; // Get the newly created program from the database response
-
-    console.log("New Program:", newProgram); // This will have the ID auto-generated by the database
-
-    res.status(201).json(newProgram); // Return the new program with image path
+    const newProgram = result.rows[0];
+    res.status(201).json(newProgram);
   } catch (error) {
     console.error("Error inserting program:", error);
     res.status(500).json({ error: "Failed to create program" });

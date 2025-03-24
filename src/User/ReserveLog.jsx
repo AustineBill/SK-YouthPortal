@@ -27,7 +27,7 @@ const ReservationLog = () => {
       try {
         const endpoint =
           selectedCategory === "Facility"
-            ? "https://isked-backend-ssmj.onrender.com/reservations"
+            ? "https://isked-backend.onrender.com/reservations"
             : "https://isked-backend-ssmj.onrender.com/schedule/equipment";
 
         const response = await axios.get(endpoint, {
@@ -103,7 +103,7 @@ const ReservationLog = () => {
               <tr>
                 {selectedCategory === "Facility" ? (
                   <>
-                    <th>ID</th>
+                    <th>Reservation ID</th>
                     <th>Program</th>
                     <th>Start Date</th>
                     <th>End Date</th>
@@ -132,10 +132,10 @@ const ReservationLog = () => {
                 </tr>
               ) : (
                 reservations.map((reservation) => (
-                  <tr key={reservation.id || reservation.reservation_id}>
+                  <tr key={reservation.reservation_id}>
                     {selectedCategory === "Facility" ? (
                       <>
-                        <td>{reservation.id}</td>
+                        <td>{reservation.reservation_id}</td>
                         <td>{reservation.program}</td>
                         <td>{formatDate(reservation.date)}</td>
                         <td>{formatDate(reservation.end_date)}</td>

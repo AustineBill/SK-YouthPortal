@@ -219,35 +219,43 @@ const ManageProgram = () => {
                           program.image_url || "https://via.placeholder.com/100"
                         }
                         alt={program.program_name}
-                        className="admin-program-image"
+                        className="admin-program-image p-0 m-0"
                       />
                     </div>
 
-                    <div className="admin-program-expandedn-details-container">
+                    <div className="admin-program-details-container d-flex align-items-center text-center">
                       <Card.Body>
                         <p className="admin-program-title fw-bold">
                           {program.program_name}
                         </p>
-                        <p className="admin-program-text">{program.heading}</p>
+                        <p className="admin-program-text">
+                          {program.heading}
+                        </p>
+
                         <div className="admin-program-details-buttons-container d-flex justify-content-center">
-                          <button
+                          <Button
+                            variant="primary"
                             onClick={() => handleViewProgram(program)}
-                            className="program-view-button rounded-pill bg-info text-white"
+                            className="program-view-button rounded-pill"
                           >
-                            View
-                          </button>
-                          <button
+                            <i class="bi bi-eye"></i>
+                          </Button>
+
+                          <Button
+                            variant="warning"
                             onClick={() => handleEditProgram(program)}
-                            className="program-edit-button rounded-pill bg-warning text-white"
+                            className="program-edit-button rounded-pill"
                           >
-                            Edit Details
-                          </button>
-                          <button
+                            <i class="bi bi-pencil-square"></i>
+                          </Button>
+
+                          <Button
+                            variant="danger"
                             onClick={() => handleDeleteProgram(program.id)}
-                            className="program-delete-button rounded-pill bg-danger text-white"
+                            className="program-delete-button rounded-pill"
                           >
-                            Delete Program
-                          </button>
+                            <i class="bi bi-trash"></i>
+                          </Button>
                         </div>
 
                         {/* Expanded Details */}

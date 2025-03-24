@@ -3,11 +3,13 @@ import { Table, Dropdown, Button, Modal } from "react-bootstrap";
 import AdminGymCalendar from "./Calendars/AdminGymCalendar";
 import "./styles/AdminGymReservation.css";
 import axios from "axios";
+//import { TabPanel } from "@restart/ui";
 
 const AdminGymReservation = () => {
   const [reservations, setReservations] = useState([]);
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
+  const [statusFilter, setStatusFilter] = useState("All");
   const [selectedReservations, setSelectedReservations] = useState([]);
 
   const [timeGap, setTimeGap] = useState(1);
@@ -21,7 +23,7 @@ const AdminGymReservation = () => {
     const fetchReservations = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend-ssmj.onrender.com/Allreservations"
+          "https://isked-backend.onrender.com/Allreservations"
         );
         const activeReservations = response.data.filter(
           (reservation) => !reservation.is_archived
@@ -61,8 +63,17 @@ const AdminGymReservation = () => {
       });
     }
 
+    if (statusFilter !== "All") {
+      filteredData = filteredData.filter((reservation) => {
+        if (statusFilter === "Pending") {
+          return !reservation.status || reservation.status === "Pending"; // Include undefined/null status as Pending
+        }
+        return reservation.status === statusFilter;
+      });
+    }
+
     setFilteredReservations(filteredData);
-  }, [filterOption, reservations]);
+  }, [filterOption, statusFilter, reservations]);
 
   const handleCheckboxChange = (id) => {
     setSelectedReservations((prevSelected) =>
@@ -116,29 +127,6 @@ const AdminGymReservation = () => {
     }
   };
 
-  const generateTimeSlots = () => {
-    const slots = [];
-    for (let hour = 10; hour <= 17; hour += timeGap) {
-      let startHour = hour;
-      let endHour = hour + timeGap;
-
-      let startPeriod = startHour < 12 ? "AM" : startHour === 12 ? "NN" : "PM";
-      let endPeriod = endHour < 12 ? "AM" : endHour === 12 ? "NN" : "PM";
-
-      // Format hours for 12-hour clock (avoid 0:00)
-      if (startHour > 12) startHour -= 12;
-      if (endHour > 12) endHour -= 12;
-
-      let start = `${startHour}:00 ${startPeriod}`;
-      let end = `${endHour}:00 ${endPeriod}`;
-
-      if (endHour <= 17) {
-        slots.push(`${start} - ${end}`);
-      }
-    }
-    return slots;
-  };
-
   return (
     <div className="admin-gym-reservation-container">
       <h2 className="admin-greservation-label-h2 fst-italic">
@@ -150,7 +138,7 @@ const AdminGymReservation = () => {
           className="btn btn-warning me-2"
           onClick={() => setShowTimeGapModal(true)}
         >
-          <i class="bi bi-clock-fill"></i>
+          <i className="bi bi-clock-fill"></i>
         </button>
         <button
           className="btn btn-info me-2"
@@ -160,10 +148,7 @@ const AdminGymReservation = () => {
         </button>
       </div>
 
-      <AdminGymCalendar
-        blockedDates={blockedDates}
-        generateTimeSlots={generateTimeSlots}
-      />
+      <AdminGymCalendar />
 
       <div className="admin-greservation-buttons-table-container">
         <div className="admin-gr-toggle-buttons-container d-flex align-items-center">
@@ -201,6 +186,26 @@ const AdminGymReservation = () => {
           >
             Disapprove
           </button>
+
+          <Dropdown className="gr-toggle-container ms-3">
+            <Dropdown.Toggle className="gr-toggle">
+              {statusFilter}
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="gr-toggle-text">
+              <Dropdown.Item onClick={() => setStatusFilter("All")}>
+                All
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setStatusFilter("Approved")}>
+                Approved
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setStatusFilter("Disapproved")}>
+                Disapproved
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setStatusFilter("Pending")}>
+                Pending
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
 
         <Table className="admin-greservation-table-container table-bordered">
@@ -232,8 +237,8 @@ const AdminGymReservation = () => {
           </thead>
 
           <tbody className="admin-greservation-body text-center">
-            {filteredReservations.map((reservation) => (
-              <tr key={reservation.id}>
+            {filteredReservations.map((reservation, index) => (
+              <tr key={reservation.id || reservation.reservation_id || index}>
                 <td>
                   <input
                     type="checkbox"
@@ -241,19 +246,22 @@ const AdminGymReservation = () => {
                     onChange={() => handleCheckboxChange(reservation.id)}
                   />
                 </td>
-                <td>{reservation.user_id}</td>
+                <td>{reservation.reservation_id}</td>
                 <td>{reservation.program}</td>
                 <td>{reservation.start_date}</td>
                 <td>{reservation.end_date}</td>
                 <td>{reservation.time_slot}</td>
                 <td>{reservation.status || "Pending"}</td>
                 <td>
-                  <Button
-                    variant="danger"
-                    onClick={() => handleCancellation(reservation.id)}
-                  >
-                    Delete
-                  </Button>
+                  <div className="admin-greservation-action-button-container d-flex justify-content-center">
+                    <Button
+                      variant="danger"
+                      className="admin-greservation-delete-button rounded-pill"
+                      onClick={handleCancellation}
+                    >
+                      <i className="bi bi-trash"></i>
+                    </Button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -288,7 +296,26 @@ const AdminGymReservation = () => {
             </Button>
             <Button
               variant="primary"
-              onClick={() => setShowTimeGapModal(false)}
+              onClick={async () => {
+                try {
+                  if (!timeGap || isNaN(timeGap)) {
+                    alert("Invalid time gap value! Please enter a number.");
+                    return;
+                  }
+
+                  await axios.post(
+                    "https://isked-backend.onrender.com/settings/time-gap",
+                    {
+                      time_gap: Number(timeGap),
+                    }
+                  );
+
+                  alert("Time gap updated!");
+                  setShowTimeGapModal(false);
+                } catch (error) {
+                  console.error("Error updating time gap:", error);
+                }
+              }}
             >
               Save
             </Button>
@@ -322,15 +349,29 @@ const AdminGymReservation = () => {
             </Button>
             <Button
               variant="danger"
-              onClick={() => {
-                if (!startBlockDate || !endBlockDate) return;
-
-                const start = new Date(startBlockDate);
-                const end = new Date(endBlockDate);
-                end.setHours(23, 59, 59, 999);
-
-                setBlockedDates([...blockedDates, { start, end }]);
-                setShowBlockModal(false);
+              onClick={async () => {
+                if (!startBlockDate)
+                  return alert("Please select a start date.");
+                try {
+                  await axios.post(
+                    "https://isked-backend.onrender.com/settings/block-dates",
+                    {
+                      start_date: startBlockDate,
+                      end_date: endBlockDate || null,
+                    }
+                  );
+                  alert("Blocked dates added!");
+                  setBlockedDates([
+                    ...blockedDates,
+                    {
+                      start: startBlockDate,
+                      end: endBlockDate || startBlockDate,
+                    },
+                  ]);
+                  setShowBlockModal(false);
+                } catch (error) {
+                  console.error("Error blocking dates:", error);
+                }
               }}
             >
               Block Date Range

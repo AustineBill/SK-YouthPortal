@@ -34,13 +34,13 @@
 }
 
 .year-selection-label {
-    font-size: 17.5px;
+    font-size: 15px;
 }
 
 .year-select {
     width: 30%;
     height: 45px;
-    font-size: 17.5px;
+    font-size: 15px;
     margin-left: 10px;
 }
 
@@ -117,13 +117,13 @@
     }
     
     .year-selection-label {
-        font-size: 15px;
+        font-size: 12.5px;
     }
     
     .year-select {
         width: 30%;
         height: 40px;
-        font-size: 15px;
+        font-size: 12.5px;
         margin-left: 10px;
     }
 
@@ -174,13 +174,13 @@
     }
     
     .year-selection-label {
-        font-size: 12.5px;
+        font-size: 10px;
     }
     
     .year-select {
         width: 30%;
         height: 35px;
-        font-size: 12.5px;
+        font-size: 10px;
         margin-left: 7.5px;
     }
 
@@ -236,13 +236,13 @@
     }
     
     .year-selection-label {
-        font-size: 12.5px;
+        font-size: 10px;
     }
     
     .year-select {
         width: 30%;
         height: 35px;
-        font-size: 12.5px;
+        font-size: 10px;
         margin-left: 5px;
     }
 
@@ -298,13 +298,13 @@
     }
     
     .year-selection-label {
-        font-size: 10px;
+        font-size: 7.5px;
     }
     
     .year-select {
         width: 30%;
         height: 25px;
-        font-size: 10px;
+        font-size: 7.5px;
         margin-left: 2.5px;
     }
 
