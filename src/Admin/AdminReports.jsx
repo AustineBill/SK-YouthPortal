@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import axios from "axios";
-import "../WebStyles/Admin-CSS.css";
+import "./styles/AdminReports.css";
+// import '../WebStyles/Admin-CSS.css';
 
 const Reports = () => {
   const [activeTable, setActiveTable] = useState("users");
@@ -11,8 +12,9 @@ const Reports = () => {
   const [equipmentReservations, setEquipmentReservations] = useState([]);
   const [schedules, setSchedules] = useState([]);
   const [inventory, setInventory] = useState([]);
-  const adminUsername = sessionStorage.getItem("username"); // here
+  const adminUsername = sessionStorage.getItem("username"); // here 
 
+  // Fetch data based on active table
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,9 +44,12 @@ const Reports = () => {
     fetchData();
   }, [activeTable]);
 
+  // Group data by date (date, monthly, or annual)
   const groupDataByDate = (data) => {
     const groupedData = data.reduce((acc, entry) => {
-      const date = new Date(entry.created_at || entry.date || entry.start_date);
+      const date = new Date(
+        entry.created_at || entry.date || entry.start_date || entry.start_time
+      );
       const year = date.getFullYear();
       const month = date.getMonth() + 1;
       const day = date.getDate();
@@ -68,33 +73,97 @@ const Reports = () => {
   };
 
   const groupedUsers = groupDataByDate(usersData);
+  const groupedEquipmentReservations = groupDataByDate(equipmentReservations);
+  const groupedSchedules = groupDataByDate(schedules);
+  const groupedInventory = groupDataByDate(inventory);
 
+  // Generate PDF
   const generatePDF = () => {
     const input = document.getElementById("admin-reports-tables-container");
+    const backgroundImage = `https://res.cloudinary.com/diewc7vew/image/upload/v1737004522/WebImages/fl5p9aafi9r6nvgrmlnf.png`;
 
-    html2canvas(input, { scale: 2 }).then((canvas) => {
+    html2canvas(input, {
+      useCORS: true,
+      backgroundColor: "transparent",
+      scale: 2, // Decrease scale for smaller content size
+    }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
 
       const pdf = new jsPDF({
-        orientation: "landscape",
+        orientation: "landscape", // Use landscape for better table fitting
         unit: "mm",
-        format: [330.6, 216.9], // Legal paper size in landscape
+        format: [330.6, 216.9], // Legal paper size in landscape (355.6mm x 215.9mm)
       });
 
-      pdf.addImage(imgData, "PNG", 10, 10, 280, 180);
-
-      // Define missing variables
-      const adminFontSize = 12;
-      const dateFontSize = 10;
-      const signatureFontSize = 12;
-      const margin = 15;
       const pageWidth = pdf.internal.pageSize.width;
       const pageHeight = pdf.internal.pageSize.height;
+
+      // Add the background image to the first page
+      pdf.addImage(backgroundImage, "PNG", 0, 0, pageWidth, pageHeight);
+
+      const margin = 15; // Add margin to prevent content cutoff
+      const contentWidth = pageWidth - margin * 2;
+      const contentHeight = (canvas.height * contentWidth) / canvas.width;
+
+      const maxHeightPerPage = pageHeight - margin * 2 - 50; // Adjusted space for table (keeping some space for header/footer)
+      let currentYPosition = margin + 50; // Starting position of content (below the header)
+
+      // Check if content fits on one page
+      let contentRemainingHeight = contentHeight;
+
+      // Add content for the first page
+      if (contentRemainingHeight <= maxHeightPerPage) {
+        pdf.addImage(
+          imgData,
+          "PNG",
+          margin,
+          currentYPosition,
+          contentWidth,
+          contentRemainingHeight
+        );
+      } else {
+        // If content exceeds one page, split it across multiple pages
+        while (contentRemainingHeight > 0) {
+          const currentPageHeight = Math.min(
+            contentRemainingHeight,
+            maxHeightPerPage
+          );
+
+          // If the content is close to the signature form area, start a new page
+          if (
+            currentYPosition + currentPageHeight + 50 >=
+            pageHeight - margin
+          ) {
+            pdf.addPage(); // Add new page
+            pdf.addImage(backgroundImage, "PNG", 0, 0, pageWidth, pageHeight);
+            currentYPosition = margin + 50; // Reset Y position for the new page
+          }
+
+          // Add the current page content (table data)
+          pdf.addImage(
+            imgData,
+            "PNG",
+            margin,
+            currentYPosition,
+            contentWidth,
+            currentPageHeight
+          );
+
+          // Decrease remaining content height and adjust Y position for the next page
+          contentRemainingHeight -= currentPageHeight;
+          currentYPosition += currentPageHeight;
+        }
+      }
+
+      // Add admin name and date, signature area
+      const adminFontSize = 13;
+      const dateFontSize = 13;
+      const signatureFontSize = 12;
 
       pdf.setFont("times", "Bold");
       pdf.setFontSize(adminFontSize);
       const adminNameYPosition = pageHeight - 50;
-      pdf.text(`Printed by: ${adminUsername || "N/A"}`, 15, adminNameYPosition);
+      pdf.text(`Printed by: ${adminUsername || "N/A"}`, 15, pdf.internal.pageSize.height - 50); // Display admin username in PDF
 
       pdf.setFontSize(dateFontSize);
       const currentDate = new Date().toLocaleDateString();
@@ -110,7 +179,6 @@ const Reports = () => {
         signatureXPosition + 85,
         signatureYPosition
       );
-
       const centeredXPosition =
         signatureXPosition +
         (85 -
@@ -118,7 +186,6 @@ const Reports = () => {
             pdf.getFontSize()) /
             pdf.internal.scaleFactor) /
           2;
-
       pdf.text(
         "Signature over Printed Name",
         centeredXPosition,
@@ -137,6 +204,7 @@ const Reports = () => {
 
       <div className="admin-reports-generate-classification-date-container d-flex align-items-center">
         <div className="admin-reports-classification-container">
+          {/* Dropdown for selecting table */}
           <select
             value={activeTable}
             onChange={(e) => setActiveTable(e.target.value)}
@@ -149,6 +217,7 @@ const Reports = () => {
           </select>
         </div>
 
+        {/* Dropdown for selecting date sort option */}
         <div className="admin-reports-date-container">
           <select
             value={dateSortOption}
@@ -161,6 +230,8 @@ const Reports = () => {
           </select>
         </div>
 
+
+
         {/* Admin Name and Date Input Fields */}
         <div className="admin-reports-info-container d-flex align-items-center">
           {/* Show admin username */}
@@ -171,7 +242,6 @@ const Reports = () => {
           )}
         </div>
         {/* Generate PDF Button */}
-
         <div className="admin-reports-generate-pdf-container d-flex justify-content-end">
           <button
             className="admin-reports-generate-pdf-button rounded"
@@ -196,17 +266,14 @@ const Reports = () => {
                   <th>Date</th>
                   <th>User ID</th>
                   <th>Name</th>
-                  <th>Youth Classification</th>{" "}
-                  {/* Added Youth Classification column */}
                   <th>Username</th>
                   <th>Email Address</th>
                 </tr>
               </thead>
-
               <tbody className="admin-reports-users-body text-center">
                 {Object.entries(groupedUsers).length === 0 ? (
                   <tr>
-                    <td colSpan="6" className="text-center">
+                    <td colSpan="5" className="text-center">
                       No records found
                     </td>
                   </tr>
@@ -223,15 +290,6 @@ const Reports = () => {
                         {users.map((user) => (
                           <div key={user.id}>
                             {user.firstname} {user.lastname}
-                          </div>
-                        ))}
-                      </td>
-                      <td>
-                        {" "}
-                        {/* Youth Classification */}
-                        {users.map((user) => (
-                          <div key={user.id}>
-                            {user.youth_age_group || "N/A"}
                           </div>
                         ))}
                       </td>
@@ -254,24 +312,192 @@ const Reports = () => {
         )}
 
         {activeTable === "equipment" && (
-          <div>
-            <h2>Equipment Reservations</h2>
-            <table>
-              <thead>
+          <div className="admin-reports-equipment-table">
+            <h2 className="reports-equipment-label-h2">
+              Equipment Reservations
+            </h2>
+            <table className="admin-reports-equipment-table-container table-bordered">
+              <thead className="admin-reports-equipment-head text-center">
                 <tr>
                   <th>Date</th>
-                  <th>Equipment Name</th>
-                  <th>Reserved By</th>
+                  <th>User ID</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Reserved Equipment</th>
+                  <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
-                {equipmentReservations.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.date}</td>
-                    <td>{item.equipment_name}</td>
-                    <td>{item.reserved_by}</td>
+              <tbody className="admin-reports-equipment-body text-center">
+                {Object.entries(groupedEquipmentReservations).length === 0 ? (
+                  <tr>
+                    <td colSpan="6" className="text-center">
+                      No records found
+                    </td>
                   </tr>
-                ))}
+                ) : (
+                  Object.entries(groupedEquipmentReservations).map(
+                    ([date, reservations]) => (
+                      <tr key={date}>
+                        <td>{date}</td>
+                        <td>
+                          {reservations.map((res) => (
+                            <div key={res.id}>{res.user_id}</div>
+                          ))}
+                        </td>
+                        <td>
+                          {reservations.map((res) => (
+                            <div key={res.id}>
+                              {new Date(res.start_date).toLocaleString()}
+                            </div>
+                          ))}
+                        </td>
+                        <td>
+                          {reservations.map((res) => (
+                            <div key={res.id}>
+                              {new Date(res.end_date).toLocaleString()}
+                            </div>
+                          ))}
+                        </td>
+                        <td>
+                          {reservations.map((res) =>
+                            res.reserved_equipment.map((equip, index) => (
+                              <div key={index}>
+                                {equip.name} (Quantity: {equip.quantity})
+                              </div>
+                            ))
+                          )}
+                        </td>
+                        <td>
+                          {reservations.map((res) => (
+                            <div key={res.id}>{res.status}</div>
+                          ))}
+                        </td>
+                      </tr>
+                    )
+                  )
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activeTable === "schedules" && (
+          <div className="admin-reports-reservation-table">
+            <h2 className="reports-reservation-label-h2">Reservations</h2>
+            <table className="admin-reports-reservation-table-container table-bordered">
+              <thead className="admin-reports-reservation-head text-center">
+                <tr>
+                  <th>Date</th>
+                  <th>User ID</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Time Slot</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody className="admin-reports-reservation-body text-center">
+                {Object.entries(groupedSchedules).length === 0 ? (
+                  <tr>
+                    <td colSpan="6" className="text-center">
+                      No records found
+                    </td>
+                  </tr>
+                ) : (
+                  Object.entries(groupedSchedules).map(
+                    ([date, reservations]) => (
+                      <tr key={date}>
+                        <td>{date}</td>
+                        <td>
+                          {reservations.map((reservation) => (
+                            <div key={reservation.id}>
+                              {reservation.user_id}
+                            </div>
+                          ))}
+                        </td>
+                        <td>
+                          {reservations.map((reservation) => (
+                            <div key={reservation.id}>
+                              {new Date(
+                                reservation.start_date
+                              ).toLocaleString()}
+                            </div>
+                          ))}
+                        </td>
+                        <td>
+                          {reservations.map((reservation) => (
+                            <div key={reservation.id}>
+                              {new Date(reservation.end_date).toLocaleString()}
+                            </div>
+                          ))}
+                        </td>
+                        <td>
+                          {reservations.map((reservation) => (
+                            <div key={reservation.id}>
+                              {reservation.time_slot}
+                            </div>
+                          ))}
+                        </td>
+                        <td>
+                          {reservations.map((reservation) => (
+                            <div key={reservation.id}>{reservation.status}</div>
+                          ))}
+                        </td>
+                      </tr>
+                    )
+                  )
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activeTable === "inventory" && (
+          <div className="admin-reports-inventory-table">
+            <h2 className="reports-inventory-label-h2">Inventory</h2>
+            <table className="admin-reports-inventory-table-container table-bordered">
+              <thead className="admin-reports-inventory-head text-center">
+                <tr>
+                  <th>Date</th>
+                  <th>Item ID</th>
+                  <th>Item Name</th>
+                  <th>Quantity</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody className="admin-reports-inventory-body text-center">
+                {Object.entries(groupedInventory).length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="text-center">
+                      No records found
+                    </td>
+                  </tr>
+                ) : (
+                  Object.entries(groupedInventory).map(([date, items]) => (
+                    <tr key={date}>
+                      <td>{date}</td>
+                      <td>
+                        {items.map((item) => (
+                          <div key={item.id}>{item.id}</div>
+                        ))}
+                      </td>
+                      <td>
+                        {items.map((item) => (
+                          <div key={item.id}>{item.name}</div>
+                        ))}
+                      </td>
+                      <td>
+                        {items.map((item) => (
+                          <div key={item.id}>{item.quantity}</div>
+                        ))}
+                      </td>
+                      <td>
+                        {items.map((item) => (
+                          <div key={item.id}>{item.status}</div>
+                        ))}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
