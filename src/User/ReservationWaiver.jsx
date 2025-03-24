@@ -19,7 +19,7 @@ const ReservationWaiver = () => {
       };
 
       await axios.post(
-        "https://isked-backend.onrender.com/reservations", // https://isked-backend-ssmj.onrender.com/reservations
+        "https://isked-backend-ssmj.onrender.com/reservations", // https://isked-backend-ssmj.onrender.com/reservations
         formattedData
       );
       console.log("Facilities reservation saved successfully.");

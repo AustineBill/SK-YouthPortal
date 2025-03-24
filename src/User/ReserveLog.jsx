@@ -27,7 +27,7 @@ const ReservationLog = () => {
       try {
         const endpoint =
           selectedCategory === "Facility"
-            ? "https://isked-backend.onrender.com/reservations"
+            ? "https://isked-backend-ssmj.onrender.com/reservations"
             : "https://isked-backend-ssmj.onrender.com/schedule/equipment";
 
         const response = await axios.get(endpoint, {

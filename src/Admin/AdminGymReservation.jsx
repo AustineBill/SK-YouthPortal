@@ -23,7 +23,7 @@ const AdminGymReservation = () => {
     const fetchReservations = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/Allreservations"
+          "https://isked-backend-ssmj.onrender.com/Allreservations"
         );
         const activeReservations = response.data.filter(
           (reservation) => !reservation.is_archived
@@ -304,7 +304,7 @@ const AdminGymReservation = () => {
                   }
 
                   await axios.post(
-                    "https://isked-backend.onrender.com/settings/time-gap",
+                    "https://isked-backend-ssmj.onrender.com/settings/time-gap",
                     {
                       time_gap: Number(timeGap),
                     }
@@ -354,7 +354,7 @@ const AdminGymReservation = () => {
                   return alert("Please select a start date.");
                 try {
                   await axios.post(
-                    "https://isked-backend.onrender.com/settings/block-dates",
+                    "https://isked-backend-ssmj.onrender.com/settings/block-dates",
                     {
                       start_date: startBlockDate,
                       end_date: endBlockDate || null,

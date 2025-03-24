@@ -37,7 +37,7 @@ const EquipReservation = () => {
     const fetchSettings = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/settings"
+          "https://isked-backend-ssmj.onrender.com/settings"
         );
 
         if (

@@ -31,7 +31,7 @@ const EquipmentCalendar = () => {
     const fetchBlockedDates = async () => {
       try {
         const response = await fetch(
-          "https://isked-backend.onrender.com/settings"
+          "https://isked-backend-ssmj.onrender.com/settings"
         );
         if (!response.ok) {
           throw new Error("Error fetching blocked dates");

@@ -42,8 +42,8 @@ const Reservation = () => {
   const fetchSettings = async () => {
     try {
       const [dateRes, timeRes] = await Promise.all([
-        axios.get("https://isked-backend.onrender.com/settings"),
-        axios.get("https://isked-backend.onrender.com/time-settings"),
+        axios.get("https://isked-backend-ssmj.onrender.com/settings"),
+        axios.get("https://isked-backend-ssmj.onrender.com/time-settings"),
       ]);
 
       setBlockedDates(
