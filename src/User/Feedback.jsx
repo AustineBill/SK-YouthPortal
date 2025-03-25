@@ -11,15 +11,8 @@ const Feedback = ({ onSubmit }) => {
 
   const handleFeedbackSubmit = async () => {
     const userId = sessionStorage.getItem("userId");
-
-    console.log("Feedback Data:", {
-      user_id: sessionStorage.getItem("userId"),
-      rating,
-      comment,
-    });
-
     if (!userId) {
-      console.error("User ID not found in session storage.");
+      console.error("User ID not found in session storage.",error);
       return;
     }
 

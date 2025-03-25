@@ -35,14 +35,12 @@ const ManageContactUs = () => {
 
   // Save updated contact details
   const saveContactDetails = async () => {
-    console.log("Saving contact details:", newContactDetails); // Check what data is being sent
     try {
       const response = await axios.put(
         "https://isked-backend-ssmj.onrender.com/contact",
         newContactDetails
       );
-      console.log("Response:", response); // Log the response from the backend
-      setContactDetails(newContactDetails); // Update the state with new contact details
+      setContactDetails(newContactDetails); 
       setActiveContent("manageContactDetails");
     } catch (error) {
       console.error("Error saving contact details:", error);

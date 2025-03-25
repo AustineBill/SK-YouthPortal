@@ -147,7 +147,6 @@ const Users = () => {
 
   // Update an existing user
   const handleUpdateUser = async () => {
-    //console.log("Form Data for Update User:", newUser);  // Print all the inputs when updating a user
     try {
       const response = await fetch(
         `https://isked-backend-ssmj.onrender.com/users/${editUserId}`,
@@ -163,7 +162,6 @@ const Users = () => {
       if (response.ok) {
         const updatedUser = await response.json();
         setUsers(users.map((u) => (u.id === editUserId ? updatedUser : u)));
-        //console.log('User updated successfully:', updatedUser);
         resetForm();
         setShowModal(false);
       } else {
@@ -176,7 +174,6 @@ const Users = () => {
 
   // Delete a user
   const handleDelete = async (userId) => {
-    console.log("Attempting to delete user with ID:", userId);
     try {
       const response = await fetch(
         `https://isked-backend-ssmj.onrender.com/users/${userId}`,
@@ -186,7 +183,6 @@ const Users = () => {
       );
 
       if (response.ok) {
-        console.log("User deleted successfully");
         setUsers(users.filter((user) => user.id !== userId));
         setDeleteModalVisible(false);
       } else {
@@ -321,21 +317,21 @@ const Users = () => {
                           onClick={() => handleViewDetails(user.id)}
                           className="admin-users-view-button rounded-pill"
                         >
-                          <i class="bi bi-eye"></i>
+                          <i className="bi bi-eye"></i>
                         </Button>
                         <Button
                           variant="warning"
                           onClick={() => handleEdit(user.id)}
                           className="admin-users-edit-button rounded-pill"
                         >
-                          <i class="bi bi-pencil-square"></i>
+                          <i className="bi bi-pencil-square"></i>
                         </Button>
                         <Button
                           variant="danger"
                           onClick={() => openDeleteModal(user.id)}
                           className="admin-users-delete-button rounded-pill"
                         >
-                          <i class="bi bi-trash"></i>
+                          <i className="bi bi-trash"></i>
                         </Button>
                       </div>
                     </td>

@@ -28,7 +28,6 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const username = sessionStorage.getItem("username");
-      console.log("Fetching profile for:", username);
       try {
         const response = await fetch(
           `https://isked-backend-ssmj.onrender.com/Profile/${username}`

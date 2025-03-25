@@ -22,7 +22,6 @@ const ReservationWaiver = () => {
         "https://isked-backend-ssmj.onrender.com/reservations", // https://isked-backend-ssmj.onrender.com/reservations
         formattedData
       );
-      console.log("Facilities reservation saved successfully.");
     } catch (error) {
       console.error("Error during reservation process:", error);
     }

@@ -132,24 +132,24 @@ const AdminEquipmentReservation = () => {
 
       <div className="admin-ereservation-buttons-table-container">
         <div className="admin-er-toggle-buttons-container d-flex align-items-center">
-          <Dropdown className="er-toggle-container">
-            <Dropdown.Toggle className="er-toggle">
+          <Dropdown className="gr-toggle-container">
+            <Dropdown.Toggle className="gr-toggle">
               {filterOption}
-            </Dropdown.Toggle>
-            <Dropdown.Menu className="er-toggle-text">
-              <Dropdown.Item onClick={() => setFilterOption("Now")}>
-                Now
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => setFilterOption("Week")}>
-                Week
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => setFilterOption("Month")}>
-                Month
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => setFilterOption("All")}>
-                All
-              </Dropdown.Item>
-            </Dropdown.Menu>
+              </Dropdown.Toggle>
+                <Dropdown.Menu className="gr-toggle-text">
+                  <Dropdown.Item onClick={() => setFilterOption("Now")}>
+                    Now
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => setFilterOption("Week")}>
+                         Week
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => setFilterOption("Month")}>
+                         Month
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => setFilterOption("All")}>
+                    All
+                  </Dropdown.Item>
+                </Dropdown.Menu>
           </Dropdown>
 
           <button

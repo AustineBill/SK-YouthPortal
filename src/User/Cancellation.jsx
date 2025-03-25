@@ -40,7 +40,6 @@ const CancelReservation = () => {
 
   const handleCancellation = async () => {
     if (!isConfirmed) {
-      console.log("Cancellation not confirmed");
       return;
     }
 
