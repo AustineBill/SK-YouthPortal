@@ -260,7 +260,6 @@ const AdminMain = () => {
 };
 
 export default AdminMain; */
-
 import React, { useContext, useEffect, useState, useCallback, useRef } from "react";
 import { AuthContext } from "../WebStructure/AuthContext";
 import { Bar, Doughnut } from "react-chartjs-2";
@@ -279,7 +278,7 @@ import jsPDF from "jspdf";
 import '../WebStyles/Admin-CSS.css';
 
 // Import your background image (replace with your actual image path)
-import backgroundImage from '../Asset/WebImages/ampochi.jpg'
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -366,7 +365,7 @@ const AdminMain = () => {
     datasets: [
       {
         data: [dashboardData.activeUsers, dashboardData.inactiveUsers],
-        backgroundColor: ["rgba(75, 192, 192, 0.2)", "rgba(255, 99, 132, 0.2)"],
+        backgroundColor: ["rgba(75, 192, 192, 0.6)", "rgba(255, 99, 132, 0.6)"],
         borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)"],
         borderWidth: 1,
       },
@@ -383,7 +382,7 @@ const AdminMain = () => {
       {
         label: "Monthly Reservations",
         data: dashboardData.monthlyReservations,
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
+        backgroundColor: "rgba(54, 162, 235, 0.6)",
         borderColor: "rgba(54, 162, 235, 1)",
         borderWidth: 1,
       },
@@ -400,7 +399,7 @@ const AdminMain = () => {
       {
         label: "Monthly Equipment Reservations",
         data: dashboardData.monthlyEquipmentReservations,
-        backgroundColor: "rgba(255, 159, 64, 0.2)",
+        backgroundColor: "rgba(255, 159, 64, 0.6)",
         borderColor: "rgba(255, 159, 64, 1)",
         borderWidth: 1,
       },
@@ -414,143 +413,214 @@ const AdminMain = () => {
       {
         label: "Yearly Ratings Distribution",
         data: dashboardData.yearlyRatings,
-        backgroundColor: "rgba(75, 192, 192, 0.6)",
+        backgroundColor: "rgba(75, 192, 192, 0.8)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
       },
     ],
   };
-
   const handleExportToPDF = async () => {
     const input = dashboardRef.current;
     const adminUsername = sessionStorage.getItem("username") || "Admin";
+  
+    // Hide UI elements
+    const elementsToHide = [
+      input.querySelector('.admin-dashboard-header-labels'),
+      pdfExportButtonRef.current,
+      yearSelectRef.current,
+      ...input.querySelectorAll('.copy-button')
+    ];
     
-    // Hide elements that shouldn't appear in the PDF
-    const header = input.querySelector('.admin-dashboard-header-labels');
-    const button = pdfExportButtonRef.current;
-    const yearSelectContainer = input.querySelector('.year-selection-container');
-    
-    if (header) header.style.display = 'none';
-    if (button) button.style.display = 'none';
-    if (yearSelectContainer) yearSelectContainer.style.display = 'none';
-
-    // Create a temporary div for PDF content
+    elementsToHide.forEach(el => {
+      if (el) el.style.display = 'none';
+    });
+  
+    // Create A4 landscape container
     const pdfContent = document.createElement('div');
+    pdfContent.style.width = '1123px';
+    pdfContent.style.height = '794px';
     pdfContent.style.position = 'relative';
-    pdfContent.style.padding = '20px';
-    pdfContent.style.width = '100%';
-    pdfContent.style.minHeight = '100vh';
-    
+    pdfContent.style.overflow = 'hidden';
+  
     // Add background image
-    const bgImg = document.createElement('img');
-    bgImg.src = backgroundImage;
-    bgImg.style.position = 'absolute';
-    bgImg.style.top = '0';
-    bgImg.style.left = '0';
-    bgImg.style.width = '100%';
-    bgImg.style.height = '100%';
-    bgImg.style.objectFit = 'cover';
-    bgImg.style.opacity = '0.1'; // Adjust opacity as needed
-    bgImg.style.zIndex = '-1';
-    pdfContent.appendChild(bgImg);
-
-    // Add content container
+    const bgImage = document.createElement('img');
+    bgImage.src = require('../Asset/WebImages/bgreportsk.png');
+    bgImage.style.position = 'absolute';
+    bgImage.style.top = '0';
+    bgImage.style.left = '0';
+    bgImage.style.width = '100%';
+    bgImage.style.height = '100%';
+    pdfContent.appendChild(bgImage);
+  
+    // Main content container (perfectly centered)
     const contentContainer = document.createElement('div');
-    contentContainer.style.position = 'relative';
-    contentContainer.style.zIndex = '1';
-    
-    // Add title and year
-    const title = document.createElement('h1');
-    title.textContent = `Admin Dashboard Report`;
-    title.style.textAlign = "center";
-    title.style.marginBottom = "10px";
-    title.style.fontSize = "24px";
-    title.style.color = "#333";
-    contentContainer.appendChild(title);
-    
-    const yearText = document.createElement('h2');
-    yearText.textContent = `Year: ${selectedYear}`;
-    yearText.style.textAlign = "center";
-    yearText.style.marginBottom = "20px";
-    yearText.style.fontSize = "20px";
-    yearText.style.color = "#555";
-    contentContainer.appendChild(yearText);
-
-    // Clone the charts container
-    const chartsContainer = input.querySelector('.admin-dashboard-charts-container');
-    if (chartsContainer) {
-      contentContainer.appendChild(chartsContainer.cloneNode(true));
-    }
-
-    // Add footer space
-    const footerSpace = document.createElement('div');
-    footerSpace.style.height = '50px';
-    contentContainer.appendChild(footerSpace);
-
+    contentContainer.style.position = 'absolute';
+    contentContainer.style.top = '48%'; // Optimal center position
+    contentContainer.style.left = '50%';
+    contentContainer.style.transform = 'translate(-50%, -50%)';
+    contentContainer.style.width = '90%';
+  
+    // Tight 2x2 grid layout
+    const chartsContainer = document.createElement('div');
+    chartsContainer.style.display = 'grid';
+    chartsContainer.style.gridTemplateColumns = '1fr 1fr';
+    chartsContainer.style.gap = '10px 30px';
+    chartsContainer.style.marginBottom = '25px'; // Space before footer
+  
+    // Chart pairs configuration
+    const chartPairs = [
+      { 
+        left: { title: 'User Distribution', ref: chartRefs.current[0] },
+        right: { title: 'Reservation Graph', ref: chartRefs.current[1] }
+      },
+      { 
+        left: { title: 'Equipment Reservation Graph', ref: chartRefs.current[2] },
+        right: { title: 'Yearly Ratings Distribution', ref: chartRefs.current[3] }
+      }
+    ];
+  
+    // Create chart pairs
+    chartPairs.forEach((pair) => {
+      const pairContainer = document.createElement('div');
+      pairContainer.style.display = 'flex';
+      pairContainer.style.justifyContent = 'space-between';
+  
+      // Left chart in pair
+      if (pair.left.ref) {
+        const leftChart = createChartElement(
+          pair.left.title, 
+          pair.left.ref, 
+          '250px', 
+          '160px'
+        );
+        pairContainer.appendChild(leftChart);
+      }
+  
+      // Right chart in pair
+      if (pair.right.ref) {
+        const rightChart = createChartElement(
+          pair.right.title, 
+          pair.right.ref, 
+          '250px', 
+          '160px'
+        );
+        pairContainer.appendChild(rightChart);
+      }
+  
+      chartsContainer.appendChild(pairContainer);
+    });
+  
+    contentContainer.appendChild(chartsContainer);
+  
+    // Footer - perfectly positioned
+    const footer = document.createElement('div');
+    footer.style.width = '100%';
+    footer.style.display = 'flex';
+    footer.style.justifyContent = 'space-between';
+    footer.style.fontSize = '14px';
+    footer.style.color = '#333';
+    footer.style.marginTop = '10px'; // Perfect spacing from charts
+  
+    // Left-aligned info
+    const infoSection = document.createElement('div');
+    infoSection.innerHTML = `
+      <div style="margin-bottom: 5px;"><strong>Generated by:</strong> ${adminUsername}</div>
+      <div><strong>Date:</strong> ${new Date().toLocaleDateString()}</div>
+    `;
+  
+    // Right-aligned signature
+    const signatureSection = document.createElement('div');
+    signatureSection.innerHTML = `
+      <div style="margin-bottom: 5px;">Signature: __________________________</div>
+      <div>Printed Name</div>
+    `;
+  
+    footer.appendChild(infoSection);
+    footer.appendChild(signatureSection);
+    contentContainer.appendChild(footer);
     pdfContent.appendChild(contentContainer);
+  
     document.body.appendChild(pdfContent);
-
+  
     try {
-      const canvas = await html2canvas(pdfContent, {
-        useCORS: true,
-        scale: 2,
-        logging: true,
-        allowTaint: true,
+      await new Promise((resolve) => {
+        if (bgImage.complete) resolve();
+        bgImage.onload = resolve;
+        bgImage.onerror = resolve;
       });
-
-      const imgData = canvas.toDataURL("image/png");
+  
       const pdf = new jsPDF({
         orientation: "landscape",
         unit: "mm",
         format: "a4",
       });
-
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-
-      // Calculate dimensions
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      const ratio = Math.min(
-        (pageWidth - 20) / imgWidth,
-        (pageHeight - 50) / imgHeight
-      );
-      const pdfWidth = imgWidth * ratio;
-      const pdfHeight = imgHeight * ratio;
-      const marginX = (pageWidth - pdfWidth) / 2;
-      const marginY = 10;
-
-      pdf.addImage(imgData, "PNG", marginX, marginY, pdfWidth, pdfHeight);
-
-      // Add footer
-      const currentDate = new Date().toLocaleDateString();
-      pdf.setFontSize(10);
-      pdf.setTextColor(0, 0, 0); // Black text for footer
-      
-      pdf.text(`Generated by: ${adminUsername}`, 15, pageHeight - 20);
-      pdf.text(`Date: ${currentDate}`, 15, pageHeight - 15);
-      
-      pdf.text("Signature:", pageWidth - 60, pageHeight - 20);
-      pdf.line(pageWidth - 60, pageHeight - 18, pageWidth - 15, pageHeight - 18);
-      pdf.text("Printed Name", pageWidth - 55, pageHeight - 12);
-
+  
+      const canvas = await html2canvas(pdfContent, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: null,
+      });
+  
+      pdf.addImage(canvas, 'PNG', 0, 0, 297, 210);
       pdf.save(`Admin-Dashboard-Report-${selectedYear}.pdf`);
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-      alert("Failed to generate PDF. Please try again.");
     } finally {
-      // Clean up
       document.body.removeChild(pdfContent);
-      if (header) header.style.display = '';
-      if (button) button.style.display = '';
-      if (yearSelectContainer) yearSelectContainer.style.display = '';
+      elementsToHide.forEach(el => {
+        if (el) el.style.display = '';
+      });
+    }
+  
+    // Helper function to create chart elements
+    function createChartElement(title, chartRef, width, height) {
+      const chartWrapper = document.createElement('div');
+      chartWrapper.style.display = 'flex';
+      chartWrapper.style.flexDirection = 'column';
+      chartWrapper.style.alignItems = 'center';
+      
+      // Chart title
+      const titleElement = document.createElement('div');
+      titleElement.textContent = title;
+      titleElement.style.fontSize = '14px';
+      titleElement.style.fontWeight = 'bold';
+      titleElement.style.marginBottom = '5px';
+      chartWrapper.appendChild(titleElement);
+  
+      // Chart canvas
+      const canvas = document.createElement('canvas');
+      canvas.width = 500;
+      canvas.height = 300;
+      canvas.style.width = width;
+      canvas.style.height = height;
+      
+      const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = true;
+      ctx.drawImage(chartRef.canvas, 0, 0, canvas.width, canvas.height);
+      
+      chartWrapper.appendChild(canvas);
+      return chartWrapper;
     }
   };
-
   const copyChartToClipboard = async (chartIndex) => {
     try {
-      const canvas = chartRefs.current[chartIndex].canvas;
-      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+      const chartRef = chartRefs.current[chartIndex];
+      if (!chartRef || !chartRef.canvas) return;
+      
+      const canvas = chartRef.canvas;
+      
+      // Create a temporary canvas with white background
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+      const ctx = tempCanvas.getContext('2d');
+      
+      // Fill with white background
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+      
+      // Draw the original chart
+      ctx.drawImage(canvas, 0, 0);
+      
+      const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, 'image/png'));
       await navigator.clipboard.write([
         new ClipboardItem({
           'image/png': blob
@@ -637,7 +707,7 @@ const AdminMain = () => {
               <h2 className="userd-label-h2">User Distribution</h2>
               <button 
                 onClick={() => copyChartToClipboard(0)}
-                className="btn btn-sm btn-outline-secondary"
+                className="btn btn-sm btn-outline-secondary copy-button"
                 title="Copy chart as image"
               >
                 Copy
@@ -647,6 +717,17 @@ const AdminMain = () => {
               ref={el => chartRefs.current[0] = el} 
               data={donutChartData} 
               className="piechart" 
+              options={{
+                backgroundColor: 'white',
+                animation: {
+                  onComplete: () => {
+                    const chart = chartRefs.current[0];
+                    if (chart && chart.canvas) {
+                      chart.canvas.style.display = 'block';
+                    }
+                  }
+                }
+              }}
             />
           </div>
 
@@ -656,7 +737,7 @@ const AdminMain = () => {
               <h2 className="reservations-label-h2">Reservation Graph</h2>
               <button 
                 onClick={() => copyChartToClipboard(1)}
-                className="btn btn-sm btn-outline-secondary"
+                className="btn btn-sm btn-outline-secondary copy-button"
                 title="Copy chart as image"
               >
                 Copy
@@ -666,6 +747,17 @@ const AdminMain = () => {
               ref={el => chartRefs.current[1] = el}
               data={reservationChartData} 
               className="chart" 
+              options={{
+                backgroundColor: 'white',
+                animation: {
+                  onComplete: () => {
+                    const chart = chartRefs.current[1];
+                    if (chart && chart.canvas) {
+                      chart.canvas.style.display = 'block';
+                    }
+                  }
+                }
+              }}
             />
           </div>
 
@@ -675,7 +767,7 @@ const AdminMain = () => {
               <h2 className="equipment-label-h2">Equipment Reservation Graph</h2>
               <button 
                 onClick={() => copyChartToClipboard(2)}
-                className="btn btn-sm btn-outline-secondary"
+                className="btn btn-sm btn-outline-secondary copy-button"
                 title="Copy chart as image"
               >
                 Copy
@@ -685,6 +777,17 @@ const AdminMain = () => {
               ref={el => chartRefs.current[2] = el}
               data={equipmentChartData} 
               className="chart" 
+              options={{
+                backgroundColor: 'white',
+                animation: {
+                  onComplete: () => {
+                    const chart = chartRefs.current[2];
+                    if (chart && chart.canvas) {
+                      chart.canvas.style.display = 'block';
+                    }
+                  }
+                }
+              }}
             />
           </div>
 
@@ -694,7 +797,7 @@ const AdminMain = () => {
               <h2 className="yearlyrd-label-h2">Yearly Ratings Distribution</h2>
               <button 
                 onClick={() => copyChartToClipboard(3)}
-                className="btn btn-sm btn-outline-secondary"
+                className="btn btn-sm btn-outline-secondary copy-button"
                 title="Copy chart as image"
               >
                 Copy
@@ -703,7 +806,18 @@ const AdminMain = () => {
             <Bar
               ref={el => chartRefs.current[3] = el}
               data={ratingsChartData}
-              options={{ indexAxis: "y" }}
+              options={{ 
+                indexAxis: "y",
+                backgroundColor: 'white',
+                animation: {
+                  onComplete: () => {
+                    const chart = chartRefs.current[3];
+                    if (chart && chart.canvas) {
+                      chart.canvas.style.display = 'block';
+                    }
+                  }
+                }
+              }}
               className="chart"
             />
           </div>
