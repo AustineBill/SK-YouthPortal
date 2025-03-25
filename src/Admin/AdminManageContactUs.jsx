@@ -35,8 +35,8 @@ const ManageContactUs = () => {
 
   // Save updated contact details
   const saveContactDetails = async () => {
-    try {
-      const response = await axios.put(
+    try { 
+        await axios.put(
         "https://isked-backend-ssmj.onrender.com/contact",
         newContactDetails
       );
