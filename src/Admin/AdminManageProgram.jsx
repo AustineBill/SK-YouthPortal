@@ -82,8 +82,6 @@ const ManageProgram = () => {
     e.preventDefault();
 
     try {
-      console.log("appending formData");
-
       const formData = new FormData();
       formData.append("program_name", newProgram.name);
       formData.append("description", newProgram.description);
@@ -94,16 +92,11 @@ const ManageProgram = () => {
         formData.append("image", newProgram.image);
       }
 
-      console.log("FormData contents:", formData); // Add this line
-      console.log("calling programs api");
-
       const response = await axios.post(
         "https://isked-backend-ssmj.onrender.com/programs",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-
-      console.log("api call success");
 
       setPrograms((prev) => [...prev, response.data]);
       setNewProgram({
@@ -238,7 +231,7 @@ const ManageProgram = () => {
                             onClick={() => handleViewProgram(program)}
                             className="program-view-button rounded-pill"
                           >
-                            <i class="bi bi-eye"></i>
+                            <i className="bi bi-eye"></i>
                           </Button>
 
                           <Button
@@ -246,7 +239,7 @@ const ManageProgram = () => {
                             onClick={() => handleEditProgram(program)}
                             className="program-edit-button rounded-pill"
                           >
-                            <i class="bi bi-pencil-square"></i>
+                            <i className="bi bi-pencil-square"></i>
                           </Button>
 
                           <Button
@@ -254,7 +247,7 @@ const ManageProgram = () => {
                             onClick={() => handleDeleteProgram(program.id)}
                             className="program-delete-button rounded-pill"
                           >
-                            <i class="bi bi-trash"></i>
+                            <i className="bi bi-trash"></i>
                           </Button>
                         </div>
 

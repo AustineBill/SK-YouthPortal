@@ -68,6 +68,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css/animate.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
+import "bootstrap/dist/js/bootstrap.bundle.min";
+
+
 const NavBarSwitcher = () => {
   const { isAuthenticated, isAdmin } = useContext(AuthContext);
 

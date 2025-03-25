@@ -168,14 +168,14 @@ const InventoryTable = () => {
                       onClick={() => handleShowModal(item)}
                       className="admin-inventory-edit-button rounded-pill"
                     >
-                      <i class="bi bi-pencil-square"></i>
+                      <i className="bi bi-pencil-square"></i>
                     </Button>
                     <Button
                       variant="danger"
                       onClick={() => handleDelete(item.id)}
                       className="admin-inventory-delete-button rounded-pill"
                     >
-                      <i class="bi bi-trash"></i>
+                      <i className="bi bi-trash"></i>
                     </Button>
                   </div>
                 </td>

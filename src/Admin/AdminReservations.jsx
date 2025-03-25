@@ -62,30 +62,25 @@ const AdminReservations = () => {
   }, []);
 
   // Handle reservation actions (Edit, Cancel, Approve)
-  const handleReservationAction = (action, reservation) => {
-    console.log(
-      `${action} reservation for ${reservation.time} on ${reservation.date}`
-    );
-    if (action === "Cancel") {
-      // Call backend API to delete reservation
-      axios
-        .delete(`/reservations/${reservation.id}`)
-        .then((response) => {
-          console.log("Reservation canceled:", response.data);
-          setReservations(reservations.filter((r) => r.id !== reservation.id)); // Update local state
-        })
-        .catch((error) => {
-          console.error("Error canceling reservation:", error);
-        });
-    }
-    // Add additional logic for "Edit" and "Approve" actions as needed
-  };
+const handleReservationAction = (action, reservation) => {
+  if (action === "Cancel") {
+    // Call backend API to delete reservation
+    axios
+      .delete(`/reservations/${reservation.id}`)
+      .then(() => {
+        setReservations(reservations.filter((r) => r.id !== reservation.id));
+      })
+      .catch((error) => {
+        console.error("Error canceling reservation:", error);
+      });
+  }
+};
 
   const handleSubmitReservation = () => {
-    const userId = 1; // Example userId
+    const userId = 1; 
     const reservationData = {
       user_id: userId,
-      reservation_type: "Event", // Can be dynamic based on user input
+      reservation_type: "Event", 
       start_date: selectedDates[0].toISOString(),
       end_date: selectedDates[1].toISOString(),
       time_slot: selectedTime,
@@ -94,7 +89,6 @@ const AdminReservations = () => {
     axios
       .post("/reservations", reservationData)
       .then((response) => {
-        console.log("Reservation created:", response.data);
         setReservations([...reservations, response.data]); // Update local state with new reservation
       })
       .catch((error) => {

@@ -17,7 +17,6 @@ const BorrowWaiver = () => {
         "https://isked-backend-ssmj.onrender.com/schedule/equipment",
         allData
       );
-      console.log("Facilities reservation saved successfully.");
       setShowFeedback(true); // Show feedback form instead of success modal
     } catch (error) {
       console.error("Error during reservation process:", error);

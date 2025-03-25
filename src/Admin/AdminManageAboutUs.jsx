@@ -338,7 +338,7 @@ const ManageAboutUs = () => {
                           onClick={() => editSkCouncilInput(member)}
                           className="admin-SK-edit-button rounded-pill"
                         >
-                          <i class="bi bi-pencil-square"></i>
+                          <i className="bi bi-pencil-square"></i>
                         </Button>
                       </div>
                     </td>

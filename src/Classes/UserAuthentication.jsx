@@ -154,7 +154,6 @@ const UserAuthentication = () => {
     }
 
     const decryptedCode = DecryptionCode(activationCode);
-    console.log("Decrypted Activation Code:", decryptedCode);
 
     if (decryptedCode.length !== 11) {
       setModalMessage("Activation code is Invalid!");

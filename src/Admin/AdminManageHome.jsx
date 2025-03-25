@@ -291,7 +291,7 @@ const ManageHomePage = () => {
                             onClick={() => handleEditEvent(events)}
                             className="event-edit-button bg-warning rounded-pill"
                           >
-                            <i class="bi bi-pencil-square"></i>
+                            <i className="bi bi-pencil-square"></i>
                           </Button>
 
                           <Button
@@ -299,7 +299,7 @@ const ManageHomePage = () => {
                             onClick={() => handleDeleteEvent(events.id)}
                             className="event-delete-button bg-danger rounded-pill"
                           >
-                            <i class="bi bi-trash"></i>
+                            <i className="bi bi-trash"></i>
                           </Button>
                         </div>
                       </Card.Body>

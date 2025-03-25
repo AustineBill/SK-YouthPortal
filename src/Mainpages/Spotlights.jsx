@@ -30,7 +30,6 @@ const Spotlight = () => {
         const response = await axios.get(
           "https://isked-backend-ssmj.onrender.com/spotlight"
         );
-        console.log(response.data); // Log the response
         setSpotlightData(response.data);
       } catch (error) {
         console.error("Error fetching spotlight data:", error);

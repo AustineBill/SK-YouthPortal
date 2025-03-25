@@ -33,7 +33,7 @@ function ScheduleDone() {
     } else if (programType === "Equipment") {
       navigate("/BorrowWaiver"); // Navigate to Borrow Waiver
     } else {
-      console.log("Unknown program type");
+      console.error("Unknown program type");
     }
   };
 
