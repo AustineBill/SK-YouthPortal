@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Table, Dropdown, Button, Modal } from "react-bootstrap";
+import React, { useState, useEffect, useCallback } from "react";
+import { Table, Dropdown, Button, Modal, Form } from "react-bootstrap";
 import AdminGymCalendar from "./Calendars/AdminGymCalendar";
 import "./styles/AdminGymReservation.css";
 import axios from "axios";
-//import { TabPanel } from "@restart/ui";
 
 const AdminGymReservation = () => {
   const [reservations, setReservations] = useState([]);
@@ -11,6 +10,7 @@ const AdminGymReservation = () => {
   const [filterOption, setFilterOption] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
   const [selectedReservations, setSelectedReservations] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [timeGap, setTimeGap] = useState(1);
   const [showTimeGapModal, setShowTimeGapModal] = useState(false);
@@ -19,23 +19,32 @@ const AdminGymReservation = () => {
   const [startBlockDate, setStartBlockDate] = useState("");
   const [endBlockDate, setEndBlockDate] = useState("");
 
+  const fetchReservations = async () => {
+    try {
+      const response = await axios.get(
+        "https://isked-backend-ssmj.onrender.com/Allreservations"
+      );
+      const activeReservations = response.data.filter(
+        (reservation) => !reservation.is_archived
+      );
+      setReservations(activeReservations);
+      setFilteredReservations(activeReservations);
+    } catch (error) {
+      console.error("Error fetching reservation data:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchReservations = async () => {
-      try {
-        const response = await axios.get(
-          "https://isked-backend-ssmj.onrender.com/Allreservations"
-        );
-        const activeReservations = response.data.filter(
-          (reservation) => !reservation.is_archived
-        );
-        setReservations(activeReservations);
-        setFilteredReservations(activeReservations);
-      } catch (error) {
-        console.error("Error fetching reservation data:", error);
-      }
-    };
     fetchReservations();
   }, []);
+
+  const applySearchFilter = useCallback((data) => {
+    if (!searchTerm) return data;
+    return data.filter(reservation => {
+      const refId = reservation.reservation_id?.toString() || '';
+      return refId.includes(searchTerm);
+    });
+  }, [searchTerm]);
 
   useEffect(() => {
     let filteredData = reservations;
@@ -66,14 +75,14 @@ const AdminGymReservation = () => {
     if (statusFilter !== "All") {
       filteredData = filteredData.filter((reservation) => {
         if (statusFilter === "Pending") {
-          return !reservation.status || reservation.status === "Pending"; // Include undefined/null status as Pending
+          return !reservation.status || reservation.status === "Pending";
         }
         return reservation.status === statusFilter;
       });
     }
 
-    setFilteredReservations(filteredData);
-  }, [filterOption, statusFilter, reservations]);
+    setFilteredReservations(applySearchFilter(filteredData));
+  }, [filterOption, statusFilter, reservations, applySearchFilter]);
 
   const handleCheckboxChange = (id) => {
     setSelectedReservations((prevSelected) =>
@@ -89,6 +98,7 @@ const AdminGymReservation = () => {
         "https://isked-backend-ssmj.onrender.com/approveReservations",
         { ids: selectedReservations }
       );
+      await fetchReservations();
       setSelectedReservations([]);
     } catch (error) {
       console.error("Error updating reservation status:", error);
@@ -101,6 +111,7 @@ const AdminGymReservation = () => {
         "https://isked-backend-ssmj.onrender.com/disapproveReservations",
         { ids: selectedReservations }
       );
+      await fetchReservations();
       setSelectedReservations([]);
     } catch (error) {
       console.error("Error updating reservation status:", error);
@@ -127,6 +138,23 @@ const AdminGymReservation = () => {
     }
   };
 
+  const highlightSearchMatch = (text) => {
+    if (!searchTerm || !text) return text;
+    const strText = text.toString();
+    const index = strText.indexOf(searchTerm);
+    if (index === -1) return strText;
+    
+    return (
+      <>
+        {strText.substring(0, index)}
+        <span style={{ backgroundColor: 'yellow' }}>
+          {strText.substring(index, index + searchTerm.length)}
+        </span>
+        {strText.substring(index + searchTerm.length)}
+      </>
+    );
+  };
+
   return (
     <div className="admin-gym-reservation-container">
       <h2 className="admin-greservation-label-h2 fst-italic">
@@ -149,6 +177,22 @@ const AdminGymReservation = () => {
       </div>
 
       <AdminGymCalendar />
+
+      {/* Search Bar - New Addition */}
+      <div className="mb-3 px-3">
+        <Form.Control
+          type="text"
+          placeholder="🔍 Search by Reservation ID..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="admin-gr-search-bar"
+          style={{
+            maxWidth: '300px',
+            borderRadius: '20px',
+            padding: '8px 15px'
+          }}
+        />
+      </div>
 
       <div className="admin-greservation-buttons-table-container">
         <div className="admin-gr-toggle-buttons-container d-flex align-items-center">
@@ -222,6 +266,7 @@ const AdminGymReservation = () => {
                     )
                   }
                   checked={
+                    selectedReservations.length > 0 &&
                     selectedReservations.length === filteredReservations.length
                   }
                 />
@@ -237,55 +282,72 @@ const AdminGymReservation = () => {
           </thead>
 
           <tbody className="admin-greservation-body text-center">
-            {filteredReservations.map((reservation, index) => (
-              <tr key={reservation.id || reservation.reservation_id || index}>
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={selectedReservations.includes(reservation.id)}
-                    onChange={() => handleCheckboxChange(reservation.id)}
-                  />
-                </td>
-                <td>{reservation.reservation_id}</td>
-                <td>{reservation.program}</td>
-                <td>{reservation.start_date}</td>
-                <td>{reservation.end_date}</td>
-                <td>{reservation.time_slot}</td>
-                <td>{reservation.status || "Pending"}</td>
-                <td>
-                  <div className="admin-greservation-action-button-container d-flex justify-content-center">
-                    <Button
-                      variant="danger"
-                      className="admin-greservation-delete-button rounded-pill"
-                      onClick={handleCancellation}
-                    >
-                      <i className="bi bi-trash"></i>
-                    </Button>
-                  </div>
-                </td>
+            {filteredReservations.length === 0 ? (
+              <tr>
+                <td colSpan="8" className="text-center">No reservations found</td>
               </tr>
-            ))}
+            ) : (
+              filteredReservations.map((reservation, index) => (
+                <tr key={reservation.id || reservation.reservation_id || index}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedReservations.includes(reservation.id)}
+                      onChange={() => handleCheckboxChange(reservation.id)}
+                    />
+                  </td>
+                  <td>{highlightSearchMatch(reservation.reservation_id)}</td>
+                  <td>{reservation.program}</td>
+                  <td>{new Date(reservation.start_date).toLocaleDateString()}</td>
+                  <td>{new Date(reservation.end_date).toLocaleDateString()}</td>
+                  <td>{reservation.time_slot}</td>
+                  <td>
+                    <span className={`badge bg-${
+                      reservation.status === "Approved" ? "success" :
+                      reservation.status === "Disapproved" ? "danger" :
+                      "warning"
+                    }`}>
+                      {reservation.status || "Pending"}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="admin-greservation-action-button-container d-flex justify-content-center">
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        className="me-2"
+                        onClick={() => handleCancellation(reservation.id)}
+                      >
+                        <i className="bi bi-trash"></i> Cancel
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </Table>
 
         <Modal
           show={showTimeGapModal}
           onHide={() => setShowTimeGapModal(false)}
+          centered
         >
           <Modal.Header closeButton>
             <Modal.Title>Customize Time Gap</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <label>Select Time Gap:</label>
-            <select
-              className="form-select"
-              value={timeGap}
-              onChange={(e) => setTimeGap(Number(e.target.value))}
-            >
-              <option value={1}>1 Hour</option>
-              <option value={2}>2 Hours</option>
-              <option value={3}>3 Hours</option>
-            </select>
+            <Form.Group>
+              <Form.Label>Select Time Gap (hours):</Form.Label>
+              <Form.Select
+                value={timeGap}
+                onChange={(e) => setTimeGap(Number(e.target.value))}
+              >
+                <option value={1}>1 Hour</option>
+                <option value={2}>2 Hours</option>
+                <option value={3}>3 Hours</option>
+              </Form.Select>
+            </Form.Group>
           </Modal.Body>
           <Modal.Footer>
             <Button
@@ -298,47 +360,49 @@ const AdminGymReservation = () => {
               variant="primary"
               onClick={async () => {
                 try {
-                  if (!timeGap || isNaN(timeGap)) {
-                    alert("Invalid time gap value! Please enter a number.");
-                    return;
-                  }
-
                   await axios.post(
                     "https://isked-backend-ssmj.onrender.com/settings/time-gap",
-                    {
-                      time_gap: Number(timeGap),
-                    }
+                    { time_gap: timeGap }
                   );
-
-                  alert("Time gap updated!");
+                  alert("Time gap updated successfully!");
                   setShowTimeGapModal(false);
                 } catch (error) {
                   console.error("Error updating time gap:", error);
+                  alert("Failed to update time gap");
                 }
               }}
             >
-              Save
+              Save Changes
             </Button>
           </Modal.Footer>
         </Modal>
 
-        <Modal show={showBlockModal} onHide={() => setShowBlockModal(false)}>
+        <Modal
+          show={showBlockModal}
+          onHide={() => setShowBlockModal(false)}
+          centered
+        >
           <Modal.Header closeButton>
-            <Modal.Title>Block Dates</Modal.Title>
+            <Modal.Title>Block Date Range</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <label>Start Date:</label>
-            <input
-              type="date"
-              className="form-control"
-              onChange={(e) => setStartBlockDate(e.target.value)}
-            />
-            <label>End Date:</label>
-            <input
-              type="date"
-              className="form-control"
-              onChange={(e) => setEndBlockDate(e.target.value)}
-            />
+            <Form.Group className="mb-3">
+              <Form.Label>Start Date:</Form.Label>
+              <Form.Control
+                type="date"
+                value={startBlockDate}
+                onChange={(e) => setStartBlockDate(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>End Date (optional):</Form.Label>
+              <Form.Control
+                type="date"
+                value={endBlockDate}
+                onChange={(e) => setEndBlockDate(e.target.value)}
+                min={startBlockDate}
+              />
+            </Form.Group>
           </Modal.Body>
           <Modal.Footer>
             <Button
@@ -350,31 +414,33 @@ const AdminGymReservation = () => {
             <Button
               variant="danger"
               onClick={async () => {
-                if (!startBlockDate)
-                  return alert("Please select a start date.");
+                if (!startBlockDate) {
+                  alert("Please select a start date");
+                  return;
+                }
                 try {
                   await axios.post(
                     "https://isked-backend-ssmj.onrender.com/settings/block-dates",
                     {
                       start_date: startBlockDate,
-                      end_date: endBlockDate || null,
+                      end_date: endBlockDate || startBlockDate
                     }
                   );
-                  alert("Blocked dates added!");
-                  setBlockedDates([
-                    ...blockedDates,
-                    {
-                      start: startBlockDate,
-                      end: endBlockDate || startBlockDate,
-                    },
-                  ]);
+                  alert("Date range blocked successfully!");
+                  setBlockedDates([...blockedDates, {
+                    start: startBlockDate,
+                    end: endBlockDate || startBlockDate
+                  }]);
                   setShowBlockModal(false);
+                  setStartBlockDate("");
+                  setEndBlockDate("");
                 } catch (error) {
                   console.error("Error blocking dates:", error);
+                  alert("Failed to block dates");
                 }
               }}
             >
-              Block Date Range
+              Block Dates
             </Button>
           </Modal.Footer>
         </Modal>
