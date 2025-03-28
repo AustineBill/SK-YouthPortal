@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { Table, Dropdown, Button } from "react-bootstrap";
+import { Table, Dropdown, Button, Form } from "react-bootstrap";
 import EquipmentCalendar from "./Calendars/EquipmentCalendar";
 import "./styles/AdminEquipmentReservation.css";
 
@@ -9,8 +9,8 @@ const AdminEquipmentReservation = () => {
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
   const [selectedReservations, setSelectedReservations] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch reservations for the table from /Allequipments endpoint
   const fetchTableReservations = async () => {
     try {
       const response = await axios.get(
@@ -27,7 +27,14 @@ const AdminEquipmentReservation = () => {
     fetchTableReservations();
   }, []);
 
-  // Filter reservations based on selected option
+  const applySearchFilter = useCallback((data) => {
+    if (!searchTerm) return data;
+    return data.filter(reservation => {
+      const refId = reservation.reservation_id.toString();
+      return refId.includes(searchTerm);
+    });
+  }, [searchTerm]);
+
   useEffect(() => {
     let filteredData = reservations;
     const now = new Date();
@@ -56,8 +63,8 @@ const AdminEquipmentReservation = () => {
       });
     }
 
-    setFilteredReservations(filteredData);
-  }, [filterOption, reservations]);
+    setFilteredReservations(applySearchFilter(filteredData));
+  }, [filterOption, reservations, applySearchFilter]);
 
   const handleCheckboxChange = (id) => {
     setSelectedReservations((prevSelected) =>
@@ -83,9 +90,7 @@ const AdminEquipmentReservation = () => {
     try {
       await axios.post(
         "https://isked-backend-ssmj.onrender.com/markNotReturned",
-        {
-          ids: selectedReservations,
-        }
+        { ids: selectedReservations }
       );
       fetchTableReservations();
       setSelectedReservations([]);
@@ -99,13 +104,7 @@ const AdminEquipmentReservation = () => {
       await axios.delete(
         `https://isked-backend-ssmj.onrender.com/equipment/${reservationId}`
       );
-
       fetchTableReservations();
-      const updatedReservations = filteredReservations.filter(
-        (reservation) => reservation.id !== reservationId
-      );
-
-      setFilteredReservations(updatedReservations);
       setSelectedReservations([]);
     } catch (error) {
       console.error("Error archiving reservation:", error);
@@ -122,6 +121,23 @@ const AdminEquipmentReservation = () => {
     });
   };
 
+  const highlightSearchMatch = (text) => {
+    if (!searchTerm) return text;
+    const strText = text.toString();
+    const index = strText.indexOf(searchTerm);
+    if (index === -1) return strText;
+    
+    return (
+      <>
+        {strText.substring(0, index)}
+        <span style={{ backgroundColor: 'yellow' }}>
+          {strText.substring(index, index + searchTerm.length)}
+        </span>
+        {strText.substring(index + searchTerm.length)}
+      </>
+    );
+  };
+
   return (
     <div className="admin-equipment-reservation-container">
       <h2 className="admin-ereservation-label-h2 fst-italic">
@@ -130,46 +146,54 @@ const AdminEquipmentReservation = () => {
 
       <EquipmentCalendar />
 
+      {/* Search Bar */}
+      <Form.Control
+        type="text"
+        placeholder="🔍 Search by Reference ID..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="mb-3"
+        style={{
+          width: '300px',
+          borderRadius: '20px',
+          padding: '8px 15px'
+        }}
+      />
+
       <div className="admin-ereservation-buttons-table-container">
         <div className="admin-er-toggle-buttons-container d-flex align-items-center">
-          <Dropdown className="gr-toggle-container">
-            <Dropdown.Toggle className="gr-toggle">
+          <Dropdown>
+            <Dropdown.Toggle variant="secondary">
               {filterOption}
-              </Dropdown.Toggle>
-                <Dropdown.Menu className="gr-toggle-text">
-                  <Dropdown.Item onClick={() => setFilterOption("Now")}>
-                    Now
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setFilterOption("Week")}>
-                         Week
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setFilterOption("Month")}>
-                         Month
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setFilterOption("All")}>
-                    All
-                  </Dropdown.Item>
-                </Dropdown.Menu>
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => setFilterOption("Now")}>Now</Dropdown.Item>
+              <Dropdown.Item onClick={() => setFilterOption("Week")}>Week</Dropdown.Item>
+              <Dropdown.Item onClick={() => setFilterOption("Month")}>Month</Dropdown.Item>
+              <Dropdown.Item onClick={() => setFilterOption("All")}>All</Dropdown.Item>
+            </Dropdown.Menu>
           </Dropdown>
 
-          <button
+          <Button
+            variant="success"
+            className="ms-2"
             disabled={selectedReservations.length === 0}
             onClick={handleReturned}
-            className="admin-er-return-button bg-success text-white rounded"
           >
             Mark as Returned
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="danger"
+            className="ms-2"
             disabled={selectedReservations.length === 0}
             onClick={handleNotReturned}
-            className="admin-er-not-returned-button bg-danger text-white rounded"
           >
             Mark as Not Returned
-          </button>
+          </Button>
         </div>
 
-        <Table className="admin-ereservation-table-container table-bordered">
-          <thead className="admin-ereservation-head text-center">
+        <Table striped bordered hover className="mt-3">
+          <thead>
             <tr>
               <th>
                 <input
@@ -177,34 +201,30 @@ const AdminEquipmentReservation = () => {
                   onChange={(e) => {
                     if (e.target.checked) {
                       setSelectedReservations(
-                        filteredReservations.map(
-                          (reservation) => reservation.id
-                        )
+                        filteredReservations.map(reservation => reservation.id)
                       );
                     } else {
                       setSelectedReservations([]);
                     }
                   }}
                   checked={
+                    selectedReservations.length > 0 &&
                     selectedReservations.length === filteredReservations.length
                   }
                 />
               </th>
               <th>Reservation ID</th>
-              <th>Reserved Equipment</th>
+              <th>Equipment</th>
               <th>Start Date</th>
               <th>End Date</th>
               <th>Status</th>
-              <th style={{ width: "120px" }}>Action</th>
+              <th>Action</th>
             </tr>
           </thead>
-
-          <tbody className="admin-ereservation-body text-center">
+          <tbody>
             {filteredReservations.length === 0 ? (
               <tr>
-                <td colSpan="7" className="text-center">
-                  No Reservation Found.
-                </td>
+                <td colSpan="7" className="text-center">No reservations found</td>
               </tr>
             ) : (
               filteredReservations.map((reservation) => (
@@ -216,34 +236,23 @@ const AdminEquipmentReservation = () => {
                       onChange={() => handleCheckboxChange(reservation.id)}
                     />
                   </td>
-                  <td>{reservation.reservation_id}</td>
+                  <td>{highlightSearchMatch(reservation.reservation_id)}</td>
                   <td>
-                    {Array.isArray(reservation.reserved_equipment) &&
-                    reservation.reserved_equipment.length > 0 ? (
-                      reservation.reserved_equipment.map((item) => (
-                        <div key={item.id}>
-                          {item.name} (Quantity: {item.quantity})
-                        </div>
-                      ))
-                    ) : (
-                      <span>No items reserved</span>
-                    )}
+                    {reservation.reserved_equipment?.map((item) => (
+                      <div key={item.id}>{item.name} (Qty: {item.quantity})</div>
+                    ))}
                   </td>
                   <td>{formatDate(reservation.start_date)}</td>
                   <td>{formatDate(reservation.end_date)}</td>
                   <td>{reservation.status || "Pending"}</td>
-                  <td className="admin-ereservation-action-button-container d-flex justify-content-center">
+                  <td>
                     <Button
                       variant="danger"
-                      className="admin-ereservation-delete-button rounded-pill"
-                      onClick={() => handleArchive(reservation.id)} // Pass the reservation ID
-                      disabled={
-                        reservation.status === "Not Returned" ||
-                        reservation.status === "Pending" ||
-                        reservation.is_archived // Disable if archived
-                      }
+                      size="sm"
+                      onClick={() => handleArchive(reservation.id)}
+                      disabled={reservation.status === "Not Returned"}
                     >
-                      <i className="bi bi-trash"></i>
+                      Archive
                     </Button>
                   </td>
                 </tr>
