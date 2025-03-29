@@ -232,7 +232,7 @@
   margin-top: 10px;
   width: 150px;
   height: 45px;
-  font-size: 17.5px;
+  font-size: 15px;
   border-style: none;
   transition: all 0.35s;
 }
@@ -354,7 +354,7 @@
   .admin-add-program-button {
     width: 125px;
     height: 40px;
-    font-size: 15px;
+    font-size: 12.5px;
   }
 }
 
@@ -712,7 +712,7 @@
 
   .admin-add-program-form input[type="text"],
   .admin-add-program-form textarea {
-    height: 30px;
+    height: 25px;
     font-size: 7.5px;
   }
 

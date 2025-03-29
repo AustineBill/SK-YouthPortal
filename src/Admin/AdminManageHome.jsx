@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, Button } from "react-bootstrap";
 import '../WebStyles/Admin-CSS.css';
+// import './styles/AdminManageHome.css';
 
 const ManageHomePage = () => {
   const [activeContent, setActiveContent] = useState("allEvents");

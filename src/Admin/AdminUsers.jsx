@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import '../WebStyles/Admin-CSS.css';
+// import './styles/AdminUsers.css';
 
 const { EncryptionCode } = require("../WebStructure/Codex");
 const Users = () => {
@@ -259,7 +260,7 @@ const Users = () => {
 
       <div className="admin-users-contents-container d-flex flex-column align-items-center justify-content-center">
         <div className="admin-users-add-classification-container d-flex align-items-center">
-          <div className="admin-users-classification-container m-0">
+          <div className="admin-users-classification-container">
             <select
               value={selectedClassification}
               onChange={(e) => setSelectedClassification(e.target.value)}

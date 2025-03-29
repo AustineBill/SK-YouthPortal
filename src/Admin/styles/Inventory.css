@@ -17,17 +17,44 @@
     margin: 20px 0 20px 40px;
 }
 
-/* Add Equipment */
+/* Search and Add Equipment */
 
-.admin-inventory-add-equipment-container {
+.admin-inventory-search-add-container {
     width: 90%;
     margin: 0 auto 20px;
+}
+
+.admin-inventory-search-container {
+    height: 45px;
+    width: 85%;
+}
+
+.admin-inventory-search-input {
+    width: 50%;
+    height: 45px;
+    font-size: 15px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.admin-inventory-search-input:hover {
+    color: #FFFFFF;
+    background-color: #858585;
+}
+
+.admin-inventory-search-input:focus {
+    outline: 1px solid #007bff;
+}
+
+.admin-inventory-add-equipment-container {
+    height: 45px;
+    width: 15%;
 }
 
 .admin-inventory-add-equipment-button {
     background-color: #42BB4E;
     color: #FFFFFF;
-    width: 15%;
+    width: 100%;
     height: 45px;
     font-size: 15px;
     border-style: solid;
@@ -45,6 +72,7 @@
     margin: 0 auto;
     width: 90%;
     margin-bottom: 40px;
+    overflow-x: auto;
 }
 
 .admin-inventory-table-container tr {
@@ -125,14 +153,25 @@
         font-size: 37.5px;
     }
 
-    /* Add Equipment */
+    /* Search and Add Equipment */
+
+    .admin-inventory-search-container {
+        height: 40px;
+        width: 82.5%;
+    }
+
+    .admin-inventory-search-input {
+        width: 52.5%;
+        height: 40px;
+        font-size: 12.5px;
+    }
 
     .admin-inventory-add-equipment-container {
         height: 40px;
+        width: 17.5%;
     }
 
     .admin-inventory-add-equipment-button {
-        width: 15%;
         height: 40px;
         font-size: 12.5px;
     }
@@ -198,14 +237,25 @@
         font-size: 35px;
     }
 
-    /* Add Equipment */
+    /* Search and Add Equipment */
+
+    .admin-inventory-search-container {
+        height: 35px;
+        width: 80%;
+    }
+
+    .admin-inventory-search-input {
+        width: 55%;
+        height: 35px;
+        font-size: 10px;
+    }
 
     .admin-inventory-add-equipment-container {
         height: 35px;
+        width: 20%;
     }
 
     .admin-inventory-add-equipment-button {
-        width: 20%;
         height: 35px;
         font-size: 10px;
     }
@@ -277,14 +327,25 @@
         margin: 20px 0 20px 25px;
     }
 
-    /* Add Equipment */
+    /* Search and Add Equipment */
+
+    .admin-inventory-search-container {
+        height: 35px;
+        width: 80%;
+    }
+
+    .admin-inventory-search-input {
+        width: 55%;
+        height: 35px;
+        font-size: 10px;
+    }
 
     .admin-inventory-add-equipment-container {
         height: 35px;
+        width: 20%;
     }
 
     .admin-inventory-add-equipment-button {
-        width: 20%;
         height: 35px;
         font-size: 10px;
     }
@@ -362,14 +423,25 @@
         margin: 20px 0 20px 20px;
     }
 
-    /* Add Equipment */
+    /* Search and Add Equipment */
+
+    .admin-inventory-search-container {
+        height: 25px;
+        width: 77.5%;
+    }
+
+    .admin-inventory-search-input {
+        width: 55%;
+        height: 25px;
+        font-size: 7.5px;
+    }
 
     .admin-inventory-add-equipment-container {
         height: 25px;
+        width: 22.5%;
     }
 
     .admin-inventory-add-equipment-button {
-        width: 25%;
         height: 25px;
         font-size: 7.5px;
     }

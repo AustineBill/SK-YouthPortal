@@ -9,7 +9,7 @@ const AdminNavbar = () => {
   const { adminlogout } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  
+
   // Retrieve the admin username from sessionStorage
   const adminUsername = sessionStorage.getItem("username"); // Assuming the username is saved during login
 
@@ -62,7 +62,7 @@ const AdminNavbar = () => {
               alt="iSKed Logo"
               className="admin-iSKed-logo me-2 d-none d-md-block m-0"
             />
-            <h1 className="admin-iSKed-name fst-italic text-white h1 m-0 p-0 d-none d-md-block">
+            <h1 className="admin-iSKed-name fst-italic text-white m-0 p-0 d-none d-md-block">
               iSKed - Admin Panel
             </h1>
 
@@ -82,10 +82,11 @@ const AdminNavbar = () => {
           </div>
 
           {/* Admin Username and Sign-out Button */}
-            <div className="d-flex align-items-center">
-              {/* Admin Username Circle Avatar */}
+          <div className="admin-navbar-right-side d-flex justify-content-end align-items-center">
+            {/* Admin Username Circle Avatar */}
+            <div className="admin-logged-in-user d-flex align-items-center">
               {adminUsername && (
-                <div className="admin-avatar">
+                <div className="admin-avatar d-flex justify-content-center align-items-center">
                   {adminUsername.match(/\d+$/) ? adminUsername.match(/\d+$/)[0] : ""}
                 </div>
               )}
@@ -96,23 +97,23 @@ const AdminNavbar = () => {
                   {adminUsername} {/* Display admin's username */}
                 </span>
               )}
-
-              {/* Sign-out Button */}
-              <button
-                className="admin-sign-out-button bg-danger rounded-pill"
-                onClick={handleSignout}
-              >
-                Sign out
-              </button>
             </div>
+
+            {/* Sign-out Button */}
+            <button
+              className="admin-sign-out-button bg-danger rounded-pill m-0 p-0"
+              onClick={handleSignout}
+            >
+              Sign out
+            </button>
+          </div>
         </div>
       </nav>
 
       {/* Sidebar */}
       <div
-        className={`admin-sidebar ${
-          isSidebarOpen ? "admin-sidebar-open" : "admin-sidebar-closed"
-        }`}
+        className={`admin-sidebar ${isSidebarOpen ? "admin-sidebar-open" : "admin-sidebar-closed"
+          }`}
       >
         <ul className="admin-sidebar-ul list-unstyled">
           {sidebarLinks.map((link) => (

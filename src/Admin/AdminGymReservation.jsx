@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Table, Dropdown, Button, Modal, Form } from "react-bootstrap";
+import { Dropdown, Button, Modal, Form } from "react-bootstrap";
 import AdminGymCalendar from "./Calendars/AdminGymCalendar";
-import "./styles/AdminGymReservation.css";
 import axios from "axios";
+// import "./styles/AdminGymReservation.css";
+import '../WebStyles/Admin-CSS.css';
 
 const AdminGymReservation = () => {
   const [reservations, setReservations] = useState([]);
@@ -143,7 +144,7 @@ const AdminGymReservation = () => {
     const strText = text.toString();
     const index = strText.indexOf(searchTerm);
     if (index === -1) return strText;
-    
+
     return (
       <>
         {strText.substring(0, index)}
@@ -156,177 +157,176 @@ const AdminGymReservation = () => {
   };
 
   return (
-    <div className="admin-gym-reservation-container">
-      <h2 className="admin-greservation-label-h2 fst-italic">
-        Gym Reservation
-      </h2>
+    <>
+      <div className="admin-gym-reservation-container">
+        <h2 className="admin-greservation-label-h2 fst-italic">
+          Gym Reservation
+        </h2>
 
-      <div className="justify-content-end d-flex me-5">
-        <button
-          className="btn btn-warning me-2"
-          onClick={() => setShowTimeGapModal(true)}
-        >
-          <i className="bi bi-clock-fill"></i>
-        </button>
-        <button
-          className="btn btn-info me-2"
-          onClick={() => setShowBlockModal(true)}
-        >
-          <i className="bi bi-calendar-x-fill"></i>
-        </button>
-      </div>
-
-      <AdminGymCalendar />
-
-      {/* Search Bar - New Addition */}
-      <div className="mb-3 px-3">
-        <Form.Control
-          type="text"
-          placeholder="🔍 Search by Reservation ID..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="admin-gr-search-bar"
-          style={{
-            maxWidth: '300px',
-            borderRadius: '20px',
-            padding: '8px 15px'
-          }}
-        />
-      </div>
-
-      <div className="admin-greservation-buttons-table-container">
-        <div className="admin-gr-toggle-buttons-container d-flex align-items-center">
-          <Dropdown className="gr-toggle-container">
-            <Dropdown.Toggle className="gr-toggle">
-              {filterOption}
-            </Dropdown.Toggle>
-            <Dropdown.Menu className="gr-toggle-text">
-              <Dropdown.Item onClick={() => setFilterOption("Now")}>
-                Now
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => setFilterOption("Week")}>
-                Week
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => setFilterOption("Month")}>
-                Month
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => setFilterOption("All")}>
-                All
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-
-          <button
-            disabled={selectedReservations.length === 0}
-            onClick={handleApprove}
-            className="admin-gr-disapprove-button bg-success text-white rounded"
+        <div className="admin-gym-reservation-time-date-container d-flex justify-content-end">
+          <Button
+            variant="warning"
+            className="admin-gr-time-range-button"
+            onClick={() => setShowTimeGapModal(true)}
           >
-            Approve
-          </button>
-          <button
-            disabled={selectedReservations.length === 0}
-            onClick={handleDisapprove}
-            className="admin-gr-disapprove-button bg-danger text-white rounded"
+            <i className="bi bi-clock-fill"></i>
+          </Button>
+          <Button
+            variant="primary"
+            className="admin-gr-date-range-button"
+            onClick={() => setShowBlockModal(true)}
           >
-            Disapprove
-          </button>
-
-          <Dropdown className="gr-toggle-container ms-3">
-            <Dropdown.Toggle className="gr-toggle">
-              {statusFilter}
-            </Dropdown.Toggle>
-            <Dropdown.Menu className="gr-toggle-text">
-              <Dropdown.Item onClick={() => setStatusFilter("All")}>
-                All
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => setStatusFilter("Approved")}>
-                Approved
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => setStatusFilter("Disapproved")}>
-                Disapproved
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => setStatusFilter("Pending")}>
-                Pending
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+            <i className="bi bi-calendar-x-fill"></i>
+          </Button>
         </div>
 
-        <Table className="admin-greservation-table-container table-bordered">
-          <thead className="admin-greservation-head text-center">
-            <tr>
-              <th>
-                <input
-                  type="checkbox"
-                  onChange={(e) =>
-                    setSelectedReservations(
-                      e.target.checked
-                        ? filteredReservations.map((res) => res.id)
-                        : []
-                    )
-                  }
-                  checked={
-                    selectedReservations.length > 0 &&
-                    selectedReservations.length === filteredReservations.length
-                  }
-                />
-              </th>
-              <th>ID</th>
-              <th>Type</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Time Slot</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+        <AdminGymCalendar />
 
-          <tbody className="admin-greservation-body text-center">
-            {filteredReservations.length === 0 ? (
+        {/* Search Bar - New Addition */}
+        <div className="admin-gym-reservation-search-container d-flex align-items-center">
+          <input
+            type="text"
+            placeholder="Search reservation by Reservation ID"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="admin-gym-reservation-search-input rounded"
+          />
+        </div>
+
+        <div className="admin-greservation-buttons-table-container">
+          <div className="admin-gr-toggle-buttons-container d-flex justify-content-between align-items-center">
+            <Dropdown className="admin-gr-date-toggle-container">
+              <Dropdown.Toggle className="gr-date-toggle">
+                {filterOption}
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="gr-date-toggle-text">
+                <Dropdown.Item onClick={() => setFilterOption("Now")}>
+                  Now
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setFilterOption("Week")}>
+                  Week
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setFilterOption("Month")}>
+                  Month
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setFilterOption("All")}>
+                  All
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+
+            <Button
+              disabled={selectedReservations.length === 0}
+              onClick={handleApprove}
+              className="admin-gr-approve-button bg-success rounded"
+            >
+              Approve
+            </Button>
+            <Button
+              disabled={selectedReservations.length === 0}
+              onClick={handleDisapprove}
+              className="admin-gr-disapprove-button bg-danger rounded"
+            >
+              Disapprove
+            </Button>
+
+            <Dropdown className="admin-gr-status-toggle-container">
+              <Dropdown.Toggle className="gr-status-toggle">
+                {statusFilter}
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="gr-status-toggle-text">
+                <Dropdown.Item onClick={() => setStatusFilter("All")}>
+                  All
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setStatusFilter("Approved")}>
+                  Approved
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setStatusFilter("Disapproved")}>
+                  Disapproved
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setStatusFilter("Pending")}>
+                  Pending
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        </div>
+
+        <div className="admin-greservation-contents-container">
+          <table className="admin-greservation-table-container table-bordered">
+            <thead className="admin-greservation-head text-center">
               <tr>
-                <td colSpan="8" className="text-center">No reservations found</td>
+                <th>
+                  <input
+                    type="checkbox"
+                    onChange={(e) =>
+                      setSelectedReservations(
+                        e.target.checked
+                          ? filteredReservations.map((res) => res.id)
+                          : []
+                      )
+                    }
+                    checked={
+                      selectedReservations.length > 0 &&
+                      selectedReservations.length === filteredReservations.length
+                    }
+                  />
+                </th>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Time Slot</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
-            ) : (
-              filteredReservations.map((reservation, index) => (
-                <tr key={reservation.id || reservation.reservation_id || index}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={selectedReservations.includes(reservation.id)}
-                      onChange={() => handleCheckboxChange(reservation.id)}
-                    />
-                  </td>
-                  <td>{highlightSearchMatch(reservation.reservation_id)}</td>
-                  <td>{reservation.program}</td>
-                  <td>{new Date(reservation.start_date).toLocaleDateString()}</td>
-                  <td>{new Date(reservation.end_date).toLocaleDateString()}</td>
-                  <td>{reservation.time_slot}</td>
-                  <td>
-                    <span className={`badge bg-${
-                      reservation.status === "Approved" ? "success" :
-                      reservation.status === "Disapproved" ? "danger" :
-                      "warning"
-                    }`}>
-                      {reservation.status || "Pending"}
-                    </span>
-                  </td>
-                  <td>
-                    <div className="admin-greservation-action-button-container d-flex justify-content-center">
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        className="me-2"
-                        onClick={() => handleCancellation(reservation.id)}
-                      >
-                        <i className="bi bi-trash"></i> Cancel
-                      </Button>
-                    </div>
-                  </td>
+            </thead>
+
+            <tbody className="admin-greservation-body text-center">
+              {filteredReservations.length === 0 ? (
+                <tr>
+                  <td colSpan="8" className="text-center">No reservations found</td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </Table>
+              ) : (
+                filteredReservations.map((reservation, index) => (
+                  <tr key={reservation.id || reservation.reservation_id || index}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={selectedReservations.includes(reservation.id)}
+                        onChange={() => handleCheckboxChange(reservation.id)}
+                      />
+                    </td>
+                    <td>{highlightSearchMatch(reservation.reservation_id)}</td>
+                    <td>{reservation.program}</td>
+                    <td>{new Date(reservation.start_date).toLocaleDateString()}</td>
+                    <td>{new Date(reservation.end_date).toLocaleDateString()}</td>
+                    <td>{reservation.time_slot}</td>
+                    <td>
+                      <span className={`badge bg-${reservation.status === "Approved" ? "success" :
+                        reservation.status === "Disapproved" ? "danger" :
+                          "warning"
+                        } m-0 p-0`}>
+                        {reservation.status || "Pending"}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="admin-greservation-action-button-container d-flex justify-content-center">
+                        <Button
+                          variant="danger"
+                          className="admin-greservation-delete-button rounded-pill"
+                          onClick={() => handleCancellation(reservation.id)}
+                        >
+                          <i className="bi bi-trash"></i>
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
 
         <Modal
           show={showTimeGapModal}
@@ -445,7 +445,8 @@ const AdminGymReservation = () => {
           </Modal.Footer>
         </Modal>
       </div>
-    </div>
+
+    </>
   );
 };
 

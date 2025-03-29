@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import axios from "axios";
-import "./styles/AdminReports.css";
-// import '../WebStyles/Admin-CSS.css';
+// import "./styles/AdminReports.css";
+import '../WebStyles/Admin-CSS.css';
 
 const Reports = () => {
   const [activeTable, setActiveTable] = useState("users");
@@ -202,7 +202,7 @@ const Reports = () => {
         <h2 className="admin-reports-label-h2 fst-italic">Reports</h2>
       </div>
 
-      <div className="admin-reports-generate-classification-date-container d-flex align-items-center">
+      <div className="admin-reports-generate-classification-date-container d-flex justify-content-between align-items-center">
         <div className="admin-reports-classification-container">
           {/* Dropdown for selecting table */}
           <select
@@ -230,19 +230,18 @@ const Reports = () => {
           </select>
         </div>
 
-
-
         {/* Admin Name and Date Input Fields */}
         <div className="admin-reports-info-container d-flex align-items-center">
           {/* Show admin username */}
           {adminUsername && (
-            <span className="text-white me-3">
+            <span className="admin-logged-in-name m-0 p-0">
               {adminUsername} {/* Display admin's username */}
             </span>
           )}
         </div>
+
         {/* Generate PDF Button */}
-        <div className="admin-reports-generate-pdf-container d-flex justify-content-end">
+        <div className="admin-reports-generate-pdf-container d-flex justify-content-end m-0">
           <button
             className="admin-reports-generate-pdf-button rounded"
             onClick={generatePDF}
