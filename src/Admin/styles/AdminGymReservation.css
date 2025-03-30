@@ -17,56 +17,68 @@
   margin: 20px 0 20px 40px;
 }
 
-/* Time */
+/* Time and Date */
 
-.time-dropdown-container {
-  height: 50px;
+.admin-gym-reservation-time-date-container {
+  width: 90%;
+  margin: 0 auto;
 }
 
-.time-dropdown-container .time-dropdown {
-  width: 20%;
+.admin-gym-reservation-time-date-container .admin-gr-time-range-button {
+  margin-right: 10px;
 }
 
-.time-dropdown .time-dropdown-button {
+.admin-gym-reservation-time-date-container .admin-gr-time-range-button,
+.admin-gym-reservation-time-date-container .admin-gr-date-range-button {
   font-size: 15px;
-  height: 50px;
+  height: 45px;
 }
 
-.time-dropdown-menu .dropdown-item {
+/* Search Bar */
+
+.admin-gym-reservation-search-container {
+  width: 90%;
+  margin: 0 auto 20px;
+}
+
+.admin-gym-reservation-search-input {
+  width: 100%;
+  height: 45px;
   font-size: 15px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.admin-gym-reservation-search-input:hover {
+  color: #FFFFFF;
+  background-color: #858585;
+}
+
+.admin-gym-reservation-search-input:focus {
+  outline: 1px solid #007bff;
 }
 
 /* Table Decision Buttons */
 
 .admin-greservation-buttons-table-container {
   width: 90%;
-  margin: 0 auto 40px;
+  margin: 0 auto 20px;
 }
 
 .admin-gr-toggle-buttons-container {
-  height: 45px;
-  width: 100%;
-  margin-bottom: 20px;
-  gap: 0.25in;
+  width: 40%;
 }
 
-.gr-toggle-container .gr-toggle {
+.admin-gr-date-toggle-container .gr-date-toggle,
+.admin-gr-status-toggle-container .gr-status-toggle {
   font-size: 15px;
   height: 45px;
 }
 
-.gr-toggle-container .gr-toggle-text .dropdown-item {
+.admin-gr-toggle-buttons-container .admin-gr-approve-button,
+.admin-gr-toggle-buttons-container .admin-gr-disapprove-button {
   font-size: 15px;
-}
-
-.admin-gr-approve-button,
-.admin-gr-disapprove-button {
-  font-size: 15px;
-  width: 175px;
   height: 45px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #000000;
 }
 
 button:disabled {
@@ -75,6 +87,12 @@ button:disabled {
 }
 
 /* Gym Reservation Table */
+
+.admin-greservation-contents-container {
+  width: 90%;
+  margin: 0 auto;
+  overflow-x: auto;
+}
 
 .admin-greservation-table-container tr {
   height: 40px;
@@ -100,18 +118,6 @@ button:disabled {
   transition: all 0.35s;
 }
 
-/* Calendar */
-
-.admin-greservation-calendar-container {
-  width: 90%;
-  margin: 0 auto;
-}
-
-.gr-calendar {
-  border-style: solid;
-  border-width: 1px;
-  border-color: #25327a;
-}
 
 /* Media */
 
@@ -121,45 +127,36 @@ button:disabled {
     font-size: 37.5px;
   }
 
-  /* Time */
+  /* Time and Date */
 
-  .time-dropdown-container {
-    height: 45px;
-  }
-
-  .time-dropdown-container .time-dropdown {
-    width: 25%;
-  }
-
-  .time-dropdown .time-dropdown-button {
+  .admin-gym-reservation-time-date-container .admin-gr-time-range-button,
+  .admin-gym-reservation-time-date-container .admin-gr-date-range-button {
     font-size: 12.5px;
-    height: 45px;
+    height: 40px;
   }
 
-  .time-dropdown-menu .dropdown-item {
+  /* Search Bar */
+
+  .admin-gym-reservation-search-input {
+    height: 40px;
     font-size: 12.5px;
   }
 
   /* Table Decision Buttons */
 
   .admin-gr-toggle-buttons-container {
-    height: 40px;
-    gap: 0.20in;
+    width: 45%;
   }
 
-  .gr-toggle-container .gr-toggle {
+  .admin-gr-date-toggle-container .gr-date-toggle,
+  .admin-gr-status-toggle-container .gr-status-toggle {
     font-size: 12.5px;
     height: 40px;
   }
 
-  .gr-toggle-container .gr-toggle-text .dropdown-item {
+  .admin-gr-toggle-buttons-container .admin-gr-approve-button,
+  .admin-gr-toggle-buttons-container .admin-gr-disapprove-button {
     font-size: 12.5px;
-  }
-
-  .admin-gr-approve-button,
-  .admin-gr-disapprove-button {
-    font-size: 12.5px;
-    width: 150px;
     height: 40px;
   }
 
@@ -188,45 +185,36 @@ button:disabled {
     font-size: 35px;
   }
 
-  /* Time */
+  /* Time and Date */
 
-  .time-dropdown-container {
-    height: 40px;
-  }
-
-  .time-dropdown-container .time-dropdown {
-    width: 30%;
-  }
-
-  .time-dropdown .time-dropdown-button {
+  .admin-gym-reservation-time-date-container .admin-gr-time-range-button,
+  .admin-gym-reservation-time-date-container .admin-gr-date-range-button {
     font-size: 10px;
-    height: 40px;
+    height: 35px;
   }
 
-  .time-dropdown-menu .dropdown-item {
+  /* Search Bar */
+
+  .admin-gym-reservation-search-input {
+    height: 35px;
     font-size: 10px;
   }
 
   /* Table Decision Buttons */
 
   .admin-gr-toggle-buttons-container {
-    height: 35px;
-    gap: 0.15in;
+    width: 50%;
   }
 
-  .gr-toggle-container .gr-toggle {
+  .admin-gr-date-toggle-container .gr-date-toggle,
+  .admin-gr-status-toggle-container .gr-status-toggle {
     font-size: 10px;
     height: 35px;
   }
 
-  .gr-toggle-container .gr-toggle-text .dropdown-item {
+  .admin-gr-toggle-buttons-container .admin-gr-approve-button,
+  .admin-gr-toggle-buttons-container .admin-gr-disapprove-button {
     font-size: 10px;
-  }
-
-  .admin-gr-approve-button,
-  .admin-gr-disapprove-button {
-    font-size: 10px;
-    width: 125px;
     height: 35px;
   }
 
@@ -261,45 +249,36 @@ button:disabled {
     margin: 20px 0 20px 25px;
   }
 
-  /* Time */
+  /* Time and Date */
 
-  .time-dropdown-container {
-    height: 40px;
-  }
-
-  .time-dropdown-container .time-dropdown {
-    width: 35%;
-  }
-
-  .time-dropdown .time-dropdown-button {
+  .admin-gym-reservation-time-date-container .admin-gr-time-range-button,
+  .admin-gym-reservation-time-date-container .admin-gr-date-range-button {
     font-size: 10px;
-    height: 40px;
+    height: 35px;
   }
 
-  .time-dropdown-menu .dropdown-item {
+  /* Search Bar */
+
+  .admin-gym-reservation-search-input {
+    height: 35px;
     font-size: 10px;
   }
 
   /* Table Decision Buttons */
 
   .admin-gr-toggle-buttons-container {
-    height: 35px;
-    gap: 0.15in;
+    width: 60%;
   }
 
-  .gr-toggle-container .gr-toggle {
+  .admin-gr-date-toggle-container .gr-date-toggle,
+  .admin-gr-status-toggle-container .gr-status-toggle {
     font-size: 10px;
     height: 35px;
   }
 
-  .gr-toggle-container .gr-toggle-text .dropdown-item {
+  .admin-gr-toggle-buttons-container .admin-gr-approve-button,
+  .admin-gr-toggle-buttons-container .admin-gr-disapprove-button {
     font-size: 10px;
-  }
-
-  .admin-gr-approve-button,
-  .admin-gr-disapprove-button {
-    font-size: 10px;
-    width: 125px;
     height: 35px;
   }
 
@@ -334,45 +313,40 @@ button:disabled {
     margin: 20px 0 20px 20px;
   }
 
-  /* Time */
+  /* Time and Date */
 
-  .time-dropdown-container {
-    height: 35px;
+  .admin-gym-reservation-time-date-container .admin-gr-time-range-button {
+    margin-right: 5px;
   }
 
-  .time-dropdown-container .time-dropdown {
-    width: 50%;
+  .admin-gym-reservation-time-date-container .admin-gr-time-range-button,
+  .admin-gym-reservation-time-date-container .admin-gr-date-range-button {
+    font-size: 7.5px;
+    height: 25px;
   }
 
-  .time-dropdown .time-dropdown-button {
-    font-size: 10px;
-    height: 35px;
-  }
+  /* Search Bar */
 
-  .time-dropdown-menu .dropdown-item {
-    font-size: 10px;
+  .admin-gym-reservation-search-input {
+    height: 25px;
+    font-size: 7.5px;
   }
 
   /* Table Decision Buttons */
 
   .admin-gr-toggle-buttons-container {
-    height: 25px;
-    gap: 0.10in;
+    width: 80%;
   }
 
-  .gr-toggle-container .gr-toggle {
+  .admin-gr-date-toggle-container .gr-date-toggle,
+  .admin-gr-status-toggle-container .gr-status-toggle {
     font-size: 7.5px;
     height: 25px;
   }
 
-  .gr-toggle-container .gr-toggle-text .dropdown-item {
+  .admin-gr-toggle-buttons-container .admin-gr-approve-button,
+  .admin-gr-toggle-buttons-container .admin-gr-disapprove-button {
     font-size: 7.5px;
-  }
-
-  .admin-gr-approve-button,
-  .admin-gr-disapprove-button {
-    font-size: 7.5px;
-    width: 100px;
     height: 25px;
   }
 

@@ -20,27 +20,37 @@
 /* Generate Report */
 
 .admin-reports-generate-classification-date-container {
-    height: 45px;
     width: 90%;
-    gap: 0.25in;
-    margin: 0 auto 20px;
+    margin: 0 auto 25px;
 }
 
 .admin-reports-classification-container,
-.admin-reports-date-container,
+.admin-reports-date-container {
+    height: 45px;
+    width: 26.66%;
+}
+
 .admin-reports-info-container {
-    width: 28.33%;
+    height: 45px;
+    width: 26.66%;
+    background-color: #FFFFFF;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
 }
 
 .admin-reports-classification,
-.admin-reports-date,
-.admin-reports-info {
+.admin-reports-date {
     width: 100%;
     height: 45px;
-    font-size: 17.5px;
+    font-size: 15px;
     border-style: solid;
     border-width: 1px;
     transition: all 0.35s;
+}
+
+.admin-logged-in-name {
+    font-size: 15px;
 }
 
 .admin-reports-classification:hover,
@@ -64,6 +74,7 @@
 }
 
 .admin-reports-generate-pdf-container {
+    height: 45px;
     width: 15%;
 }
 
@@ -94,6 +105,7 @@
 .admin-reports-reservation-table,
 .admin-reports-inventory-table {
     width: 100%;
+    overflow-x: auto;
 }
 
 .reports-users-label-h2,
@@ -120,6 +132,13 @@
     font-weight: bold;
 }
 
+.admin-reports-users-table-container,
+.admin-reports-equipment-table-container,
+.admin-reports-reservation-table-container,
+.admin-reports-inventory-table-container {
+    word-wrap: break-word;
+}
+
 .reports-list-container td {
     font-size: 15px;
 }
@@ -135,25 +154,30 @@
 
     /* Generate Report */
 
-    .admin-reports-generate-classification-date-container {
+    .admin-reports-classification-container,
+    .admin-reports-date-container {
         height: 40px;
+        width: 25%;
     }
 
-    .admin-reports-classification-container,
-    .admin-reports-date-container,
     .admin-reports-info-container {
-        width: 26.66%;
+        height: 40px;
+        width: 25%;
     }
 
     .admin-reports-classification,
-    .admin-reports-date,
-    .admin-reports-info {
+    .admin-reports-date {
         height: 40px;
-        font-size: 15px;
+        font-size: 12.5px;
+    }
+
+    .admin-logged-in-name {
+        font-size: 12.5px;
     }
 
     .admin-reports-generate-pdf-container {
-        width: 20%;
+        height: 40px;
+        width: 17.5%;
     }
 
     .admin-reports-generate-pdf-button {
@@ -191,25 +215,30 @@
 
     /* Generate Report */
 
-    .admin-reports-generate-classification-date-container {
-        height: 35px;
-    }
-
     .admin-reports-classification-container,
-    .admin-reports-date-container,
-    .admin-reports-info-container {
-        width: 25%;
+    .admin-reports-date-container {
+        height: 35px;
+        width: 23.33%;
     }
 
-    .admin-reports-generate-pdf-container {
-        width: 25%;
+    .admin-reports-info-container {
+        height: 35px;
+        width: 23.33%;
     }
 
     .admin-reports-classification,
-    .admin-reports-date,
-    .admin-reports-info {
+    .admin-reports-date {
         height: 35px;
-        font-size: 12.5px;
+        font-size: 10px;
+    }
+
+    .admin-logged-in-name {
+        font-size: 10px;
+    }
+
+    .admin-reports-generate-pdf-container {
+        height: 35px;
+        width: 20%;
     }
 
     .admin-reports-generate-pdf-button {
@@ -253,25 +282,30 @@
 
     /* Generate Report */
 
-    .admin-reports-generate-classification-date-container {
-        height: 35px;
-    }
-
     .admin-reports-classification-container,
-    .admin-reports-date-container,
-    .admin-reports-info-container {
+    .admin-reports-date-container {
+        height: 35px;
         width: 23.33%;
     }
 
-    .admin-reports-generate-pdf-container {
-        width: 30%;
+    .admin-reports-info-container {
+        height: 35px;
+        width: 23.33%;
     }
 
     .admin-reports-classification,
-    .admin-reports-date,
-    .admin-reports-info {
+    .admin-reports-date {
         height: 35px;
-        font-size: 12.5px;
+        font-size: 10px;
+    }
+
+    .admin-logged-in-name {
+        font-size: 10px;
+    }
+
+    .admin-reports-generate-pdf-container {
+        height: 35px;
+        width: 20%;
     }
 
     .admin-reports-generate-pdf-button {
@@ -315,25 +349,30 @@
 
     /* Generate Report */
 
-    .admin-reports-generate-classification-date-container {
-        height: 25px;
-    }
-
     .admin-reports-classification-container,
-    .admin-reports-date-container,
-    .admin-reports-info-container {
+    .admin-reports-date-container {
+        height: 25px;
         width: 21.66%;
     }
 
-    .admin-reports-generate-pdf-container {
-        width: 35%;
+    .admin-reports-info-container {
+        height: 25px;
+        width: 21.66%;
     }
 
     .admin-reports-classification,
-    .admin-reports-date,
-    .admin-reports-info {
+    .admin-reports-date {
         height: 25px;
-        font-size: 10px;
+        font-size: 7.5px;
+    }
+
+    .admin-logged-in-name {
+        font-size: 7.5px;
+    }
+
+    .admin-reports-generate-pdf-container {
+        height: 25px;
+        width: 22.5%;
     }
 
     .admin-reports-generate-pdf-button {

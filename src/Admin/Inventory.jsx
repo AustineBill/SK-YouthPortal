@@ -160,23 +160,17 @@ const InventoryTable = () => {
 
       <div className="admin-inventory-search-add-container d-flex justify-content-between align-items-center">
         {/* New Search Bar */}
-        <div className="admin-inventory-search-container">
+        <div className="admin-inventory-search-container d-flex align-items-center">
           <input
             type="text"
-            placeholder="🔍 Search by item name..."
+            placeholder="Search item by name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="admin-inventory-search-input"
-            style={{
-              borderRadius: '20px',
-              padding: '8px 15px',
-              border: '1px solid #ced4da',
-              width: '300px'
-            }}
+            className="admin-inventory-search-input rounded"
           />
         </div>
 
-        <div className="admin-inventory-add-equipment-container">
+        <div className="admin-inventory-add-equipment-container d-flex align-items-center m-0">
           <button
             className="admin-inventory-add-equipment-button rounded"
             onClick={() => handleShowModal()}

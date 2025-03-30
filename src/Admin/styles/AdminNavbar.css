@@ -6,30 +6,14 @@
     background-color: #25327A;
     z-index: 3;
 }
-.admin-avatar {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-color: #ffcc00; /* Yellow background */
-    color: #25327A; /* Text color */
-    font-size: 14px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-    text-transform: uppercase;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.admin-username {
-    font-size: 1rem;
-    color: white;
-    margin-right: 12px;
-}
 
 .admin-navbar-details {
     width: 100%;
+}
+
+.admin-navbar-left-side {
+    height: 70px;
+    width: 75%;
 }
 
 .admin-iSKed-logo {
@@ -40,16 +24,39 @@
 .admin-iSKed-name,
 .admin-iSKed-name-h4 {
     font-family: 'Sansita', sans-serif;
+    font-size: 25px;
 }
 
 .admin-hamburger-nav {
     color: white;
 }
 
-.admin-sign-out-button {
-    font-size: 15px;
+.admin-navbar-right-side {
+    height: 70px;
+    width: 25%;
+}
+
+.admin-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #ffcc00;
+    color: #25327A;
+    font-size: 12.5px;
+    margin-right: 10px;
+    text-transform: uppercase;
+}
+
+.admin-username {
+    margin: 0 15px 0 0;
+    font-size: 12.5px;
     color: #FFFFFF;
-    height: 45px;
+}
+
+.admin-navbar-right-side .admin-sign-out-button {
+    font-size: 12.5px;
+    color: #FFFFFF;
+    height: 40px;
     width: 100px;
     cursor: pointer;
     border-style: none;
@@ -92,36 +99,19 @@
 
 @media (min-width: 481px) and (max-width: 767px) {
 
-    .admin-sign-out-button {
-        font-size: 12.5px;
-        height: 42.5px;
-        width: 90px;
-    }
-
-    .admin-username {
-        display: none;
-    }
-
-    .admin-avatar {
-        width: 40px;
-        height: 40px;
-        font-size: 16px; /* Make avatar slightly bigger for better visibility */
-    }
-}
-
-@media (min-width: 320px) and (max-width: 480px) {
-
-    .admin-iSKed-name-h4 {
-        font-size: 17.5px;
-    }
-
-    .admin-sign-out-button {
+    .admin-navbar-right-side .admin-sign-out-button {
         font-size: 10px;
-        height: 40px;
+        height: 35px;
         width: 80px;
     }
 
-    
+    .admin-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 10px;
+        margin-right: 10px;
+    }
+
     .admin-username {
         display: none;
     }
@@ -143,5 +133,48 @@
 
     .admin-sidebar .admin-sidebar-links {
         font-size: 12.5px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    .admin-iSKed-name-h4 {
+        font-size: 20px;
+    }
+
+    .admin-navbar-right-side .admin-sign-out-button {
+        font-size: 7.5px;
+        height: 25px;
+        width: 60px;
+    }
+
+    .admin-avatar {
+        width: 25px;
+        height: 25px;
+        font-size: 7.5px;
+        margin-right: 10px;
+    }
+
+    .admin-username {
+        display: none;
+    }
+
+    /* Sidebar */
+
+    .admin-sidebar {
+        left: -225px;
+        width: 225px;
+    }
+
+    .admin-sidebar-open {
+        left: 0;
+    }
+
+    .admin-sidebar-closed {
+        left: -225px;
+    }
+
+    .admin-sidebar .admin-sidebar-links {
+        font-size: 10px;
     }
 }

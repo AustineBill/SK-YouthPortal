@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { Table, Dropdown, Button, Form } from "react-bootstrap";
+import { Dropdown, Button } from "react-bootstrap";
 import EquipmentCalendar from "./Calendars/EquipmentCalendar";
-import "./styles/AdminEquipmentReservation.css";
+import '../WebStyles/Admin-CSS.css';
 
 const AdminEquipmentReservation = () => {
   const [reservations, setReservations] = useState([]);
@@ -126,7 +126,7 @@ const AdminEquipmentReservation = () => {
     const strText = text.toString();
     const index = strText.indexOf(searchTerm);
     if (index === -1) return strText;
-    
+
     return (
       <>
         {strText.substring(0, index)}
@@ -146,54 +146,59 @@ const AdminEquipmentReservation = () => {
 
       <EquipmentCalendar />
 
-      {/* Search Bar */}
-      <Form.Control
-        type="text"
-        placeholder="🔍 Search by Reference ID..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-3"
-        style={{
-          width: '300px',
-          borderRadius: '20px',
-          padding: '8px 15px'
-        }}
-      />
+      {/* Search Bar - New Addition */}
+      <div className="admin-equipment-reservation-search-container d-flex align-items-center">
+        <input
+          type="text"
+          placeholder="Search reservation by Reservation ID"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="admin-equipment-reservation-search-input rounded"
+        />
+      </div>
 
       <div className="admin-ereservation-buttons-table-container">
-        <div className="admin-er-toggle-buttons-container d-flex align-items-center">
-          <Dropdown>
-            <Dropdown.Toggle variant="secondary">
+        <div className="admin-er-toggle-buttons-container d-flex justify-content-between align-items-center">
+          <Dropdown className="admin-er-date-toggle-container">
+            <Dropdown.Toggle className="er-date-toggle">
               {filterOption}
             </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => setFilterOption("Now")}>Now</Dropdown.Item>
-              <Dropdown.Item onClick={() => setFilterOption("Week")}>Week</Dropdown.Item>
-              <Dropdown.Item onClick={() => setFilterOption("Month")}>Month</Dropdown.Item>
-              <Dropdown.Item onClick={() => setFilterOption("All")}>All</Dropdown.Item>
+            <Dropdown.Menu className="er-date-toggle-text">
+              <Dropdown.Item onClick={() => setFilterOption("Now")}>
+                Now
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setFilterOption("Week")}>
+                Week
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setFilterOption("Month")}>
+                Month
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setFilterOption("All")}>
+                All
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
 
           <Button
-            variant="success"
-            className="ms-2"
             disabled={selectedReservations.length === 0}
             onClick={handleReturned}
+            className="admin-er-returned-button bg-success rounded"
           >
             Mark as Returned
           </Button>
           <Button
-            variant="danger"
-            className="ms-2"
             disabled={selectedReservations.length === 0}
             onClick={handleNotReturned}
+            className="admin-er-unreturned-button bg-danger rounded"
           >
             Mark as Not Returned
           </Button>
         </div>
+      </div>
 
-        <Table striped bordered hover className="mt-3">
-          <thead>
+      <div className="admin-ereservation-contents-container">
+        <table className="admin-ereservation-table-container table-bordered">
+          <thead className="admin-ereservation-head text-center">
             <tr>
               <th>
                 <input
@@ -221,7 +226,8 @@ const AdminEquipmentReservation = () => {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
+
+          <tbody className="admin-ereservation-body text-center">
             {filteredReservations.length === 0 ? (
               <tr>
                 <td colSpan="7" className="text-center">No reservations found</td>
@@ -246,22 +252,24 @@ const AdminEquipmentReservation = () => {
                   <td>{formatDate(reservation.end_date)}</td>
                   <td>{reservation.status || "Pending"}</td>
                   <td>
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() => handleArchive(reservation.id)}
-                      disabled={reservation.status === "Not Returned"}
-                    >
-                      Archive
-                    </Button>
+                    <div className="admin-ereservation-action-button-container d-flex justify-content-center">
+                      <Button
+                        variant="danger"
+                        className="admin-ereservation-archive-button rounded-pill"
+                        onClick={() => handleArchive(reservation.id)}
+                        disabled={reservation.status === "Not Returned"}
+                      >
+                        <i class="bi bi-archive"></i>
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))
             )}
           </tbody>
-        </Table>
+        </table>
       </div>
-    </div>
+    </div >
   );
 };
 
