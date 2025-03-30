@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, Modal, Alert, Button } from "react-bootstrap";
 import "../WebStyles/Admin-CSS.css";
-// import './styles/AdminManageProgram.css';
 
 const ManageProgram = () => {
   const [programs, setPrograms] = useState([]);

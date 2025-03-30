@@ -118,18 +118,6 @@ button:disabled {
   transition: all 0.35s;
 }
 
-/* Calendar */
-
-.admin-greservation-calendar-container {
-  width: 90%;
-  margin: 0 auto;
-}
-
-.gr-calendar {
-  border-style: solid;
-  border-width: 1px;
-  border-color: #25327a;
-}
 
 /* Media */
 

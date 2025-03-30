@@ -21,18 +21,18 @@
 
 .admin-reports-generate-classification-date-container {
     width: 90%;
-    margin: 0 auto 20px;
+    margin: 0 auto 25px;
 }
 
 .admin-reports-classification-container,
 .admin-reports-date-container {
     height: 45px;
-    width: 28.33%;
+    width: 26.66%;
 }
 
 .admin-reports-info-container {
     height: 45px;
-    width: 28.33%;
+    width: 26.66%;
     background-color: #FFFFFF;
     border-style: solid;
     border-width: 1px;
@@ -157,12 +157,12 @@
     .admin-reports-classification-container,
     .admin-reports-date-container {
         height: 40px;
-        width: 27.5%;
+        width: 25%;
     }
 
     .admin-reports-info-container {
         height: 40px;
-        width: 27.5%;
+        width: 25%;
     }
 
     .admin-reports-classification,
@@ -218,12 +218,12 @@
     .admin-reports-classification-container,
     .admin-reports-date-container {
         height: 35px;
-        width: 26.66%;
+        width: 23.33%;
     }
 
     .admin-reports-info-container {
         height: 35px;
-        width: 26.66%;
+        width: 23.33%;
     }
 
     .admin-reports-classification,
@@ -285,12 +285,12 @@
     .admin-reports-classification-container,
     .admin-reports-date-container {
         height: 35px;
-        width: 26.66%;
+        width: 23.33%;
     }
 
     .admin-reports-info-container {
         height: 35px;
-        width: 26.66%;
+        width: 23.33%;
     }
 
     .admin-reports-classification,
@@ -352,12 +352,12 @@
     .admin-reports-classification-container,
     .admin-reports-date-container {
         height: 25px;
-        width: 25.83%;
+        width: 21.66%;
     }
 
     .admin-reports-info-container {
         height: 25px;
-        width: 25.83%;
+        width: 21.66%;
     }
 
     .admin-reports-classification,

@@ -20,6 +20,7 @@
 /* Users Classification */
 
 .admin-users-add-classification-container {
+    margin: 0 auto 25px;
     width: 90%;
 }
 
@@ -28,7 +29,7 @@
 }
 
 .admin-users-classification {
-    width: 100%;
+    width: 95%;
     height: 45px;
     font-size: 15px;
     border-style: solid;

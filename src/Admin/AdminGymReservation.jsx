@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Dropdown, Button, Modal, Form } from "react-bootstrap";
 import AdminGymCalendar from "./Calendars/AdminGymCalendar";
 import axios from "axios";
-// import "./styles/AdminGymReservation.css";
 import '../WebStyles/Admin-CSS.css';
 
 const AdminGymReservation = () => {
@@ -302,14 +301,7 @@ const AdminGymReservation = () => {
                     <td>{new Date(reservation.start_date).toLocaleDateString()}</td>
                     <td>{new Date(reservation.end_date).toLocaleDateString()}</td>
                     <td>{reservation.time_slot}</td>
-                    <td>
-                      <span className={`badge bg-${reservation.status === "Approved" ? "success" :
-                        reservation.status === "Disapproved" ? "danger" :
-                          "warning"
-                        } m-0 p-0`}>
-                        {reservation.status || "Pending"}
-                      </span>
-                    </td>
+                    <td>{reservation.status || "Pending"}</td>
                     <td>
                       <div className="admin-greservation-action-button-container d-flex justify-content-center">
                         <Button

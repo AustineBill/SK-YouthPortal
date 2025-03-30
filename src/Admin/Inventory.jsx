@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Button } from "react-bootstrap";
 import '../WebStyles/Admin-CSS.css';
-// import './styles/Inventory.css';
 
 const InventoryTable = () => {
   const [inventory, setInventory] = useState([]);
