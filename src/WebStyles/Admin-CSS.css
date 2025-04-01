@@ -826,7 +826,7 @@
 
 .admin-dashboard-container-2 {
   width: 90%;
-  margin: 0 auto 25px;
+  margin: 0 auto 20px;
 }
 
 .year-dropdown-container {
@@ -886,7 +886,7 @@
 
 .admin-dashboard-charts-section {
   width: 90%;
-  margin: 0 auto;
+  margin: 0 auto 20px;
 }
 
 .reservations-label-h2,
@@ -1284,7 +1284,7 @@
 }
 
 .admin-home-contents-container {
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 }
 
 /* Admin All Events */
@@ -2061,16 +2061,16 @@
   margin: 20px 40px 20px 0;
 }
 
-.admin-edit-about-details-container,
-.admin-current-SK-details-container {
-  margin-bottom: 40px;
-}
-
 .admin-current-about-details-container,
 .admin-edit-about-details-container,
 .admin-current-SK-details-container {
   background-color: #d0e7ff;
   width: 90%;
+}
+
+.admin-edit-about-details-container,
+.admin-current-SK-details-container {
+  margin-bottom: 60px;
 }
 
 .admin-about-details-group,
@@ -2487,7 +2487,7 @@
 }
 
 .admin-program-contents-container {
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 /* Admin All Programs */
@@ -2564,11 +2564,11 @@
   font-size: 17.5px;
 }
 
-.amenity-preview {
+/* .amenity-preview {
   width: 75px;
   height: 75px;
   margin: 5px;
-}
+} */
 
 /* Edit Program Modal */
 
@@ -3179,305 +3179,302 @@
 /* ____________________________________________________________________________________________________ */
 
 .admin-contact-us-container {
-    position: relative;
-    padding-top: 75px;
-    left: 22.5%;
-    width: 77.5%;
-    background-color: #FFFFFF;
-    font-family: 'Inter', sans-serif;
-    z-index: 1;
+  position: relative;
+  padding-top: 75px;
+  left: 22.5%;
+  width: 77.5%;
+  background-color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  z-index: 1;
 }
 
 .admin-contact-us-label-h2 {
-    font-size: 40px;
-    margin: 20px 0 20px 40px;
+  font-size: 40px;
+  margin: 20px 0 20px 40px;
 }
 
 .admin-edit-contact-details-back-button {
-    margin: 20px 40px 20px 0;
-}
-
-.admin-contact-us-contents-container {
-    margin-bottom: 40px;
+  margin: 20px 40px 20px 0;
 }
 
 .admin-current-contacts-details-container,
 .admin-edit-contacts-details-container {
-    background-color: #d0e7ff;
-    width: 90%;
+  background-color: #d0e7ff;
+  width: 90%;
+  margin-bottom: 20px;
 }
 
 .admin-contacts-details-group,
 .admin-edit-contacts-details-group {
-    width: 90%;
-    margin: 25px 0 25px 0;
+  width: 90%;
+  margin: 25px 0 25px 0;
 }
 
 .admin-current-contact-form,
 .admin-edit-contact-form {
-    width: 100%;
+  width: 100%;
 }
 
 .admin-contacts-details-group .admin-current-contact-label,
 .admin-edit-contacts-details-group .admin-edit-contact-label {
-    font-family: 'Roboto', sans-serif;
-    font-size: 17.5px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 17.5px;
 }
 
 .admin-current-contact-form input[type="text"],
 .admin-current-contact-form input[type="email"] {
-    height: 45px;
-    border-style: none;
-    border-radius: 10px;
-    outline: none;
-    margin-bottom: 10px;
-    font-size: 15px;
-    transition: all 0.35s;
+  height: 45px;
+  border-style: none;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 10px;
+  font-size: 15px;
+  transition: all 0.35s;
 }
 
 .admin-edit-contact-form input[type="text"],
 .admin-edit-contact-form input[type="email"] {
-    height: 45px;
-    border-style: none;
-    border-radius: 10px;
-    outline: none;
-    margin-bottom: 0;
-    font-size: 17.5px;
-    transition: all 0.35s;
+  height: 45px;
+  border-style: none;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 0;
+  font-size: 17.5px;
+  transition: all 0.35s;
 }
 
 .admin-current-contact-form input[type="text"]:focus,
 .admin-edit-contact-form input[type="text"]:focus,
 .admin-edit-contact-form input[type="email"]:focus {
-    outline: 1px solid #007bff;
+  outline: 1px solid #007bff;
 }
 
 .admin-edit-contact-details-back-button {
-    background-color: #25327A;
-    color: #FFFFFF;
-    width: 100px;
-    height: 40px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #25327A;
+  color: #FFFFFF;
+  width: 100px;
+  height: 40px;
+  font-size: 15px;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-edit-contact-details-button {
-    background-color: #25327A;
-    color: #FFFFFF;
-    margin-top: 10px;
-    width: 150px;
-    height: 45px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #25327A;
+  color: #FFFFFF;
+  margin-top: 10px;
+  width: 150px;
+  height: 45px;
+  font-size: 15px;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-save-contact-details-button {
-    background-color: #42BB4E;
-    color: #FFFFFF;
-    margin-top: 10px;
-    width: 150px;
-    height: 45px;
-    font-size: 15px;
-    border-style: none;
-    transition: all 0.35s;
+  background-color: #42BB4E;
+  color: #FFFFFF;
+  margin-top: 10px;
+  width: 150px;
+  height: 45px;
+  font-size: 15px;
+  border-style: none;
+  transition: all 0.35s;
 }
 
 .admin-edit-contact-details-back-button:hover,
 .admin-edit-contact-details-button:hover,
 .admin-save-contact-details-button:hover {
-    color: rgb(2, 107, 107);
+  color: rgb(2, 107, 107);
 }
 
 /* Media */
 
 @media (min-width: 1025px) and (max-width: 1440px) {
 
-    .admin-contact-us-label-h2 {
-        font-size: 37.5px;
-    }
+  .admin-contact-us-label-h2 {
+      font-size: 37.5px;
+  }
 
-    .admin-contacts-details-group .admin-current-contact-label,
-    .admin-edit-contacts-details-group .admin-edit-contact-label {
-        font-size: 15px;
-    }
+  .admin-contacts-details-group .admin-current-contact-label,
+  .admin-edit-contacts-details-group .admin-edit-contact-label {
+      font-size: 15px;
+  }
 
-    .admin-current-contact-form input[type="text"],
-    .admin-current-contact-form input[type="email"] {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-current-contact-form input[type="text"],
+  .admin-current-contact-form input[type="email"] {
+      height: 40px;
+      font-size: 12.5px;
+  }
 
-    .admin-edit-contact-form input[type="text"],
-    .admin-edit-contact-form input[type="email"] {
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-edit-contact-form input[type="text"],
+  .admin-edit-contact-form input[type="email"] {
+      height: 40px;
+      font-size: 12.5px;
+  }
 
-    .admin-edit-contact-details-back-button {
-        width: 90px;
-        height: 37.5px;
-        font-size: 12.5px;
-    }
+  .admin-edit-contact-details-back-button {
+      width: 90px;
+      height: 37.5px;
+      font-size: 12.5px;
+  }
 
-    .admin-edit-contact-details-button {
-        width: 125px;
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-edit-contact-details-button {
+      width: 125px;
+      height: 40px;
+      font-size: 12.5px;
+  }
 
-    .admin-save-contact-details-button {
-        width: 125px;
-        height: 40px;
-        font-size: 12.5px;
-    }
+  .admin-save-contact-details-button {
+      width: 125px;
+      height: 40px;
+      font-size: 12.5px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
 
-    .admin-contact-us-label-h2 {
-        font-size: 35px;
-    }
+  .admin-contact-us-label-h2 {
+      font-size: 35px;
+  }
 
-    .admin-contacts-details-group .admin-current-contact-label,
-    .admin-edit-contacts-details-group .admin-edit-contact-label {
-        font-size: 12.5px;
-    }
+  .admin-contacts-details-group .admin-current-contact-label,
+  .admin-edit-contacts-details-group .admin-edit-contact-label {
+      font-size: 12.5px;
+  }
 
-    .admin-current-contact-form input[type="text"],
-    .admin-current-contact-form input[type="email"] {
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-current-contact-form input[type="text"],
+  .admin-current-contact-form input[type="email"] {
+      height: 35px;
+      font-size: 10px;
+  }
 
-    .admin-edit-contact-form input[type="text"],
-    .admin-edit-contact-form input[type="email"] {
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-edit-contact-form input[type="text"],
+  .admin-edit-contact-form input[type="email"] {
+      height: 35px;
+      font-size: 10px;
+  }
 
-    .admin-edit-contact-details-back-button {
-        width: 80px;
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-edit-contact-details-back-button {
+      width: 80px;
+      height: 35px;
+      font-size: 10px;
+  }
 
-    .admin-edit-contact-details-button {
-        width: 100px;
-        height: 35px;
-        font-size: 12.5px;
-    }
+  .admin-edit-contact-details-button {
+      width: 100px;
+      height: 35px;
+      font-size: 12.5px;
+  }
 
-    .admin-save-contact-details-button {
-        width: 100px;
-        height: 35px;
-        font-size: 12.5px;
-    }
+  .admin-save-contact-details-button {
+      width: 100px;
+      height: 35px;
+      font-size: 12.5px;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
 
-    .admin-contact-us-container {
-        left: 0;
-        width: 100%;
-    }
+  .admin-contact-us-container {
+      left: 0;
+      width: 100%;
+  }
 
-    .admin-contact-us-label-h2 {
-        font-size: 35px;
-        margin: 20px 0 20px 25px;
-    }
+  .admin-contact-us-label-h2 {
+      font-size: 35px;
+      margin: 20px 0 20px 25px;
+  }
 
-    .admin-edit-contact-details-back-button {
-        margin: 20px 25px 20px 0;
-    }
+  .admin-edit-contact-details-back-button {
+      margin: 20px 25px 20px 0;
+  }
 
-    .admin-contacts-details-group .admin-current-contact-label,
-    .admin-edit-contacts-details-group .admin-edit-contact-label {
-        font-size: 12.5px;
-    }
+  .admin-contacts-details-group .admin-current-contact-label,
+  .admin-edit-contacts-details-group .admin-edit-contact-label {
+      font-size: 12.5px;
+  }
 
-    .admin-current-contact-form input[type="text"],
-    .admin-current-contact-form input[type="email"] {
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-current-contact-form input[type="text"],
+  .admin-current-contact-form input[type="email"] {
+      height: 35px;
+      font-size: 10px;
+  }
 
-    .admin-edit-contact-form input[type="text"],
-    .admin-edit-contact-form input[type="email"] {
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-edit-contact-form input[type="text"],
+  .admin-edit-contact-form input[type="email"] {
+      height: 35px;
+      font-size: 10px;
+  }
 
-    .admin-edit-contact-details-back-button {
-        width: 80px;
-        height: 35px;
-        font-size: 10px;
-    }
+  .admin-edit-contact-details-back-button {
+      width: 80px;
+      height: 35px;
+      font-size: 10px;
+  }
 
-    .admin-edit-contact-details-button {
-        width: 100px;
-        height: 35px;
-        font-size: 12.5px;
-    }
+  .admin-edit-contact-details-button {
+      width: 100px;
+      height: 35px;
+      font-size: 12.5px;
+  }
 
-    .admin-save-contact-details-button {
-        width: 100px;
-        height: 35px;
-        font-size: 12.5px;
-    }
+  .admin-save-contact-details-button {
+      width: 100px;
+      height: 35px;
+      font-size: 12.5px;
+  }
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
 
-    .admin-contact-us-container {
-        left: 0;
-        width: 100%;
-    }
+  .admin-contact-us-container {
+      left: 0;
+      width: 100%;
+  }
 
-    .admin-contact-us-label-h2 {
-        font-size: 30px;
-        margin: 20px 0 20px 20px;
-    }
+  .admin-contact-us-label-h2 {
+      font-size: 30px;
+      margin: 20px 0 20px 20px;
+  }
 
-    .admin-edit-contact-details-back-button {
-        margin: 20px 20px 20px 0;
-    }
+  .admin-edit-contact-details-back-button {
+      margin: 20px 20px 20px 0;
+  }
 
-    .admin-contacts-details-group .admin-current-contact-label,
-    .admin-edit-contacts-details-group .admin-edit-contact-label {
-        font-size: 10px;
-    }
+  .admin-contacts-details-group .admin-current-contact-label,
+  .admin-edit-contacts-details-group .admin-edit-contact-label {
+      font-size: 10px;
+  }
 
-    .admin-current-contact-form input[type="text"],
-    .admin-current-contact-form input[type="email"] {
-        height: 25px;
-        font-size: 7.5px;
-    }
+  .admin-current-contact-form input[type="text"],
+  .admin-current-contact-form input[type="email"] {
+      height: 25px;
+      font-size: 7.5px;
+  }
 
-    .admin-edit-contact-form input[type="text"],
-    .admin-edit-contact-form input[type="email"] {
-        height: 25px;
-        font-size: 7.5px;
-    }
+  .admin-edit-contact-form input[type="text"],
+  .admin-edit-contact-form input[type="email"] {
+      height: 25px;
+      font-size: 7.5px;
+  }
 
-    .admin-edit-contact-details-back-button {
-        width: 70px;
-        height: 32.5px;
-        font-size: 10px;
-    }
+  .admin-edit-contact-details-back-button {
+      width: 70px;
+      height: 32.5px;
+      font-size: 10px;
+  }
 
-    .admin-edit-contact-details-button {
-        width: 100px;
-        height: 25px;
-        font-size: 10px;
-    }
+  .admin-edit-contact-details-button {
+      width: 100px;
+      height: 25px;
+      font-size: 10px;
+  }
 
-    .admin-save-contact-details-button {
-        width: 100px;
-        height: 25px;
-        font-size: 10px;
-    }
+  .admin-save-contact-details-button {
+      width: 100px;
+      height: 25px;
+      font-size: 10px;
+  }
 }
 
 
@@ -3505,7 +3502,7 @@
 
 .admin-gym-reservation-time-date-container {
   width: 90%;
-  margin: 0 auto;
+  margin: 0 auto 20px;
 }
 
 .admin-gym-reservation-time-date-container .admin-gr-time-range-button {
@@ -3518,38 +3515,14 @@
   height: 45px;
 }
 
-/* Search Bar */
-
-.admin-gym-reservation-search-container {
+/* Action Buttons and Search Bar */
+.admin-greservation-buttons-search-container {
   width: 90%;
   margin: 0 auto 20px;
 }
 
-.admin-gym-reservation-search-input {
-  width: 100%;
-  height: 45px;
-  font-size: 15px;
-  border-style: solid;
-  border-width: 1px;
-}
-
-.admin-gym-reservation-search-input:hover {
-  color: #FFFFFF;
-  background-color: #858585;
-}
-
-.admin-gym-reservation-search-input:focus {
-  outline: 1px solid #007bff;
-}
-
-/* Table Decision Buttons */
-
-.admin-greservation-buttons-table-container {
-  width: 90%;
-  margin: 0 auto 20px;
-}
-
-.admin-gr-toggle-buttons-container {
+.admin-gr-toggle-buttons-container,
+.admin-gr-search-toggle-button-container {
   width: 40%;
 }
 
@@ -3570,11 +3543,29 @@ button:disabled {
   opacity: 0.5;
 }
 
+.admin-gym-reservation-search-input {
+  width: 60%;
+  height: 45px;
+  font-size: 15px;
+  margin-right: 10px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.admin-gym-reservation-search-input:hover {
+  color: #FFFFFF;
+  background-color: #858585;
+}
+
+.admin-gym-reservation-search-input:focus {
+  outline: 1px solid #007bff;
+}
+
 /* Gym Reservation Table */
 
 .admin-greservation-contents-container {
   width: 90%;
-  margin: 0 auto;
+  margin: 0 auto 20px;
   overflow-x: auto;
 }
 
@@ -3590,6 +3581,7 @@ button:disabled {
 .admin-greservation-body th,
 .admin-greservation-body td {
   word-wrap: break-word;
+  text-align: center;
 }
 
 .admin-greservation-table-container td {
@@ -3619,17 +3611,11 @@ button:disabled {
     height: 40px;
   }
 
-  /* Search Bar */
+  /* Action Buttons and Search Bar */
 
-  .admin-gym-reservation-search-input {
-    height: 40px;
-    font-size: 12.5px;
-  }
-
-  /* Table Decision Buttons */
-
-  .admin-gr-toggle-buttons-container {
-    width: 45%;
+  .admin-gr-toggle-buttons-container,
+  .admin-gr-search-toggle-button-container {
+    width: 42.5%;
   }
 
   .admin-gr-date-toggle-container .gr-date-toggle,
@@ -3642,6 +3628,11 @@ button:disabled {
   .admin-gr-toggle-buttons-container .admin-gr-disapprove-button {
     font-size: 12.5px;
     height: 40px;
+  }
+
+  .admin-gym-reservation-search-input {
+    height: 40px;
+    font-size: 12.5px;
   }
 
   /* Gym Reservation Table */
@@ -3677,17 +3668,11 @@ button:disabled {
     height: 35px;
   }
 
-  /* Search Bar */
+  /* Action Buttons and Search Bar */
 
-  .admin-gym-reservation-search-input {
-    height: 35px;
-    font-size: 10px;
-  }
-
-  /* Table Decision Buttons */
-
-  .admin-gr-toggle-buttons-container {
-    width: 50%;
+  .admin-gr-toggle-buttons-container,
+  .admin-gr-search-toggle-button-container {
+    width: 45%;
   }
 
   .admin-gr-date-toggle-container .gr-date-toggle,
@@ -3698,6 +3683,11 @@ button:disabled {
 
   .admin-gr-toggle-buttons-container .admin-gr-approve-button,
   .admin-gr-toggle-buttons-container .admin-gr-disapprove-button {
+    font-size: 10px;
+    height: 35px;
+  }
+
+  .admin-gym-reservation-search-input {
     font-size: 10px;
     height: 35px;
   }
@@ -3741,17 +3731,11 @@ button:disabled {
     height: 35px;
   }
 
-  /* Search Bar */
+  /* Action Buttons and Search Bar */
 
-  .admin-gym-reservation-search-input {
-    height: 35px;
-    font-size: 10px;
-  }
-
-  /* Table Decision Buttons */
-
-  .admin-gr-toggle-buttons-container {
-    width: 60%;
+  .admin-gr-toggle-buttons-container,
+  .admin-gr-search-toggle-button-container {
+    width: 47.5%;
   }
 
   .admin-gr-date-toggle-container .gr-date-toggle,
@@ -3762,6 +3746,11 @@ button:disabled {
 
   .admin-gr-toggle-buttons-container .admin-gr-approve-button,
   .admin-gr-toggle-buttons-container .admin-gr-disapprove-button {
+    font-size: 10px;
+    height: 35px;
+  }
+
+  .admin-gym-reservation-search-input {
     font-size: 10px;
     height: 35px;
   }
@@ -3809,17 +3798,11 @@ button:disabled {
     height: 25px;
   }
 
-  /* Search Bar */
+  /* Action Buttons and Search Bar */
 
-  .admin-gym-reservation-search-input {
-    height: 25px;
-    font-size: 7.5px;
-  }
-
-  /* Table Decision Buttons */
-
-  .admin-gr-toggle-buttons-container {
-    width: 80%;
+  .admin-gr-toggle-buttons-container,
+  .admin-gr-search-toggle-button-container {
+    width: 50%;
   }
 
   .admin-gr-date-toggle-container .gr-date-toggle,
@@ -3832,6 +3815,13 @@ button:disabled {
   .admin-gr-toggle-buttons-container .admin-gr-disapprove-button {
     font-size: 7.5px;
     height: 25px;
+  }
+
+  .admin-gym-reservation-search-input {
+    width: 35%;
+    font-size: 7.5px;
+    height: 25px;
+    margin-right: 5px;
   }
 
   /* Gym Reservation Table */
@@ -3875,17 +3865,41 @@ button:disabled {
   margin: 20px 0 20px 40px;
 }
 
-/* Search Bar */
+/* Action Buttons and Search Bar */
 
-.admin-equipment-reservation-search-container {
+.admin-ereservation-buttons-search-container {
   width: 90%;
   margin: 0 auto 20px;
 }
 
+.admin-er-toggle-buttons-container,
+.admin-er-search-toggle-button-container {
+  width: 40%;
+}
+
+.admin-er-date-toggle-container .er-date-toggle,
+.admin-er-status-toggle-container .er-status-toggle {
+  font-size: 15px;
+  height: 45px;
+}
+
+.admin-er-toggle-buttons-container .admin-er-received-button,
+.admin-er-toggle-buttons-container .admin-er-returned-button,
+.admin-er-toggle-buttons-container .admin-er-nreturned-button {
+  font-size: 15px;
+  height: 45px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .admin-equipment-reservation-search-input {
-  width: 100%;
+  width: 60%;
   height: 45px;
   font-size: 15px;
+  margin-right: 10px;
   border-style: solid;
   border-width: 1px;
 }
@@ -3899,38 +3913,11 @@ button:disabled {
   outline: 1px solid #007bff;
 }
 
-/* Table Decision Buttons */
-
-.admin-ereservation-buttons-table-container {
-  width: 90%;
-  margin: 0 auto 20px;
-}
-
-.admin-er-toggle-buttons-container {
-  width: 50%;
-}
-
-.admin-er-date-toggle-container .er-date-toggle {
-  font-size: 15px;
-  height: 45px;
-}
-
-.admin-er-toggle-buttons-container .admin-er-returned-button,
-.admin-er-toggle-buttons-container .admin-er-unreturned-button {
-  font-size: 15px;
-  height: 45px;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
 /* Equipment Reservation Table */
 
 .admin-ereservation-contents-container {
   width: 90%;
-  margin: 0 auto;
+  margin: 0 auto 20px;
   overflow-x: auto;
 }
 
@@ -3946,6 +3933,7 @@ button:disabled {
 .admin-ereservation-body th,
 .admin-ereservation-body td {
   word-wrap: break-word;
+  text-align: center;
 }
 
 .admin-ereservation-table-container td {
@@ -3966,26 +3954,30 @@ button:disabled {
     font-size: 37.5px;
   }
 
-  /* Search Bar */
-
-  .admin-equipment-reservation-search-input {
-    height: 40px;
-    font-size: 12.5px;
-  }
-
-  /* Table Decision Buttons */
+  /* Action Buttons and Search Bar */
 
   .admin-er-toggle-buttons-container {
-    width: 55%;
+    width: 50%;
   }
 
-  .admin-er-date-toggle-container .er-date-toggle {
+  .admin-er-search-toggle-button-container {
+    width: 42.5%;
+  }
+
+  .admin-er-date-toggle-container .er-date-toggle,
+  .admin-er-status-toggle-container .er-status-toggle {
     font-size: 12.5px;
     height: 40px;
   }
 
+  .admin-er-toggle-buttons-container .admin-er-received-button,
   .admin-er-toggle-buttons-container .admin-er-returned-button,
-  .admin-er-toggle-buttons-container .admin-er-unreturned-button {
+  .admin-er-toggle-buttons-container .admin-er-nreturned-button {
+    font-size: 12.5px;
+    height: 40px;
+  }
+
+  .admin-equipment-reservation-search-input {
     font-size: 12.5px;
     height: 40px;
   }
@@ -4015,26 +4007,30 @@ button:disabled {
     font-size: 35px;
   }
 
-  /* Search Bar */
-
-  .admin-equipment-reservation-search-input {
-    height: 35px;
-    font-size: 10px;
-  }
-
-  /* Table Decision Buttons */
+  /* Action Buttons and Search Bar */
 
   .admin-er-toggle-buttons-container {
-    width: 60%;
+    width: 55%;
   }
 
-  .admin-er-date-toggle-container .er-date-toggle {
+  .admin-er-search-toggle-button-container {
+    width: 42.5%;
+  }
+
+  .admin-er-date-toggle-container .er-date-toggle,
+  .admin-er-status-toggle-container .er-status-toggle {
     font-size: 10px;
     height: 35px;
   }
 
+  .admin-er-toggle-buttons-container .admin-er-received-button,
   .admin-er-toggle-buttons-container .admin-er-returned-button,
-  .admin-er-toggle-buttons-container .admin-er-unreturned-button {
+  .admin-er-toggle-buttons-container .admin-er-nreturned-button {
+    font-size: 10px;
+    height: 35px;
+  }
+
+  .admin-equipment-reservation-search-input {
     font-size: 10px;
     height: 35px;
   }
@@ -4070,29 +4066,36 @@ button:disabled {
     margin: 20px 0 20px 25px;
   }
 
-  /* Search Bar */
-
-  .admin-equipment-reservation-search-input {
-    height: 35px;
-    font-size: 10px;
-  }
-
-  /* Table Decision Buttons */
+  /* Action Buttons and Search Bar */
 
   .admin-er-toggle-buttons-container {
-    width: 70%;
+    width: 65%;
   }
 
-  .admin-er-date-toggle-container .er-date-toggle {
+  .admin-er-search-toggle-button-container {
+    width: 35%;
+  }
+
+  .admin-er-date-toggle-container .er-date-toggle,
+  .admin-er-status-toggle-container .er-status-toggle {
     font-size: 10px;
     height: 35px;
   }
 
+  .admin-er-toggle-buttons-container .admin-er-received-button,
   .admin-er-toggle-buttons-container .admin-er-returned-button,
-  .admin-er-toggle-buttons-container .admin-er-unreturned-button {
+  .admin-er-toggle-buttons-container .admin-er-nreturned-button {
     font-size: 10px;
     height: 35px;
   }
+
+  .admin-equipment-reservation-search-input {
+    width: 35%;
+    font-size: 10px;
+    height: 35px;
+    margin-right: 7.5px;
+  }
+
 
   /* Equipment Reservation Table */
 
@@ -4125,28 +4128,31 @@ button:disabled {
     margin: 20px 0 20px 20px;
   }
 
-  /* Search Bar */
-
-  .admin-equipment-reservation-search-input {
-    height: 25px;
-    font-size: 7.5px;
-  }
-
-  /* Table Decision Buttons */
+  /* Action Buttons and Search Bar */
 
   .admin-er-toggle-buttons-container {
-    width: 90%;
+    width: 75%;
   }
 
-  .admin-er-date-toggle-container .er-date-toggle {
+  .admin-er-search-toggle-button-container {
+    width: 25%;
+  }
+
+  .admin-er-date-toggle-container .er-date-toggle,
+  .admin-er-status-toggle-container .er-status-toggle {
     font-size: 7.5px;
     height: 25px;
   }
 
+  .admin-er-toggle-buttons-container .admin-er-received-button,
   .admin-er-toggle-buttons-container .admin-er-returned-button,
-  .admin-er-toggle-buttons-container .admin-er-unreturned-button {
+  .admin-er-toggle-buttons-container .admin-er-nreturned-button {
     font-size: 7.5px;
     height: 25px;
+  }
+
+  .admin-equipment-reservation-search-input {
+    display: none;
   }
 
   /* Equipment Reservation Table */
@@ -4242,9 +4248,8 @@ button:disabled {
 /* Equipment Table */
 
 .admin-inventory-contents-container {
-  margin: 0 auto;
+  margin: 0 auto 20px;
   width: 90%;
-  margin-bottom: 40px;
   overflow-x: auto;
 }
 
@@ -4260,6 +4265,7 @@ button:disabled {
 .admin-inventory-table-container th,
 .admin-inventory-table-container td {
   word-wrap: break-word;
+  text-align: center;
 }
 
 .admin-inventory-table-container td {
@@ -4705,7 +4711,7 @@ button:disabled {
 
 .admin-reports-generate-classification-date-container {
   width: 90%;
-  margin: 0 auto 25px;
+  margin: 0 auto 20px;
 }
 
 .admin-reports-classification-container,
@@ -4781,7 +4787,7 @@ button:disabled {
 
 .reports-list-container {
   width: 90%;
-  margin: 0 auto;
+  margin: 0 auto 20px;
 }
 
 .admin-reports-users-table,
@@ -4816,11 +4822,16 @@ button:disabled {
   font-weight: bold;
 }
 
-.admin-reports-users-table-container,
-.admin-reports-equipment-table-container,
-.admin-reports-reservation-table-container,
-.admin-reports-inventory-table-container {
+.admin-reports-users-table-container th,
+.admin-reports-users-table-container td, 
+.admin-reports-equipment-table-container th,
+.admin-reports-equipment-table-container td,
+.admin-reports-reservation-table-container th,
+.admin-reports-reservation-table-container td,
+.admin-reports-inventory-table-container th,
+.admin-reports-inventory-table-container td {
   word-wrap: break-word;
+  text-align: center;
 }
 
 .reports-list-container td {
@@ -5165,7 +5176,7 @@ button:disabled {
 
 .users-list-container {
   width: 90%;
-  margin: 0 auto;
+  margin: 0 auto 20px;
   overflow-x: auto;
 }
 
@@ -5181,6 +5192,7 @@ button:disabled {
 .admin-users-body th, 
 .admin-users-body td {
   word-wrap: break-word;
+  text-align: center;
 }
 
 .users-list-container td {

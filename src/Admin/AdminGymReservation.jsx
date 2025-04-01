@@ -186,18 +186,7 @@ const AdminGymReservation = () => {
 
         <AdminGymCalendar />
 
-        {/* Search Bar - New Addition */}
-        <div className="admin-gym-reservation-search-container d-flex align-items-center">
-          <input
-            type="text"
-            placeholder="Search reservation by Reservation ID"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="admin-gym-reservation-search-input rounded"
-          />
-        </div>
-
-        <div className="admin-greservation-buttons-table-container">
+        <div className="admin-greservation-buttons-search-container d-flex justify-content-between">
           <div className="admin-gr-toggle-buttons-container d-flex justify-content-between align-items-center">
             <Dropdown className="admin-gr-date-toggle-container">
               <Dropdown.Toggle className="gr-date-toggle">
@@ -233,10 +222,23 @@ const AdminGymReservation = () => {
             >
               Disapprove
             </Button>
+          </div>
 
-            <Dropdown>
-              <Dropdown.Toggle>Status: {statusFilter}</Dropdown.Toggle>
-              <Dropdown.Menu>
+          {/* Search Bar */}
+          <div className="admin-gr-search-toggle-button-container d-flex justify-content-end align-items-center">
+            <input
+              type="text"
+              placeholder="Search Reservation ID"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="admin-gym-reservation-search-input rounded"
+            />
+
+            <Dropdown className="admin-gr-status-toggle-container">
+              <Dropdown.Toggle className="gr-status-toggle">
+                Status: {statusFilter}
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="gr-status-toggle-text">
                 {["All", "Approved", "Disapproved", "Pending"].map((status) => (
                   <Dropdown.Item
                     key={status}
@@ -267,7 +269,7 @@ const AdminGymReservation = () => {
                     checked={
                       selectedReservations.length > 0 &&
                       selectedReservations.length ===
-                        filteredReservations.length
+                      filteredReservations.length
                     }
                   />
                 </th>
