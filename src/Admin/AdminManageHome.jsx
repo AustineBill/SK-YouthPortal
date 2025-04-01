@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, Button } from "react-bootstrap";
-import '../WebStyles/Admin-CSS.css';
+import "../WebStyles/Admin-CSS.css";
 
 const ManageHomePage = () => {
   const [activeContent, setActiveContent] = useState("allEvents");
@@ -202,7 +202,6 @@ const ManageHomePage = () => {
           },
         }
       );
-      alert("Spotlight added successfully!");
       setSpotlightData({ additionalImages: [] }); // Reset form
     } catch (error) {
       console.error("Error adding Spotlight:", error);
@@ -210,16 +209,12 @@ const ManageHomePage = () => {
     }
   };
 
-  // Handle removing a spotlight image
-  // Handle removing a spotlight image
   const removeSpotlightImage = async (spotlightId) => {
     try {
-      const response = await axios.delete(
+      await axios.delete(
         `https://isked-backend-ssmj.onrender.com/spotlight/${spotlightId}`
       );
-      alert(response.data.message); // Display success message to the user
 
-      // Optionally update the UI by removing the spotlight from the state
       setSpotlight((prevSpotlight) =>
         prevSpotlight.filter((spotlight) => spotlight.id !== spotlightId)
       );
@@ -331,7 +326,7 @@ const ManageHomePage = () => {
                             onClick={() => removeSpotlightImage(spotlight.id)}
                             className="spotlight-delete-button bg-danger rounded-pill"
                           >
-                            <i class="bi bi-trash"></i>
+                            <i className="bi bi-trash"></i>
                           </Button>
                         </div>
                       </Card.Body>

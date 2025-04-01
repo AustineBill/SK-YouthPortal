@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Dropdown, Button, Modal, Form } from "react-bootstrap";
 import AdminGymCalendar from "./Calendars/AdminGymCalendar";
 import axios from "axios";
-import '../WebStyles/Admin-CSS.css';
+import "../WebStyles/Admin-CSS.css";
 
 const AdminGymReservation = () => {
   const [reservations, setReservations] = useState([]);
@@ -18,6 +18,8 @@ const AdminGymReservation = () => {
   const [showBlockModal, setShowBlockModal] = useState(false);
   const [startBlockDate, setStartBlockDate] = useState("");
   const [endBlockDate, setEndBlockDate] = useState("");
+
+  //{new Date(reservation.end_date).toLocaleDateString()}
 
   const fetchReservations = async () => {
     try {
@@ -38,13 +40,16 @@ const AdminGymReservation = () => {
     fetchReservations();
   }, []);
 
-  const applySearchFilter = useCallback((data) => {
-    if (!searchTerm) return data;
-    return data.filter(reservation => {
-      const refId = reservation.reservation_id?.toString() || '';
-      return refId.includes(searchTerm);
-    });
-  }, [searchTerm]);
+  const applySearchFilter = useCallback(
+    (data) => {
+      if (!searchTerm) return data;
+      return data.filter((reservation) => {
+        const refId = reservation.reservation_id?.toString() || "";
+        return refId.includes(searchTerm);
+      });
+    },
+    [searchTerm]
+  );
 
   useEffect(() => {
     let filteredData = reservations;
@@ -147,7 +152,7 @@ const AdminGymReservation = () => {
     return (
       <>
         {strText.substring(0, index)}
-        <span style={{ backgroundColor: 'yellow' }}>
+        <span style={{ backgroundColor: "yellow" }}>
           {strText.substring(index, index + searchTerm.length)}
         </span>
         {strText.substring(index + searchTerm.length)}
@@ -229,23 +234,17 @@ const AdminGymReservation = () => {
               Disapprove
             </Button>
 
-            <Dropdown className="admin-gr-status-toggle-container">
-              <Dropdown.Toggle className="gr-status-toggle">
-                {statusFilter}
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="gr-status-toggle-text">
-                <Dropdown.Item onClick={() => setStatusFilter("All")}>
-                  All
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => setStatusFilter("Approved")}>
-                  Approved
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => setStatusFilter("Disapproved")}>
-                  Disapproved
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => setStatusFilter("Pending")}>
-                  Pending
-                </Dropdown.Item>
+            <Dropdown>
+              <Dropdown.Toggle>Status: {statusFilter}</Dropdown.Toggle>
+              <Dropdown.Menu>
+                {["All", "Approved", "Disapproved", "Pending"].map((status) => (
+                  <Dropdown.Item
+                    key={status}
+                    onClick={() => setStatusFilter(status)}
+                  >
+                    {status}
+                  </Dropdown.Item>
+                ))}
               </Dropdown.Menu>
             </Dropdown>
           </div>
@@ -267,7 +266,8 @@ const AdminGymReservation = () => {
                     }
                     checked={
                       selectedReservations.length > 0 &&
-                      selectedReservations.length === filteredReservations.length
+                      selectedReservations.length ===
+                        filteredReservations.length
                     }
                   />
                 </th>
@@ -284,11 +284,15 @@ const AdminGymReservation = () => {
             <tbody className="admin-greservation-body text-center">
               {filteredReservations.length === 0 ? (
                 <tr>
-                  <td colSpan="8" className="text-center">No reservations found</td>
+                  <td colSpan="8" className="text-center">
+                    No reservations found
+                  </td>
                 </tr>
               ) : (
                 filteredReservations.map((reservation, index) => (
-                  <tr key={reservation.id || reservation.reservation_id || index}>
+                  <tr
+                    key={reservation.id || reservation.reservation_id || index}
+                  >
                     <td>
                       <input
                         type="checkbox"
@@ -298,8 +302,8 @@ const AdminGymReservation = () => {
                     </td>
                     <td>{highlightSearchMatch(reservation.reservation_id)}</td>
                     <td>{reservation.program}</td>
-                    <td>{new Date(reservation.start_date).toLocaleDateString()}</td>
-                    <td>{new Date(reservation.end_date).toLocaleDateString()}</td>
+                    <td>{reservation.start_date} </td>
+                    <td>{reservation.end_date}</td>
                     <td>{reservation.time_slot}</td>
                     <td>{reservation.status || "Pending"}</td>
                     <td>
@@ -415,14 +419,17 @@ const AdminGymReservation = () => {
                     "https://isked-backend-ssmj.onrender.com/settings/block-dates",
                     {
                       start_date: startBlockDate,
-                      end_date: endBlockDate || startBlockDate
+                      end_date: endBlockDate || startBlockDate,
                     }
                   );
                   alert("Date range blocked successfully!");
-                  setBlockedDates([...blockedDates, {
-                    start: startBlockDate,
-                    end: endBlockDate || startBlockDate
-                  }]);
+                  setBlockedDates([
+                    ...blockedDates,
+                    {
+                      start: startBlockDate,
+                      end: endBlockDate || startBlockDate,
+                    },
+                  ]);
                   setShowBlockModal(false);
                   setStartBlockDate("");
                   setEndBlockDate("");
@@ -437,7 +444,6 @@ const AdminGymReservation = () => {
           </Modal.Footer>
         </Modal>
       </div>
-
     </>
   );
 };

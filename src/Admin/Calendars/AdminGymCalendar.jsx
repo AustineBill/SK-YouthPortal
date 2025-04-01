@@ -28,17 +28,18 @@ const AdminGymCalendar = () => {
     const fetchSettings = async () => {
       try {
         const [dateRes, timeRes] = await Promise.all([
-          axios.get("https://isked-backend-ssmj.onrender.com/settings"),
+          axios.get("https://isked-backend-ssmj.onrender.com/date-settings"),
           axios.get("https://isked-backend-ssmj.onrender.com/time-settings"),
         ]);
 
         setBlockedDates(
-          dateRes.data.blocked_dates.map((date) => ({
-            start: date.start_date,
-            end: date.end_date,
+          dateRes.data.map((date) => ({
+            start: new Date(date.start_date).setHours(0, 0, 0, 0),
+            end: new Date(date.end_date).setHours(23, 59, 59, 999),
           }))
         );
-        setTimeGap(timeRes.data?.time_gap || 1); // Defaults to 1 if empty
+
+        setTimeGap(timeRes.data?.time_gap || 1);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

@@ -2,12 +2,13 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Dropdown, Button } from "react-bootstrap";
 import EquipmentCalendar from "./Calendars/EquipmentCalendar";
-import '../WebStyles/Admin-CSS.css';
+import "../WebStyles/Admin-CSS.css";
 
 const AdminEquipmentReservation = () => {
   const [reservations, setReservations] = useState([]);
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
+  const [statusFilter, setStatusFilter] = useState("All");
   const [selectedReservations, setSelectedReservations] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -27,13 +28,26 @@ const AdminEquipmentReservation = () => {
     fetchTableReservations();
   }, []);
 
-  const applySearchFilter = useCallback((data) => {
-    if (!searchTerm) return data;
-    return data.filter(reservation => {
-      const refId = reservation.reservation_id.toString();
-      return refId.includes(searchTerm);
-    });
-  }, [searchTerm]);
+  const applySearchFilter = useCallback(
+    (data) => {
+      if (!searchTerm) return data;
+      return data.filter((reservation) => {
+        const refId = reservation.reservation_id.toString();
+        return refId.includes(searchTerm);
+      });
+    },
+    [searchTerm]
+  );
+
+  useEffect(() => {
+    let filteredData = reservations;
+    if (statusFilter !== "All") {
+      filteredData = filteredData.filter(
+        (reservation) => reservation.status === statusFilter
+      );
+    }
+    setFilteredReservations(applySearchFilter(filteredData));
+  }, [statusFilter, reservations, applySearchFilter]);
 
   useEffect(() => {
     let filteredData = reservations;
@@ -74,28 +88,15 @@ const AdminEquipmentReservation = () => {
     );
   };
 
-  const handleReturned = async () => {
+  const handleStatusUpdate = async (status) => {
     try {
-      await axios.post("https://isked-backend-ssmj.onrender.com/markReturned", {
+      await axios.post(`https://isked-backend.onrender.com/mark/${status}`, {
         ids: selectedReservations,
       });
       fetchTableReservations();
       setSelectedReservations([]);
     } catch (error) {
-      console.error("Error marking reservations as returned:", error);
-    }
-  };
-
-  const handleNotReturned = async () => {
-    try {
-      await axios.post(
-        "https://isked-backend-ssmj.onrender.com/markNotReturned",
-        { ids: selectedReservations }
-      );
-      fetchTableReservations();
-      setSelectedReservations([]);
-    } catch (error) {
-      console.error("Error marking reservations as not returned:", error);
+      console.error(`Error marking reservations as ${status}:`, error);
     }
   };
 
@@ -130,7 +131,7 @@ const AdminEquipmentReservation = () => {
     return (
       <>
         {strText.substring(0, index)}
-        <span style={{ backgroundColor: 'yellow' }}>
+        <span style={{ backgroundColor: "yellow" }}>
           {strText.substring(index, index + searchTerm.length)}
         </span>
         {strText.substring(index + searchTerm.length)}
@@ -146,20 +147,9 @@ const AdminEquipmentReservation = () => {
 
       <EquipmentCalendar />
 
-      {/* Search Bar - New Addition */}
-      <div className="admin-equipment-reservation-search-container d-flex align-items-center">
-        <input
-          type="text"
-          placeholder="Search reservation by Reservation ID"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="admin-equipment-reservation-search-input rounded"
-        />
-      </div>
-
-      <div className="admin-ereservation-buttons-table-container">
-        <div className="admin-er-toggle-buttons-container d-flex justify-content-between align-items-center">
-          <Dropdown className="admin-er-date-toggle-container">
+      <div className="admin-equipment-reservation-search-container d-flex justify-content-between align-items-center">
+        <div className="button-group d-flex align-items-center">
+          <Dropdown className="er-date-toggle-container me-2">
             <Dropdown.Toggle className="er-date-toggle">
               {filterOption}
             </Dropdown.Toggle>
@@ -180,19 +170,52 @@ const AdminEquipmentReservation = () => {
           </Dropdown>
 
           <Button
-            disabled={selectedReservations.length === 0}
-            onClick={handleReturned}
-            className="admin-er-returned-button bg-success rounded"
+            disabled={!selectedReservations.length}
+            onClick={() => handleStatusUpdate("Received")}
+            className="bg-primary rounded me-2"
           >
-            Mark as Returned
+            Received
           </Button>
           <Button
-            disabled={selectedReservations.length === 0}
-            onClick={handleNotReturned}
-            className="admin-er-unreturned-button bg-danger rounded"
+            disabled={!selectedReservations.length}
+            onClick={() => handleStatusUpdate("Returned")}
+            className="bg-success rounded me-2"
           >
-            Mark as Not Returned
+            Returned
           </Button>
+          <Button
+            disabled={!selectedReservations.length}
+            onClick={() => handleStatusUpdate("Not Returned")}
+            className="bg-danger rounded me-2"
+          >
+            Not Returned
+          </Button>
+        </div>
+
+        <div className="filter-group d-flex align-items-center">
+          <input
+            type="text"
+            placeholder="Search Reservation ID"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="admin-equipment-reservation-search-input rounded me-2"
+          />
+
+          <Dropdown>
+            <Dropdown.Toggle>Status: {statusFilter}</Dropdown.Toggle>
+            <Dropdown.Menu>
+              {["All", "Pending", "Returned", "Not Returned", "Received"].map(
+                (status) => (
+                  <Dropdown.Item
+                    key={status}
+                    onClick={() => setStatusFilter(status)}
+                  >
+                    {status}
+                  </Dropdown.Item>
+                )
+              )}
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       </div>
 
@@ -206,7 +229,9 @@ const AdminEquipmentReservation = () => {
                   onChange={(e) => {
                     if (e.target.checked) {
                       setSelectedReservations(
-                        filteredReservations.map(reservation => reservation.id)
+                        filteredReservations.map(
+                          (reservation) => reservation.id
+                        )
                       );
                     } else {
                       setSelectedReservations([]);
@@ -230,7 +255,9 @@ const AdminEquipmentReservation = () => {
           <tbody className="admin-ereservation-body text-center">
             {filteredReservations.length === 0 ? (
               <tr>
-                <td colSpan="7" className="text-center">No reservations found</td>
+                <td colSpan="7" className="text-center">
+                  No reservations found
+                </td>
               </tr>
             ) : (
               filteredReservations.map((reservation) => (
@@ -245,7 +272,9 @@ const AdminEquipmentReservation = () => {
                   <td>{highlightSearchMatch(reservation.reservation_id)}</td>
                   <td>
                     {reservation.reserved_equipment?.map((item) => (
-                      <div key={item.id}>{item.name} (Qty: {item.quantity})</div>
+                      <div key={item.id}>
+                        {item.name} (Qty: {item.quantity})
+                      </div>
                     ))}
                   </td>
                   <td>{formatDate(reservation.start_date)}</td>
@@ -259,7 +288,7 @@ const AdminEquipmentReservation = () => {
                         onClick={() => handleArchive(reservation.id)}
                         disabled={reservation.status === "Not Returned"}
                       >
-                        <i class="bi bi-archive"></i>
+                        <i className="bi bi-archive"></i>
                       </Button>
                     </div>
                   </td>
@@ -269,7 +298,7 @@ const AdminEquipmentReservation = () => {
           </tbody>
         </table>
       </div>
-    </div >
+    </div>
   );
 };
 
