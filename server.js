@@ -1867,12 +1867,11 @@ app.delete("/users/:id", async (req, res) => {
   }
 });
 
-
 app.get("/admindashboard", async (req, res) => {
-  const { year } = req.query; 
+  const { year } = req.query;
 
   try {
-    const selectedYear = year ? parseInt(year, 10) : new Date().getFullYear(); 
+    const selectedYear = year ? parseInt(year, 10) : new Date().getFullYear();
     const mainQuery = `
       SELECT 
         EXTRACT(YEAR FROM created_at) AS year,
@@ -2032,8 +2031,8 @@ app.get("/Allreservations", async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT id, reservation_id, user_id, reservation_type AS program, 
-       TO_CHAR(start_date, 'FMDay, FMDD, YYYY') AS start_date, 
-       TO_CHAR(end_date, 'FMDay, FMDD, YYYY') AS end_date, 
+       TO_CHAR(start_date, 'FMDay, FMMonth FMDD, YYYY') AS start_date, 
+       TO_CHAR(end_date, 'FMDay, FMMonth FMDD, YYYY') AS end_date, 
        status, time_slot 
       FROM Schedules 
       WHERE is_archived IS DISTINCT FROM true
@@ -2048,35 +2047,23 @@ app.get("/Allreservations", async (req, res) => {
   }
 });
 
-// Endpoint to mark reservations as "Returned"
-app.post("/markReturned", async (req, res) => {
-  const { ids } = req.body; // Array of reservation IDs to mark as returned
-  try {
-    await pool.query(
-      "UPDATE Equipment SET status = $1 WHERE id = ANY($2::int[])",
-      ["Returned", ids]
-    );
-    res.status(200).send("Equipment reservations marked as returned");
-  } catch (error) {
-    console.error("Error marking equipment reservations as returned:", error);
-    res.status(500).send("Server error");
-  }
-});
+app.post("/mark/:status", async (req, res) => {
+  const { ids } = req.body;
+  const { status } = req.params;
+  const validStatuses = ["Returned", "Not Returned", "Received"];
 
-// Endpoint to mark reservations as "Not Returned"
-app.post("/markNotReturned", async (req, res) => {
-  const { ids } = req.body; // Array of reservation IDs to mark as not returned
+  if (!validStatuses.includes(status)) {
+    return res.status(400).send("Invalid status");
+  }
+
   try {
     await pool.query(
       "UPDATE Equipment SET status = $1 WHERE id = ANY($2::int[])",
-      ["Not Returned", ids]
+      [status, ids] // No need for `replace` anymore
     );
-    res.status(200).send("Equipment reservations marked as not returned");
+    res.status(200).send(`Equipment reservations marked as ${status}`);
   } catch (error) {
-    console.error(
-      "Error marking equipment reservations as not returned:",
-      error
-    );
+    console.error(`Error marking equipment reservations as ${status}:`, error);
     res.status(500).send("Server error");
   }
 });
