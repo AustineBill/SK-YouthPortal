@@ -147,9 +147,9 @@ const AdminEquipmentReservation = () => {
 
       <EquipmentCalendar />
 
-      <div className="admin-equipment-reservation-search-container d-flex justify-content-between align-items-center">
-        <div className="button-group d-flex align-items-center">
-          <Dropdown className="er-date-toggle-container me-2">
+      <div className="admin-ereservation-buttons-search-container d-flex justify-content-between">
+        <div className="admin-er-toggle-buttons-container d-flex justify-content-between align-items-center">
+          <Dropdown className="admin-er-date-toggle-container">
             <Dropdown.Toggle className="er-date-toggle">
               {filterOption}
             </Dropdown.Toggle>
@@ -172,38 +172,41 @@ const AdminEquipmentReservation = () => {
           <Button
             disabled={!selectedReservations.length}
             onClick={() => handleStatusUpdate("Received")}
-            className="bg-primary rounded me-2"
+            className="admin-er-received-button bg-primary rounded"
           >
             Received
           </Button>
           <Button
             disabled={!selectedReservations.length}
             onClick={() => handleStatusUpdate("Returned")}
-            className="bg-success rounded me-2"
+            className="admin-er-returned-button bg-success rounded"
           >
             Returned
           </Button>
           <Button
             disabled={!selectedReservations.length}
             onClick={() => handleStatusUpdate("Not Returned")}
-            className="bg-danger rounded me-2"
+            className="admin-er-nreturned-button bg-danger rounded"
           >
             Not Returned
           </Button>
         </div>
 
-        <div className="filter-group d-flex align-items-center">
+        {/* Search Bar */}
+        <div className="admin-er-search-toggle-button-container d-flex justify-content-end align-items-center">
           <input
             type="text"
             placeholder="Search Reservation ID"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="admin-equipment-reservation-search-input rounded me-2"
+            className="admin-equipment-reservation-search-input rounded"
           />
 
-          <Dropdown>
-            <Dropdown.Toggle>Status: {statusFilter}</Dropdown.Toggle>
-            <Dropdown.Menu>
+          <Dropdown className="admin-er-status-toggle-container">
+            <Dropdown.Toggle className="er-status-toggle">
+              Status: {statusFilter}
+            </Dropdown.Toggle>
+            <Dropdown.Menu  className="er-status-toggle-text">
               {["All", "Pending", "Returned", "Not Returned", "Received"].map(
                 (status) => (
                   <Dropdown.Item

@@ -20,7 +20,6 @@ import {
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import "../WebStyles/Admin-CSS.css";
-// import './styles/Admin-Main.css';
 
 // Import your background image (replace with your actual image path)
 
