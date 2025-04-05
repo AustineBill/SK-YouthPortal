@@ -97,29 +97,16 @@ const AdminGymReservation = () => {
     );
   };
 
-  const handleApprove = async () => {
+  const handleReservationUpdate = async (status) => {
     try {
-      await axios.post(
-        "https://isked-backend-ssmj.onrender.com/approveReservations",
-        { ids: selectedReservations }
-      );
+      await axios.post("https://isked-backend.onrender.com/update/status", {
+        ids: selectedReservations,
+        status,
+      });
       await fetchReservations();
       setSelectedReservations([]);
     } catch (error) {
-      console.error("Error updating reservation status:", error);
-    }
-  };
-
-  const handleDisapprove = async () => {
-    try {
-      await axios.post(
-        "https://isked-backend-ssmj.onrender.com/disapproveReservations",
-        { ids: selectedReservations }
-      );
-      await fetchReservations();
-      setSelectedReservations([]);
-    } catch (error) {
-      console.error("Error updating reservation status:", error);
+      console.error(`Error updating reservation status to ${status}:`, error);
     }
   };
 
@@ -128,10 +115,12 @@ const AdminGymReservation = () => {
       "Are you sure you want to cancel this reservation?"
     );
     if (!isConfirmed) return;
+
     try {
-      await axios.delete(
+      await axios.patch(
         `https://isked-backend-ssmj.onrender.com/reservations/${reservationId}`
       );
+
       setReservations((prev) =>
         prev.filter((reservation) => reservation.id !== reservationId)
       );
@@ -210,14 +199,14 @@ const AdminGymReservation = () => {
 
             <Button
               disabled={selectedReservations.length === 0}
-              onClick={handleApprove}
+              onClick={() => handleReservationUpdate("Approved")}
               className="admin-gr-approve-button bg-success rounded"
             >
               Approve
             </Button>
             <Button
               disabled={selectedReservations.length === 0}
-              onClick={handleDisapprove}
+              onClick={() => handleReservationUpdate("Disapproved")}
               className="admin-gr-disapprove-button bg-danger rounded"
             >
               Disapprove
@@ -269,7 +258,7 @@ const AdminGymReservation = () => {
                     checked={
                       selectedReservations.length > 0 &&
                       selectedReservations.length ===
-                      filteredReservations.length
+                        filteredReservations.length
                     }
                   />
                 </th>

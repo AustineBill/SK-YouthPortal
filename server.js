@@ -672,26 +672,6 @@ app.patch("/reservations/:reservationId", async (req, res) => {
   }
 });
 
-/*app.delete("/reservations/:reservationId", async (req, res) => {
-  const { reservationId } = req.params;
-
-  try {
-    // Delete the reservation using PostgreSQL query
-    const result = await pool.query(
-      "DELETE FROM Schedules WHERE id = $1 RETURNING *",
-      [reservationId]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Reservation not found" });
-    }
-    res.status(200).json({ message: "Reservation cancelled successfully" });
-  } catch (error) {
-    console.error("Error cancelling reservation:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});*/
-
 app.get("/equipment/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
 
@@ -747,34 +727,25 @@ app.patch("/equipment/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
 
   try {
-    // Step 1: Get the reservation details to identify the reserved equipment
+    const reservationIdNumber = parseInt(reservationId, 10); // convert to number
     const reservationResult = await pool.query(
       "SELECT * FROM Equipment WHERE reservation_id = $1",
-      [reservationId]
+      [reservationIdNumber]
     );
 
     if (reservationResult.rows.length === 0) {
       return res.status(404).json({ message: "Reservation not found" });
     }
-
-    // Step 2: Get the reserved equipment
     const reservedEquipment = reservationResult.rows[0].reserved_equipment;
-
-    // Step 3: Check if reserved_equipment is a string and parse it if necessary
     let equipmentList;
     if (typeof reservedEquipment === "string") {
-      // Parse the JSON string if it's in string format
       equipmentList = JSON.parse(reservedEquipment);
     } else {
-      // If it's already an object/array, use it directly
       equipmentList = reservedEquipment;
     }
-
-    // Step 4: Update the inventory for each equipment in the reservation
     for (const equipment of equipmentList) {
       const { id, quantity } = equipment;
 
-      // Update the inventory by increasing the quantity of the equipment
       const updateInventoryResult = await pool.query(
         "UPDATE Inventory SET quantity = quantity + $1 WHERE id = $2 RETURNING *",
         [quantity, id]
@@ -787,7 +758,6 @@ app.patch("/equipment/:reservationId", async (req, res) => {
       }
     }
 
-    // Step 5: Archive the reservation (Set is_archived = true)
     const archiveReservationResult = await pool.query(
       "UPDATE Equipment SET is_archived = true WHERE reservation_id = $1 RETURNING *",
       [reservationId]
@@ -799,7 +769,6 @@ app.patch("/equipment/:reservationId", async (req, res) => {
         .json({ message: "Reservation not found or already archived" });
     }
 
-    // Step 6: Return success response
     res.status(200).json({
       message:
         "Reservation archived and equipment quantity updated successfully",
@@ -1999,33 +1968,21 @@ app.get("/admindashboard", async (req, res) => {
   }
 });
 
-app.post("/approveReservations", async (req, res) => {
-  const { ids } = req.body; // Array of reservation IDs to approve
+app.post("/update/status", async (req, res) => {
+  const { ids, status } = req.body;
 
-  try {
-    // Update the status of the selected reservations
-    await pool.query(
-      "UPDATE Schedules SET status = $1 WHERE id = ANY($2::int[])",
-      ["Approved", ids]
-    );
-    res.status(200).send("Reservations approved");
-  } catch (error) {
-    console.error("Error approving reservations:", error);
-    res.status(500).send("Server error");
+  if (!ids || !Array.isArray(ids) || !status) {
+    return res.status(400).send("Missing or invalid 'ids' or 'status'");
   }
-});
-app.post("/disapproveReservations", async (req, res) => {
-  const { ids } = req.body; // Array of reservation IDs to disapprove
 
   try {
-    // Update the status of the selected reservations to 'Disapproved'
     await pool.query(
       "UPDATE Schedules SET status = $1 WHERE id = ANY($2::int[])",
-      ["Disapproved", ids]
+      [status, ids]
     );
-    res.status(200).send("Reservations disapproved");
+    res.status(200).send(`Reservations updated to ${status}`);
   } catch (error) {
-    console.error("Error disapproving reservations:", error);
+    console.error(`Error updating reservations to ${status}:`, error);
     res.status(500).send("Server error");
   }
 });

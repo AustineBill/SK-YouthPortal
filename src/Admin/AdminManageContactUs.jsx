@@ -22,7 +22,7 @@ const ManageContactUs = () => {
     const fetchContactDetails = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/contact"
+          "https://isked-backend-ssmj.onrender.com/contact"
         );
         setContactDetails(response.data);
         setNewContactDetails(response.data); // Pre-fill newContactDetails
@@ -38,7 +38,7 @@ const ManageContactUs = () => {
   const saveContactDetails = async () => {
     try {
       await axios.put(
-        "https://isked-backend.onrender.com/contact",
+        "https://isked-backend-ssmj.onrender.com/contact",
         newContactDetails
       );
       setContactDetails(newContactDetails);

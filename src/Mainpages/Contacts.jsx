@@ -15,7 +15,7 @@ const Contact = () => {
     const fetchContactDetails = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend.onrender.com/contact"
+          "https://isked-backend-ssmj.onrender.com/contact"
         );
         setContactDetails(response.data);
       } catch (err) {

@@ -101,10 +101,12 @@ const AdminEquipmentReservation = () => {
   };
 
   const handleArchive = async (reservationId) => {
+    console.log("Archiving reservation with ID:", reservationId); // Debugging log
     try {
-      await axios.delete(
-        `https://isked-backend-ssmj.onrender.com/equipment/${reservationId}`
+      const response = await axios.patch(
+        `https://isked-backend.onrender.com/equipment/${reservationId}`
       );
+      console.log("Archive Response:", response.data); // Debugging response
       fetchTableReservations();
       setSelectedReservations([]);
     } catch (error) {
@@ -206,7 +208,7 @@ const AdminEquipmentReservation = () => {
             <Dropdown.Toggle className="er-status-toggle">
               Status: {statusFilter}
             </Dropdown.Toggle>
-            <Dropdown.Menu  className="er-status-toggle-text">
+            <Dropdown.Menu className="er-status-toggle-text">
               {["All", "Pending", "Returned", "Not Returned", "Received"].map(
                 (status) => (
                   <Dropdown.Item

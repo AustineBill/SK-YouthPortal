@@ -302,7 +302,7 @@ const AdminMain = () => {
     const signatureSection = document.createElement("div");
     signatureSection.innerHTML = `
       <div style="margin-bottom: 5px;">Signature: __________________________</div>
-      <div>Printed Name</div>
+      <div>Over Printed Name</div>
     `;
 
     footer.appendChild(infoSection);
