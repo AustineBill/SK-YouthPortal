@@ -101,12 +101,17 @@ const AdminEquipmentReservation = () => {
   };
 
   const handleArchive = async (reservationId) => {
-    console.log("Archiving reservation with ID:", reservationId); // Debugging log
+    console.log("Archiving reservation with ID:", reservationId);
+    const isConfirmed = window.confirm(
+      "Are you sure you want to cancel this reservation?"
+    );
+    if (!isConfirmed) return;
+
     try {
       const response = await axios.patch(
         `https://isked-backend.onrender.com/equipment/${reservationId}`
       );
-      console.log("Archive Response:", response.data); // Debugging response
+      console.log("Archive Response:", response.data);
       fetchTableReservations();
       setSelectedReservations([]);
     } catch (error) {

@@ -727,10 +727,9 @@ app.patch("/equipment/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
 
   try {
-    const reservationIdNumber = parseInt(reservationId, 10); // convert to number
     const reservationResult = await pool.query(
-      "SELECT * FROM Equipment WHERE reservation_id = $1",
-      [reservationIdNumber]
+      "SELECT * FROM Equipment WHERE id = $1",
+      [reservationId]
     );
 
     if (reservationResult.rows.length === 0) {
