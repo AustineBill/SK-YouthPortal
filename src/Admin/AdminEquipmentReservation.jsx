@@ -90,9 +90,12 @@ const AdminEquipmentReservation = () => {
 
   const handleStatusUpdate = async (status) => {
     try {
-      await axios.post(`https://isked-backend.onrender.com/mark/${status}`, {
-        ids: selectedReservations,
-      });
+      await axios.post(
+        `https://isked-backend-ssmj.onrender.com/mark/${status}`,
+        {
+          ids: selectedReservations,
+        }
+      );
       fetchTableReservations();
       setSelectedReservations([]);
     } catch (error) {
@@ -109,7 +112,7 @@ const AdminEquipmentReservation = () => {
 
     try {
       const response = await axios.patch(
-        `https://isked-backend.onrender.com/equipment/${id}` // Use 'id' here
+        `https://isked-backend-ssmj.onrender.com/equipment/${id}` // Use 'id' here
       );
       console.log("Archive Response:", response.data);
       fetchTableReservations();

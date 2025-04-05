@@ -99,10 +99,13 @@ const AdminGymReservation = () => {
 
   const handleReservationUpdate = async (status) => {
     try {
-      await axios.post("https://isked-backend.onrender.com/update/status", {
-        ids: selectedReservations,
-        status,
-      });
+      await axios.post(
+        "https://isked-backend-ssmj.onrender.com/update/status",
+        {
+          ids: selectedReservations,
+          status,
+        }
+      );
       await fetchReservations();
       setSelectedReservations([]);
     } catch (error) {
