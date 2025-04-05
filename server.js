@@ -723,18 +723,19 @@ app.get("/equipment/:reservationId", async (req, res) => {
   }
 });
 
-app.patch("/equipment/:reservationId", async (req, res) => {
-  const { reservationId } = req.params;
+app.patch("/equipment/:id", async (req, res) => {
+  const { id } = req.params; // Using 'id' instead of 'reservationId'
 
   try {
     const reservationResult = await pool.query(
       "SELECT * FROM Equipment WHERE id = $1",
-      [reservationId]
+      [id]
     );
 
     if (reservationResult.rows.length === 0) {
       return res.status(404).json({ message: "Reservation not found" });
     }
+
     const reservedEquipment = reservationResult.rows[0].reserved_equipment;
     let equipmentList;
     if (typeof reservedEquipment === "string") {
@@ -742,6 +743,7 @@ app.patch("/equipment/:reservationId", async (req, res) => {
     } else {
       equipmentList = reservedEquipment;
     }
+
     for (const equipment of equipmentList) {
       const { id, quantity } = equipment;
 
@@ -758,8 +760,8 @@ app.patch("/equipment/:reservationId", async (req, res) => {
     }
 
     const archiveReservationResult = await pool.query(
-      "UPDATE Equipment SET is_archived = true WHERE reservation_id = $1 RETURNING *",
-      [reservationId]
+      "UPDATE Equipment SET is_archived = true WHERE id = $1 RETURNING *",
+      [id]
     );
 
     if (archiveReservationResult.rowCount === 0) {
