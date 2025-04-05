@@ -207,8 +207,6 @@ body {
 }
 /* */
 
-
-
 .sign-up-modal-overlay {
   position: fixed;
   top: 0;
@@ -746,8 +744,8 @@ h2,
 .spotlight-container {
   background: linear-gradient(to bottom, #edebf9);
   display: grid;
-  grid-template-columns: 1fr 1fr; 
-  grid-template-rows: auto auto; 
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
   align-items: center;
   justify-items: center;
   padding: 2rem;
@@ -762,7 +760,7 @@ h2,
 }
 
 .image-content {
-  max-width:100%;
+  max-width: 100%;
   text-align: right; /* Align image to the right */
   position: relative;
   top: 20px;
@@ -787,7 +785,6 @@ h2,
   color: #fff;
   text-decoration: none;
   position: relative;
-
 }
 
 .spotlight-button:hover {
@@ -875,8 +872,7 @@ h2,
   padding: 2rem;
   border-radius: 10px;
   width: 100%;
-  position:relative;
-
+  position: relative;
 }
 
 .blockquote p {
@@ -1139,8 +1135,8 @@ h2,
 .dropdownAvatar {
   color: #000000;
   padding: 10px 30px;
-  text-decoration: none !important; 
-  cursor:pointer;
+  text-decoration: none !important;
+  cursor: pointer;
 }
 
 .dropdown-about {
@@ -1399,7 +1395,9 @@ h2,
 .contact-container {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap; /* Allow wrapping for responsiveness */
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 /* Divider */
@@ -1426,23 +1424,11 @@ h2,
 .ContactCard {
   font-weight: 400;
   text-align: center;
-  padding: 5em;
+  padding: 3em;
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: slideInLeft;
-  width: 25%;
-  margin: 2em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Ensure text is horizontal */
-.ContactCard p {
-  writing-mode: horizontal-tb;
-}
-
-.PageContainer {
+  width: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1453,14 +1439,6 @@ h2,
   flex-direction: column;
   align-items: center;
 }
-
-/*.PageContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
-  justify-items: center; 
-  align-items: center; )
-}/
 
 /****** Form *******/
 
@@ -1481,7 +1459,6 @@ h2,
 .sign-in-form button,
 .sign-up-form button {
   color: #25327a;
-  height: 50px;
   width: 35%;
   font-weight: bold;
   font-size: 20px;
@@ -1490,22 +1467,12 @@ h2,
   box-shadow: 0px 2px 4px;
 }
 
-.welcome-back-sign-in h2,
-.start-with-us-sign-up h2 {
-  color: #25327a;
-  font-family: "Sansita";
-  font-style: italic;
-  font-weight: bold;
-  font-size: 40px;
-}
-
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: "Poppins";
-  gap: 15px;
-  margin-left: 20px;
+  gap: 20px;
 }
 
 .sign-in-username input,

@@ -1300,15 +1300,64 @@ app.delete("/settings/:id", async (req, res) => {
 app.get("/contact", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT contact_number, location, gmail FROM public.contact WHERE id = $1",
+      "SELECT contact_number, location, gmail, facebook FROM public.contact WHERE id = $1",
       [1]
     );
-    res.json(result.rows[0]); // Send the contact details
+    res.json(result.rows[0]);
   } catch (error) {
     console.error("Error fetching contact details:", error);
     res.status(500).json({ error: "Error fetching contact details" });
   }
 });
+
+app.put("/contact", async (req, res) => {
+  const { contact_number, location, gmail, facebook } = req.body;
+
+  // Build the SET clause dynamically based on provided fields
+  const fields = [];
+  const values = [];
+  let paramIndex = 1;
+
+  if (contact_number !== undefined) {
+    fields.push(`contact_number = $${paramIndex++}`);
+    values.push(contact_number);
+  }
+
+  if (location !== undefined) {
+    fields.push(`location = $${paramIndex++}`);
+    values.push(location);
+  }
+
+  if (gmail !== undefined) {
+    fields.push(`gmail = $${paramIndex++}`);
+    values.push(gmail);
+  }
+
+  if (facebook !== undefined) {
+    fields.push(`facebook = $${paramIndex++}`);
+    values.push(facebook);
+  }
+
+  // Check if at least one field is provided
+  if (fields.length === 0) {
+    return res.status(400).json({ error: "No fields provided for update" });
+  }
+
+  // Add ID to the end
+  values.push(1); // hardcoded ID
+  const query = `UPDATE public.contact SET ${fields.join(
+    ", "
+  )} WHERE id = $${paramIndex}`;
+
+  try {
+    await pool.query(query, values);
+    res.json({ message: "Contact details updated successfully" });
+  } catch (error) {
+    console.error("Error updating contact details:", error);
+    res.status(500).json({ error: "Error updating contact details" });
+  }
+});
+
 app.post("/Website", async (req, res) => {
   const { description, objectives, mission, vision } = req.body;
 
@@ -1329,6 +1378,7 @@ app.post("/Website", async (req, res) => {
     res.status(500).json({ error: "Error adding website details" });
   }
 });
+
 app.get("/Website", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM Website WHERE id = $1", [1]);
@@ -1628,29 +1678,6 @@ app.delete("/spotlight/:id", async (req, res) => {
   } catch (error) {
     console.error("Error deleting spotlight:", error);
     res.status(500).json({ message: "Failed to delete spotlight" });
-  }
-});
-
-// Update contact details
-app.put("/contact", async (req, res) => {
-  const { contact_number, location, gmail } = req.body;
-
-  // Ensure all fields are provided
-  if (!contact_number || !location || !gmail) {
-    return res.status(400).json({
-      error: "All fields (contact_number, location, gmail) are required",
-    });
-  }
-
-  try {
-    await pool.query(
-      "UPDATE public.contact SET contact_number = $1, location = $2, gmail = $3 WHERE id = $4",
-      [contact_number, location, gmail, 1]
-    );
-    res.json({ message: "Contact details updated successfully" });
-  } catch (error) {
-    console.error("Error updating contact details:", error);
-    res.status(500).json({ error: "Error updating contact details" });
   }
 });
 

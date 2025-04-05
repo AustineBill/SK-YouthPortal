@@ -13,6 +13,7 @@ const ManageContactUs = () => {
     contact_number: "",
     location: "",
     gmail: "",
+    facebook: "",
   });
   const [newContactDetails, setNewContactDetails] = useState(contactDetails);
 
@@ -21,7 +22,7 @@ const ManageContactUs = () => {
     const fetchContactDetails = async () => {
       try {
         const response = await axios.get(
-          "https://isked-backend-ssmj.onrender.com/contact"
+          "https://isked-backend.onrender.com/contact"
         );
         setContactDetails(response.data);
         setNewContactDetails(response.data); // Pre-fill newContactDetails
@@ -35,12 +36,12 @@ const ManageContactUs = () => {
 
   // Save updated contact details
   const saveContactDetails = async () => {
-    try { 
-        await axios.put(
-        "https://isked-backend-ssmj.onrender.com/contact",
+    try {
+      await axios.put(
+        "https://isked-backend.onrender.com/contact",
         newContactDetails
       );
-      setContactDetails(newContactDetails); 
+      setContactDetails(newContactDetails);
       setActiveContent("manageContactDetails");
     } catch (error) {
       console.error("Error saving contact details:", error);
@@ -69,8 +70,14 @@ const ManageContactUs = () => {
       <div className="admin-contact-us-contents-container d-flex justify-content-center">
         {activeContent === "manageContactDetails" && (
           <div className="admin-current-contacts-details-container d-flex justify-content-center">
-            {/* Group of Current Contact Details Form */}
             <div className="admin-contacts-details-group d-flex flex-column align-items-center">
+              <div className="admin-current-contact-form d-flex flex-column">
+                <label className="admin-current-contact-label">
+                  Facebook Link
+                </label>
+                <input type="text" value={contactDetails.facebook} readOnly />
+              </div>
+
               <div className="admin-current-contact-form d-flex flex-column">
                 <label className="admin-current-contact-label">
                   Contact Number
@@ -106,6 +113,22 @@ const ManageContactUs = () => {
           <div className="admin-edit-contacts-details-container d-flex justify-content-center">
             {/* Group of Edit Contact Details Form */}
             <form className="admin-edit-contacts-details-group d-flex flex-column align-items-center">
+              <div className="admin-edit-contact-form d-flex flex-column">
+                <label className="admin-edit-contact-label">
+                  Facebook Link
+                </label>
+                <input
+                  type="text"
+                  value={newContactDetails.facebook}
+                  onChange={(e) =>
+                    setNewContactDetails({
+                      ...newContactDetails,
+                      facebook: e.target.value,
+                    })
+                  }
+                />
+              </div>
+
               <div className="admin-edit-contact-form d-flex flex-column">
                 <label className="admin-edit-contact-label">
                   Contact Number
