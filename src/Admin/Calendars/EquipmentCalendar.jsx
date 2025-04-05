@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Popover, OverlayTrigger } from "react-bootstrap";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import axios from "axios";
 
 const EquipmentCalendar = () => {
   const [calendarReservations, setCalendarReservations] = useState([]);
@@ -30,17 +31,15 @@ const EquipmentCalendar = () => {
   useEffect(() => {
     const fetchBlockedDates = async () => {
       try {
-        const response = await fetch(
-          "https://isked-backend-ssmj.onrender.com/settings"
+        const response = await axios.get(
+          "https://isked-backend-ssmj.onrender.com/date-settings"
         );
-        if (!response.ok) {
-          throw new Error("Error fetching blocked dates");
-        }
-        const data = await response.json();
+
+        // Process the blocked dates to only include the date portion, without time
         setBlockedDates(
-          data.blocked_dates.map((date) => ({
-            start: date.start_date,
-            end: date.end_date,
+          response.data.map((date) => ({
+            start: new Date(date.start_date).setHours(0, 0, 0, 0), // Only the date, no time
+            end: new Date(date.end_date).setHours(23, 59, 59, 999), // Ensure end date includes full day
           }))
         );
       } catch (error) {

@@ -259,7 +259,7 @@ const Users = () => {
 
       <div className="admin-users-contents-container d-flex flex-column align-items-center justify-content-center">
         <div className="admin-users-add-classification-container d-flex align-items-center">
-          <div className="admin-users-classification-container m-0">
+          <div className="admin-users-classification-container">
             <select
               value={selectedClassification}
               onChange={(e) => setSelectedClassification(e.target.value)}

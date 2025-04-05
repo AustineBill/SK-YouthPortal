@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { Table, Dropdown, Button } from "react-bootstrap";
+import { Dropdown, Button } from "react-bootstrap";
 import EquipmentCalendar from "./Calendars/EquipmentCalendar";
-import "./styles/AdminEquipmentReservation.css";
+import "../WebStyles/Admin-CSS.css";
 
 const AdminEquipmentReservation = () => {
   const [reservations, setReservations] = useState([]);
   const [filteredReservations, setFilteredReservations] = useState([]);
   const [filterOption, setFilterOption] = useState("All");
+  const [statusFilter, setStatusFilter] = useState("All");
   const [selectedReservations, setSelectedReservations] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch reservations for the table from /Allequipments endpoint
   const fetchTableReservations = async () => {
     try {
       const response = await axios.get(
@@ -27,7 +28,27 @@ const AdminEquipmentReservation = () => {
     fetchTableReservations();
   }, []);
 
-  // Filter reservations based on selected option
+  const applySearchFilter = useCallback(
+    (data) => {
+      if (!searchTerm) return data;
+      return data.filter((reservation) => {
+        const refId = reservation.reservation_id.toString();
+        return refId.includes(searchTerm);
+      });
+    },
+    [searchTerm]
+  );
+
+  useEffect(() => {
+    let filteredData = reservations;
+    if (statusFilter !== "All") {
+      filteredData = filteredData.filter(
+        (reservation) => reservation.status === statusFilter
+      );
+    }
+    setFilteredReservations(applySearchFilter(filteredData));
+  }, [statusFilter, reservations, applySearchFilter]);
+
   useEffect(() => {
     let filteredData = reservations;
     const now = new Date();
@@ -56,8 +77,8 @@ const AdminEquipmentReservation = () => {
       });
     }
 
-    setFilteredReservations(filteredData);
-  }, [filterOption, reservations]);
+    setFilteredReservations(applySearchFilter(filteredData));
+  }, [filterOption, reservations, applySearchFilter]);
 
   const handleCheckboxChange = (id) => {
     setSelectedReservations((prevSelected) =>
@@ -67,22 +88,10 @@ const AdminEquipmentReservation = () => {
     );
   };
 
-  const handleReturned = async () => {
-    try {
-      await axios.post("https://isked-backend-ssmj.onrender.com/markReturned", {
-        ids: selectedReservations,
-      });
-      fetchTableReservations();
-      setSelectedReservations([]);
-    } catch (error) {
-      console.error("Error marking reservations as returned:", error);
-    }
-  };
-
-  const handleNotReturned = async () => {
+  const handleStatusUpdate = async (status) => {
     try {
       await axios.post(
-        "https://isked-backend-ssmj.onrender.com/markNotReturned",
+        `https://isked-backend-ssmj.onrender.com/mark/${status}`,
         {
           ids: selectedReservations,
         }
@@ -90,22 +99,23 @@ const AdminEquipmentReservation = () => {
       fetchTableReservations();
       setSelectedReservations([]);
     } catch (error) {
-      console.error("Error marking reservations as not returned:", error);
+      console.error(`Error marking reservations as ${status}:`, error);
     }
   };
 
-  const handleArchive = async (reservationId) => {
+  const handleArchive = async (id) => {
+    console.log("Archiving reservation with ID:", id);
+    const isConfirmed = window.confirm(
+      "Are you sure you want to cancel this reservation?"
+    );
+    if (!isConfirmed) return;
+
     try {
-      await axios.delete(
-        `https://isked-backend-ssmj.onrender.com/equipment/${reservationId}`
+      const response = await axios.patch(
+        `https://isked-backend-ssmj.onrender.com/equipment/${id}` // Use 'id' here
       );
-
+      console.log("Archive Response:", response.data);
       fetchTableReservations();
-      const updatedReservations = filteredReservations.filter(
-        (reservation) => reservation.id !== reservationId
-      );
-
-      setFilteredReservations(updatedReservations);
       setSelectedReservations([]);
     } catch (error) {
       console.error("Error archiving reservation:", error);
@@ -122,6 +132,23 @@ const AdminEquipmentReservation = () => {
     });
   };
 
+  const highlightSearchMatch = (text) => {
+    if (!searchTerm) return text;
+    const strText = text.toString();
+    const index = strText.indexOf(searchTerm);
+    if (index === -1) return strText;
+
+    return (
+      <>
+        {strText.substring(0, index)}
+        <span style={{ backgroundColor: "yellow" }}>
+          {strText.substring(index, index + searchTerm.length)}
+        </span>
+        {strText.substring(index + searchTerm.length)}
+      </>
+    );
+  };
+
   return (
     <div className="admin-equipment-reservation-container">
       <h2 className="admin-ereservation-label-h2 fst-italic">
@@ -130,45 +157,83 @@ const AdminEquipmentReservation = () => {
 
       <EquipmentCalendar />
 
-      <div className="admin-ereservation-buttons-table-container">
-        <div className="admin-er-toggle-buttons-container d-flex align-items-center">
-          <Dropdown className="gr-toggle-container">
-            <Dropdown.Toggle className="gr-toggle">
+      <div className="admin-ereservation-buttons-search-container d-flex justify-content-between">
+        <div className="admin-er-toggle-buttons-container d-flex justify-content-between align-items-center">
+          <Dropdown className="admin-er-date-toggle-container">
+            <Dropdown.Toggle className="er-date-toggle">
               {filterOption}
-              </Dropdown.Toggle>
-                <Dropdown.Menu className="gr-toggle-text">
-                  <Dropdown.Item onClick={() => setFilterOption("Now")}>
-                    Now
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setFilterOption("Week")}>
-                         Week
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setFilterOption("Month")}>
-                         Month
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setFilterOption("All")}>
-                    All
-                  </Dropdown.Item>
-                </Dropdown.Menu>
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="er-date-toggle-text">
+              <Dropdown.Item onClick={() => setFilterOption("Now")}>
+                Now
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setFilterOption("Week")}>
+                Week
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setFilterOption("Month")}>
+                Month
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setFilterOption("All")}>
+                All
+              </Dropdown.Item>
+            </Dropdown.Menu>
           </Dropdown>
 
-          <button
-            disabled={selectedReservations.length === 0}
-            onClick={handleReturned}
-            className="admin-er-return-button bg-success text-white rounded"
+          <Button
+            disabled={!selectedReservations.length}
+            onClick={() => handleStatusUpdate("Received")}
+            className="admin-er-received-button bg-primary rounded"
           >
-            Mark as Returned
-          </button>
-          <button
-            disabled={selectedReservations.length === 0}
-            onClick={handleNotReturned}
-            className="admin-er-not-returned-button bg-danger text-white rounded"
+            Received
+          </Button>
+          <Button
+            disabled={!selectedReservations.length}
+            onClick={() => handleStatusUpdate("Returned")}
+            className="admin-er-returned-button bg-success rounded"
           >
-            Mark as Not Returned
-          </button>
+            Returned
+          </Button>
+          <Button
+            disabled={!selectedReservations.length}
+            onClick={() => handleStatusUpdate("Not Returned")}
+            className="admin-er-nreturned-button bg-danger rounded"
+          >
+            Not Returned
+          </Button>
         </div>
 
-        <Table className="admin-ereservation-table-container table-bordered">
+        {/* Search Bar */}
+        <div className="admin-er-search-toggle-button-container d-flex justify-content-end align-items-center">
+          <input
+            type="text"
+            placeholder="Search Reservation ID"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="admin-equipment-reservation-search-input rounded"
+          />
+
+          <Dropdown className="admin-er-status-toggle-container">
+            <Dropdown.Toggle className="er-status-toggle">
+              Status: {statusFilter}
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="er-status-toggle-text">
+              {["All", "Pending", "Returned", "Not Returned", "Received"].map(
+                (status) => (
+                  <Dropdown.Item
+                    key={status}
+                    onClick={() => setStatusFilter(status)}
+                  >
+                    {status}
+                  </Dropdown.Item>
+                )
+              )}
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+      </div>
+
+      <div className="admin-ereservation-contents-container">
+        <table className="admin-ereservation-table-container table-bordered">
           <thead className="admin-ereservation-head text-center">
             <tr>
               <th>
@@ -186,16 +251,17 @@ const AdminEquipmentReservation = () => {
                     }
                   }}
                   checked={
+                    selectedReservations.length > 0 &&
                     selectedReservations.length === filteredReservations.length
                   }
                 />
               </th>
               <th>Reservation ID</th>
-              <th>Reserved Equipment</th>
+              <th>Equipment</th>
               <th>Start Date</th>
               <th>End Date</th>
               <th>Status</th>
-              <th style={{ width: "120px" }}>Action</th>
+              <th>Action</th>
             </tr>
           </thead>
 
@@ -203,7 +269,7 @@ const AdminEquipmentReservation = () => {
             {filteredReservations.length === 0 ? (
               <tr>
                 <td colSpan="7" className="text-center">
-                  No Reservation Found.
+                  No reservations found
                 </td>
               </tr>
             ) : (
@@ -216,41 +282,34 @@ const AdminEquipmentReservation = () => {
                       onChange={() => handleCheckboxChange(reservation.id)}
                     />
                   </td>
-                  <td>{reservation.reservation_id}</td>
+                  <td>{highlightSearchMatch(reservation.reservation_id)}</td>
                   <td>
-                    {Array.isArray(reservation.reserved_equipment) &&
-                    reservation.reserved_equipment.length > 0 ? (
-                      reservation.reserved_equipment.map((item) => (
-                        <div key={item.id}>
-                          {item.name} (Quantity: {item.quantity})
-                        </div>
-                      ))
-                    ) : (
-                      <span>No items reserved</span>
-                    )}
+                    {reservation.reserved_equipment?.map((item) => (
+                      <div key={item.id}>
+                        {item.name} (Qty: {item.quantity})
+                      </div>
+                    ))}
                   </td>
                   <td>{formatDate(reservation.start_date)}</td>
                   <td>{formatDate(reservation.end_date)}</td>
                   <td>{reservation.status || "Pending"}</td>
-                  <td className="admin-ereservation-action-button-container d-flex justify-content-center">
-                    <Button
-                      variant="danger"
-                      className="admin-ereservation-delete-button rounded-pill"
-                      onClick={() => handleArchive(reservation.id)} // Pass the reservation ID
-                      disabled={
-                        reservation.status === "Not Returned" ||
-                        reservation.status === "Pending" ||
-                        reservation.is_archived // Disable if archived
-                      }
-                    >
-                      <i className="bi bi-trash"></i>
-                    </Button>
+                  <td>
+                    <div className="admin-ereservation-action-button-container d-flex justify-content-center">
+                      <Button
+                        variant="danger"
+                        className="admin-ereservation-archive-button rounded-pill"
+                        onClick={() => handleArchive(reservation.id)}
+                        disabled={reservation.status === "Not Returned"}
+                      >
+                        <i className="bi bi-archive"></i>
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))
             )}
           </tbody>
-        </Table>
+        </table>
       </div>
     </div>
   );

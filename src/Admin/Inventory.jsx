@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Button } from "react-bootstrap";
 import '../WebStyles/Admin-CSS.css';
 
 const InventoryTable = () => {
   const [inventory, setInventory] = useState([]);
+  const [filteredInventory, setFilteredInventory] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   const [newItem, setNewItem] = useState({
@@ -14,6 +15,7 @@ const InventoryTable = () => {
     status: "Available",
     image: null,
   });
+  const [searchTerm, setSearchTerm] = useState(""); // New state for search term
 
   useEffect(() => {
     fetchInventory();
@@ -24,8 +26,42 @@ const InventoryTable = () => {
       .get("https://isked-backend-ssmj.onrender.com/inventory")
       .then((response) => {
         setInventory(response.data);
+        setFilteredInventory(response.data); // Initialize filtered inventory
       })
       .catch((error) => console.error(error));
+  };
+
+  // New: Search filter function for item names
+  const applySearchFilter = useCallback((data) => {
+    if (!searchTerm) return data;
+    const lowerSearchTerm = searchTerm.toLowerCase();
+    return data.filter(item => {
+      const itemName = item.name?.toLowerCase() || '';
+      return itemName.includes(lowerSearchTerm);
+    });
+  }, [searchTerm]);
+
+  useEffect(() => {
+    setFilteredInventory(applySearchFilter(inventory));
+  }, [inventory, searchTerm, applySearchFilter]);
+
+  // New: Highlight matching text in item names
+  const highlightSearchMatch = (text) => {
+    if (!searchTerm || !text) return text;
+    const lowerText = text.toLowerCase();
+    const lowerSearchTerm = searchTerm.toLowerCase();
+    const index = lowerText.indexOf(lowerSearchTerm);
+    if (index === -1) return text;
+    
+    return (
+      <>
+        {text.substring(0, index)}
+        <span style={{ backgroundColor: 'yellow', fontWeight: 'bold' }}>
+          {text.substring(index, index + searchTerm.length)}
+        </span>
+        {text.substring(index + searchTerm.length)}
+      </>
+    );
   };
 
   const handleChange = (e) => {
@@ -39,7 +75,7 @@ const InventoryTable = () => {
     if (e.target.files.length > 0) {
       setNewItem({
         ...newItem,
-        image: e.target.files[0], // Assign only if a file is selected
+        image: e.target.files[0],
       });
     }
   };
@@ -52,7 +88,7 @@ const InventoryTable = () => {
         quantity: item.quantity,
         specification: item.specification,
         status: item.status,
-        image: null, // New image will be uploaded if needed
+        image: null,
       });
     } else {
       setNewItem({
@@ -77,7 +113,7 @@ const InventoryTable = () => {
     formData.append("status", newItem.status);
 
     if (newItem.image) {
-      formData.append("image", newItem.image); // Append only if an image is selected
+      formData.append("image", newItem.image);
     }
 
     try {
@@ -122,13 +158,26 @@ const InventoryTable = () => {
         <h2 className="admin-inventory-label-h2 fst-italic">Inventory</h2>
       </div>
 
-      <div className="admin-inventory-add-equipment-container">
-        <button
-          className="admin-inventory-add-equipment-button rounded"
-          onClick={() => handleShowModal()}
-        >
-          Add Equipment
-        </button>
+      <div className="admin-inventory-search-add-container d-flex justify-content-between align-items-center">
+        {/* New Search Bar */}
+        <div className="admin-inventory-search-container d-flex align-items-center">
+          <input
+            type="text"
+            placeholder="Search item by name"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="admin-inventory-search-input rounded"
+          />
+        </div>
+
+        <div className="admin-inventory-add-equipment-container d-flex align-items-center m-0">
+          <button
+            className="admin-inventory-add-equipment-button rounded"
+            onClick={() => handleShowModal()}
+          >
+            Add Equipment
+          </button>
+        </div>
       </div>
 
       <div className="admin-inventory-contents-container">
@@ -144,43 +193,49 @@ const InventoryTable = () => {
             </tr>
           </thead>
           <tbody className="admin-inventory-body text-center">
-            {inventory.map((item) => (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>{item.quantity}</td>
-                <td>{item.specification}</td>
-                <td>{item.status}</td>
-                <td>
-                  {item.image ? (
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="equipment-image"
-                    />
-                  ) : (
-                    "No Image"
-                  )}
-                </td>
-                <td>
-                  <div className="admin-inventory-actions-buttons-container d-flex justify-content-center">
-                    <Button
-                      variant="warning"
-                      onClick={() => handleShowModal(item)}
-                      className="admin-inventory-edit-button rounded-pill"
-                    >
-                      <i className="bi bi-pencil-square"></i>
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDelete(item.id)}
-                      className="admin-inventory-delete-button rounded-pill"
-                    >
-                      <i className="bi bi-trash"></i>
-                    </Button>
-                  </div>
-                </td>
+            {filteredInventory.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="text-center">No items found</td>
               </tr>
-            ))}
+            ) : (
+              filteredInventory.map((item) => (
+                <tr key={item.id}>
+                  <td>{highlightSearchMatch(item.name)}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.specification}</td>
+                  <td>{item.status}</td>
+                  <td>
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="equipment-image"
+                      />
+                    ) : (
+                      "No Image"
+                    )}
+                  </td>
+                  <td>
+                    <div className="admin-inventory-actions-buttons-container d-flex justify-content-center">
+                      <Button
+                        variant="warning"
+                        onClick={() => handleShowModal(item)}
+                        className="admin-inventory-edit-button rounded-pill"
+                      >
+                        <i className="bi bi-pencil-square"></i>
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDelete(item.id)}
+                        className="admin-inventory-delete-button rounded-pill"
+                      >
+                        <i className="bi bi-trash"></i>
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

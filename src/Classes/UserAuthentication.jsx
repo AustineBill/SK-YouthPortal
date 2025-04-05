@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../WebStructure/AuthContext";
 import axios from "axios";
-// import "../WebStyles/Admin-CSS.css";
 import "./UserAuthentication.css";
 
 const { DecryptionCode } = require("../WebStructure/Codex");
@@ -236,7 +235,7 @@ const UserAuthentication = () => {
       );
       setModalMessage(
         error.response?.data?.message ||
-        "An error occurred while updating your account"
+          "An error occurred while updating your account"
       );
       setShowModal(true);
     }
@@ -284,7 +283,7 @@ const UserAuthentication = () => {
 
   return (
     <div className="user-authentication-contents d-flex justify-content-center">
-      <div className='left-side-responsive d-none d-md-flex align-items-center justify-content-center'>
+      <div className="left-side-responsive d-none d-md-flex align-items-center justify-content-center">
         <div className="left-side-contents-container d-flex flex-column justify-content-center text-center text-lg-center">
           <div className="d-flex flex-column justify-content-center text-center">
             <h1 className="top-part">
@@ -335,9 +334,7 @@ const UserAuthentication = () => {
               </button>
 
               <div className="sign-in-form-bottom p-0 m-0">
-                <p className="no-account-p">
-                  Don't have an account?
-                </p>
+                <p className="no-account-p">Don't have an account?</p>
                 <Link
                   onClick={(e) => {
                     e.preventDefault();

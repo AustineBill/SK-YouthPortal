@@ -672,26 +672,6 @@ app.patch("/reservations/:reservationId", async (req, res) => {
   }
 });
 
-/*app.delete("/reservations/:reservationId", async (req, res) => {
-  const { reservationId } = req.params;
-
-  try {
-    // Delete the reservation using PostgreSQL query
-    const result = await pool.query(
-      "DELETE FROM Schedules WHERE id = $1 RETURNING *",
-      [reservationId]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Reservation not found" });
-    }
-    res.status(200).json({ message: "Reservation cancelled successfully" });
-  } catch (error) {
-    console.error("Error cancelling reservation:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});*/
-
 app.get("/equipment/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
 
@@ -743,38 +723,30 @@ app.get("/equipment/:reservationId", async (req, res) => {
   }
 });
 
-app.patch("/equipment/:reservationId", async (req, res) => {
-  const { reservationId } = req.params;
+app.patch("/equipment/:id", async (req, res) => {
+  const { id } = req.params; // Using 'id' instead of 'reservationId'
 
   try {
-    // Step 1: Get the reservation details to identify the reserved equipment
     const reservationResult = await pool.query(
-      "SELECT * FROM Equipment WHERE reservation_id = $1",
-      [reservationId]
+      "SELECT * FROM Equipment WHERE id = $1",
+      [id]
     );
 
     if (reservationResult.rows.length === 0) {
       return res.status(404).json({ message: "Reservation not found" });
     }
 
-    // Step 2: Get the reserved equipment
     const reservedEquipment = reservationResult.rows[0].reserved_equipment;
-
-    // Step 3: Check if reserved_equipment is a string and parse it if necessary
     let equipmentList;
     if (typeof reservedEquipment === "string") {
-      // Parse the JSON string if it's in string format
       equipmentList = JSON.parse(reservedEquipment);
     } else {
-      // If it's already an object/array, use it directly
       equipmentList = reservedEquipment;
     }
 
-    // Step 4: Update the inventory for each equipment in the reservation
     for (const equipment of equipmentList) {
       const { id, quantity } = equipment;
 
-      // Update the inventory by increasing the quantity of the equipment
       const updateInventoryResult = await pool.query(
         "UPDATE Inventory SET quantity = quantity + $1 WHERE id = $2 RETURNING *",
         [quantity, id]
@@ -787,10 +759,9 @@ app.patch("/equipment/:reservationId", async (req, res) => {
       }
     }
 
-    // Step 5: Archive the reservation (Set is_archived = true)
     const archiveReservationResult = await pool.query(
-      "UPDATE Equipment SET is_archived = true WHERE reservation_id = $1 RETURNING *",
-      [reservationId]
+      "UPDATE Equipment SET is_archived = true WHERE id = $1 RETURNING *",
+      [id]
     );
 
     if (archiveReservationResult.rowCount === 0) {
@@ -799,7 +770,6 @@ app.patch("/equipment/:reservationId", async (req, res) => {
         .json({ message: "Reservation not found or already archived" });
     }
 
-    // Step 6: Return success response
     res.status(200).json({
       message:
         "Reservation archived and equipment quantity updated successfully",
@@ -1300,15 +1270,64 @@ app.delete("/settings/:id", async (req, res) => {
 app.get("/contact", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT contact_number, location, gmail FROM public.contact WHERE id = $1",
+      "SELECT contact_number, location, gmail, facebook FROM public.contact WHERE id = $1",
       [1]
     );
-    res.json(result.rows[0]); // Send the contact details
+    res.json(result.rows[0]);
   } catch (error) {
     console.error("Error fetching contact details:", error);
     res.status(500).json({ error: "Error fetching contact details" });
   }
 });
+
+app.put("/contact", async (req, res) => {
+  const { contact_number, location, gmail, facebook } = req.body;
+
+  // Build the SET clause dynamically based on provided fields
+  const fields = [];
+  const values = [];
+  let paramIndex = 1;
+
+  if (contact_number !== undefined) {
+    fields.push(`contact_number = $${paramIndex++}`);
+    values.push(contact_number);
+  }
+
+  if (location !== undefined) {
+    fields.push(`location = $${paramIndex++}`);
+    values.push(location);
+  }
+
+  if (gmail !== undefined) {
+    fields.push(`gmail = $${paramIndex++}`);
+    values.push(gmail);
+  }
+
+  if (facebook !== undefined) {
+    fields.push(`facebook = $${paramIndex++}`);
+    values.push(facebook);
+  }
+
+  // Check if at least one field is provided
+  if (fields.length === 0) {
+    return res.status(400).json({ error: "No fields provided for update" });
+  }
+
+  // Add ID to the end
+  values.push(1); // hardcoded ID
+  const query = `UPDATE public.contact SET ${fields.join(
+    ", "
+  )} WHERE id = $${paramIndex}`;
+
+  try {
+    await pool.query(query, values);
+    res.json({ message: "Contact details updated successfully" });
+  } catch (error) {
+    console.error("Error updating contact details:", error);
+    res.status(500).json({ error: "Error updating contact details" });
+  }
+});
+
 app.post("/Website", async (req, res) => {
   const { description, objectives, mission, vision } = req.body;
 
@@ -1329,6 +1348,7 @@ app.post("/Website", async (req, res) => {
     res.status(500).json({ error: "Error adding website details" });
   }
 });
+
 app.get("/Website", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM Website WHERE id = $1", [1]);
@@ -1631,29 +1651,6 @@ app.delete("/spotlight/:id", async (req, res) => {
   }
 });
 
-// Update contact details
-app.put("/contact", async (req, res) => {
-  const { contact_number, location, gmail } = req.body;
-
-  // Ensure all fields are provided
-  if (!contact_number || !location || !gmail) {
-    return res.status(400).json({
-      error: "All fields (contact_number, location, gmail) are required",
-    });
-  }
-
-  try {
-    await pool.query(
-      "UPDATE public.contact SET contact_number = $1, location = $2, gmail = $3 WHERE id = $4",
-      [contact_number, location, gmail, 1]
-    );
-    res.json({ message: "Contact details updated successfully" });
-  } catch (error) {
-    console.error("Error updating contact details:", error);
-    res.status(500).json({ error: "Error updating contact details" });
-  }
-});
-
 // Fetch all users
 app.get("/users", async (req, res) => {
   try {
@@ -1867,12 +1864,11 @@ app.delete("/users/:id", async (req, res) => {
   }
 });
 
-
 app.get("/admindashboard", async (req, res) => {
-  const { year } = req.query; 
+  const { year } = req.query;
 
   try {
-    const selectedYear = year ? parseInt(year, 10) : new Date().getFullYear(); 
+    const selectedYear = year ? parseInt(year, 10) : new Date().getFullYear();
     const mainQuery = `
       SELECT 
         EXTRACT(YEAR FROM created_at) AS year,
@@ -1973,33 +1969,21 @@ app.get("/admindashboard", async (req, res) => {
   }
 });
 
-app.post("/approveReservations", async (req, res) => {
-  const { ids } = req.body; // Array of reservation IDs to approve
+app.post("/update/status", async (req, res) => {
+  const { ids, status } = req.body;
 
-  try {
-    // Update the status of the selected reservations
-    await pool.query(
-      "UPDATE Schedules SET status = $1 WHERE id = ANY($2::int[])",
-      ["Approved", ids]
-    );
-    res.status(200).send("Reservations approved");
-  } catch (error) {
-    console.error("Error approving reservations:", error);
-    res.status(500).send("Server error");
+  if (!ids || !Array.isArray(ids) || !status) {
+    return res.status(400).send("Missing or invalid 'ids' or 'status'");
   }
-});
-app.post("/disapproveReservations", async (req, res) => {
-  const { ids } = req.body; // Array of reservation IDs to disapprove
 
   try {
-    // Update the status of the selected reservations to 'Disapproved'
     await pool.query(
       "UPDATE Schedules SET status = $1 WHERE id = ANY($2::int[])",
-      ["Disapproved", ids]
+      [status, ids]
     );
-    res.status(200).send("Reservations disapproved");
+    res.status(200).send(`Reservations updated to ${status}`);
   } catch (error) {
-    console.error("Error disapproving reservations:", error);
+    console.error(`Error updating reservations to ${status}:`, error);
     res.status(500).send("Server error");
   }
 });
@@ -2032,8 +2016,8 @@ app.get("/Allreservations", async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT id, reservation_id, user_id, reservation_type AS program, 
-       TO_CHAR(start_date, 'FMDay, FMDD, YYYY') AS start_date, 
-       TO_CHAR(end_date, 'FMDay, FMDD, YYYY') AS end_date, 
+       TO_CHAR(start_date, 'FMDay, FMMonth FMDD, YYYY') AS start_date, 
+       TO_CHAR(end_date, 'FMDay, FMMonth FMDD, YYYY') AS end_date, 
        status, time_slot 
       FROM Schedules 
       WHERE is_archived IS DISTINCT FROM true
@@ -2048,35 +2032,23 @@ app.get("/Allreservations", async (req, res) => {
   }
 });
 
-// Endpoint to mark reservations as "Returned"
-app.post("/markReturned", async (req, res) => {
-  const { ids } = req.body; // Array of reservation IDs to mark as returned
-  try {
-    await pool.query(
-      "UPDATE Equipment SET status = $1 WHERE id = ANY($2::int[])",
-      ["Returned", ids]
-    );
-    res.status(200).send("Equipment reservations marked as returned");
-  } catch (error) {
-    console.error("Error marking equipment reservations as returned:", error);
-    res.status(500).send("Server error");
-  }
-});
+app.post("/mark/:status", async (req, res) => {
+  const { ids } = req.body;
+  const { status } = req.params;
+  const validStatuses = ["Returned", "Not Returned", "Received"];
 
-// Endpoint to mark reservations as "Not Returned"
-app.post("/markNotReturned", async (req, res) => {
-  const { ids } = req.body; // Array of reservation IDs to mark as not returned
+  if (!validStatuses.includes(status)) {
+    return res.status(400).send("Invalid status");
+  }
+
   try {
     await pool.query(
       "UPDATE Equipment SET status = $1 WHERE id = ANY($2::int[])",
-      ["Not Returned", ids]
+      [status, ids] // No need for `replace` anymore
     );
-    res.status(200).send("Equipment reservations marked as not returned");
+    res.status(200).send(`Equipment reservations marked as ${status}`);
   } catch (error) {
-    console.error(
-      "Error marking equipment reservations as not returned:",
-      error
-    );
+    console.error(`Error marking equipment reservations as ${status}:`, error);
     res.status(500).send("Server error");
   }
 });
