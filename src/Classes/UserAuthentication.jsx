@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../WebStructure/AuthContext";
 import axios from "axios";
-import "./UserAuthentication.css";
+import "../WebStyles/Admin-CSS.css";
 
 const { DecryptionCode } = require("../WebStructure/Codex");
 

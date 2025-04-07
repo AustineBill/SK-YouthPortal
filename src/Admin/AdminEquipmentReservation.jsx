@@ -299,7 +299,10 @@ const AdminEquipmentReservation = () => {
                         variant="danger"
                         className="admin-ereservation-archive-button rounded-pill"
                         onClick={() => handleArchive(reservation.id)}
-                        disabled={reservation.status === "Not Returned"}
+                        disabled=
+                        {(reservation.status === "Not Returned") || 
+                        (reservation.status === "Received")
+                      }
                       >
                         <i className="bi bi-archive"></i>
                       </Button>

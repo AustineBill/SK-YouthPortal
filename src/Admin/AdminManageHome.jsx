@@ -254,12 +254,10 @@ const ManageHomePage = () => {
       <div className="admin-home-contents-container d-flex justify-content-center">
         {activeContent === "allEvents" && (
           <div className="admin-events-details-container d-flex flex-column">
-            {/* <div className="card-container"> */}
             {events.length === 0 ? (
               <p>No events available</p>
             ) : (
               events.map((events) => (
-                // <Card key={events.id} className="ProgramCard">
                 <Card key={events.id} className="admin-event-card d-flex">
                   <div className="admin-event-card-details d-flex">
                     <div className="admin-event-image-container d-flex justify-content-center align-items-center">
@@ -303,7 +301,10 @@ const ManageHomePage = () => {
                 </Card>
               ))
             )}
-            {/* </div> */}
+
+            <div className="admin-spotlight-label-container d-flex justify-content-center">
+              <h2 className="spotlight-label-h2">Spotlights</h2>
+            </div>
 
             <div className="admin-spotlight-container d-flex justify-content-center">
               {spotlight.length > 0 ? (
