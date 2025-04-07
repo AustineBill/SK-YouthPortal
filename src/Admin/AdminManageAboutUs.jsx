@@ -305,48 +305,50 @@ const ManageAboutUs = () => {
         )}
 
         {activeContent === "manageAboutDetails" && !loading && (
-          <div className="admin-current-SK-details-container d-flex flex-column align-items-center">
+          <>
             <div className="admin-current-SK-label-container">
               <h2 className="SK-label-h2">SK Council Members</h2>
             </div>
-
-            <table className="admin-SK-table table-bordered">
-              <thead className="admin-SK-table-head text-center">
-                <tr>
-                  <th>Image</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-
-              <tbody className="admin-SK-table-body">
-                {skCouncilInputs.map((member, index) => (
-                  <tr key={index}>
-                    <td className="text-center">
-                      <div className="d-flex justify-content-center">
-                        <img
-                          src={member.image}
-                          alt={`SK Member ${index + 1}`}
-                          style={{ width: "150px", height: "auto" }}
-                          className="p-0 m-0"
-                        />
-                      </div>
-                    </td>
-                    <td className="text-center">
-                      <div className="admin-about-details-buttons-container d-flex justify-content-center">
-                        <Button
-                          variant="warning"
-                          onClick={() => editSkCouncilInput(member)}
-                          className="admin-SK-edit-button rounded-pill"
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </Button>
-                      </div>
-                    </td>
+            
+            <div className="admin-current-SK-details-container d-flex flex-column align-items-center">
+              <table className="admin-SK-table table-bordered">
+                <thead className="admin-SK-table-head text-center">
+                  <tr>
+                    <th>Image</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+
+                <tbody className="admin-SK-table-body">
+                  {skCouncilInputs.map((member, index) => (
+                    <tr key={index}>
+                      <td className="text-center">
+                        <div className="d-flex justify-content-center">
+                          <img
+                            src={member.image}
+                            alt={`SK Member ${index + 1}`}
+                            style={{ width: "150px", height: "auto" }}
+                            className="p-0 m-0"
+                          />
+                        </div>
+                      </td>
+                      <td className="text-center">
+                        <div className="admin-about-details-buttons-container d-flex justify-content-center">
+                          <Button
+                            variant="warning"
+                            onClick={() => editSkCouncilInput(member)}
+                            className="admin-SK-edit-button rounded-pill"
+                          >
+                            <i className="bi bi-pencil-square"></i>
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
 
         {/* Modal for managing SK Council members */}

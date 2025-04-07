@@ -158,7 +158,9 @@ const ReservationLog = () => {
                           (selectedCategory === "Facility" &&
                             reservation.status === "Disapproved") ||
                           (selectedCategory === "Equipment" &&
-                            reservation.status === "Not Returned")
+                            reservation.status === "Not Returned") ||
+                          (selectedCategory === "Equipment" &&
+                            reservation.status === "Received")
                         }
                         onClick={() => {
                           sessionStorage.setItem(
