@@ -327,8 +327,8 @@ const ManageAboutUs = () => {
                           <img
                             src={member.image}
                             alt={`SK Member ${index + 1}`}
-                            style={{ width: "150px", height: "auto" }}
-                            className="p-0 m-0"
+                            // style={{ width: "150px", height: "auto" }}
+                            className="SK-image p-0 m-0"
                           />
                         </div>
                       </td>

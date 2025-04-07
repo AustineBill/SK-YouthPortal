@@ -2199,10 +2199,15 @@
   height: 35px;
 }
 
+.SK-image {
+  width: 200px;
+  height: auto;
+}
+
 .admin-about-details-buttons-container .admin-SK-edit-button {
-  font-size: 15px;
+  font-size: 12.5px;
   width: 100px;
-  height: 40px;
+  height: 35px;
   transition: all 0.35s;
 }
 
@@ -2243,11 +2248,14 @@
       height: 32.5px;
   }
 
+  .SK-image {
+    width: 175px;
+  }
+
   .admin-about-details-buttons-container .admin-SK-edit-button {
       width: 90px;
-      height: 35px;
-      font-size: 12.5px;
-      transition: all 0.35s;
+      height: 30px;
+      font-size: 10px;
   }
 
   .admin-edit-about-details-back-button {
@@ -2303,11 +2311,14 @@
       height: 30px;
   }
 
+  .SK-image {
+    width: 150px;
+  }
+
   .admin-about-details-buttons-container .admin-SK-edit-button {
       width: 80px;
-      height: 30px;
-      font-size: 10px;
-      transition: all 0.35s;
+      height: 25px;
+      font-size: 7.5px;
   }
 
   .admin-edit-about-details-back-button {
@@ -2373,11 +2384,14 @@
       height: 30px;
   }
 
+  .SK-image {
+    width: 125px;
+  }
+
   .admin-about-details-buttons-container .admin-SK-edit-button {
       width: 80px;
-      height: 30px;
-      font-size: 10px;
-      transition: all 0.35s;
+      height: 25px;
+      font-size: 7.5px;
   }
 
   .admin-edit-about-details-back-button {
@@ -2443,11 +2457,14 @@
       height: 22.5px;
   }
 
+  .SK-image {
+    width: 100px;
+  }
+
   .admin-about-details-buttons-container .admin-SK-edit-button {
       width: 70px;
-      height: 30px;
-      font-size: 10px;
-      transition: all 0.35s;
+      height: 25px;
+      font-size: 5px;
   }
 
   .admin-edit-about-details-back-button {
