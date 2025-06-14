@@ -46,7 +46,9 @@ const spotlightRoutes = require("./src/Backend/Routes/Admin/spotlight");
 const reportRoutes = require("./src/Backend/Routes/Admin/reports");
 const statusRoutes = require("./src/Backend/Routes/Admin/status");
 
-const { scheduleAgeAndStatusUpdate } = require("./Utils/ageIncrement");
+const {
+  scheduleAgeAndStatusUpdate,
+} = require("./src/Backend/Utils/ageIncrement");
 
 pool.query("SET timezone = 'UTC';");
 

@@ -1,7 +1,15 @@
 const cron = require("node-cron");
-const pool = require("../db");
+const { Pool } = require("pg");
 
-// Function to increment birthdate and update status
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl: { rejectUnauthorized: false },
+});
+
 async function updateAgeAndStatus() {
   try {
     // Increment age (adjusting birthdate here seems wrong — should track age separately or calculate from date)
