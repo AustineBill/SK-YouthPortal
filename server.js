@@ -814,33 +814,6 @@ const skOfficialsStorage = multer.diskStorage({
 
 const skOfficialsupload = multer({ storage: skOfficialsStorage });
 
-app.post("/inventory", upload.single("image"), async (req, res) => {
-  try {
-    // Check if an image is uploaded
-    if (!req.file) {
-      return res.status(400).send("No file uploaded");
-    }
-
-    const { name, quantity, specification } = req.body; // Exclude 'status' from the request
-    const imageFileName = "/Equipment/" + req.file.filename; // Save only the relative path
-    const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
-
-    // Automatically set status based on quantity
-    const status = quantity >= 1 ? "Available" : "Out of Stock";
-
-    // Insert the item data into your database
-    const query =
-      "INSERT INTO inventory (name, quantity, specification, status, image) VALUES ($1, $2, $3, $4, $5)";
-    const values = [name, quantity, specification, status, uploadedImageUrl];
-
-    await pool.query(query, values);
-
-    res.status(201).send("Item added successfully");
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
-
 /***** Check Reservatoion *******/
 app.post("/ValidateReservation", async (req, res) => {
   const { user_id, start_date, end_date } = req.body;
