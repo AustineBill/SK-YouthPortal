@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const multer = require("multer");
-const fs = require("fs");
 const path = require("path");
 const bcrypt = require("bcrypt");
 const moment = require("moment-timezone");
@@ -35,6 +34,15 @@ const pool = new Pool({
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
+const reserveRoutes = require("./src/Backend/Routes/reservations");
+const inventoryRoutes = require("./src/Backend/Routes/inventory");
+const equipmentRoutes = require("./src/Backend/Routes/equipment");
+const featureRoutes = require("./src/Backend/Routes/feature");
+const usersRoutes = require("./src/Backend/Routes/users");
+
+//const adminRoutes = require("./src/Backend/Routes/Admin/admin");
+const eventRoutes = require("./src/Backend/Routes/Admin/events");
+
 pool.query("SET timezone = 'UTC';");
 
 pool.connect((err) => {
@@ -44,6 +52,12 @@ pool.connect((err) => {
     console.log("Connected to the database successfully.");
   }
 });
+
+app.use(reserveRoutes);
+app.use(equipmentRoutes);
+app.use(inventoryRoutes);
+app.use(featureRoutes);
+app.use(usersRoutes);
 
 // Welcome endpoint
 app.get("/", (req, res) => {
@@ -370,122 +384,6 @@ app.post("/login", async (req, res) => {
   } catch (err) {
     console.error("Login error:", err.stack);
     res.status(500).json({ message: "Server error" });
-  }
-});
-
-app.get("/Profile/:username", async (req, res) => {
-  const username = req.params.username;
-  try {
-    const query = `
-      SELECT id, username, firstname, lastname, street, province, city, barangay, zone,
-             sex, birthdate, birthday, email_address, contact_number, civil_status,
-             youth_age_group, work_status, educational_background, 
-             registered_sk_voter, registered_national_voter
-      FROM Users
-      WHERE username = $1
-    `;
-    const result = await pool.query(query, [username]);
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    res.json(result.rows[0]);
-  } catch (err) {
-    console.error("Database error:", err); // Log full error
-    res
-      .status(500)
-      .json({ message: "Internal server error", error: err.message });
-  }
-});
-
-app.post("/change-password-only", async (req, res) => {
-  const { id, oldPassword, newPassword } = req.body;
-
-  try {
-    // Fetch the current user's password hash from the database
-    const user = await pool.query("SELECT password FROM users WHERE id = $1", [
-      id,
-    ]);
-
-    if (user.rows.length === 0) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    const currentPasswordHash = user.rows[0].password;
-
-    // Compare the old password with the stored hash
-    const isOldPasswordCorrect = await bcrypt.compare(
-      oldPassword,
-      currentPasswordHash
-    );
-
-    if (!isOldPasswordCorrect) {
-      return res.status(400).json({ message: "Old password is incorrect" });
-    }
-
-    // Hash the new password before saving it
-    const newPasswordHash = await bcrypt.hash(newPassword, 10);
-
-    // Update the password in the database with the hashed new password
-    await pool.query("UPDATE users SET password = $1 WHERE id = $2", [
-      newPasswordHash,
-      id,
-    ]);
-
-    res.status(200).json({ message: "Password updated successfully" });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-app.post("/reservations", async (req, res) => {
-  const {
-    user_id,
-    reservation_id,
-    reservation_type,
-    start_date,
-    end_date,
-    status,
-    time_slot,
-  } = req.body;
-
-  try {
-    const result = await pool.query(
-      `INSERT INTO Schedules (user_id, reservation_id, reservation_type, start_date, end_date, status, time_slot)
-         VALUES ($1, $2, $3, $4, $5, $6 , $7) RETURNING *`,
-      [
-        user_id,
-        reservation_id,
-        reservation_type,
-        start_date,
-        end_date,
-        status,
-        time_slot,
-      ]
-    );
-    res.status(201).json(result.rows[0]);
-  } catch (error) {
-    console.error("Error saving reservation:", error);
-    res.status(500).send("Server error");
-  }
-});
-
-app.get("/reservations", async (req, res) => {
-  const { userId } = req.query; // Get userId from query parameters
-
-  try {
-    const result = await pool.query(
-      `SELECT id, reservation_id, reservation_type AS program, start_date AS date, end_date, status, time_slot 
-         FROM Schedules 
-         WHERE user_id = $1 AND is_archived = false
-         ORDER BY start_date ASC`,
-      [userId]
-    );
-    res.json(result.rows);
-  } catch (error) {
-    console.error("Error fetching reservations:", error);
-    res.status(500).send("Server error");
   }
 });
 
@@ -885,63 +783,6 @@ app.get("/Details/:id", async (req, res) => {
   }
 });
 
-/******** View Schedules ********/
-app.get("/ViewSched", async (req, res) => {
-  try {
-    const result = await pool.query(`
-      SELECT 
-          s.start_date, 
-          s.end_date, 
-          s.time_slot, 
-          u.username, 
-          s.reservation_type -- Include reservation_type in the response
-      FROM Schedules s
-      JOIN Users u ON s.user_id = u.id
-      WHERE s.start_date >= CURRENT_DATE::date
-        AND (s.is_archived IS NULL OR s.is_archived = FALSE OR s.is_archived != 't') -- Exclude archived records
-      ORDER BY s.start_date ASC
-    `);
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "No schedules found" });
-    }
-
-    res.json(result.rows); // Send the result as a JSON response
-  } catch (err) {
-    console.error("Error during query execution:", err);
-    res.status(500).json({ error: err.message }); // Send error message if there's an issue
-  }
-});
-
-app.get("/ViewEquipment", async (req, res) => {
-  try {
-    // Query to fetch equipment details, using JSON functions to extract data
-    const result = await pool.query(`
-      SELECT 
-          e.start_date, 
-          u.username, 
-          jsonb_array_elements(e.reserved_equipment) AS equipment
-      FROM Equipment e
-      JOIN Users u ON e.user_id = u.id
-      WHERE e.start_date >= CURRENT_DATE
-        AND (e.is_archived IS NULL OR e.is_archived = FALSE OR e.is_archived != 't') -- Exclude archived records
-      ORDER BY e.start_date ASC
-    `);
-
-    // Map the result to extract equipment name and quantity
-    const formattedResult = result.rows.map((row) => ({
-      start_date: row.start_date,
-      username: row.username,
-      equipment_name: row.equipment.name,
-      quantity: row.equipment.quantity,
-    }));
-
-    res.json(formattedResult);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
 /******** Inventory ********/
 
 const MilestoneStorage = multer.diskStorage({
@@ -958,23 +799,6 @@ const MilestoneStorage = multer.diskStorage({
 const Milestonesupload = multer({ storage: MilestoneStorage });
 
 // Define multer storage configuration to save files in public/Asset
-const Inventorystorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = path.join(__dirname, "public", "Equipment");
-    // Make sure the directory exists
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    cb(null, dir); // All files will be saved to the public/Asset directory
-  },
-  filename: (req, file, cb) => {
-    // Sanitize the filename to prevent issues with special characters
-    const sanitizedFilename = file.originalname.replace(/[^a-zA-Z0-9.-]/g, "_");
-    cb(null, sanitizedFilename); // Keep the original file name
-  },
-});
-
-const upload = multer({ storage: Inventorystorage });
 
 // Set up the storage engine for multer
 const skOfficialsStorage = multer.diskStorage({
@@ -1012,63 +836,6 @@ app.post("/inventory", upload.single("image"), async (req, res) => {
     await pool.query(query, values);
 
     res.status(201).send("Item added successfully");
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
-
-app.get("/inventory", (req, res) => {
-  pool
-    .query("SELECT * FROM inventory")
-    .then((result) => res.json(result.rows))
-    .catch((error) => res.status(500).send(error.message));
-});
-
-app.put("/inventory/:id", upload.single("image"), async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name, quantity, specification, status } = req.body;
-    let query =
-      "UPDATE inventory SET name = $1, quantity = $2, specification = $3, status = $4";
-    const values = [name, quantity, specification, status];
-
-    if (req.file) {
-      const imageFileName = "/Equipment/" + req.file.filename;
-      query += ", image = $5 WHERE id = $6";
-      const uploadedImageUrl = await uploadImage(req.file.path); // Wait for the upload to finish
-
-      values.push(uploadedImageUrl, id);
-    } else {
-      query += " WHERE id = $5";
-      values.push(id);
-    }
-
-    await pool.query(query, values);
-    res.status(200).send("Item updated successfully");
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
-
-app.delete("/inventory/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    // Retrieve the item's image path to delete the file
-    const result = await pool.query(
-      "SELECT image FROM inventory WHERE id = $1",
-      [id]
-    );
-    if (result.rows.length > 0) {
-      const imagePath = path.join(__dirname, "public", result.rows[0].image);
-      if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath);
-      }
-    }
-
-    // Delete the item from the database
-    await pool.query("DELETE FROM inventory WHERE id = $1", [id]);
-    res.status(200).send("Item deleted successfully");
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -2262,7 +2029,7 @@ app.post("/events", Eventupload.single("event_image"), async (req, res) => {
   const { event_name, event_description } = req.body;
 
   try {
-    const event_image = await uploadImage(req.file.path); //`/Asset/Events/${req.file.filename}`; // Construct the file path
+    const event_image = await uploadImage(req.file.path);
     const result = await pool.query(
       "INSERT INTO home (event_name, event_description, event_image) VALUES ($1, $2, $3) RETURNING *",
       [event_name, event_description, event_image]
