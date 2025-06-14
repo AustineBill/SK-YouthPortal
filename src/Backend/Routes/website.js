@@ -1,5 +1,7 @@
 const express = require("express");
 const { Pool } = require("pg");
+const multer = require("multer");
+const uploadImage = require("../utils/upload"); // Assuming you have a utility function to handle image uploads
 
 const router = express.Router();
 
