@@ -113,4 +113,15 @@ router.delete("/inventory/:id", async (req, res) => {
   }
 });
 
+// Route for fetching inventory data
+router.get("/inventory-reports", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM inventory");
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error fetching inventory data");
+  }
+});
+
 module.exports = router;
