@@ -1,17 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const multer = require("multer");
 const path = require("path");
-const bcrypt = require("bcrypt");
 const moment = require("moment-timezone");
-const nodemailer = require("nodemailer");
-const cron = require("node-cron");
-const crypto = require("crypto");
-const cloudinary = require("cloudinary").v2;
 const { Pool } = require("pg");
-
-const { generateRandomId } = require("./src/WebStructure/Codex");
 
 const PORT = process.env.PORT || 5000;
 
@@ -34,6 +26,9 @@ const pool = new Pool({
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
+const authRoutes = require("./src/Backend/Routes/authentication");
+const registrationRoutes = require("./src/Backend/Routes/registration");
+
 const reserveRoutes = require("./src/Backend/Routes/reservations");
 const inventoryRoutes = require("./src/Backend/Routes/inventory");
 const equipmentRoutes = require("./src/Backend/Routes/equipment");
@@ -41,6 +36,7 @@ const featureRoutes = require("./src/Backend/Routes/feature");
 const usersRoutes = require("./src/Backend/Routes/users");
 
 const websiteRoutes = require("./src/Backend/Routes/website");
+const settingsRoutes = require("./src/Backend/Routes/settings");
 
 //const adminRoutes = require("./src/Backend/Routes/Admin/admin");
 const eventRoutes = require("./src/Backend/Routes/Admin/events");
@@ -49,6 +45,8 @@ const spotlightRoutes = require("./src/Backend/Routes/Admin/spotlight");
 
 const reportRoutes = require("./src/Backend/Routes/Admin/reports");
 const statusRoutes = require("./src/Backend/Routes/Admin/status");
+
+const { scheduleAgeAndStatusUpdate } = require("./utils/ageIncrement");
 
 pool.query("SET timezone = 'UTC';");
 
@@ -72,334 +70,16 @@ app.use(spotlightRoutes);
 app.use(reportRoutes);
 app.use(statusRoutes);
 app.use(websiteRoutes);
+app.use(settingsRoutes);
+app.use(authRoutes);
+app.use(registrationRoutes);
 
 // Welcome endpoint
 app.get("/", (req, res) => {
   res.send("Welcome to the iSKed API");
 });
 
-// Nodemailer transporter
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: process.env.EMAIL_PORT,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET, // Replace with your actual secret key
-});
-
-/**
- * Function to upload an image to Cloudinary
- * @param {string} path - The file path of the image to upload
- * @returns {Promise<string>} - The secure URL of the uploaded image
- */
-async function uploadImage(path) {
-  try {
-    const uniquePublicId = `image_${Date.now()}`; // Generate unique public_id
-    const uploadResult = await cloudinary.uploader.upload(path, {
-      public_id: uniquePublicId,
-    });
-    return uploadResult.secure_url; // Return only the secure URL
-  } catch (error) {
-    console.error("Error uploading image:", error);
-    throw error; // Propagate error for the caller to handle
-  }
-}
-
-module.exports = { uploadImage };
-
 /********* Website ******** */
-
-const verificationCodes = {};
-const emailTimestamps = {};
-
-// Route to check email existence and send verification code
-app.post("/check-email", async (req, res) => {
-  const { email } = req.body;
-  const currentTime = Date.now();
-
-  try {
-    if (
-      emailTimestamps[email] &&
-      currentTime - emailTimestamps[email] < 3 * 60 * 1000
-    ) {
-      const remainingTime = Math.ceil(
-        (3 * 60 * 1000 - (currentTime - emailTimestamps[email])) / 1000
-      );
-      return res.status(429).json({
-        success: false,
-        message: `Please wait ${remainingTime} seconds before requesting another code.`,
-      });
-    }
-
-    const result = await pool.query(
-      "SELECT * FROM Users WHERE email_address = $1",
-      [email]
-    );
-
-    if (result.rows.length > 0) {
-      // Generate a verification code
-      const verificationCode = crypto.randomInt(100000, 999999).toString();
-      verificationCodes[email] = verificationCode;
-      emailTimestamps[email] = currentTime; // Update the timestamp for this email
-
-      // Send email with the verification code
-      await transporter.sendMail({
-        from: '"SK Western Bicutan" <austinebillryannmalic@gmail.com>',
-        to: email,
-        subject: "Password Reset Verification Code",
-        text: `Your verification code is: ${verificationCode}`,
-      });
-
-      res.json({ success: true, message: "Verification code sent to email." });
-    } else {
-      res.status(404).json({ success: false, message: "Email not found." });
-    }
-  } catch (error) {
-    console.error("Error checking email:", error);
-    res.status(500).json({ success: false, message: "Internal server error." });
-  }
-});
-
-// Route to verify the code
-app.post("/verify-code", (req, res) => {
-  const { email, verificationCode } = req.body;
-
-  if (verificationCodes[email] === verificationCode) {
-    res.json({ success: true, message: "Verification code is correct." });
-  } else {
-    res
-      .status(400)
-      .json({ success: false, message: "Incorrect verification code." });
-  }
-});
-
-app.post("/change-password", async (req, res) => {
-  const { email, newPassword } = req.body;
-
-  try {
-    const hashedPassword = await bcrypt.hash(newPassword, 10); // 10 salt rounds
-
-    await pool.query(
-      "UPDATE users SET password = $1 WHERE email_address = $2",
-      [hashedPassword, email]
-    );
-    if (verificationCodes[email]) {
-      delete verificationCodes[email];
-    }
-
-    res.json({ success: true, message: "Password updated successfully." });
-  } catch (error) {
-    console.error("Error changing password:", error);
-    res.status(500).json({ success: false, message: "Internal server error." });
-  }
-});
-
-app.post("/ValidateCode", async (req, res) => {
-  const { activationCode } = req.body;
-  try {
-    const activationCodeTrimmed = activationCode.toString().trim();
-    const user = await pool.query(
-      "SELECT username, password FROM Users WHERE id = $1",
-      [activationCodeTrimmed]
-    );
-
-    if (user.rowCount === 0) {
-      return res.status(400).json({ message: "Invalid Activation Code" });
-    }
-
-    res.status(200).json({
-      message:
-        "Activation code validated. Please change your username and password.",
-      username: user.rows[0].username,
-      password: user.rows[0].password,
-    });
-  } catch (error) {
-    console.error("Error during validation:", error);
-    res.status(500).json({ message: "An error occurred during validation" });
-  }
-});
-app.post("/UpdateAccount", async (req, res) => {
-  const { decryptedCode, username, password } = req.body;
-
-  try {
-    if (!decryptedCode || !username || !password) {
-      return res.status(400).json({ message: "All fields are required." });
-    }
-
-    // Retrieve the existing user details
-    const userQuery = await pool.query("SELECT * FROM Users WHERE id = $1", [
-      decryptedCode,
-    ]);
-
-    if (userQuery.rowCount === 0) {
-      return res.status(404).json({ message: "User not found." });
-    }
-
-    const existingUser = userQuery.rows[0];
-
-    // Check if username or password has changed
-    const isUsernameChanged = existingUser.username !== username;
-    const isPasswordChanged = !(await bcrypt.compare(
-      password,
-      existingUser.password
-    ));
-
-    if (!isUsernameChanged && !isPasswordChanged) {
-      return res.status(400).json({
-        message: "No changes detected. Username or password must be updated.",
-      });
-    }
-
-    // Hash the new password if it has changed
-    const hashedPassword = isPasswordChanged
-      ? await bcrypt.hash(password, 10)
-      : existingUser.password;
-
-    // Update the user with new username, password, and set status to active
-    const updateQuery = await pool.query(
-      `UPDATE Users 
-       SET username = $1, password = $2, status = 'active'
-       WHERE id = $3 
-       RETURNING *`,
-      [username, hashedPassword, decryptedCode]
-    );
-
-    res.status(200).json({
-      message: "Account updated successfully. Status set to active.",
-      user: {
-        id: updateQuery.rows[0].id,
-        username: updateQuery.rows[0].username,
-        status: updateQuery.rows[0].status,
-      },
-    });
-  } catch (error) {
-    console.error("Error during account update:", error);
-    res.status(500).json({
-      message: "An error occurred while updating your account.",
-      error: error.message,
-    });
-  }
-});
-
-app.put("/updateUser", async (req, res) => {
-  const { userId, username, password, newPassword } = req.body;
-
-  try {
-    // Find the user by ID (using raw SQL)
-    const userResult = await pool.query("SELECT * FROM Users WHERE id = $1", [
-      userId,
-    ]);
-    const user = userResult.rows[0];
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found." });
-    }
-
-    // Check if the username already exists
-    const existingUser = await pool.query(
-      "SELECT * FROM Users WHERE username = $1",
-      [username]
-    );
-    if (existingUser.rowCount > 0 && existingUser.rows[0].id !== userId) {
-      return res
-        .status(400)
-        .json({ message: "Username already taken by another user." });
-    }
-
-    // Check if password matches current password (using bcrypt)
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(400).json({ message: "Incorrect current password." });
-    }
-
-    // Hash the new password before saving to the database
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    // Update user info (username and password) in the database
-    await pool.query(
-      "UPDATE Users SET username = $1, password = $2 WHERE id = $3",
-      [username, hashedPassword, userId]
-    );
-
-    return res.status(200).json({ message: "User info updated successfully!" });
-  } catch (error) {
-    console.error("Error during update:", error);
-    return res
-      .status(500)
-      .json({ message: "An error occurred while updating user info." });
-  }
-});
-
-app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    // Check for Admin credentials in the Admins table
-    const adminResult = await pool.query(
-      "SELECT * FROM Admins WHERE username = $1",
-      [username]
-    );
-
-    if (adminResult.rows.length > 0) {
-      const admin = adminResult.rows[0];
-
-      // Compare password for admin login
-      if (admin.password === password) {
-        return res.status(200).json({
-          message: "Admin login successful",
-          user: { id: admin.id, username: admin.username, role: "admin" },
-        });
-      } else {
-        return res.status(400).json({ message: "Invalid admin password" });
-      }
-    }
-
-    // If not admin, check for regular user credentials in Users table
-    const userResult = await pool.query(
-      "SELECT * FROM Users WHERE username = $1",
-      [username]
-    );
-
-    if (userResult.rows.length > 0) {
-      const user = userResult.rows[0];
-
-      // Validate password for user login (bcrypt used for users)
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-        return res
-          .status(400)
-          .json({ message: "Invalid username or password" });
-      }
-
-      // Return user details including ID
-      return res.status(200).json({
-        message: "User login successful",
-        user: {
-          id: user.id,
-          username: user.username,
-          address: user.address,
-          fullName: user.full_name,
-          email: user.email,
-          phone: user.phone,
-          role: "user", // Adding role for user
-        },
-      });
-    } else {
-      return res.status(400).json({ message: "Invalid username or password" });
-    }
-  } catch (err) {
-    console.error("Login error:", err.stack);
-    res.status(500).json({ message: "Server error" });
-  }
-});
 
 app.post("/schedule/equipment", async (req, res) => {
   const { user_id, reservation_id, reservedEquipment, startDate, endDate } =
@@ -757,65 +437,6 @@ app.delete("/equipment/:reservation_id", async (req, res) => {
   }
 });
 
-/********* Auto Fill Details  *********/
-app.get("/Details/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const result = await pool.query(
-      "SELECT username, birthdate, email_address AS email FROM Users WHERE id = $1",
-      [id]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    res.json(result.rows[0]);
-  } catch (err) {
-    console.error("Error fetching user details:", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-/***** Check Reservatoion *******/
-app.post("/ValidateReservation", async (req, res) => {
-  const { user_id, start_date, end_date } = req.body;
-
-  try {
-    const startDate = new Date(start_date);
-    const endDate = new Date(end_date);
-
-    // Query to check for overlapping reservations only for this user
-    const overlapQuery = `
-      SELECT * FROM Schedules 
-      WHERE user_id = $1
-      AND (is_archived IS NULL OR is_archived = FALSE) -- Exclude archived reservations
-      AND (
-        (start_date <= $2 AND end_date >= $2) OR -- Overlap with new start date
-        (start_date <= $3 AND end_date >= $3) OR -- Overlap with new end date
-        (start_date >= $2 AND end_date <= $3)    -- Fully contained within new range
-      )
-    `;
-    const overlapValues = [user_id, startDate, endDate];
-    const overlapResult = await pool.query(overlapQuery, overlapValues);
-
-    // If any rows are returned, there is an overlap
-    if (overlapResult.rowCount > 0) {
-      return res.json({
-        success: false,
-        message: "You already have a reservation overlapping these dates.",
-      });
-    }
-
-    // If no overlaps, allow the reservation
-    return res.json({ success: true, message: "Reservation allowed." });
-  } catch (error) {
-    console.error("Error validating reservation:", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
-  }
-});
-
 app.post("/CheckEquipment", async (req, res) => {
   const { user_id, date } = req.body;
   try {
@@ -835,122 +456,6 @@ app.post("/CheckEquipment", async (req, res) => {
 });
 
 //Admin Side
-
-app.get("/date-settings", async (req, res) => {
-  try {
-    const result = await pool.query(
-      "SELECT * FROM date_settings ORDER BY id ASC"
-    );
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-// Get the single time setting (only one row exists)
-app.get("/time-settings", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM time_settings LIMIT 1");
-    res.json(result.rows[0] || {}); // Return empty object if no data exists
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-app.get("/settings", async (req, res) => {
-  try {
-    const timeGapResult = await pool.query(`
-      SELECT time_gap FROM settings 
-      WHERE time_gap IS NOT NULL 
-      ORDER BY created_at DESC 
-      LIMIT 1
-    `);
-
-    const timeGap =
-      timeGapResult.rows.length > 0 ? timeGapResult.rows[0].time_gap : 1;
-
-    // Get blocked dates
-    const blockedDatesResult = await pool.query(`
-      SELECT start_date, end_date FROM settings 
-      WHERE start_date IS NOT NULL
-    `);
-
-    res.json({
-      blocked_dates: blockedDatesResult.rows,
-      time_gap: timeGap,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
-});
-
-app.post("/settings/time-gap", async (req, res) => {
-  try {
-    const { time_gap } = req.body;
-
-    if (!time_gap || isNaN(time_gap)) {
-      return res.status(400).json({ error: "Invalid time gap value!" });
-    }
-
-    // Check if time_settings already has a row
-    const checkExisting = await pool.query(
-      "SELECT * FROM time_settings LIMIT 1"
-    );
-
-    if (checkExisting.rowCount === 0) {
-      // Insert if no row exists
-      await pool.query(
-        "INSERT INTO time_settings (id, time_gap) VALUES (TRUE, $1)",
-        [time_gap]
-      );
-    } else {
-      // Update if a row exists
-      await pool.query(
-        "UPDATE time_settings SET time_gap = $1, created_at = NOW()",
-        [time_gap]
-      );
-    }
-
-    res.json({ message: "Time gap updated successfully!" });
-  } catch (err) {
-    console.error("Error updating time gap:", err);
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-// Insert blocked date range
-app.post("/settings/block-dates", async (req, res) => {
-  const { start_date, end_date } = req.body;
-
-  if (!start_date) {
-    return res.status(400).json({ error: "Start date is required" });
-  }
-
-  try {
-    await pool.query(
-      "INSERT INTO date_settings (start_date, end_date) VALUES ($1, $2);",
-      [start_date, end_date || null]
-    );
-    res.json({ message: "Blocked date range added successfully" });
-  } catch (error) {
-    console.error("Error inserting blocked dates:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-app.delete("/settings/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    await pool.query("DELETE FROM settings WHERE id = $1", [id]);
-    res.send("Block date removed");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
-});
 
 app.get("/admindashboard", async (req, res) => {
   const { year } = req.query;
@@ -1101,139 +606,8 @@ app.get("/Allreservations", async (req, res) => {
   }
 });
 
-// Forgot Password - Send Verification Code
-app.post("/forgot-password", async (req, res) => {
-  const { email } = req.body;
-
-  try {
-    // Find user by email address in the database
-    const userResult = await pool.query(
-      "SELECT * FROM users WHERE email_address = $1",
-      [email]
-    );
-
-    if (userResult.rows.length === 0) {
-      return res.status(404).json({ message: "Email address not found" });
-    }
-
-    const user = userResult.rows[0];
-
-    // Generate a reset password token and its expiration
-    const resetToken = generateRandomId(); // Unique random token
-    const resetTokenExpiration = moment().add(1, "hour").toISOString(); // Token expires in 1 hour
-
-    // Store token and expiration date in the database (hash the token for security)
-    const hashedToken = bcrypt.hashSync(resetToken, 10);
-    await pool.query(
-      "UPDATE users SET reset_token = $1, reset_token_expiration = $2 WHERE email_address = $3",
-      [hashedToken, resetTokenExpiration, email]
-    );
-
-    // Send reset password email
-    const mailOptions = {
-      from: "your-email@gmail.com",
-      to: email,
-      subject: "Password Reset Request",
-      html: `
-              <h1>Password Reset</h1>
-              <p>You requested a password reset. Please click the link below to reset your password:</p>
-              <a href="https://isked-backend-ssmj.onrender.com/reset-password?token=${resetToken}">Reset Password</a>
-          `,
-    };
-
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: "Password reset email sent!" });
-  } catch (error) {
-    console.error("Error sending email:", error);
-    res.status(500).json({ message: "Server error, please try again later." });
-  }
-});
-// Reset Password
-app.post("/reset-password", async (req, res) => {
-  const { email, token, newPassword } = req.body;
-
-  if (!email || !token || !newPassword) {
-    return res.status(400).json({ message: "All fields are required." });
-  }
-
-  try {
-    // Find the user in the database and retrieve the reset token and expiration
-    const userResult = await pool.query(
-      "SELECT * FROM users WHERE email_address = $1",
-      [email]
-    );
-
-    if (userResult.rows.length === 0) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    const user = userResult.rows[0];
-
-    // Check if the reset token exists and if it is still valid
-    const isTokenValid = bcrypt.compareSync(token, user.reset_token);
-
-    if (
-      !isTokenValid ||
-      Date.now() > new Date(user.reset_token_expiration).getTime()
-    ) {
-      return res
-        .status(400)
-        .json({ message: "Invalid or expired reset token" });
-    }
-
-    // Hash the new password
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    // Update the password in the database
-    await pool.query(
-      "UPDATE users SET password = $1 WHERE email_address = $2",
-      [hashedPassword, email]
-    );
-
-    // Clear the reset token and expiration
-    await pool.query(
-      "UPDATE users SET reset_token = NULL, reset_token_expiration = NULL WHERE email_address = $1",
-      [email]
-    );
-
-    res.status(200).json({ message: "Password successfully updated!" });
-  } catch (error) {
-    console.error("Error resetting password:", error);
-    res.status(500).json({ message: "Failed to reset password." });
-  }
-});
-
 // Function to increment birthdate and update status
-async function updateAgeAndStatus() {
-  try {
-    // Update the birthdate for users with birthdays today
-    const updateAgeQuery = `
-      UPDATE Users
-      SET birthdate = birthdate + 1
-      WHERE EXTRACT(MONTH FROM CURRENT_DATE) = EXTRACT(MONTH FROM birthday)
-        AND EXTRACT(DAY FROM CURRENT_DATE) = EXTRACT(DAY FROM birthday);
-    `;
-    await pool.query(updateAgeQuery);
-
-    // Update the status to 'inactive' for users 31 or older
-    const updateStatusQuery = `
-      UPDATE Users
-      SET status = 'inactive'
-      WHERE birthdate >= 31;
-    `;
-    await pool.query(updateStatusQuery);
-
-    console.log("Age and status updated successfully.");
-  } catch (err) {
-    console.error("Error updating birthdate and status:", err);
-  }
-}
-
-// Schedule the task to run once a day at midnight
-cron.schedule("0 0 * * *", () => {
-  console.log("Running the birthdate and status update task...");
-  updateAgeAndStatus();
-});
+scheduleAgeAndStatusUpdate();
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
