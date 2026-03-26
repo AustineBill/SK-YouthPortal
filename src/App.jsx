@@ -269,13 +269,18 @@ const App = () => {
                   }
                 />
                 {/* Admin Side Routes */}
-                <Route
+                {/* Wala na to. */}
+                {/* <Route
                   path="/admin/reservations"
                   element={<AdminReservations />}
-                />{" "}
-                {/* Wala na to. */}
-                <Route path="/admin" element={<AdminMain />} />
-                <Route path="/admin/manage-home" element={<ManageHome />} />
+                />{" "} */}
+                
+                <Route path="/admin"
+                  element={<AdminMain />}
+                />
+                <Route path="/admin/manage-home"
+                  element={<ManageHome />}
+                />
                 <Route
                   path="/admin/manage-about-us"
                   element={<ManageAboutUs />}
@@ -296,10 +301,18 @@ const App = () => {
                   path="/admin/equipment-reservation"
                   element={<AdminEquipmentReservation />}
                 />
-                <Route path="/admin/Inventory" element={<InventoryTable />} />
-                <Route path="/admin/reports" element={<Reports />} />
-                <Route path="/admin/users" element={<Users />} />
-                <Route path="/user/:id" element={<UserDetails />} />
+                <Route path="/admin/Inventory"
+                  element={<InventoryTable />}
+                />
+                <Route path="/admin/reports"
+                  element={<Reports />}
+                />
+                <Route path="/admin/users"
+                  element={<Users />}
+                />
+                <Route path="/user/:id"
+                  element={<UserDetails />}
+                />
               </Routes>
               {!isAdmin && <FooterSwitcher />}
             </>
